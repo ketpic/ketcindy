@@ -1,0 +1,2836 @@
+%Copyright (C)  2014  Setsuo Takato, KETpic developer team
+%* 
+%* This program is free software: you can redistribute it and/or modify
+%* it under the terms of the GNU General Public License as published by
+%* the Free Software Foundation; either version 3 of the License, or
+%* (at your option) any later version.
+%* 
+%* This program is distributed in the hope that it will be useful,
+%* but WITHOUT ANY WARRANTY; without even the implied warranty of
+%* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%* GNU General Public License for more details.
+%* 
+%* You should have received a copy of the GNU General Public License
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>
+%%% ketlayer.sty 2017-1-13 12:53
+%%% ketlayer170109.sce 2017-1-13 12:53
+%   2017.01.09%
+\newlength{\layercurrentunit}%
+\newcommand{\shadebox}[7][0]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+( 100.00000, 100.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+{\color{#6}%
+\special{pa 0 0}\special{pa 3937 0}\special{pa 3937 -3937}\special{pa 0 -3937}\special{pa 0 0}%
+\special{sh 1}\special{ip}%
+}%
+\end{picture}}%%
+}%
+%
+{%
+\ifnum %
+#4<10 %
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+{%
+\ifnum %
+#1>0 %
+\boxframese{#2}{#3}{#4}{#5}{}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\shadeboxse}[7][0]{%
+\shadebox[#1]{#2}{#3}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxc}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxe}[7][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxw}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxn}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxs}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxnw}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxne}[7][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxsw}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\shadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\eraser}[5][0]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+( 100.00000, 100.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 0 0}\special{pa 3937 0}\special{pa 3937 -3937}\special{pa 0 -3937}\special{pa 0 0}%
+\special{sh 0}\special{ip}%
+\end{picture}}%%
+}%
+%
+{%
+\ifnum %
+#4<10 %
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\scalebox{0.#4}[0.#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.#4}[0.#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.#4}[0.#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.#4}[0.#5]{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+{%
+\ifnum %
+#1>0 %
+\boxframese{#2}{#3}{#4}{#5}{}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\eraserse}[5][0]{%
+\eraser[#1]{#2}{#3}{#4}{#5}%
+%
+}%
+\newcommand{\eraserc}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasere}[5][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\eraserw}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasern}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasers}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasernw}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\eraserne}[5][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasersw}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\arrowhead}[4][1]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   4.00000,   1.23607)(  -2.00000,  -0.61803)%
+\special{pn 8}%
+%
+\special{pn 4}%
+\special{pa 0 0}\special{pa 79 24}\special{pa 79 -24}\special{pa 0 0}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 0 0}\special{pa 79 24}\special{pa 79 -24}\special{pa 0 0}\special{sh 1}\special{ip}%
+\end{picture}}%%
+}%
+\settowidth{\Width}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\settodepth{\Depth}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}}%
+%
+}%
+\newcommand{\lineseg}[5][12]{%
+\def\tmpcontents{%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.00200)(   0.00000,  -0.00100)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 0}%
+\special{fp}%
+\end{picture}}%%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+%
+{%
+\ifnum %
+#5>0 %
+%
+{%
+\ifnum %
+#5<90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5>-90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\dashlineseg}[5][12]{%
+\def\tmpcontents{%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.00200)(   0.00000,  -0.00100)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 20 0}%
+\special{fp}%
+\end{picture}}%%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+%
+{%
+\ifnum %
+#5>0 %
+%
+{%
+\ifnum %
+#5<90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5>-90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+}%
+\def\arrowline#1#2#3#4{%
+\lineseg[12]{#1}{#2}{#3}{#4}%
+\arrowhead{#1}{#2}{#4}%
+%
+}%
+\newcommand{\arrowlineseg}[5][12]{%
+\lineseg[#1]{#2}{#3}{#4}{#5}%
+\arrowhead{#2}{#3}{#5}%
+%
+}%
+\newcommand{\conversion}[1]{%
+\setcounter{ketpicctra}{#1}%
+\multiply\value{ketpicctra} by 3937%
+\divide\value{ketpicctra} by 100%
+\{\theketpicctra\}%
+%
+}%
+\def\drwline#1#2#3#4{%
+\special{pn 8}%
+\special{pa #1 #2}\special{pa #3 #4}%
+\special{fp}%
+%
+}%
+\newcommand{\dispgrid}[2]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(  10.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn 12}%
+\special{pa -6 0}\special{pa 6 0}\special{fp}\special{pa 33 0}\special{pa 45 0}\special{fp}%
+\special{pa 73 0}\special{pa 85 0}\special{fp}\special{pa 112 0}\special{pa 124 0}\special{fp}%
+\special{pa 151 0}\special{pa 163 0}\special{fp}\special{pa 191 0}\special{pa 203 0}\special{fp}%
+\special{pa 230 0}\special{pa 242 0}\special{fp}\special{pa 270 0}\special{pa 282 0}\special{fp}%
+\special{pa 309 0}\special{pa 321 0}\special{fp}\special{pa 348 0}\special{pa 360 0}\special{fp}%
+\special{pa 388 0}\special{pa 400 0}\special{fp}\special{pn 8}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\divide\value{ketpicctre} by 10%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\addtocounter{ketpicctrf}{-1}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{0}%
+\addtocounter{ketpicctrd}{-\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+\setcounter{ketpicctrg}{0}%
+\addtocounter{ketpicctrg}{-\value{ketpicctrd}}%
+\settowidth{\Width}{\theketpicctrg}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\theketpicctrg}\settodepth{\Depth}{\theketpicctrg}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(-1,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\theketpicctrg}}%
+%
+\ifnum\theketpicctra<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrd>-#2 %
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,-#2){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+%
+\fi%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,  10.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn 12}%
+\special{pa 0 6}\special{pa 0 -6}\special{fp}\special{pa 0 -33}\special{pa 0 -45}\special{fp}%
+\special{pa 0 -73}\special{pa 0 -85}\special{fp}\special{pa 0 -112}\special{pa 0 -124}\special{fp}%
+\special{pa 0 -151}\special{pa 0 -163}\special{fp}\special{pa 0 -191}\special{pa 0 -203}\special{fp}%
+\special{pa 0 -230}\special{pa 0 -242}\special{fp}\special{pa 0 -270}\special{pa 0 -282}\special{fp}%
+\special{pa 0 -309}\special{pa 0 -321}\special{fp}\special{pa 0 -348}\special{pa 0 -360}\special{fp}%
+\special{pa 0 -388}\special{pa 0 -400}\special{fp}\special{pn 8}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   0.02000)(  -0.01000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pa 3 -3}\special{pa -3 -3}\special{pa -3 3}\special{pa 3 3}\special{pa 3 -3}%
+\special{sh 1}\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\divide\value{ketpicctre} by 10%
+\addtocounter{ketpicctre}{-1}%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{0}%
+\addtocounter{ketpicctrd}{\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrd,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{-10}%
+%
+\ifnum\theketpicctrb<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrc>-#2 %
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{-#2}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\ifnum\theketpicctrb<\theketpicctrc%
+\repeat%
+}%
+%
+\fi%
+}%
+\setcounter{ketpicctrg}{-#2}%
+\addtocounter{ketpicctrg}{-1}%
+\settowidth{\Width}{\theketpicctrd}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\theketpicctrd}\settodepth{\Depth}{\theketpicctrd}\setlength{\Height}{-\Height}%
+\put(\theketpicctrd,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{\theketpicctrd}}%
+%
+\ifnum\theketpicctra<\theketpicctrf%
+\repeat%
+}%
+%
+}%
+\newcommand{\dispgridneg}[2]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(  10.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn 12}%
+\special{pa -6 0}\special{pa 6 0}\special{fp}\special{pa 33 0}\special{pa 45 0}\special{fp}%
+\special{pa 73 0}\special{pa 85 0}\special{fp}\special{pa 112 0}\special{pa 124 0}\special{fp}%
+\special{pa 151 0}\special{pa 163 0}\special{fp}\special{pa 191 0}\special{pa 203 0}\special{fp}%
+\special{pa 230 0}\special{pa 242 0}\special{fp}\special{pa 270 0}\special{pa 282 0}\special{fp}%
+\special{pa 309 0}\special{pa 321 0}\special{fp}\special{pa 348 0}\special{pa 360 0}\special{fp}%
+\special{pa 388 0}\special{pa 400 0}\special{fp}\special{pn 8}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\multiply\value{ketpicctre} by -1%
+\divide\value{ketpicctre} by 10%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\addtocounter{ketpicctrf}{-1}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+\setcounter{ketpicctrg}{0}%
+\addtocounter{ketpicctrg}{-\value{ketpicctrd}}%
+\settowidth{\Width}{\theketpicctrg}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\theketpicctrg}\settodepth{\Depth}{\theketpicctrg}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(-1,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\theketpicctrg}}%
+%
+\ifnum\theketpicctra<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrd>-#2 %
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,-#2){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+%
+\fi%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,  10.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn 12}%
+\special{pa 0 6}\special{pa 0 -6}\special{fp}\special{pa 0 -33}\special{pa 0 -45}\special{fp}%
+\special{pa 0 -73}\special{pa 0 -85}\special{fp}\special{pa 0 -112}\special{pa 0 -124}\special{fp}%
+\special{pa 0 -151}\special{pa 0 -163}\special{fp}\special{pa 0 -191}\special{pa 0 -203}\special{fp}%
+\special{pa 0 -230}\special{pa 0 -242}\special{fp}\special{pa 0 -270}\special{pa 0 -282}\special{fp}%
+\special{pa 0 -309}\special{pa 0 -321}\special{fp}\special{pa 0 -348}\special{pa 0 -360}\special{fp}%
+\special{pa 0 -388}\special{pa 0 -400}\special{fp}\special{pn 8}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   0.02000)(  -0.01000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pa 3 -3}\special{pa -3 -3}\special{pa -3 3}\special{pa 3 3}\special{pa 3 -3}%
+\special{sh 1}\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\multiply\value{ketpicctre} by -1%
+\divide\value{ketpicctre} by 10%
+\addtocounter{ketpicctre}{-1}%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{0}%
+\addtocounter{ketpicctrd}{\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrc>-#2 %
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{-#2}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\ifnum\theketpicctrb<\theketpicctrc%
+\repeat%
+}%
+%
+\fi%
+}%
+\setcounter{ketpicctrg}{-#2}%
+\addtocounter{ketpicctrg}{1}%
+\settowidth{\Width}{\theketpicctrd}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\theketpicctrd}\settodepth{\Depth}{\theketpicctrd}\setlength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{\theketpicctrd}}%
+%
+\ifnum\theketpicctra<\theketpicctrf%
+\repeat%
+}%
+%
+}%
+\newenvironment{layer}[3][0]{%
+\setlength{\layercurrentunit}{\unitlength}%
+\unitlength=1 mm%
+\vspace{-\baselineskip}%
+\noindent%
+\hspace*{#1 mm}%
+\begin{picture}(#3,0)(0,0)%
+%
+{%
+\ifnum %
+#3>0 %
+\dispgrid{#2}{#3}%
+%
+\fi%
+}%
+%
+{%
+\ifnum %
+#3<0 %
+\dispgridneg{#2}{#3}%
+%
+\fi%
+}%
+}{%
+\end{picture}%
+\setlength{\unitlength}{\layercurrentunit}%
+%
+}%
+\newenvironment{layerv}[3][0]{%
+\setlength{\layercurrentunit}{\unitlength}%
+\unitlength=1 mm%
+\vspace*{-\baselineskip}%
+\vspace*{#2 mm}%
+
+\setcounter{ketpicctrj}{-#2}%
+\noindent%
+\hspace*{#1 mm}%
+\begin{picture}(100,0)(0,0)%
+%
+{%
+\ifnum %
+#3>0 %
+\setlength{\Width}{\textwidth}%
+\addtolength{\Width}{-#1 mm}%
+\setcounter{ketpicctri}{0}%
+\setcounter{ketpicctri}{1}%
+\addtocounter{ketpicctri}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctri}{1}%
+%
+{%
+\ifdim %
+\theketpicctri mm>\Width %
+\addtocounter{ketpicctri}{500}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctri<400%
+\repeat%
+}%
+\addtocounter{ketpicctri}{-500}%
+\addtocounter{ketpicctri}{-1}%
+\dispgrid{\theketpicctri}{#3}%
+%
+\fi%
+}%
+}{%
+\end{picture}%
+\vspace*{\theketpicctrj mm}%
+\setlength{\unitlength}{\layercurrentunit}%
+%
+}%
+\newenvironment{layerg}[2][1]{%
+\setlength{\layercurrentunit}{\unitlength}%
+\unitlength=1 mm%
+\vspace*{-\baselineskip}%
+\ketcalcheight{#2}%
+\setcounter{ketpicctrj}{\value{ketpicctra}}%
+\ketcalcdepth{#2}%
+\addtocounter{ketpicctrj}{\value{ketpicctra}}%
+\vspace*{-\theketpicctrj mm}%
+
+\noindent%
+\begin{picture}(100,0)(0,0)%
+%
+{%
+\ifnum %
+#1>0 %
+\setlength{\Width}{\textwidth}%
+\addtolength{\Width}{-#1 mm}%
+\setcounter{ketpicctri}{0}%
+\setcounter{ketpicctri}{1}%
+\addtocounter{ketpicctri}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctri}{1}%
+%
+{%
+\ifdim %
+\theketpicctri mm>\Width %
+\addtocounter{ketpicctri}{500}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctri<400%
+\repeat%
+}%
+\addtocounter{ketpicctri}{-500}%
+\addtocounter{ketpicctri}{-1}%
+\dispgrid{\theketpicctri}{\theketpicctrj}%
+%
+\fi%
+}%
+}{%
+\end{picture}%
+\vspace*{\theketpicctrj mm}%
+\setlength{\unitlength}{\layercurrentunit}%
+%
+}%
+\newcommand{\putnotec}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotee}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotew}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotes}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-\Height}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnoten}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotene}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotenw}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotese}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-\Height}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotesw}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-\Height}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\ballonr}[5][8]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   4.00000,   3.50000)(  -2.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 124 -260}\special{pa 123 -261}\special{pa 120 -262}\special{pa 115 -263}%
+\special{pa 109 -264}\special{pa 101 -266}\special{pa 92 -267}\special{pa 82 -269}%
+\special{pa 71 -271}\special{pa 59 -273}\special{pa 45 -276}\special{pa 32 -279}\special{pa 17 -282}%
+\special{pa 2 -286}\special{pa -14 -290}\special{pa -30 -295}\special{pa -47 -300}%
+\special{pa -63 -306}\special{pa -80 -312}\special{pa -96 -319}\special{pa -112 -327}%
+\special{pa -128 -335}\special{pa -144 -344}\special{pa -159 -354}\special{pa -174 -365}%
+\special{pa -188 -376}\special{pa -201 -388}\special{pa -213 -401}\special{pa -224 -416}%
+\special{pa -234 -431}\special{pa -243 -447}\special{pa -250 -464}\special{pa -256 -482}%
+\special{pa -260 -501}\special{pa -263 -522}\special{pa -264 -544}\special{pa -263 -566}%
+\special{pa -260 -591}\special{pa -265 -595}\special{pa -274 -599}\special{pa -287 -603}%
+\special{pa -302 -607}\special{pa -320 -611}\special{pa -340 -615}\special{pa -360 -620}%
+\special{pa -381 -626}\special{pa -402 -633}\special{pa -423 -641}\special{pa -442 -651}%
+\special{pa -459 -662}\special{pa -473 -675}\special{pa -484 -691}\special{pa -492 -709}%
+\special{pa -496 -728}\special{pa -498 -750}\special{pa -498 -772}\special{pa -496 -794}%
+\special{pa -493 -817}\special{pa -490 -839}\special{pa -487 -860}\special{pa -483 -880}%
+\special{pa -479 -899}\special{pa -472 -918}\special{pa -464 -935}\special{pa -452 -952}%
+\special{pa -437 -969}\special{pa -418 -984}\special{pa -395 -999}\special{pa -370 -1013}%
+\special{pa -342 -1026}\special{pa -312 -1037}\special{pa -280 -1048}\special{pa -248 -1057}%
+\special{pa -216 -1065}\special{pa -184 -1071}\special{pa -152 -1076}\special{pa -122 -1078}%
+\special{pa -95 -1079}\special{pa -69 -1078}\special{pa -47 -1075}\special{pa -37 -1085}%
+\special{pa -26 -1095}\special{pa -15 -1106}\special{pa -1 -1117}\special{pa 13 -1129}%
+\special{pa 29 -1140}\special{pa 47 -1152}\special{pa 67 -1162}\special{pa 90 -1172}%
+\special{pa 114 -1181}\special{pa 142 -1189}\special{pa 172 -1196}\special{pa 205 -1201}%
+\special{pa 242 -1205}\special{pa 282 -1206}\special{pa 324 -1206}\special{pa 368 -1204}%
+\special{pa 411 -1200}\special{pa 454 -1195}\special{pa 494 -1189}\special{pa 531 -1181}%
+\special{pa 565 -1172}\special{pa 594 -1162}\special{pa 619 -1150}\special{pa 642 -1136}%
+\special{pa 662 -1120}\special{pa 680 -1102}\special{pa 697 -1081}\special{pa 712 -1057}%
+\special{pa 726 -1031}\special{pa 738 -1004}\special{pa 748 -975}\special{pa 755 -945}%
+\special{pa 760 -916}\special{pa 762 -886}\special{pa 760 -857}\special{pa 755 -829}%
+\special{pa 745 -803}\special{pa 732 -779}\special{pa 713 -758}\special{pa 690 -740}%
+\special{pa 661 -726}\special{pa 668 -717}\special{pa 675 -706}\special{pa 681 -695}%
+\special{pa 688 -683}\special{pa 694 -670}\special{pa 699 -657}\special{pa 704 -643}%
+\special{pa 708 -629}\special{pa 712 -614}\special{pa 715 -599}\special{pa 718 -583}%
+\special{pa 719 -567}\special{pa 720 -551}\special{pa 719 -534}\special{pa 718 -518}%
+\special{pa 715 -501}\special{pa 712 -484}\special{pa 707 -468}\special{pa 701 -451}%
+\special{pa 693 -435}\special{pa 684 -418}\special{pa 673 -402}\special{pa 661 -387}%
+\special{pa 648 -372}\special{pa 633 -357}\special{pa 617 -343}\special{pa 600 -329}%
+\special{pa 581 -316}\special{pa 560 -304}\special{pa 539 -293}\special{pa 516 -283}%
+\special{pa 491 -273}\special{pa 466 -265}\special{pa 439 -258}\special{pa 410 -252}%
+\special{pa 381 -247}\special{pa 349 -244}\special{pa 317 -242}\special{pa 283 -242}%
+\special{pa 278 -228}\special{pa 273 -215}\special{pa 267 -202}\special{pa 261 -190}%
+\special{pa 255 -178}\special{pa 248 -166}\special{pa 242 -155}\special{pa 235 -144}%
+\special{pa 228 -133}\special{pa 220 -123}\special{pa 213 -114}\special{pa 205 -104}%
+\special{pa 197 -95}\special{pa 189 -87}\special{pa 180 -79}\special{pa 171 -71}\special{pa 162 -63}%
+\special{pa 153 -57}\special{pa 144 -50}\special{pa 134 -44}\special{pa 124 -38}\special{pa 114 -33}%
+\special{pa 104 -28}\special{pa 93 -23}\special{pa 82 -19}\special{pa 71 -15}\special{pa 60 -11}%
+\special{pa 48 -8}\special{pa 37 -6}\special{pa 25 -3}\special{pa 12 -1}\special{pa 0 0}%
+\special{pa 8 -6}\special{pa 15 -12}\special{pa 23 -18}\special{pa 30 -25}\special{pa 37 -31}%
+\special{pa 43 -38}\special{pa 49 -45}\special{pa 55 -52}\special{pa 61 -59}\special{pa 67 -66}%
+\special{pa 72 -73}\special{pa 77 -81}\special{pa 82 -88}\special{pa 86 -96}\special{pa 90 -104}%
+\special{pa 94 -112}\special{pa 98 -120}\special{pa 102 -129}\special{pa 105 -137}%
+\special{pa 108 -146}\special{pa 111 -155}\special{pa 113 -163}\special{pa 115 -172}%
+\special{pa 117 -182}\special{pa 119 -191}\special{pa 121 -200}\special{pa 122 -210}%
+\special{pa 123 -220}\special{pa 123 -229}\special{pa 124 -239}\special{pa 124 -250}%
+\special{pa 124 -260}%
+\special{fp}%
+\settowidth{\Width}{{\begin{minipage}{1.8cm}#5\end{minipage}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\begin{minipage}{1.8cm}#5\end{minipage}}}\settodepth{\Depth}{{\begin{minipage}{1.8cm}#5\end{minipage}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(0.5000,1.8000){\hspace*{\Width}\raisebox{\Height}{{\begin{minipage}{1.8cm}#5\end{minipage}}}}%
+%
+%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\scalebox{#4}{\tempcontents}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\scalebox{#4}{\tempcontents}}}\settodepth{\Depth}{{\scalebox{#4}{\tempcontents}}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\scalebox{#4}{\tempcontents}}}}%
+%
+}%
+\newcommand{\ballonl}[5][8]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   5.00000,   2.50000)(  -2.50000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa -225 -221}\special{pa -262 -199}\special{pa -296 -180}\special{pa -329 -163}%
+\special{pa -360 -149}\special{pa -390 -138}\special{pa -419 -128}\special{pa -446 -121}%
+\special{pa -473 -116}\special{pa -499 -112}\special{pa -525 -110}\special{pa -550 -109}%
+\special{pa -576 -109}\special{pa -602 -111}\special{pa -628 -113}\special{pa -655 -115}%
+\special{pa -682 -119}\special{pa -709 -124}\special{pa -736 -131}\special{pa -762 -139}%
+\special{pa -786 -151}\special{pa -810 -165}\special{pa -831 -182}\special{pa -851 -202}%
+\special{pa -868 -224}\special{pa -883 -248}\special{pa -895 -274}\special{pa -904 -301}%
+\special{pa -909 -329}\special{pa -912 -357}\special{pa -910 -386}\special{pa -906 -414}%
+\special{pa -898 -441}\special{pa -887 -467}\special{pa -874 -492}\special{pa -857 -515}%
+\special{pa -838 -537}\special{pa -817 -555}\special{pa -793 -572}\special{pa -767 -585}%
+\special{pa -738 -594}\special{pa -708 -600}\special{pa -676 -602}\special{pa -684 -633}%
+\special{pa -688 -663}\special{pa -689 -691}\special{pa -687 -718}\special{pa -681 -743}%
+\special{pa -673 -766}\special{pa -663 -788}\special{pa -650 -808}\special{pa -635 -827}%
+\special{pa -619 -843}\special{pa -601 -858}\special{pa -582 -871}\special{pa -562 -883}%
+\special{pa -541 -892}\special{pa -520 -900}\special{pa -498 -906}\special{pa -476 -911}%
+\special{pa -452 -915}\special{pa -427 -918}\special{pa -401 -920}\special{pa -372 -922}%
+\special{pa -342 -924}\special{pa -311 -926}\special{pa -279 -927}\special{pa -248 -928}%
+\special{pa -217 -927}\special{pa -187 -925}\special{pa -160 -922}\special{pa -136 -918}%
+\special{pa -114 -912}\special{pa -94 -904}\special{pa -77 -894}\special{pa -61 -882}%
+\special{pa -47 -869}\special{pa -35 -853}\special{pa -23 -836}\special{pa -13 -816}%
+\special{pa -3 -794}\special{pa 7 -770}\special{pa 16 -744}\special{pa 25 -715}\special{pa 35 -684}%
+\special{pa 56 -683}\special{pa 76 -680}\special{pa 95 -677}\special{pa 112 -672}%
+\special{pa 128 -667}\special{pa 142 -661}\special{pa 156 -654}\special{pa 169 -646}%
+\special{pa 180 -637}\special{pa 191 -627}\special{pa 202 -616}\special{pa 211 -603}%
+\special{pa 221 -590}\special{pa 230 -576}\special{pa 238 -561}\special{pa 246 -545}%
+\special{pa 253 -528}\special{pa 258 -510}\special{pa 262 -492}\special{pa 264 -473}%
+\special{pa 264 -455}\special{pa 261 -436}\special{pa 257 -417}\special{pa 250 -399}%
+\special{pa 242 -382}\special{pa 232 -365}\special{pa 222 -348}\special{pa 212 -333}%
+\special{pa 202 -320}\special{pa 192 -307}\special{pa 181 -296}\special{pa 170 -285}%
+\special{pa 158 -276}\special{pa 144 -268}\special{pa 130 -260}\special{pa 114 -253}%
+\special{pa 96 -246}\special{pa 77 -241}\special{pa 55 -235}\special{pa 31 -230}\special{pa 4 -225}%
+\special{pa -26 -221}\special{pa -26 -214}\special{pa -26 -208}\special{pa -26 -201}%
+\special{pa -27 -194}\special{pa -26 -187}\special{pa -26 -181}\special{pa -26 -174}%
+\special{pa -26 -167}\special{pa -26 -160}\special{pa -25 -154}\special{pa -25 -147}%
+\special{pa -24 -140}\special{pa -24 -133}\special{pa -23 -126}\special{pa -22 -119}%
+\special{pa -22 -113}\special{pa -21 -106}\special{pa -20 -99}\special{pa -19 -92}%
+\special{pa -18 -85}\special{pa -17 -78}\special{pa -16 -71}\special{pa -14 -64}\special{pa -13 -57}%
+\special{pa -12 -50}\special{pa -10 -43}\special{pa -9 -36}\special{pa -7 -29}\special{pa -5 -21}%
+\special{pa -4 -14}\special{pa -2 -7}\special{pa 0 0}\special{pa -9 -11}\special{pa -17 -21}%
+\special{pa -26 -32}\special{pa -34 -42}\special{pa -42 -52}\special{pa -50 -61}\special{pa -58 -71}%
+\special{pa -66 -80}\special{pa -74 -88}\special{pa -82 -97}\special{pa -89 -105}%
+\special{pa -97 -113}\special{pa -104 -121}\special{pa -111 -129}\special{pa -119 -136}%
+\special{pa -126 -143}\special{pa -133 -150}\special{pa -139 -156}\special{pa -146 -162}%
+\special{pa -153 -168}\special{pa -160 -174}\special{pa -166 -180}\special{pa -172 -185}%
+\special{pa -179 -190}\special{pa -185 -195}\special{pa -191 -199}\special{pa -197 -203}%
+\special{pa -203 -207}\special{pa -208 -211}\special{pa -214 -215}\special{pa -220 -218}%
+\special{pa -225 -221}%
+\special{fp}%
+\settowidth{\Width}{{\begin{minipage}{1.5cm}#5\end{minipage}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\begin{minipage}{1.5cm}#5\end{minipage}}}\settodepth{\Depth}{{\begin{minipage}{1.5cm}#5\end{minipage}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(-0.8000,1.2000){\hspace*{\Width}\raisebox{\Height}{{\begin{minipage}{1.5cm}#5\end{minipage}}}}%
+%
+%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\scalebox{#4}{\tempcontents}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\scalebox{#4}{\tempcontents}}}\settodepth{\Depth}{{\scalebox{#4}{\tempcontents}}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\scalebox{#4}{\tempcontents}}}}%
+%
+}%
+\newcommand{\lefthand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -1.00000,  -0.80000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa -324 274}\special{pa -311 261}\special{pa -296 251}\special{pa -280 243}%
+\special{pa -265 237}\special{pa -249 232}\special{pa -233 228}\special{pa -219 225}%
+\special{pa -204 222}\special{pa -192 218}\special{pa -180 215}\special{pa -170 210}%
+\special{pa -163 204}\special{pa -156 198}\special{pa -150 191}\special{pa -143 184}%
+\special{pa -136 178}\special{pa -127 173}\special{pa -118 169}\special{pa -108 165}%
+\special{pa -99 162}\special{pa -91 160}\special{pa -84 158}\special{pa -80 156}\special{pa -78 154}%
+\special{pa -76 152}\special{pa -76 151}\special{pa -76 149}\special{pa -77 146}\special{pa -78 144}%
+\special{pa -80 142}\special{pa -82 140}\special{pa -85 138}\special{pa -88 137}\special{pa -92 136}%
+\special{pa -97 136}\special{pa -102 136}\special{pa -107 136}\special{pa -112 136}%
+\special{pa -117 137}\special{pa -122 137}\special{pa -126 138}\special{pa -130 138}%
+\special{pa -133 139}%
+\special{fp}%
+\special{pa -165 170}\special{pa -161 166}\special{pa -156 161}\special{pa -149 154}%
+\special{pa -142 147}\special{pa -133 138}\special{pa -123 129}\special{pa -113 119}%
+\special{pa -102 109}\special{pa -91 98}\special{pa -79 88}\special{pa -67 78}\special{pa -55 69}%
+\special{pa -43 60}\special{pa -34 52}\special{pa -25 44}\special{pa -19 38}\special{pa -14 32}%
+\special{pa -10 26}\special{pa -7 22}\special{pa -5 17}\special{pa -3 12}\special{pa -1 8}%
+\special{pa 0 4}\special{pa 0 1}\special{pa -1 -1}\special{pa -3 -3}\special{pa -6 -3}%
+\special{pa -11 -2}\special{pa -17 1}\special{pa -25 5}\special{pa -35 12}\special{pa -47 20}%
+\special{pa -60 30}\special{pa -74 42}\special{pa -90 55}\special{pa -106 68}\special{pa -122 82}%
+\special{pa -137 95}\special{pa -150 106}\special{pa -161 115}\special{pa -168 122}%
+\special{pa -171 124}\special{pa -169 123}\special{pa -161 116}%
+\special{fp}%
+\special{pa -151 107}\special{pa -151 105}\special{pa -150 104}\special{pa -150 102}%
+\special{pa -151 101}\special{pa -151 99}\special{pa -151 98}\special{pa -152 97}%
+\special{pa -153 96}\special{pa -153 94}\special{pa -154 93}\special{pa -155 92}\special{pa -156 92}%
+\special{pa -158 91}\special{pa -159 90}\special{pa -160 89}\special{pa -161 89}\special{pa -163 88}%
+\special{pa -164 88}\special{pa -165 87}\special{pa -167 87}\special{pa -168 86}\special{pa -170 86}%
+\special{pa -171 86}\special{pa -173 85}\special{pa -174 85}\special{pa -176 85}\special{pa -177 85}%
+\special{pa -178 85}\special{pa -179 85}\special{pa -181 85}\special{pa -182 85}\special{pa -183 85}%
+\special{pa -184 85}\special{pa -185 85}\special{pa -185 85}\special{pa -186 85}\special{pa -187 85}%
+\special{fp}%
+\special{pa -198 97}\special{pa -196 96}\special{pa -193 94}\special{pa -192 93}\special{pa -190 91}%
+\special{pa -189 90}\special{pa -188 88}\special{pa -188 87}\special{pa -187 86}\special{pa -187 84}%
+\special{pa -188 83}\special{pa -188 82}\special{pa -189 81}\special{pa -190 80}\special{pa -191 78}%
+\special{pa -192 77}\special{pa -193 76}\special{pa -194 76}\special{pa -195 75}\special{pa -197 74}%
+\special{pa -198 73}\special{pa -199 72}\special{pa -201 72}\special{pa -202 71}\special{pa -204 71}%
+\special{pa -205 70}\special{pa -206 70}\special{pa -207 69}\special{pa -209 69}\special{pa -210 69}%
+\special{pa -211 68}\special{pa -213 68}\special{pa -214 68}\special{pa -215 68}\special{pa -216 68}%
+\special{pa -218 68}\special{pa -219 68}\special{pa -220 68}\special{pa -221 68}\special{pa -222 68}%
+\special{fp}%
+\special{pa -232 80}\special{pa -230 78}\special{pa -228 76}\special{pa -227 75}\special{pa -226 73}%
+\special{pa -225 71}\special{pa -224 69}\special{pa -223 67}\special{pa -223 66}\special{pa -223 64}%
+\special{pa -223 63}\special{pa -224 61}\special{pa -225 60}\special{pa -226 58}\special{pa -227 57}%
+\special{pa -229 55}\special{pa -231 54}\special{pa -233 53}\special{pa -236 53}\special{pa -240 53}%
+\special{pa -244 54}\special{pa -248 56}\special{pa -253 58}\special{pa -259 62}\special{pa -265 67}%
+\special{pa -271 73}\special{pa -277 79}\special{pa -283 86}\special{pa -289 93}\special{pa -294 101}%
+\special{pa -299 110}\special{pa -303 118}\special{pa -307 127}\special{pa -312 137}%
+\special{pa -316 146}\special{pa -321 156}\special{pa -325 165}\special{pa -331 175}%
+\special{pa -336 185}\special{pa -343 194}\special{pa -350 203}\special{pa -358 213}%
+\special{pa -367 221}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\righthand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -0.01000,  -0.80000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 324 274}\special{pa 311 261}\special{pa 296 251}\special{pa 280 243}\special{pa 265 237}%
+\special{pa 249 232}\special{pa 233 228}\special{pa 219 225}\special{pa 204 222}\special{pa 192 218}%
+\special{pa 180 215}\special{pa 170 210}\special{pa 163 204}\special{pa 156 198}\special{pa 150 191}%
+\special{pa 143 184}\special{pa 136 178}\special{pa 127 173}\special{pa 118 169}\special{pa 108 165}%
+\special{pa 99 162}\special{pa 91 160}\special{pa 84 158}\special{pa 80 156}\special{pa 78 154}%
+\special{pa 76 152}\special{pa 76 151}\special{pa 76 149}\special{pa 77 146}\special{pa 78 144}%
+\special{pa 80 142}\special{pa 82 140}\special{pa 85 138}\special{pa 88 137}\special{pa 92 136}%
+\special{pa 97 136}\special{pa 102 136}\special{pa 107 136}\special{pa 112 136}\special{pa 117 137}%
+\special{pa 122 137}\special{pa 126 138}\special{pa 130 138}\special{pa 133 139}%
+\special{fp}%
+\special{pa 165 170}\special{pa 161 166}\special{pa 156 161}\special{pa 149 154}\special{pa 142 147}%
+\special{pa 133 138}\special{pa 123 129}\special{pa 113 119}\special{pa 102 109}\special{pa 91 98}%
+\special{pa 79 88}\special{pa 67 78}\special{pa 55 69}\special{pa 43 60}\special{pa 34 52}%
+\special{pa 25 44}\special{pa 19 38}\special{pa 14 32}\special{pa 10 26}\special{pa 7 22}%
+\special{pa 5 17}\special{pa 3 12}\special{pa 1 8}\special{pa 0 4}\special{pa 0 1}%
+\special{pa 1 -1}\special{pa 3 -3}\special{pa 6 -3}\special{pa 11 -2}\special{pa 17 1}%
+\special{pa 25 5}\special{pa 35 12}\special{pa 47 20}\special{pa 60 30}\special{pa 74 42}%
+\special{pa 90 55}\special{pa 106 68}\special{pa 122 82}\special{pa 137 95}\special{pa 150 106}%
+\special{pa 161 115}\special{pa 168 122}\special{pa 171 124}\special{pa 169 123}\special{pa 161 116}%
+\special{fp}%
+\special{pa 151 107}\special{pa 151 105}\special{pa 150 104}\special{pa 150 102}\special{pa 151 101}%
+\special{pa 151 99}\special{pa 151 98}\special{pa 152 97}\special{pa 153 96}\special{pa 153 94}%
+\special{pa 154 93}\special{pa 155 92}\special{pa 156 92}\special{pa 158 91}\special{pa 159 90}%
+\special{pa 160 89}\special{pa 161 89}\special{pa 163 88}\special{pa 164 88}\special{pa 165 87}%
+\special{pa 167 87}\special{pa 168 86}\special{pa 170 86}\special{pa 171 86}\special{pa 173 85}%
+\special{pa 174 85}\special{pa 176 85}\special{pa 177 85}\special{pa 178 85}\special{pa 179 85}%
+\special{pa 181 85}\special{pa 182 85}\special{pa 183 85}\special{pa 184 85}\special{pa 185 85}%
+\special{pa 185 85}\special{pa 186 85}\special{pa 187 85}%
+\special{fp}%
+\special{pa 198 97}\special{pa 196 96}\special{pa 193 94}\special{pa 192 93}\special{pa 190 91}%
+\special{pa 189 90}\special{pa 188 88}\special{pa 188 87}\special{pa 187 86}\special{pa 187 84}%
+\special{pa 188 83}\special{pa 188 82}\special{pa 189 81}\special{pa 190 80}\special{pa 191 78}%
+\special{pa 192 77}\special{pa 193 76}\special{pa 194 76}\special{pa 195 75}\special{pa 197 74}%
+\special{pa 198 73}\special{pa 199 72}\special{pa 201 72}\special{pa 202 71}\special{pa 204 71}%
+\special{pa 205 70}\special{pa 206 70}\special{pa 207 69}\special{pa 209 69}\special{pa 210 69}%
+\special{pa 211 68}\special{pa 213 68}\special{pa 214 68}\special{pa 215 68}\special{pa 216 68}%
+\special{pa 218 68}\special{pa 219 68}\special{pa 220 68}\special{pa 221 68}\special{pa 222 68}%
+\special{fp}%
+\special{pa 232 80}\special{pa 230 78}\special{pa 228 76}\special{pa 227 75}\special{pa 226 73}%
+\special{pa 225 71}\special{pa 224 69}\special{pa 223 67}\special{pa 223 66}\special{pa 223 64}%
+\special{pa 223 63}\special{pa 224 61}\special{pa 225 60}\special{pa 226 58}\special{pa 227 57}%
+\special{pa 229 55}\special{pa 231 54}\special{pa 233 53}\special{pa 236 53}\special{pa 240 53}%
+\special{pa 244 54}\special{pa 248 56}\special{pa 253 58}\special{pa 259 62}\special{pa 265 67}%
+\special{pa 271 73}\special{pa 277 79}\special{pa 283 86}\special{pa 289 93}\special{pa 294 101}%
+\special{pa 299 110}\special{pa 303 118}\special{pa 307 127}\special{pa 312 137}\special{pa 316 146}%
+\special{pa 321 156}\special{pa 325 165}\special{pa 331 175}\special{pa 336 185}\special{pa 343 194}%
+\special{pa 350 203}\special{pa 358 213}\special{pa 367 221}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\leftdownhand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -1.00000,  -0.02000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa -324 -274}\special{pa -311 -261}\special{pa -296 -251}\special{pa -280 -243}%
+\special{pa -265 -237}\special{pa -249 -232}\special{pa -233 -228}\special{pa -219 -225}%
+\special{pa -204 -222}\special{pa -192 -218}\special{pa -180 -215}\special{pa -170 -210}%
+\special{pa -163 -204}\special{pa -156 -198}\special{pa -150 -191}\special{pa -143 -184}%
+\special{pa -136 -178}\special{pa -127 -173}\special{pa -118 -169}\special{pa -108 -165}%
+\special{pa -99 -162}\special{pa -91 -160}\special{pa -84 -158}\special{pa -80 -156}%
+\special{pa -78 -154}\special{pa -76 -152}\special{pa -76 -151}\special{pa -76 -149}%
+\special{pa -77 -146}\special{pa -78 -144}\special{pa -80 -142}\special{pa -82 -140}%
+\special{pa -85 -138}\special{pa -88 -137}\special{pa -92 -136}\special{pa -97 -136}%
+\special{pa -102 -136}\special{pa -107 -136}\special{pa -112 -136}\special{pa -117 -137}%
+\special{pa -122 -137}\special{pa -126 -138}\special{pa -130 -138}\special{pa -133 -139}%
+\special{fp}%
+\special{pa -165 -170}\special{pa -161 -166}\special{pa -156 -161}\special{pa -149 -154}%
+\special{pa -142 -147}\special{pa -133 -138}\special{pa -123 -129}\special{pa -113 -119}%
+\special{pa -102 -109}\special{pa -91 -98}\special{pa -79 -88}\special{pa -67 -78}%
+\special{pa -55 -69}\special{pa -43 -60}\special{pa -34 -52}\special{pa -25 -44}\special{pa -19 -38}%
+\special{pa -14 -32}\special{pa -10 -26}\special{pa -7 -22}\special{pa -5 -17}\special{pa -3 -12}%
+\special{pa -1 -8}\special{pa 0 -4}\special{pa 0 -1}\special{pa -1 1}\special{pa -3 3}%
+\special{pa -6 3}\special{pa -11 2}\special{pa -17 -1}\special{pa -25 -5}\special{pa -35 -12}%
+\special{pa -47 -20}\special{pa -60 -30}\special{pa -74 -42}\special{pa -90 -55}\special{pa -106 -68}%
+\special{pa -122 -82}\special{pa -137 -95}\special{pa -150 -106}\special{pa -161 -115}%
+\special{pa -168 -122}\special{pa -171 -124}\special{pa -169 -123}\special{pa -161 -116}%
+\special{fp}%
+\special{pa -151 -107}\special{pa -151 -105}\special{pa -150 -104}\special{pa -150 -102}%
+\special{pa -151 -101}\special{pa -151 -99}\special{pa -151 -98}\special{pa -152 -97}%
+\special{pa -153 -96}\special{pa -153 -94}\special{pa -154 -93}\special{pa -155 -92}%
+\special{pa -156 -92}\special{pa -158 -91}\special{pa -159 -90}\special{pa -160 -89}%
+\special{pa -161 -89}\special{pa -163 -88}\special{pa -164 -88}\special{pa -165 -87}%
+\special{pa -167 -87}\special{pa -168 -86}\special{pa -170 -86}\special{pa -171 -86}%
+\special{pa -173 -85}\special{pa -174 -85}\special{pa -176 -85}\special{pa -177 -85}%
+\special{pa -178 -85}\special{pa -179 -85}\special{pa -181 -85}\special{pa -182 -85}%
+\special{pa -183 -85}\special{pa -184 -85}\special{pa -185 -85}\special{pa -185 -85}%
+\special{pa -186 -85}\special{pa -187 -85}%
+\special{fp}%
+\special{pa -198 -97}\special{pa -196 -96}\special{pa -193 -94}\special{pa -192 -93}%
+\special{pa -190 -91}\special{pa -189 -90}\special{pa -188 -88}\special{pa -188 -87}%
+\special{pa -187 -86}\special{pa -187 -84}\special{pa -188 -83}\special{pa -188 -82}%
+\special{pa -189 -81}\special{pa -190 -80}\special{pa -191 -78}\special{pa -192 -77}%
+\special{pa -193 -76}\special{pa -194 -76}\special{pa -195 -75}\special{pa -197 -74}%
+\special{pa -198 -73}\special{pa -199 -72}\special{pa -201 -72}\special{pa -202 -71}%
+\special{pa -204 -71}\special{pa -205 -70}\special{pa -206 -70}\special{pa -207 -69}%
+\special{pa -209 -69}\special{pa -210 -69}\special{pa -211 -68}\special{pa -213 -68}%
+\special{pa -214 -68}\special{pa -215 -68}\special{pa -216 -68}\special{pa -218 -68}%
+\special{pa -219 -68}\special{pa -220 -68}\special{pa -221 -68}\special{pa -222 -68}%
+\special{fp}%
+\special{pa -232 -80}\special{pa -230 -78}\special{pa -228 -76}\special{pa -227 -75}%
+\special{pa -226 -73}\special{pa -225 -71}\special{pa -224 -69}\special{pa -223 -67}%
+\special{pa -223 -66}\special{pa -223 -64}\special{pa -223 -63}\special{pa -224 -61}%
+\special{pa -225 -60}\special{pa -226 -58}\special{pa -227 -57}\special{pa -229 -55}%
+\special{pa -231 -54}\special{pa -233 -53}\special{pa -236 -53}\special{pa -240 -53}%
+\special{pa -244 -54}\special{pa -248 -56}\special{pa -253 -58}\special{pa -259 -62}%
+\special{pa -265 -67}\special{pa -271 -73}\special{pa -277 -79}\special{pa -283 -86}%
+\special{pa -289 -93}\special{pa -294 -101}\special{pa -299 -110}\special{pa -303 -118}%
+\special{pa -307 -127}\special{pa -312 -137}\special{pa -316 -146}\special{pa -321 -156}%
+\special{pa -325 -165}\special{pa -331 -175}\special{pa -336 -185}\special{pa -343 -194}%
+\special{pa -350 -203}\special{pa -358 -213}\special{pa -367 -221}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\rightdownhand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -0.01000,  -0.02000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 324 -274}\special{pa 311 -261}\special{pa 296 -251}\special{pa 280 -243}%
+\special{pa 265 -237}\special{pa 249 -232}\special{pa 233 -228}\special{pa 219 -225}%
+\special{pa 204 -222}\special{pa 192 -218}\special{pa 180 -215}\special{pa 170 -210}%
+\special{pa 163 -204}\special{pa 156 -198}\special{pa 150 -191}\special{pa 143 -184}%
+\special{pa 136 -178}\special{pa 127 -173}\special{pa 118 -169}\special{pa 108 -165}%
+\special{pa 99 -162}\special{pa 91 -160}\special{pa 84 -158}\special{pa 80 -156}\special{pa 78 -154}%
+\special{pa 76 -152}\special{pa 76 -151}\special{pa 76 -149}\special{pa 77 -146}\special{pa 78 -144}%
+\special{pa 80 -142}\special{pa 82 -140}\special{pa 85 -138}\special{pa 88 -137}\special{pa 92 -136}%
+\special{pa 97 -136}\special{pa 102 -136}\special{pa 107 -136}\special{pa 112 -136}%
+\special{pa 117 -137}\special{pa 122 -137}\special{pa 126 -138}\special{pa 130 -138}%
+\special{pa 133 -139}%
+\special{fp}%
+\special{pa 165 -170}\special{pa 161 -166}\special{pa 156 -161}\special{pa 149 -154}%
+\special{pa 142 -147}\special{pa 133 -138}\special{pa 123 -129}\special{pa 113 -119}%
+\special{pa 102 -109}\special{pa 91 -98}\special{pa 79 -88}\special{pa 67 -78}\special{pa 55 -69}%
+\special{pa 43 -60}\special{pa 34 -52}\special{pa 25 -44}\special{pa 19 -38}\special{pa 14 -32}%
+\special{pa 10 -26}\special{pa 7 -22}\special{pa 5 -17}\special{pa 3 -12}\special{pa 1 -8}%
+\special{pa 0 -4}\special{pa 0 -1}\special{pa 1 1}\special{pa 3 3}\special{pa 6 3}%
+\special{pa 11 2}\special{pa 17 -1}\special{pa 25 -5}\special{pa 35 -12}\special{pa 47 -20}%
+\special{pa 60 -30}\special{pa 74 -42}\special{pa 90 -55}\special{pa 106 -68}\special{pa 122 -82}%
+\special{pa 137 -95}\special{pa 150 -106}\special{pa 161 -115}\special{pa 168 -122}%
+\special{pa 171 -124}\special{pa 169 -123}\special{pa 161 -116}%
+\special{fp}%
+\special{pa 151 -107}\special{pa 151 -105}\special{pa 150 -104}\special{pa 150 -102}%
+\special{pa 151 -101}\special{pa 151 -99}\special{pa 151 -98}\special{pa 152 -97}%
+\special{pa 153 -96}\special{pa 153 -94}\special{pa 154 -93}\special{pa 155 -92}\special{pa 156 -92}%
+\special{pa 158 -91}\special{pa 159 -90}\special{pa 160 -89}\special{pa 161 -89}\special{pa 163 -88}%
+\special{pa 164 -88}\special{pa 165 -87}\special{pa 167 -87}\special{pa 168 -86}\special{pa 170 -86}%
+\special{pa 171 -86}\special{pa 173 -85}\special{pa 174 -85}\special{pa 176 -85}\special{pa 177 -85}%
+\special{pa 178 -85}\special{pa 179 -85}\special{pa 181 -85}\special{pa 182 -85}\special{pa 183 -85}%
+\special{pa 184 -85}\special{pa 185 -85}\special{pa 185 -85}\special{pa 186 -85}\special{pa 187 -85}%
+\special{fp}%
+\special{pa 198 -97}\special{pa 196 -96}\special{pa 193 -94}\special{pa 192 -93}\special{pa 190 -91}%
+\special{pa 189 -90}\special{pa 188 -88}\special{pa 188 -87}\special{pa 187 -86}\special{pa 187 -84}%
+\special{pa 188 -83}\special{pa 188 -82}\special{pa 189 -81}\special{pa 190 -80}\special{pa 191 -78}%
+\special{pa 192 -77}\special{pa 193 -76}\special{pa 194 -76}\special{pa 195 -75}\special{pa 197 -74}%
+\special{pa 198 -73}\special{pa 199 -72}\special{pa 201 -72}\special{pa 202 -71}\special{pa 204 -71}%
+\special{pa 205 -70}\special{pa 206 -70}\special{pa 207 -69}\special{pa 209 -69}\special{pa 210 -69}%
+\special{pa 211 -68}\special{pa 213 -68}\special{pa 214 -68}\special{pa 215 -68}\special{pa 216 -68}%
+\special{pa 218 -68}\special{pa 219 -68}\special{pa 220 -68}\special{pa 221 -68}\special{pa 222 -68}%
+\special{fp}%
+\special{pa 232 -80}\special{pa 230 -78}\special{pa 228 -76}\special{pa 227 -75}\special{pa 226 -73}%
+\special{pa 225 -71}\special{pa 224 -69}\special{pa 223 -67}\special{pa 223 -66}\special{pa 223 -64}%
+\special{pa 223 -63}\special{pa 224 -61}\special{pa 225 -60}\special{pa 226 -58}\special{pa 227 -57}%
+\special{pa 229 -55}\special{pa 231 -54}\special{pa 233 -53}\special{pa 236 -53}\special{pa 240 -53}%
+\special{pa 244 -54}\special{pa 248 -56}\special{pa 253 -58}\special{pa 259 -62}\special{pa 265 -67}%
+\special{pa 271 -73}\special{pa 277 -79}\special{pa 283 -86}\special{pa 289 -93}\special{pa 294 -101}%
+\special{pa 299 -110}\special{pa 303 -118}\special{pa 307 -127}\special{pa 312 -137}%
+\special{pa 316 -146}\special{pa 321 -156}\special{pa 325 -165}\special{pa 331 -175}%
+\special{pa 336 -185}\special{pa 343 -194}\special{pa 350 -203}\special{pa 358 -213}%
+\special{pa 367 -221}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\cirscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 621.63538, 724.07834)( 277.81039,2339.74153)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 916 -3691}\special{pa 815 -3685}\special{pa 726 -3696}\special{pa 650 -3725}%
+\special{pa 585 -3768}\special{pa 533 -3824}\special{pa 492 -3891}\special{pa 463 -3966}%
+\special{pa 445 -4049}\special{pa 437 -4137}\special{pa 441 -4228}\special{pa 455 -4321}%
+\special{pa 479 -4413}\special{pa 514 -4503}\special{pa 558 -4588}\special{pa 612 -4664}%
+\special{pa 676 -4729}\special{pa 748 -4780}\special{pa 830 -4813}\special{pa 920 -4825}%
+\special{pa 1016 -4817}\special{pa 1113 -4791}\special{pa 1204 -4750}\special{pa 1285 -4698}%
+\special{pa 1351 -4638}\special{pa 1395 -4572}\special{pa 1416 -4502}\special{pa 1416 -4431}%
+\special{pa 1400 -4358}\special{pa 1369 -4284}\special{pa 1327 -4210}\special{pa 1278 -4137}%
+\special{pa 1225 -4066}\special{pa 1171 -3997}\special{pa 1120 -3932}\special{pa 1074 -3871}%
+\special{pa 1037 -3815}\special{pa 1012 -3765}%
+\special{fp}%
+\special{pa 980 -3765}\special{pa 918 -3783}\special{pa 864 -3802}\special{pa 818 -3820}%
+\special{pa 778 -3839}\special{pa 746 -3859}\special{pa 720 -3880}\special{pa 701 -3903}%
+\special{pa 688 -3928}\special{pa 681 -3956}\special{pa 680 -3986}\special{pa 684 -4020}%
+\special{pa 694 -4058}\special{pa 709 -4099}\special{pa 729 -4143}\special{pa 753 -4189}%
+\special{pa 781 -4234}\special{pa 813 -4276}\special{pa 848 -4314}\special{pa 887 -4346}%
+\special{pa 927 -4371}\special{pa 969 -4387}\special{pa 1009 -4396}\special{pa 1048 -4396}%
+\special{pa 1083 -4386}\special{pa 1114 -4367}\special{pa 1139 -4338}\special{pa 1159 -4302}%
+\special{pa 1173 -4261}\special{pa 1183 -4216}\special{pa 1187 -4171}\special{pa 1187 -4127}%
+\special{pa 1183 -4086}\special{pa 1174 -4046}\special{pa 1163 -4009}\special{pa 1149 -3974}%
+\special{pa 1132 -3940}\special{pa 1115 -3908}\special{pa 1096 -3876}\special{pa 1077 -3846}%
+\special{pa 1059 -3816}\special{pa 1041 -3786}\special{pa 1025 -3756}\special{pa 1012 -3727}%
+\special{fp}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\scirscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 535.76632, 538.46556)( 296.43854,1549.10000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 951 -2440}\special{pa 865 -2450}\special{pa 787 -2470}\special{pa 718 -2499}%
+\special{pa 658 -2535}\special{pa 606 -2577}\special{pa 563 -2624}\special{pa 527 -2675}%
+\special{pa 500 -2728}\special{pa 481 -2781}\special{pa 470 -2835}\special{pa 467 -2889}%
+\special{pa 471 -2941}\special{pa 483 -2991}\special{pa 502 -3039}\special{pa 527 -3083}%
+\special{pa 558 -3124}\special{pa 592 -3160}\special{pa 631 -3191}\special{pa 672 -3218}%
+\special{pa 716 -3241}\special{pa 761 -3259}\special{pa 808 -3273}\special{pa 856 -3283}%
+\special{pa 906 -3288}\special{pa 959 -3287}\special{pa 1013 -3281}\special{pa 1067 -3269}%
+\special{pa 1117 -3251}\special{pa 1162 -3227}\special{pa 1200 -3196}\special{pa 1232 -3160}%
+\special{pa 1258 -3119}\special{pa 1279 -3074}\special{pa 1296 -3025}\special{pa 1306 -2974}%
+\special{pa 1311 -2922}\special{pa 1309 -2868}\special{pa 1300 -2815}\special{pa 1284 -2763}%
+\special{pa 1262 -2712}\special{pa 1233 -2662}\special{pa 1198 -2615}\special{pa 1157 -2571}%
+\special{pa 1109 -2531}\special{pa 1056 -2494}%
+\special{fp}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\triscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 579.38800, 435.04900)( 235.82100, 892.46100)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 909 -2091}\special{pa 893 -2068}\special{pa 877 -2045}\special{pa 861 -2022}%
+\special{pa 845 -2000}\special{pa 829 -1977}\special{pa 813 -1954}\special{pa 797 -1932}%
+\special{pa 782 -1910}\special{pa 766 -1888}\special{pa 750 -1866}\special{pa 735 -1844}%
+\special{pa 719 -1822}\special{pa 704 -1801}\special{pa 688 -1780}\special{pa 673 -1759}%
+\special{pa 658 -1739}\special{pa 643 -1718}\special{pa 628 -1698}\special{pa 613 -1679}%
+\special{pa 598 -1660}\special{pa 584 -1641}\special{pa 569 -1622}\special{pa 555 -1604}%
+\special{pa 541 -1587}\special{pa 527 -1569}\special{pa 513 -1553}\special{pa 499 -1537}%
+\special{pa 486 -1521}\special{pa 472 -1506}\special{pa 459 -1491}\special{pa 446 -1477}%
+\special{pa 433 -1463}\special{pa 420 -1451}\special{pa 408 -1438}\special{pa 395 -1427}%
+\special{pa 383 -1416}\special{pa 371 -1405}%
+\special{fp}%
+\special{pa 371 -1405}\special{pa 379 -1412}\special{pa 388 -1418}\special{pa 399 -1423}%
+\special{pa 410 -1429}\special{pa 423 -1434}\special{pa 437 -1438}\special{pa 452 -1443}%
+\special{pa 468 -1447}\special{pa 486 -1451}\special{pa 504 -1455}\special{pa 523 -1459}%
+\special{pa 544 -1462}\special{pa 565 -1465}\special{pa 587 -1468}\special{pa 610 -1471}%
+\special{pa 634 -1473}\special{pa 659 -1476}\special{pa 685 -1478}\special{pa 711 -1480}%
+\special{pa 738 -1482}\special{pa 766 -1483}\special{pa 795 -1485}\special{pa 824 -1487}%
+\special{pa 854 -1488}\special{pa 884 -1489}\special{pa 915 -1490}\special{pa 947 -1491}%
+\special{pa 979 -1492}\special{pa 1011 -1493}\special{pa 1044 -1494}\special{pa 1077 -1495}%
+\special{pa 1111 -1495}\special{pa 1145 -1496}\special{pa 1179 -1497}\special{pa 1214 -1497}%
+\special{pa 1249 -1498}\special{pa 1284 -1498}%
+\special{fp}%
+\special{pa 1284 -1498}\special{pa 1271 -1513}\special{pa 1259 -1528}\special{pa 1247 -1543}%
+\special{pa 1235 -1558}\special{pa 1223 -1572}\special{pa 1212 -1586}\special{pa 1201 -1601}%
+\special{pa 1190 -1615}\special{pa 1180 -1628}\special{pa 1169 -1642}\special{pa 1159 -1656}%
+\special{pa 1149 -1670}\special{pa 1140 -1683}\special{pa 1130 -1697}\special{pa 1121 -1711}%
+\special{pa 1112 -1724}\special{pa 1103 -1738}\special{pa 1094 -1752}\special{pa 1085 -1765}%
+\special{pa 1076 -1779}\special{pa 1068 -1793}\special{pa 1059 -1807}\special{pa 1051 -1821}%
+\special{pa 1043 -1835}\special{pa 1035 -1849}\special{pa 1026 -1863}\special{pa 1018 -1878}%
+\special{pa 1010 -1892}\special{pa 1002 -1907}\special{pa 994 -1922}\special{pa 986 -1937}%
+\special{pa 978 -1952}\special{pa 970 -1968}\special{pa 962 -1984}\special{pa 954 -2000}%
+\special{pa 946 -2016}\special{pa 938 -2033}%
+\special{fp}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\crosscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 727.79300, 479.77400)( 209.39300, 264.28200)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 839 -1159}\special{pa 847 -1123}\special{pa 855 -1088}\special{pa 862 -1055}%
+\special{pa 870 -1023}\special{pa 877 -992}\special{pa 885 -962}\special{pa 892 -934}%
+\special{pa 899 -907}\special{pa 906 -880}\special{pa 913 -855}\special{pa 920 -831}%
+\special{pa 926 -808}\special{pa 933 -786}\special{pa 939 -764}\special{pa 946 -744}%
+\special{pa 952 -724}\special{pa 958 -705}\special{pa 965 -687}\special{pa 971 -669}%
+\special{pa 977 -652}\special{pa 983 -636}\special{pa 989 -620}\special{pa 995 -604}%
+\special{pa 1001 -589}\special{pa 1007 -575}\special{pa 1013 -560}\special{pa 1019 -547}%
+\special{pa 1025 -533}\special{pa 1031 -520}\special{pa 1037 -506}\special{pa 1043 -493}%
+\special{pa 1049 -481}\special{pa 1055 -468}\special{pa 1061 -455}\special{pa 1067 -442}%
+\special{pa 1073 -429}\special{pa 1079 -416}%
+\special{fp}%
+\special{pa 330 -490}\special{pa 362 -513}\special{pa 394 -536}\special{pa 426 -558}%
+\special{pa 458 -580}\special{pa 490 -602}\special{pa 521 -623}\special{pa 553 -644}%
+\special{pa 584 -664}\special{pa 615 -684}\special{pa 646 -704}\special{pa 676 -724}%
+\special{pa 707 -743}\special{pa 738 -762}\special{pa 768 -780}\special{pa 798 -799}%
+\special{pa 829 -817}\special{pa 859 -835}\special{pa 889 -853}\special{pa 920 -870}%
+\special{pa 950 -888}\special{pa 980 -905}\special{pa 1011 -922}\special{pa 1041 -939}%
+\special{pa 1071 -956}\special{pa 1102 -972}\special{pa 1132 -989}\special{pa 1163 -1006}%
+\special{pa 1194 -1022}\special{pa 1224 -1039}\special{pa 1255 -1055}\special{pa 1286 -1072}%
+\special{pa 1318 -1088}\special{pa 1349 -1105}\special{pa 1380 -1122}\special{pa 1412 -1138}%
+\special{pa 1444 -1155}\special{pa 1476 -1172}%
+\special{fp}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\boxline}[5][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctrc}{-#3}%
+\addtocounter{ketpicctrc}{-#5}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 0 -39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctrc}{#2}%
+\addtocounter{ketpicctrc}{#4}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-#5}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#5%
+\repeat%
+}%
+%
+}%
+\newcommand{\boxlinene}[5][8]{%
+\boxline[#1]{#2}{#3}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinec}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinee}[5][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinew}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinen}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlines}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinenw}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinese}[5][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinesw}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\ketboxframe}[6][8]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\boxline[#1]{#2}{#3}{#4}{#5}%
+%
+}%
+\newcommand{\boxframese}[6][8]{%
+\ketboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\circleline}[4][8]{%
+\settowidth{\Width}{\circlemark[#1]{#4}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\circlemark[#1]{#4}}\settodepth{\Depth}{\circlemark[#1]{#4}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\circlemark[#1]{#4}}}%
+%
+}%
+\newcommand{\hjaggyline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 -39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 -39}\special{pa 39 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vjaggyline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 39 0}\special{pa 0 39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\hjaggylineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 -39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 -39}\special{pa 39 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vjaggylineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 39 0}\special{pa 0 39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\jaggyboxframe}[6][8]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\setcounter{ketpicctrg}{#2}%
+\setcounter{ketpicctrh}{#3}%
+\hjaggylineb[#1]{\theketpicctrg}{\theketpicctrh}{#4}%
+\vjaggylineb[#1]{\theketpicctrg}{\theketpicctrh}{#5}%
+\setcounter{ketpicctrg}{#2}%
+\setcounter{ketpicctrh}{#3}%
+\addtocounter{ketpicctrh}{#5}%
+\hjaggyline[#1]{\theketpicctrg}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{#4}%
+\setcounter{ketpicctrh}{#3}%
+\vjaggyline[#1]{\theketpicctrg}{\theketpicctrh}{#5}%
+%
+}%
+\newcommand{\jaggyboxframese}[6][8]{%
+\jaggyboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\hdialine}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -0.50000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 39 -20}\special{pa 0 0}\special{pa 39 20}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -0.50000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 -20}\special{pa 39 0}\special{pa 0 20}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vdialine}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(  -0.50000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa -20 0}\special{pa 0 -39}\special{pa 20 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(  -0.50000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa -20 -39}\special{pa 0 0}\special{pa 20 -39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\diaboxframe}[6][4]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\setcounter{ketpicctrh}{#3}%
+\hdialine[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrh}{#3}%
+\addtocounter{ketpicctrh}{#5}%
+\hdialine[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrg}{#2}%
+\vdialine[#1]{\theketpicctrg}{#3}{#5}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{#4}%
+\vdialine[#1]{\theketpicctrg}{#3}{#5}%
+%
+}%
+\newcommand{\diaboxframese}[6][8]{%
+\diaboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\hdashline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 20 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\hdashlineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 20 0}\special{pa 39 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vdashline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 0 -20}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vdashlineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 -20}\special{pa 0 -39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\dashboxframe}[6][4]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\setcounter{ketpicctrh}{#3}%
+\hdashline[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrh}{#3}%
+\addtocounter{ketpicctrh}{#5}%
+\hdashlineb[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrg}{#2}%
+\vdashline[#1]{\theketpicctrg}{#3}{#5}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{#4}%
+\vdashlineb[#1]{\theketpicctrg}{#3}{#5}%
+%
+}%
+\newcommand{\dashboxframese}[6][8]{%
+\dashboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxlinep}[6][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 39 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=0.1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 4 0}%
+\special{fp}%
+\end{picture}}%%
+}%
+{\unitlength=0.1mm%
+\setcounter{ketpicctrc}{-#3}%
+\addtocounter{ketpicctrc}{-#5}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{9}%
+%
+{%
+\ifnum %
+\theketpicctrb>#4 %
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+%
+\else%
+\addtocounter{ketpicctra}{9}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 0 -39}%
+\special{fp}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=0.1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 0 0}\special{pa 0 -4}%
+\special{fp}%
+\end{picture}}%%
+}%
+{\unitlength=0.1mm%
+\setcounter{ketpicctrc}{#2}%
+\addtocounter{ketpicctrc}{#4}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{9}%
+%
+{%
+\ifnum %
+\theketpicctrb>#5 %
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+%
+\else%
+\addtocounter{ketpicctra}{9}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#5%
+\repeat%
+}%
+}%
+%
+}%
+\newcommand{\shadeframep}[6][1]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+( 100.00000, 100.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+{\color{#1}%
+\special{pa 0 0}\special{pa 3937 0}\special{pa 3937 -3937}\special{pa 0 -3937}\special{pa 0 0}%
+\special{sh 1}\special{ip}%
+}%
+\end{picture}}%%
+}%
+{\unitlength=0.1mm%
+%
+{%
+\ifnum %
+#4<100 %
+%
+{%
+\ifnum %
+#5<100 %
+\settowidth{\Width}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#4<1000 %
+%
+{%
+\ifnum %
+#5<100 %
+\settowidth{\Width}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5<100 %
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}}%
+\setcounter{ketpicctra}{#2}%
+\addtocounter{ketpicctra}{#4}%
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(\theketpicctra,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}}%
+\setcounter{ketpicctra}{#2}%
+\addtocounter{ketpicctra}{#4}%
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(\theketpicctra,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+}%
+%
+}%
+\newcommand{\popframe}[9][8]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#9}%
+\setcounter{ketpicctrh}{\value{ketpicctra}}%
+\ketcalcheight{#9}%
+\setcounter{ketpicctri}{\value{ketpicctra}}%
+\ketcalcdepth{#9}%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrh}{30}%
+\addtocounter{ketpicctri}{30}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\addtocounter{ketpicctrg}{15}%
+\shadeframep[#5]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#5}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\shadeframep[#7]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#7}%
+\boxlinep[#1]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#8}%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctra}{\value{ketpicctri}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrg}{\value{ketpicctra}}%
+\multiply\value{ketpicctrg} by -1%
+\settowidth{\Width}{{#9}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{#9}}\settodepth{\Depth}{{#9}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#9}}}%
+}%
+%
+}%
+\newcommand{\colorframe}[7][8]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#7}%
+\setcounter{ketpicctrh}{\value{ketpicctra}}%
+\ketcalcheight{#7}%
+\setcounter{ketpicctri}{\value{ketpicctra}}%
+\ketcalcdepth{#7}%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrh}{30}%
+\addtocounter{ketpicctri}{30}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\shadeframep[#4]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#5}%
+\boxlinep[#1]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#6}%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctra}{\value{ketpicctri}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrg}{\value{ketpicctra}}%
+\multiply\value{ketpicctrg} by -1%
+\settowidth{\Width}{{#7}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{#7}}\settodepth{\Depth}{{#7}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#7}}}%
+}%
+%
+}%
+\newcommand{\colorframes}[7][8]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#7}%
+\setcounter{ketpicctrh}{\value{ketpicctra}}%
+\ketcalcheight{#7}%
+\setcounter{ketpicctri}{\value{ketpicctra}}%
+\ketcalcdepth{#7}%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrh}{30}%
+\addtocounter{ketpicctri}{30}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\setcounter{ketpicctra}{\value{ketpicctrh}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrf}{-\value{ketpicctra}}%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\shadeframep[#5]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#5}%
+\boxlinep[#1]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#6}%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctra}{\value{ketpicctri}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrg}{\value{ketpicctra}}%
+\multiply\value{ketpicctrg} by -1%
+\settowidth{\Width}{{#7}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{#7}}\settodepth{\Depth}{{#7}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#7}}}%
+}%
+%
+}%

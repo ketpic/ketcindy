@@ -1,0 +1,74 @@
+// e:2017.05.15
+//Dirhead=getdirhead();
+if(iswindows(),
+  Dirlib=Dirhead+"\ketlib";
+  DirlibC=Dirhead+"\ketlibC";
+  Dirbin=Dirhead+"\ketbin";
+  Dirwork=Dirhead+"\ketwork";
+  Dirwork=replace(Dirwork,"/","\");
+  Libname=Dirlib+"\ketpicsciL5";
+  Batparent="\kc.bat";
+  if(indexof(Shellfile,".")==0,Shellfile=Shellfile+".bat");
+  if(indexof(Shellfile,"/")+indexof(Shellfile,"\")==0 ,
+    Batchild=Dirbin+"\"+Shellfile;
+  ,
+    Batchild=Shellfile;
+  );
+);
+if(ismacosx(),
+  Dirlib=Dirhead+"/ketlib";
+  DirlibC=Dirhead+"/ketlibC";
+  Dirbin=Dirhead+"/ketbin";
+  Dirwork=Dirhead+"/ketwork";
+  Dirwork=replace(Dirwork,"\","/");
+  Libname=Dirlib+"/ketpicsciL5";
+  Shellparent="/kc.sh";
+  if(isstring(Shellfile),
+    if(indexof(Shellfile,".")==0,Shellfile=Shellfile+".sh");
+    if(indexof(Shellfile,"/")==0,
+      Shellchild=Dirbin+"/"+Shellfile;
+    ,
+      Shellchild=Shellfile;
+    );
+  ,
+    Shellfile="";
+  );
+  if(!isexists(Dirwork,""),
+    println(Dirwork+" not exist");
+  ,
+    if(!iskcexists(Dirwork),
+      setdirectory(Dirwork);
+      SCEOUTPUT = openfile(Shellparent);
+      closefile(SCEOUTPUT);
+      println(Shellparent+" generated");
+    );
+    println(setexec(Dirwork,Shellparent));
+  );
+  Mackc="sh";
+//  Mackc="open";
+);
+if(islinux(),
+  Dirlib=Dirhead+"/ketlib";
+  DirlibC=Dirhead+"/ketlibC";
+  Dirbin=Dirhead+"/ketbin";
+  Dirwork=Dirhead+"/ketwork";
+  Dirwork=replace(Dirwork,"\","/");
+  Libname=Dirlib+"/ketpicsciL5";
+  Shellparent="/kc.sh";
+  if(indexof(Shellfile,".")==0,Shellfile=Shellfile+".sh");
+  if(indexof(Shellfile,"/")==0,
+    Shellchild=Dirbin+"/"+Shellfile;
+  ,
+    Shellchild=Shellfile;
+  );
+);
+
+setdirectory(Dirlib);
+import("ketcindylibbasic1.cs");
+import("ketcindylibbasic2.cs");
+import("ketcindylibout.cs");
+import("ketcindylib3d.cs");
+import("ketcindylibmv.cs");
+
+setdirectory(Dirhead);
+

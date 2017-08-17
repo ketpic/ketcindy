@@ -1,0 +1,2 @@
+Dirhead="C:\ketcindy";
+//Dirhead=gethome()+"/Desktop/ketcindy";

@@ -1,0 +1,9 @@
+%タイトル::slide0::kabegami//
+タイトル::slide0//
+
+%%%%%%%%%%%%%%%%//
+new::極座標と曲線(Flip)//
+%repeat=,para=pointoncircle:{0}:s{85}{10}:input:1.2//
+
+$r=2$を満たす点の軌跡は？\\//
+%[31]::\hspace{20mm}円になる//

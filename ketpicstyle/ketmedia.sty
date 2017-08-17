@@ -1,0 +1,46 @@
+\newcommand{\inputsound}[3][90]{
+
+\vspace{-20mm}
+
+\vfill
+
+\noindent%
+\hspace*{#1mm}\hspace{8mm}%
+\mediabutton[
+mediacommand=#3:playPause,
+overface={\color{blue}\small \strut \fbox{$\oplus\triangleright$}},
+%downface={\color{red}\small\strut Pause/Pause}%
+]{\small\strut \fbox{$\oplus\triangleright$}}%
+\mediabutton[
+mediacommand=#3:rewind,
+overface={\color{blue}\small \strut \fbox{$\ll$}}
+%downface={\color{red}\small\strut Pause/Pause}%
+]{\small\strut \fbox{$\ll$}}%
+%\mediabutton[
+%mediacommand=#3:seek[(15)],
+%overface={\color{blue}\small \strut \fbox{1}}
+%downface={\color{red}\small\strut Pause/Pause}%
+%]{\small\strut \fbox{1}}%
+%\mediabutton[
+%mediacommand=#3:seek[(30)],
+%overface={\color{blue}\small \strut \fbox{2}}
+%%downface={\color{red}\small\strut Pause/Pause}%
+%]{\small\strut \fbox{2}}%
+
+\vspace{-7mm}
+
+\noindent%
+\hspace*{#1mm}%
+\includemedia[
+    label=#3,
+    addresource=#2#3.mp3,
+    activate=pageopen,
+    flashvars={
+      source=#2#3.mp3
+     &autoPlay=true
+    }
+%    transparent,
+%    passcontext
+]{\color{blue}\fbox{　}}{APlayer.swf}
+
+}

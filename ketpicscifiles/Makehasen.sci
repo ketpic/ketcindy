@@ -1,3 +1,6 @@
+//
+// 11.05.26  (for pdflatex)
+
 function Makehasen(Figdata,Sen,Gap,Ptn)
   global Wfile FID;
   Eps=10.0^(-6);
@@ -64,9 +67,10 @@ function Makehasen(Figdata,Sen,Gap,Ptn)
       T=(Len-Lenlist(Hajime))...
           /(Lenlist(Hajime+1)-Lenlist(Hajime));
       P=Data(Hajime,:)+T*(Data(Hajime+1,:)-Data(Hajime,:));
-      X=string(round(MilliIn*P(1)));
-      Y=string(-round(MilliIn*P(2)));
-      Str='\special{pa '+X+' '+Y+'}';
+      X0=sprintf('%5.5f',P(1));
+      Y0=sprintf('%5.5f',P(2));
+      Pt0='('+X0+','+Y0+')';
+      Str='\polyline'+Pt0;
       if Wfile=='default'
         mprintf('%s',Str);
       else
@@ -75,31 +79,31 @@ function Makehasen(Figdata,Sen,Gap,Ptn)
       Mojisu=Mojisu+length(Str);
       for J=Hajime+1:Owari
         P=Data(J,:);
-        X=string(round(MilliIn*P(1)));
-        Y=string(-round(MilliIn*P(2)));
-        Str='\special{pa '+X+' '+Y+'}';
+        X=sprintf('%5.5f',P(1));
+        Y=sprintf('%5.5f',P(2));
+        Pt='('+X+','+Y+')';
+        Str=Pt;
         if Wfile=='default'
           mprintf('%s',Str);
         else
           mfprintf(FID,'%s',Str);
         end;
+        Pt0=Pt;
         Mojisu=Mojisu+length(Str);
-      end
+      end;
       T=(Len+Naga-Lenlist(Owari))...
           /(Lenlist(Owari+1)-Lenlist(Owari));
       P=Data(Owari,:)+T*(Data(Owari+1,:)-Data(Owari,:));
-      X=string(round(MilliIn*P(1)));
-      Y=string(-round(MilliIn*P(2)));
-      Str1='\special{pa '+X+' '+Y+'}';
-      Str2='\special{fp}';
+      X=sprintf('%5.5f',P(1));
+      Y=sprintf('%5.5f',P(2));
+      Pt='('+string(X)+','+string(Y)+')';
+      Str=Pt;
       if Wfile=='default'
-        mprintf('%s',Str1);
-        mprintf('%s',Str2);        
+        mprintf('%s',Str);
       else
-        mfprintf(FID,'%s',Str1);
-        mfprintf(FID,'%s',Str2);
+        mfprintf(FID,'%s',Str);
       end;
-      Mojisu=Mojisu+length(Str1)+length(Str2);
+      Mojisu=Mojisu+length(Str);
       if Mojisu>80
         if Wfile=='default'
           mprintf('%s\n','%');

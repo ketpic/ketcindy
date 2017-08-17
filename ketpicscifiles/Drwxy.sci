@@ -14,4 +14,3 @@ function Drwxy(varargin)
    Letter([GENTEN(1),YMAX],YPOS,YNAME);
    Letter(GENTEN,OPOS,ONAME);
 endfunction
-

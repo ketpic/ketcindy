@@ -2,6 +2,7 @@
 // 09.12.25
 // 11.05.25
 // 14.03.05 MARKLEN
+// 14.11.14  special removed
 
 function Openpicture(ul)
   global Wfile FID XMIN XMAX YMIN YMAX ULEN ...
@@ -75,7 +76,7 @@ function Openpicture(ul)
     mprintf('%s\n','\begin{picture}%');
     mprintf('%c%10.5f%c%10.5f%2s%10.5f%c%10.5f%2s\n',...
             '(',Dx,',',Dy,')(',Xm,',',Ym,')%');
-    Str='\special{pn '+string(PenThickInit)+'}%';
+    Str='\linethickness{'+string(PenThickInit/1000)+'in}%';
     mprintf('%s\n',Str);
     mprintf('%s\n','%');
   else
@@ -83,7 +84,7 @@ function Openpicture(ul)
     mfprintf(FID,'%s\n','\begin{picture}%');
     mfprintf(FID,'%c%10.5f%c%10.5f%2s%10.5f%c%10.5f%2s\n',...
             '(',Dx,',',Dy,')(',Xm,',',Ym,')%');  //11.05.25
-    Str='\special{pn '+string(PenThickInit)+'}%';
+    Str='\linethickness{'+string(PenThickInit/1000)+'in}%';
     mfprintf(FID,'%s\n',Str);
     mfprintf(FID,'%s\n','%');
   end

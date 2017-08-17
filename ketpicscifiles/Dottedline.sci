@@ -3,6 +3,7 @@
 // 09.12.24 (Revised)
 // 09.12.29
 // 10.01.02
+// 11.05.27
 
 function Dottedline(varargin)
   global Wfile FID MilliIn PenThick PenThickInit
@@ -21,16 +22,18 @@ function Dottedline(varargin)
   end
   if I==Nall-2
     Nagasa=Nagasa*varargin(Nall-1);
-    Ookisa=round(Ookisa*varargin(Nall));
+    Ookisa=Ookisa*varargin(Nall);
     Nall=Nall-2;
   end
   Nagasa=1000/2.54/MilliIn*Nagasa;
+  Ra=Ookisa/MilliIn;
   for N=1:Nall
     Tmp=varargin(N);
 	Pdata=Flattenlist(Tmp); //
-    for II=1:Mixlength(Pdata)
+    for II=1:length(Pdata)
       Clist=MakeCurves(Op(II,Pdata));
       DinM=Dataindex(Clist);
+      Mojisu=0;
       for n=1:size(DinM,1)
         Tmp=DinM(n,:);
         Data=Clist(Tmp(1):Tmp(2),:);
@@ -74,12 +77,6 @@ function Dottedline(varargin)
             end
           end
         end
-        Str='\special{pn '+string(Ookisa)+'}%';
-        if Wfile=='default'    
-          mprintf('%s\n',Str);
-        else
-          mfprintf(FID,'%s\n',Str);
-        end
         for I=1:size(PPd,1)
           P=PPd(I,:);
           if size(PPd,1)==1
@@ -96,38 +93,32 @@ function Dottedline(varargin)
             Tmp3=1/norm(Tmp1)*Tmp1+1/norm(Tmp2)*Tmp2;
             V=1/norm(Tmp3)*Tmp3;
           end;
-          Tmp=round(MilliIn*P(1)-1/2*Ookisa*V(1));
-          X=string(Tmp);
-          Tmp=-round(MilliIn*P(2)-1/2*Ookisa*V(2));
-          Y=string(Tmp);
-          Str='\special{pa '+X+' '+Y+'}';
+          X=sprintf('%5.5f',P(1));
+          Y=sprintf('%5.5f',P(2));
+          Str='\put('+X+','+Y+'){\circle*{'+sprintf('%6.6f',Ra)+'}}';
           if Wfile=='default'    
             mprintf('%s',Str);
           else
             mfprintf(FID,'%s',Str);
           end
-          Tmp=round(MilliIn*P(1)+1/2*Ookisa*V(1));
-          X=string(Tmp);
-          Tmp=-round(MilliIn*P(2)+1/2*Ookisa*V(2));
-          Y=string(Tmp);
-          Str='\special{pa '+X+' '+Y+'}';
-          if Wfile=='default'    
-            mprintf('%s',Str);
-            mprintf('%s','\special{fp}');
-            if modulo(I,2)==0
-              mprintf('%s\n','%');
-            end;
-          else
-            mfprintf(FID,'%s',Str);
-            mfprintf(FID,'%s','\special{fp}');
-            if modulo(I,2)==0
-              mfprintf(FID,'%s\n','%');
-            end;
+          Mojisu=Mojisu+length(Str);
+          if Mojisu>80
+            if Wfile=='default'
+              mprintf('%c\n','%');
+            else
+              mfprintf(FID,'%c\n','%');
+            end
+            Mojisu=0;
           end
         end
       end
     end;
+	if Mojisu>0
+      if Wfile=='default'
+        mprintf('%c\n','%');
+      else
+        mfprintf(FID,'%c\n','%');
+      end:
+    end;
   end;
-  Tmp=PenThick/PenThickInit;
-  Setpen(Tmp);
 endfunction;

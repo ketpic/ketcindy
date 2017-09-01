@@ -1,5 +1,11 @@
+// s:2017.08.23
+//   thin changed so as to change dynamically
+//   \setthin{dense} supported
+// s:2017.08.13
+//   uplatex added
 // s:2017.07.31
 //   Presentation, Mktitle changed  (color->xcolor)
+//   Setslidehyper, Presentation changed  (the case LinkSize==0)
 // s:2017.07.10
 //   Presentation,.. debugged (Addpack )
 // s:2017.06.25

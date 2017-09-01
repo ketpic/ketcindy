@@ -1,7 +1,7 @@
 #!/bin/sh
 cd "/Users/takatoosetsuo/ketcindy/ketsample/samples/s07slides"
-"/Library/TeX/texbin/platex" s0706animate.tex
-"/Library/TeX/texbin/dvipdfmx" s0706animate.dvi
-rm s0706animate.dvi
-"/Applications/Adobe Acrobat Reader DC.app/Contents/MacOS/AdobeReader" s0706animate.pdf
+"/Applications/kettex/texlive/bin/x86_64-darwin/uplatex" s0704para.tex
+"/Applications/kettex/texlive/bin/x86_64-darwin/dvipdfmx" s0704para.dvi
+rm s0704para.dvi
+open -a "skim" s0704para.pdf
 exit 0

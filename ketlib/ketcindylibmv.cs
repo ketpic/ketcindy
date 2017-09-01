@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(2017.06.18) loaded");
+println("ketcindymv(2017.08.19) loaded");
 
 //help:start();
 
@@ -540,9 +540,10 @@ Texpara():=(
 
 Setpara(path,fstr,sL):=Setpara(path,fstr,sL,[]); // 16.12.27added
 Setpara(pathorg,fstr,sL,options):=(
-//help:Setpara(""(Slidename),funstr,range,options);
+//help:Setpara("folder name","funstr","range",options);
 //help:Setpara(folder,funstr,range,options);
-//help:Setpara(options=["m/r","Div=25","Title=(Slidename)"]);
+//help:Setpara(options=["m/r","Div=25"]);
+//help:Setpara(options=["Frate=10","Scale=1","OpA=[loop]"] for animation);
   regional(path);//17.04.10
   if(length(pathorg)==0, path=Slidename,path=pathorg);//17.04.10
   ParaPath=path;
@@ -789,8 +790,13 @@ Animatefile(path,folder):=(
   println(SCEOUTPUT,"\def\parapath{"+pa+"}%"); //17.06.22
   println(SCEOUTPUT,"\begin{animateinline}"+OpA+"{"+FRate+"}%");
   forall(1..(length(tmp1)),
-    tmp="\scalebox{"+Scale+"}{\input{\parapath/";//17.06.22(3lines)
-    tmp=tmp+folder+"/"+tmp1_#+"}}%"; 
+    if(Scale==1, // 17.08.30from
+      tmp="\input{\parapath/";
+      tmp=tmp+folder+"/"+tmp1_#+"}%"; 
+    ,
+      tmp="\scalebox{"+Scale+"}{\input{\parapath/";//17.06.22(3lines)
+      tmp=tmp+folder+"/"+tmp1_#+"}}%"; 
+    ); // 17.08.30upto
     println(SCEOUTPUT,tmp);
 //    println(SCEOUTPUT,""); //17.06.25
     if(#<length(tmp1),

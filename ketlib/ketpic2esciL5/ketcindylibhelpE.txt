@@ -1,0 +1,116 @@
+//help:start();
+//help:drawimage*(import image into the screen);
+//help:drawtext*(write letters on the screen);
+//help:Option1*(specify the style of drawing lines);
+//help:Option2*(specify the way of writing data out);
+//help:Option3*(specify the way of reading and writing data in);
+//help:Changestyle*(change the style for drawing plot data);
+//help:Workprocess*(display the process of execution);
+//help:Textformat*(convert number into string with specific number of digits);
+//help:Assign*(replace the name of variable in the string by some specific value);
+//help:Flattenlist*(flatten the list of data);
+//help:Dotprod*(inner product);
+//help:Crossprod*(exterior product);
+//help:Ptstart*(starting point of plot data);
+//help:Ptend*(ending point of plot data);
+//help:Numptcrvtenn*(number of points in plot data);
+//help:Ptcrv*(the n-th point of plot data);
+//help:Invert*(reverse the orientation of curve);
+//help:ParamonCurve*(information (parameter value etc.) of the point in plot data);
+//help:PointonCurve*(the point in the plot data specified by the given information);
+//help:Nearestptcrv*(the point in the curve which is nearest to the given point);
+//help:Nearestpt*(the points in two given curves which are nearest each other);
+//help:Derivative*(calculate the differential coefficient);
+//help:Integrate*(numerical integration);
+//help:Findarea*(calculate the area of the region surrounded by a closed curve);
+//help:Findlength*(calculate the length of curve);
+//help:Com2nd*(add the Scilab command to write out plot data into TeX);
+//help:Texcom*(write command into TeX output exactly as written here);
+//help:SetEnglish*(display Scilab messages in English language);
+//help:Setunitlen*(specify the unit length);
+//help:Setmarklen*(specify the unit length of the tickmarks on coordinate axis);
+//help:Setorigin*(specify the position the origin);
+//help:Fontsize*(specify the size of font);
+ //help:Setpen*(specify the thickness of line);
+//help:Setpt*(specify the size of point);
+//help:Definecolor*(define the color for user's own use);
+//help:Setcolor*(specify the color);
+//help:Joincrvs*(join curves);
+//help:Partcrv*(cut out some part of the curve);
+//help:Pointdata*(generate the plot data of point
+//additional option : "Size=");
+//help:Listplot*(generate the plot data of a polyline);
+//help:Lineplot*(generate the plot data of line);
+//help:Plotdata*(generate the plot data of function
+//additional option : "Num=", "Exc=", "Dis=");
+//help:Paramplot*(generate the plot data of parametric function
+//additional option : "Num=", "Exc=", "Dis=");
+//help:Circledata*(generate the plot data of circle
+//additional option : "Num=", "Rng=");
+//help:Framedata*(generate the plot data of rectangle);
+//help:Ovaldata*(generate the plot data of oval shape);
+//help:Arrowhead*(generate the plot data of arrowhead
+//option : size, sharpness, shape and position in the arrow);
+//help:Arrowdata*(generate the plot data of arrow line
+//option : size of arrowhead, sharpness(angle)，position of arrowhead);
+//help:Anglemark*(generate the plot data of angle mark  option : size);
+//help:Paramark*(generate the plot data of right angle mark   option : size);
+//help:Bowdata*(generate the plot data of bow arched curve
+//option : curvatute, size of the blank space, letter);
+//help:Deqplot*(generate the solution curve of differential equation
+//additional option : "Num=");
+//help:Hatchdata*(add hatching into some region
+// option : slope, degree, space betwen lines));
+//help:Enclosing*(generate the plot data of closed curve connecting some curves);
+//help:Shade*(add shading into some region   option : depth);
+//help:Rotatepoint*(rotate the point,   option : center);
+//help:Translatepoint*(pararell transport of the point);
+//help:Scalepoint*(magnify or reduce the position of point   option : center);
+ //help:Reflectpoint*(reflect the point);
+//help:Rotatedata*(rotate the plot data   option : center);
+//help:Scaledata*(magnify or reduce the plot data  option : center);
+//help:Reflectdata*(reflect the plot data);
+//help:Mksegments*(generate the plot data of all segments on the screen);
+//help:Mkcircles*(generate the plot data of all circles on the screen):
+//help:Setax*(specify the setting of coordinate axes);
+//help:Htickmark*(put a tickmark on the horizontal coordinate axis);
+//help:Vtickmark*(put a tickmark on the vertical coordinate axis);
+//help:Drwxy*(draw coordinate axes);
+//help:Addax*(specify whether coordinate axes are drawn or not);
+//help:Expr*(write mathematical expressions at a specific position);
+//help:Letter*(write letters at a specific position);
+//help:Letterrot*(write sloped letters at a specific position):
+//help:Exprrot*(write sloped mathematical expressions at a specific position):
+//help:Putpoint*(put a point at the specific position);
+//help:Bezier*(generate the plot data of Bezier curve);
+//help:Mkbezierptcrv*(generate the plot data of Bezier curve by automatically taking controll points);
+//help:CRspline*(generate the plot data of Catmull-Rom spline curve);
+//help:Beziersmooth*(generate the plot data of Bezier spline curve);
+//help:Bspline*(generate the plot data of B-spline curve);
+//help:PtonLine*(put a point on a specific line);
+//help:PtonSeg*(put a point on a specific segment);
+//help:PutonCurve*(put a point on a specific curve);
+//help:Setscaling*(specify the rate of magnification in the vertical direction);
+ //help:Tabledatalight*(generate the plot data of table without geometric points
+ //additional option : rules to be removed);
+ //help:Tgrid*(return the coordinates of a cell in the table);
+ //help:Tlistplot*(draw segment connecting two lattice points in the table);
+//help:ChangeTablestyle*(change the style for drawing rules in the table);
+//help:Tabledata*(generate the plot data of table with geometric points
+ //option : usual options＋rules to be removed);
+//help:Tabledata*(xLst=apply(1..5,10);yLst=apply(1..4,8);rmvL=[];);
+//help:Findcell*(return the information of a cell in the table);
+//help:Putcell*(write letters in a specific cell of the table);
+//help:Putcellexpr*(write mathematical expressions in a specific cell of the table);
+//help:Putrow*(write letters in a specific row of the table));
+//help:Putrowexpr*(write mathematical expressions in a specific row of the table);
+//help:PutcoL*(write letters in a specific column of the table));
+//help:PutcoLexpr*(write mathematical expressions in a specific column of the table));
+//help:Setwindow*(specify the area of drawing);
+//help:Defvar*(the definition of a variable is called by Scilab);
+//help:Deffun*(the definition of a function is called by Scilab);
+//help:Extractdata*(endow attribute to the imported plot data);
+//help:ReadOutData*(import the plot data);
+//help:WriteOutData*(export the plot data);
+//help:Removespace*(remove spaces of in front and behind);
+//help:end();

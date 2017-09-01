@@ -14,11 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.0.2(2017.07.18)");
-
+println("KETCindy V.3.0.2(2017.08.23)");
 println(ketjavaversion());//17.06.05
-
-println("ketcindylibbasic1(2017.07.18) loaded");
+println("ketcindylibbasic1(2017.08.23) loaded");
 
 //help:start();
 
@@ -34,7 +32,8 @@ println("ketcindylibbasic1(2017.07.18) loaded");
 //help :Option3(["in","out","in-","out-"]);
 
 //help:getdirhead();
-//help:gedirhead("/Applications/ketcindy","C:\ketcindy","/usr/share/ketcindy");
+//help:gedirhead("/Applications");
+//help:gedirhead("C:\Users\(username)");
 
 Ch=[0]; ChNum=1;
 
@@ -812,7 +811,8 @@ Assign(funstr,varname,rep):=(
 //help:Assign("x^2+a*x","a",1.3);
 //help:Assign("a*x^2+b*x",["a",1,"b",2]);
   regional(repstr,ii,jj,tmp,tmp1,tmp2,Notvar,Flg);
-  if(isstring(rep),repstr=rep,repstr="("+Textformat(rep,5)+")"); // 15.02.09, 07.06
+  if(isstring(rep),repstr=rep,repstr="("+Textformat(rep,6)+")");
+        // 15.02.09, 07.06,17.08.24
   tmp=[46];  // 12.20
   tmp=concat(tmp,48..57);
   tmp=concat(tmp,65..90);

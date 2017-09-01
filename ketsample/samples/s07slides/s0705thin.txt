@@ -41,6 +41,8 @@ end//
 new::layerの使い方//
 %repeat=5//
 
+\setthin{0}//
+
 itemize//
 %thin[1,-]::item::layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+//
 %thin[2,-]::item::layerの終わりは\verb|end|//

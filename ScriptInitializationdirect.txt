@@ -1,0 +1,10 @@
+use("KetCindyPlugin"); 
+Dirhead=getdirhead(gethome()+"/work");
+Shellfile="";
+setdirectory(Dirhead);
+import("setketcindy.txt");
+import("ketoutset.txt");
+
+setdirectory(Dirwork);
+
+Helplist(["+","+3d","+mv"],"helpJ");

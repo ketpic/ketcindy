@@ -7,6 +7,6 @@ main::メインスライド１//
 %%%%%%%%%%%%%%%%//
 new::極座標と曲線(Animation)//
 
-layer::{120}{0}//
-putnote::s{65}{5}::animpointoncircle//
-end//
+\begin{center}//
+\input{fig/animpointoncircle}//
+\end{center}//

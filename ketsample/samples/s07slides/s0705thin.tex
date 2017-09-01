@@ -1,0 +1,871 @@
+%%% タイトル s0705thin
+\documentclass[landscape,10pt]{ujarticle}
+\special{papersize=\the\paperwidth,\the\paperheight}
+\usepackage{/Users/takatoosetsuo/ketcindy/ketpicstyle/ketpic}
+\usepackage{/Users/takatoosetsuo/ketcindy/ketpicstyle/ketlayer}
+\usepackage{/Users/takatoosetsuo/ketcindy/ketpicstyle/ketslide}
+\usepackage{amsmath,amssymb}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{xcolor}
+\definecolor{slidecolorb}{cmyk}{0,0.32,0.52,0}
+\definecolor{slidecolorc}{cmyk}{0,0.32,0.52,0}
+\definecolor{slidecolord}{cmyk}{0,0.32,0.52,0}
+\definecolor{slidecolore}{cmyk}{0,0,0,0.5}
+\definecolor{slidecolorf}{cmyk}{0,0,0,0.5}
+\def\setthin#1{\def\thin{#1}}
+\setthin{0.1}
+\usepackage[dvipdfmx,colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}
+\ketmarginJ
+\ketslideinit
+
+\pagestyle{headings}
+
+\begin{document}
+
+\begin{layer}{120}{0}
+\putnotese{0}{0}{\input{fig/slide0.tex}}
+\end{layer}
+
+\def\mainslidetitley{22}
+\def\ketcletter{black}
+\def\ketcbox{slidecolorb}
+\def\ketdbox{slidecolorc}
+\def\ketcframe{slidecolord}
+\def\ketcshadow{slidecolore}
+\def\ketdshadow{slidecolorf}
+\def\slidetitlex{6}
+\def\slidetitlesize{1.3}
+\def\mketcletter{black}
+\def\mketcbox{yellow}
+\def\mketdbox{yellow}
+\def\mketcframe{yellow}
+\def\mslidetitlex{62}
+\def\mslidetitlesize{2}
+
+\color{black}
+\Large\bf\boldmath
+\thispagestyle{empty}
+\addtocounter{page}{-1}
+
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+\mainslide{メインスライド１}
+
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+\newslide{画面上のボタン}
+
+\vspace*{18mm}
+
+\begin{itemize}
+\item
+\Ltab{20mm}{Figure}静止画（Fhead+".tex"）をfigに作成
+\item
+\Ltab{20mm}{Title}タイトル(デフォルトはslide0)をfigに作成
+\item
+\Ltab{20mm}{ParaF}パラパラ動画フォルダを作成\\
+\Ltab{25mm}{}Setparaで引数を書いておく
+\item
+\Ltab{20mm}{Slide}Texparent+".txt"からスライドを作成
+\item
+\Ltab{20mm}{Sum}SummaryのPDFを作成
+\end{itemize}
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+\newslide{enumerate環境の使い方}
+
+\vspace*{18mm}
+
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\begin{enumerate}[(1)]
+\item
+番号を変えるには，例えば [(1)]
+\end{enumerate}
+
+\sameslide
+
+\vspace*{18mm}
+
+\begin{enumerate}[(1)]
+\item
+番号を変えるには，例えば [(1)]
+\item
+表示ページはリストで与える\\
+\hspace*{10mm}[1],\ [1,-],\ [1..3],\ [1..3,6]など
+\end{enumerate}
+
+\newslide{薄文字の使い方}
+
+\vspace*{18mm}
+
+\begin{itemize}
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+Setslidebodyの3番目の引数で濃さを変更\\
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\hspace*{10mm}\verb|Setslidebody(["","",0.2]);|
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+デフォルトは$0.1$
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+リストのページ以外が薄文字になる
+}%
+\end{itemize}
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\begin{itemize}
+\item
+Setslidebodyの3番目の引数で濃さを変更\\
+\hspace*{10mm}\verb|Setslidebody(["","",0.2]);|
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+デフォルトは$0.1$
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+リストのページ以外が薄文字になる
+}%
+\end{itemize}
+
+\sameslide
+
+\vspace*{18mm}
+
+\begin{itemize}
+\item
+Setslidebodyの3番目の引数で濃さを変更\\
+\hspace*{10mm}\verb|Setslidebody(["","",0.2]);|
+\item
+デフォルトは$0.1$
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+リストのページ以外が薄文字になる
+}%
+\end{itemize}
+
+\sameslide
+
+\vspace*{18mm}
+
+\begin{itemize}
+\item
+Setslidebodyの3番目の引数で濃さを変更\\
+\hspace*{10mm}\verb|Setslidebody(["","",0.2]);|
+\item
+デフォルトは$0.1$
+\item
+リストのページ以外が薄文字になる
+\end{itemize}
+
+\newslide{layerの使い方}
+
+\vspace*{18mm}
+
+\setthin{0}
+\begin{itemize}
+\item
+layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+layerの終わりは\verb|end|
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+図のサイズを変えるときは\\
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\hspace*{10mm}{:}{:}\verb+grf,0.8+
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+通常の\verb|\putnote|文も使える
+}%
+\end{itemize}
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\setthin{0}
+\begin{itemize}
+\item
+layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+
+\item
+layerの終わりは\verb|end|
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+図のサイズを変えるときは\\
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\hspace*{10mm}{:}{:}\verb+grf,0.8+
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+通常の\verb|\putnote|文も使える
+}%
+\end{itemize}
+
+\sameslide
+
+\vspace*{18mm}
+
+\setthin{0}
+\begin{itemize}
+\item
+layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+
+\item
+layerの終わりは\verb|end|
+\item
+図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+図のサイズを変えるときは\\
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\hspace*{10mm}{:}{:}\verb+grf,0.8+
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+通常の\verb|\putnote|文も使える
+}%
+\end{itemize}
+
+\sameslide
+
+\vspace*{18mm}
+
+\setthin{0}
+\begin{itemize}
+\item
+layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+
+\item
+layerの終わりは\verb|end|
+\item
+図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+
+\item
+図のサイズを変えるときは\\
+\hspace*{10mm}{:}{:}\verb+grf,0.8+
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+通常の\verb|\putnote|文も使える
+}%
+\end{itemize}
+
+\sameslide
+
+\vspace*{18mm}
+
+\setthin{0}
+\begin{itemize}
+\item
+layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+
+\item
+layerの終わりは\verb|end|
+\item
+図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+
+\item
+図のサイズを変えるときは\\
+\hspace*{10mm}{:}{:}\verb+grf,0.8+
+\item
+通常の\verb|\putnote|文も使える
+\end{itemize}
+
+\mainslide{メインスライド2}
+
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+\newslide{コントローラの表示}
+
+\vspace*{18mm}
+
+\hypertarget{para1pg1}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{70}{\hyperlink{para0pg5}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para0pg5}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para0pg5}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para1pg2}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 1/3}
+\end{layer}
+
+\begin{itemize}
+\item
+スクリプトに\verb|Setlidehyper();|を入れる
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+\verb|%repeat=n,para|とすると表示される
+}%
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+パラパラ動画のときは自動的に表示
+}%
+\end{itemize}
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg2}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{70}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para1pg1}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 2/3}
+\end{layer}
+
+\begin{itemize}
+\item
+スクリプトに\verb|Setlidehyper();|を入れる
+\item
+\verb|%repeat=n,para|とすると表示される
+{\color[cmyk]{\thin,\thin,\thin,\thin}
+\item
+パラパラ動画のときは自動的に表示
+}%
+\end{itemize}
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg3}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{70}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para1pg2}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 3/3}
+\end{layer}
+
+\begin{itemize}
+\item
+スクリプトに\verb|Setlidehyper();|を入れる
+\item
+\verb|%repeat=n,para|とすると表示される
+\item
+パラパラ動画のときは自動的に表示
+\end{itemize}
+
+\newslide{パラパラ動画}
+
+\vspace*{18mm}
+
+\hypertarget{para2pg1}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p001.tex}}
+\putnotew{96}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para1pg3}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg2}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg4}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 1/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg2}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p002.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg3}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg5}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 2/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg3}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p003.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg2}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg4}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg6}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 3/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg4}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p004.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg3}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg5}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 4/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg5}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p005.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg2}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg4}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg6}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg8}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 5/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg6}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p006.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg3}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg5}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg7}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg9}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 6/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg7}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p007.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg4}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg6}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg8}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg10}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 7/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg8}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p008.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg5}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg7}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg9}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg11}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 8/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg9}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p009.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg6}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg8}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg10}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg12}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 9/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg10}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p010.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg9}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg11}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg13}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 10/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg11}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p011.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg8}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg10}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg12}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg14}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 11/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg12}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p012.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg9}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg11}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg13}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg15}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 12/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg13}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p013.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg10}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg12}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg14}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg16}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 13/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg14}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p014.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg11}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg13}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg15}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg17}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 14/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg15}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p015.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg12}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg14}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg16}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg18}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 15/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg16}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p016.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg13}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg15}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg17}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg19}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 16/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg17}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p017.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg14}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg16}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg18}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg20}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 17/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg18}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p018.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg15}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg17}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg19}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg21}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 18/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg19}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p019.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg16}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg18}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg20}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg22}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 19/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg20}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p020.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg17}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg19}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg21}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg23}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 20/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg21}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p021.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg18}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg20}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg22}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg24}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 21/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg22}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p022.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg19}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg21}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg23}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg25}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 22/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg23}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p023.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg20}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg22}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg24}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 23/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg24}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p024.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg21}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg23}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg25}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 24/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg25}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p025.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg22}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg24}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para2pg26}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 25/26}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para2pg26}{}
+
+\begin{layer}{120}{0}
+\putnotes{85}{10}{\input{fig/pointoncircle/p026.tex}}
+\putnotew{96}{70}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{101}{70}{\hyperlink{para2pg23}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}
+\putnotew{108}{70}{\hyperlink{para2pg25}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{70}{\hyperlink{para3pg1}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{70}{\hyperlink{para3pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}
+\putnotew{125}{70}{\hyperlink{para3pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{76}{\scriptsize\color{black} 26/26}
+\end{layer}
+
+
+
+\end{document}

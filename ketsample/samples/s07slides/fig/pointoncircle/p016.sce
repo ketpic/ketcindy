@@ -1,7 +1,7 @@
-//date time=2017/6/25 09:43:29
+//date time=2017/8/19 10:55:49
 
 cd('/Users/takatoosetsuo/ketcindy/ketsample/samples/s07slides/fig');
-Ketlib=lib('/Users/takatoosetsuo/ketcindy/ketlib/ketpicsciL5');
+Ketlib=lib('/Users/takatoosetsuo/ketcindy/ketlib/ketpicscifiles6');
 Ketinit();
 disp('KETpic '+ThisVersion())
 Fnametex='pointoncircle/p016.tex';

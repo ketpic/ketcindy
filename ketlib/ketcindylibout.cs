@@ -4614,7 +4614,7 @@ Mkketcindyjs(libname,options):=(
     );
   );
   SCEOUTPUT = openfile(Fhead+".sce");
-  println(SCEOUTPUT,"cd('"+Dirhead+"/data/js');");
+  println(SCEOUTPUT,"cd('"+Dirhead+"/CindyJS);");
   println(SCEOUTPUT,"Dtket=mgetl('"+libname+".txt');");
   println(SCEOUTPUT,"cd('"+Dirwork+"');");
   println(SCEOUTPUT,"Dtjs=mgetl('"+Fhead+".html');");

@@ -1,5 +1,7 @@
 \newcommand{\inputsound}[3][90]{
 
+% #1:position, #2:dir, #3:file
+
 \vspace{-20mm}
 
 \vfill
@@ -42,5 +44,26 @@ overface={\color{blue}\small \strut \fbox{$\ll$}}
 %    transparent,
 %    passcontext
 ]{\color{blue}\fbox{　}}{APlayer.swf}
+
+}
+
+\newcommand{\inputmovie}[3][90]{
+
+\includemedia[
+  label=#3,
+  width=0.8\linewidth,height=0.6\linewidth,
+%  width=60mm,height=45mm,
+  activate=pagevisible,
+  addresource=#2#3.mp4,
+  flashvars={
+        source=#2#3.mp4
+%        &showloading=never
+%        &autoRewind=true
+        &autoplay=true
+%        &loop=1
+%        &buffer=0.2
+  }
+%]{}{player_flv_maxi.swf}
+]{}{VPlayer.swf}
 
 }

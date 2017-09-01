@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2017.07.31) loaded");
+println("ketcindybasic2(2017.08.23) loaded");
 
 //help:start();
 
@@ -3112,7 +3112,7 @@ Makeshell(texmainfile,flow):=(
       tmp=Dq+PathS+Dq+" -nwni -f "+Fhead+".sce"; // 16.07.21from
       println(SCEOUTPUT,tmp); 
     );
-    if(tex=="latex" % tex=="platex", 
+    if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
       tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
       println(SCEOUTPUT,tmp); 
       if(indexof(Shellfile,"mv")>0,
@@ -3243,7 +3243,7 @@ Makebat(texmainfile,flow):=(
       tmp=Dq+PathS+Dq+" -nb -nwni -f "+Fhead+".sce"; // 16.07.21from
       println(SCEOUTPUT,tmp);
     );
-    if(tex=="latex" % tex=="platex", 
+    if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
       tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
       println(SCEOUTPUT,tmp); 
       if(indexof(Shellfile,"mv")>0,
@@ -3337,6 +3337,9 @@ Viewtex():=(
   tmp="\documentclass{article}"; // 16.06.09from
   if(indexof(PathT,"platex")>0,
     tmp=replace(tmp,"article","jarticle");
+    if(indexof(PathT,"uplatex")>0, //17.08.13from
+      tmp=replace(tmp,"jarticle","ujarticle");
+    );//17.08.13upto
   ); // 16.06.09upto
   println(SCEOUTPUT,tmp);
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0) ,//16.11.23,12.16
@@ -3550,6 +3553,9 @@ Figpdf(fnameorg,optionorg):=(
   tmp="\documentclass{article}"; // 16.06.09from
   if(indexof(PathT,"platex")>0,
     tmp=replace(tmp,"article","jarticle");
+    if(indexof(PathT,"uplatex")>0, //17.08.13from
+      tmp=replace(tmp,"jarticle","ujarticle");
+    );//17.08.13upto
   );
   FigPdfList=append(FigPdfList,tmp); // 16.06.09upto
   tmp1="\special{papersize=W mm,H mm}";
@@ -3953,7 +3959,7 @@ Setslidehyper(driver,options):=(
   LinkSize=1;
   if(length(reL)>0,LinkPosH=reL_1);
   if(length(reL)>1,LinkPosV=reL_2);
-  if(length(reL)>2,LinkSize=reL_3);
+  if(length(reL)>2,LinkSize=max(reL_3,0.1)); // 17.07.31
 );
 
 Settitle(cmdL):=Settitle("slide0",cmdL,[]);
@@ -4046,6 +4052,9 @@ Maketitle(name):=(
   tmp="\documentclass[landscape,10pt]{article}";
   if(indexof(PathT,"platex")>0,
     tmp=replace(tmp,"article","jarticle");
+    if(indexof(PathT,"uplatex")>0, //17.08.13from
+      tmp=replace(tmp,"jarticle","ujarticle");
+    );//17.08.13upto
   ); 
   println(SCEOUTPUT,tmp);
   tmp="\special{papersize=\the\paperwidth,\the\paperheight}";
@@ -4147,10 +4156,8 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
         if(contains(seL,1),
           if(substring(str,0,1)!="%", 
             if(NonThinFlg==0,
-              tmp=text(ThinDense*[1,1,1,1]); // 17.01.08from
-              tmp=substring(tmp,1,length(tmp)-1);
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
-                println(SCEOUTPUT,"{\color[cmyk]{"+tmp+"}"); // 17.01.08upto
+                println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
                 println(SCEOUTPUT,str);
                 println(SCEOUTPUT,"}%");
               ,
@@ -4159,9 +4166,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             );
             if(NonThinFlg==1,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
-                tmp=text(ThinDense*[1,1,1,1]); // 17.01.08from
-                tmp=substring(tmp,1,length(tmp)-1);
-                println(SCEOUTPUT,"{\color[cmyk]{"+tmp+"}"); 
+                println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
               );
               println(SCEOUTPUT,str);
             );
@@ -4178,13 +4183,11 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
           forall(1..(length(seL)),nn,
             tmp=seL_nn;
             if(NonThinFlg==0,
-              tmp1=text(ThinDense*[1,1,1,1]);//17.01.08from
-              tmp1="{\color[cmyk]{"+substring(tmp1,1,length(tmp1)-1)+"}";
+              tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
               tmp1=[tmp1,str,"}%"];
             );
             if(NonThinFlg==1,
-              tmp1=text(ThinDense*[1,1,1,1]);
-              tmp1="{\color[cmyk]{"+substring(tmp1,1,length(tmp1)-1)+"}";
+              tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
               tmp1=[tmp1,str];//17.01.08upto
             );
             if(NonThinFlg==2,
@@ -4260,6 +4263,9 @@ Presentation(texfile,txtfile):=(
   tmp="\documentclass[landscape,10pt]{article}"; 
   if(indexof(PathT,"platex")>0,
     tmp=replace(tmp,"article","jarticle");
+    if(indexof(PathT,"uplatex")>0, //17.08.13from
+      tmp=replace(tmp,"jarticle","ujarticle");
+    );//17.08.13upto
   );
   println(SCEOUTPUT,tmp);// 16.06.09from
   tmp=select(1..(length(tmp3)),indexof(tmp3_#,"\usepackage")>0);//17.06.18from
@@ -4311,22 +4317,24 @@ Presentation(texfile,txtfile):=(
 //    SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
 //                  letterc,mboxc,mboxc,mboxc,62,2,letterc];
 //  , //17.03.02upto
-    tmp4="abcdefghijklmno";
-    forall(1..15,
-      tmp=SlideColorList_#;
-      if(islist(tmp),
-        tmp=text(tmp);
-        tmp=substring(tmp,1,length(tmp)-1);
-        if(length(SlideColorList_#)==4,//17.01.07from
-          println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{cmyk}{"+tmp+"}");
-        );
-        if(length(SlideColorList_#)==3,
-          println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{rgb}{"+tmp+"}");
-        );//17.01.07upto
-        SlideColorList_#="slidecolor"+tmp4_#;
+  tmp4="abcdefghijklmno";
+  forall(1..15,
+    tmp=SlideColorList_#;
+    if(islist(tmp),
+      tmp=text(tmp);
+      tmp=substring(tmp,1,length(tmp)-1);
+      if(length(SlideColorList_#)==4,//17.01.07from
+        println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{cmyk}{"+tmp+"}");
       );
+      if(length(SlideColorList_#)==3,
+        println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{rgb}{"+tmp+"}");
+      );//17.01.07upto
+      SlideColorList_#="slidecolor"+tmp4_#;
     );
+  );
 //  ); //17.03.02
+  println(SCEOUTPUT,"\def\setthin#1{\def\thin{#1}}");//17.08.23
+  println(SCEOUTPUT,"\setthin{"+text(ThinDense)+"}");//17.08.23
   forall(ADDPACK,// 16.06.09from
 //    if(indexof(#,"[")==0,  // 16.09.05from
 //      println(SCEOUTPUT,"\usepackage{"+#+"}");
@@ -4511,7 +4519,7 @@ Presentation(texfile,txtfile):=(
           ,
             tmp4=concat(tmp4,["","\begin{layer}{120}{0}"]);
           );
-          if(hyperflg>0,
+          if((hyperflg>0) & (LinkSize>0.15), 
             tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
             tmp1=tmp+text(paractr)+"pg";
             tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);

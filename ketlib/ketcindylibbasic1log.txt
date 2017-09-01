@@ -1,3 +1,5 @@
+// s:2017.08.23
+//    Help of getdirhead changed
 // s:2017.07.19
 //    Sep1000 added;
 // s:2017.07.03

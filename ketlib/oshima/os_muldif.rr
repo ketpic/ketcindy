@@ -5,7 +5,7 @@
 /* #undef USEMODULE */
 
 /*             os_muldif.rr (Library for Risa/Asir) 
- *          Toshio Oshima (Nov. 2007 - June 2017)
+ *          Toshio Oshima (Nov. 2007 - Aug. 2017)
  *
  *   For polynomials and differential operators with coefficients
  *   in rational funtions (See os_muldif.pdf)
@@ -180,6 +180,8 @@ localf eta$
 localf jell$
 localf frac$
 localf erfc$
+localf orthpoly$
+localf schurpoly$
 localf fouriers$
 localf todf$
 localf f2df$
@@ -271,6 +273,7 @@ localf okuboetos$
 localf heun$
 localf fspt$
 localf abs$
+localf sgn$
 localf calc$
 localf isint$
 localf israt$
@@ -398,6 +401,9 @@ localf areabezier$
 localf saveproc$
 localf xygraph$
 localf xy2graph$
+localf addIL$
+localf xy2curve$
+localf xygrid$
 localf xyarrow$
 localf xyarrows$
 localf xyang$
@@ -451,7 +457,7 @@ extern LQS$
 static S_Fc,S_Dc,S_Ic,S_Ec,S_EC,S_Lc$
 static S_FDot$
 extern AMSTeX$
-Muldif.rr="00170612"$
+Muldif.rr="00170825"$
 AMSTeX=1$
 TeXEq=5$
 TeXLim=80$
@@ -550,9 +556,7 @@ def makenewv(L)
 	if((V=getopt(var))<2) V="z_";
 	else if(isvar(V)) V=rtostr(V);
 	if(type(N=getopt(num))!=1) N=0;
-	Var=vars(L);
-	for(Va=Var;Va!=[];Va=cdr(Va))
-		if(vtype(car(Va))==2) Var=append(vars(args(car(Va))),Var);
+	Var=varargs(L|all=2);
 	for(XX=[],I=J=0;;I++){
 		X=strtov(V+rtostr(I));
 		if(findin(X,Var)<0){
@@ -616,6 +620,12 @@ def mycat(L)
 def fcat(S,X)
 {
 	if(type(S)!=7){
+		if(type(DIROUTD)!=7){
+			DIROUTD=str_subst(DIROUT,["%HOME%","%ASIRROOT%","\\"],
+				[getenv("HOME"),get_rootdir(),"/"])+"/";
+			if(isMs()) DIROUTD=str_subst(DIROUTD,"/","\\"|sjis=1);
+		}
+		if(S==-1) return;
 		T="fcat";
 		if(S>=2&&S<=9) T+=rtostr(S);
 		T=DIROUTD+T+".txt";
@@ -623,16 +633,18 @@ def fcat(S,X)
 		if(S!=0&&access(T)) remove_file(T);
 		S=T;
 	}
-	output(S);
+	R=output(S);
 	print(X);
 	output();
 	if(getopt(exe)==1) shell("\""+S+"\"");
+	return R;
 }
 
 def mycat0(L,T)
 {
 	Opt = getopt(delim);
 	Del = (type(Opt) >= 0)?Opt:"";
+	if(type(L)!=4) L=[L];
 	while(L != []){
 		if(Do==1)
 			print(Del,0);
@@ -728,7 +740,7 @@ def mydiff(P,X)
 		for(;X!=[];X=cdr(X)) P=mydiff(P,car(X));
 		return P;
 	}
-	if(deg(dn(P),X) == 0) 
+	if(ptype(dn(P),X)<2) 
 		return red(diff(nm(P),X)/dn(P));
 	return red(diff(P,X));
 }
@@ -1245,21 +1257,36 @@ def mulseries(V1,V2)
 def scale(L)
 {
 	T=0;LS=1;
+	Pr=getopt(prec);
 	if(type(L)!=4){
 		if(L==2){
-			L=[[[1,2,1/20],[2,5,1/10],[5,10,1/5], [10,20,1/2],[20,50,1],[50,100,2]],
+			L=(Pr!=1)?
+			  [[[1,2,1/20],[2,5,1/10],[5,10,1/5], [10,20,1/2],[20,50,1],[50,100,2]],
     		   [[1,2,1/10],[2,5,1/2], [10,20,1],[20,50,5]],
-    		   [[1,2,1/2],[2,10,1], [10,20,5],[20,100,10]]];
+    		   [[1,2,1/2],[2,10,1], [10,20,5],[20,100,10]]]:
+			   [[[1,2,1/50],[2,5,1/20],[5,10,1/10], [10,20,1/5],[20,50,1/2],[50,100,1]],
+				[[1,5,1/10],[5,10,1/2], [10,20,1],[50,100,5]],
+				[[1,5,1/2],[5,10,1], [10,50,5],[50,100,10]]];
 			LS=2;
 		}else if(L==3){
-			L=[[[1,2,1/20],[2,5,1/10],[5,10,1/5], [10,20,1/2],[20,50,1],[50,100,2],
-                [100,200,5],[200,500,10],[500,1000,20]],
+			L=(Pr!=1)?
+			  [[[1,2,1/20],[2,5,1/10],[5,10,1/5], [10,20,1/2],[20,50,1],[50,100,2],
+                  [100,200,5],[200,500,10],[500,1000,20]],
     			[[1,2,1/10],[2,5,1/2], [10,20,1],[20,50,5], [100,200,10],[200,500,50]],
-    			[[1,2,1/2],[2,10,1], [10,20,5],[20,100,10], [100,200,50],[200,1000,100]]];
+    			[[1,2,1/2],[2,10,1], [10,20,5],[20,100,10], [100,200,50],[200,1000,100]]]:
+			  [[[1,2,1/50],[2,5,1/20],[5,10,1/10],[10,20,1/5],[20,50,1/2],[50,100,1], 
+			      [100,200,2],[200,500,5],[500,1000,10]],
+				[[1,5,1/10],[5,10,1/2], [10,50,1],[50,100,5], [100,500,10],[500,1000,50]],
+				[[1,5,1/2],[5,10,1], [10,50,5],[50,100,10], [100,500,50],[500,1000,100]]];
 			LS=3;
 		}else{
-			L=[[[1,2,1/50],[5,10,1/2],[5,10,1/10]],[[1,5,1/10],[5,10,1/2]],
-				[[1,5,1/2],[5,10,1]]];
+			L=(Pr!=1)?
+			   [[[1,2,1/50],[2,5,1/20],[5,10,1/10]],
+				[[1,5,1/10],[5,10,1/2]],
+				[[1,5,1/2],[5,10,1]]]:
+			   [[[1,2,1/100],[2,5,1/50],[5,10,1/20]],
+			    [[1,2,1/20],[2,10,1/10]],
+			    [[1,2,1/10],[2,10,1/2]]];
 		}
 	}else if(type(L[0])!=4){
 		L=[L];
@@ -1284,41 +1311,48 @@ def scale(L)
 	SC=getopt(scale);
 	if(type(SC)==4){
 		S0=SC[0];S1=SC[1];
-	}else if(type(S)==1){
-		S0=S;S1=0;
+	}else if(type(SC)==1){
+		S0=SC;S1=0;
 	}else return T;
 	if(type(D=getopt(shift))==4){
 		D0=D[0];D1=D[1];
 	}
 	if(type(F=getopt(f))>1) F=f2df(F);
 	else F=0;
-	for(M=[],I=length(T);T!=[];T=cdr(T),I--){
+	for(M=M0=[],I=length(T);T!=[];T=cdr(T),I--){
 		for(S=car(T);S!=[];S=cdr(S)){
 			V=((!F)?dlog(car(S))/dlog(10)/LS:myfdeval(F,car(S)))*S0;
 			if(S1!=0){
 				M=cons([V+D0,D1],M);
 				M=cons([V+D0,I*((length(SC)>2)?SC[I]:S1)+D1],M);
 				M=cons(0,M);
-			}else M=cons(V+D0,M);
+			}else M0=cons(V+D0,M0);
 		}
+		if(S1==0) M=cons(reverse(M0),M);
 	}
 	if(S1!=0) M=cdr(M);
+	if(S1==0||getopt(TeX)!=1) return M;
 	M=reverse(M);
-	if(getopt(TeX)==1){
-		if(type(U=getopt(line))==4)
-			M=cons([U[0]+D0,D1],cons([U[1]+D0,D1],cons(0,M)));
-		S=xylines(M);
-		if(type(Mes=getopt(mes))==4){
-			S3=car(Mes);
-			V=car(scale(cdr(Mes)));
-			if(!F) Mes=scale(cdr(Mes)|scale=[S0/LS,0],shift=[D0,D1]);
-			else Mes=scale(cdr(Mes)|f=F,scale=[S0,0],shift=[D0,D1]);
-			for(M=Mes;M!=[];M=cdr(M),V=cdr(V))
-				S+=xyput([car(M),S3,deval(car(V))]);
+	if(type(U=getopt(line))==4)
+		M=cons([U[0]+D0,D1],cons([U[1]+D0,D1],cons(0,M)));
+	if(type(Col=getopt(col))<1) S=xylines(M);
+	else S=xylines(M|opt=Col);
+	if(type(Mes=getopt(mes))==4){
+		S3=car(Mes);
+		if(type(S3)==4){
+			Col=S3[1];
+			S3=car(S3);
+		}else Col=0;
+		V=car(scale(cdr(Mes)));
+		if(!F) Mes=scale(cdr(Mes)|scale=[S0/LS,0],shift=[D0,D1]);
+		else Mes=scale(cdr(Mes)|f=F,scale=[S0,0],shift=[D0,D1]);
+		for(M=car(Mes);M!=[];M=cdr(M),V=cdr(V)){
+			VT=deval(car(V));
+			if(Col!=0) VT=[Col,VT];
+			S+=xyput([car(M),S3,VT]);
 		}
-		return S;
 	}
-	return M;
+	return S;
 }
 
 def pluspower(P,V,N,M)
@@ -3631,9 +3665,27 @@ def ladd(X,Y,M)
 
 def mrot(X)
 {
+	if(type(X)==4){
+		if(getopt(deg)==1)
+			X=[deval(@pi*X[0]/180),deval(@pi*X[1]/180),deval(@pi*X[2]/180)];
+		if(getopt(conj)==1)
+			return mrot([-X[2],-X[1],0])*mrot([X[0],X[1],X[2]]);
+		if(X[1]==0){
+			X=[X[0]+X[2],0,0];
+			if(X[0]==0) return diagm(3,[1]);
+		}
+		if(X[0]!=0){
+			M=mat([dcos(X[0]),-dsin(X[0]),0],[dsin(X[0]),dcos(X[0]),0],[0,0,1]);
+			if(X[1]==0) return M;
+		}
+		N=mat([dcos(X[1]),0,-dsin(X[1])],[0,1,0],[dsin(X[1]),0,dcos(X[1])]);
+		if(X[0]!=0) N=M*N;
+		if(X[2]==0) return N;
+		return N*mrot([X[2],0,0]);
+	}
 	if(getopt(deg)==1) X=@pi*X/180;
 	X=deval(X);
-	return mat([dcos(X),dsin(X)],[-dsin(X),dcos(X)]);
+	return mat([dcos(X),-dsin(X)],[dsin(X),dcos(X)]);
 }
 
 def m2v(M)
@@ -5779,7 +5831,7 @@ def pol2sft(F,A)
 
 def binom(P,N)
 {
-	if(type(N)!=1 || N<0) return 1;
+	if(type(N)!=1 || N<=0) return 1;
 	for(S=1;N>0;N--,P-=1)	S*=P/N;
 	return red(S);
 }
@@ -5795,6 +5847,7 @@ def expower(P,R,N)
 
 def seriesHG(A,B,X,N)
 {
+	if(N==0) return 1;
 	if(type(N)!=1 || N<0) return 0;
 	if(type(X)<4){
 		for(K=0,S=S0=1;K<N;K++){
@@ -7413,6 +7466,22 @@ def abs(X)
 		}else if(T==4) X=P?pari(abs,X,P):pari(abs,X);
 	}
 	return X;
+}
+
+def sgn(X)
+{
+	if(X==0) return 0;
+	if(type(X)==1){
+		return (X>0)?1:-1;
+	}
+	if(type(X)==5) X=vtol(X);
+	if(type(X)==4){
+		for(W=0,Y=X;Y!=[];Y=cdr(Y))
+			for(Z=cdr(Y);Z!=[];Z=cdr(Z))
+				if(car(Y)>car(Z)) W++;
+		if(getopt(val)==1) return W;
+		return (iand(W,1))?-1:1;
+	}
 }
 
 def calc(X,L)
@@ -10349,6 +10418,7 @@ def tocsv(L)
 	S=str_tb(0,Tb);
 	if(type(EXE=getopt(exe))!=1&&EXE!=0&&type(EXE)!=7) return S;
 	if(type(F)!=7){
+		fcat(-1,0);
 		F="risaout";
 		if(EXE>=2&&EXE<=9) F+=rtostr(EXE);
 		F=DIROUTD+F+".csv";
@@ -11100,7 +11170,6 @@ def xyline(P,Q)
 
 def xylines(P)
 {
-/*	mycat([P,getopt()]);	*/
 	Lf=getopt(curve);
 	if(type(Lf)!=1) Lf=0;
 	SS=getopt(opt);
@@ -11259,9 +11328,292 @@ def saveproc(S,Out)
 	}
 }
 
+def xygrid(X,Y)
+{
+	for(RR=[],I=0,Z=X;I<2;I++){
+		U=Z[2];L=LL=[];M=Z[3];
+		if(Z[1]==1||Z[1]==-1){
+			if(type(M)==4) L=M;
+			else{
+				if(U*(-dlog(1-1/20)/dlog(10))>=M){
+					L=cons([1,2,1/10],L);
+					LL=cons([1,2,1/2],LL);
+				}else if(U*(-dlog(1-1/10)/dlog(10))>=M)
+					L=cons([1,2,1/5],L);
+				else if(U*(-dlog(1-1/4)/dlog(10))>=M)
+					L=cons([1,2,1/2],L);
+				if(U*(-dlog(1-1/50)/dlog(10))>=M){
+					L=cons([2,5,1/10],L);
+					LL=cons([2,5,1/2],LL);
+				}else if(U*(-dlog(1-1/25)/dlog(10))>=M)
+					L=cons([2,5,1/5],L);
+				else if(U*(-dlog(1-1/10)/dlog(10))>=M)
+					L=cons([2,5,1/2],L);
+				if(U*(-dlog(1-1/100)/dlog(10))>=M){
+					L=cons([5,10,1/10],L);
+					LL=cons([5,10,1/2],LL);
+				}
+				else if(U*(-dlog(1-1/50)/dlog(10))>=M)
+					L=cons([5,10,1/5],L);
+				else if(U*(-dlog(1-1/20)/dlog(10))>=M)
+					L=cons([5,10,1/2],L);
+				L=cons(L,cons(LL,[[[1,10,1]]]));
+			}
+			R=scale(L|scale=U);
+			if(Z[1]==-1){
+				for(LL=[];R!=[];R=cdr(R)){
+					for(L=[],T=car(R);T!=[];T=cdr(T)) L=cons(U-car(T),L);
+					LL=cons(reverse(L),LL);
+				}
+				R=reverse(LL);
+			}
+		}else if(Z[1]==0){
+			if(type(M)==4){
+				R=scale(M|f=x,scale=U);
+			}else{
+				V=0;
+				if(U/10>=M) V=1/10;
+				else if(U/5>=M) V=1/5;
+				else if(U/2>=M) V=1/2;
+				R=[];
+				if(V>0){
+					UU=U*V;
+					for(R=[],J=UU;J<U;J+=UU) R=cons(J,R);
+				}
+				if(V==1/10) L=[U/2];
+				else L=[];
+				R=cons(R,cons(L,[[0,U]]));
+			}
+		}else if(type(Z[1])==4){
+			R=Z[1];
+			if(length(R)==0||type(R[0])!=4) R=[[],[],R];
+		}else return 0;
+		K=length(R);
+		S=newvect(K);
+		for(J=0;J<K;J++){
+			for(S[J]=[],JJ=0;JJ<=Z[0];JJ+=U){
+				for(P=R[J];P!=[];P=cdr(P))
+					if(car(P)+JJ<=Z[0]) S[J]=cons(car(P)+JJ,S[J]);
+			}
+		}
+		for(J=0;J<K;J++) S[J]=lsort(S[J],[],1);
+		for(U=[],J=K-1;J>0;J--){
+			U=lsort(S[J],U,0);S[J-1]=lsort(S[J-1],U,1);
+		}
+		RR=cons(vtol(S),RR);
+		Z=Y;
+	}
+	if((Raw=getopt(raw))==1) return RR;
+	SS=[];
+	if(type(Sf=getopt(shift))==7){
+		Sx=Sf[0];Sy=Sf[1];
+	}else Sx=Sy=0;
+	for(I=0;I<2;I++){
+		for(S0=[],L=RR[I];L!=[];L=cdr(L)){
+			for(S=[],T=car(L);T!=[];T=cdr(T)){
+				if(S!=[]) S=cons(0,S);
+				if(I==0){
+					S=cons([X[0]+Sx,car(T)+Sy],S);
+					S=cons([Sx,car(T)+Sy],S);
+				}else{
+					S=cons([car(T)+Sx,Y[0]+Sy],S);
+					S=cons([car(T)+Sx,Sy],S);
+				}
+			}
+			S0=cons(S,S0);
+		}
+		SS=cons(reverse(S0),SS);
+	}
+	SS=reverse(SS);
+	if(Raw==2) return SS;
+	if(length(Y)<5) T=[["",""]];
+	else if(type(Y[4])==4) T=[Y[4]];
+	else T=[Y[4],Y[4]];
+	if(length(X[4])==4) T=cons([""],T);
+	else if(type(X[4])==4) T=cons(X[4],T);
+	else T=cons([X[4]],T);
+	for(Sx=Sy=[],I=0;I<2;I++){
+		TT=T[I];
+		for(V=SS[I];V!=[];V=cdr(V)){
+			Op=car(TT);
+			if(length(TT)>1) TT=cdr(TT);
+			if(car(V)==[]) continue;
+			if(Op=="") S=xylines(car(V));
+			else S=xylines(car(V)|opt=Op);
+			if(I==0) Sx=cons(S,Sx);
+			else Sy=cons(S,Sy);
+		}
+	}
+	for(S="",Sx=reverse(Sx), Sy=reverse(Sy);Sx!=[]&&Sy!=[];){
+		if(Sx!=[]){
+			S+=car(Sx);Sx=cdr(Sx);
+		}
+		if(Sy!=[]){
+			S+=car(Sy);Sy=cdr(Sy);
+		}
+	}
+	return S;
+}
+
+
+def addIL(I,L)
+{
+	if(I==0){
+		for(R=[];L!=[];L=cdr(L)) R=addIL(car(L),R);
+		return reverse(R);
+	}
+	if(type(In=getopt(in))==1){
+		if(In==-1){
+			J=JJ=I[1];I=I[0];
+			for(R=[];L!=[];L=cdr(L)){
+				J=lmin([car(L)[0],JJ]);
+				if(J>I) R=cons([I,J],R);
+				I=lmax([car(L)[1],I]);
+			}
+			if(I<JJ) R=cons([I,JJ],R);
+			return reverse(R);
+		}else{
+			for(;L!=[];L=cdr(L)){
+				if(car(L)[0]>I) return 0;
+				if(car(L)[1]>=I){
+					if(In==3) return car(L);
+					if(In==1||(I!=car(L)[0]&&I!=car(L)[1])) return 1;
+					return 2;
+				}
+			}
+			return 0;
+		}
+	}
+	I0=car(I);I1=I[1];
+	for(F=0,R=[];L!=[];L=cdr(L)){
+		if(I0>car(L)[1]){
+			R=cons(car(L),R);
+			continue;
+		}
+		if(I0<=car(L)[1]){
+			I0=lmin([I0,car(L)[0]]);
+			if(I1<car(L)[0]){
+				R=cons([I0,I1],R);
+				for( ;L!=[];L=cdr(L)) R=cons(car(L),R);
+				F=1;
+				break;
+			}
+			I1=lmax([I1,car(L)[1]]);
+		}
+	}
+	if(!F) R=cons([I0,I1],R);
+	return reverse(R);
+}
+
+def xy2curve(F,N,Lx,Ly,Lz,A,B)
+{
+	Raw=getopt(raw);
+	if(type(Gap=getopt(gap))==4){
+		MG=Gap[1];Gap=car(Gap);
+	}else MG=3;
+	if(type(Gap)!=1 && Gap!=0) Gap=0.7;
+	if(type(Dvi=getopt(dviout))<1) Dvi=0;
+	OL=[["dviout",Dvi]];
+	if(type(Opt=getopt(opt))<1) Opt=0;
+	else OL=cons(["opt",Opt],OL);
+	if(type(Sc=getopt(scale))!=1 && type(Sc)!=4) Sc=[1,1,1];
+	else if(type(Sc)!=4) Sc=[Sc,Sc,Sc];
+	else if(length(Sc)!=3) Sc=[Sc[0],Sc[1],Sc[1]];
+	M=diagm(3,Sc);
+	if(A!=0||B!=0){
+		if(type(A)!=6){	/* M=mrot([-A,B,0]|deg=1)*M; */
+			Pi=deval(@pi);
+			Ac=dcos(Pi*A/180);As=dsin(Pi*A/180);
+			M=mat([Ac,As,0],[-As,Ac,0],[0,0,1])*M;
+			Ac=dcos(Pi*B/180);As=dsin(Pi*B/180);
+			M=mat([Ac,0,As],[0,1,0],[-As,0,Ac])*M;
+		}else M=A;
+		V=M*newvect(3,[x,y,z]);
+		Fx=compdf(V[0],[x,y,z],F);Fy=compdf(V[1],[x,y,z],F);Fz=compdf(V[2],[x,y,z],F);
+	}else{
+		for(I=0;I<3;I++){
+			if(type(T=F[I])!=4) T=f2df(T);
+			if(type(T)==4) T=cons(car(T)*Sc[I],cdr(T));
+			else T*=Sc[I];
+			if(I==0) Fx=T;
+			else if(I==1) Fy=T;
+			else Fz=T;
+		}
+	}
+	if(Raw==5||!Gap)
+		return (Dvi||!Gap)? xygraph([Fy,Fz],N,Lx,Ly,Lz|option_list=OL):[Fx,Fy,Fz];
+	R=xygraph([Fy,Fz],N,Lx,Ly,Lz|raw=2);
+	R0=cdr(car(R));R1=R[1];
+	for(LT=[];R0!=[];R0=cdr(R0),R1=cdr(R1))
+		if(car(R0)!=0) LT=cons([R1[0],R1[1]],LT);
+	LT=reverse(LT);
+	if(N<0){
+		Be=xylines(car(R)|curve=1,proc=3,close=-1);
+		LT=reverse(cdr(LT));
+		LT=reverse(cdr(LT));
+	}
+	else Be=xylines(car(R)|curve=1,proc=3);
+	Be=cdr(cdr(Be));
+	Be=lbezier(car(Be));
+	if(Raw==4) return [Be,LT,Lx];
+	X=ptcombz(Be,0,0);
+	Var=(length(Lx)==3)?car(Lx):x;
+	if(type(Eq=getopt(eq))!=1) Eq=0.01;
+	if(TikZ==1){
+		Gap/=10;Eq/=10;
+	}
+	for(R=[],XT=X;XT!=[];XT=cdr(XT)){
+		V=car(XT);
+		U=LT[V[0][0]];
+		T=U[0]*V[1][0]+U[1]*(1-V[1][0]);
+		VV=myfdeval(Fx,[Var,T]);
+		U=LT[V[0][1]];
+		T=U[0]*V[1][1]+U[1]*(1-V[1][1]);
+		VV-=myfdeval(Fx,[Var,T]);
+		if(abs(VV)<Eq) continue;
+		I=(VV<0)?0:1;
+		R=cons([V[0][I],V[1][I],V[0][1-I],V[1][1-I]],R);
+	}
+	R=qsort(R);
+	if(Raw==3) return [Be,R];
+    Db=newvect(L=length(Be));
+	for(I=0;I<L;I++) Db[I]=[];
+	for(TR=R;TR!=[];TR=cdr(TR)){
+    	V1=ptbezier(Be,[I=car(TR)[0],P=car(TR)[1]])[1];
+		V2=ptbezier(Be,[car(TR)[2],car(TR)[3]])[1];
+		T=dsqrt(1-dvangle(V1,V2)^2);
+		if(T<1/MG) T=MG;
+		GP=Gap/T;
+		W=GP/dnorm(V1);
+		Db[I]=addIL([P-W,P+W],Db[I]);
+		if(P-W<0 && I>0) Db[I-1]=addIL([P-W+1,1],Db[I-1]);
+		if(P+W>1 && I+1<L) Db[I+1]=addIL([0,P+W-1],Db[I+1]);
+	}
+	Db=vtol(Db);
+	for(Bf=[];Be!=[];Be=cdr(Be),Db=cdr(Db)){
+		if(car(Db)==[]) Bf=cons(car(Be),Bf);
+		else{
+			D=addIL([0,1],car(Db)|in=-1);
+			for(;D!=[];D=cdr(D))
+				Bf=cons(tobezier(car(Be)|inv=car(D)),Bf);
+		}
+	}
+	Bf=reverse(Bf);
+	if(Raw==2) return Bf;
+	OL=[];
+	if(Opt){
+		if(type(Opt)==4&&length(Opt)>1) OL=[["opt",Opt[0]],["cmd",Opt[1]]];
+		else OL=[["opt",Opt]];
+	}else OL=[];
+	S=xybezier(lbezier(Bf|inv=1)|option_list=OL);
+	if(Raw==1||!Dvi) return S;
+	return xyproc(S|dviout=Dvi);
+}
+
 def xy2graph(F0,N,Lx,Ly,Lz,A,B)
 {
-	/* (x,y,z) -> ( -x sin A + y cos A, z cos B - x cos A sin B - y sin A sin B) */
+	/* (x,y,z) -> (z sin B + x cos A cos B + y sin A cos B, 
+	    -x sin A + y cos A, z cos B - x cos A sin B - y sin A sin B) */
 	if((Proc=getopt(proc))==1||Proc==2){
 		OPT0=[["proc",3]];
 	}else{
@@ -11695,22 +12047,100 @@ def xy2graph(F0,N,Lx,Ly,Lz,A,B)
 	if(Dvi<0) return Lout;
 }
 
+def orthpoly(N)
+{
+	F=0;
+	if(type(P=getopt(pol))==7){
+		for(L=["Le","Ge","Tc","2T","Ja","He","La","Se"];L!=[];L=cdr(L),F++)
+			if(str_str(P,car(L)|end=2)==0) break;
+	}else P=0;
+	if(type(D=N)==4) D=N[0];
+	if(!isint(D)||D<0) return 0;
+	if(F==0) return seriesHG([-D,D+1],[1],(1-x)/2,D);
+	if(F==1) return red(seriesHG([-D,D+2*N[1]],[N[1]+1/2],(1-x)/2,D)*binom(D+2*N[1]-1,D));
+	if(F==2) return seriesHG([-D,D],[1/2],(1-x)/2,D);
+	if(F==3){
+		if(D==0) return 0;
+		return orthpoly([D-1,1]|pol="Ge");
+	}
+	if(F==4) return red(seriesHG([-D,D+N[1]],[N[2]],x,D));
+	if(F==5){
+		for(S=I=1;I<=D;I+=2) S*=I;
+		if(iand(D,1)) return seriesHG([-(D-1)/2],[3/2],x^2/2,D-1)*x*S*(-1)^((D-1)/2);
+		else return seriesHG([-D/2],[1/2],x^2/2,D)*S*(-1)^(D/2);
+	}
+	if(F==6){
+		NN=(type(N)==4)?N[1]:0;
+		return red(seriesHG([-D],[NN+1],x,D)*binom(D+NN,D)); 
+	}
+	if(F==7){
+		NN=N[1];
+		for(S=1,I=1;I<=D;I++) S+=(-1)^I*binom(D,I)*binom(D+I,I)*sftpow(x,I)/sftpow(NN,I);
+		return S;
+	}
+	return 0;
+}
+
+def schurpoly(L)
+{
+	N=length(L);
+	for(R=[],I=1;L!=[];L=cdr(L),I++) R=cons(car(L)+N-I,R);
+	L=reverse(R);
+	if(type(X=getopt(var))!=4){
+		V=(type(X)>1)?X:"x";
+		for(X=[],I=0;I<N;I++) X=cons(makev([V,N-I]),X);
+	}
+	M=newmat(N,N);
+	for(I=0;I<N;I++)
+		for(J=0;J<N;J++) M[I][J]=X[I]^L[J];
+	P=det(M);
+	for(I=0;I<N;I++)
+		for(J=I+1;J<N;J++) P=sdiv(P,X[I]-X[J]);
+	return P;
+}
+
 def fouriers(A,B,X)
 {
+	if((Y=getopt(y))==0||type(Y)>0) Y=deval(Y);
+	else Y=0;
+	if((V=getopt(const))==0||type(V)>0){
+		V=myfeval(V,Y);
+		K=1;
+	}else K=0;
 	if(A!=[]&&type(car(A))>1){
-		for(C=[],I=A[1];I>=0;I--) C=cons(myfeval(car(A),I),C);
+		for(C=[],I=A[1];I>=K;I--) C=cons(myf2eval(car(A),I,Y),C);
+		if(K) C=cons(0,C);
 		A=C;
 	}
+	if(K){
+		if(A!=[]) A=cdr(A);
+		A=cons(V,A);
+	}
 	if(B!=[]&&type(car(B))>1){
-		for(C=[],I=B[1];I>0;I--) C=cons(myfeval(car(B),I),C);
+		for(C=[],I=B[1];I>0;I--) C=cons(myf2eval(car(B),I,Y),C);
 		B=C;
 	}
-	R=0;
+	L=length(B)+1;
+	if(length(A)>=L) L=length(A)+1;
+	if(type(Sum=getopt(sum))>0){
+		if(Sum==1) Sum=1-x;
+		else if(Sum==2) Sum=[(z__)/(3.1416*x),[z__,os_md.mysin,3.1416*x]];
+ 		else Sum=f2df(Sum);
+		C=[];
+		if(A!=[]){
+			C=cons(car(A),C);
+			A=cdr(A);
+		}
+		for(I=1;A!=[];A=cdr(A),I++) C=cons(car(A)*myf2eval(Sum,I/L,L),C);
+		A=reverse(C);
+		for(C=[],I=1;B!=[];B=cdr(B),I++) C=cons(car(B)*myf2eval(Sum,I/L,L),C);
+		B=reverse(C);
+	}
 	if(getopt(cpx)==1){
-	if(type(X=eval(X))>1) return todf([os_md.fouriers,[["cpx",1]]],[[A],[B],[X]]);
+		if(type(X=eval(X))>1) return todf([os_md.fouriers,[["cpx",1]]],[[A],[B],[X]]);
 		V=dexp(@i*X);
 		for(C=A,P=1,I=0;C!=[];C=cdr(C),I++){
-			R+=car(C)*P;
+			R+=S*car(C)*P;
 			P*=V;
 		}
 		V=dexp(-@i*X);
@@ -12226,10 +12656,6 @@ def compdf(F,V,G)
 {
 	FL=["abs","floor","rint","zeta","gamma","arg","real","imag","conj"];
 	FS=[os_md.abs,floor,rint,os_md.zeta,os_md.gamma,os_md.myarg,real,imag,conj];
-	if(type(V)==4){
-		for(;V!=[];V=cdr(V),G=cdr(G)) F=compdf(F,car(V),car(G));
-		return F;
-	}
 	if(type(F)==7){
 		if(str_str(F,"|")==0){
 			F="abs("+str_cut(F,1,str_len(F)-2)+")";
@@ -12250,7 +12676,20 @@ def compdf(F,V,G)
 	}
 	if(type(F)!=4) F=f2df(F);
 	if(type(G)!=4) G=f2df(G);
+	if(V==G) return F;	/* subst(F(V),V,G) */ 
 	VF=vars(F);VG=vars(G);
+	if(type(V)==4){
+		for(VT=[],VV=V;VV!=[];VV=cdr(VV)){
+			if(findin(car(VV),VF)>=0){
+				X=makenewv(append(VF,VG));
+				VF=cons(X,VF);
+				F=mysubst(F,[car(VV),X]);
+				VT=cons(X,VT);
+			}else VT=cons(car(VV),VT);
+		}
+		for(V=reverse(VT);V!=[];V=cdr(V),G=cdr(G)) F=compdf(F,car(V),car(G));
+		return F;
+	}
 	for(E=I=0;I<30;I++){
 		for(J=0;J<30;J++){
 			X=makev(["z__",I,J]);
@@ -12261,7 +12700,6 @@ def compdf(F,V,G)
 		if(E) break;
 	}
 	if(!E) return 0;
-	if(V==G) return F;	/* subst(F(V),V,G) */ 
 	if(type(G)<4) return mysubst(F,[V,G]);
 	if(type(F)<4) F=[F]; /* return compdf([X,[X,0,F]],V,G); */
 	F=mysubst(F,[V,X]);
@@ -12709,7 +13147,8 @@ def xygraph(F,N,LT,LX,LY)
 		}
 		V=reverse(NV);
 	}
-	if(getopt(raw)==1) return V;
+	if((Raw=getopt(raw))==1) return V;
+	if(Raw==2) return [V,LT];
 	OL=[["curve",1]];OLP=[];
 	if(type(C=getopt(ratio))==1){
 		OL=cons(["ratio",C],OL);OLP=cons(["ratio",C],OLP);
@@ -13033,7 +13472,7 @@ def polroots(L,V)
 	if(SS==0&&INIT==1){
 		SS=polroots(L,V|option_list=OL);
 		if(SS!=0) return SS;
-		for(C=0;SS==0&&C<4;C++){
+		for(C=0;SS==0&&C<5;C++){
 			I=(C==0)?1:(iand(random(),0xff)-0x80);
 			for(LL=[],K=length(L)-1;K>=0;K--){
 				for(Q=0,J=length(L)-1;J>=0;J--)
@@ -13252,7 +13691,7 @@ def cutf(F,X,VV)
 			if(car(V)!=[] && car(V)[0]<X) return myfeval(car(V)[1],Y);
 			return myfeval(F,Y);
 		}
-		if(X>car(V)[0]) continue;
+		if(car(V)==[]||X>car(V)[0]) continue;
 		if(X==car(V)[0]) return car(V)[1];
 		return myfeval(F,Y);
 	}
@@ -13279,8 +13718,8 @@ def periodicf(F,L,X)
 	if(type(L)==4) L=[eval(L[0]),eval(L[1])];
 	else L=eval(L);
 	if(isvar(X)){
-		Y=makenewv([X,V]);
-		Z=makenewv([X,Y,V]);
+		Y=makenewv([X,F]);
+		Z=makenewv([X,Y,F]);
 		return [Z,[Z,os_md.periodicf,[mysubst(F,[x,Y])],(type(L)==4)?[L]:L,[[Y,X]]]];
 	}
 	if(type(X)==4){
@@ -17235,7 +17674,7 @@ def integrate(P,X)
 			if(S!=RR) R=cons([[1,RR=S]],R);
 			for(V=FR=[];R!=[];R=cdr(R))
 				if(car(R)!=FR) V=cons(FR=car(R),V);
-			Var=varargs(V|all=1)[1];
+			Var=varargs(V|all=2);
 			for(S0=[x0,x1,x2,x3],S=[t,s,u,v,w];S0!=[]&&S!=[];){
 				if(findin(car(S0),Var)<0){
 					S0=cdr(S0); continue;
@@ -18366,10 +18805,10 @@ def linfrac01(X)
 
 def varargs(P)
 {
-	if((All=getopt(all))!=1) All=0;
+	if((All=getopt(all))!=1&&All!=2) All=0;
 	V=vars(P);
 	for(Arg=FC=[];V!=[];V=cdr(V)){
-		if(vtype(CV=car(V))==0&&All==1){
+		if(vtype(CV=car(V))==0&&All!=0){
 			Arg=lsort([CV],Arg,0);
 		}
 		if(vtype(CV)!=2) continue;
@@ -18386,7 +18825,8 @@ def varargs(P)
 			}
 		}
 	}
-	return [FC,Arg];
+	Arg=reverse(Arg);
+	return (All==2)?Arg:[reverse(FC),Arg];
 }
 
 def pfargs(P,X)
@@ -18812,7 +19252,7 @@ def init() {
 	}
 	if(Id>=0){
 		while((S=get_line(Id))!=0){
-			if(type(P=str_str(S,LS))==4 && (P0=str_char(S,P[1]+5,"="))>0){
+			if(type(P=str_str(S,LS))==4 && (P0=str_char(S,P[1]+4,"="))>0){
 				if(P[0]<5){
 					P0=str_chr(S,P0+1,"\"");
 					if(P0>0){
@@ -18836,7 +19276,7 @@ def init() {
 					else if(P[0]==7)	TikZ=SV;
 					else if(P[0]==8)	XYPrec=SV;
 					else if(P[0]==9)	XYcm=SV;
-					else if(P[0]==10)	XYcm=Canvas;
+					else if(P[0]==10)	Canvas=SV;
 				}
 			}
 		}

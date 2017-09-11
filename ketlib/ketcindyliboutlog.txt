@@ -1,4 +1,6 @@
-//// s:2017.08.26
+// s:2017.09.10
+//   MkketcindyJS changed substantially
+// s:2017.08.26
 ////   MkketcindyJS  ( data/js => CindyJS )
 // s:2017.07.02
 //   MkketcindyJS  ( Texview => Figure )

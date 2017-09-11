@@ -1,3 +1,5 @@
+// s:2017.09.05
+//   Presentation ( option about display of arrowbutton )
 // s:2017.08.23
 //   thin changed so as to change dynamically
 //   \setthin{dense} supported

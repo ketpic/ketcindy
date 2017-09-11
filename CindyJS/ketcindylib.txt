@@ -1,3 +1,5 @@
+// 17.08.26  Slider
+// 16.11.27
 Ketinit():=Ketinit(1);
 Ketinit(sy):=Ketinit(sy,[-5,5],[-5,5]);
 Ketinit(sy,rangex,rangey):=(
@@ -4790,6 +4792,34 @@ Exprrot(pt,dir,movstr,str):=(
 Exprrot(pt,dir,tmov,nmov,str):=(
   Expr([pt,"c",str],["notex"]);
   Com2nd("Exprrot("+pt+","+dir+","+tmov+","+nmov+",'"+str+"')");
+);
+
+Slider(ptstr,p1,p2):=( //17.04.11
+//help:Slider("A-C-B",[-3,0],[3,0]);
+  regional(pA,pB,pC,seg,sname,Alpha,tmp,tmp1);
+  tmp=indexall(ptstr,"-");
+  pA=substring(ptstr,0,tmp_1-1);
+  pC=substring(ptstr,tmp_1,tmp_2-1);
+  pB=substring(ptstr,tmp_2,length(ptstr));
+  seg=pA+pB;
+  Alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  sname="";
+  forall(1..(length(seg)),
+    tmp=substring(seg,#-1,#);
+    tmp1=indexof(Alpha,tmp);
+    if(tmp1>0,
+      sname=sname+unicode(text(tmp1+96),base->10);
+    ,
+      sname=sname+tmp;
+    );
+  );
+  Putpoint(pA,p1);
+  Putpoint(pB,p2);
+  Listplot([parse(pA),parse(pB)],["notex","color->[0,0.4,0.4]","size->2"]);
+//  create([sname],"Segment",[parse(pA),parse(pB)]);
+//  tmp2=Listplot("",[p1,p2],["nodata"]);
+  Putonseg(pC,parse("sg"+pA+pB));
+//  create([pC],"PointOn",[parse(sname),0.5]);
 );
 
 Putpoint(name,Pt):=Putpoint(name,Pt,Pt);

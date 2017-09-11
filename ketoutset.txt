@@ -1,11 +1,13 @@
 if(iswindows(),
-  PathT="C:\kettex\w32texb\bin\platex";
+  PathT="C:\kettex\texlive\bin\win32\platex";
+  PathT="C:\kettex\texlive\bin\win32\uplatex";
+//  PathT="C:\kettex\w32texb\bin\platex";
 //  PathT="C:\kettex\w32texb\bin\latex";
 //  PathT="C:\kettex\w32texb\bin\pdflatex";
 //  PathT="C:\w32tex\bin\platex";
 //  PathT="C:\texlive\bin\platex";
-  PathS="C:\Program Files\scilab-5.5.2\bin\scilex";
-//  PathS="C:\Program Files\scilab-6.6.0\bin\scilex";
+//  PathS="C:\Program Files\scilab-5.5.2\bin\scilex";
+  PathS="C:\Program Files\scilab-6.6.0\bin\scilex";
   PathC="C:\MinGW\bin\gcc.exe";
 //  PathC="C:\MinGW32\bin\gcc.exe";
   Pathpdf="C:\Program Files\SumatraPDF\SumatraPDF.exe";
@@ -19,7 +21,10 @@ if(iswindows(),
 );
 if(ismacosx(),
   PathT="/Applications/kettex/texlive/bin/x86_64-darwin/platex";
+//  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/uplatex";
 //  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/latex";
+//  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/xelatex";
+//  PathT="/Applications/kettexbasic/texlive/bin/x86_64-darwin/platex";
 //  PathT="/Library/TeX/texbin/platex"; 
 //  PathT="/Library/TeX/texbin/pdflatex";
 //  PathT="/Library/TeX/texbin/lualatex";
@@ -27,7 +32,7 @@ if(ismacosx(),
 //  PathT="/usr/texbin/platex";
 //  PathS="/Applications/scilab-5.5.2.app/Contents/MacOS/bin/scilab";
   PathS="/Applications/scilab-6.0.0.app/Contents/MacOS/bin/scilab";
-  Pathpdf="preview";
+//  Pathpdf="preview";
   Pathpdf="skim";
 //  Pathpdf="/Applications/skim.app/Contents/MacOS/Skim";
   PathC="gcc";
@@ -52,3 +57,5 @@ if(islinux(),
   PathF="";
   PathAd="";
 );
+// Changes for Mac
+PathT="/Applications/kettex/texlive/bin/x86_64-darwin/uplatex";

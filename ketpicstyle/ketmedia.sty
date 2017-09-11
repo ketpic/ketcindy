@@ -47,11 +47,11 @@ overface={\color{blue}\small \strut \fbox{$\ll$}}
 
 }
 
-\newcommand{\inputmovie}[3][90]{
+\newcommand{\inputmovie}[3][0.8]{
 
 \includemedia[
   label=#3,
-  width=0.8\linewidth,height=0.6\linewidth,
+  width=#1\linewidth,height=0.6\linewidth,
 %  width=60mm,height=45mm,
   activate=pagevisible,
   addresource=#2#3.mp4,

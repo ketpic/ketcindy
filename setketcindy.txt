@@ -1,12 +1,16 @@
-// e:2017.05.15
+// e:2017.09.09
 //Dirhead=getdirhead();
+Dirlib=Dirhead+pathsep()+"ketlib";
+Libname=Dirlib+pathsep()+"ketpicsciL5";
+DirlibC=Dirhead+pathsep()+"ketlibC";
+if(isexists(Dirhead,"ketfiles"),
+  Dirfiles=Dirhead+pathsep()+"ketfiles";
+,
+  Dirfiles=Dirhead;
+);
+println(makedir(Dirfiles,"ketwork"));
+Dirwork=Dirfiles+pathsep()+"ketwork";
 if(iswindows(),
-  Dirlib=Dirhead+"\ketlib";
-  DirlibC=Dirhead+"\ketlibC";
-  Dirbin=Dirhead+"\ketbin";
-  Dirwork=Dirhead+"\ketwork";
-  Dirwork=replace(Dirwork,"/","\");
-  Libname=Dirlib+"\ketpicsciL5";
   Batparent="\kc.bat";
   if(indexof(Shellfile,".")==0,Shellfile=Shellfile+".bat");
   if(indexof(Shellfile,"/")+indexof(Shellfile,"\")==0 ,
@@ -16,12 +20,6 @@ if(iswindows(),
   );
 );
 if(ismacosx(),
-  Dirlib=Dirhead+"/ketlib";
-  DirlibC=Dirhead+"/ketlibC";
-  Dirbin=Dirhead+"/ketbin";
-  Dirwork=Dirhead+"/ketwork";
-  Dirwork=replace(Dirwork,"\","/");
-  Libname=Dirlib+"/ketpicsciL5";
   Shellparent="/kc.sh";
   if(isstring(Shellfile),
     if(indexof(Shellfile,".")==0,Shellfile=Shellfile+".sh");
@@ -44,16 +42,10 @@ if(ismacosx(),
     );
     println(setexec(Dirwork,Shellparent));
   );
-  Mackc="sh";
-//  Mackc="open";
+//  Mackc="sh";
+  Mackc="open";
 );
 if(islinux(),
-  Dirlib=Dirhead+"/ketlib";
-  DirlibC=Dirhead+"/ketlibC";
-  Dirbin=Dirhead+"/ketbin";
-  Dirwork=Dirhead+"/ketwork";
-  Dirwork=replace(Dirwork,"\","/");
-  Libname=Dirlib+"/ketpicsciL5";
   Shellparent="/kc.sh";
   if(indexof(Shellfile,".")==0,Shellfile=Shellfile+".sh");
   if(indexof(Shellfile,"/")==0,
@@ -62,7 +54,6 @@ if(islinux(),
     Shellchild=Shellfile;
   );
 );
-
 setdirectory(Dirlib);
 import("ketcindylibbasic1.cs");
 import("ketcindylibbasic2.cs");

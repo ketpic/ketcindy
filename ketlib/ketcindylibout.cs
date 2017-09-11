@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2017.06.23) loaded");
+println("ketcindyout(2017.09.10) loaded");
 
 //help:start();
 
@@ -4597,7 +4597,7 @@ Mkketcindyjs(Arg):=(
   );
 );
 Mkketcindyjs(libname,options):=(
-//help:Mkketcindyjs("ketcindylib");
+//help:Mkketcindyjs();
 //help:Mkketcindyjs(options="Tex=y","Net=y"]);
   regional(texflg,netflg,tmp,tmp1,tmp2);
   texflg="Y";
@@ -4614,90 +4614,69 @@ Mkketcindyjs(libname,options):=(
     );
   );
   SCEOUTPUT = openfile(Fhead+".sce");
-  println(SCEOUTPUT,"cd('"+Dirhead+"/CindyJS);");
+  println(SCEOUTPUT,"cd('"+Dirhead+"/CindyJS');");
   println(SCEOUTPUT,"Dtket=mgetl('"+libname+".txt');");
   println(SCEOUTPUT,"cd('"+Dirwork+"');");
   println(SCEOUTPUT,"Dtjs=mgetl('"+Fhead+".html');");
   println(SCEOUTPUT,"Qt=char(34);");
-  println(SCEOUTPUT,"Fb=0;Lb=0;Ka=0;");
+  // 17.09.10from
   println(SCEOUTPUT,
-    "for I=1:size(Dtjs,1)");
-  println(SCEOUTPUT,
-    "  Tmp=strindex(Dtjs(I,:),['<script id=','csinit']);");
-  println(SCEOUTPUT,
-    "  if length(Tmp)>1 then Fb=I,end;");
-  println(SCEOUTPUT,
-    "  if Fb>0 then");
-  println(SCEOUTPUT,
-    "    Tmp=strindex(Dtjs(I,:),'</script>');");
-  println(SCEOUTPUT,
-    "    if Tmp>0 then Lb=I,end;");
-  println(SCEOUTPUT,
-    "    Tmp=strindex(Dtjs(I,:),'scripts: '+Qt+'cs*'+Qt+',');");
-  println(SCEOUTPUT,
-    "    if Tmp>0 then Ka=I;break,end;");
-  println(SCEOUTPUT,
-    "  end;");
-  println(SCEOUTPUT,
-    "end;");
-  if(netflg=="N", //16.11.08from
+    "Dtinit=['<script id='+Qt+'csinit'+Qt+' type='+Qt+'text/x-cindyscript'+Qt+'>'];");
+  println(SCEOUTPUT,"Dtinit=[Dtinit;Dtket;'</script>'];");
+  println(SCEOUTPUT,"Dthead=[];");
+  println(SCEOUTPUT,"for I=1:size(Dtjs,1)");
+  println(SCEOUTPUT,"  if length(strindex(Dtjs(I,1),'<script id='))==0 then");
+  println(SCEOUTPUT,"    Tmp=Dtjs(I,:);");
+  if(netflg=="N",
     println(SCEOUTPUT,
-      "for I=1:Fb");
+      "  if length(strindex(Tmp,'link rel='))>0 then");
     println(SCEOUTPUT,
-      "  Tmp=strindex(Dtjs(I,:),['href=','CindyJS.css']);");
-    println(SCEOUTPUT,
-      "  if length(Tmp)>1 then");
-    println(SCEOUTPUT,
-      "    Tmp=part(Dtjs(I,:),1:(Tmp(1)+4))+Qt+'CindyJS.css'+Qt+'>';");
-    println(SCEOUTPUT,
-      "    Dtjs(I,:)=Tmp;");
+      "    Tmp='    <link rel='+Qt+'stylesheet'+Qt+' href='+Qt+'CindyJS.css'+Qt+'>';");
     println(SCEOUTPUT,
       "  end;");
     println(SCEOUTPUT,
-      "  Tmp=strindex(Dtjs(I,:),['src=','Cindy.js']);");
+      "  if length(strindex(Tmp,['script type=','Cindy.js']))>1 then");
     println(SCEOUTPUT,
-      "  if length(Tmp)>1 then");
+      "    Tmp='    <script type='+Qt+'text/javascript'+Qt+' src='+Qt+'Cindy.js'+Qt+'>';");
     println(SCEOUTPUT,
-      "    Tmp=part(Dtjs(I,:),1:(Tmp(1)+3))+Qt+'Cindy.js'+Qt+'></script>';");
-    println(SCEOUTPUT,
-      "    Dtjs(I,:)=Tmp;");
+      "    Tmp=Tmp+'</script>';");
     println(SCEOUTPUT,
       "  end;");
-    println(SCEOUTPUT,
-      "end;"); 
-  );//16.11.08upto
-  println(SCEOUTPUT,
-    "Dtket=[Dtjs(1:Fb,:);Dtket;Dtjs(Lb:Ka,:)];");
-  if(texflg=="Y",
-    println(SCEOUTPUT,
-      "Dtket=[Dtket;'  use: ['+Qt+'katex'+Qt+'],'];");
   );
-  println(SCEOUTPUT,  //16.11.08from
-    "for I=Ka+1:size(Dtjs,1)");
-  println(SCEOUTPUT,
-    "  Tmp=strindex(Dtjs(I,:),['Button',Qt+'Figure']);");
-  println(SCEOUTPUT,
-    "  if length(Tmp)>1 then continue,end;");
-  println(SCEOUTPUT,
-    "  Tmp=strindex(Dtjs(I,:),['Button',Qt+'Exekc']);");
-  println(SCEOUTPUT,
-    "  if length(Tmp)>1 then continue,end;");
-  println(SCEOUTPUT,
-    "  Tmp=strindex(Dtjs(I,:),['Button',Qt+'Parent']);");
-  println(SCEOUTPUT,
-    "  if length(Tmp)>1 then continue,end;");
-  println(SCEOUTPUT,
-    "  Tmp=strindex(Dtjs(I,:),['Button',Qt+'KeTJS']);");
-  println(SCEOUTPUT,
-    "  if length(Tmp)>1 then continue,end;");
-  println(SCEOUTPUT,
-    "  Dtket=[Dtket;Dtjs(I,:)];");
-  println(SCEOUTPUT,
-    "end"); //16.11.08upto
-//  println(SCEOUTPUT,
-//    "Dtket=[Dtket;Dtjs((Ka+1):(size(Dtjs,1)),:)];");
-  println(SCEOUTPUT,
-    "mputl(Dtket,'"+Fhead+"ketcindy.html');");
+  println(SCEOUTPUT,"    Dthead=[Dthead;Tmp];");
+  println(SCEOUTPUT,"  else");
+  println(SCEOUTPUT,"    Is=I;break");
+  println(SCEOUTPUT,"  end;");
+  println(SCEOUTPUT,"end;");
+  println(SCEOUTPUT,"Dt=[];");
+  println(SCEOUTPUT,"for I=Is:size(Dtjs,1)");
+  println(SCEOUTPUT,"  Dt=[Dt;Dtjs(I,1)];");
+  println(SCEOUTPUT,"  if length(strindex(Dtjs(I,1),'</script>'))>0 then");
+  println(SCEOUTPUT,"    if length(strindex(Dt(1,1),'draw'))>0 then Dtdraw=Dt,end;");
+  println(SCEOUTPUT,"    if length(strindex(Dt(1,1),'keytyped'))>0 then Dtkey=Dt,end;");
+  println(SCEOUTPUT,"    Dt=[];");
+  println(SCEOUTPUT,"    if length(strindex(Dtjs(I+1,1),'<script id='))==0 then");
+  println(SCEOUTPUT,"      Ie=I+1;break;");
+  println(SCEOUTPUT,"    end;");
+  println(SCEOUTPUT,"  end;");
+  println(SCEOUTPUT,"end;");
+  println(SCEOUTPUT,"Dt=[Dthead;Dtdraw;Dtkey;Dtinit];");
+  println(SCEOUTPUT,"for I=Ie:size(Dtjs,1)");
+  println(SCEOUTPUT,"  Tmp=strindex(Dtjs(I,1),['Button',Qt+'Figure']);");
+  println(SCEOUTPUT,"  if length(Tmp)>1 then continue,end;");
+  println(SCEOUTPUT,"  Tmp=strindex(Dtjs(I,1),['Button',Qt+'Exekc']);");
+  println(SCEOUTPUT,"  if length(Tmp)>1 then continue,end;");
+  println(SCEOUTPUT,"  Tmp=strindex(Dtjs(I,1),['Button',Qt+'Parent']);");
+  println(SCEOUTPUT,"  if length(Tmp)>1 then continue,end;");
+  println(SCEOUTPUT,"  Dt=[Dt;Dtjs(I,1)];");
+  if(texflg=="Y",
+    println(SCEOUTPUT,"  if length(strindex(Dtjs(I,1),Qt+'cs*'+Qt))>0 then");
+    println(SCEOUTPUT,"    Dt=[Dt;'  use: ['+Qt+'katex'+Qt+'],'];");
+    println(SCEOUTPUT,"  end;");
+  );
+  println(SCEOUTPUT,"end;");
+  println(SCEOUTPUT,"mputl(Dt,'"+Fhead+"ketcindy.html');");
+  // 17.09.10upto
   println(SCEOUTPUT,"quit()");
   closefile(SCEOUTPUT);
   kcS(PathS,Fhead+".sce",["m"]);

@@ -3934,7 +3934,6 @@ Setslidehyper(Arg):=(
 Setslidehyper(driver,options):=(
 //help:Setslidehyper();
 //help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue",125,70,1]);
-//help:Setslidehyper([125,70,0]);
   regional(reL,stL,tmp,tmp1,tmp2,str,reL);
   str="";
   reL=[];
@@ -4520,50 +4519,46 @@ Presentation(texfile,txtfile):=(
           ,
             tmp4=concat(tmp4,["","\begin{layer}{120}{0}"]);
           );
-          if(hyperflg>0, //17.09.05
-            if(LinkSize>0.15, //17.09.05
-              tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
-              tmp1=tmp+text(paractr)+"pg";
-              tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);
-              if(#>1,tmp=tmp1+text(1),tmp=tmp2);
-              tmp3=[text(LinkPosH-29*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                    +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                    +"}{\scriptsize $\mathstrut|\!\lhd$}}}}}"];
-              if(#>1,tmp=tmp1+text(max(#-3,1)),tmp=tmp2);
-              tmp3=append(tmp3,
-                  text(LinkPosH-24*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                    +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                    +"}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}");
-              if(#>1,tmp=tmp1+text(#-1),tmp=tmp2);
-              tmp3=append(tmp3,
-                 text(LinkPosH-17*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                    +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                    +"}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}");
-              tmp="{"+text(LinkPosV)+"}{\hyperlink{para";
-              tmp2=tmp+text(paractr+1)+"pg"+text(1);
-              if(#<nrep,tmp=tmp1+text(#+1),tmp=tmp2);
-              tmp3=append(tmp3,
-                 text(LinkPosH-10*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                    +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                    +"}{\scriptsize $\mathstrut\!\rhd\!$}}}}}");
-              if(#<nrep,tmp=tmp1+text(min(#+3,nrep)),tmp=tmp2);
-              tmp3=append(tmp3,
+          if((hyperflg>0) & (LinkSize>0.15), 
+            tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
+            tmp1=tmp+text(paractr)+"pg";
+            tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);
+            if(#>1,tmp=tmp1+text(1),tmp=tmp2);
+            tmp3=[text(LinkPosH-29*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut|\!\lhd$}}}}}"];
+            if(#>1,tmp=tmp1+text(max(#-3,1)),tmp=tmp2);
+            tmp3=append(tmp3,
+                text(LinkPosH-24*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}");
+            if(#>1,tmp=tmp1+text(#-1),tmp=tmp2);
+            tmp3=append(tmp3,
+               text(LinkPosH-17*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                  +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}");
+            tmp="{"+text(LinkPosV)+"}{\hyperlink{para";
+            tmp2=tmp+text(paractr+1)+"pg"+text(1);
+            if(#<nrep,tmp=tmp1+text(#+1),tmp=tmp2);
+            tmp3=append(tmp3,
+               text(LinkPosH-10*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                  +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut\!\rhd\!$}}}}}");
+            if(#<nrep,tmp=tmp1+text(min(#+3,nrep)),tmp=tmp2);
+            tmp3=append(tmp3,
                text(LinkPosH-5*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                    +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                    +"}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}");
-              if(#<nrep,tmp=tmp1+text(nrep),tmp=tmp2);
-              tmp3=append(tmp3,
-                 text(LinkPosH)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
-                    +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                    +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
-              tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
-              tmp4=concat(tmp4,tmp3);// 17.01.12upto
-            );//17.09.05
-            if(LinkPosH>0, //17.09.05
-              tmp="\putnotew{"+text(LinkPosH)+"}{"+text(LinkPosV+6)+"}";//17.01.21from
-              tmp=tmp+"{\scriptsize\color{black} "+text(#)+"/"+text(nrep)+"}";
-              tmp4=append(tmp4,tmp);//17.01.21upto
-            );
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}");
+            if(#<nrep,tmp=tmp1+text(nrep),tmp=tmp2);
+            tmp3=append(tmp3,
+               text(LinkPosH)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
+            tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
+            tmp4=concat(tmp4,tmp3);// 17.01.12uptor
+            tmp="\putnotew{"+text(LinkPosH)+"}{"+text(LinkPosV+6)+"}";//17.10.21from
+            tmp=tmp+"{\scriptsize\color{black} "+text(#)+"/"+text(nrep)+"}";
+            tmp4=append(tmp4,tmp);//17.10.21upto
           );
           tmp4=concat(tmp4,["\end{layer}",""]);//16.12.31upto
           Repeatsameslide(repeatflg,text([#]),tmp4);

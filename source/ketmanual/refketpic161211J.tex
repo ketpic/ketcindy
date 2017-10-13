@@ -1,0 +1,90 @@
+\documentclass[a4j]{jarticle}
+%あいう
+
+\usepackage{ketpic,ketlayer}
+\usepack
+
+\input{/tools/reference/refstyle}
+
+\setmargin{20}{20}{15}{25}
+
+\begin{document}
+
+\begin{flushright}
+2016.12.11
+\end{flushright}
+
+
+\begin{center}
+{\bf \huge \ketpic\ --ketpic--}\vspace{3mm}\\
+\end{center}
+
+\section{スタイル名}
+\tab{ketpic.sty,\ ketpic2e.sty(pict2e必要)}
+
+\section{概要}
+
+\bs Width,\ \bs Height,\ \bs Depthを定義する．
+
+また，10個の一時カウンタ ketpicctra,\ $\cdots$,\ ketpicctrj を定義する．
+
+\section{マクロ一覧}
+
+\subsection{プリアンブル用}
+
+%\tab{\bs usepack}amsmath, amssymb,graphicx,colorを読み込む
+
+\tab{\bs setmargin\br{left}\br{right}\br{top}\br{bottom}}\\
+\tab{}マージン設定（単位はmm）\\
+\rei \bs setmargin\br{20}\br{20}\br{15}\br{25}
+
+\subsection{本文用}
+
+\tab{\bs ketpic}ロゴ \ketpic
+
+\tab{\bs Ltab\br{W}\br{S}}Wの幅を確保して左寄せでSを書く\\
+\rei \bs Ltab\br{5cm}\br{abc}xyz
+
+\tab{\bs Rtab\br{W}\br{S}}Wの幅を確保して右寄せでSを書く
+
+\tab{\bs Ctab\br{W}\br{S}}Wの幅を確保して中央寄せでSを書く
+
+%\tab{\bs vbackward\br{C}}文字Cの高さ分だけ上に戻る\\
+%\rei \bs vbackward\br{\bs includegraphics\br{ex.eps}}
+
+%\tab{\bs vforward\br{C}}文字Cの高さ分だけ下に進む
+
+\tab{\bs ketcalcwidth[0]\br{C}}文字Cの幅を単位長で計ってカウンタ１に返す\\
+\chuu オプションが１のときは，値を表示
+
+\tab{\bs ketcalcheight[0]\br{C}}文字Cの高さを単位長で計ってをカウンタ１に返す\\
+\chuu オプションが１のときは，値を表示
+
+\tab{\bs ketcalcdepth[0]\br{C}}文字Cの深さを単位長で計ってカウンタ１に返す\\
+\chuu オプションが１のときは，値を表示
+
+\tab{\bs ketcalcwh\br{C}}文字Cの横幅と縦幅をmm単位で返す\\
+\chuu \{横幅\}\{縦幅\}の形式で
+
+\subsection{シンボル}
+
+\begin{layer}[120]{120}{0}
+\putnotee{5}{5}{\dangerbendmark}
+\putnotee{10}{10}{\cautionmark}
+\putnotee{15}{15}{\circlemark{1}}
+\putnotee{20}{25}{\circleshade{1}{0.5}}
+\putnotee{5}{30}{\NEarrow,\ \NELarrow,\ \NERarrow}
+\end{layer}
+
+\tab[6cm]{\bs dangerbendmark[size]}ブルバキの「危険な曲がり角」
+
+\tab[6cm]{\bs cautionmark[size]}注意書きのマーク
+
+\tab[6cm]{\bs circlemark[thickness]\br{size}} 円\\
+\chuu サイズ１= 4mm（直径）
+
+\tab[6cm]{\bs circleshade[thickness]\br{size}\br{density}}中塗りの円
+
+\tab[6cm]{\bs NEarrow[倍率],\bs NELarrow[倍率]など} 増減矢印
+
+\end{document}

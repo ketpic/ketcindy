@@ -1,2 +1,7 @@
+//2017.10.13
+//    Ketinitmv changed (Shellfile removed)
+//    Parafolder debugged
+//2017.10.12
+//    Parafolder changed ( cmdL for making TeX files)
 //2017.10.08
 //    Mkanimation added

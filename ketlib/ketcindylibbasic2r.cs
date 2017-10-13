@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2017.10.07) loaded");
+println("ketcindybasic2(2017.10.11) loaded");
 
 //help:start();
 
@@ -2631,8 +2631,8 @@ WritetoRS(filename,shchoice):=(
 //    Libname=Libname+"2e";
 //  ); //  17.10.07removed
   tmp=replace(Libname,"\","/"); //17.09.24from
-//  println(SCEOUTPUT,"load('"+tmp+".Rdata')");
-  println(SCEOUTPUT,"source('"+tmp+".r')");//temporary,0924upto
+//  println(SCEOUTPUT,"load('"+tmp+".Rdata')"); //17.10.11
+  println(SCEOUTPUT,"source('"+tmp+".r')");//temporary
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
        //  17.10.07added
     tmp=replace(tmp+"_rep2e","\","/");
@@ -2969,7 +2969,7 @@ Makeshell():=(
     Makeshell(Fhead+"main");
   );
 );
-Makeshell(texmainfile):=Makeshell(texmainfile,"stv");
+Makeshell(texmainfile):=Makeshell(texmainfile,"rtv");
 Makeshell(texmainfile,flow):=(
   regional(parent,tmp,tmp1,tmp2,tmp3,flg,tex,path,shnm);
   parent=Dirwork+Shellparent; // 16.05.29
@@ -2996,79 +2996,67 @@ Makeshell(texmainfile,flow):=(
   println(SCEOUTPUT,"#!/bin/sh");
   println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq); // 15.07.16
   tmp1=" "+Dq+Fhead+Dq+" "+Dq+texmainfile+Dq; // 15.12.11
-  if((isstring(Shellfile)) & (length(Shellfile)>5), // 16.04.01
-    tmp="sh "+Dq+Shellchild+Dq+tmp1; // 16.05.15,16.05.30
-  ,
-    flg=0;
-    forall(reverse(1..length(PathT)),
-      if(flg==0,
-        if(substring(PathT,#-1,#)=="/",
-          tex=substring(PathT,#,length(PathT));
-          path=substring(PathT,0,#-1);
-          flg=1;
-        );
+  flg=0;
+  forall(reverse(1..length(PathT)),
+    if(flg==0,
+      if(substring(PathT,#-1,#)=="/",
+        tex=substring(PathT,#,length(PathT));
+        path=substring(PathT,0,#-1);
+        flg=1;
       );
     );
-    if(indexof(flow,"s")>0,
-      tmp=Dq+PathR+Dq+" --vanilla --slave < "+Fhead+".r";
-       // 17.09.14
-      println(SCEOUTPUT,tmp);
-    );
-    if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
-      tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-      tmp=replace(Dq+PathT+Dq,tex,"dvipdfmx")+" "+texmainfile+".dvi";
-      println(SCEOUTPUT,tmp); 
-      tmp="rm "+texmainfile+".dvi";
-      println(SCEOUTPUT,tmp);
-    );
-    if(tex=="xelatex", 
-      tmp="export PATH=$"+path+":${PATH}";
-      println(SCEOUTPUT,tmp); 
-      tmp="xelatex"+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-      tmp="rm "+texmainfile+".dvi";
-      println(SCEOUTPUT,tmp);
-    );
-    if(tex=="pdflatex" % tex=="pdftex",//16.11.22from 
-      tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-    );//16.11.22upto
-    if(tex=="lualatex",//16.12.16
-      tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-    );//16.12.16
-    tmp="";
-    if(isstring(Shellfile),
-      if(indexof(Shellfile,"mv")>0,
-        tmp=PathAd;
-      );
-    );
-    if(length(tmp)==0,
-      if(!isstring(Pathpdf),
-        tmp="preview";
-      ,
-        tmp=Pathpdf;
-      );
-    );
-    if(tmp=="preview" % tmp=="skim", // 16.09.09from,16.10.20
-      tmp="open -a "+Dq+tmp+Dq+" "+texmainfile+".pdf";
-    ,
-      tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
-    );// 16.09.09upto
   );
+  if(indexof(flow,"r")>0,
+    tmp=Dq+PathR+Dq+" --vanilla --slave < "+Fhead+".r";
+     // 17.09.14
+    println(SCEOUTPUT,tmp);
+  );
+  if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
+    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+    tmp=replace(Dq+PathT+Dq,tex,"dvipdfmx")+" "+texmainfile+".dvi";
+    println(SCEOUTPUT,tmp); 
+    tmp="rm "+texmainfile+".dvi";
+    println(SCEOUTPUT,tmp);
+  );
+  if(tex=="xelatex", 
+    tmp="export PATH=$"+path+":${PATH}";
+    println(SCEOUTPUT,tmp); 
+    tmp="xelatex"+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+    tmp="rm "+texmainfile+".dvi";
+    println(SCEOUTPUT,tmp);
+  );
+  if(tex=="pdflatex" % tex=="pdftex",//16.11.22from 
+    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+  );//16.11.22upto
+  if(tex=="lualatex",//16.12.16
+    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+  );//16.12.16
+  if(!isstring(Pathpdf),
+    tmp="preview";
+  ,
+    tmp=Pathpdf;
+  );
+  if(tmp=="preview" % tmp=="skim", // 16.09.09from,16.10.20
+   tmp="open -a "+Dq+tmp+Dq+" "+texmainfile+".pdf";
+  ,
+    tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
+  );// 16.09.09upto
   println(SCEOUTPUT,tmp); // 16.07.21upto
   println(SCEOUTPUT,"exit 0");
   closefile(SCEOUTPUT);
@@ -3090,7 +3078,7 @@ Makebat():=(
     Makebat(Fhead+"main");
   );
 );
-Makebat(texmainfile):=Makebat(texmainfile,"stv");
+Makebat(texmainfile):=Makebat(texmainfile,"rtv");
 Makebat(texmainfile,flow):=(
   regional(drive,fname,tmp,tmp1,tmp2,tmp3,flg,tex,path,batnm);
   drive="C:";
@@ -3128,78 +3116,64 @@ Makebat(texmainfile,flow):=(
     println(SCEOUTPUT,drive);
   );
   println(SCEOUTPUT,"cd "+Dq+fname+Dq);// 15.07.16
-  if((isstring(Shellfile)) & (length(Shellfile)>6), // 16.04.01
-    tmp=Dq+Batchild+Dq+tmp1;
+  flg=0;
+  forall(reverse(1..length(PathT)),
+    if(flg==0,
+      if(substring(PathT,#-1,#)=="\",
+        tex=substring(PathT,#,length(PathT));
+        path=substring(PathT,0,#-1);
+        flg=1;
+      );
+    );
+  );
+  if(indexof(flow,"r")>0,
+    tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r";
+      // 17.09.14
+    println(SCEOUTPUT,tmp);
+  );
+  if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
+    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+    tmp=replace(Dq+PathT+Dq,tex,"dvipdfmx")+" "+texmainfile+".dvi";
+    println(SCEOUTPUT,tmp); 
+    tmp="del "+texmainfile+".dvi";
+    println(SCEOUTPUT,tmp);
+  );
+  if(tex=="xelatex", 
+    tmp="set Path = %Path%;"+Dq+path+Dq;
+    println(SCEOUTPUT,tmp); 
+    tmp="xelatex"+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+    tmp="del "+texmainfile+".dvi";
+    println(SCEOUTPUT,tmp);
+  );
+  if(tex=="pdflatex" % tex=="pdftex",//16.11.22from 
+    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+  );//16.11.22upto
+  if(tex=="lualatex",//16.12.16
+    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    println(SCEOUTPUT,tmp); 
+    if(indexof(Shellfile,"mv")>0,
+      println(SCEOUTPUT,tmp); 
+    );
+  );//16.12.16
+  if(!isstring(Pathpdf),
+    tmp=indexof(PathS,"\scilab");// 15.12.12
+    tmp=substring(PathS,0,tmp-1)+"\SumatraPDF\SumatraPDF.exe";
   ,
-    flg=0;
-    forall(reverse(1..length(PathT)),
-      if(flg==0,
-        if(substring(PathT,#-1,#)=="\",
-          tex=substring(PathT,#,length(PathT));
-          path=substring(PathT,0,#-1);
-          flg=1;
-        );
-      );
-    );
-    if(indexof(flow,"s")>0,
-      tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r";
-        // 17.09.14
-      println(SCEOUTPUT,tmp);
-    );
-    if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
-      tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-      tmp=replace(Dq+PathT+Dq,tex,"dvipdfmx")+" "+texmainfile+".dvi";
-      println(SCEOUTPUT,tmp); 
-      tmp="del "+texmainfile+".dvi";
-      println(SCEOUTPUT,tmp);
-    );
-    if(tex=="xelatex", 
-      tmp="set Path = %Path%;"+Dq+path+Dq;
-      println(SCEOUTPUT,tmp); 
-      tmp="xelatex"+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-      tmp="del "+texmainfile+".dvi";
-      println(SCEOUTPUT,tmp);
-    );
-    if(tex=="pdflatex" % tex=="pdftex",//16.11.22from 
-      tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-    );//16.11.22upto
-    if(tex=="lualatex",//16.12.16
-      tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
-      println(SCEOUTPUT,tmp); 
-      if(indexof(Shellfile,"mv")>0,
-        println(SCEOUTPUT,tmp); 
-      );
-    );//16.12.16
-//    tmp="del "+texmainfile+".dvi";
-//    println(SCEOUTPUT,tmp);
-    tmp=""; 
-    if(isstring(Shellfile),
-      if(indexof(Shellfile,"mv")>0,
-        tmp=PathAd;
-      );
-    );
-    if(length(tmp)==0,
-      if(!isstring(Pathpdf),
-        tmp=indexof(PathS,"\scilab");// 15.12.12
-        tmp=substring(PathS,0,tmp-1)+"\SumatraPDF\SumatraPDF.exe";
-      ,
-        tmp=Pathpdf;
-      );
-    ); 
-    tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
-  ); //16.07.21upto
+    tmp=Pathpdf;
+  );
+  tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"exit 0");
   closefile(SCEOUTPUT);
@@ -4759,44 +4733,24 @@ Mkslides():=(
   ,  // 17.04.12upto
     Presentation(Texparent);  // 15.08.14 upto
     if(iswindows(),
-  	  tmp1=Batchild;
       tmp2=Batparent;
-      tmp3=Shellfile;
       parent=replace(Dirwork+Batparent,sep+"fig","");// 16.05.29
-      if((isstring(Shellslide)) & (length(Shellslide)>0),
-        Shellfile=Dirbin+sep+Shellslide+".bat";  // 15.12.08
-        Batchild=Shellfile;
-      ,
-        Shellfile=".bat";
-      );
       Makebat(Texparent,"tv"); // 16.07.21
       kc():=(
         println("kc : "+kc(parent,Dirlib,Fnametex)); // 16.06.10, 17.02.19
       );
       kc();
-      Batchild=tmp1;
       Batparent=tmp2;
-      Shellfile=tmp3;
     ,
-      tmp1=Shellchild;
       tmp2=Shellparent;
-      tmp3=Shellfile;
       parent=replace(Dirwork+Shellparent,sep+"fig","");// 16.05.29
-      if((isstring(Shellslide)) & (length(Shellslide)>0),
-        Shellfile=Dirbin+sep+Shellslide+".sh";  // 15.12.08
-        Shellchild=Shellfile;
-      ,
-        Shellfile=".sh";
-      );
       Shellparent=replace(Shellparent,sep+"fig","");
       Makeshell(Texparent,"tv"); // 16.07.21
       kc():=(
         println("kc : "+kc(parent,Mackc+Dirlib,Fnametex)); // 16.06.10
       );
       kc();
-      Shellchild=tmp1;
       Shellparent=tmp2;
-      Shellfile=tmp3;
     );
   );
   Dirwork=Dirwork+sep+"fig";

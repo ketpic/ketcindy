@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(2017.10.09) loaded");
+println("ketcindymv(2017.10.13) loaded");
 
 //help:start();
 
@@ -30,7 +30,7 @@ Ketinitmv():=(
   Listplot("sl",[[tmp2,tmp1],[tmp3,tmp1]],["notex","linecolor->[0,1,0]"]);
   PutonCurve("MF",sgsl,[tmp2,tmp3]);
   Paraamble();  // 16.08.10
-  Shellfile="mv"; // 17.04.09
+  Pathpdf=Pathad; // 17.10.13
 );
 
 Moviedata(func,var):=Moviedata(func,var,[]);
@@ -671,23 +671,33 @@ Parafolder(path,fstr,sLorg,optionorg):=(
         );
       );
     ); 
+    tmp1=replace(Dirwork+pathsep()+path,"\","/"); //17.10.13
     cmdL=[
-      "setwd",[Dq+Dirwork+pathsep()+path+Dq],
-      "Execfile=function(fname){",[],
+      "setwd",[Dq+tmp1+Dq],
+      "Mkallfile=function(fname){",[],
+      "  Ctr<<- Ctr+1",[],
+      "  cat('print(',Ctr,')\n',file='all.r',append=TRUE)",[],
       "  tmp=readLines(fname)",[],
-      "  file.remove(fname)",[],
-      "  cat('Ketinit()\n',file=fname,append=TRUE)",[],
-      "  for(J in 7:(length(tmp)-1)){",[],
-      "    cat(paste(tmp[J],'\n',sep=''),file=fname,append=TRUE)",[],
+      "  first=1",[],
+      "  if(Ctr>1){",[],
+      "    first=7",[],
+      "    cat('Ketinit()\n',file='all.r',append=TRUE)",[],
       "  }",[],
-      "  print(fname)",[],
-      "  source(fname)",[],
+      "  for(J in first:(length(tmp)-1)){",[],
+      "    cat(paste(tmp[J],'\n',sep=''),file='all.r',append=TRUE)",[],
+      "  }",[],
+//      "  source(fname)",[],
       "}",[],
+      "file.remove('all.r')",[],
       "fL=list.files()",[],
+      "Ctr=0",[],
+      "t<-proc.time()",[],
       "for(fname in fL){",[],
-      "  Execfile(fname)",[],
+      "  Mkallfile(fname)",[],
       "}",[],
-//      "source('all.r')",[],
+      "proc.time()-t",[],
+      "source('all.r')",[],
+      "proc.time()-t",[],
       "setwd",[Dq+Dirwork+Dq]
     ];
     if(ErrFlag!=-1,

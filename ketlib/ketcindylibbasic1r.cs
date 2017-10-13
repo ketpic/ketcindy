@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.0(2017.10.09)");
+println("KETCindy V.3.1.0(2017.10.13)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.10.06) loaded");
+println("ketcindylibbasic1(2017.10.13) loaded");
 
 //help:start();
 
@@ -86,6 +86,22 @@ Ketinit(sy,rangex,rangey):=(
   );
   if(!isstring(Mackc),// 16.06.07
     Mackc="sh"; 
+  );
+  if(iswindows(),
+    Batparent="\kc.bat";
+  ,
+    Shellparent="/kc.sh";
+    if(!isexists(Dirwork,""),
+      println(Dirwork+" not exist");
+    ,
+      if(!iskcexists(Dirwork),
+        setdirectory(Dirwork);
+        SCEOUTPUT = openfile(Shellparent);
+        closefile(SCEOUTPUT);
+        println(Shellparent+" generated");
+      );
+      println(setexec(Dirwork,Shellparent));
+    );
   );
   ArrowlineNumber=1;  // 15.01.05
   ArrowheadNumber=1;
@@ -543,9 +559,9 @@ Changework(path):=( //16.10.21
     setdirectory(Dirwork);
     if(!iswindows(), //17.04.11
       if(!iskcexists(Dirwork),
-        SCEOUTPUT = openfile(Shellparent);
+        SCEOUTPUT = openfile("/kc.sh");
         closefile(SCEOUTPUT);
-        println(setexec(Dirwork,Shellparent));
+        println(setexec(Dirwork,"/kc.sh"));
       );
     );
   );

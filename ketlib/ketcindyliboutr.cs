@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2017.10.07) loaded");
+println("ketcindyout(2017.10.12) loaded");
 
 //help:start();
 
@@ -506,7 +506,7 @@ WritetoR(fname,cmdL,options):=(
   tmp="setwd("+Dq+tmp1+Dq+")##";
   println(SCEOUTPUT,tmp);
   tmp1=replace(Libname,"\","/"); // 17.09.24from
-//  tmp="load('"+tmp1+".r')"; 
+//  tmp="load('"+tmp1+".Rdata')"; # 17.10.12
   tmp="source('"+tmp1+".r')##"; // 17.09.24temporarily
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"Ketinit()##"); // 16.07.07
@@ -606,7 +606,7 @@ kcR(path,fname,optionorg):=(
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       if(PathR=="",tmp="R",tmp=PathR);//16.10.20
-      tmp=tmp+"  --vanilla --slave < "+filename+" >& "+ferr;//16.10.22
+      tmp=tmp+"  --vanilla --slave < "+filename+" 2> "+ferr;//17.10.12
       println(SCEOUTPUT,tmp); 
       println(SCEOUTPUT,"exit 0");
       closefile(SCEOUTPUT);

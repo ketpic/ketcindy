@@ -11,7 +11,7 @@ if(iswindows(),
   PathC="C:\MinGW\bin\gcc.exe";
 //  PathC="C:\MinGW32\bin\gcc.exe";
   Pathpdf="C:\Program Files\SumatraPDF\SumatraPDF.exe";
-  PathR="C:\Program Files\R\R-3.4.2\bin";
+  PathR="C:\Program Files\R\R-3.2.2\bin";
   PathA="C:\Program Files\asir\bin\asir";
   PathM="C:\maxima-5.37.3\bin\maxima.bat";
   PathV3="C:\Program Files\VCG\MeshLab\meshlab";
@@ -26,7 +26,6 @@ if(ismacosx(),
 //  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/xelatex";
 //  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/pdflatex";
 //  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/lualatex";
-//  PathT="/Applications/kettex/texlive/bin/x86_64-darwin/platex";
 //  PathT="/Applications/kettexbasic/texlive/bin/x86_64-darwin/platex";
 //  PathT="/Library/TeX/texbin/platex"; 
 //  PathT="/Library/TeX/texbin/pdflatex";
@@ -35,8 +34,8 @@ if(ismacosx(),
 //  PathT="/usr/texbin/platex";
 //  PathS="/Applications/scilab-5.5.2.app/Contents/MacOS/bin/scilab";
   PathS="/Applications/scilab-6.0.0.app/Contents/MacOS/bin/scilab";
-  Pathpdf="preview";
-//  Pathpdf="skim";
+//  Pathpdf="preview";
+  Pathpdf="skim";
 //  Pathpdf="/Applications/skim.app/Contents/MacOS/Skim";
   PathC="gcc";
 //  PathR="R";
@@ -48,8 +47,8 @@ if(ismacosx(),
   PathF="/Applications/FriCAS.app/Contents/Resources/bin/fricas";
 //  PathAd="Adobe Reader";
   PathAd="/Applications/Adobe Acrobat Reader DC.app/Contents/MacOS/AdobeReader";
-  Mackc="sh";
-//  Mackc="open";
+//  Mackc="sh";
+  Mackc="open";
 );
 if(islinux(),
   PathT="/usr/bin/platex";

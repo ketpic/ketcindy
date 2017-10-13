@@ -1,3 +1,5 @@
+//2017.10.13
+//    Makebat,Makeshell,Mkslides debugged  (Shellfile,Sehllchild removed )
 //2017.10.08
 //    Mkslides debugged  (Sheslide=>Shellslide )
 //2017.10.07

@@ -1,1 +1,0 @@
-Dirhead=gethome()+"/ketcindy";

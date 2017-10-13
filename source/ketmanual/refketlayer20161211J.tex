@@ -1,0 +1,273 @@
+\documentclass[a4j]{jarticle}
+
+\usepackage{ketpic,ketlayer}
+
+\usepack
+
+\input{refstyle}
+
+\setmargin{20}{20}{15}{25}
+
+\begin{document}
+
+\begin{flushright}
+2016.12.11
+\end{flushright}
+
+
+\begin{center}
+{\bf \huge \ketpic\ style ---ketlayer---}\vspace{3mm}\\
+\end{center}
+
+\section{スタイル名}
+\tab{ketlayer.sty,\ ketlayer2e.sty(pict2e必要)}
+
+\section{概要}
+追記（コメント，メモ，挿絵）用の環境，マクロを定義．\\
+\hspace*{5zw}ketpic.sty も読んでおく．\\
+\hspace*{5zw}graphicx,\ color も必要
+
+\section{環境}
+
+\tab{\bs begin\br{layer}[方眼の水平移動]\br{W}\br{H}---\bs end\br{layer}}\\
+\tab{}メモを書くためのpicture環境を定義して，方眼を描く．\\
+\chuu 方眼の水平移動のデフォルトは 0\\
+\chuu $\mathrm{H}=0$のときは，方眼を描かない．\\
+\chuu $\mathrm{H}<0$のときは，上側に方眼を描く．\\
+\rei \bs begin\br{layer}\br{170}\br{30}
+
+\vspace{0.5\baselineskip}
+
+\begin{layerv}{0}{30}
+
+\end{layerv}
+
+\vspace{7\baselineskip}
+
+%\tab{\bs begin\br{layerv}[方眼の水平移動]\br{縦方向の移動}\br{H}---\bs end\br{layerv}}\\
+%\tab{}縦方向の移動をし，水平方向は紙幅から自動計算．縦方向は下が＋\\
+%\chuu 該当部分の下におき，$-$で指定するのが普通
+
+\tab{\bs begin\br{layerg}[1 or 0]\br{C}---\bs end\br{layerg}}
+
+\tab{}C（図など）の下におき，Cの縦幅だけ方眼をおく\\
+\chuu オプション引数(def=1)：１のとき方眼を描き，０のとき描かない
+
+\section{シンボル}
+
+
+\begin{layer}{170}{0}
+
+\putnotec{30}{35}{\cirscoremark{0.8}}
+
+\putnotec{60}{35}{\scirscoremark{0.8}}
+
+\putnotec{90}{35}{\triscoremark{0.8}}
+
+\putnotec{120}{35}{\crosscoremark{0.8}}
+
+\end{layer}
+
+
+%\tab[6cm]{\bs circlemark[thickness]\br{size}}円\\
+%\chuu サイズは直径10mmからの倍率で与える．\\
+%\chuu thicknessのデフォルトは　8 ( milli inch）
+
+%\tab[6cm]{\bs remarkmark[thickness]\br{size}}注意マーク
+
+\tab[6cm]{\bs cirscoremark[thickness]\br{size}}手がきの2重丸
+
+\tab[6cm]{\bs scirscoremark[thickness]\br{size}}手がきの単丸
+
+\tab[6cm]{\bs triscoremark[thickness]\br{size}}手がきの三角
+
+\tab[6cm]{\bs crosscoremark[thickness]\br{size}}手がきのバツ
+
+\vspace{6\baselineskip}
+
+\section{マクロ一覧}
+
+\begin{layer}{160}{0}
+
+\putnotee{120}{20}{\fbox{$\dfrac{1}{2}$}}
+
+\end{layer}
+
+\tab[14zw]{\bs putnotec\br{x}\br{y}\br{Char}}(x,\ y)を中心にCharを書く
+
+\tab[14zw]{\bs putnotee\br{x}\br{y}\br{Char}}(x,\ y)の右にCharを書く
+
+\tab[14zw]{\bs putnotew\br{x}\br{y}\br{Char}}(x,\ y)の左にCharを書く
+
+\tab[14zw]{\bs putnotes\br{x}\br{y}\br{Char}}(x,\ y)の下にCharを書く
+
+\tab[14zw]{\bs putnoten\br{x}\br{y}\br{Char}}(x,\ y)の上にCharを書く
+
+\tab{\bs putnotene\br{x}\br{y}\br{Char}\ ,\ 
+\bs putnotenw\br{x}\br{y}\br{Char}}
+
+\tab{\bs putnotese\br{x}\br{y}\br{Char}\ ,\ 
+\bs putnotesw\br{x}\br{y}\br{Char}}
+
+\noindent
+\rei putnotee\br{20}\br{5}\br{\bs fbox\br{\$\bs dfrac\br{1}\br{2}\$}}
+
+\mbox{}
+
+\begin{layer}{160}{0}
+
+\lineseg[16]{135}{25}{30}{25}
+
+\arrowlineseg[16]{130}{50}{10}{45}
+
+\end{layer}
+
+\tab{\bs lineseg[thickness]\br{$x$}\br{$y$}\br{$L$}\br{$\theta$}}\\
+\tab{}点$(x, \ y)$から長さ$L$の線分を$\theta^{\circ}$
+方向に描く（単位はmm）\\
+\rei \bs lineseg[16]\br{130}\br{20}\br{30}\br{25}\\
+\chuu thicknessの単位は　milli inch（デフォルト=12）\\
+\chuu $x,\ y,\ \theta$ は小数でもよい．
+
+\tab{\bs dashlineseg[thickness]\br{$x$}\br{$y$}\br{$L$}\br{$\theta$}}\\
+\tab{}点$(x, \ y)$から長さ$L$の破線を$\theta^{\circ}$
+方向に描く（単位はmm）
+
+\tab{\bs arrowlineseg[thickness]\br{$x$}\br{$y$}\br{$L$}\br{$\theta$}}\\
+\tab{}矢印を描く（鏃は始点に描く）\\
+\rei \bs arrowlineseg[16]\br{30}\br{20}\br{10}\br{45}
+
+\tab[13zw]{\bs arrowhead[size]\br{$x$}\br{$y$}\br{$\theta$}}鏃だけを描く
+
+\mbox{}
+
+%\tab{\bs boxline[線幅]\br{x}\br{y}\br{W}\br{H}}\\
+%\tab{}(x,\ y)の右上(ne)に幅W，高さHの矩形を描く．\\
+%\chuu 線幅のデフォルトは8 (milli inch）\\
+%\chuu n,\ s など8方向＋c を付加すれば，それぞれの方向に描く\\
+%\rei \bs boxlinen\br{30}\br{20}\br{50}\br{5}
+
+\tab{\bs boxframe+dir[thickness]\br{x}\br{y}\br{W}\br{H}\br{文字}}\\
+\tab{}(x,\ y)のdir方向に幅W，高さHの矩形を描き，中に文字を入れる\\
+\chuu dir=n,\ s,\ e,\ w,\ ne,\ nw,\ se,\ sw,\ c \\
+\rei \bs boxframen\br{30}\br{20}\br{50}\br{5}\br{}
+
+%\tab{\bs dashboxline[線幅]\br{x}\br{y}\br{W}\br{H}}\\
+%\tab{}(x,\ y)の右上(ne)に幅W，高さHの点線の矩形を描く．\\
+%\chuu 線幅のデフォルトは8 (milli inch）\\
+%\chuu 8方向＋c については，\bs boxlineと同じ
+
+\tab{\bs dashboxframe+dir[thickness]\br{x}\br{y}\br{W}\br{H}\br{文字}}\\
+\tab{}(x,\ y)のdir方向にギザの矩形を描き，中に文字を入れる\\
+\chuu dir=n,\ s,\ e,\ w,\ ne,\ nw,\ se,\ sw,\ c 
+
+\tab{\bs jaggyboxframe+dir[thickness]\br{x}\br{y}\br{W}\br{H}\br{文字}}\\
+\tab{}(x,\ y)のdir方向にギザ四角形を描き，中に文字を入れる\\
+\chuu dir=n,\ s,\ e,\ w,\ ne,\ nw,\ se,\ sw,\ c 
+
+\tab{\bs dialboxframe+dir[thickness]\br{x}\br{y}\br{W}\br{H}\br{文字}}\\
+\tab{}(x,\ y)のdir方向にダイヤ型からなる矩形を描き，中に文字を入れる\\
+\chuu dir=n,\ s,\ e,\ w,\ ne,\ nw,\ se,\ sw,\ c 
+
+\tab{\bs eraser+dir[枠]\br{$x$}\br{$y$}\br{W}\br{H}}\\
+\tab{}$(x,\ y)$のdir方向の長方形の内部を消す\\
+\chuu 枠=0 とすると枠線を描かない（デフォルトは 1）\\
+\chuu dir=n,\ s,\ e,\ w,\ ne,\ nw,\ se,\ sw,\ c 
+
+\tab{\bs shadebox+dir[枠描画]\br{$x$}\br{$y$}\br{W}\br{H}\br{D}\br{色}}\\
+\tab{}$(x,\ y)$のdir方向に幅W，高さHの矩形の内部を濃さDで塗る\\
+\chuu 枠描画のデフォルトは 0（枠線を描かない）\\
+\chuu dir=n,\ s,\ e,\ w,\ ne,\ nw,\ se,\ sw,\ c 
+
+\vspace{\baselineskip}
+
+\begin{layer}{160}{0}
+
+\boxframese[24]{10}{0}{30}{16}{boxframe}
+\dashboxframese{50}{0}{30}{16}{dashboxframe}
+\jaggyboxframese{90}{0}{30}{16}{jaggyboxframe}
+\diaboxframese{130}{0}{30}{16}{diaboxframe}
+\shadeboxse{10}{0}{30}{16}{0.5}{green}
+
+\end{layer}
+
+\newpage
+
+\tab{\bs popframe[thickness]\br{x}\br{y}\br{Ds}\br{色s}\br{Dp}\br{色p}\br{色f}\br{文字}}\\
+\tab{}(x,\ y)の右下(se)に文字入り矩形を描き，濃さDsの陰をつける\\
+\chuu 色p : 背景色，色f : 枠の色\\
+\chuu 矩形の大きさは文字から自動計算する\\
+\chuu 線の太さ(thickness)のデフォルトは8\\
+\chuu 文字列の幅$\leqq 200mm$，高さ$\leqq 100mm$\\
+\rei \bs popframe\br{0}\br{5}\br{0.5}\br{black}\br{1}\br{yellow}\br{yellow}\br{タイトル}
+
+\tab{\bs colorframe[thickness]\br{x}\br{y}\br{Dp}\br{色p}\br{色f}\br{文字}}\\
+\tab{}(x,\ y)の右下(se)に文字入り矩形を描き，背景を色pで塗る\\
+\chuu 矩形の大きさは文字から自動計算する\\
+\chuu 線の太さ(thickness)のデフォルトは8\\
+\chuu 文字列の幅$\leqq 200$mm，高さ$\leqq 100$mm\\
+\rei \bs colorframe\br{100}\br{5}\br{0.3}\br{green}\br{blue}\br{文字列}
+
+\begin{layer}{160}{0}
+\popframe{60}{5}{0.3}{black}{1}{yellow}{yellow}{\Large タイトル}
+\colorframe{100}{5}{0.3}{green}{blue}{\Large\bf 強調文字}
+\end{layer}
+
+\vspace{15mm}
+
+\begin{layer}{160}{0}
+
+\hjaggyline{130}{10}{25}
+
+\vjaggyline{140}{20}{15}
+
+\end{layer}
+
+%\vspace{6\baselineskip}
+
+\tab{\bs hjaggyline[thickness]\br{x}\br{y}\br{W}}\\
+\tab{}(x,\ y)から左に幅Wのギザ線を描く．\\
+\chuu bを付加すると，線の出方が逆になる．
+
+\tab{\bs vjaggyline[thickness]\br{x}\br{y}\br{W}}\\
+\tab{}(x,\ y)から下に幅Wのギザ線を描く．\\
+\chuu bを付加すると，線の出方が逆になる．
+
+\tab{\bs circleline[thickness]\br{x}\br{y}\br{size}}\\
+\tab{}(x,\ y)を中心に
+円を描く
+
+\tab{\bs ballonr[thickness]\br{x}\br{y}\br{size}\br{Char}}\\
+\tab{}(x,\ y)から右上に吹き出しとCharを描く
+
+\tab{\bs ballonl[thickness]\br{x}\br{y}\br{size}\br{Char}}\\
+\tab{}(x,\ y)から左上に吹き出しとCharを描く
+
+
+\tab[14zw]{\bs lefthand[thickness]\br{x}\br{y}}(x,\ y)に指先を描く
+
+\tab[14zw]{\bs righthand[thickness]\br{x}\br{y}}(x,\ y)に指先を描く
+
+\tab[16zw]{\bs leftdownhand[thickness]\br{x}\br{y}}(x,\ y)に指先を描く
+
+\tab[16zw]{\bs rightdownhand[thickness]\br{x}\br{y}}(x,\ y)に指先を描く
+
+\begin{layer}{180}{0}
+
+\ballonr{30}{40}{1}{Example1}
+
+\ballonl{90}{40}{1}{Example2}
+
+\lefthand{120}{30}
+
+\righthand{140}{30}
+
+\leftdownhand{120}{25}
+
+\rightdownhand{140}{25}
+
+\end{layer}
+
+
+
+\end{document}

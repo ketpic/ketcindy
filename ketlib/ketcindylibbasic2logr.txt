@@ -1,0 +1,26 @@
+//2017.10.08
+//    Mkslides debugged  (Sheslide=>Shellslide )
+//2017.10.07
+//    WritetoRS changed  (for pict2e)
+//    Helplist debugged  ( for r )
+//2017.10.06
+//    RSform debugged
+//2017.09.29
+//    Viewparent debugged  (WritetoRS)
+//2017.09.24
+//    WritetoRS debugged  ("\" => "/")
+//    RSslash added
+//    Letter changed (RSslash used)
+//2017.09.22
+//    Defvar changed  ("=" removed)
+//   WritetoRS changed  (Com1st,..., VLIST )
+//2017.09.18
+//   Extractdata changed
+//    SCIWR,SCIRE removed
+//2017.09.17
+//   WritetoRS added
+//   Viewtex changed ( Writetosci => WritetoR )
+//2017.09.16
+//   RSform, Deffun, IftoR, FortoR changed( added )
+//2017.09.14
+//   Makeshell, Makebat changed

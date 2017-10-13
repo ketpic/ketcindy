@@ -1,0 +1,33 @@
+%%title::slide0::kabegami//
+title::slideE//
+
+%%%%%%%%%%%%%%%%//
+main::Main Slide//
+
+%%%%%%%%%%%%%%%%//
+new::itemize and repeat//
+%repeat=2//
+
+itemize//
+item::Contents//
+%[2,-]::item::Conclusions//
+end//
+
+%%%%%%%%%%%%%%%%//
+new::enumerate and repeat//
+%repeat=3//
+
+enumerate::[(1)]//
+%thin[2,-]::item::Contents//
+%thin[3,-]::item::Conclusions//
+end//
+
+%%%%%%%%%%%%%%%%//
+new::Graph and repeat//
+%repeat=2//
+
+layer::{100}{0}//
+%[1]::putnote::se{10}{15}::figsin,0.8//
+%[2]::putnote::se{30}{40}::figsin,0.8//
+end//
+

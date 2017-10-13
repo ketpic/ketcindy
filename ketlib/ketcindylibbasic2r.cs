@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2017.08.23) loaded");
+println("ketcindybasic2(2017.10.07) loaded");
 
 //help:start();
 
@@ -598,6 +598,7 @@ Letter(list,options):=(
     tmp=replace(Str,".xy","");
     tmp=replace(tmp,".x","(1)");
     Str=replace(tmp,".y","(2)");
+    Str=RSslash(Str); // 17.09.24
     if(indexof(Str,"`")>0,
 //      tmp=Dq+",Assign('"+Str+"','`',Prime()))";
       tmp=Dq+",Assign('"+Str+"'))"; // 15.02.22
@@ -2259,7 +2260,8 @@ Sciform(list):=(
           out2=out2+"'+Assign('";
         ,
           tmp=indexof(out,"'");
-          out=substring(out,0,tmp)+substring(out,tmp+1,length(out)); // 16.04.18 upto
+          out=substring(out,0,tmp)+substring(out,tmp+1,length(out)); 
+          // 16.04.18 upto
         );
       );
     );
@@ -2269,6 +2271,47 @@ Sciform(list):=(
   out2;
 );
 
+RSform(str):=RSform(str,3);
+RSform(str,listfrom):=(
+  regional(posL,mxlv,rep1,rep2,rep3,prev,out,
+    tmp,tmp1,tmp2);
+  rep1="c("; rep2="c("; rep3="list(";
+  if(listfrom<3,rep2="list(");
+  if(listfrom==1,rep1="list(");
+  posL=Bracket(str,"[]");
+  tmp=apply(posL,#_2);
+  mxlv=max(tmp);
+  out="";
+  prev=0;
+  forall(posL,
+    out=out+substring(str,prev,#_1-1);
+    prev=#_1;
+    if(#_2>0,
+      tmp1=select(posL,tmp,(tmp_2<0)&(tmp_1>#_1));
+      tmp1=tmp1_1_1;
+      tmp=substring(str,#_1,tmp1);
+      if(#_2==mxlv,out=out+rep1);
+      if(#_2==mxlv-1,out=out+rep2);
+      if(#_2<=mxlv-2,out=out+rep3);
+    ,
+      out=out+")";
+    );
+  );
+  out=out+substring(str,prev,length(str));
+  out=replace(out,".xy","");
+  out=replace(out,".x","[1]");
+  out=replace(out,".y","[2]");
+  out=replace(out,"c(1)","[1]");//17.10.06(2lines)
+  out=replace(out,"c(2)","[2]");
+  out;
+);
+
+RSslash(str):=(  //17.09.24
+  regional(tmp);
+  tmp=replace(str,"\","\\");
+//  tmp=replace(tmp,"\\\\","\\");
+  tmp;
+);
 
 Rform(list):=(
   regional(plotlist,comp,pos,out,strL,tmp,tmp1,tmp2,tmp3,Nj);
@@ -2290,12 +2333,12 @@ Defvar(varstr):=(
     name=substring(varstr,0,tmp-1);
     value=substring(varstr,tmp,length(varstr));
     value=parse(value);
-    tmp1=select(1..length(VLIST),VLIST_#_1==name+"=");
+    tmp1=select(1..length(VLIST),VLIST_#_1==name);
     if(length(tmp1)>0,
       tmp=tmp1_1;
-      VLIST_tmp=[name+"=",value];
+      VLIST_tmp=[name,value];
     ,
-      VLIST=prepend([name+"=",value],VLIST);
+      VLIST=prepend([name,value],VLIST);
     );
   ,
     forall(1..(length(varstr)/2), // 16.11.16from
@@ -2325,84 +2368,113 @@ Defvar(name,value):=(
   );
   tmp=name+"="+tmp1; // 15.02.06
   parse(tmp);
-  VLIST=select(VLIST,#_1!=name+"="); // 15.02.08
-  VLIST=prepend([name+"=",value],VLIST);
+  VLIST=select(VLIST,#_1!=name); // 15.02.08
+  VLIST=prepend([name,value],VLIST);
 );
 
-Iftosci(strorg):=( // 16.06.10
-  regional(str,ifL,ppL,cpL,kk,sL,
-    tmp,tmp1,tmp2,tmp3,tmp4);
+IftoR(strorg):=( // 17.09.16
+  regional(str,ifL,ppL,cpL,kk,Lv,no,out,prev,
+      tmp,tmp1,tmp2);
   str=replace(strorg,LFmark,"");
   ifL=Indexall(str,"if(");
-  ppL=Bracket(str,"()");
-  cpL=Indexall(str,",");
-  tmp1=Bracket(str,"[]");
-  forall(1..(length(tmp1)/2),kk,
-    cpL=select(cpL,#<tmp1_(2*kk-1)_1%#_1>tmp1_(2*kk)_1);
-  );
-  forall(1..length(ifL),kk,
-    tmp=select(ppL,#_1>ifL_kk);
-    tmp1=tmp_1;
-    tmp2=select(tmp,#_2==-tmp1_2);
-    tmp2=tmp2_1;
-    tmp3=select(cpL,#>tmp1_1 & #<tmp2_1);
-    ifL_kk=[tmp1_1,tmp2_1,tmp1_2,tmp3];
-  );
-  forall(1..length(cpL),kk,
-    tmp=select(1..length(ifL),contains(ifL_#_4,cpL_kk));
-    tmp1=tmp_(length(tmp));
-    cpL_kk=[cpL_kk,tmp1];
-  );
-  sL=apply(1..length(str),substring(str,#-1,#));
-  forall(1..length(ifL),kk,
-    tmp1=ifL_kk_1;
-    tmp2=ifL_kk_2;
-    tmp=select(cpL,#_2==kk);
-    tmp3=apply(tmp,#_1);
-    sL_tmp1=" ";
-    sL_tmp2=";end;";
-    sL_(tmp3_1)=" then,";
-    if(length(tmp3)>1,
-      sL_(tmp3_2)=";else,";
+  ifL=apply(ifL,#+2);
+  if(length(ifL)>0,
+    ppL=Bracket(str,"()");
+    tmp2=[];
+    forall(ifL,kk,
+      tmp=select(ppL,#_1==kk);
+      tmp1=select(ppL,#_2==-tmp_1_2);
+      tmp2=append(tmp2,[kk,tmp1_1_1,tmp_1_2]);
     );
+    ifL=tmp2;
+    cpL=[];
+    forall(1..(length(str)),kk,
+      if(substring(str,kk-1,kk)==",",
+        tmp1=select(ifL,#_1<kk & kk<#_2);
+        Lv=max(apply(tmp1,#_3));
+        tmp=select(cpL,#_2==Lv);
+        no=length(tmp)+1;
+        cpL=append(cpL,[kk,Lv,no]);
+      );
+      if(contains(ifL,kk),
+        tmp1=select(ifL,#_1<kk & kk<#_2);
+        Lv=max(apply(tmp1,#_3));
+        tmp=select(cpL,#_2==Lv);
+        no=length(tmp)+1;
+        cpL=append(cpL,[kk,Lv,no]);
+      );
+    );
+    forall(ifL,
+      str_(#_2)="}";
+    );
+    out="";
+    prev=0;
+    forall(cpL,
+      out=out+substring(str,prev,#_1-1);
+      prev=#_1;
+      if(#_3==1,out=out+"){");
+      if(#_3==2,out=out+"}else{");
+    );
+    out=out+substring(str,prev,length(str));
   );
-  tmp=sum(sL);
 );
 
-Fortosci(strorg):=(
-  regional(str,jj,var,tmp,tmp1,tmp2,tmp3,tmp4,
-    Out,repL,Pflg,Iflg,Cflg);
-  str=strorg;
-  repL=[];
-  tmp1=Indexall(str,"forall");
-  tmp2=Indexall(str,",");
-  forall(1..length(tmp1),jj,
-    tmp=select(tmp2,#>tmp1_jj);
-    var=substring(str,tmp_1,tmp_2-1);
-    tmp3=substring(str,tmp1_jj-1,tmp_2-1);
-    tmp=indexof(tmp3,"(");
-    tmp4=substring(tmp3,tmp,length(tmp3));
-    tmp=indexof(tmp4,",");
-    tmp4=substring(tmp4,0,tmp-1);
-    tmp4="for "+var+"="+tmp4;
-    tmp4=replace(tmp4,"..",":");
-    repL=concat(repL,[tmp3,tmp4]);
+FortoR(strorg):=( // 17.09.16
+  regional(str,frL,ppL,cpL,kk,Lv,no,out,prev,
+      tmp,tmp1,tmp2);
+  str=replace(strorg,LFmark,"");
+  frL=Indexall(str,"forall(");
+  frL=apply(frL,#+6);
+  if(length(frL)>0,
+    ppL=Bracket(str,"()");
+    tmp2=[];
+    forall(frL,kk,
+      tmp=select(ppL,#_1==kk);
+      tmp1=select(ppL,#_2==-tmp_1_2);
+      tmp2=append(tmp2,[kk,tmp1_1_1,tmp_1_2]);
+    );
+    frL=tmp2;
+    cpL=[];
+    forall(1..(length(str)),kk,
+      if(substring(str,kk-1,kk)==",",
+        tmp1=select(frL,#_1<kk & kk<#_2);
+        Lv=max(apply(tmp1,#_3));
+        tmp=select(cpL,#_2==Lv);
+        no=length(tmp)+1;
+        cpL=append(cpL,[kk,Lv,no]);
+      );
+      if(contains(frL,kk),
+        tmp1=select(frL,#_1<kk & kk<#_2);
+        Lv=max(apply(tmp1,#_3));
+        tmp=select(cpL,#_2==Lv);
+        no=length(tmp)+1;
+        cpL=append(cpL,[kk,Lv,no]);
+      );
+    );
+    forall(frL,
+      str_(#_2)="}";
+    );
+    out="";
+    prev=0;
+    forall(cpL,
+      if(#_3==1,
+        tmp1=substring(str,prev,#_1-1);
+        tmp=indexof(tmp1,"(");
+        tmp1=substring(tmp1,tmp,length(tmp1));
+        tmp1=replace(tmp1,"..",":");
+      );
+      if(#_3==2,
+        tmp2=substring(str,prev,#_1-1);
+        out=out+"for("+tmp2+" in "+tmp1+"){";
+      );
+      prev=#_1;
+    );
+    out=out+substring(str,prev,length(str));
   );
-  forall(1..length(repL)/2,
-    str=replace(str,repL_(2*#-1),repL_(2*#));
-  );
-  tmp=Bracket(str);
-  tmp=select(tmp,#_2==0);
-  tmp=tmp_1_1;
-  tmp1=substring(str,tmp-1,length(str));
-  tmp1=replace(tmp1,")",";end");
-  str=substring(str,0,tmp-1)+tmp1;
-  str=replace(str,";;",";");
-  str;
 );
 
 Deffun(name,bodylist):=(
-//help:Deffun("f(x)",["regional(y)","y=x^2*(x-3)","y"]); // 16.02.18
+//help:Deffun("f(x)",["regional(y)","y=x^2*(x-3)","y"]);
   regional(funstr,tmp,tmp1,str,Pos);
   funstr=name+":=(";
   forall(bodylist,
@@ -2410,27 +2482,27 @@ Deffun(name,bodylist):=(
   );
   funstr=funstr+");";
   parse(funstr);
-  tmp=bodylist_(length(bodylist));
-  str="function "+tmp+"="+name+",";
+  tmp=indexof(name,"("); // 17.09.15from
+  str=substring(name,0,tmp-1)+"<-function(";
+  str=str+substring(name,tmp,length(name))+"{";
   forall(1..(length(bodylist)-1),
     tmp1=bodylist_#;
-    tmp1=replace(tmp1,LFmark,"");// 16.05.26
-    tmp1=replace(tmp1," ","");// 16.05.26
+    tmp1=replace(tmp1,LFmark,"");
+    tmp1=replace(tmp1," ","");
     Pos=indexof(tmp1,"regional")+indexof(tmp1,"local");
     if(Pos==0,
-      tmp=replace(tmp1,".xy","");
-      tmp=replace(tmp,".x","(1)");
-      tmp=replace(tmp,".y","(2)");
+      tmp=RSform(tmp1);
       if(indexof(tmp,"if(")>0,
-        tmp=iftosci(tmp);
+        tmp=iftoR(tmp);
       );
-      if(indexof(tmp,"forall(")>0, // 16.05.26from
-        tmp=Fortosci(tmp);
-      ); // 16.05.26upto
-      str=str+tmp+",";
+      if(indexof(tmp,"forall(")>0, 
+        tmp=FortoR(tmp);
+      ); 
+      str=str+tmp+";";
     );
   );
-  str=str+"endfunction;";
+  str=str+"return("+bodylist_(length(bodylist))+")}";
+  //17.09.15upto
   FUNLIST=append(FUNLIST,str);
 );
 
@@ -2509,117 +2581,106 @@ Windispg(pltdata):=(
   layer(0);
 );
 
-
-WritetoSci() := WritetoSci(Fnamesci);
-WritetoSci(Arg) := (
+WritetoRS():=WritetoRS(FnameR);// 17.09.17from
+WritetoRS(Arg):=(
   regional(string,filename,shch,tmp1,tmp2);
   if(isstring(Arg),
     string=Arg;
-    if(indexof(string,".sce")>0,
+    if(indexof(string,".r")>0,
       filename=string;
-      shchoice="";
+      shch="";
     ,
-      filename=Fnamesci;
+      filename=FnameR;
       shch=string;
     );
-    WritetoSci(filename,shch);
+    WritetoRS(filename,shch);
   ,
-    if(Arg<=1,WritetoSci(Fnamesci,"all"));
-    if(Arg==2,WritetoSci(Fnamesci,"sh"));
-    if(Arg==3,WritetoScibody(Fnamescibody));
+    if(Arg<=1,WritetoRS(FnameR,"all"));
+    if(Arg==2,WritetoRS(FnameR,"sh"));
   );
 );
-WritetoSci(filename,shchoice) := (
-  regional(Plist,Pos,Pnamelist,Pvaluelist,GrL,str,tmp,tmp1,tmp2,cmd);
-  println("Write to Sci "+filename);
+WritetoRS(filename,shchoice):=(
+  regional(Plist,Pos,GrL,str,tmp,tmp1,tmp2,cmd);
+  println("Write to R "+filename);
   Plist=[];
   Pnamelist=[];
-  Pvaluelist=[];
   forall(remove(allpoints(),[SW,NE]),
     tmp=Lcrd(#);
-    tmp1=format(re(tmp_1),5);// 15.02.05
-    tmp2=format(re(tmp_2),5);
-    tmp="["+tmp1+","+tmp2+"]"; 
-    Plist=append(Plist,#.name+"="+tmp+";");
-    Pnamelist=append(Pnamelist,#.name);
-    Pvaluelist=append(Pvaluelist,tmp);
+    tmp1=format(re(tmp_1),6);// 15.02.05
+    tmp2=format(re(tmp_2),6);
+    tmp=#.name+"="+"c("+tmp1+","+tmp2+");";
+	tmp=tmp+"Assignadd('"+#.name+"',"+#.name+")";
+    Plist=append(Plist,tmp);
   );
   SCEOUTPUT = openfile(filename);
-  tmp=Datetime();//16.12.25from
-  println(SCEOUTPUT,"//date time="+tmp_1+" "+tmp_2);
+  tmp=Datetime();
+  println(SCEOUTPUT,"# date time="+tmp_1+" "+tmp_2);
   if(isstring(CindyPathName), // 16.12.25from
     if(length(CindyPathName)>0,
-      println(SCEOUTPUT,"//path file="+CindyPathName+" "+CindyFileName+".cdy");
+      println(SCEOUTPUT,
+           "# path file="+CindyPathName+" "+CindyFileName+".cdy");
     ,
       println(SCEOUTPUT,"");
     );
   ,
     println(SCEOUTPUT,"");
-  );//16.12.25upto
-  println(SCEOUTPUT,"cd('"+Dirwork+"');");
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0) ,//16.11.29,12.16
-    if(indexof(PathS,"-6.")>0,
-      Libname=Dirlib+"/ketpic2escifiles6";//17.05.13
-    ,
-      Libname=Dirlib+"/ketpic2esciL5";//16.11.29
-    );
   );
-  println(SCEOUTPUT,"Ketlib=lib('"+Libname+"');");
-  tmp=length(Libname)-1;
-  if(substring(Libname,tmp-1,tmp)!="C",  // 15.06.02
-    println(SCEOUTPUT,"Ketinit();");
-  ,
-    println(SCEOUTPUT,"errcatch(235,"+DqDq("continue")+");");
-    println(SCEOUTPUT,"Ketinit("+DqDq("Ketlib")+");");
-  );
-  println(SCEOUTPUT,"disp('KETpic '+ThisVersion())");  // 15.04.12
-  println(SCEOUTPUT,"Fnametex='"+Fnametex+"';");
-  println(SCEOUTPUT,"Fnamesci='"+Fnamesci+"';");
-  println(SCEOUTPUT,"Fnamescibody='"+Fnamescibody+"';");
-  println(SCEOUTPUT,"Fnameout='"+Fnameout+"';");
-  if(iswindows(),  // 17.01.11from
-      println(SCEOUTPUT,"setlanguage('en')");
-  );  // 17.01.11upto
-  println(SCEOUTPUT,"pi=%pi; i=%i;");
-  println(SCEOUTPUT,"arccos=acos; arcsin=asin; arctan=atan;"); // 15.05.15
+  tmp=replace(Dirwork,"\","/"); //17.09.24
+  println(SCEOUTPUT,"setwd('"+tmp+"')"); //17.09.24
+//  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
+//    Libname=Libname+"2e";
+//  ); //  17.10.07removed
+  tmp=replace(Libname,"\","/"); //17.09.24from
+//  println(SCEOUTPUT,"load('"+tmp+".Rdata')");
+  println(SCEOUTPUT,"source('"+tmp+".r')");//temporary,0924upto
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
+       //  17.10.07added
+    tmp=replace(tmp+"_rep2e","\","/");
+    println(SCEOUTPUT,"source('"+tmp+".r')");
+  ); 
+  println(SCEOUTPUT,"Ketinit()");
+  println(SCEOUTPUT,"cat('KETpic',ThisVersion,'\n')"); 
+  println(SCEOUTPUT,"Fnametex='"+Fnametex+"'");
+  println(SCEOUTPUT,"FnameR='"+FnameR+"'");
+  println(SCEOUTPUT,"Fnameout='"+Fnameout+"'");
+  println(SCEOUTPUT,"arccos=acos; arcsin=asin; arctan=atan");
   println(SCEOUTPUT,"");
   forall(COM0thlist,
-    println(SCEOUTPUT,#+";");
+    if(indexof(#,"Texcom")==0, //17.09.22
+      println(SCEOUTPUT,RSform(#));
+    ,
+      println(SCEOUTPUT,#);
+    );
   );
   println(SCEOUTPUT,
-     "Setwindow(["+XMIN+","+XMAX+"], ["+YMIN+","+YMAX+"]);");
-  println(SCEOUTPUT,"Assignadd('pi',%pi);");
-  println(SCEOUTPUT,"Assignadd('XMIN',Xmin());");
-  println(SCEOUTPUT,"Assignadd('XMAX',Xmax());");
-  println(SCEOUTPUT,"Assignadd('YMIN',Ymin());");
-  println(SCEOUTPUT,"Assignadd('YMAX',Ymax());");
-  forall(1..length(Plist),
-    print(SCEOUTPUT,Plist_#);
-    println(SCEOUTPUT," Assignrep('"+Pnamelist_#+"',"+Pvaluelist_#+");");
+     "Setwindow(c("+XMIN+","+XMAX+"), c("+YMIN+","+YMAX+"))");
+  forall(Plist,
+    println(SCEOUTPUT,#);
   );
-  forall(VLIST,
-    tmp=Sciform(#_1);
-    tmp1=#_2; // 15.02.06
+  forall(VLIST, 
+    tmp=#_1;
+    tmp1=#_2;
     if(!isstring(tmp1), 
       if(islist(tmp1),
         tmp2="[";
         forall(tmp1,
-          tmp2=tmp2+format(#,5)+",";
+          tmp2=tmp2+textformat(#,6)+",";
         );
         tmp1=substring(tmp2,0,length(tmp2)-1)+"]";
       ,
-        tmp1=format(tmp1,5);
+        tmp1=format(tmp1,6);
       );
     );
-    print(SCEOUTPUT,tmp+"evstr('"+tmp1+"')"+"; ");
-	tmp=substring(tmp,0,length(tmp)-1);
-    println(SCEOUTPUT," Assignrep('"+tmp+"',"+tmp1+");"); // 15.01.27
+    tmp1=RSform(tmp1);
+    print(SCEOUTPUT,tmp+"="+tmp1+";"); //17.09.22
+//    tmp=substring(tmp,0,length(tmp)-1);
+    println(SCEOUTPUT,"Assignadd('"+tmp+"',"+tmp+")");
   );
   forall(FUNLIST,
     println(SCEOUTPUT,#);
   );
   forall(GLIST,
-    println(SCEOUTPUT,Sciform(#)+";");
+    println(SCEOUTPUT,RSform(#));
   );
   tmp=text(Pnamelist);
   tmp=replace(tmp,"[","list(");
@@ -2630,183 +2691,48 @@ WritetoSci(filename,shchoice) := (
   tmp=text(GrL);
   tmp=replace(tmp,"[","list(");
   tmp=replace(tmp,"]",")");
-  println(SCEOUTPUT,"GrL="+tmp+";");
+  println(SCEOUTPUT,"GrL="+tmp);
   tmp1="";
-  forall(SCIWRLIST,
-    tmp1=tmp1+","+Dq+#+Dq+","+#;
-  );
   if(length(tmp1)>0,
     tmp1="WriteOutData(Fnameout"+tmp1+");";
     println(SCEOUTPUT,tmp1);
   );
-  if(length(SCIRELIST)>0, 
-    println(SCEOUTPUT,"if length(fileinfo(Fnameout))>0"); // 15.05.15
-    println(SCEOUTPUT,"  Tmpout=ReadOutData(Fnameout);");// 15.09.12
-    println(SCEOUTPUT,"  execstr(Tmpout);"); // 15.05.15
-//    println(SCEOUTPUT,"  forall Tmp1=1:size(Tmpout,1)");
-//    println(SCEOUTPUT,"    Tmp=strindex(Tmpout(Tmp1,1),'=list()');");
-//    println(SCEOUTPUT,"    if length(Tmp)>0");
-//    println(SCEOUTPUT,"      Tmp=part(Tmpout(Tmp1,1),1:(Tmp-1));");
-//    println(SCEOUTPUT,"      if length(evstr(Tmp))==1,");
-//    println(SCEOUTPUT,"        Tmp=Tmp+'='+Tmp+'(1)';");
-//    println(SCEOUTPUT,"        execstr(Tmp);");
-//    println(SCEOUTPUT,"      end;");
-//    println(SCEOUTPUT,"    end;");
-//    println(SCEOUTPUT,"  end;");
-//    println(SCEOUTPUT,"end;");
-  );
-  if(shchoice=="sh",
-    println(SCEOUTPUT,"//if length(fileinfo(Fnamescibody))>0");
-    println(SCEOUTPUT,"//  Gbdy=ReadfromCindy(Fnamescibody);");
-    println(SCEOUTPUT,"//  execstr(Gbdy)");
-    println(SCEOUTPUT,"//end;");
-  ,
-    println(SCEOUTPUT,"//if length(fileinfo(Fnamescibody))>0");
-    println(SCEOUTPUT,"//  Gbdy=ReadfromCindy(Fnamescibody);");
-    println(SCEOUTPUT,"//  execstr(Gbdy)");
-    println(SCEOUTPUT,"//end;");
-  );
   forall(COM1stlist,
-    println(SCEOUTPUT,#+";");
+    if(indexof(#,"Texcom")==0, //17.09.22
+      println(SCEOUTPUT,RSform(#));
+    ,
+      println(SCEOUTPUT,#);
+    );
   );
-//  forall(GOUTLIST,
-//    if(length(#_2)>0,
-//      tmp1=#_1;
-//      println(SCEOUTPUT,"execstr(ReadOutData('"+tmp1+"'));");
-//    );
-//  );
   println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"//Windisp(GrL,'c');");
+  println(SCEOUTPUT,"# Windisp(GrL)");
   println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"if 1==1 then");
+  println(SCEOUTPUT,"if(1==1){");
   println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"Openfile('"+Dirwork+"/"+Fnametex+"','"+ULEN+"');");// 16.05.29
+  tmp=replace(Dirwork,"\","/"); //17.09.24(2lines)
+  println(SCEOUTPUT,"Openfile('"+tmp+"/"+Fnametex+"','"+ULEN+"')");
   forall(COM2ndlist,
-    println(SCEOUTPUT,"  "+#+";");
+    if(indexof(#,"Texcom")==0, //17.09.22
+      println(SCEOUTPUT,RSform(#));
+    ,
+      println(SCEOUTPUT,#);
+    );
   );
   if(length(GrL)>0,
-    println(SCEOUTPUT,"  Drwline(GrL);");
+    println(SCEOUTPUT,"  Drwline(GrL)");
   );
-//  forall(GOUTLIST,
-//    if(length(#_2)>0,
-//      tmp1=textformat(#_2,5);
-//	  tmp1=substring(tmp1,1,length(tmp1)-1);
-//      println(SCEOUTPUT,"  Drwline("+tmp1+");");
-//    );
-//  );
-  println(SCEOUTPUT,"Closefile('"+ADDAXES+"');");
+  println(SCEOUTPUT,"Closefile('"+ADDAXES+"')");
   println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"end;");
+  println(SCEOUTPUT,"}");
   if(shchoice=="sh",
     println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"quit();");
+    println(SCEOUTPUT,"quit()");
   ,
     println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"//quit();");
+    println(SCEOUTPUT,"#quit()");
   );
   closefile(SCEOUTPUT);
-
-);
-
-WritetoScibody() := WritetoScibody(Fnamescibody);
-WritetoScibody(filename) := (
-  regional(Plist,Pos,Pnamelist,Pvaluelist,GrL,str,tmp,tmp1,cmd);
-  println("WritetoScibody "+filename);
-  Plist=[];
-  Pnamelist=[];
-  Pvaluelist=[];
-  forall(remove(allpoints(),[SW,NE]),
-    Plist=append(Plist,#.name+"="+#.xy+";");
-    Pnamelist=append(Pnamelist,#.name);
-    Pvaluelist=append(Pvaluelist,#.xy);
-  );
-  SCEOUTPUT = openfile(filename);
-  println(SCEOUTPUT,
-     "Setwindow(["+XMIN+","+XMAX+"], ["+YMIN+","+YMAX+"]);");
-  println(SCEOUTPUT,"Assignadd('pi',%pi);");
-  println(SCEOUTPUT,"Assignadd('XMIN',Xmin());");
-  println(SCEOUTPUT,"Assignadd('XMAX',Xmax());");
-  println(SCEOUTPUT,"Assignadd('YMIN',Ymin());");
-  println(SCEOUTPUT,"Assignadd('YMAX',Ymax());");
-  forall(1..length(Plist),
-    print(SCEOUTPUT,Plist_#);
-    println(SCEOUTPUT," Assignrep('"+Pnamelist_#+"',"+Pvaluelist_#+");");
-  );
-  forall(VLIST,
-    tmp=Sciform(#_1);
-    tmp1=#_2;
-    if(!isstring(tmp1),
-      print(SCEOUTPUT,tmp+tmp1+"; ");
-    ,
-      print(SCEOUTPUT,tmp+"evstr('"+tmp1+"')"+"; ");
-    );
-	tmp=substring(tmp,0,length(tmp)-1);
-    println(SCEOUTPUT," Assignrep('"+tmp+"',"+#_2+");");
-  );
-  forall(FUNLIST,
-    println(SCEOUTPUT,#);
-  );
-  forall(GLIST,
-    println(SCEOUTPUT,Sciform(#)+";");
-  );
-  tmp=text(Pnamelist);
-  tmp=replace(tmp,"[","list(");
-  Pnamelist=replace(tmp,"]",")");
-  println(SCEOUTPUT,"PtL="+Pnamelist+";");
-  tmp=select(GCLIST,#_2==-1);
-  GrL=apply(tmp,#_1);
-  tmp=textformat(GrL,5);
-  tmp=replace(tmp,"[","list(");
-  tmp=replace(tmp,"]",")");
-  println(SCEOUTPUT,"GrL="+tmp+";");
-  tmp1="";
-  forall(SCIWRLIST,
-    tmp1=tmp1+","+Dq+#+Dq+","+#;
-  );
-  if(length(tmp1)>0,
-    tmp1="WriteOutData(Fnameout"+tmp1+");";
-    println(SCEOUTPUT,tmp1);
-  );
-  if(length(SCIRELIST)>0,  
-    println(SCEOUTPUT,"Tmpout=ReadOutData(Fnameout);");
-    println(SCEOUTPUT,"execstr(Tmpout);");
-    println(SCEOUTPUT,"forall Tmp1=1:size(Tmpout,1)");
-    println(SCEOUTPUT,"  Tmp=strindex(Tmpout(Tmp1,1),'=list()');");
-    println(SCEOUTPUT,"  if length(Tmp)>0");
-    println(SCEOUTPUT,"    Tmp=part(Tmpout(Tmp1,1),1:(Tmp-1));");
-    println(SCEOUTPUT,"    if length(evstr(Tmp))==1,");
-    println(SCEOUTPUT,"      Tmp=Tmp+'='+Tmp+'(1)';");
-    println(SCEOUTPUT,"      execstr(Tmp);");
-    println(SCEOUTPUT,"    end;");
-    println(SCEOUTPUT,"  end;");
-    println(SCEOUTPUT,"end;");
-  );
-  if(shchoice=="sh",
-    println(SCEOUTPUT,"//if length(fileinfo(Fnamescibody))>0");
-    println(SCEOUTPUT,"//  Gbdy=ReadfromCindy(Fnamescibody);");
-    println(SCEOUTPUT,"//  execstr(Gbdy)");
-    println(SCEOUTPUT,"//end;");
-  ,
-    println(SCEOUTPUT,"//if length(fileinfo(Fnamescibody))>0");
-    println(SCEOUTPUT,"//  Gbdy=ReadfromCindy(Fnamescibody);");
-    println(SCEOUTPUT,"//  execstr(Gbdy)");
-    println(SCEOUTPUT,"//end;");
-  );
-  forall(COM1stlist,
-    println(SCEOUTPUT,#+";");
-  );
-//  forall(GOUTLIST,   2014.12.18
-//    if(length(#_2)>0,
-//      tmp1=#_1;
-//      println(SCEOUTPUT,"execstr(ReadOutData('"+tmp1+"'));");
-//    );
-//  );
-  println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"//Windisp(GrL,'c');");
-  println(SCEOUTPUT,"");
-  
-  closefile(SCEOUTPUT);
-);
+); //17.09.17upto
 
 Extractdata(name):=Extractdata(1,name,[]);
 Extractdata(Arg1,Arg2):=(
@@ -2843,33 +2769,8 @@ Extractdata(number,name,options):=(
   if(Noflg<3,
     println("extract outdata  "+name);
     tmp1=parse(name);
-    if(1==0,
-      Com0th("Tmpout=ReadOutData("+Dq+File+Dq+");");
-      Com0th("execstr(Tmpout);");
-      Com0th("for Tmp1=1:size(Tmpout,1)");
-      Com0th("  Tmp=strindex(Tmpout(Tmp1,1),'=list()');");
-      Com0th("  if length(Tmp)>0");
-      Com0th("    Tmp=part(Tmpout(Tmp1,1),1:(Tmp-1));");
-      Com0th("    if length(evstr(Tmp))==1,");
-      Com0th("      Tmp=Tmp+'='+Tmp+'(1)';");
-      Com0th("      execstr(Tmp);");
-      Com0th("    end;");
-      Com0th("  end;");
-      Com0th("end;");
-    );
-    tmp3=[
-	  "Tmpout=ReadOutData("+Dq+File+Dq+");",
-      "execstr(Tmpout);",
-      "for Tmp1=1:size(Tmpout,1)",
-      "  Tmp=strindex(Tmpout(Tmp1,1),'=list()');",
-      "  if length(Tmp)>0",
-      "    Tmp=part(Tmpout(Tmp1,1),1:(Tmp-1));",
-      "    if length(evstr(Tmp))==1",
-      "      Tmp=Tmp+'='+Tmp+'(1)';",
-      "      execstr(Tmp);",
-      "    end;",
-      "  end;",
-      "end;"
+    tmp3=[ //17.09.18
+	  "Tmpout=ReadOutData("+Dq+File+Dq+")"
     ];
     GLIST=concat(GLIST,tmp3);
   );
@@ -3109,8 +3010,9 @@ Makeshell(texmainfile,flow):=(
       );
     );
     if(indexof(flow,"s")>0,
-      tmp=Dq+PathS+Dq+" -nwni -f "+Fhead+".sce"; // 16.07.21from
-      println(SCEOUTPUT,tmp); 
+      tmp=Dq+PathR+Dq+" --vanilla --slave < "+Fhead+".r";
+       // 17.09.14
+      println(SCEOUTPUT,tmp);
     );
     if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
       tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
@@ -3240,7 +3142,8 @@ Makebat(texmainfile,flow):=(
       );
     );
     if(indexof(flow,"s")>0,
-      tmp=Dq+PathS+Dq+" -nb -nwni -f "+Fhead+".sce"; // 16.07.21from
+      tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r";
+        // 17.09.14
       println(SCEOUTPUT,tmp);
     );
     if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
@@ -3342,7 +3245,8 @@ Viewtex():=(
     );//17.08.13upto
   ); // 16.06.09upto
   println(SCEOUTPUT,tmp);
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0) ,//16.11.23,12.16
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0) ,
+          //16.11.23,12.16
     if(indexof(PathT,"pdflatex")>0,
       println(SCEOUTPUT,"\usepackage[pdftex]{pict2e}");//16.11.24
     ,
@@ -3392,7 +3296,7 @@ Viewtex():=(
     );
     Makeshell(texfile);
   );
-  WritetoSci(2);
+  WritetoRS(2); //17.09.19
 );
 
 Viewparent():=( //17.04.13
@@ -3410,7 +3314,7 @@ Viewparent():=( //17.04.13
     ,
       Makeshell();
     );
-    WritetoSci(2);
+    WritetoRS(2); //17.09.29
     kc();
   );
 );
@@ -3708,9 +3612,9 @@ Helplist(dir,files,help):=(
     ketfiles=files;
   );
   ketfiles=apply(ketfiles,replace(#,"+","ketcindylib"));
-  ketfiles=apply(ketfiles,#+".cs");  // 15.11.05 from
+  ketfiles=apply(ketfiles,#+"r.cs");  // 15.11.05 from
   tmp=apply(files,replace(#,"+","ketcindylib"));
-//  tmp=apply(files,replace(#,".cs",""));
+//  tmp=apply(files,replace(#,"r.cs",""));
 //  tmp=remove(tmp,["ketcindylibout"]); 
 //  tmp=apply(tmp,replace(#,"basic",""));
   tmp=apply(tmp,#+help+".txt"); 
@@ -4859,7 +4763,7 @@ Mkslides():=(
       tmp2=Batparent;
       tmp3=Shellfile;
       parent=replace(Dirwork+Batparent,sep+"fig","");// 16.05.29
-      if((isstring(Sheslide)) & (length(Shellslide)>0),
+      if((isstring(Shellslide)) & (length(Shellslide)>0),
         Shellfile=Dirbin+sep+Shellslide+".bat";  // 15.12.08
         Batchild=Shellfile;
       ,
@@ -5084,6 +4988,7 @@ BBdata(fname,optionorg):=(
     tmp=replace(PathT,"pdflatex","extractbb"); //16.11.22
     tmp=replace(tmp,"pdftex","extractbb");  //16.11.22
     tmp=replace(tmp,"xelatex","extractbb"); 
+    tmp=replace(tmp,"uplatex","extractbb"); //17.09.20
     tmp=replace(tmp,"platex","extractbb");
     tmp=replace(tmp,"latex","extractbb");
     tmp=tmp+" -O "+file;

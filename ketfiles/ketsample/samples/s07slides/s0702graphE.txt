@@ -1,0 +1,20 @@
+title::slideE//
+%%title::slideE::kabegami//
+
+%%%%%%%%%%%%%%%%//
+main::Main Slide//
+
+%%%%%%%%%%%%%%%%//
+new::input and layer//
+
+layer::{100}{0}//
+putnote::se{10}{15}::figsin,0.8//
+end//
+
+%%%%%%%%%%%%%%%%//
+new::includegrpahics and layer//
+
+layer::{100}{0}//
+putnote::s{60}{5}
+::include[bb=0.00 0.00 803.00 285.00,width=100mm]::cindyscreen.pdf//
+end//

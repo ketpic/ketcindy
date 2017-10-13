@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(2017.08.19) loaded");
+println("ketcindymv(2017.10.08) loaded");
 
 //help:start();
 
@@ -806,6 +806,104 @@ Animatefile(path,folder):=(
   println(SCEOUTPUT,"\end{animateinline}%");
   closefile(SCEOUTPUT);
   println(fname+" has been generated");
+);
+
+Mkanimation():=(  // 17.10.08
+  if(!isexists(Dirwork,ParaPath),
+    Parafolder();
+  );
+  if(!isexists(Dirwork,"anim"+ParaPath+".tex"),
+    Animatefile();
+  );
+  Mkanimation("fig",ParaPath);
+);
+Mkanimation(folder):=Mkanimation("fig",folder);
+Mkanimation(path,folder):=(
+//help:Mkanimation();
+//help:Mkanimation(path,folder);
+  regional(Fheadbkup,Dirworkbkup,Pathpdfbkup,tex,article,parent,
+     tmp,tmp1,tmp2,tmp3,flg);
+  Fheadbkup=Fhead;
+  Dirworkbkup=Dirwork;
+  Pathpdfbkup=Pathpdf;
+  Fhead="animate"+folder; 
+  Pathpdf=PathAd;
+  Dirwork=replace(Dirwork,"\",pathsep());
+  Dirwork=replace(Dirwork,"/",pathsep());
+  Dirwork=replace(Dirwork,pathsep()+"fig","");
+  Setdirectory(Dirwork);
+  tmp1=replace(PathT,pathsep(),"/");
+  tmp=indexall(tmp1,pathsep());
+  tex=substring(tmp1,tmp_(length(tmp)),length(tmp1));
+  if((tex=="platex")%(tex=="uplatex"),
+    if(tex=="platex",article="jarticle",article="ujarticle");
+  ,
+    article="article";
+  );
+  SCEOUTPUT=openfile(Fhead+".tex");
+  println(SCEOUTPUT,"\documentclass[landscape]{"+article+"}");
+  if((tex=="platex")%(tex=="uplatex")%(tex=="latex"),
+    tmp="\special{papersize=\the\paperwidth,\the\paperheight}";
+    println(SCEOUTPUT,tmp);
+  );
+  if((tex=="pdflatex")%(tex=="lualatex")%(tex=="xelatex"),
+    if((tex=="pdflatex")%(tex=="xelatex"),
+      println(SCEOUTPUT,"\usepackage[pdftex]{pict2e}");
+    ,
+      println(SCEOUTPUT,"\usepackage{pict2e}");
+      println(SCEOUTPUT,"\usepackage{luatexja}");
+    );
+    tmp=replace(Dirhead+"/ketpicstyle",pathsep(),"/");
+    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic2e}");
+    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer2e}");
+  ,
+    tmp=replace(Dirhead+"/ketpicstyle",pathsep(),"/");
+    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
+    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
+  );
+  println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
+  println(SCEOUTPUT,"\usepackage{bm,enumerate}");
+  if((tex=="platex")%(tex=="uplatex")%(tex=="latex"),
+    println(SCEOUTPUT,"\usepackage[dvipdfmx]{graphicx}");
+    println(SCEOUTPUT,"\usepackage[dvipdfmx]{animate}");
+  ,
+    println(SCEOUTPUT,"\usepackage{graphicx}");
+    println(SCEOUTPUT,"\usepackage{animate}");
+  );
+  println(SCEOUTPUT,"\usepackage{xcolor}");
+  forall(ADDPACK, tmp1,
+    tmp=indexof(tmp1,"{animate}")+indexof(tmp1,"{hyperref}");
+    if(tmp==0,
+      println(SCEOUTPUT,"\usepackage"+tmp1);
+    );
+  );
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\begin{document}");
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\begin{center}");
+  println(SCEOUTPUT,"\input{"+path+"/anim"+folder+".tex}");
+  println(SCEOUTPUT,"\end{center}");
+  println(SCEOUTPUT,"\end{document}");
+  closefile(SCEOUTPUT);
+  if(iswindows(),
+    parent=replace(Dirwork+Batparent,pathsep()+"fig","");
+    Makebat(Fhead,"tv"); 
+    kc():=(
+      println("kc : "+kc(parent,Dirlib,Fnametex))
+    ); 
+  ,
+    parent=replace(Dirwork+Shellparent,pathsep()+"fig","");
+    Makeshell(Fhead,"tv"); 
+    kc():=(
+      println("kc : "+kc(parent,Mackc+Dirlib,Fnametex));
+    );
+  );
+  kc();
+  Dirwork=Dirworkbkup;
+  Dirwork=Dirwork+pathsep()+"fig";
+  setdirectory(Dirwork);
+  Fhead=Fheadbkup;
+  Pathpdf= Pathpdfbkup;
 );
 
 //help:end();

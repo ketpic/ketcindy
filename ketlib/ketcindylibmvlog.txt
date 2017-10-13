@@ -1,3 +1,7 @@
+// e: 2017.10.09
+//    Parafolder changed (for R)
+// e: 2017.10.08
+//    Mkanimation added
 // e: 2017.08.19
 //    Help of Setpara changed
 // e: 2017.06.25

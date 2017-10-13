@@ -3099,7 +3099,7 @@ Makeshell(texmainfile,flow):=(
     tmp="sh "+Dq+Shellchild+Dq+tmp1; // 16.05.15,16.05.30
   ,
     flg=0;
-    forall(reverse(1..length(PathT)),
+    forall(reverse(1..(length(PathT))),
       if(flg==0,
         if(substring(PathT,#-1,#)=="/",
           tex=substring(PathT,#,length(PathT));
@@ -3230,7 +3230,7 @@ Makebat(texmainfile,flow):=(
     tmp=Dq+Batchild+Dq+tmp1;
   ,
     flg=0;
-    forall(reverse(1..length(PathT)),
+    forall(reverse(1..(length(PathT))),
       if(flg==0,
         if(substring(PathT,#-1,#)=="\",
           tex=substring(PathT,#,length(PathT));
@@ -5089,6 +5089,7 @@ BBdata(fname,optionorg):=(
     tmp=replace(PathT,"pdflatex","extractbb"); //16.11.22
     tmp=replace(tmp,"pdftex","extractbb");  //16.11.22
     tmp=replace(tmp,"xelatex","extractbb"); 
+    tmp=replace(tmp,"uplatex","extractbb"); //17.09.20
     tmp=replace(tmp,"platex","extractbb");
     tmp=replace(tmp,"latex","extractbb");
     tmp=tmp+" -O "+file;

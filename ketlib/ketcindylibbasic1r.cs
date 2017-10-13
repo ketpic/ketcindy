@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.0.2(2017.08.23)");
+println("KETCindy V.3.1.0(2017.10.09)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.08.23) loaded");
+println("ketcindylibbasic1(2017.10.06) loaded");
 
 //help:start();
 
@@ -29,11 +29,11 @@ println("ketcindylibbasic1(2017.08.23) loaded");
 
 //help:Option1(["dr","dr,2","da","da,2,1","do","do,1,2"]);
 //help:Option2(["notex","nodisp","nodata"]);
-//help :Option3(["in","out","in-","out-"]);
 
 //help:getdirhead();
 //help:gedirhead("/Applications");
 //help:gedirhead("C:\Users\(username)");
+//help:setpath();
 
 Ch=[0]; ChNum=1;
 
@@ -41,7 +41,7 @@ Ketinit():=Ketinit(1);
 //help:Ketinit();
 Ketinit(sy):=Ketinit(sy,[-5,5],[-5,5]);
 Ketinit(sy,rangex,rangey):=(
-  regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc,sep);
+  regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
   PenThickInit=8;
   ULEN="1cm";
   MARKLEN=0.2; //16.11.01
@@ -66,8 +66,6 @@ Ketinit(sy,rangex,rangey):=(
   COM0thlist=[];
   COM1stlist=[];
   COM2ndlist=[];
-  SCIWRLIST=[];
-  SCIRELIST=[];
   ADDAXES="1";
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
@@ -82,8 +80,8 @@ Ketinit(sy,rangex,rangey):=(
   setdirectory(Dirwork);
   if(isstring(Fhead),    // 15.04.06
     Fnametex=Fhead+".tex";
-    Fnamesci=Fhead+".sce";
-    Fnamescibody=Fhead+"body.sce";
+    FnameR=Fhead+".r";
+    FnamebodyR=Fhead+"body.r";
     Fnameout=Fhead+".txt";
   );
   if(!isstring(Mackc),// 16.06.07
@@ -106,14 +104,13 @@ Ketinit(sy,rangex,rangey):=(
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   ThinDense=0.1;//17.01.08
-  if(indexof(PathS,"-6.")>0,//17.04.14from
-    if(iswindows(),sep="\",sep="/");
+  if(indexof(PathS,"-6.")>0,//17.09.29
     if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
-        Libname=Dirlib+sep+"ketpicscifiles6";
+        LibnameS=Dirlib+pathsep()+"ketpicscifiles6";
     ,
-        Libname=Dirlib+sep+"ketpic2escifiles6";
+        LibnameS=Dirlib+pathsep()+"ketpic2escifiles6";
     );
-  );//17.04.14upto
+  );//17.09.29upto
 );
 
 Setwindow():=Setwindow("Msg=yes");
@@ -159,8 +156,8 @@ Setfiles(file):=( // 17.01.16
 //help:Setfiles(file);
     Fhead=file;
     Fnametex=Fhead+".tex";
-    Fnamesci=Fhead+".sce";
-    Fnamescibody=Fhead+"body.sce";
+    FnameR=Fhead+".sce";
+    FnamebodyR=Fhead+"body.sce";
     Fnameout=Fhead+".txt";
 );
 
@@ -1715,10 +1712,12 @@ Com2ndpre(String):=(
     COM2ndlist=prepend(str,COM2ndlist);
 );
 
-Texcom(String):=(
+Texcom(strorg):=(  //17.09.22
 //help:Texcom("\color[cmyk]{0,0,0,0.5}");
   regional(str);
-  str="Texcom("+Dq+String+Dq+")";
+  str=replace(strorg,"\","\\");
+  str=replace(str,"\\\\","\\");
+  str="Texcom("+Dq+str+Dq+")";
   Com2nd(str);
 );
 
@@ -1937,8 +1936,7 @@ Setcolor(colorname,options):=(
   if(islist(colorname),
     tmp=text(colorname);
     tmp=substring(tmp,1,length(tmp)-1);
-    tmp="Texcom("+Dq+"\color[cmyk]{"+tmp+"}"+Dq+")";
-    Com2nd(tmp);
+    Texcom("\color[cmyk]{"+tmp+"}"); //17.09.22
   );
 );
 
@@ -1947,7 +1945,7 @@ Setcolorrgb(colorlist):=(
   regional(tmp);
   tmp=text(colorlist);
   tmp=substring(tmp,1,length(tmp)-1);
-  tmp="Texcom("+Dq+"\color[rgb]{"+tmp+"}"+Dq+")";
+  tmp="Texcom("+Dq+"\\color[rgb]{"+tmp+"}"+Dq+")"; //17.10.07
   Com2nd(tmp);
 );
 
@@ -2734,6 +2732,16 @@ Pointdata(nm,list,options):=(
   tmp=nameL+"="+tmp3;
   parse(tmp);
   if(Noflg<3,
+    tmp2="list("; //17.10.10from
+    forall(list,
+      if(isstring(#),
+        tmp=#;
+      ,
+        if(ispoint(#),tmp=text(#),tmp=textformat(#,6));
+      );
+      tmp2=tmp2+tmp+",";
+    );
+    tmp2=substring(tmp2,0,length(tmp2)-1)+")"; //17.10.10upto
     GLIST=append(GLIST,name+"=Pointdata("+tmp2+")");
   );
   if(Noflg<2,
@@ -3035,29 +3043,6 @@ Plotdata(name1,func,variable,options):=(
     );
     PdL;
   , 
-                              //  Inflg or Outflg >0  15.05.15
-    if(Noflg<3,
-      if(Outflg==1,
-        println("Output Plotdata "+name);
-        tmp=name+"=Plotdata('"+func+"','"+variable+"'"+opstr+")";
-        GLIST=append(GLIST,tmp);
-        SCIWRLIST=append(SCIWRLIST,name);
-        if(Inflg==0,Inflg=1);  // 15.05.17
-      );
-      if(Inflg==1,
-        println("Input Plotdata "+name);
-        if(length(SCIRELIST)==0,
-          ReadOutData(Fnameout);
-        );
-        tmp=parse(name);
-        if(islist(tmp),
-          Extractdata(name,["nodisp"]);  // 12.19
-        );
-        tmp="// "+name+"=Plotdata('"+func+"','"+variable+"'"+opstr+")";
-        Com1st(tmp);
-        SCIRELIST=append(SCIRELIST,name);
-      );
-    );
     if(Noflg<2,
       if(isstring(Ltype),
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
@@ -3201,29 +3186,6 @@ Paramplot(name1,funstr,variable,options):=(
     );
     Out;
   , 
-                              //  Inflg or Outflg >0  15.05.15
-    if(Noflg<3,
-      if(Outflg==1,
-        println("Output Paramplot "+name);
-        tmp=name+"=Paramplot('"+funstr+"','"+variable+"'"+opstr+")";
-        GLIST=append(GLIST,tmp);
-        SCIWRLIST=append(SCIWRLIST,name);
-         if(Inflg==0,Inflg=1);  // 15.05.17
-      );
-      if(Inflg==1,
-        println("Input Paramplotdata "+name);
-        if(length(SCIRELIST)==0,
-          ReadOutData(Fnameout);
-        );
-        tmp=parse(name);
-        if(islist(tmp),
-          Extractdata(name,["nodisp"]);  // 12.19
-        );
-        tmp="// "+name+"=Paramplot('"+func+"','"+variable+"'"+opstr+")";
-        Com1st(tmp);
-        SCIRELIST=append(SCIRELIST,name);
-      );
-    );
     if(Noflg<2,
       if(isstring(Ltype),
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
@@ -4433,6 +4395,66 @@ Bownamerot(bwdata,tmov,nmov,str,updown):=(
   Exprrot(BOWMIDDLE,tmp,tmov,nmov,str);
 );
 
+Deqdata(deq,rng,initt,initf,Num):=( //17.10.04
+//  Deqdata("[x1,...xn]`=[f1,...fn]","t=[0,20]",0,[...],50);
+  regional(Eps,Inf,tname,Xname,func,t1,t2,dt,tt,X0,flg,
+                 kl1,kl2,kl3,kl4,pdL,tmp,tmp1,tmp2);
+  Eps=10^(-3);
+  Inf=10^3;
+  tmp=tokenize(deq,"=");
+  tmp1=replace(tmp_1,"`","");
+  tmp1=substring(tmp1,1,length(tmp1)-1);
+  Xname=tokenize(tmp1,",");
+  func=tmp_2;
+  forall(1..(length(Xname)),
+    func=replace(func,Xname_#,"X_"+text(#));
+  );
+  tmp=tokenize(rng,"=");
+  tname=tmp_1;
+  tmp=parse(tmp_2);
+  t1=tmp_1;
+  t2=tmp_2;
+  tmp="funP("+tname+",X):="+func+";";
+  parse(tmp);
+  tmp="funN("+tname+",X):=-"+func+";";
+  parse(tmp);
+  dt=(t2-t1)/Num;
+  tt=initt;
+  X0=Lcrd(initf);
+  pdL=[flatten([tt,X0])];
+  flg=0;
+  forall(1..floor((t2-initt)/dt),
+    if(flg==0,
+      kl1=dt*funP(tt,X0);
+      kl2=dt*funP(tt+dt/2,X0+kl1/2);
+      kl3=dt*funP(tt+dt/2,X0+kl2/2);
+      kl4=dt*funP(tt+dt,X0+kl3);
+      X0=X0+(kl1+2*kl2+2*kl3+kl4)/6;
+      tt=initt+#*dt;
+      tmp=flatten([tt,X0]);
+      pdL=append(pdL,tmp);
+      if(|tmp|>Inf,flg=1);
+    );
+  );
+  tt=initt;
+  X0=Lcrd(initf);
+  flg=0;
+  forall(1..floor((initt-t1)/dt),
+    if(flg==0,
+      kl1=dt*funN(tt,X0);
+      kl2=dt*funN(tt+dt/2,X0+kl1/2);
+      kl3=dt*funN(tt+dt/2,X0+kl2/2);
+      kl4=dt*funN(tt+dt,X0+kl3);
+      X0=X0+(kl1+2*kl2+2*kl3+kl4)/6;
+      tt=initt-#*dt;
+      tmp=flatten([tt,X0]);
+      pdL=prepend(tmp,pdL);
+      if(|tmp1|>Inf,flg=1);
+    );
+  );
+  pdL;
+);
+ 
 Deqplot(nm,deq,rng,initf):=Deqplot(nm,deq,rng,Lcrd(initf)_1,initf,[]);
 Deqplot(nm,deq,rng,Arg1,Arg2):=(
   regional(initt,initf,options);
@@ -4447,198 +4469,100 @@ Deqplot(nm,deq,rng,Arg1,Arg2):=(
   );
   Deqplot(nm,deq,rng,initt,initf,options);
 );
-Deqplot(nm,deq,rng,initt,initf,options):=(
-  regional(name,Noflg,Ltype,eqL,opstr,opcindy,pdL,var2,deq2,rng2,initt2,initf2,
-      tmp,tmp1,tmp2,tmp3,tmp4);
-  tmp=tokenize(deq,"=");
-  tmp1=tmp_1;
-  tmp2=tmp_2;
-  tmp3=tokenize(tmp1,"`");
-  if(length(tmp3)==2,
-    if(indexof(tmp1,"[")>0,
-      Deqplot(nm,deq,rng,initt,initf,options,[2,3]);
-    ,
-      if(indexof(rng,"=")>0,rng2=rng,rng2=rng+"=[XMIN,XMAX]");
-      tmp=tokenize(rng2,"=");
-      deq2="["+tmp_1+","+replace(tmp1,"`","]")+"`=[1,"+tmp2+"]";
-      rng2="tvar="+tmp_2; //17.02.26
-      if(isreal(initf) & !islist(initf),
-        initf2=[initt,initf];
-        initt2=initt;
-      ,
-        initf2=Lcrd(initf);
-        initt2=initf2_1;
-      );
-      Deqplot(nm,deq2,rng2,initt2,initf2,options,[2,3]);
-    );
-  ,
-    name="de"+nm;
-    tmp=Divoptions(options);
-    Ltype=tmp_1;
-    Noflg=tmp_2;
-    eqL=tmp_5;
-    opcindy=tmp_9;
-    opstr="";
-    forall(eqL,
-      if(Toupper(substring(#,0,1))=="N",
-        tmp=indexof(#,"=");
-        tmp1="N="+substring(#,tmp,length(#));
-        opstr=opstr+",'"+tmp1+"'";
-      );        
-    );
-	if(Noflg<1,
-      if(indexof(rng,"=")>0,rng2=rng,rng2=rng+"=[XMIN,XMAX]");
-      var2="d"+tmp3_1;
-      deq2="["+tmp3_1+","+var2+"]`=[";
-      tmp=replace(tmp2,tmp3_1+"`",var2);
-      deq2=deq2+var2+","+tmp+"]";
-      Deqplot(nm,deq2,rng2,initt,initf,append(options,"nodisp"),[1,2]);
-      parse(tmp);
-      tmp=name+"=Deqplot(Assign("+Dq+deq+Dq+"),'"+rng+"',";
-      tmp=tmp+initt+","+initf+opstr+")";
-      GLIST=append(GLIST,tmp);
-    );
-    if(Noflg<2,
-      if(isstring(Ltype),
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      ,
-        if(Noflg==1,Ltype=0);
-      );
-      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-      parse("de"+nm);
-    );
-  );
-);
-Deqplot(nm,deq,rng,initt,initf,options,Sel):=(
+Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
 //help:Deqplot("2","y`=y*(1-y)","x",0, 0.5,["Num=100"]);
 //help:Deqplot("1","y``=-y","x",0, [1,0]);
-//help:Deqplot("3","[x,y]`=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",[1,0.5]);
-  regional(Ltype,Noflg,Inflg,Outflg,strL,opstr,opcindy,Num,
-      outstr,name,func,xf,yf,pdL,Eps,Inf,t1,t2,tt,Vname,dt,funP,funN,flg,
-      kl1,kl2,kl3,kl4,x0,y0,x1,y1,tmp,tmp1,tmp2);
+//help:Deqplot("3","[x,y]`=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",0,[1,0.5]);
+  regional(deq,rng,Ltype,Noflg,eqL,opcindy,Num,name,nn,pdL,phase,
+                  sel,tmp,tmp1,tmp2);
   name="de"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  Inflg=tmp_3;
-  Outflg=tmp_4;
   eqL=tmp_5;
-  strL=tmp_7;
-//  opstr=tmp_(length(tmp)-1);
-  opstr="";
   opcindy=tmp_(length(tmp));
-  outstr="";
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="S",
-      outstr="Sci";
-    );
-  );
   Num=50;
   forall(eqL,
     tmp=indexof(#,"=");
     tmp2=substring(#,0,1);
     tmp2=Toupper(tmp2);
     tmp1=substring(#,tmp,length(#));
-    opstr=opstr+",'"+tmp2+"="+tmp1+"'";
     if(Toupper(substring(#,0,1))=="N",
       Num=parse(tmp1);
     );
   );
-  if(outstr=="Sci",
-    if(Inflg==0 & Outflg==0,Outflg=1;Inflg=1);
+  rng=rngorg;
+  if(indexof(rng,"=")==0,
+    rng=rng+"="+textformat([XMIN,XMAX],6);
+  );
+  deq=deqorg;
+  tmp=indexof(deq,"=");
+  tmp1=substring(deq,0,tmp-1);
+  if(indexof(tmp1,"[")==0,
+    phase=0;
+    sel=[1,2];
+  ,
+    phase=1;
+    sel=[2,3];
+  );
+  tmp2=substring(deq,tmp,length(deq));
+  nn=length(Indexall(tmp1,"`"));
+  if(nn==1,
+    if(indexof(tmp1,"[")==0,
+      tmp1="["+replace(tmp1,"`","]`");
+      deq=tmp1+"="+tmp2;
+    );
+  ,
+    tmp=indexof(tmp1,"`");
+    tmp1=substring(tmp1,0,tmp-1);
+    deq="[";
+    forall(1..nn,
+      deq=deq+tmp1+"N"+text(#)+",";
+    );
+    deq=substring(deq,0,length(deq)-1)+"]`=[";
+    forall(1..(nn-1),
+      deq=deq+tmp1+"N"+text(#+1)+",";
+    );
+    forall(reverse(1..(nn)),jj,
+      tmp=tmp1;
+      forall(1..jj,
+        tmp=tmp+"`";
+        tmp2=replace(tmp2,tmp,tmp1+"N"+text(#+1));
+      );
+    );
+    tmp2=tmp2+"]";
+    forall(1..(length(tmp2)-1),
+      tmp=substring(tmp2,#-1,#);
+      if(tmp!=tmp1,
+        deq=deq+tmp;
+      ,
+        tmp=substring(tmp2,#,#+1);
+        if(tmp=="N",
+          deq=deq+tmp1;
+        ,
+          deq=deq+tmp1+"N1"
+        );
+      );
+    );
+    deq=deq+"]";
   );
   if(Noflg<3,
-    if(outstr=="Sci",
-      if(Outflg==1,
-        println("Output Deqplot "+name);
-        SCIWRLIST=append(SCIWRLIST,name);
-      );
-      if(Inflg==1,
-        println("Input Deqplot "+name);
-        if(length(SCIRELIST)==0,
-          ReadOutData(Fnameout);
-        );
-        tmp=parse(name);
-        if(islist(tmp),
-          Extractdata(name,["nodisp"]);  // 12.19
-        );
-        SCIRELIST=append(SCIRELIST,name);
-      );
-    ,
-	  Eps=10^(-3);
-      Inf=10^3;
-      tmp=tokenize(deq,"=");
-      tmp1=tmp_1;
-      func=tmp_2;
-      tmp=indexof(tmp1,",");
-      xf=substring(tmp1,1,tmp-1);
-      yf=substring(tmp1,tmp,length(tmp1));
-      tmp=indexof(yf,"]");
-      yf=substring(yf,0,tmp-1);
-      tmp=tokenize(rng,"=");
-      Vname=tmp_1;
-      tmp=parse(tmp_2);
-      t1=tmp_1;
-      t2=tmp_2;
-      tmp="funP("+Vname+","+xf+","+yf+"):="+func+";";
-      parse(tmp);
-      tmp=tokenize(func,",");
-      tmp1="-("+substring(tmp_1,1,length(tmp_1))+")";
-      tmp2="-("+substring(tmp_2,0,length(tmp_2)-1)+")";
-      tmp="funN("+Vname+","+xf+","+yf+"):=["+tmp1+","+tmp2+"];";
-      parse(tmp);
-      dt=(t2-t1)/Num;
-      tt=initt;
-      tmp=Lcrd(initf);
-      x0=tmp_1;
-      y0=tmp_2;
-      pdL=[[tt,x0,y0]];
-      flg=0;
-      forall(1..floor((t2-initt)/dt),
-        if(flg==0,
-          kl1=dt*funP(tt,x0,y0);
-          kl2=dt*funP(tt+dt/2,x0+kl1_1/2,y0+kl1_2/2);
-          kl3=dt*funP(tt+dt/2,x0+kl2_1/2,y0+kl2_2/2);
-          kl4=dt*funP(tt+dt,x0+kl3_1,y0+kl3_2);//16.10.14
-          tmp1=[x0,y0]+(kl1+2*kl2+2*kl3+kl4)/6;
-          x0=tmp1_1;
-          y0=tmp1_2;
-          tt=initt+#*dt;
-          pdL=append(pdL,[tt,x0,y0]);
-          if(|tmp1|>Inf,flg=1);
-        );
-      );
-      tt=initt;
-      tmp=Lcrd(initf);
-      x0=tmp_1;
-      y0=tmp_2;
-      flg=0;
-      forall(1..floor((initt-t1)/dt),
-        if(flg==0,
-          kl1=dt*funN(tt,x0,y0);
-          kl2=dt*funN(tt+dt/2,x0+kl1_1/2,y0+kl1_2/2);
-          kl3=dt*funN(tt+dt/2,x0+kl2_1/2,y0+kl2_2/2);
-          kl4=dt*funN(tt+dt/2,x0+kl3_1/2,y0+kl3_2/2);
-          tmp1=[x0,y0]+(kl1+2*kl2+2*kl3+kl4)/6;
-          x0=tmp1_1;
-          y0=tmp1_2;
-          tt=initt-#*dt;
-          pdL=prepend([tt,x0,y0],pdL);
-          if(|tmp1|>Inf,flg=1);
-        );
-      );
-      println("Generate Deqplot "+name);
-      pdL=apply(pdL,#_Sel);
-      tmp1=apply(pdL,Pcrd(#));
-      tmp=name+"="+textformat(tmp1,5);
-      parse(tmp);
+    pdL=deqdata(deq,rng,initt,initf,Num);
+    if(phase==1,
+      pdL=apply(pdL,#_(2..3));
     );
-    if(Noflg<1,
-      tmp=name+"=Deqplot(Assign("+Dq+deq+Dq+"),'"+rng+"',";
-      tmp=tmp+initt+","+initf+opstr+")";
-      GLIST=append(GLIST,tmp);
-    );
+    tmp1=apply(pdL,Pcrd(#));
+    tmp=name+"="+textformat(tmp1,5);
+    parse(tmp);
+  );
+  if(Noflg<1,
+    tmp=Assign(deq);
+    tmp=replace(deq,"'","`");
+    tmp=name+"=Deqplot('"+tmp+"','"+rng+"',";
+    tmp=tmp+format(initt,6)+","+textformat(initf,6);
+    tmp=tmp+","+text(sel)+",'Num="+text(Num)+"')";
+    tmp=RSform(tmp);
+    GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
     if(isstring(Ltype),
@@ -4646,15 +4570,8 @@ Deqplot(nm,deq,rng,initt,initf,options,Sel):=(
     ,
       if(Noflg==1,Ltype=0);
     );
-    if(outstr=="Sci",
-      if(Inflg==1,
-        GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-      );
-    ,
-      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-    );
+    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
-  if(outstr!="Sci",pdL); // 17.02.17
 );
 
 Enclosing(nm,plist):=EnclosingS(nm,plist);
@@ -4828,7 +4745,10 @@ EnclosingS(nm,plist,options):=(
 Shade(plist):=Shade(plist,[]);
 Shade(plist,options):=(
 //help:Shade(["gr2","sg1"],[0.5]);
-//help:Shade([pointlist],[0.5]);
+//help:Shade(["gr2","sg1"],["red" /pict2e]);
+//help:Shade(["gr2","sg1"],[[0,0,0,0.5] /pict2e]);
+//help:Shade(["gr2","sg1"],[[1,0,0] /pict2e]);
+//help:Shade([pointlist]);
   regional(tmp,tmp1,tmp2,opstr,opcindy,Str,G2,flg);
   if(isstring(plist_1), // 16.01.24
     println("output Shade of "+plist);

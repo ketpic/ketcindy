@@ -1,0 +1,22 @@
+title::slideE//
+%%title::slide0::kabegami//
+
+%%%%%%%%%%%%%%%%//
+main::Main Slide//
+
+%%%%%%%%%%%%%%%%//
+new::How to use itemize//
+
+itemize//
+item::Contents//
+item::Conclusion//
+end//
+
+%%%%%%%%%%%%%%%%//
+new::How to use enumerate//
+
+enumerate::[(1)]//
+item::Change the style of number adding, for example, [(1)]//
+item::Same as usual//
+end//
+

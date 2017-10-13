@@ -1,0 +1,8 @@
+// 2017.10.08
+//    Bezier3,Putbezier3data,Mkbezierptcrv3d greatly changed
+// 2017.10.07
+//    Mkpointlist debugged
+//    Start3d,Ptseg3d, Setangle, Mkpointlist, Mkseq3d, Putpoint3d Skeleton..,Putbezier..
+//        changed  ( "=" removed from VLIST)
+// 2017.09.18
+//    SCIWR,SCIRE removed

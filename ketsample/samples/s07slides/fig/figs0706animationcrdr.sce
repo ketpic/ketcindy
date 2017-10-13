@@ -1,9 +1,0 @@
-cd('/Users/takatoosetsuo/ketcindy/ketsample/samples/s07slides/fig');//
-Ketlib=lib("/Users/takatoosetsuo/ketcindy/ketlib/ketpicsciL5");//
-Ketinit();//
-Setwindow([(-2.5),(2.5)],[(-2.5),(2.5)]);
-pi=%pi;////
-rmdir("pointoncircle","s");//
-createdir("pointoncircle");//
-mputl('||||','resultS.txt')//
-quit()//

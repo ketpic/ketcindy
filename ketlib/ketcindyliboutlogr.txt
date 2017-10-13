@@ -1,0 +1,15 @@
+// 2017.10.07
+//   CalcbyR debugged ( => WritetoRS )
+//   ReadCdata changed  ( execstr removed )
+// 2017.10.02
+//    Imlicitplot changed (for R)
+// 2017.09.29
+//    WritetoS debugged (LibnameS)
+//    Dotfilldata changed
+// 2017.09.24
+//    Circledata, WritetoR, PrecommandR debugged
+// 2017.09.23
+//    Hatchdata debugged
+// 2017.09.18
+//    Hatchdata changed (for R)
+//    SCIWR,SCIRE removed

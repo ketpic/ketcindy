@@ -34,9 +34,11 @@ mv ketcindy/CindyJS ketcindy/ketmanual ketcindy/ketfiles/ketsample \
    ketcindy/ketfiles/ScriptDraw.txt ketcindy/ketfiles/ScriptInitialization.txt \
    ketcindy/ketfiles/ScriptKeytyped.txt \
    doc/support/ketcindy
-if [ -r TODO ] ; then
-   mv TODO doc/support/ketcindy
-fi
+for i in TODO README.TeXLive ; do
+  if [ -r ketcindy/$i ] ; then
+    mv ketcindy/$i doc/support/ketcindy
+  fi
+done
 
 # the rest should be files that can be removed:
 rm ketcindy/scripts/update-permissions.sh

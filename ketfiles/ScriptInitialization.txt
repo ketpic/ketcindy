@@ -1,4 +1,6 @@
+ketfilesdir=loaddirectory;
 use("KetCindyPlugin"); 
+ketcindydir=ketfilesdir + "..";
 if(isexists(gethome(),"ketcindyhead.txt"),
   setdirectory(gethome());
   import("ketcindyhead.txt");
@@ -10,8 +12,9 @@ if(isexists(gethome(),"ketcindyhead.txt"),
     Dirhead=getdirhead();
   );
 );
-setdirectory(Dirhead);
+setdirectory(ketcindydir);
 import("setketcindy.txt");
+setdirectory(ketcindydir);
 import("ketoutset.txt");
 
 setdirectory(Dirwork);

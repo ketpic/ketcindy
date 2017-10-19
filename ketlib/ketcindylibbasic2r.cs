@@ -3220,15 +3220,15 @@ Viewtex():=(
       println(SCEOUTPUT,"\usepackage{pict2e}");//16.12.16
       println(SCEOUTPUT,"\usepackage{luatexja}");//16.12.18
     );
-//    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");// 17.04.07from
-    tmp=replace(Dirhead+"/ketpicstyle","\","/");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic2e}");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer2e}");
+    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");// 17.04.07from
+//    tmp=replace(Dirhead+"/ketpicstyle","\","/");
+//    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic2e}");
+//    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer2e}");
   ,
-//    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
-    tmp=replace(Dirhead+"/ketpicstyle","\","/");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
+    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
+//    tmp=replace(Dirhead+"/ketpicstyle","\","/");
+//    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
+//    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
   );//17.04.07upto
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{graphicx}");

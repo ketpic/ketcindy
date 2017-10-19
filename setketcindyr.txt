@@ -1,11 +1,11 @@
 // e:2017.10.14
-Dirlib=Dirhead+pathsep()+"ketlib";
+Dirlib=ketcindydir+pathsep()+"ketlib";
 Libname=Dirlib+pathsep()+"ketpic5_2_3";
 LibnameS=Dirlib+pathsep()+"ketpicsciL5";
-DirlibC=Dirhead+pathsep()+"ketlibC";
-tmp=Dirhead+pathsep()+"ketfiles";
-println(makedir(tmp,"ketwork"));
-Dirwork=tmp+pathsep()+"ketwork";
+DirlibC=ketcindydir+pathsep()+"ketlibC";
+Dirwork=Dirhead+pathsep()+"ketwork";
+tmp=Dirhead;
+println(makedir(Dirhead,"ketwork"));
 setdirectory(Dirlib);
 import("ketcindylibbasic1r.cs");
 import("ketcindylibbasic2r.cs");

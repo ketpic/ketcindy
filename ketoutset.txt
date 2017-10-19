@@ -51,13 +51,13 @@ if(ismacosx(),
 //  Mackc="open";
 );
 if(islinux(),
-  PathT="/usr/bin/platex";
-  PathS="/usr/bin/scilab";
+  PathT="platex";
+  PathS="scilab";
   Pathpdf="evince";
 //  Pathpdf="/usr/bin/xpdf";
-  PathR="";
+  PathR="R";
   PathA="";
-  PathM="/usr/bin/maxima";
+  PathM="maxima";
   PathV3="";
   PathF="";
   PathAd="";

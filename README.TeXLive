@@ -1,0 +1,9 @@
+KETCindy for TeX Live
+=====================
+The files originally distributed by Prof. Takato have been adapted
+by Norbert Preining to work within the framework of TeX Live.
+In particular the setketcindy(r).txt and the ScriptInitialization.txt
+and its depending template.cdy have been patched to work with
+unwritable texmf-dist trees.
+
+2017-10-19 Norbert Preining

@@ -12,7 +12,7 @@ fi
 mkdir texmf
 git archive --format=tar --prefix=ketcindy/ HEAD | (cd texmf && tar xf -)
 mkdir -p texmf/doc/support/ketcindy
-mkdir -p texmf/scripts/ketcindy
+mkdir -p texmf/scripts/ketcindy/ketfiles
 mkdir -p texmf/tex/latex/ketcindy
 
 cd texmf
@@ -23,17 +23,20 @@ rmdir ketcindy/ketpicstyle
 
 # scripts
 mv ketcindy/ketlib ketcindy/ketlibC ketcindy/ketoutset.txt ketcindy/setketcindy.txt \
-   ketcindy/ketfiles/allbuttons.cdy ketcindy/ketfiles/template.cdy ketcindy/data \
-   ketcindy/scripts/ketcindy.sh ketcindy/ketjava \
+   ketcindy/data ketcindy/scripts/ketcindy.sh ketcindy/ketjava \
    scripts/ketcindy
+mv ketcindy/ketfiles/allbuttons.cdy ketcindy/ketfiles/template.cdy scripts/ketcindy/ketfiles
 chmod 0755 scripts/ketcindy/ketcindy.sh
 
 # doc
 mv ketcindy/CindyJS ketcindy/ketmanual ketcindy/ketfiles/ketsample \
-   ketcindy/LICENSE ketcindy/TODO ketcindy/source \
+   ketcindy/LICENSE ketcindy/source \
    ketcindy/ketfiles/ScriptDraw.txt ketcindy/ketfiles/ScriptInitialization.txt \
    ketcindy/ketfiles/ScriptKeytyped.txt \
    doc/support/ketcindy
+if [ -r TODO ] ; then
+   mv TODO doc/support/ketcindy
+fi
 
 # the rest should be files that can be removed:
 rm ketcindy/scripts/update-permissions.sh

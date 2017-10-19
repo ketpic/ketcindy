@@ -1,11 +1,15 @@
 use("KetCindyPlugin"); 
-if(isexists(plugindirectory,"dirhead.txt"),
-  setdirectory(plugindirectory);
-  import("dirhead.txt");
+if(isexists(gethome(),"ketcindyhead.txt"),
+  setdirectory(gethome());
+  import("ketcindyhead.txt");
 ,
-  Dirhead=getdirhead();
+  if(isexists(plugindirectory,"dirhead.txt"),
+    setdirectory(plugindirectory);
+    import("dirhead.txt");
+  ,
+    Dirhead=getdirhead();
+  );
 );
-Shellfile="";
 setdirectory(Dirhead);
 import("setketcindy.txt");
 import("ketoutset.txt");

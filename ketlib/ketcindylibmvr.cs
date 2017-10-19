@@ -550,7 +550,7 @@ Setpara(pathorg,fstr,sL,options):=(
   ParaFstr=fstr;
   ParaSL=sL;
   ParaOp=options;
-  GLISTback=GLIST; 
+  GLISTback=GLIST;
   GCLISTback=GCLIST;
   GOUTLISTback=GOUTLIST;
   POUTLISTback=POUTLIST;
@@ -632,11 +632,12 @@ Parafolder(path,fstr,sLorg,optionorg):=(
       );
     ,
       if(mkr=="Y",
+        tmp1=replace(Dirwork,"\","/");//17.10.13
         cmdL=[
-          "setwd",[Dq+Dirwork+pathsep()+path+Dq],
+          "setwd",[Dq+tmp1+"/"+path+Dq],
           "fL=as.matrix(list.files())",[],
           "apply",["fL",2,"file.remove"],
-          "setwd",[Dq+Dirwork+Dq],
+          "setwd",[Dq+tmp1+Dq],
         ];
         CalcbyR("rvf",cmdL,["Cat=n","m"]);
         tmp=Dirwork+pathsep()+path;
@@ -664,16 +665,16 @@ Parafolder(path,fstr,sLorg,optionorg):=(
       FnameR=path+"/p"+tmp1+".r";
       sfL=append(sfL,FnameR);
       Fnametex=replace(FnameR,".r",".tex");
-      Movieframe(sL_nn);
+      Movieframe(sL_nn); //17.10.13
       if(!isexists(Dirwork,FnameR) % mkr=="Y",
         if(ErrFlag!=-1,
           Viewtex();
         );
       );
     ); 
-    tmp1=replace(Dirwork+pathsep()+path,"\","/"); //17.10.13
+    tmp1=replace(Dirwork,"\","/"); //17.10.13
     cmdL=[
-      "setwd",[Dq+tmp1+Dq],
+      "setwd",[Dq+tmp1+"/"+path+Dq],
       "Mkallfile=function(fname){",[],
       "  Ctr<<- Ctr+1",[],
       "  cat('print(',Ctr,')\n',file='all.r',append=TRUE)",[],
@@ -698,7 +699,7 @@ Parafolder(path,fstr,sLorg,optionorg):=(
       "proc.time()-t",[],
       "source('all.r')",[],
       "proc.time()-t",[],
-      "setwd",[Dq+Dirwork+Dq]
+      "setwd",[Dq+tmp1+Dq]
     ];
     if(ErrFlag!=-1,
       if(!isexists(Dirwork,Fnametex) % mktex=="Y",
@@ -777,6 +778,7 @@ Animatefile(path,folder):=(
   FRate="10";
   Scale="1";
   OpA="";
+  remflg=0;
   forall(eqL,
     tmp1=Toupper(substring(#,0,2));
     tmp=indexof(#,"=");
@@ -822,13 +824,12 @@ Animatefile(path,folder):=(
   println(fname+" has been generated");
 );
 
-Mkanimation():=(  // 17.10.08
-  if(!isexists(Dirwork,ParaPath),
+Mkanimation():=(
+  regional(remflg,tmp,eqL,tmp1,tmp2);
+  if(!isexists(Dirwork,ParaPath), //17.10.14from
     Parafolder();
   );
-  if(!isexists(Dirwork,"anim"+ParaPath+".tex"),
-    Animatefile();
-  );
+  Animatefile(); //17.10.14upto
   Mkanimation("fig",ParaPath);
 );
 Mkanimation(folder):=Mkanimation("fig",folder);
@@ -847,8 +848,12 @@ Mkanimation(path,folder):=(
   Dirwork=replace(Dirwork,pathsep()+"fig","");
   Setdirectory(Dirwork);
   tmp1=replace(PathT,pathsep(),"/");
-  tmp=indexall(tmp1,pathsep());
-  tex=substring(tmp1,tmp_(length(tmp)),length(tmp1));
+  tmp=indexall(tmp1,"/");//17.10.14from
+  if(length(tmp)>0,
+    tex=substring(tmp1,tmp_(length(tmp)),length(tmp1));
+  ,
+    tex=tmp1;
+  );//17.10.14upto
   if((tex=="platex")%(tex=="uplatex"),
     if(tex=="platex",article="jarticle",article="ujarticle");
   ,
@@ -901,18 +906,19 @@ Mkanimation(path,folder):=(
   closefile(SCEOUTPUT);
   if(iswindows(),
     parent=replace(Dirwork+Batparent,pathsep()+"fig","");
-    Makebat(Fhead,"tv"); 
+    Makebat(Fhead,"ttv"); 
     kc():=(
       println("kc : "+kc(parent,Dirlib,Fnametex))
     ); 
+    kc();
   ,
     parent=replace(Dirwork+Shellparent,pathsep()+"fig","");
-    Makeshell(Fhead,"tv"); 
+    Makeshell(Fhead,"ttv"); 
     kc():=(
       println("kc : "+kc(parent,Mackc+Dirlib,Fnametex));
     );
+    kc();
   );
-  kc();
   Dirwork=Dirworkbkup;
   Dirwork=Dirwork+pathsep()+"fig";
   setdirectory(Dirwork);

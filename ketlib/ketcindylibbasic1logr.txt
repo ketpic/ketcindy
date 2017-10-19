@@ -1,3 +1,5 @@
+// s:2017.10.14
+//    Setfiles debugged
 // s:2017.10.13
 //    Ketinit() changed  (definition of Shellparent,Shellchild)
 // s:2017.10.07

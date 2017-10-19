@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.0(2017.10.13)");
+println("KETCindy V.3.1.0(2017.10.14)");
 println(ketjavaversion());//17.06.05
 println("ketcindylibbasic1(2017.10.13) loaded");
 
@@ -78,12 +78,14 @@ Ketinit(sy,rangex,rangey):=(
   ADDPACK=[]; // 16.05.16
   ErrFlag=0;
   setdirectory(Dirwork);
-  if(isstring(Fhead),    // 15.04.06
-    Fnametex=Fhead+".tex";
-    FnameR=Fhead+".r";
-    FnamebodyR=Fhead+"body.r";
-    Fnameout=Fhead+".txt";
+  if(!isstring(Fhead),  // 17.10.13from
+    Fhead=text(curkernel());
+    Fhead=replace(Fhead,".cdy","");
   );
+  Fnametex=Fhead+".tex";
+  FnameR=Fhead+".r";
+  FnamebodyR=Fhead+"body.r";
+  Fnameout=Fhead+".txt";  // 17.10.13upto
   if(!isstring(Mackc),// 16.06.07
     Mackc="sh"; 
   );

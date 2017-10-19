@@ -47,8 +47,8 @@ if(ismacosx(),
   PathF="/Applications/FriCAS.app/Contents/Resources/bin/fricas";
 //  PathAd="Adobe Reader";
   PathAd="/Applications/Adobe Acrobat Reader DC.app/Contents/MacOS/AdobeReader";
-//  Mackc="sh";
-  Mackc="open";
+  Mackc="sh";
+//  Mackc="open";
 );
 if(islinux(),
   PathT="/usr/bin/platex";

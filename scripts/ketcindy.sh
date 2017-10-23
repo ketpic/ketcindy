@@ -8,6 +8,7 @@
 
 BinaryName=Cinderella2
 TemplateFile=template.cdy
+systype=`uname`
 
 if [ "$1" = "-c" ]
 then
@@ -19,8 +20,18 @@ fi
 
 if [ -z "$cinderella" ]
 then
-  echo "Cannot find $BinaryName!" >&2
-  exit 1
+  case $systype in
+    Darwin)
+      if [ -r /Applications/Cinderella2.app/Contents/MacOS/Cinderella2 ]
+      then
+        cinderella=/Applications/Cinderella2.app/Contents/MacOS/Cinderella2
+      else
+        echo "Cannot find $BinaryName!" >&2
+        exit 1
+      fi
+    *)
+      echo "Cannot find $BinaryName!" >&2
+      exit 1
 fi
 
 if [ ! -x "$cinderella" ] ; then
@@ -30,7 +41,13 @@ fi
 # find real path
 realcind=`realpath "$cinderella"`
 cinddir=`dirname "$realcind"`
-plugindir="$cinddir/Plugins"
+case $systype in
+  Darwin)
+    plugindir="$cinddir/../PlugIns";;
+  *)
+    plugindir="$cinddir/Plugins";;
+esac
+
 plugin="$plugindir/KetCindyPlugin.jar"
 
 # find Jar
@@ -56,8 +73,14 @@ if [ ! -r "$plugin" ] ; then
 fi
 
 # check whether the .jar md5sum is fine, but don't make this an error
-myjarmd=`cat "$KetCdyJar" | md5sum`
-sysjarmd=`cat "$plugin" | md5sum`
+case $systype in
+  Darwin)
+    __md5sum=md5;;
+  *)
+    __md5sum=md5sum;;
+esac
+myjarmd=`cat "$KetCdyJar" | $__md5sum`
+sysjarmd=`cat "$plugin" | $__md5sum`
 if [ ! "$myjarmd" = "$sysjarmd" ]
 then
   echo "The installed version of the plugin in"

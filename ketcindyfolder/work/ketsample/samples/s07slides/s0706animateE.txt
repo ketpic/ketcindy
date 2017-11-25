@@ -1,0 +1,19 @@
+%%タイトル::slideE::kabegami//
+タイトル::slideE//
+
+%%%%%%%%%%%%%%%%//
+main::Main Slide//
+
+%%%%%%%%%%%%%%%%//
+new::Animation1//
+
+\begin{center}//
+\input{fig/animsinemove}//
+\end{center}//
+
+%%%%%%%%%%%%%%%%//
+new::Animation2//
+
+\begin{center}//
+\input{fig/animsinemove2}//
+\end{center}//

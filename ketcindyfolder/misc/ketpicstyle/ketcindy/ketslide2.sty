@@ -1,0 +1,151 @@
+%Copyright (C)  2014  Setsuo Takato, KETpic developer team
+%* 
+%* This program is free software: you can redistribute it and/or modify
+%* it under the terms of the GNU General Public License as published by
+%* the Free Software Foundation; either version 3 of the License, or
+%* (at your option) any later version.
+%* 
+%* This program is distributed in the hope that it will be useful,
+%* but WITHOUT ANY WARRANTY; without even the implied warranty of
+%* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%* GNU General Public License for more details.
+%* 
+%* You should have received a copy of the GNU General Public License
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>
+%%% ketslide.sty 2017-1-9 11:50
+%%% ketslide170109.sce 2017-1-9 11:50
+%       2017.01.09 ketslide%
+%    \documentclass[landscape,10pt]{jarticle}%
+% or \documentclass[landscape,10pt]{article}%
+%\special{papersize=297mm,210mm}%
+\mag=2000%
+\newcommand{\ketmarginJ}{%
+\setmargin{25}{150}{15}{110}%
+%
+}%
+\newcommand{\ketmarginE}{%
+\setmargin{25}{135}{15}{115}%
+%
+}%
+\newcommand{\ketslideinit}{%
+\definecolor{ketshadowclr}{cmyk}{0,0,0,0.5}%
+\def\ketcletter{black}%
+\def\ketcbox{black}%
+\def\ketdbox{}%
+\def\ketcframe{black}%
+\def\ketcshadow{ketshadowclr}%
+\def\ketdshadow{}%
+\def\ketslidew{130}%
+\def\slidetitlex{6}%
+\def\slidetitlesize{2}%
+\def\mketcletter{black}%
+\def\mketcbox{white}%
+\def\mketdbox{}%
+\def\mketcframe{white}%
+\def\mslidetitlex{62}%
+\def\mslidetitlesize{3}%
+%
+}%
+\newcommand{\newnewslide}[2][7]{%
+\def\slidetitle{{\color{\ketcletter}#2}}%
+{\unitlength=1mm%
+\ketcalcwidth{#2}%
+}%
+%
+{%
+\ifnum %
+\theketpicctra>1 %
+\begin{layer}{\ketslidew}{0}%
+\popframe{\slidetitlex}{#1}%
+{\ketdshadow}{\ketcshadow}%
+{\ketdbox}{\ketcbox}{\ketcframe}%
+{\scalebox{\slidetitlesize}{\slidetitle}}%
+\end{layer}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\newslide}[2][7]{%
+%\newpage%
+\def\slidetitle{{\color{\ketcletter}#2}}%
+{\unitlength=1mm%
+\ketcalcwidth{#2}%
+}%
+%
+{%
+\ifnum %
+\theketpicctra>1 %
+\begin{layer}{\ketslidew}{0}%
+\popframe{\slidetitlex}{#1}%
+{\ketdshadow}{\ketcshadow}%
+{\ketdbox}{\ketcbox}{\ketcframe}%
+{\scalebox{\slidetitlesize}{\slidetitle}}%
+\end{layer}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\sameslide}[1][7]{%
+%\newpage%
+\addtocounter{page}{-1}%
+\ketcalcwidth{\slidetitle}%
+{\unitlength=1mm%
+\ketcalcwidth{\slidetitle}%
+}%
+%
+{%
+\ifnum %
+\theketpicctra>1 %
+\begin{layer}{\ketslidew}{0}%
+\popframe{\slidetitlex}{#1}%
+{\ketdshadow}{\ketcshadow}%
+{\ketdbox}{\ketcbox}{\ketcframe}%
+{\scalebox{\slidetitlesize}{\slidetitle}}%
+\end{layer}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\mainslide}[2][35]{%
+%\newpage%
+\def\slidetitle{{\color{\mketcletter}#2}}%
+{\unitlength=1mm%
+\ketcalcwidth{#2}%
+}%
+%
+{%
+\ifnum %
+\theketpicctra>1 %
+\begin{layer}{\ketslidew}{0}%
+\colorframes{\mslidetitlex}{#1}%
+{\mketdbox}{\mketcbox}{\mketcframe}%
+{\scalebox{\mslidetitlesize}{\slidetitle}}%
+\end{layer}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\mainsameslide}[1][35]{%
+%\newpage%
+\addtocounter{page}{-1}%
+{\unitlength=1mm%
+\ketcalcwidth{\slidetitle}%
+}%
+%
+{%
+\ifnum %
+\theketpicctra>1 %
+\begin{layer}{\ketslidew}{0}%
+\colorframes{\mslidetitlex}{#1}%
+{\mketdbox}{\mketcbox}{\mketcframe}%
+{\scalebox{\mslidetitlesize}{\slidetitle}}%
+\end{layer}%
+%
+\fi%
+}%
+%
+}%

@@ -1,0 +1,44 @@
+%%% test.tex 2014-10-16 21:49
+%%% test.sce 2014-10-16 21:49
+{\unitlength=1cm%
+\begin{picture}%
+(   4.00000,   3.50000)(  -1.00000,  -1.00000)%
+\special{pn 8}%
+%
+\settowidth{\Width}{A}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{A}\settodepth{\Depth}{A}\setlength{\Height}{\Depth}%
+\put(1.0300,1.7900){\hspace*{\Width}\raisebox{\Height}{A}}%
+%
+%
+\settowidth{\Width}{B}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{B}\settodepth{\Depth}{B}\setlength{\Height}{-\Height}%
+\put(0.0500,-0.0500){\hspace*{\Width}\raisebox{\Height}{B}}%
+%
+%
+\settowidth{\Width}{C}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{C}\settodepth{\Depth}{C}\setlength{\Height}{-\Height}%
+\put(2.0500,-0.0500){\hspace*{\Width}\raisebox{\Height}{C}}%
+%
+%
+\special{pa 0 0}\special{pa 386 -685}\special{pa 787 0}%
+\special{fp}%
+\special{pa -394 0}\special{pa 1181 0}%
+\special{fp}%
+\special{pa 0 394}\special{pa 0 -984}%
+\special{fp}%
+\settowidth{\Width}{$x$}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{$x$}\settodepth{\Depth}{$x$}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(3.0500,0.0000){\hspace*{\Width}\raisebox{\Height}{$x$}}%
+%
+%
+\settowidth{\Width}{$y$}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{$y$}\settodepth{\Depth}{$y$}\setlength{\Height}{\Depth}%
+\put(0.0000,2.5500){\hspace*{\Width}\raisebox{\Height}{$y$}}%
+%
+%
+\settowidth{\Width}{O}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{O}\settodepth{\Depth}{O}\setlength{\Height}{-\Height}%
+\put(-0.0500,-0.0500){\hspace*{\Width}\raisebox{\Height}{O}}%
+%
+%
+\end{picture}}%

@@ -1,0 +1,70 @@
+// e: 2017.10.09
+//    Parafolder changed (for R)
+// e: 2017.10.08
+//    Mkanimation added
+// e: 2017.08.19
+//    Help of Setpara changed
+// e: 2017.06.25
+//    Animatefile changed  (remove blank lines)
+// e: 2017.06.22
+//    Animatefile changed  (parapath)
+// e: 2017.06.18
+//    Animatefile added
+// e: 2017.04.10
+//    Mkmoviesh changed ( Texparent )
+//    Ketinitmv changed  ( Ketinit included )
+// e: 2017.04.09
+//    Ketinitmv changed ( Shellfile="mv" added )
+//    Flipbook added
+// s:2017.04.08
+//    bugs fixed
+// e: 2017.02.26
+//    Paraamble debugged ( \def\ketcbox{white} added )
+// e: 2017.02.20
+//    Parafolder debugged ( waiting time )
+// e: 2017.02.19
+//    Paraamble debugged  ( "colorframe" )
+// e: 2016.12.29
+//    Parafolder changed (rmdir added);
+// e: 2016.12.28
+//    Parafolder changed (clrscr,windispg);
+// e: 2016.12.27
+//    Setpara added ( for Para button )
+//    Parafolder changed( "m" for remake)
+// e: 2016.12.26
+//    Parafolder debugged("quit" removed from all.sce)
+// e: 2016.12.25
+//    Parafolder debugged/changed (OK for "Scetex=m or m,r")
+// e: 2016.12.24
+//    Parafolder debugged (definition of movieframe )
+// e: 2016.12.22
+//    Parafolder changed ( not executed when Errflg=-1 from Changework )
+// e: 2016.12.21
+//    Parafolder changed ( for functionstring )
+// e: 2016.12.19
+//    Parafolder debugged
+// e: 2016.12.15
+//    Parafolder added
+// e: 2016.12.10
+//    Setpara added (global var ParaTitle added )
+// e: 2016.08.10
+//    Ketinitmv changed ( Paraamble()  added)
+// e: 2016.07.06
+//    amsmath,amssymb  added
+//    putnotes => putnotec  in paraamble
+
+//////////// old ////
+// s: 2015.06.20  v1.4.6
+// e: 2015.06.22  v1.5.0
+//   .cs adopted
+//   movie, para embodied
+// e: 2015.07.10  v1.5.1
+//   applied to Deqplot
+// e: 2015.07.10  v1.5.2
+//   rename "start","end" to "First", "Last"
+// e: 2016.04.01  v1.5.3
+//   rename Texmovie to Texmov
+// e: 2016.05.19
+//    Mkmovie changed  ( for name of axis )
+////////  To Reverse Sequence
+

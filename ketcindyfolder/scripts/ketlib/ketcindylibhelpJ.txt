@@ -1,0 +1,140 @@
+//help:start();
+//help:drawimage*(画像を画面に読み込む);
+//help:drawtext*(画面に文字を書き込む);
+//help:Option1*(線種を指定．コマンドのオプション);
+//help:Option2*(書き出しを指定．コマンドのオプション);
+//help:Option3*(外部ファイルの読込／書込の指定．コマンドのオプション);
+//help:Changestyle*(プロットデータのオプションを変更);
+//help:Workprocess*(実行手順を表示);
+//help:Textformat*(数値の文字列化で桁数指定);
+//help:Assign*(文字列内の変数への割当て);
+//help:Flattenlist*(データリストを平坦化);
+//help:Dotprod*(内積);
+//help:Crossprod*(外積);
+//help:Ptstart*(プロットデータの始点);
+//help:Ptend*(プロットデータの終点);
+//help:Numptcrvtenn*(プロットデータの点の数);
+//help:Ptcrv*(プロットデータのn番目の点);
+//help:Invert*(プロットデータの向きを逆にする);
+//help:ParamonCurve*(プロットデータ上の点の情報);
+//help:PointonCurve*(プロットデータ上の情報による点);
+//help:Nearestptcrv*(点についてプロットデータ上の最近点);
+//help:Nearestpt*(２曲線の最近点);
+//help:Derivative*(微分係数);
+//help:Integrate*(数値積分);
+//help:Findarea*(閉曲線に囲まれた面積);
+//help:Findlength*(曲線の長さ);
+//help:Com2nd*(TeXの書き出しコマンドを入れる);
+//help:Texcom*(TeXのコマンドを直接記述);
+//help:SetEnglish*(Scilabのメッセージを英語にする);
+//help:Setunitlen*(単位長を指定);
+//help:Setmarklen*(微小単位長を指定);
+//help:Setorigin*(原点の位置を指定);
+//help:Fontsize*(フォントサイズを指定);
+ //help:Setpen*(線の太さを指定);
+//help:Setpt*(点の大きさを指定);
+//help:Definecolor*(ユーザー色を定義);
+//help:Setcolor*(色を指定);
+//help:Joincrvs*(曲線をつなげる);
+//help:Partcrv*(部分曲線を作る);
+//help:Pointdata*(点データを表示／作成
+//追加オプション : "Size=");
+//help:Listplot*(線分や折れ線データを作成);
+//help:Lineplot*(直線データを作成);
+//help:Plotdata*(関数のグラフを作成
+//追加オプション : "Num=", "Exc=", "Dis=");
+//help:Paramplot*(媒介変数の関数のグラフを作成
+//追加オプション : "Num=", "Exc=", "Dis=");
+//help:Circledata*(円のデータを作成
+//追加オプション : "Num=", "Rng=");
+//help:Framedata*(長方形のデータを作成);
+//help:Ovaldata*(オーバルデータを作成);
+//help:Arrowhead*(鏃を作成
+//オプション : 大きさ，開き角，形状と位置);
+//help:Arrowdata*(矢印を作成
+//オプション : 大きさ，開き角，矢じり位置);
+//help:Anglemark*(角度マークを作成.   オプション : 角の印の大きさ);
+//help:Paramark*(垂直マークを作成.   オプション : 角の印の大きさ);
+//help:Bowdata*(弓形を描く
+//オプション : 曲がり，空白サイズ，文字);
+//help:Deqplot*(微分方程式の解曲線を作成
+//追加オプション : "Num=");
+//help:Hatchdata*(斜線塗り.   オプション : 傾き（度），間隔);
+//help:Enclosing*(複数曲線をつなげて閉曲線を作成);
+//help:Shade*(シェーディング.   オプション : 濃さ);
+//help:Rotatepoint*(点を回転.   オプション : 中心);
+//help:Translatepoint*(点を平行移動);
+//help:Translatedata*(プロットデータを平行移動);
+//help:Scalepoint*(点を縮小／拡大.   オプション : 中心);
+//help:Reflectpoint*(点を鏡映);
+//help:Rotatedata*(プロットデータを回転.   オプション : 中心);
+//help:Scaledata*(プロットデータを縮小／拡大.   オプション : 中心);
+//help:Reflectdata*(プロットデータを鏡映);
+//help:Mksegments*(画面にあるすべての線分データを作成);
+//help:Mkcircles*(画面にあるすべての円データを作成):
+//help:Setax*(座標軸を指定);
+//help:Htickmark*(横軸に目盛りを描く);
+//help:Vtickmark*(縦軸に目盛りを描く);
+//help:Drwxy*(座標軸を描く);
+//help:Addax*(座標軸を描くか描かないかの指定);
+//help:Expr*(数式を書き込む);
+//help:Letter*(文字を書き込む);
+//help:Letterrot*(傾いた文字を書き込む):
+//help:Exprrot*(傾いた数式を書き込む):
+//help:Putpoint*(幾何点をとる);
+//help:Bezier*(ベジェ曲線データを作成);
+//help:Mkbezierptcrv*(制御点を自動的にとってベジェを作成);
+//help:CRspline*(Catmull-Romスプラインを作成);
+//help:Beziersmooth*(ベジェスプラインを作成);
+//help:Bspline*(B-スプラインを作成);
+//help:PtonLine*(直線上に点をとる);
+//help:PtonSeg*(線分上に点をとる);
+//help:PutonCurve*(曲線上に点をとる);
+//help:Setscaling*(縦方向の倍率を指定);
+ //help:Tabledatalight*(幾何点をもたない表データ作成
+ //追加オプション : ラベルのとび，描画領域を表に合わせるか);
+ //help:Tgrid*(表のセルの座標を返す);
+ //help:Tlistplot*(表の2格子点を結ぶ線分);
+////help:ChangeTablestyle*(表の罫線のスタイル変更);
+//help:Tabledata*(幾何点をもつ表データを作成
+ //追加オプション : ラベルのとび，描画領域を表に合わせるか);
+//help:Tabledata*(xLst=apply(1..5,10);yLst=apply(1..4,8);rmvL=[];);
+//help:Findcell*(表のセルの情報を返す);
+//help:Putcell*(表のセルに文字を書き入れる);
+//help:Putcellexpr*(表のセルに数式を書き入れる);
+//help:Putrow*(表の行に文字を書き入れる));
+//help:Putrowexpr*(表の行に数式を書き入れる);
+//help:PutcoL*(表の列に文字を書き入れる));
+//help:PutcoLexpr*(表の列に数式を書き入れる));
+//help:Setwindow*(描画領域を指定);
+//help:Defvar*(変数をScilabに渡す);
+//help:Deffun*(関数をScilabに渡す);
+//help:Extractdata*(読み込んだデータに属性を与える);
+//help:ReadOutData*(データを読み込む);
+//help:WriteOutData*(データを書き出す);
+//help:Removespace*(前後のスペースを除く);
+//help:Drawlinetype*(線種を指定して曲線を描く);
+//help:Intersectcrvs*(交点リストを求める);
+//help:IntersectcrvsPp*(交点とパラメータ値のリストを求める);
+//help:Implicitplot*(陰関数のグラフを描く);
+//help:Boxplot*(箱ヒゲ図を描く（R使用）);
+//help:CalcbyR*(Rのコマンドを実行して結果を返す);
+//help:CalcbyS*(Scilabのコマンドを実行して結果を返す);
+//help:Framedata2*(左下と右上の点で長方形を描く); 
+//help:HIstplot*(ヒストグラムを描く（R使用）);
+//help:Hyperbolaplot*(双曲線を描く);
+//help:Ellipseplot*(楕円を描く);
+//help:Ospline*(Oshimaのスプラインを描く);
+//help:Parabolaplot*(放物線を描く);
+//help:PlotdataR*(Rの関数のグラフを描く);
+//help:Polygonplot*(正多角形を描く);
+//help:Putintersect*(交点に幾何点をとる);
+//help:Rulerscale*(点の右と上に目盛を描く);
+//help:Segmark*(線分にマークをつける);
+//help:Sprintf*(小数点以下の長さを固定した文字列に変換);
+//help:Readcsv*(csvファイルを読み込み);
+//help:Writecsv*(csvファイルを書き込み);
+//help:Drwpt*(点をTeXに描く．オプション：白抜き 0);
+
+
+//help:end();

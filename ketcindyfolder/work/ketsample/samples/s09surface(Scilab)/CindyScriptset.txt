@@ -1,0 +1,26 @@
+use("KetCindyPlugin");
+Sciver="5.5.2";
+if(iswindows(),
+  Pathhead="C:\kettex\texlive";
+  Dirhead=Pathhead+"\texmf-dist\scripts\ketcindy";
+  PathThead=Pathhead+"\bin\win32\";
+  Homehead="C:\Users";
+  Dirfile=Homehead+"\"+getname()+"\ketcindy";
+);
+if(ismacosx(),
+  Pathhead="/Applications/kettex/texlive";
+  Dirhead=Pathhead+"/texmf-dist/scripts/ketcindy";
+  PathThead=Pathhead+"/bin/x86_64-darwin/";
+  Homehead="/Users";
+  Dirfile=gethome()+"/ketcindy";
+);
+setdirectory(Dirfile);
+import("setketcindysci.txt");
+import("ketoutsetsci.txt");
+Mackc="open";
+setdirectory(Dirwork);
+Helplist(["+","+3d","+mv"],"helpJ");
+
+Ketinit();
+Ketinit3d();
+

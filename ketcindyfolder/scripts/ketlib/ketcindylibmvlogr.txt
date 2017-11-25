@@ -1,0 +1,22 @@
+//2017.11.24
+//   Mkflipanime added
+//   Old movie function removed
+//   Flipbook removed
+//   Mkanimation changed (for R)
+//2017.11.21
+//   Ketinitmv, Paraamble, Mkmovie changed (for R)
+//2017.11.03
+//   Mkanimation changed (ketpic.sty etc )
+//2017.10.28
+//   Parafolder changed (timing of display of counter,time)
+//2017.10.24
+//   Parafolder changed (file.exists added)
+//2017.10.14
+//    Mkanimation changed ("Rem=" option added)
+//2017.10.13
+//    Ketinitmv changed (Shellfile removed)
+//    Parafolder debugged
+//2017.10.12
+//    Parafolder changed ( cmdL for making TeX files)
+//2017.10.08
+//    Mkanimation added

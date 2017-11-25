@@ -1,0 +1,825 @@
+%Copyright (C)  2014  Setsuo Takato, KETpic developer team
+%* 
+%* This program is free software: you can redistribute it and/or modify
+%* it under the terms of the GNU General Public License as published by
+%* the Free Software Foundation; either version 3 of the License, or
+%* (at your option) any later version.
+%* 
+%* This program is distributed in the hope that it will be useful,
+%* but WITHOUT ANY WARRANTY; without even the implied warranty of
+%* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%* GNU General Public License for more details.
+%* 
+%* You should have received a copy of the GNU General Public License
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>
+%%% ketpic.sty
+%   2016.12.08
+%       NEarrow, ..., SELarrow,...  added
+%       argument ( option ) = size
+%   2016.04.07
+%       ketcindy, selarrow, serarrow, nelarrow, nerarrow  
+%   2010.09.17 %
+%
+\newcounter{ketpicctra}%
+\newcounter{ketpicctrb}%
+\newcounter{ketpicctrc}%
+\newcounter{ketpicctrd}%
+\newcounter{ketpicctre}%
+\newcounter{ketpicctrf}%
+\newcounter{ketpicctrg}%
+\newcounter{ketpicctrh}%
+\newcounter{ketpicctri}%
+\newcounter{ketpicctrj}%
+\def\ketpic{%
+{K\kern-.20em\lower.5ex\hbox{E}\kern-.125em{Tpic}}%
+%
+}%
+\def\ketcindy{{K\kern-.20em%
+\lower.5ex\hbox{E}\kern-.125em{TCindy}}}%
+\def\KeTpic{\ketpic}%
+\def\KeTCindy{\ketcindy}%
+\newlength{\Width}%
+\newlength{\Height}%
+\newlength{\Depth}%
+\newcommand{\Ltab}[2]{%
+\settowidth{\Width}{#2}%
+\setlength{\Width}{-\Width}%
+\addtolength{\Width}{#1}%
+#2\hspace{\Width}\mbox{}%
+%
+}%
+\newcommand{\Rtab}[2]{%
+\settowidth{\Width}{#2}%
+\setlength{\Width}{-\Width}%
+\addtolength{\Width}{#1}%
+\hspace*{\Width}#2\mbox{}%
+%
+}%
+\newcommand{\Ctab}[2]{%
+\settowidth{\Width}{#2}%
+\setlength{\Width}{-\Width}%
+\addtolength{\Width}{#1}%
+\setlength{\Width}{0.5\Width}%
+\hspace*{\Width}#2\hspace{\Width}\mbox{}%
+%
+}%
+\newcommand{\vbackward}[1]{%
+\settoheight{\Height}{#1}%
+\vspace*{-\Height}%
+%
+}%
+\newcommand{\vforward}[1]{%
+\settoheight{\Height}{#1}%
+\vspace*{\Height}%
+%
+}%
+\newcommand{\usepack}{%
+\usepackage{amsmath,amssymb}%
+\usepackage{graphicx}%
+\usepackage{color}%
+%
+}%
+\newcommand{\setmargin}[4]{%
+\setlength{\oddsidemargin}{-25.4mm}%
+\addtolength{\oddsidemargin}{#1 mm}%
+\setlength{\textwidth}{\paperwidth}%
+\addtolength{\textwidth}{-#1 mm}%
+\addtolength{\textwidth}{-#2 mm}%
+\setlength{\headheight}{0mm}%
+\setlength{\headsep}{0mm}%
+\setlength{\topmargin}{-25.4mm}%
+\addtolength{\topmargin}{#3 mm}%
+\setlength{\textheight}{\paperheight}%
+\addtolength{\textheight}{-#3 mm}%
+\addtolength{\textheight}{-#4 mm}%
+%
+}%
+\newcommand{\ketcalcwidth}[2][0]{%
+\settowidth{\Depth}{#2}%
+\setlength{\Width}{0\unitlength}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\addtolength{\Width}{\unitlength}%
+%
+{%
+\ifdim %
+\Width>\Depth  %
+\addtocounter{ketpicctra}{6000}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<5000%
+\repeat%
+}%
+\addtocounter{ketpicctra}{-6000}%
+%
+{%
+\ifnum %
+#1>0 %
+\theketpicctra%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\ketcalcheight}[2][0]{%
+\settoheight{\Depth}{#2}%
+\setlength{\Height}{0\unitlength}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\addtolength{\Height}{\unitlength}%
+%
+{%
+\ifdim %
+\Height>\Depth  %
+\addtocounter{ketpicctra}{6000}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<5000%
+\repeat%
+}%
+\addtocounter{ketpicctra}{-6000}%
+%
+{%
+\ifnum %
+#1>0 %
+\theketpicctra%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\ketcalcdepth}[2][0]{%
+\settodepth{\Width}{#2}%
+\setlength{\Depth}{0\unitlength}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\addtolength{\Depth}{\unitlength}%
+%
+{%
+\ifdim %
+\Depth>\Width  %
+\addtocounter{ketpicctra}{5000}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<5000%
+\repeat%
+}%
+\addtocounter{ketpicctra}{-5000}%
+%
+{%
+\ifnum %
+#1>0 %
+\theketpicctra%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\ketcalcwh}[1]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#1}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\divide\value{ketpicctrb} by 10%
+\addtocounter{ketpicctrb}{0}%
+\{\theketpicctrb.%
+\multiply\value{ketpicctrb} by 10%
+\addtocounter{ketpicctrb}{0}%
+\addtocounter{ketpicctra}{-\value{ketpicctrb}}%
+\theketpicctra\}\{%
+\ketcalcheight{#1}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\ketcalcdepth{#1}%
+\addtocounter{ketpicctra}{\value{ketpicctrb}}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\divide\value{ketpicctrb} by 10%
+\addtocounter{ketpicctrb}{0}%
+\theketpicctrb.%
+\multiply\value{ketpicctrb} by 10%
+\addtocounter{ketpicctrb}{0}%
+\addtocounter{ketpicctra}{-\value{ketpicctrb}}%
+\theketpicctra\}%
+%
+}%
+%
+}%
+\newcommand{\dangerbendmark}[1][1]{%
+\def\tmpcontents{%
+{\unitlength=0.911mm%
+\begin{picture}%
+(   3.85072,   4.34364)(   3.18982,   4.86836)%
+\special{pn 8}%
+%
+\special{pa 229 -200}\special{pa 211 -204}\special{pa 195 -208}\special{pa 183 -210}%
+\special{pa 173 -212}\special{pa 166 -213}\special{pa 160 -214}\special{pa 155 -215}%
+\special{pa 151 -215}\special{pa 149 -215}\special{pa 146 -215}\special{pa 143 -216}%
+\special{pa 142 -217}\special{pa 141 -218}\special{pa 142 -220}\special{pa 146 -222}%
+\special{pa 152 -226}\special{pa 160 -229}\special{pa 169 -233}\special{pa 180 -237}%
+\special{pa 190 -241}\special{pa 201 -245}\special{pa 211 -248}\special{pa 221 -252}%
+\special{pa 229 -255}\special{pa 235 -258}\special{pa 240 -260}\special{pa 243 -263}%
+\special{pa 246 -266}\special{pa 248 -270}\special{pa 250 -275}\special{pa 251 -280}%
+\special{pa 252 -286}\special{pa 253 -292}\special{pa 252 -298}\special{pa 249 -302}%
+\special{pa 245 -306}\special{pa 240 -309}\special{pa 235 -312}\special{pa 228 -314}%
+\special{pa 221 -316}\special{pa 214 -319}\special{pa 207 -320}\special{pa 198 -322}%
+\special{pa 190 -324}\special{pa 181 -326}\special{pa 172 -327}\special{pa 163 -328}%
+\special{pa 153 -329}\special{pa 142 -330}\special{pa 142 -330}\special{pa 142 -329}%
+\special{pa 142 -329}\special{pa 142 -328}\special{pa 142 -328}\special{pa 142 -327}%
+\special{pa 142 -327}\special{pa 142 -326}\special{pa 142 -326}\special{pa 142 -325}%
+\special{pa 141 -325}\special{pa 141 -324}\special{pa 141 -324}\special{pa 141 -323}%
+\special{pa 141 -323}\special{pa 141 -322}\special{pa 141 -322}\special{pa 141 -321}%
+\special{pa 141 -321}\special{pa 141 -320}\special{pa 141 -320}\special{pa 141 -319}%
+\special{pa 141 -319}\special{pa 141 -318}\special{pa 141 -318}\special{pa 141 -317}%
+\special{pa 140 -317}\special{pa 140 -316}\special{pa 140 -316}\special{pa 140 -315}%
+\special{pa 140 -315}\special{pa 140 -314}\special{pa 140 -313}\special{pa 140 -313}%
+\special{pa 140 -312}\special{pa 140 -312}\special{pa 140 -311}\special{pa 140 -311}%
+\special{pa 140 -310}\special{pa 140 -310}\special{pa 140 -309}\special{pa 140 -309}%
+\special{pa 139 -308}\special{pa 139 -308}\special{pa 139 -307}\special{pa 139 -307}%
+\special{pa 139 -306}\special{pa 139 -306}\special{pa 139 -305}\special{pa 159 -301}%
+\special{pa 175 -297}\special{pa 188 -294}\special{pa 198 -293}\special{pa 206 -292}%
+\special{pa 211 -291}\special{pa 215 -291}\special{pa 217 -290}\special{pa 218 -290}%
+\special{pa 219 -289}\special{pa 219 -289}\special{pa 219 -287}\special{pa 219 -286}%
+\special{pa 219 -285}\special{pa 220 -284}\special{pa 220 -283}\special{pa 220 -283}%
+\special{pa 219 -282}\special{pa 215 -280}\special{pa 210 -278}\special{pa 201 -275}%
+\special{pa 190 -272}\special{pa 179 -268}\special{pa 167 -264}\special{pa 155 -259}%
+\special{pa 145 -255}\special{pa 136 -251}\special{pa 128 -246}\special{pa 122 -242}%
+\special{pa 118 -238}\special{pa 116 -234}\special{pa 115 -230}\special{pa 114 -225}%
+\special{pa 115 -221}\special{pa 115 -216}\special{pa 116 -211}\special{pa 118 -206}%
+\special{pa 121 -202}\special{pa 125 -197}\special{pa 132 -194}\special{pa 140 -190}%
+\special{pa 150 -188}\special{pa 160 -185}\special{pa 171 -183}\special{pa 183 -181}%
+\special{pa 194 -180}\special{pa 205 -178}\special{pa 215 -176}\special{pa 224 -175}%
+\special{pa 224 -175}\special{pa 224 -176}\special{pa 224 -176}\special{pa 224 -176}%
+\special{pa 224 -177}\special{pa 224 -177}\special{pa 224 -178}\special{pa 225 -178}%
+\special{pa 225 -179}\special{pa 225 -179}\special{pa 225 -180}\special{pa 225 -180}%
+\special{pa 225 -181}\special{pa 225 -181}\special{pa 225 -182}\special{pa 225 -182}%
+\special{pa 226 -183}\special{pa 226 -183}\special{pa 226 -184}\special{pa 226 -184}%
+\special{pa 226 -184}\special{pa 226 -185}\special{pa 226 -185}\special{pa 226 -186}%
+\special{pa 226 -186}\special{pa 227 -187}\special{pa 227 -187}\special{pa 227 -188}%
+\special{pa 227 -188}\special{pa 227 -189}\special{pa 227 -189}\special{pa 227 -190}%
+\special{pa 227 -190}\special{pa 227 -191}\special{pa 227 -191}\special{pa 228 -192}%
+\special{pa 228 -192}\special{pa 228 -192}\special{pa 228 -193}\special{pa 228 -193}%
+\special{pa 228 -194}\special{pa 228 -194}\special{pa 228 -195}\special{pa 228 -195}%
+\special{pa 229 -196}\special{pa 229 -196}\special{pa 229 -197}\special{pa 229 -197}%
+\special{pa 229 -198}\special{pa 229 -200}\special{sh 1}\special{ip}%
+\special{pn 8}%
+\special{pa 229 -200}\special{pa 211 -204}\special{pa 195 -208}\special{pa 183 -210}%
+\special{pa 173 -212}\special{pa 166 -213}\special{pa 160 -214}\special{pa 155 -215}%
+\special{pa 151 -215}\special{pa 149 -215}\special{pa 146 -215}\special{pa 143 -216}%
+\special{pa 142 -217}\special{pa 141 -218}\special{pa 142 -220}\special{pa 146 -222}%
+\special{pa 152 -226}\special{pa 160 -229}\special{pa 169 -233}\special{pa 180 -237}%
+\special{pa 190 -241}\special{pa 201 -245}\special{pa 211 -248}\special{pa 221 -252}%
+\special{pa 229 -255}\special{pa 235 -258}\special{pa 240 -260}\special{pa 243 -263}%
+\special{pa 246 -266}\special{pa 248 -270}\special{pa 250 -275}\special{pa 251 -280}%
+\special{pa 252 -286}\special{pa 253 -292}\special{pa 252 -298}\special{pa 249 -302}%
+\special{pa 245 -306}\special{pa 240 -309}\special{pa 235 -312}\special{pa 228 -314}%
+\special{pa 221 -316}\special{pa 214 -319}\special{pa 207 -320}\special{pa 198 -322}%
+\special{pa 190 -324}\special{pa 181 -326}\special{pa 172 -327}\special{pa 163 -328}%
+\special{pa 153 -329}\special{pa 142 -330}%
+\special{fp}%
+\special{pa 142 -330}\special{pa 142 -330}\special{pa 142 -329}\special{pa 142 -329}%
+\special{pa 142 -328}\special{pa 142 -328}\special{pa 142 -327}\special{pa 142 -327}%
+\special{pa 142 -326}\special{pa 142 -326}\special{pa 142 -325}\special{pa 141 -325}%
+\special{pa 141 -324}\special{pa 141 -324}\special{pa 141 -323}\special{pa 141 -323}%
+\special{pa 141 -322}\special{pa 141 -322}\special{pa 141 -321}\special{pa 141 -321}%
+\special{pa 141 -320}\special{pa 141 -320}\special{pa 141 -319}\special{pa 141 -319}%
+\special{pa 141 -318}\special{pa 141 -318}\special{pa 141 -317}\special{pa 140 -317}%
+\special{pa 140 -316}\special{pa 140 -316}\special{pa 140 -315}\special{pa 140 -315}%
+\special{pa 140 -314}\special{pa 140 -313}\special{pa 140 -313}\special{pa 140 -312}%
+\special{pa 140 -312}\special{pa 140 -311}\special{pa 140 -311}\special{pa 140 -310}%
+\special{pa 140 -310}\special{pa 140 -309}\special{pa 140 -309}\special{pa 139 -308}%
+\special{pa 139 -308}\special{pa 139 -307}\special{pa 139 -307}\special{pa 139 -306}%
+\special{pa 139 -306}\special{pa 139 -305}%
+\special{fp}%
+\special{pa 139 -305}\special{pa 159 -301}\special{pa 175 -297}\special{pa 188 -294}%
+\special{pa 198 -293}\special{pa 206 -292}\special{pa 211 -291}\special{pa 215 -291}%
+\special{pa 217 -290}\special{pa 218 -290}\special{pa 219 -289}\special{pa 219 -289}%
+\special{pa 219 -287}\special{pa 219 -286}\special{pa 219 -285}\special{pa 220 -284}%
+\special{pa 220 -283}\special{pa 220 -283}\special{pa 219 -282}\special{pa 215 -280}%
+\special{pa 210 -278}\special{pa 201 -275}\special{pa 190 -272}\special{pa 179 -268}%
+\special{pa 167 -264}\special{pa 155 -259}\special{pa 145 -255}\special{pa 136 -251}%
+\special{pa 128 -246}\special{pa 122 -242}\special{pa 118 -238}\special{pa 116 -234}%
+\special{pa 115 -230}\special{pa 114 -225}\special{pa 115 -221}\special{pa 115 -216}%
+\special{pa 116 -211}\special{pa 118 -206}\special{pa 121 -202}\special{pa 125 -197}%
+\special{pa 132 -194}\special{pa 140 -190}\special{pa 150 -188}\special{pa 160 -185}%
+\special{pa 171 -183}\special{pa 183 -181}\special{pa 194 -180}\special{pa 205 -178}%
+\special{pa 215 -176}\special{pa 224 -175}%
+\special{fp}%
+\special{pa 224 -175}\special{pa 224 -175}\special{pa 224 -176}\special{pa 224 -176}%
+\special{pa 224 -176}\special{pa 224 -177}\special{pa 224 -177}\special{pa 224 -178}%
+\special{pa 225 -178}\special{pa 225 -179}\special{pa 225 -179}\special{pa 225 -180}%
+\special{pa 225 -180}\special{pa 225 -181}\special{pa 225 -181}\special{pa 225 -182}%
+\special{pa 225 -182}\special{pa 226 -183}\special{pa 226 -183}\special{pa 226 -184}%
+\special{pa 226 -184}\special{pa 226 -184}\special{pa 226 -185}\special{pa 226 -185}%
+\special{pa 226 -186}\special{pa 226 -186}\special{pa 227 -187}\special{pa 227 -187}%
+\special{pa 227 -188}\special{pa 227 -188}\special{pa 227 -189}\special{pa 227 -189}%
+\special{pa 227 -190}\special{pa 227 -190}\special{pa 227 -191}\special{pa 227 -191}%
+\special{pa 228 -192}\special{pa 228 -192}\special{pa 228 -192}\special{pa 228 -193}%
+\special{pa 228 -193}\special{pa 228 -194}\special{pa 228 -194}\special{pa 228 -195}%
+\special{pa 228 -195}\special{pa 229 -196}\special{pa 229 -196}\special{pa 229 -197}%
+\special{pa 229 -197}\special{pa 229 -198}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+\scalebox{#1}{\tmpcontents}%
+%
+}%
+\newcommand{\cautionmark}[1][1]{%
+\scalebox{#1}{%
+{\unitlength=1mm%
+\begin{picture}%
+(   4.60000,   3.98372)(  -2.30000,   0.00000)%
+\special{pn 8}%
+%
+\special{pn 12}%
+\special{pa -91 -0}\special{pa 91 -0}\special{pa 0 -157}\special{pa -91 -0}%
+\special{fp}%
+\special{pn 2}%
+\special{pa 12 -22}\special{pa 11 -25}\special{pa 10 -29}\special{pa 7 -31}\special{pa 4 -33}%
+\special{pa 0 -33}\special{pa -4 -33}\special{pa -7 -31}\special{pa -10 -29}\special{pa -11 -25}%
+\special{pa -12 -22}\special{pa -11 -18}\special{pa -10 -15}\special{pa -7 -12}\special{pa -4 -10}%
+\special{pa -0 -10}\special{pa 4 -10}\special{pa 7 -12}\special{pa 10 -15}\special{pa 11 -18}%
+\special{pa 12 -22}%
+\special{fp}%
+\special{pa 0 -47}\special{pa 4 -49}\special{pa 8 -54}\special{pa 11 -60}\special{pa 13 -67}%
+\special{pa 14 -75}\special{pa 16 -82}\special{pa 17 -88}\special{pa 18 -94}\special{pa 18 -98}%
+\special{pa 16 -102}\special{pa 14 -105}\special{pa 11 -108}\special{pa 7 -110}\special{pa 2 -112}%
+\special{pa -3 -112}\special{pa -7 -110}\special{pa -11 -108}\special{pa -14 -105}%
+\special{pa -16 -102}\special{pa -17 -98}\special{pa -17 -93}\special{pa -17 -88}%
+\special{pa -16 -82}\special{pa -15 -75}\special{pa -13 -67}\special{pa -11 -60}\special{pa -8 -53}%
+\special{pa -4 -49}\special{pa 0 -47}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 12 -22}\special{pa 11 -25}\special{pa 10 -29}\special{pa 7 -31}\special{pa 4 -33}%
+\special{pa 0 -33}\special{pa -4 -33}\special{pa -7 -31}\special{pa -10 -29}\special{pa -11 -25}%
+\special{pa -12 -22}\special{pa -11 -18}\special{pa -10 -15}\special{pa -7 -12}\special{pa -4 -10}%
+\special{pa -0 -10}\special{pa 4 -10}\special{pa 7 -12}\special{pa 10 -15}\special{pa 11 -18}%
+\special{pa 12 -22}\special{sh 1}\special{ip}%
+\special{pa 0 -47}\special{pa 4 -49}\special{pa 8 -54}\special{pa 11 -60}\special{pa 13 -67}%
+\special{pa 14 -75}\special{pa 16 -82}\special{pa 17 -88}\special{pa 18 -94}\special{pa 18 -98}%
+\special{pa 16 -102}\special{pa 14 -105}\special{pa 11 -108}\special{pa 7 -110}\special{pa 2 -112}%
+\special{pa -3 -112}\special{pa -7 -110}\special{pa -11 -108}\special{pa -14 -105}%
+\special{pa -16 -102}\special{pa -17 -98}\special{pa -17 -93}\special{pa -17 -88}%
+\special{pa -16 -82}\special{pa -15 -75}\special{pa -13 -67}\special{pa -11 -60}\special{pa -8 -53}%
+\special{pa -4 -49}\special{pa 0 -47}\special{sh 1}\special{ip}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\circlemark}[2][8]{%
+\scalebox{#2}{%
+{\unitlength=1mm%
+\begin{picture}%
+(   4.00000,   4.00000)(  -2.00000,  -2.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 79 -0}\special{pa 78 -10}\special{pa 76 -20}\special{pa 73 -29}\special{pa 69 -38}%
+\special{pa 64 -46}\special{pa 57 -54}\special{pa 50 -61}\special{pa 42 -66}\special{pa 34 -71}%
+\special{pa 24 -75}\special{pa 15 -77}\special{pa 5 -79}\special{pa -5 -79}\special{pa -15 -77}%
+\special{pa -24 -75}\special{pa -34 -71}\special{pa -42 -66}\special{pa -50 -61}\special{pa -57 -54}%
+\special{pa -64 -46}\special{pa -69 -38}\special{pa -73 -29}\special{pa -76 -20}\special{pa -78 -10}%
+\special{pa -79 0}\special{pa -78 10}\special{pa -76 20}\special{pa -73 29}\special{pa -69 38}%
+\special{pa -64 46}\special{pa -57 54}\special{pa -50 61}\special{pa -42 66}\special{pa -34 71}%
+\special{pa -24 75}\special{pa -15 77}\special{pa -5 79}\special{pa 5 79}\special{pa 15 77}%
+\special{pa 24 75}\special{pa 34 71}\special{pa 42 66}\special{pa 50 61}\special{pa 57 54}%
+\special{pa 64 46}\special{pa 69 38}\special{pa 73 29}\special{pa 76 20}\special{pa 78 10}%
+\special{pa 79 -0}%
+\special{fp}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\circleshade}[3][8]{%
+\scalebox{#2}{%
+{\unitlength=1mm%
+\begin{picture}%
+(   4.00000,   4.00000)(  -2.00000,  -2.00000)%
+\special{pn 8}%
+%
+\special{pn #1}%
+\special{pa 79 -0}\special{pa 78 -10}\special{pa 76 -20}\special{pa 73 -29}\special{pa 69 -38}%
+\special{pa 64 -46}\special{pa 57 -54}\special{pa 50 -61}\special{pa 42 -66}\special{pa 34 -71}%
+\special{pa 24 -75}\special{pa 15 -77}\special{pa 5 -79}\special{pa -5 -79}\special{pa -15 -77}%
+\special{pa -24 -75}\special{pa -34 -71}\special{pa -42 -66}\special{pa -50 -61}\special{pa -57 -54}%
+\special{pa -64 -46}\special{pa -69 -38}\special{pa -73 -29}\special{pa -76 -20}\special{pa -78 -10}%
+\special{pa -79 0}\special{pa -78 10}\special{pa -76 20}\special{pa -73 29}\special{pa -69 38}%
+\special{pa -64 46}\special{pa -57 54}\special{pa -50 61}\special{pa -42 66}\special{pa -34 71}%
+\special{pa -24 75}\special{pa -15 77}\special{pa -5 79}\special{pa 5 79}\special{pa 15 77}%
+\special{pa 24 75}\special{pa 34 71}\special{pa 42 66}\special{pa 50 61}\special{pa 57 54}%
+\special{pa 64 46}\special{pa 69 38}\special{pa 73 29}\special{pa 76 20}\special{pa 78 10}%
+\special{pa 79 -0}\special{sh #3}\special{ip}%
+\special{pa 79 -0}\special{pa 78 -10}\special{pa 76 -20}\special{pa 73 -29}\special{pa 69 -38}%
+\special{pa 64 -46}\special{pa 57 -54}\special{pa 50 -61}\special{pa 42 -66}\special{pa 34 -71}%
+\special{pa 24 -75}\special{pa 15 -77}\special{pa 5 -79}\special{pa -5 -79}\special{pa -15 -77}%
+\special{pa -24 -75}\special{pa -34 -71}\special{pa -42 -66}\special{pa -50 -61}\special{pa -57 -54}%
+\special{pa -64 -46}\special{pa -69 -38}\special{pa -73 -29}\special{pa -76 -20}\special{pa -78 -10}%
+\special{pa -79 0}\special{pa -78 10}\special{pa -76 20}\special{pa -73 29}\special{pa -69 38}%
+\special{pa -64 46}\special{pa -57 54}\special{pa -50 61}\special{pa -42 66}\special{pa -34 71}%
+\special{pa -24 75}\special{pa -15 77}\special{pa -5 79}\special{pa 5 79}\special{pa 15 77}%
+\special{pa 24 75}\special{pa 34 71}\special{pa 42 66}\special{pa 50 61}\special{pa 57 54}%
+\special{pa 64 46}\special{pa 69 38}\special{pa 73 29}\special{pa 76 20}\special{pa 78 10}%
+\special{pa 79 -0}%
+\special{fp}%
+\end{picture}}%%
+}%
+%
+}%
+%  2016.04.07
+\newcommand{\nelarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(  -5.00000,  -5.00000)%
+\special{pn 8}%
+%
+\special{pa -55 55}\special{pa -40 54}\special{pa -24 51}\special{pa -10 45}\special{pa 4 38}%
+\special{pa 17 29}\special{pa 28 18}\special{pa 37 5}\special{pa 45 -9}\special{pa 51 -23}%
+\special{pa 54 -39}%
+\special{fp}%
+\special{pa 61 -16}\special{pa 55 -55}\special{pa 37 -20}\special{pa 49 -18}\special{pa 61 -16}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 61 -16}\special{pa 55 -55}\special{pa 37 -20}\special{pa 49 -18}\special{pa 61 -16}%
+\special{pa 55 -55}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%
+}}}%
+\newcommand{\nerarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(  -5.00000,  -5.00000)%
+\special{pn 8}%
+%
+\special{pa 39 -54}\special{pa 23 -51}\special{pa 9 -45}\special{pa -5 -37}\special{pa -18 -28}%
+\special{pa -29 -17}\special{pa -38 -4}\special{pa -45 10}\special{pa -51 24}\special{pa -54 40}%
+\special{pa -55 55}%
+\special{fp}%
+\special{pa 20 -37}\special{pa 55 -55}\special{pa 16 -61}\special{pa 18 -49}\special{pa 20 -37}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 20 -37}\special{pa 55 -55}\special{pa 16 -61}\special{pa 18 -49}\special{pa 20 -37}%
+\special{pa 55 -55}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%
+}}}%
+\newcommand{\selarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(  -5.00000,  -5.00000)%
+\special{pn 8}%
+%
+\special{pa -55 -55}\special{pa -54 -40}\special{pa -51 -24}\special{pa -45 -10}\special{pa -38 4}%
+\special{pa -29 17}\special{pa -18 28}\special{pa -5 37}\special{pa 9 45}\special{pa 23 51}%
+\special{pa 39 54}%
+\special{fp}%
+\special{pa 16 61}\special{pa 55 55}\special{pa 20 37}\special{pa 18 49}\special{pa 16 61}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 16 61}\special{pa 55 55}\special{pa 20 37}\special{pa 18 49}\special{pa 16 61}%
+\special{pa 55 55}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%
+}}}%
+\newcommand{\serarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(  -5.00000,  -5.00000)%
+\special{pn 8}%
+%
+\special{pa 54 39}\special{pa 51 23}\special{pa 45 9}\special{pa 37 -5}\special{pa 28 -18}%
+\special{pa 17 -29}\special{pa 4 -38}\special{pa -10 -45}\special{pa -24 -51}\special{pa -40 -54}%
+\special{pa -55 -55}%
+\special{fp}%
+\special{pa 37 20}\special{pa 55 55}\special{pa 61 16}\special{pa 49 18}\special{pa 37 20}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 37 20}\special{pa 55 55}\special{pa 61 16}\special{pa 49 18}\special{pa 37 20}%
+\special{pa 55 55}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%
+}}}%
+%%% bendingarrow.sty 2016-12-9 7:41
+%%% bendingarrow.sce 2016-12-9 7:41
+\newcommand{\NEarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 28 -28}\special{pa 97 -97}%
+\special{fp}%
+\special{pa 91 -68}\special{pa 111 -111}\special{pa 68 -91}\special{pa 86 -86}\special{pa 91 -68}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 91 -68}\special{pa 111 -111}\special{pa 68 -91}\special{pa 86 -86}\special{pa 91 -68}%
+\special{pa 111 -111}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\SEarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 28 -111}\special{pa 97 -42}%
+\special{fp}%
+\special{pa 68 -48}\special{pa 111 -28}\special{pa 91 -70}\special{pa 86 -53}\special{pa 68 -48}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 68 -48}\special{pa 111 -28}\special{pa 91 -70}\special{pa 86 -53}\special{pa 68 -48}%
+\special{pa 111 -28}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\NWarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 111 -28}\special{pa 42 -97}%
+\special{fp}%
+\special{pa 70 -91}\special{pa 28 -111}\special{pa 48 -68}\special{pa 53 -86}\special{pa 70 -91}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 70 -91}\special{pa 28 -111}\special{pa 48 -68}\special{pa 53 -86}\special{pa 70 -91}%
+\special{pa 28 -111}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\SWarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 111 -111}\special{pa 42 -42}%
+\special{fp}%
+\special{pa 48 -70}\special{pa 28 -28}\special{pa 70 -48}\special{pa 53 -53}\special{pa 48 -70}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 48 -70}\special{pa 28 -28}\special{pa 70 -48}\special{pa 53 -53}\special{pa 48 -70}%
+\special{pa 28 -28}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\NELarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 28 -28}\special{pa 33 -28}\special{pa 39 -28}\special{pa 45 -29}\special{pa 50 -31}%
+\special{pa 56 -33}\special{pa 61 -35}\special{pa 66 -37}\special{pa 71 -40}\special{pa 76 -43}%
+\special{pa 80 -46}\special{pa 85 -50}\special{pa 89 -54}\special{pa 92 -59}\special{pa 96 -63}%
+\special{pa 99 -68}\special{pa 102 -73}\special{pa 104 -78}\special{pa 106 -83}\special{pa 108 -89}%
+\special{pa 109 -94}%
+\special{fp}%
+\special{pa 114 -64}\special{pa 111 -111}\special{pa 83 -72}\special{pa 101 -76}\special{pa 114 -64}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 114 -64}\special{pa 111 -111}\special{pa 83 -72}\special{pa 101 -76}\special{pa 114 -64}%
+\special{pa 111 -111}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\NERarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 94 -109}\special{pa 89 -108}\special{pa 83 -106}\special{pa 78 -104}\special{pa 73 -102}%
+\special{pa 68 -99}\special{pa 63 -96}\special{pa 59 -92}\special{pa 54 -89}\special{pa 50 -85}%
+\special{pa 46 -80}\special{pa 43 -76}\special{pa 40 -71}\special{pa 37 -66}\special{pa 35 -61}%
+\special{pa 33 -56}\special{pa 31 -50}\special{pa 29 -45}\special{pa 28 -39}\special{pa 28 -33}%
+\special{pa 28 -28}%
+\special{fp}%
+\special{pa 72 -84}\special{pa 111 -111}\special{pa 64 -115}\special{pa 76 -102}\special{pa 72 -84}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 72 -84}\special{pa 111 -111}\special{pa 64 -115}\special{pa 76 -102}\special{pa 72 -84}%
+\special{pa 111 -111}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\SELarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 28 -111}\special{pa 28 -105}\special{pa 28 -99}\special{pa 29 -94}\special{pa 31 -88}%
+\special{pa 33 -83}\special{pa 35 -78}\special{pa 37 -72}\special{pa 40 -67}\special{pa 43 -63}%
+\special{pa 46 -58}\special{pa 50 -54}\special{pa 54 -50}\special{pa 59 -46}\special{pa 63 -43}%
+\special{pa 68 -40}\special{pa 73 -37}\special{pa 78 -34}\special{pa 83 -32}\special{pa 89 -31}%
+\special{pa 94 -29}%
+\special{fp}%
+\special{pa 64 -24}\special{pa 111 -28}\special{pa 72 -55}\special{pa 76 -37}\special{pa 64 -24}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 64 -24}\special{pa 111 -28}\special{pa 72 -55}\special{pa 76 -37}\special{pa 64 -24}%
+\special{pa 111 -28}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\SERarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 109 -44}\special{pa 108 -50}\special{pa 106 -55}\special{pa 104 -60}\special{pa 102 -66}%
+\special{pa 99 -71}\special{pa 96 -75}\special{pa 92 -80}\special{pa 89 -84}\special{pa 85 -88}%
+\special{pa 80 -92}\special{pa 76 -95}\special{pa 71 -99}\special{pa 66 -101}\special{pa 61 -104}%
+\special{pa 56 -106}\special{pa 50 -108}\special{pa 45 -109}\special{pa 39 -110}\special{pa 33 -111}%
+\special{pa 28 -111}%
+\special{fp}%
+\special{pa 83 -66}\special{pa 111 -28}\special{pa 114 -75}\special{pa 101 -62}\special{pa 83 -66}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 83 -66}\special{pa 111 -28}\special{pa 114 -75}\special{pa 101 -62}\special{pa 83 -66}%
+\special{pa 111 -28}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\SWRarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 44 -29}\special{pa 50 -31}\special{pa 55 -32}\special{pa 60 -34}\special{pa 66 -37}%
+\special{pa 71 -40}\special{pa 75 -43}\special{pa 80 -46}\special{pa 84 -50}\special{pa 88 -54}%
+\special{pa 92 -58}\special{pa 95 -63}\special{pa 99 -67}\special{pa 101 -72}\special{pa 104 -78}%
+\special{pa 106 -83}\special{pa 108 -88}\special{pa 109 -94}\special{pa 110 -99}\special{pa 111 -105}%
+\special{pa 111 -111}%
+\special{fp}%
+\special{pa 67 -55}\special{pa 28 -28}\special{pa 75 -24}\special{pa 62 -37}\special{pa 67 -55}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 67 -55}\special{pa 28 -28}\special{pa 75 -24}\special{pa 62 -37}\special{pa 67 -55}%
+\special{pa 28 -28}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\SWLarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 111 -111}\special{pa 105 -111}\special{pa 99 -110}\special{pa 94 -109}%
+\special{pa 88 -108}\special{pa 83 -106}\special{pa 78 -104}\special{pa 72 -101}\special{pa 67 -99}%
+\special{pa 63 -95}\special{pa 58 -92}\special{pa 54 -88}\special{pa 50 -84}\special{pa 46 -80}%
+\special{pa 43 -75}\special{pa 40 -71}\special{pa 37 -66}\special{pa 34 -60}\special{pa 32 -55}%
+\special{pa 31 -50}\special{pa 29 -44}%
+\special{fp}%
+\special{pa 24 -75}\special{pa 28 -28}\special{pa 55 -66}\special{pa 37 -62}\special{pa 24 -75}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 24 -75}\special{pa 28 -28}\special{pa 55 -66}\special{pa 37 -62}\special{pa 24 -75}%
+\special{pa 28 -28}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\NWRarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 29 -94}\special{pa 31 -89}\special{pa 32 -83}\special{pa 34 -78}\special{pa 37 -73}%
+\special{pa 40 -68}\special{pa 43 -63}\special{pa 46 -59}\special{pa 50 -54}\special{pa 54 -50}%
+\special{pa 58 -46}\special{pa 63 -43}\special{pa 67 -40}\special{pa 72 -37}\special{pa 78 -35}%
+\special{pa 83 -33}\special{pa 88 -31}\special{pa 94 -29}\special{pa 99 -28}\special{pa 105 -28}%
+\special{pa 111 -28}%
+\special{fp}%
+\special{pa 55 -72}\special{pa 28 -111}\special{pa 24 -64}\special{pa 37 -76}\special{pa 55 -72}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 55 -72}\special{pa 28 -111}\special{pa 24 -64}\special{pa 37 -76}\special{pa 55 -72}%
+\special{pa 28 -111}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%
+\newcommand{\NWLarrow}[1][1]{%
+\scalebox{#1}{\raisebox{-2.5pt}{%
+{\unitlength=1pt%
+\begin{picture}%
+(  10.00000,  10.00000)(   0.00000,   0.00000)%
+\special{pn 8}%
+%
+\special{pa 111 -28}\special{pa 111 -33}\special{pa 110 -39}\special{pa 109 -45}\special{pa 108 -50}%
+\special{pa 106 -56}\special{pa 104 -61}\special{pa 101 -66}\special{pa 99 -71}\special{pa 95 -76}%
+\special{pa 92 -80}\special{pa 88 -85}\special{pa 84 -89}\special{pa 80 -92}\special{pa 75 -96}%
+\special{pa 71 -99}\special{pa 66 -102}\special{pa 60 -104}\special{pa 55 -106}\special{pa 50 -108}%
+\special{pa 44 -109}%
+\special{fp}%
+\special{pa 75 -115}\special{pa 28 -111}\special{pa 67 -84}\special{pa 62 -102}\special{pa 75 -115}%
+\special{sh 1}\special{ip}%
+\special{pn 1}%
+\special{pa 75 -115}\special{pa 28 -111}\special{pa 67 -84}\special{pa 62 -102}\special{pa 75 -115}%
+\special{pa 28 -111}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%%
+}%
+%
+}%
+%
+}%

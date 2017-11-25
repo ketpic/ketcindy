@@ -1,0 +1,10 @@
+%%タイトル::slide0::kabegami//
+タイトル::slide0//
+
+%%%%%%%%%%%%%%%%//
+new::parapara//
+%repeat=,para=sinemove:{0}:s{65}{10}:input:1.2//
+
+%%%%%%%%%%%%%%%%//
+new::parapara2//
+%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2//

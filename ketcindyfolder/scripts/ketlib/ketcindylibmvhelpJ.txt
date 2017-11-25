@@ -1,0 +1,4 @@
+//help:start();
+//help:Moviedata*(movieデータを定義
+//オプション : "Cut=１秒のコマ数(20)", "Div=全体のコマ数(80)");
+//help:end();

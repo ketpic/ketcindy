@@ -1,0 +1,3155 @@
+%Copyright (C)  2014  Setsuo Takato, KETpic developer team
+%* 
+%* This program is free software: you can redistribute it and/or modify
+%* it under the terms of the GNU General Public License as published by
+%* the Free Software Foundation; either version 3 of the License, or
+%* (at your option) any later version.
+%* 
+%* This program is distributed in the hope that it will be useful,
+%* but WITHOUT ANY WARRANTY; without even the implied warranty of
+%* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%* GNU General Public License for more details.
+%* 
+%* You should have received a copy of the GNU General Public License
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>%%% ketlayer2e.sty 2017-1-11 8:5
+%%% ketlayer2e170109.sce 2017-1-10 13:47
+%  2017.01.09%
+\newlength{\layercurrentunit}%
+\newcommand{\ketshadebox}[7][0]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+( 100.00000, 100.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+{\color{#7}
+\polygon*(0.00010,0.00010)(99.99990,0.00010)(99.99990,99.99990)(0.00010,99.99990)%
+(0.00010,0.00010)
+}%
+\end{picture}}%%
+}%
+%
+{%
+\ifnum %
+#4<10 %
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+{%
+\ifnum %
+#1>0 %
+\boxframese{#2}{#3}{#4}{#5}{}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\shadeboxse}[7][0]{%
+\ketshadebox[#1]{#2}{#3}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxc}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxe}[7][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxw}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxn}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxs}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxnw}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxne}[7][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\shadeboxsw}[7][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\ketshadebox[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}{#7}%
+%
+}%
+\newcommand{\eraser}[5][0]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+( 100.00000, 100.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+{\color[cmyk]{0,0,0,0}
+\polygon*(0.00010,0.00010)(99.99990,0.00010)(99.99990,99.99990)(0.00010,99.99990)%
+(0.00010,0.00010)
+}%
+\end{picture}}%%
+}%
+%
+{%
+\ifnum %
+#4<10 %
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.0#4}[0.#5]{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5<10 %
+\settowidth{\Width}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.#4}[0.0#5]{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\scalebox{0.#4}[0.#5]{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\scalebox{0.#4}[0.#5]{\tmpcontents}}\settodepth{\Depth}{\scalebox{0.#4}[0.#5]{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\scalebox{0.#4}[0.#5]{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+{%
+\ifnum %
+#1>0 %
+\boxframese{#2}{#3}{#4}{#5}{}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\eraserse}[5][0]{%
+\eraser[#1]{#2}{#3}{#4}{#5}%
+%
+}%
+\newcommand{\eraserc}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasere}[5][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\eraserw}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#4}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasern}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasers}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasernw}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\eraserne}[5][0]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#4}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\erasersw}[5][0]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\arrowhead}[4][1]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   4.00000,   1.23607)(  -2.00000,  -0.61803)%
+\linethickness{0.008in}%
+%
+\linethickness{0.004in}%
+\polyline(0.00000,0.00000)(2.00000,-0.61803)(2.00000,0.61803)(0.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\polygon*(0.00000,0.00000)(2.00000,-0.61803)(2.00000,0.61803)(0.00000,0.00000)\end{picture}}%%
+}%
+\settowidth{\Width}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\settodepth{\Depth}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}}%
+%
+}%
+\newcommand{\lineseg}[5][12]{%
+\def\tmpcontents{%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.00200)(   0.00000,  -0.00100)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+%
+{%
+\ifnum %
+#5>0 %
+%
+{%
+\ifnum %
+#5<90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5>-90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+}%
+\newcommand{\dashlineseg}[5][12]{%
+\def\tmpcontents{%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.00200)(   0.00000,  -0.00100)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(0.50000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+%
+{%
+\ifnum %
+#5>0 %
+%
+{%
+\ifnum %
+#5<90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5>-90 %
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\else%
+\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+}%
+\def\arrowline#1#2#3#4{%
+\lineseg[12]{#1}{#2}{#3}{#4}%
+\arrowhead{#1}{#2}{#4}%
+%
+}%
+\newcommand{\arrowlineseg}[5][12]{%
+\lineseg[#1]{#2}{#3}{#4}{#5}%
+\arrowhead{#2}{#3}{#5}%
+%
+}%
+\newcommand{\conversion}[1]{%
+\setcounter{ketpicctra}{#1}%
+\multiply\value{ketpicctra} by 3937%
+\divide\value{ketpicctra} by 100%
+\{\theketpicctra\}%
+%
+}%
+\newcommand{\dispgrid}[2]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(  10.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+\put(0.00000,0.00000){\circle*{0.304800}}\put(1.00000,0.00000){\circle*{0.304800}}%
+\put(2.00000,0.00000){\circle*{0.304800}}\put(3.00000,0.00000){\circle*{0.304800}}%
+\put(4.00000,0.00000){\circle*{0.304800}}\put(5.00000,0.00000){\circle*{0.304800}}%
+\put(6.00000,0.00000){\circle*{0.304800}}\put(7.00000,0.00000){\circle*{0.304800}}%
+\put(8.00000,0.00000){\circle*{0.304800}}\put(9.00000,0.00000){\circle*{0.304800}}%
+\put(10.00000,0.00000){\circle*{0.304800}}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\divide\value{ketpicctre} by 10%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\addtocounter{ketpicctrf}{-1}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{0}%
+\addtocounter{ketpicctrd}{-\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+\setcounter{ketpicctrg}{0}%
+\addtocounter{ketpicctrg}{-\value{ketpicctrd}}%
+\settowidth{\Width}{\theketpicctrg}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\theketpicctrg}\settodepth{\Depth}{\theketpicctrg}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(-1,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\theketpicctrg}}%
+%
+\ifnum\theketpicctra<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrd>-#2 %
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,-#2){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+%
+\fi%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,  10.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+\put(0.00000,0.00000){\circle*{0.304800}}\put(0.00000,1.00000){\circle*{0.304800}}%
+\put(0.00000,2.00000){\circle*{0.304800}}\put(0.00000,3.00000){\circle*{0.304800}}%
+\put(0.00000,4.00000){\circle*{0.304800}}\put(0.00000,5.00000){\circle*{0.304800}}%
+\put(0.00000,6.00000){\circle*{0.304800}}\put(0.00000,7.00000){\circle*{0.304800}}%
+\put(0.00000,8.00000){\circle*{0.304800}}\put(0.00000,9.00000){\circle*{0.304800}}%
+\put(0.00000,10.00000){\circle*{0.304800}}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   0.02000)(  -0.01000,  -0.01000)%
+\linethickness{0.008in}%
+%
+\put(0.00000,0.00000){\circle*{0.200000}}
+
+\put(0.00000,0.00000){\circle{0.200000}}
+%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\divide\value{ketpicctre} by 10%
+\addtocounter{ketpicctre}{-1}%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{0}%
+\addtocounter{ketpicctrd}{\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrd,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{-10}%
+%
+\ifnum\theketpicctrb<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrc>-#2 %
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{-#2}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\ifnum\theketpicctrb<\theketpicctrc%
+\repeat%
+}%
+%
+\fi%
+}%
+\setcounter{ketpicctrg}{-#2}%
+\addtocounter{ketpicctrg}{-1}%
+\settowidth{\Width}{\theketpicctrd}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\theketpicctrd}\settodepth{\Depth}{\theketpicctrd}\setlength{\Height}{-\Height}%
+\put(\theketpicctrd,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{\theketpicctrd}}%
+%
+\ifnum\theketpicctra<\theketpicctrf%
+\repeat%
+}%
+%
+}%
+\newcommand{\dispgridneg}[2]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(  10.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+\put(0.00000,0.00000){\circle*{0.304800}}\put(1.00000,0.00000){\circle*{0.304800}}%
+\put(2.00000,0.00000){\circle*{0.304800}}\put(3.00000,0.00000){\circle*{0.304800}}%
+\put(4.00000,0.00000){\circle*{0.304800}}\put(5.00000,0.00000){\circle*{0.304800}}%
+\put(6.00000,0.00000){\circle*{0.304800}}\put(7.00000,0.00000){\circle*{0.304800}}%
+\put(8.00000,0.00000){\circle*{0.304800}}\put(9.00000,0.00000){\circle*{0.304800}}%
+\put(10.00000,0.00000){\circle*{0.304800}}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\multiply\value{ketpicctre} by -1%
+\divide\value{ketpicctre} by 10%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\addtocounter{ketpicctrf}{-1}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+\setcounter{ketpicctrg}{0}%
+\addtocounter{ketpicctrg}{-\value{ketpicctrd}}%
+\settowidth{\Width}{\theketpicctrg}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\theketpicctrg}\settodepth{\Depth}{\theketpicctrg}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(-1,\theketpicctrd){\hspace*{\Width}\raisebox{\Height}{\theketpicctrg}}%
+%
+\ifnum\theketpicctra<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrd>-#2 %
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrc,-#2){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctrf%
+\repeat%
+}%
+%
+\fi%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,  10.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+\put(0.00000,0.00000){\circle*{0.304800}}\put(0.00000,1.00000){\circle*{0.304800}}%
+\put(0.00000,2.00000){\circle*{0.304800}}\put(0.00000,3.00000){\circle*{0.304800}}%
+\put(0.00000,4.00000){\circle*{0.304800}}\put(0.00000,5.00000){\circle*{0.304800}}%
+\put(0.00000,6.00000){\circle*{0.304800}}\put(0.00000,7.00000){\circle*{0.304800}}%
+\put(0.00000,8.00000){\circle*{0.304800}}\put(0.00000,9.00000){\circle*{0.304800}}%
+\put(0.00000,10.00000){\circle*{0.304800}}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   0.02000)(  -0.01000,  -0.01000)%
+\linethickness{0.008in}%
+%
+\put(0.00000,0.00000){\circle*{0.200000}}
+
+\put(0.00000,0.00000){\circle{0.200000}}
+%
+\end{picture}}%%
+}%
+\setcounter{ketpicctre}{#2}%
+\multiply\value{ketpicctre} by -1%
+\divide\value{ketpicctre} by 10%
+\addtocounter{ketpicctre}{-1}%
+\setcounter{ketpicctrf}{#1}%
+\divide\value{ketpicctrf} by 10%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{0}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrd}{0}%
+\addtocounter{ketpicctrd}{\value{ketpicctra}}%
+\multiply\value{ketpicctrd} by 10%
+\setcounter{ketpicctrc}{0}%
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{0}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\addtocounter{ketpicctrc}{10}%
+%
+\ifnum\theketpicctrb<\theketpicctre%
+\repeat%
+}%
+%
+{%
+\ifnum %
+\theketpicctrc>-#2 %
+\setcounter{ketpicctrb}{0}%
+\setcounter{ketpicctrb}{-#2}%
+\addtocounter{ketpicctrb}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\ifnum\theketpicctrb<\theketpicctrc%
+\repeat%
+}%
+%
+\fi%
+}%
+\setcounter{ketpicctrg}{-#2}%
+\addtocounter{ketpicctrg}{1}%
+\settowidth{\Width}{\theketpicctrd}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\theketpicctrd}\settodepth{\Depth}{\theketpicctrd}\setlength{\Height}{\Depth}%
+\put(\theketpicctrd,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{\theketpicctrd}}%
+%
+\ifnum\theketpicctra<\theketpicctrf%
+\repeat%
+}%
+%
+}%
+\newenvironment{layer}[3][0]{%
+\setlength{\layercurrentunit}{\unitlength}%
+\unitlength=1 mm%
+\vspace{-\baselineskip}%
+\noindent%
+\hspace*{#1 mm}%
+\begin{picture}(#3,0)(0,0)%
+%
+{%
+\ifnum %
+#3>0 %
+\dispgrid{#2}{#3}%
+%
+\fi%
+}%
+%
+{%
+\ifnum %
+#3<0 %
+\dispgridneg{#2}{#3}%
+%
+\fi%
+}%
+}{%
+\end{picture}%
+\setlength{\unitlength}{\layercurrentunit}%
+%
+}%
+\newenvironment{layerv}[3][0]{%
+\setlength{\layercurrentunit}{\unitlength}%
+\unitlength=1 mm%
+\vspace*{-\baselineskip}%
+\vspace*{#2 mm}%
+
+\setcounter{ketpicctrj}{-#2}%
+\noindent%
+\hspace*{#1 mm}%
+\begin{picture}(100,0)(0,0)%
+%
+{%
+\ifnum %
+#3>0 %
+\setlength{\Width}{\textwidth}%
+\addtolength{\Width}{-#1 mm}%
+\setcounter{ketpicctri}{0}%
+\setcounter{ketpicctri}{1}%
+\addtocounter{ketpicctri}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctri}{1}%
+%
+{%
+\ifdim %
+\theketpicctri mm>\Width %
+\addtocounter{ketpicctri}{500}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctri<400%
+\repeat%
+}%
+\addtocounter{ketpicctri}{-500}%
+\addtocounter{ketpicctri}{-1}%
+\dispgrid{\theketpicctri}{#3}%
+%
+\fi%
+}%
+}{%
+\end{picture}%
+\vspace*{\theketpicctrj mm}%
+\setlength{\unitlength}{\layercurrentunit}%
+%
+}%
+\newenvironment{layerg}[2][1]{%
+\setlength{\layercurrentunit}{\unitlength}%
+\unitlength=1 mm%
+\vspace*{-\baselineskip}%
+\ketcalcheight{#2}%
+\setcounter{ketpicctrj}{\value{ketpicctra}}%
+\ketcalcdepth{#2}%
+\addtocounter{ketpicctrj}{\value{ketpicctra}}%
+\vspace*{-\theketpicctrj mm}%
+
+\noindent%
+\begin{picture}(100,0)(0,0)%
+%
+{%
+\ifnum %
+#1>0 %
+\setlength{\Width}{\textwidth}%
+\addtolength{\Width}{-#1 mm}%
+\setcounter{ketpicctri}{0}%
+\setcounter{ketpicctri}{1}%
+\addtocounter{ketpicctri}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctri}{1}%
+%
+{%
+\ifdim %
+\theketpicctri mm>\Width %
+\addtocounter{ketpicctri}{500}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctri<400%
+\repeat%
+}%
+\addtocounter{ketpicctri}{-500}%
+\addtocounter{ketpicctri}{-1}%
+\dispgrid{\theketpicctri}{\theketpicctrj}%
+%
+\fi%
+}%
+}{%
+\end{picture}%
+\vspace*{\theketpicctrj mm}%
+\setlength{\unitlength}{\layercurrentunit}%
+%
+}%
+\newcommand{\putnotec}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotee}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotew}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotes}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-\Height}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnoten}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotene}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotenw}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{\Depth}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotese}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-\Height}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\putnotesw}[3]{%
+\settowidth{\Width}{#3}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{#3}\settodepth{\Depth}{#3}\setlength{\Height}{-\Height}%
+\put(#1,-#2){\hspace*{\Width}\raisebox{\Height}{#3}}%
+%
+}%
+\newcommand{\ballonr}[5][8]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   4.00000,   3.50000)(  -2.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.31500,0.66000)(0.31187,0.66265)(0.30427,0.66539)(0.29249,0.66830)(0.27679,0.67148)%
+(0.25744,0.67501)(0.23472,0.67898)(0.20890,0.68347)(0.18024,0.68859)(0.14903,0.69440)%
+(0.11553,0.70101)(0.08002,0.70850)(0.04276,0.71695)(0.00403,0.72646)(-0.03590,0.73711)%
+(-0.07675,0.74900)(-0.11826,0.76220)(-0.16016,0.77681)(-0.20216,0.79292)(-0.24401,0.81061)%
+(-0.28543,0.82997)(-0.32614,0.85109)(-0.36587,0.87406)(-0.40436,0.89896)(-0.44133,0.92588)%
+(-0.47651,0.95492)(-0.50963,0.98615)(-0.54041,1.01967)(-0.56858,1.05557)(-0.59388,1.09393)%
+(-0.61602,1.13484)(-0.63475,1.17838)(-0.64978,1.22466)(-0.66084,1.27374)(-0.66767,1.32573)%
+(-0.66998,1.38072)(-0.66752,1.43877)(-0.66000,1.50000)(-0.67265,1.51154)(-0.69581,1.52188)%
+(-0.72792,1.53157)(-0.76744,1.54117)(-0.81283,1.55123)(-0.86253,1.56232)(-0.91500,1.57500)%
+(-0.96870,1.58982)(-1.02207,1.60734)(-1.07358,1.62812)(-1.12167,1.65272)(-1.16480,1.68169)%
+(-1.20143,1.71560)(-1.23000,1.75500)(-1.24947,1.80016)(-1.26077,1.85015)(-1.26535,1.90376)%
+(-1.26462,1.95976)(-1.26003,2.01695)(-1.25302,2.07410)(-1.24500,2.13000)(-1.23692,2.18365)%
+(-1.22772,2.23494)(-1.21582,2.28399)(-1.19966,2.33091)(-1.17768,2.37580)(-1.14832,2.41880)%
+(-1.11000,2.46000)(-1.06166,2.49946)(-1.00422,2.53695)(-0.93909,2.57220)(-0.86769,2.60491)%
+(-0.79143,2.63481)(-0.71173,2.66160)(-0.63000,2.68500)(-0.54766,2.70473)(-0.46612,2.72050)%
+(-0.38680,2.73203)(-0.31111,2.73903)(-0.24047,2.74121)(-0.17630,2.73830)(-0.12000,2.73000)%
+(-0.09460,2.75467)(-0.06709,2.78128)(-0.03698,2.80930)(-0.00373,2.83822)(0.03317,2.86749)%
+(0.07424,2.89659)(0.12000,2.92500)(0.17096,2.95218)(0.22764,2.97761)(0.29056,3.00076)%
+(0.36024,3.02110)(0.43720,3.03811)(0.52194,3.05125)(0.61500,3.06000)(0.71632,3.06396)%
+(0.82363,3.06329)(0.93405,3.05824)(1.04476,3.04912)(1.15288,3.03618)(1.25558,3.01972)%
+(1.35000,3.00000)(1.43396,2.97717)(1.50797,2.95077)(1.57321,2.92024)(1.63085,2.88498)%
+(1.68208,2.84441)(1.72807,2.79794)(1.77000,2.74500)(1.80872,2.68530)(1.84374,2.61981)%
+(1.87426,2.54981)(1.89946,2.47655)(1.91852,2.40132)(1.93064,2.32537)(1.93500,2.25000)%
+(1.93079,2.17646)(1.91719,2.10603)(1.89340,2.03998)(1.85860,1.97958)(1.81197,1.92610)%
+(1.75271,1.88082)(1.68000,1.84500)(1.69733,1.82055)(1.71432,1.79394)(1.73080,1.76532)%
+(1.74658,1.73483)(1.76150,1.70260)(1.77537,1.66877)(1.78801,1.63348)(1.79925,1.59686)%
+(1.80890,1.55905)(1.81680,1.52020)(1.82276,1.48043)(1.82660,1.43988)(1.82815,1.39870)%
+(1.82722,1.35702)(1.82365,1.31498)(1.81725,1.27272)(1.80784,1.23036)(1.79525,1.18806)%
+(1.77929,1.14594)(1.75980,1.10416)(1.73670,1.06286)(1.70998,1.02223)(1.67968,0.98246)%
+(1.64581,0.94374)(1.60838,0.90626)(1.56741,0.87019)(1.52291,0.83572)(1.47491,0.80304)%
+(1.42342,0.77234)(1.36845,0.74381)(1.31002,0.71762)(1.24815,0.69397)(1.18285,0.67303)%
+(1.11414,0.65501)(1.04204,0.64008)(0.96655,0.62842)(0.88771,0.62024)(0.80552,0.61570)%
+(0.72000,0.61500)(0.70658,0.58034)(0.69258,0.54668)(0.67799,0.51401)(0.66281,0.48234)%
+(0.64705,0.45167)(0.63070,0.42199)(0.61377,0.39331)(0.59625,0.36562)(0.57814,0.33894)%
+(0.55945,0.31324)(0.54018,0.28854)(0.52031,0.26484)(0.49986,0.24214)(0.47883,0.22043)%
+(0.45721,0.19972)(0.43500,0.18000)(0.41221,0.16128)(0.38883,0.14355)(0.36486,0.12683)%
+(0.34031,0.11109)(0.31518,0.09636)(0.28945,0.08262)(0.26314,0.06987)(0.23625,0.05812)%
+(0.20877,0.04737)(0.18070,0.03762)(0.15205,0.02886)(0.12281,0.02109)(0.09299,0.01433)%
+(0.06258,0.00855)(0.03158,0.00378)(0.00000,0.00000)(0.01983,0.01518)(0.03902,0.03070)%
+(0.05757,0.04658)(0.07547,0.06281)(0.09272,0.07939)(0.10934,0.09633)(0.12530,0.11361)%
+(0.14062,0.13125)(0.15530,0.14924)(0.16934,0.16758)(0.18272,0.18627)(0.19547,0.20531)%
+(0.20757,0.22471)(0.21902,0.24445)(0.22983,0.26455)(0.24000,0.28500)(0.24952,0.30580)%
+(0.25840,0.32695)(0.26663,0.34846)(0.27422,0.37031)(0.28116,0.39252)(0.28746,0.41508)%
+(0.29312,0.43799)(0.29812,0.46125)(0.30249,0.48486)(0.30621,0.50883)(0.30929,0.53314)%
+(0.31172,0.55781)(0.31351,0.58283)(0.31465,0.60820)(0.31515,0.63393)(0.31500,0.66000)%
+%
+\linethickness{0.008in}%
+\settowidth{\Width}{{\begin{minipage}{1.8cm}#5\end{minipage}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\begin{minipage}{1.8cm}#5\end{minipage}}}\settodepth{\Depth}{{\begin{minipage}{1.8cm}#5\end{minipage}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(0.5000,1.8000){\hspace*{\Width}\raisebox{\Height}{{\begin{minipage}{1.8cm}#5\end{minipage}}}}%
+%
+%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\scalebox{#4}{\tempcontents}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\scalebox{#4}{\tempcontents}}}\settodepth{\Depth}{{\scalebox{#4}{\tempcontents}}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\scalebox{#4}{\tempcontents}}}}%
+%
+}%
+\newcommand{\ballonl}[5][8]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   5.00000,   2.50000)(  -2.50000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(-0.57200,0.56100)(-0.66502,0.50474)(-0.75287,0.45596)(-0.83608,0.41418)%
+(-0.91517,0.37896)(-0.99068,0.34982)(-1.06311,0.32633)(-1.13300,0.30800)(-1.20087,0.29439)%
+(-1.26724,0.28503)(-1.33264,0.27947)(-1.39759,0.27725)(-1.46262,0.27790)(-1.52825,0.28097)%
+(-1.59500,0.28600)(-1.66316,0.29276)(-1.73209,0.30198)(-1.80088,0.31459)(-1.86866,0.33154)%
+(-1.93453,0.35380)(-1.99760,0.38230)(-2.05700,0.41800)(-2.11187,0.46151)(-2.16154,0.51214)%
+(-2.20539,0.56886)(-2.24279,0.63064)(-2.27311,0.69644)(-2.29572,0.76523)(-2.31000,0.83600)%
+(-2.31548,0.90773)(-2.31232,0.97953)(-2.30083,1.05052)(-2.28134,1.11983)(-2.25416,1.18660)%
+(-2.21960,1.24995)(-2.17800,1.30900)(-2.12966,1.36289)(-2.07491,1.41075)(-2.01405,1.45170)%
+(-1.94742,1.48487)(-1.87532,1.50939)(-1.79807,1.52439)(-1.71600,1.52900)(-1.73655,1.60873)%
+(-1.74760,1.68448)(-1.74979,1.75622)(-1.74378,1.82389)(-1.73021,1.88744)(-1.70974,1.94683)%
+(-1.68300,2.00200)(-1.65065,2.05290)(-1.61334,2.09949)(-1.57171,2.14172)(-1.52641,2.17953)%
+(-1.47810,2.21288)(-1.42741,2.24172)(-1.37500,2.26600)(-1.32132,2.28578)(-1.26601,2.30158)%
+(-1.20854,2.31404)(-1.14835,2.32378)(-1.08489,2.33143)(-1.01763,2.33763)(-0.94600,2.34300)%
+(-0.86985,2.34798)(-0.79052,2.35223)(-0.70976,2.35517)(-0.62929,2.35627)(-0.55085,2.35498)%
+(-0.47618,2.35074)(-0.40700,2.34300)(-0.34466,2.33128)(-0.28894,2.31535)(-0.23922,2.29505)%
+(-0.19488,2.27022)(-0.15531,2.24071)(-0.11989,2.20636)(-0.08800,2.16700)(-0.05903,2.12248)%
+(-0.03237,2.07263)(-0.00739,2.01731)(0.01653,1.95634)(0.03998,1.88957)(0.06360,1.81685)%
+(0.08800,1.73800)(0.14258,1.73395)(0.19323,1.72765)(0.24018,1.71905)(0.28370,1.70812)%
+(0.32401,1.69482)(0.36136,1.67913)(0.39600,1.66100)(0.42817,1.64040)(0.45812,1.61730)%
+(0.48608,1.59166)(0.51231,1.56344)(0.53704,1.53262)(0.56052,1.49915)(0.58300,1.46300)%
+(0.60454,1.42421)(0.62448,1.38306)(0.64198,1.33994)(0.65622,1.29521)(0.66636,1.24923)%
+(0.67157,1.20237)(0.67100,1.15500)(0.66413,1.10751)(0.65163,1.06036)(0.63448,1.01405)%
+(0.61367,0.96907)(0.59016,0.92591)(0.56495,0.88505)(0.53900,0.84700)(0.51304,0.81212)%
+(0.48675,0.78032)(0.45955,0.75138)(0.43086,0.72510)(0.40009,0.70124)(0.36666,0.67962)%
+(0.33000,0.66000)(0.28952,0.64218)(0.24465,0.62594)(0.19480,0.61107)(0.13939,0.59735)%
+(0.07784,0.58458)(0.00957,0.57253)(-0.06600,0.56100)(-0.06660,0.54413)(-0.06703,0.52723)%
+(-0.06729,0.51028)(-0.06738,0.49328)(-0.06729,0.47624)(-0.06703,0.45916)(-0.06660,0.44204)%
+(-0.06600,0.42487)(-0.06523,0.40767)(-0.06428,0.39041)(-0.06316,0.37312)(-0.06187,0.35578)%
+(-0.06041,0.33840)(-0.05878,0.32098)(-0.05698,0.30351)(-0.05500,0.28600)(-0.05285,0.26845)%
+(-0.05053,0.25085)(-0.04804,0.23321)(-0.04537,0.21553)(-0.04254,0.19781)(-0.03953,0.18004)%
+(-0.03635,0.16223)(-0.03300,0.14437)(-0.02948,0.12648)(-0.02578,0.10854)(-0.02191,0.09056)%
+(-0.01787,0.07253)(-0.01366,0.05446)(-0.00928,0.03635)(-0.00473,0.01820)(0.00000,0.00000)%
+(-0.02187,0.02752)(-0.04348,0.05440)(-0.06484,0.08063)(-0.08594,0.10622)(-0.10678,0.13116)%
+(-0.12736,0.15546)(-0.14768,0.17912)(-0.16775,0.20212)(-0.18756,0.22449)(-0.20711,0.24621)%
+(-0.22640,0.26729)(-0.24544,0.28772)(-0.26421,0.30751)(-0.28273,0.32665)(-0.30100,0.34515)%
+(-0.31900,0.36300)(-0.33675,0.38021)(-0.35423,0.39677)(-0.37146,0.41269)(-0.38844,0.42797)%
+(-0.40515,0.44260)(-0.42161,0.45659)(-0.43781,0.46993)(-0.45375,0.48262)(-0.46943,0.49468)%
+(-0.48486,0.50609)(-0.50003,0.51685)(-0.51494,0.52697)(-0.52959,0.53644)(-0.54398,0.54527)%
+(-0.55812,0.55346)(-0.57200,0.56100)%
+%
+\linethickness{0.008in}%
+\settowidth{\Width}{{\begin{minipage}{1.5cm}#5\end{minipage}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\begin{minipage}{1.5cm}#5\end{minipage}}}\settodepth{\Depth}{{\begin{minipage}{1.5cm}#5\end{minipage}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(-0.8000,1.2000){\hspace*{\Width}\raisebox{\Height}{{\begin{minipage}{1.5cm}#5\end{minipage}}}}%
+%
+%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\scalebox{#4}{\tempcontents}}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\scalebox{#4}{\tempcontents}}}\settodepth{\Depth}{{\scalebox{#4}{\tempcontents}}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\scalebox{#4}{\tempcontents}}}}%
+%
+}%
+\newcommand{\lefthand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -1.00000,  -0.80000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(-0.82419,-0.69564)(-0.78908,-0.66318)(-0.75158,-0.63725)(-0.71246,-0.61684)%
+(-0.67248,-0.60097)(-0.63240,-0.58865)(-0.59300,-0.57888)(-0.55504,-0.57068)(-0.51928,-0.56304)%
+(-0.48649,-0.55497)(-0.45744,-0.54549)(-0.43288,-0.53361)(-0.41280,-0.51898)(-0.39570,-0.50254)%
+(-0.37987,-0.48534)(-0.36363,-0.46845)(-0.34530,-0.45295)(-0.32358,-0.43973)(-0.29944,-0.42879)%
+(-0.27467,-0.41976)(-0.25107,-0.41230)(-0.23044,-0.40605)(-0.21452,-0.40067)(-0.20374,-0.39585)%
+(-0.19724,-0.39136)(-0.19411,-0.38695)(-0.19341,-0.38238)(-0.19423,-0.37742)(-0.19592,-0.37195)%
+(-0.19858,-0.36627)(-0.20245,-0.36070)(-0.20775,-0.35558)(-0.21472,-0.35126)(-0.22356,-0.34804)%
+(-0.23405,-0.34593)(-0.24580,-0.34478)(-0.25843,-0.34446)(-0.27152,-0.34481)(-0.28469,-0.34568)%
+(-0.29753,-0.34694)(-0.30966,-0.34843)(-0.32067,-0.35001)(-0.33016,-0.35154)(-0.33774,-0.35286)%
+\polyline(-0.41839,-0.43100)(-0.40862,-0.42173)(-0.39536,-0.40850)(-0.37893,-0.39183)%
+(-0.35961,-0.37226)(-0.33771,-0.35032)(-0.31352,-0.32655)(-0.28734,-0.30146)(-0.25947,-0.27560)%
+(-0.23021,-0.24949)(-0.19985,-0.22367)(-0.16898,-0.19861)(-0.13874,-0.17463)(-0.11037,-0.15207)%
+(-0.08509,-0.13123)(-0.06413,-0.11244)(-0.04790,-0.09575)(-0.03554,-0.08081)(-0.02614,-0.06722)%
+(-0.01872,-0.05461)(-0.01239,-0.04261)(-0.00683,-0.03113)(-0.00249,-0.02050)(0.00015,-0.01101)%
+(0.00061,-0.00300)(-0.00156,0.00320)(-0.00679,0.00711)(-0.01539,0.00804)(-0.02769,0.00535)%
+(-0.04401,-0.00164)(-0.06467,-0.01354)(-0.08964,-0.03035)(-0.11867,-0.05169)(-0.15155,-0.07719)%
+(-0.18802,-0.10645)(-0.22772,-0.13897)(-0.26909,-0.17335)(-0.31003,-0.20776)(-0.34845,-0.24036)%
+(-0.38225,-0.26930)(-0.40932,-0.29275)(-0.42756,-0.30887)(-0.43488,-0.31583)(-0.42916,-0.31178)%
+(-0.40831,-0.29489)%
+\polyline(-0.38311,-0.27221)(-0.38240,-0.26776)(-0.38210,-0.26354)(-0.38219,-0.25954)%
+(-0.38266,-0.25575)(-0.38347,-0.25218)(-0.38462,-0.24881)(-0.38607,-0.24564)(-0.38782,-0.24266)%
+(-0.38983,-0.23987)(-0.39209,-0.23727)(-0.39458,-0.23485)(-0.39729,-0.23260)(-0.40018,-0.23051)%
+(-0.40324,-0.22859)(-0.40644,-0.22682)(-0.40978,-0.22521)(-0.41322,-0.22374)(-0.41676,-0.22241)%
+(-0.42036,-0.22122)(-0.42401,-0.22016)(-0.42768,-0.21922)(-0.43137,-0.21840)(-0.43504,-0.21770)%
+(-0.43868,-0.21710)(-0.44227,-0.21661)(-0.44578,-0.21621)(-0.44920,-0.21591)(-0.45251,-0.21569)%
+(-0.45568,-0.21555)(-0.45870,-0.21549)(-0.46155,-0.21551)(-0.46420,-0.21558)(-0.46664,-0.21572)%
+(-0.46884,-0.21591)(-0.47079,-0.21615)(-0.47246,-0.21644)(-0.47384,-0.21676)%
+\polyline(-0.50409,-0.24700)(-0.49723,-0.24301)(-0.49144,-0.23910)(-0.48667,-0.23526)%
+(-0.48284,-0.23151)(-0.47990,-0.22784)(-0.47780,-0.22427)(-0.47648,-0.22078)(-0.47587,-0.21740)%
+(-0.47593,-0.21411)(-0.47658,-0.21093)(-0.47778,-0.20786)(-0.47946,-0.20489)(-0.48156,-0.20204)%
+(-0.48403,-0.19931)(-0.48681,-0.19669)(-0.48984,-0.19420)(-0.49306,-0.19184)(-0.49641,-0.18961)%
+(-0.49984,-0.18751)(-0.50329,-0.18555)(-0.50672,-0.18373)(-0.51014,-0.18205)(-0.51354,-0.18050)%
+(-0.51692,-0.17909)(-0.52029,-0.17782)(-0.52363,-0.17668)(-0.52695,-0.17568)(-0.53025,-0.17481)%
+(-0.53352,-0.17407)(-0.53677,-0.17347)(-0.53998,-0.17300)(-0.54317,-0.17266)(-0.54633,-0.17245)%
+(-0.54946,-0.17237)(-0.55256,-0.17243)(-0.55562,-0.17261)(-0.55864,-0.17291)(-0.56163,-0.17335)%
+(-0.56458,-0.17391)%
+\polyline(-0.58978,-0.20416)(-0.58464,-0.19911)(-0.58011,-0.19420)(-0.57622,-0.18941)%
+(-0.57296,-0.18473)(-0.57035,-0.18018)(-0.56839,-0.17573)(-0.56710,-0.17139)(-0.56647,-0.16715)%
+(-0.56652,-0.16301)(-0.56726,-0.15897)(-0.56868,-0.15502)(-0.57081,-0.15115)(-0.57364,-0.14737)%
+(-0.57718,-0.14366)(-0.58147,-0.14010)(-0.58662,-0.13698)(-0.59277,-0.13468)(-0.60005,-0.13357)%
+(-0.60861,-0.13403)(-0.61859,-0.13643)(-0.63011,-0.14114)(-0.64323,-0.14845)(-0.65761,-0.15822)%
+(-0.67283,-0.17027)(-0.68845,-0.18437)(-0.70404,-0.20032)(-0.71919,-0.21791)(-0.73345,-0.23692)%
+(-0.74652,-0.25717)(-0.75858,-0.27848)(-0.76993,-0.30070)(-0.78085,-0.32369)(-0.79166,-0.34729)%
+(-0.80265,-0.37135)(-0.81410,-0.39571)(-0.82633,-0.42023)(-0.83963,-0.44475)(-0.85430,-0.46912)%
+(-0.87062,-0.49319)(-0.88891,-0.51680)(-0.90946,-0.53981)(-0.93256,-0.56206)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\righthand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -0.01000,  -0.80000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.82419,-0.69564)(0.78908,-0.66318)(0.75158,-0.63725)(0.71246,-0.61684)%
+(0.67248,-0.60097)(0.63240,-0.58865)(0.59300,-0.57888)(0.55504,-0.57068)(0.51928,-0.56304)%
+(0.48649,-0.55497)(0.45744,-0.54549)(0.43288,-0.53361)(0.41280,-0.51898)(0.39570,-0.50254)%
+(0.37987,-0.48534)(0.36363,-0.46845)(0.34530,-0.45295)(0.32358,-0.43973)(0.29944,-0.42879)%
+(0.27467,-0.41976)(0.25107,-0.41230)(0.23044,-0.40605)(0.21452,-0.40067)(0.20374,-0.39585)%
+(0.19724,-0.39136)(0.19411,-0.38695)(0.19341,-0.38238)(0.19423,-0.37742)(0.19592,-0.37195)%
+(0.19858,-0.36627)(0.20245,-0.36070)(0.20775,-0.35558)(0.21472,-0.35126)(0.22356,-0.34804)%
+(0.23405,-0.34593)(0.24580,-0.34478)(0.25843,-0.34446)(0.27152,-0.34481)(0.28469,-0.34568)%
+(0.29753,-0.34694)(0.30966,-0.34843)(0.32067,-0.35001)(0.33016,-0.35154)(0.33774,-0.35286)%
+\polyline(0.41839,-0.43100)(0.40862,-0.42173)(0.39536,-0.40850)(0.37893,-0.39183)%
+(0.35961,-0.37226)(0.33771,-0.35032)(0.31352,-0.32655)(0.28734,-0.30146)(0.25947,-0.27560)%
+(0.23021,-0.24949)(0.19985,-0.22367)(0.16898,-0.19861)(0.13874,-0.17463)(0.11037,-0.15207)%
+(0.08509,-0.13123)(0.06413,-0.11244)(0.04790,-0.09575)(0.03554,-0.08081)(0.02614,-0.06722)%
+(0.01872,-0.05461)(0.01239,-0.04261)(0.00683,-0.03113)(0.00249,-0.02050)(-0.00015,-0.01101)%
+(-0.00061,-0.00300)(0.00156,0.00320)(0.00679,0.00711)(0.01539,0.00804)(0.02769,0.00535)%
+(0.04401,-0.00164)(0.06467,-0.01354)(0.08964,-0.03035)(0.11867,-0.05169)(0.15155,-0.07719)%
+(0.18802,-0.10645)(0.22772,-0.13897)(0.26909,-0.17335)(0.31003,-0.20776)(0.34845,-0.24036)%
+(0.38225,-0.26930)(0.40932,-0.29275)(0.42756,-0.30887)(0.43488,-0.31583)(0.42916,-0.31178)%
+(0.40831,-0.29489)%
+\polyline(0.38311,-0.27221)(0.38240,-0.26776)(0.38210,-0.26354)(0.38219,-0.25954)%
+(0.38266,-0.25575)(0.38347,-0.25218)(0.38462,-0.24881)(0.38607,-0.24564)(0.38782,-0.24266)%
+(0.38983,-0.23987)(0.39209,-0.23727)(0.39458,-0.23485)(0.39729,-0.23260)(0.40018,-0.23051)%
+(0.40324,-0.22859)(0.40644,-0.22682)(0.40978,-0.22521)(0.41322,-0.22374)(0.41676,-0.22241)%
+(0.42036,-0.22122)(0.42401,-0.22016)(0.42768,-0.21922)(0.43137,-0.21840)(0.43504,-0.21770)%
+(0.43868,-0.21710)(0.44227,-0.21661)(0.44578,-0.21621)(0.44920,-0.21591)(0.45251,-0.21569)%
+(0.45568,-0.21555)(0.45870,-0.21549)(0.46155,-0.21551)(0.46420,-0.21558)(0.46664,-0.21572)%
+(0.46884,-0.21591)(0.47079,-0.21615)(0.47246,-0.21644)(0.47384,-0.21676)%
+\polyline(0.50409,-0.24700)(0.49723,-0.24301)(0.49144,-0.23910)(0.48667,-0.23526)%
+(0.48284,-0.23151)(0.47990,-0.22784)(0.47780,-0.22427)(0.47648,-0.22078)(0.47587,-0.21740)%
+(0.47593,-0.21411)(0.47658,-0.21093)(0.47778,-0.20786)(0.47946,-0.20489)(0.48156,-0.20204)%
+(0.48403,-0.19931)(0.48681,-0.19669)(0.48984,-0.19420)(0.49306,-0.19184)(0.49641,-0.18961)%
+(0.49984,-0.18751)(0.50329,-0.18555)(0.50672,-0.18373)(0.51014,-0.18205)(0.51354,-0.18050)%
+(0.51692,-0.17909)(0.52029,-0.17782)(0.52363,-0.17668)(0.52695,-0.17568)(0.53025,-0.17481)%
+(0.53352,-0.17407)(0.53677,-0.17347)(0.53998,-0.17300)(0.54317,-0.17266)(0.54633,-0.17245)%
+(0.54946,-0.17237)(0.55256,-0.17243)(0.55562,-0.17261)(0.55864,-0.17291)(0.56163,-0.17335)%
+(0.56458,-0.17391)%
+\polyline(0.58978,-0.20416)(0.58464,-0.19911)(0.58011,-0.19420)(0.57622,-0.18941)%
+(0.57296,-0.18473)(0.57035,-0.18018)(0.56839,-0.17573)(0.56710,-0.17139)(0.56647,-0.16715)%
+(0.56652,-0.16301)(0.56726,-0.15897)(0.56868,-0.15502)(0.57081,-0.15115)(0.57364,-0.14737)%
+(0.57718,-0.14366)(0.58147,-0.14010)(0.58662,-0.13698)(0.59277,-0.13468)(0.60005,-0.13357)%
+(0.60861,-0.13403)(0.61859,-0.13643)(0.63011,-0.14114)(0.64323,-0.14845)(0.65761,-0.15822)%
+(0.67283,-0.17027)(0.68845,-0.18437)(0.70404,-0.20032)(0.71919,-0.21791)(0.73345,-0.23692)%
+(0.74652,-0.25717)(0.75858,-0.27848)(0.76993,-0.30070)(0.78085,-0.32369)(0.79166,-0.34729)%
+(0.80265,-0.37135)(0.81410,-0.39571)(0.82633,-0.42023)(0.83963,-0.44475)(0.85430,-0.46912)%
+(0.87062,-0.49319)(0.88891,-0.51680)(0.90946,-0.53981)(0.93256,-0.56206)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\leftdownhand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -1.00000,  -0.02000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(-0.82419,0.69564)(-0.78908,0.66318)(-0.75158,0.63725)(-0.71246,0.61684)%
+(-0.67248,0.60097)(-0.63240,0.58865)(-0.59300,0.57888)(-0.55504,0.57068)(-0.51928,0.56304)%
+(-0.48649,0.55497)(-0.45744,0.54549)(-0.43288,0.53361)(-0.41280,0.51898)(-0.39570,0.50254)%
+(-0.37987,0.48534)(-0.36363,0.46845)(-0.34530,0.45295)(-0.32358,0.43973)(-0.29944,0.42879)%
+(-0.27467,0.41976)(-0.25107,0.41230)(-0.23044,0.40605)(-0.21452,0.40067)(-0.20374,0.39585)%
+(-0.19724,0.39136)(-0.19411,0.38695)(-0.19341,0.38238)(-0.19423,0.37742)(-0.19592,0.37195)%
+(-0.19858,0.36627)(-0.20245,0.36070)(-0.20775,0.35558)(-0.21472,0.35126)(-0.22356,0.34804)%
+(-0.23405,0.34593)(-0.24580,0.34478)(-0.25843,0.34446)(-0.27152,0.34481)(-0.28469,0.34568)%
+(-0.29753,0.34694)(-0.30966,0.34843)(-0.32067,0.35001)(-0.33016,0.35154)(-0.33774,0.35286)%
+\polyline(-0.41839,0.43100)(-0.40862,0.42173)(-0.39536,0.40850)(-0.37893,0.39183)%
+(-0.35961,0.37226)(-0.33771,0.35032)(-0.31352,0.32655)(-0.28734,0.30146)(-0.25947,0.27560)%
+(-0.23021,0.24949)(-0.19985,0.22367)(-0.16898,0.19861)(-0.13874,0.17463)(-0.11037,0.15207)%
+(-0.08509,0.13123)(-0.06413,0.11244)(-0.04790,0.09575)(-0.03554,0.08081)(-0.02614,0.06722)%
+(-0.01872,0.05461)(-0.01239,0.04261)(-0.00683,0.03113)(-0.00249,0.02050)(0.00015,0.01101)%
+(0.00061,0.00300)(-0.00156,-0.00320)(-0.00679,-0.00711)(-0.01539,-0.00804)(-0.02769,-0.00535)%
+(-0.04401,0.00164)(-0.06467,0.01354)(-0.08964,0.03035)(-0.11867,0.05169)(-0.15155,0.07719)%
+(-0.18802,0.10645)(-0.22772,0.13897)(-0.26909,0.17335)(-0.31003,0.20776)(-0.34845,0.24036)%
+(-0.38225,0.26930)(-0.40932,0.29275)(-0.42756,0.30887)(-0.43488,0.31583)(-0.42916,0.31178)%
+(-0.40831,0.29489)%
+\polyline(-0.38311,0.27221)(-0.38240,0.26776)(-0.38210,0.26354)(-0.38219,0.25954)%
+(-0.38266,0.25575)(-0.38347,0.25218)(-0.38462,0.24881)(-0.38607,0.24564)(-0.38782,0.24266)%
+(-0.38983,0.23987)(-0.39209,0.23727)(-0.39458,0.23485)(-0.39729,0.23260)(-0.40018,0.23051)%
+(-0.40324,0.22859)(-0.40644,0.22682)(-0.40978,0.22521)(-0.41322,0.22374)(-0.41676,0.22241)%
+(-0.42036,0.22122)(-0.42401,0.22016)(-0.42768,0.21922)(-0.43137,0.21840)(-0.43504,0.21770)%
+(-0.43868,0.21710)(-0.44227,0.21661)(-0.44578,0.21621)(-0.44920,0.21591)(-0.45251,0.21569)%
+(-0.45568,0.21555)(-0.45870,0.21549)(-0.46155,0.21551)(-0.46420,0.21558)(-0.46664,0.21572)%
+(-0.46884,0.21591)(-0.47079,0.21615)(-0.47246,0.21644)(-0.47384,0.21676)%
+\polyline(-0.50409,0.24700)(-0.49723,0.24301)(-0.49144,0.23910)(-0.48667,0.23526)%
+(-0.48284,0.23151)(-0.47990,0.22784)(-0.47780,0.22427)(-0.47648,0.22078)(-0.47587,0.21740)%
+(-0.47593,0.21411)(-0.47658,0.21093)(-0.47778,0.20786)(-0.47946,0.20489)(-0.48156,0.20204)%
+(-0.48403,0.19931)(-0.48681,0.19669)(-0.48984,0.19420)(-0.49306,0.19184)(-0.49641,0.18961)%
+(-0.49984,0.18751)(-0.50329,0.18555)(-0.50672,0.18373)(-0.51014,0.18205)(-0.51354,0.18050)%
+(-0.51692,0.17909)(-0.52029,0.17782)(-0.52363,0.17668)(-0.52695,0.17568)(-0.53025,0.17481)%
+(-0.53352,0.17407)(-0.53677,0.17347)(-0.53998,0.17300)(-0.54317,0.17266)(-0.54633,0.17245)%
+(-0.54946,0.17237)(-0.55256,0.17243)(-0.55562,0.17261)(-0.55864,0.17291)(-0.56163,0.17335)%
+(-0.56458,0.17391)%
+\polyline(-0.58978,0.20416)(-0.58464,0.19911)(-0.58011,0.19420)(-0.57622,0.18941)%
+(-0.57296,0.18473)(-0.57035,0.18018)(-0.56839,0.17573)(-0.56710,0.17139)(-0.56647,0.16715)%
+(-0.56652,0.16301)(-0.56726,0.15897)(-0.56868,0.15502)(-0.57081,0.15115)(-0.57364,0.14737)%
+(-0.57718,0.14366)(-0.58147,0.14010)(-0.58662,0.13698)(-0.59277,0.13468)(-0.60005,0.13357)%
+(-0.60861,0.13403)(-0.61859,0.13643)(-0.63011,0.14114)(-0.64323,0.14845)(-0.65761,0.15822)%
+(-0.67283,0.17027)(-0.68845,0.18437)(-0.70404,0.20032)(-0.71919,0.21791)(-0.73345,0.23692)%
+(-0.74652,0.25717)(-0.75858,0.27848)(-0.76993,0.30070)(-0.78085,0.32369)(-0.79166,0.34729)%
+(-0.80265,0.37135)(-0.81410,0.39571)(-0.82633,0.42023)(-0.83963,0.44475)(-0.85430,0.46912)%
+(-0.87062,0.49319)(-0.88891,0.51680)(-0.90946,0.53981)(-0.93256,0.56206)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\rightdownhand}[3][16]{%
+\def\tempcontents{%
+{\unitlength=1cm%
+\begin{picture}%
+(   1.01000,   0.82000)(  -0.01000,  -0.02000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.82419,0.69564)(0.78908,0.66318)(0.75158,0.63725)(0.71246,0.61684)(0.67248,0.60097)%
+(0.63240,0.58865)(0.59300,0.57888)(0.55504,0.57068)(0.51928,0.56304)(0.48649,0.55497)%
+(0.45744,0.54549)(0.43288,0.53361)(0.41280,0.51898)(0.39570,0.50254)(0.37987,0.48534)%
+(0.36363,0.46845)(0.34530,0.45295)(0.32358,0.43973)(0.29944,0.42879)(0.27467,0.41976)%
+(0.25107,0.41230)(0.23044,0.40605)(0.21452,0.40067)(0.20374,0.39585)(0.19724,0.39136)%
+(0.19411,0.38695)(0.19341,0.38238)(0.19423,0.37742)(0.19592,0.37195)(0.19858,0.36627)%
+(0.20245,0.36070)(0.20775,0.35558)(0.21472,0.35126)(0.22356,0.34804)(0.23405,0.34593)%
+(0.24580,0.34478)(0.25843,0.34446)(0.27152,0.34481)(0.28469,0.34568)(0.29753,0.34694)%
+(0.30966,0.34843)(0.32067,0.35001)(0.33016,0.35154)(0.33774,0.35286)%
+\polyline(0.41839,0.43100)(0.40862,0.42173)(0.39536,0.40850)(0.37893,0.39183)(0.35961,0.37226)%
+(0.33771,0.35032)(0.31352,0.32655)(0.28734,0.30146)(0.25947,0.27560)(0.23021,0.24949)%
+(0.19985,0.22367)(0.16898,0.19861)(0.13874,0.17463)(0.11037,0.15207)(0.08509,0.13123)%
+(0.06413,0.11244)(0.04790,0.09575)(0.03554,0.08081)(0.02614,0.06722)(0.01872,0.05461)%
+(0.01239,0.04261)(0.00683,0.03113)(0.00249,0.02050)(-0.00015,0.01101)(-0.00061,0.00300)%
+(0.00156,-0.00320)(0.00679,-0.00711)(0.01539,-0.00804)(0.02769,-0.00535)(0.04401,0.00164)%
+(0.06467,0.01354)(0.08964,0.03035)(0.11867,0.05169)(0.15155,0.07719)(0.18802,0.10645)%
+(0.22772,0.13897)(0.26909,0.17335)(0.31003,0.20776)(0.34845,0.24036)(0.38225,0.26930)%
+(0.40932,0.29275)(0.42756,0.30887)(0.43488,0.31583)(0.42916,0.31178)(0.40831,0.29489)%
+\polyline(0.38311,0.27221)(0.38240,0.26776)(0.38210,0.26354)(0.38219,0.25954)(0.38266,0.25575)%
+(0.38347,0.25218)(0.38462,0.24881)(0.38607,0.24564)(0.38782,0.24266)(0.38983,0.23987)%
+(0.39209,0.23727)(0.39458,0.23485)(0.39729,0.23260)(0.40018,0.23051)(0.40324,0.22859)%
+(0.40644,0.22682)(0.40978,0.22521)(0.41322,0.22374)(0.41676,0.22241)(0.42036,0.22122)%
+(0.42401,0.22016)(0.42768,0.21922)(0.43137,0.21840)(0.43504,0.21770)(0.43868,0.21710)%
+(0.44227,0.21661)(0.44578,0.21621)(0.44920,0.21591)(0.45251,0.21569)(0.45568,0.21555)%
+(0.45870,0.21549)(0.46155,0.21551)(0.46420,0.21558)(0.46664,0.21572)(0.46884,0.21591)%
+(0.47079,0.21615)(0.47246,0.21644)(0.47384,0.21676)%
+\polyline(0.50409,0.24700)(0.49723,0.24301)(0.49144,0.23910)(0.48667,0.23526)(0.48284,0.23151)%
+(0.47990,0.22784)(0.47780,0.22427)(0.47648,0.22078)(0.47587,0.21740)(0.47593,0.21411)%
+(0.47658,0.21093)(0.47778,0.20786)(0.47946,0.20489)(0.48156,0.20204)(0.48403,0.19931)%
+(0.48681,0.19669)(0.48984,0.19420)(0.49306,0.19184)(0.49641,0.18961)(0.49984,0.18751)%
+(0.50329,0.18555)(0.50672,0.18373)(0.51014,0.18205)(0.51354,0.18050)(0.51692,0.17909)%
+(0.52029,0.17782)(0.52363,0.17668)(0.52695,0.17568)(0.53025,0.17481)(0.53352,0.17407)%
+(0.53677,0.17347)(0.53998,0.17300)(0.54317,0.17266)(0.54633,0.17245)(0.54946,0.17237)%
+(0.55256,0.17243)(0.55562,0.17261)(0.55864,0.17291)(0.56163,0.17335)(0.56458,0.17391)%
+\polyline(0.58978,0.20416)(0.58464,0.19911)(0.58011,0.19420)(0.57622,0.18941)(0.57296,0.18473)%
+(0.57035,0.18018)(0.56839,0.17573)(0.56710,0.17139)(0.56647,0.16715)(0.56652,0.16301)%
+(0.56726,0.15897)(0.56868,0.15502)(0.57081,0.15115)(0.57364,0.14737)(0.57718,0.14366)%
+(0.58147,0.14010)(0.58662,0.13698)(0.59277,0.13468)(0.60005,0.13357)(0.60861,0.13403)%
+(0.61859,0.13643)(0.63011,0.14114)(0.64323,0.14845)(0.65761,0.15822)(0.67283,0.17027)%
+(0.68845,0.18437)(0.70404,0.20032)(0.71919,0.21791)(0.73345,0.23692)(0.74652,0.25717)%
+(0.75858,0.27848)(0.76993,0.30070)(0.78085,0.32369)(0.79166,0.34729)(0.80265,0.37135)%
+(0.81410,0.39571)(0.82633,0.42023)(0.83963,0.44475)(0.85430,0.46912)(0.87062,0.49319)%
+(0.88891,0.51680)(0.90946,0.53981)(0.93256,0.56206)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{-#3}%
+\settowidth{\Width}{{\tempcontents}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\tempcontents}}\settodepth{\Depth}{{\tempcontents}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctra){\hspace*{\Width}\raisebox{\Height}{{\tempcontents}}}%
+%
+}%
+\newcommand{\cirscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 621.63538, 724.07834)( 277.81039,2339.74153)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(581.42100,2343.98000)(517.25871,2339.74153)(461.02448,2347.24212)(412.58070,2365.27538)%
+(371.78973,2392.63490)(338.51396,2428.11428)(312.61577,2470.50710)(293.95752,2518.60696)%
+(282.40160,2571.20746)(277.81039,2627.10220)(280.04626,2685.08476)(288.97159,2743.94874)%
+(304.44877,2802.48773)(326.33983,2859.45726)(354.50312,2913.17008)(388.79455,2961.65333)%
+(429.07001,3002.92940)(475.18538,3035.02067)(526.99654,3055.94950)(584.29056,3063.81987)%
+(645.27185,3058.61222)(706.56216,3042.18351)(764.71444,3016.47226)(816.28162,2983.41699)%
+(857.81665,2944.95624)(885.90654,2903.01977)(899.18278,2859.01098)(899.44577,2813.51741)%
+(888.76853,2767.05643)(869.22406,2720.14541)(842.88537,2673.30172)(811.82546,2627.04273)%
+(778.11735,2581.88580)(743.83405,2538.34830)(711.04855,2496.94761)(681.83387,2458.20108)%
+(658.26302,2422.62609)(642.40900,2390.74000)%
+\polyline(622.08000,2390.74000)(583.00266,2402.49652)(548.77013,2414.09750)(519.23649,2425.79318)%
+(494.25586,2437.83376)(473.68232,2450.46947)(457.36999,2463.95054)(445.17295,2478.52717)%
+(436.94531,2494.44961)(432.54116,2511.96806)(431.81461,2531.33275)(434.61976,2552.79389)%
+(440.81070,2576.60172)(450.23717,2602.92167)(462.70610,2631.08618)(478.00010,2659.95493)%
+(495.90151,2688.38216)(516.19267,2715.22212)(538.65591,2739.32904)(563.05305,2759.58189)%
+(588.80104,2775.27493)(615.03072,2786.04698)(640.86425,2791.54730)(665.42380,2791.42518)%
+(687.83153,2785.32986)(707.22241,2772.93278)(723.15440,2754.63757)(735.69523,2731.73029)%
+(744.94296,2705.54955)(750.99569,2677.43394)(753.95148,2648.72206)(753.90950,2620.74666)%
+(751.06452,2594.33214)(745.77971,2569.40718)(738.43537,2545.80933)(729.41181,2523.37610)%
+(719.08936,2501.94502)(707.84831,2481.35362)(696.06898,2461.43943)(684.13168,2442.03997)%
+(672.41672,2422.99277)(661.30441,2404.13536)(651.17507,2385.30526)(642.40900,2366.34000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\scirscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 535.76632, 538.46556)( 296.43854,1549.10000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(603.78400,1549.10000)(549.09950,1555.72780)(499.93413,1568.59203)(456.23153,1586.89332)%
+(417.93533,1609.83230)(384.98918,1636.60958)(357.33669,1666.42580)(334.92151,1698.48158)%
+(317.68727,1731.97755)(305.57594,1766.14560)(298.51789,1800.43565)(296.43854,1834.39046)%
+(299.26329,1867.55317)(306.88798,1899.47041)(318.93045,1929.72197)(334.85626,1957.90583)%
+(354.12938,1983.62013)(376.21735,2006.48478)(400.63359,2026.40258)(426.92367,2043.47418)%
+(454.63379,2057.80428)(483.32821,2069.48943)(512.90936,2078.47342)(543.58006,2084.56434)%
+(575.55355,2087.56556)(609.01674,2087.28028)(643.39940,2083.50671)(677.27873,2076.03742)%
+(709.18644,2064.66465)(737.66856,2049.18630)(761.96761,2029.67427)(782.32209,2006.59228)%
+(799.04710,1980.43418)(812.45557,1951.69401)(822.64859,1920.88299)(829.34059,1888.54374)%
+(832.20486,1855.22221)(830.91512,1821.46418)(825.26103,1787.76328)(815.30455,1754.49078)%
+(801.14666,1722.00039)(782.88837,1690.64582)(760.63067,1660.78079)(734.47454,1632.75900)%
+(704.52099,1606.93416)(670.87100,1583.66000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\triscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 579.38800, 435.04900)( 235.82100, 892.46100)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(577.35500,1327.51000)(567.14266,1313.03444)(556.94693,1298.57080)(546.77105,1284.13099)%
+(536.61828,1269.72692)(526.49187,1255.37053)(516.39507,1241.07373)(506.33113,1226.84844)%
+(496.30330,1212.70658)(486.31483,1198.66006)(476.36899,1184.72081)(466.46901,1170.90075)%
+(456.61814,1157.21179)(446.81965,1143.66586)(437.07678,1130.27487)(427.39279,1117.05074)%
+(417.77092,1104.00540)(408.21442,1091.15076)(398.72656,1078.49874)(389.31057,1066.06126)%
+(379.96972,1053.85024)(370.70724,1041.87760)(361.52641,1030.15526)(352.43045,1018.69513)%
+(343.42264,1007.50914)(334.50621,996.60921)(325.68443,986.00725)(316.96053,975.71519)%
+(308.33779,965.74494)(299.81943,956.10842)(291.40872,946.81756)(283.10891,937.88427)%
+(274.92325,929.32047)(266.85499,921.13808)(258.90739,913.34901)(251.08369,905.96520)%
+(243.38714,898.99856)(235.82100,892.46100)%
+\polyline(235.82100,892.46100)(240.77169,896.42750)(246.54485,900.19895)(253.12099,903.78079)%
+(260.48059,907.17841)(268.60416,910.39725)(277.47218,913.44271)(287.06515,916.32022)%
+(297.36356,919.03519)(308.34792,921.59304)(319.99871,923.99919)(332.29642,926.25905)%
+(345.22156,928.37804)(358.75462,930.36158)(372.87609,932.21508)(387.56647,933.94397)%
+(402.80624,935.55366)(418.57592,937.04957)(434.85598,938.43711)(451.62693,939.72170)%
+(468.86925,940.90877)(486.56345,942.00372)(504.69002,943.01197)(523.22945,943.93895)%
+(542.16224,944.79006)(561.46888,945.57073)(581.12987,946.28637)(601.12569,946.94241)%
+(621.43686,947.54425)(642.04385,948.09731)(662.92717,948.60702)(684.06730,949.07879)%
+(705.44475,949.51803)(727.04001,949.93017)(748.83356,950.32061)(770.80592,950.69479)%
+(792.93757,951.05811)(815.20900,951.41600)%
+\polyline(815.20900,951.41600)(807.14899,961.02180)(799.28294,970.50244)(791.60435,979.86661)%
+(784.10672,989.12298)(776.78356,998.28023)(769.62835,1007.34705)(762.63460,1016.33211)%
+(755.79580,1025.24409)(749.10546,1034.09168)(742.55707,1042.88355)(736.14412,1051.62839)%
+(729.86013,1060.33486)(723.69859,1069.01167)(717.65299,1077.66747)(711.71684,1086.31096)%
+(705.88363,1094.95081)(700.14686,1103.59571)(694.50003,1112.25433)(688.93664,1120.93535)%
+(683.45019,1129.64746)(678.03417,1138.39933)(672.68209,1147.19965)(667.38744,1156.05709)%
+(662.14373,1164.98033)(656.94444,1173.97805)(651.78308,1183.05894)(646.65315,1192.23168)%
+(641.54814,1201.50493)(636.46156,1210.88739)(631.38690,1220.38773)(626.31767,1230.01464)%
+(621.24735,1239.77679)(616.16945,1249.68287)(611.07746,1259.74154)(605.96490,1269.96151)%
+(600.82524,1280.35143)(595.65200,1290.92000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\crosscoremark}[2][20]{%
+\scalebox{#2}{%
+{\unitlength=0.04mm%
+\begin{picture}%
+( 727.79300, 479.77400)( 209.39300, 264.28200)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(532.63100,735.92500)(537.69449,712.99599)(542.66769,690.94870)(547.55386,669.75605)%
+(552.35624,649.39093)(557.07808,629.82627)(561.72263,611.03497)(566.29315,592.98994)%
+(570.79288,575.66409)(575.22507,559.03032)(579.59297,543.06155)(583.89984,527.73068)%
+(588.14892,513.01063)(592.34346,498.87430)(596.48672,485.29460)(600.58193,472.24444)%
+(604.63236,459.69673)(608.64125,447.62437)(612.61185,436.00028)(616.54742,424.79737)%
+(620.45119,413.98854)(624.32643,403.54671)(628.17638,393.44477)(632.00429,383.65565)%
+(635.81342,374.15225)(639.60700,364.90747)(643.38830,355.89423)(647.16056,347.08544)%
+(650.92703,338.45400)(654.69096,329.97283)(658.45560,321.61483)(662.22420,313.35291)%
+(666.00002,305.15998)(669.78629,297.00895)(673.58628,288.87273)(677.40322,280.72422)%
+(681.24038,272.53634)(685.10100,264.28200)%
+\polyline(209.39300,311.04000)(229.97986,325.81197)(250.42730,340.29966)(270.74288,354.51284)%
+(290.93421,368.46126)(311.00886,382.15466)(330.97442,395.60280)(350.83847,408.81544)%
+(370.60861,421.80232)(390.29242,434.57320)(409.89748,447.13783)(429.43138,459.50596)%
+(448.90171,471.68735)(468.31604,483.69175)(487.68198,495.52890)(507.00709,507.20857)%
+(526.29897,518.74050)(545.56520,530.13446)(564.81338,541.40018)(584.05108,552.54742)%
+(603.28588,563.58594)(622.52539,574.52549)(641.77717,585.37581)(661.04883,596.14667)%
+(680.34793,606.84782)(699.68208,617.48900)(719.05884,628.07997)(738.48582,638.63049)%
+(757.97060,649.15029)(777.52075,659.64915)(797.14387,670.13681)(816.84755,680.62301)%
+(836.63936,691.11753)(856.52690,701.63010)(876.51775,712.17048)(896.61949,722.74842)%
+(916.83971,733.37368)(937.18600,744.05600)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+%
+}%
+\newcommand{\boxline}[5][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctrc}{-#3}%
+\addtocounter{ketpicctrc}{-#5}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(0.00000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctrc}{#2}%
+\addtocounter{ketpicctrc}{#4}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-#5}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#5%
+\repeat%
+}%
+%
+}%
+\newcommand{\boxlinene}[5][8]{%
+\boxline[#1]{#2}{#3}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinec}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinee}[5][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinew}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinen}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlines}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinenw}[5][0.008]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinese}[5][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\boxlinesw}[5][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#5}%
+\addtocounter{ketpicctre}{#3}%
+\boxline[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
+%
+}%
+\newcommand{\ketboxframe}[6][8]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\boxline[#1]{#2}{#3}{#4}{#5}%
+%
+}%
+\newcommand{\boxframese}[6][8]{%
+\ketboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\ketboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\circleline}[4][8]{%
+\settowidth{\Width}{\circlemark[#1]{#4}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\circlemark[#1]{#4}}\settodepth{\Depth}{\circlemark[#1]{#4}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\circlemark[#1]{#4}}}%
+%
+}%
+\newcommand{\hjaggyline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,1.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vjaggyline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,-1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(1.00000,0.00000)(0.00000,-1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\hjaggylineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,1.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vjaggylineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,-1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -1.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(1.00000,0.00000)(0.00000,-1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\jaggyboxframe}[6][8]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\setcounter{ketpicctrg}{#2}%
+\setcounter{ketpicctrh}{#3}%
+\hjaggylineb[#1]{\theketpicctrg}{\theketpicctrh}{#4}%
+\vjaggylineb[#1]{\theketpicctrg}{\theketpicctrh}{#5}%
+\setcounter{ketpicctrg}{#2}%
+\setcounter{ketpicctrh}{#3}%
+\addtocounter{ketpicctrh}{#5}%
+\hjaggyline[#1]{\theketpicctrg}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{#4}%
+\setcounter{ketpicctrh}{#3}%
+\vjaggyline[#1]{\theketpicctrg}{\theketpicctrh}{#5}%
+%
+}%
+\newcommand{\jaggyboxframese}[6][8]{%
+\jaggyboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\jaggyboxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\jaggyboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\hdialine}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -0.50000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(1.00000,0.50000)(0.00000,0.00000)(1.00000,-0.50000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(   0.00000,  -0.50000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.50000)(1.00000,0.00000)(0.00000,-0.50000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vdialine}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(  -0.50000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(-0.50000,0.00000)(0.00000,1.00000)(0.50000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   1.00000)(  -0.50000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(-0.50000,1.00000)(0.00000,0.00000)(0.50000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\setcounter{ketpicctrc}{\value{ketpicctra}}%
+\divide\value{ketpicctrc} by 2%
+\multiply\value{ketpicctrc} by 2%
+%
+{%
+\ifnum %
+\theketpicctrc<\theketpicctra %
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\else%
+\settowidth{\Width}{\tmpcontentsb}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontentsb}\settodepth{\Depth}{\tmpcontentsb}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontentsb}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\diaboxframe}[6][4]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\setcounter{ketpicctrh}{#3}%
+\hdialine[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrh}{#3}%
+\addtocounter{ketpicctrh}{#5}%
+\hdialine[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrg}{#2}%
+\vdialine[#1]{\theketpicctrg}{#3}{#5}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{#4}%
+\vdialine[#1]{\theketpicctrg}{#3}{#5}%
+%
+}%
+\newcommand{\diaboxframese}[6][8]{%
+\diaboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframes}[6][0.008]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\addtocounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\diaboxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\diaboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\hdashline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(0.50000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\hdashlineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.50000,0.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{-1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vdashline}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(0.00000,0.50000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\vdashlineb}[4][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.50000)(0.00000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{1}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+%
+}%
+\newcommand{\dashboxframe}[6][4]{%
+\def\tmpcontents{%
+\setcounter{ketpicctrf}{#4}%
+\addtocounter{ketpicctrf}{-4}%
+\setlength{\Width}{\theketpicctrf\unitlength}%
+\begin{minipage}{\Width}%
+#6%
+\end{minipage}%
+%
+}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{2}%
+\setcounter{ketpicctrh}{-#3}%
+\addtocounter{ketpicctrh}{-2}%
+\settowidth{\Width}{\tmpcontents}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{\tmpcontents}\settodepth{\Depth}{\tmpcontents}\setlength{\Height}{-\Height}%
+\put(\theketpicctrg,\theketpicctrh){\hspace*{\Width}\raisebox{\Height}{\tmpcontents}}%
+\setcounter{ketpicctrh}{#3}%
+\hdashline[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrh}{#3}%
+\addtocounter{ketpicctrh}{#5}%
+\hdashlineb[#1]{#2}{\theketpicctrh}{#4}%
+\setcounter{ketpicctrg}{#2}%
+\vdashline[#1]{\theketpicctrg}{#3}{#5}%
+\setcounter{ketpicctrg}{#2}%
+\addtocounter{ketpicctrg}{#4}%
+\vdashlineb[#1]{\theketpicctrg}{#3}{#5}%
+%
+}%
+\newcommand{\dashboxframese}[6][8]{%
+\dashboxframe[#1]{#2}{#3}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframec}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframee}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframew}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{-#5}%
+\divide\value{ketpicctre} by 2%
+\addtocounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframen}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframes}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\divide\value{ketpicctrd} by 2%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframenw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframene}[6][8]{%
+\setcounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\addtocounter{ketpicctre}{-#5}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\dashboxframesw}[6][8]{%
+\setcounter{ketpicctrd}{-#4}%
+\addtocounter{ketpicctrd}{#2}%
+\setcounter{ketpicctre}{#3}%
+\dashboxframe[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}{#6}%
+%
+}%
+\newcommand{\boxlinep}[6][8]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=0.1mm%
+\begin{picture}%
+(   1.00000,   0.02000)(   0.00000,  -0.01000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(1.00000,0.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+{\unitlength=0.1mm%
+\setcounter{ketpicctrc}{-#3}%
+\addtocounter{ketpicctrc}{-#5}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{9}%
+%
+{%
+\ifnum %
+\theketpicctrb>#4 %
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+%
+\else%
+\addtocounter{ketpicctra}{9}%
+\setcounter{ketpicctrb}{#2}%
+\addtocounter{ketpicctrb}{\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrb,\theketpicctrc){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#4%
+\repeat%
+}%
+}%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(0.00000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+\def\tmpcontentsb{%
+{\unitlength=0.1mm%
+\begin{picture}%
+(   0.02000,   1.00000)(  -0.01000,   0.00000)%
+\linethickness{0.008in}%
+%
+%
+{%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+}%
+\polyline(0.00000,0.00000)(0.00000,1.00000)%
+%
+\linethickness{0.008in}%
+\end{picture}}%%
+}%
+{\unitlength=0.1mm%
+\setcounter{ketpicctrc}{#2}%
+\addtocounter{ketpicctrc}{#4}%
+\setcounter{ketpicctra}{0}%
+\setcounter{ketpicctra}{1}%
+\addtocounter{ketpicctra}{-1}%
+%
+{%
+\loop%
+\addtocounter{ketpicctra}{1}%
+\setcounter{ketpicctrb}{\value{ketpicctra}}%
+\addtocounter{ketpicctrb}{9}%
+%
+{%
+\ifnum %
+\theketpicctrb>#5 %
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontentsb}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontentsb}}\settodepth{\Depth}{{\color{#6}\tmpcontentsb}}\setlength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontentsb}}}%
+%
+\else%
+\addtocounter{ketpicctra}{9}%
+\setcounter{ketpicctrb}{-#3}%
+\addtocounter{ketpicctrb}{-\value{ketpicctra}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(#2,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+\settowidth{\Width}{{\color{#6}\tmpcontents}}\setlength{\Width}{-0.5\Width}%
+\settoheight{\Height}{{\color{#6}\tmpcontents}}\settodepth{\Depth}{{\color{#6}\tmpcontents}}\setlength{\Height}{\Depth}%
+\put(\theketpicctrc,\theketpicctrb){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\tmpcontents}}}%
+%
+\fi%
+}%
+%
+\ifnum\theketpicctra<#5%
+\repeat%
+}%
+}%
+%
+}%
+\newcommand{\shadeframep}[6][white]{%
+\def\tmpcontents{%
+{\unitlength=1mm%
+\begin{picture}%
+( 100.00000, 100.00000)(   0.00000,   0.00000)%
+\linethickness{0.008in}%
+%
+{\color{#1}
+\polygon*(0.00010,0.00010)(99.99990,0.00010)(99.99990,99.99990)(0.00010,99.99990)%
+(0.00010,0.00010)
+}%
+\end{picture}}%%
+}%
+{\unitlength=0.1mm%
+%
+{%
+\ifnum %
+#4<100 %
+%
+{%
+\ifnum %
+#5<100 %
+\settowidth{\Width}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#4<1000 %
+%
+{%
+\ifnum %
+#5<100 %
+\settowidth{\Width}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\else%
+%
+{%
+\ifnum %
+#5<100 %
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}}%
+\setcounter{ketpicctra}{#2}%
+\addtocounter{ketpicctra}{#4}%
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(\theketpicctra,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.0#5]{\tmpcontents}}}}%
+%
+\else%
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}}%
+\setcounter{ketpicctra}{#2}%
+\addtocounter{ketpicctra}{#4}%
+\settowidth{\Width}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Width}{-1\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(\theketpicctra,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{1}[0.#5]{\tmpcontents}}}}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+%
+\fi%
+}%
+}%
+%
+}%
+\newcommand{\popframe}[9][8]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#9}%
+\setcounter{ketpicctrh}{\value{ketpicctra}}%
+\ketcalcheight{#9}%
+\setcounter{ketpicctri}{\value{ketpicctra}}%
+\ketcalcdepth{#9}%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrh}{30}%
+\addtocounter{ketpicctri}{30}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\addtocounter{ketpicctrg}{15}%
+\shadeframep[#5]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#5}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\shadeframep[#7]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#7}%
+\boxlinep[#1]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#8}%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctra}{\value{ketpicctri}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrg}{\value{ketpicctra}}%
+\multiply\value{ketpicctrg} by -1%
+\settowidth{\Width}{{#9}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{#9}}\settodepth{\Depth}{{#9}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#9}}}%
+}%
+%
+}%
+\newcommand{\colorframe}[7][8]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#7}%
+\setcounter{ketpicctrh}{\value{ketpicctra}}%
+\ketcalcheight{#7}%
+\setcounter{ketpicctri}{\value{ketpicctra}}%
+\ketcalcdepth{#7}%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrh}{30}%
+\addtocounter{ketpicctri}{30}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\shadeframep[#4]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#5}%
+\boxlinep[#1]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#6}%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctra}{\value{ketpicctri}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrg}{\value{ketpicctra}}%
+\multiply\value{ketpicctrg} by -1%
+\settowidth{\Width}{{#7}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{#7}}\settodepth{\Depth}{{#7}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#7}}}%
+}%
+%
+}%
+\newcommand{\colorframes}[7][8]{%
+{\unitlength=0.1mm%
+\ketcalcwidth{#7}%
+\setcounter{ketpicctrh}{\value{ketpicctra}}%
+\ketcalcheight{#7}%
+\setcounter{ketpicctri}{\value{ketpicctra}}%
+\ketcalcdepth{#7}%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrh}{30}%
+\addtocounter{ketpicctri}{30}%
+\setcounter{ketpicctrf}{#2}%
+\multiply\value{ketpicctrf} by 10%
+\setcounter{ketpicctra}{\value{ketpicctrh}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrf}{-\value{ketpicctra}}%
+\setcounter{ketpicctrg}{#3}%
+\multiply\value{ketpicctrg} by 10%
+\shadeframep[#5]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#5}%
+\boxlinep[#1]{\theketpicctrf}{\theketpicctrg}{\theketpicctrh}{\theketpicctri}{#6}%
+\addtocounter{ketpicctrf}{15}%
+\setcounter{ketpicctra}{\value{ketpicctri}}%
+\divide\value{ketpicctra} by 2%
+\addtocounter{ketpicctrg}{\value{ketpicctra}}%
+\multiply\value{ketpicctrg} by -1%
+\settowidth{\Width}{{#7}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{#7}}\settodepth{\Depth}{{#7}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
+\put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#7}}}%
+}%
+%
+}%

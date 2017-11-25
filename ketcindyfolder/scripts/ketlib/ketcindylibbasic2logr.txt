@@ -1,0 +1,52 @@
+//2017.11.24
+//    Slidework changed ( makedir)
+//    Rotatedata debugged  ( MeasureDepth)
+//2017.11.20
+//    Slidework changed ( for the case of (ex) dir="...../")
+//2017.11.05
+//    Figpdf debugged 
+//2017.11.01
+//    Presentation debugged  ( usepackage{ketpic} etc. )
+//2017.10.30
+//    Viewtex changed ( path of ketpicstyle )
+//2017.10.28
+//    WritetoRS changed ( generator is written )
+//2017.10.26
+//    Mksummary changed for R
+//2017.10.18
+//    Letter,Letterrot,Exprrot debugged  (\ and \\)
+//2017.10.17
+//    Viewtex debugged  ($ removed for xelatex)
+//2017.10.16
+//    Mkslides debugged  ( line4 from last,path)
+//2017.10.14
+//    Makebat,Makeshell changed(flow="tt" supported)
+//2017.10.13
+//    Makebat,Makeshell,Mkslides debugged  (Shellfile,Sehllchild removed )
+//    Makeshell debugged ( Case of no "/" )
+//2017.10.08
+//    Mkslides debugged  (Sheslide=>Shellslide )
+//2017.10.07
+//    WritetoRS changed  (for pict2e)
+//    Helplist debugged  ( for r )
+//2017.10.06
+//    RSform debugged
+//2017.09.29
+//    Viewparent debugged  (WritetoRS)
+//2017.09.24
+//    WritetoRS debugged  ("\" => "/")
+//    RSslash added
+//    Letter changed (RSslash used)
+//2017.09.22
+//    Defvar changed  ("=" removed)
+//   WritetoRS changed  (Com1st,..., VLIST )
+//2017.09.18
+//   Extractdata changed
+//    SCIWR,SCIRE removed
+//2017.09.17
+//   WritetoRS added
+//   Viewtex changed ( Writetosci => WritetoR )
+//2017.09.16
+//   RSform, Deffun, IftoR, FortoR changed( added )
+//2017.09.14
+//   Makeshell, Makebat changed

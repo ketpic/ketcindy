@@ -1,0 +1,72 @@
+\documentclass[a4j]{jarticle}
+
+\usepackage{/tools/ketpic,/tools/ketlayer}
+\usepack
+
+\input{/tools/reference/refstyle}
+
+\setmargin{20}{20}{15}{25}
+
+\begin{document}
+
+\begin{flushright}
+2016.12.11
+\end{flushright}
+
+
+\begin{center}
+{\bf \huge \ketpic スタイル\ --ketslide--}\vspace{3mm}\\
+\end{center}
+
+\section{スタイル名}
+\tab{ketslide.sty}
+
+\section{概要}
+
+プレゼン用スライドを作成する．\\
+\hspace*{2zw}\bs documentclass[landscape,10pt]\{jarticle または article\}\\
+\hspace*{2zw}スライドの大きさは　約130 $\times$ 85 (mm)
+
+
+\section{マクロ一覧}
+
+\subsection{プリアンブル用}
+
+\tab{\bs ketmarginJ}jarticleのときのマージン設定
+
+\tab{\bs ketmarginE}articleのときのマージン設定
+
+\tab{\bs ketslideinit}パラメータ指定マクロへのdefault値設定
+
+\noindent
+\hspace*{2zw}\tab{\bs ketcletter}タイトルの文字色（black\\
+\hspace*{2zw}\tab{\bs ketcbox}ボックス内の色（white\\
+\hspace*{2zw}\tab{\bs ketdbox}ボックス内の色の濃さ（1）\\
+\hspace*{2zw}\tab{\bs ketcframe}枠の色（black）\\
+\hspace*{2zw}\tab{\bs ketcshadow}陰の色（black）\\
+\hspace*{2zw}\tab{\bs ketdshadow}陰の色の濃さ（0.5）\\
+\hspace*{2zw}\tab{\bs slidetitlex}タイトルの横位置（6）\\
+%\hspace*{2zw}\tab{\bs slidetitley}タイトルの縦位置（7）\\
+\hspace*{2zw}\tab{\bs slidetitlesize}タイトルの文字サイズ（2）\\
+\hspace*{2zw}\tab{\bs mketcletter}メインタイトルの文字色（black）\\
+\hspace*{2zw}\tab{\bs mketcbox}メインタイトルのボックス内の色（white）\\
+\hspace*{2zw}\tab{\bs mketdbox}メインタイトルのボックス内の色の濃さ（1）\\
+\hspace*{2zw}\tab{\bs mketcframe}メインタイトルの枠の色（white）\\
+\hspace*{2zw}\tab{\bs mslidetitlex}メインタイトルの横位置（62）\\
+%\hspace*{2zw}\tab{\bs mslidetitley}メインタイトルの立て位置（35）\\
+\hspace*{2zw}\tab{\bs mslidetitlesize}メインタイトルの文字サイズ（3）\\
+\hspace{6zw}注） これらのパラメータは本文中で \bs def を使って変更できる．
+
+
+\subsection{本文用}
+
+\tab[15zw]{\bs newslide[縦位置]\{タイトル\}}新しいスライドを始める．（縦位置のdefault=6）
+
+\tab[15zw]{\bs sameslide}[縦位置]同じページとして，追加する．
+
+\tab[15zw]{\bs mainslide[縦位置]\{タイトル\}}新しいメインスライドを始める．（縦位置のdefault=35）
+
+\tab[15zw]{\bs mainsameslide[縦位置]}同じページとして，追加する．
+
+
+\end{document}

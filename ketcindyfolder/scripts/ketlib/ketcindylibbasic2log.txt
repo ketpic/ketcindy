@@ -1,0 +1,297 @@
+// s:2017.11.20
+//   Viewtex changed  ( ketpic,ketlayer )
+// s:2017.09.05
+//   Presentation ( option about display of arrowbutton )
+// s:2017.08.23
+//   thin changed so as to change dynamically
+//   \setthin{dense} supported
+// s:2017.08.13
+//   uplatex added
+// s:2017.07.31
+//   Presentation, Mktitle changed  (color->xcolor)
+//   Setslidehyper, Presentation changed  (the case LinkSize==0)
+// s:2017.07.10
+//   Presentation,.. debugged (Addpack )
+// s:2017.06.25
+//   Addpackage changed  ( change to full form of package )
+//   Presentation changed  ( ADDPACK )
+// s:2017.06.23
+//   Presentation debugged  ("%%")
+// s:2017.06.19
+//   Htick, Vtick added
+// s:2017.06.18
+//   Presentation changed ( usepackages in the1st line are writte first)
+// s:2017.06.14
+//   Presentation changed ( usepackage{color} )
+// s:2017.06.11
+//   Periodfun debugged( for "pi",etc)
+//  e:2017.05.31
+//      Presentation changed (for %%[, %%thin[ )
+//  e:2017.05.30
+//      Setwindow changed and moved to basic1( SW,NE )
+//  e:2017.05.28
+//      Repeatsameslide changed (color for thin)
+//      Presentation changed  ( comment out the thin line )
+//  e:2017.05.24
+//      WriteOutData changed (format changed  4 -> 5)
+//      ReadOutdata changed ( for blank file )
+//  e:2017.05.13
+//      Dispchoice() added ( for Keypressed )
+//  e:2017.05.13
+//      WritetoSci debugged ( for Scilab6 and pdflatexs )
+//  e:2017.04.16
+//      Slidework debugged ( "\" for windows )
+//  e:2017.04.13
+//      Maketitle changed ( Error Message when Settitle is not defined )
+//      Viewparent added
+//  e:2017.04.12
+//      Mkslides changed ( Error Message when txt file do not exist )
+//  e:2017.04.11
+//      Putslider added
+//  e:2017.04.10
+//      Mkslides,Mkslidesummary changed  ( Slidename )
+//      Mkslidesummary debugged
+//  e:2017.04.09
+//      Presentation debugged (for verbatim )
+//      Presentation changed (PageStyle )
+// s:2017.04.08
+//    bugs fixed
+//  e:2017.04.08
+//      Figpdf, Mktitle, Presentation changed
+//      ( To read stylefiles from ketpicstyle);
+//  e:2017.04.07
+//      Viewtex changed  ( To read stylefiles from ketpicstyle, log of ketcindy deleted);
+//  e:2017.03.05
+//      Setslide...  changed  (to display values when no argment )
+//  e:2017.03.02
+//      Presentation changed  ( To define SlideColorList  removed);
+//  e:2017.02.19
+//      Maketitle, Mkslides debugged ( for windows )
+//  e:2017.01.29
+//      Setslidehyper changed  ( for null string)
+//      Presentation changed (pagestyle added, para for input(,) changed )
+//  e:2017.01.21
+//      Presentation changed ( counter added to para )
+//  e:2017.01.20
+//      Setrange added
+//  e:2017.01.15
+//      Repeatsameslide debugged  ( for \begin,\end )
+//  e:2017.01.14
+//      Mkslidesummary added
+//  e:2017.01.12
+//      Repeatsameslide changed ( message for "n>nrep" added)
+//      Presentation changed  ( hyperlink )
+//      Writetosci changed  ( english message for windows)
+//  e:2017.01.07
+//      Setslide..., Presentation changed  ( slidecolorlist);
+//  e:2017.01.06
+//      Setslidebody, Presentation changed  ( BodyStyle, "\boldmath");
+//      Presentation changed ( thin added )
+//      Mkbeziercrv changed  ( name => nm )
+//      Presentation changed ( for pdflatex,lualatex , not finished )
+//  e:2017.01.05
+//      Setslidemain debugged
+//      Presentation changed  ( NewSlideOption added to sameslide )
+//      Presentation,Repeatsameslide changed (ThinFlg,NonThinFlg)
+//  e:2017.01.03
+//      Presentation changed (control button)
+//  e:2016.12.31
+//      Helplist changed (when adding to  HLIST)
+//      Setslidehyper added
+//      Presentation changed (paractr,hyherflg)
+//  e:2016.12.29
+//      Writetosci changed ( add null row when path not defined)
+///  e:2016.12.28
+//      Maketitle debugged
+//  e:2016.12.27
+//      Maketitle, Settitle added
+//      Slidework debugged  ( when "fig" not exists )
+//      Presentation changed  ( nrep,npara )
+//  e:2016.12.25
+//      WritetoSci changed ( date/time and path/file stamped if possible)
+//  e:2016.12.23
+//      BBdata changed ( waiting=2)
+//  e:2016.12.22
+//      Setslidetitle,Setslidemain,Setslidebody added
+//      Presentation changed ( for commands above )
+//  e:2016.12.20
+//      Slidework changed ( isexists(dir) checked )
+//  e:2016.12.18
+//      Slidework changed ( to create "fig" when not exists )
+//      Presentation changed ( input replaced to \input )
+//      viewtex changed  ( luatexja-core => luatexja )
+//  e:2016.12.16
+//      Tabledata,Tabledatalight changed  ( "Rng" option added );
+//      Viewtex,Writetosci,Makeshell,Makebat changed  (for lualatex );
+//  e:2016.12.09
+//      Presentation changed ( for parapara ) here fileslist(directory) used
+//  e:2016.12.06
+//      Changetablestyle debugged
+//  e:2016.12.05
+//      Repeatsameslide added
+//      Presentation changed ( for repeated slide )
+//  e:2016.11.29
+//      Macro \ketcindy recovered
+//      Writetosci debugged  ( for pdflatex )
+//  e:2016.11.28
+//      Tabledata,Tabldata changed  (TableOptions added )
+//      ChangeTablestyle changed completely
+//  e:2016.11.24
+//      Periodfun,Fourierseries added
+//      Viewtex changed  ( option [pdftex] added to pict2e )
+//  e:2016.11.23
+//      Viewtex changed (if pdflatex, Libname changed)
+//  e:2016.11.22
+//      Viewtex changed (for pict2e)
+//      BBdata changed ( for pdflatex )
+//  e:2016.11.16
+//      Defvar changed (for a list of variables )
+//  e:2016.11.11
+//      Presentation changed (for no title (nodisp=10mm) )
+//  e:2016.11.09
+//      Presentation changed (for same option([]) )
+//  e:2016.11.08
+//      Figpdf changed (options )
+//  e:2016.10.21
+//      Datetime added
+//  e:2016.10.20
+//      Makeshell changed (skim for mac )
+//  e:2016.10.19
+//      Letter debugged (case of s,e )
+//  e:2016.10.13
+//      Letter changed (position )
+//  e:2016.10.11
+//      PutonLine,PutonSeg debugged & changed ( scaling, segstr)
+//  e:2016.10.09
+//      Expr and Letter(slightly) changed
+//  e:2016.10.07
+//      Commands which use Putpoint changed (=> .name  )
+//  e:2016.10.06
+//      Putpoint changed ( .name used )
+//      BBdata changed (default path )
+//  e:2016.09.30
+//      Letter,Expr changed ( align, string )
+//  e:2016.09.25
+//      Small bug-fix  ( :, ", _ )
+//  e:2016.09.05
+//     Texview, Figpdf, Presentation changed ( for ADDPACK )
+//  e:2016.08.16
+//     Mkbezierptcrv, Ospline, Bspline,  Beziersmooth,
+//     CRspline, Beziersym changed ( for scaling )
+//  e:2016.08.10
+//    Setslidecolor added
+//    Presentation changed ( for color change )
+//  e:2016.07.21
+//   Makeshell,Makebat, Mkslides changed  (no call of .sh/.bat )
+//  e:2016.07.11
+//   Presentation changed  (spaces in verbatim, and   || in verbatim changed // )
+//  e:2016.07.07
+//   Letter, Expr changed  ( opcindy "size->..." supported )
+//  e:2016.06.28
+//   Presentation debugged and changed (verbatim, :: )
+//  e:2016.06.25
+//   Presentation debugged (Preamble addtion )
+//  e:2016.06.10
+//   Iftosci changed (Major change )
+//   Presentation debugged  ( wall )
+//   Slidework added 
+//  e:2016.06.09
+//   Viewtex,Figpdf,Presentation changed ( jartcle used when platex )
+//   Presentation changed ( for % )
+//  e:2016.06.07
+//   Mackc added
+//  e:2016.06.06
+//   Makebat debugged
+//  e:2016.06.04
+//    Viewtex,Mkslide, BBdata changed  ( kc)
+//  e:2016.06.02
+//    Makeshell,Makebat changed  ( Pathpdf= )
+//  e:2016.05.30
+//    Makeshell changed  ( output to kcout.txt )
+//    Makebat changed  ( for Sumatra )
+//  e:2016.05.29
+//    WritetoSci changed ( for /users )
+//    Makeshell, Makebat, Mkslide changed  ( for /users )
+//  e: 2016.05.25
+//    Defun changed ( for "forall")
+//    Iftosci debugged, Fortosci added
+
+
+///////////////////
+//  e: 2015.11.06
+//    libbasic divided to libbasic1,libbasic2
+//  e: 2015.11.09
+//    helplist debugged
+//  e: 2015.11.25
+//    Help changed  (  '  changed to Dq)
+//  e: 2015.11.29
+//    Example, Helpkey added
+//  e: 2015.12.08
+//    Mkslide changed  ( Dirbin )
+//  e: 2015.12.12
+//    Makeshell, Makebat changed ( for autosetting )
+//    Mksliides changed  ( for autosetting )
+//  e: 2015.12.14
+//    Mkslides, Makeshell, Makebat  changed ( for autosetting of slides )
+//  e: 2016.01.12
+//    Viewtex changed  ( Title changed to verb )
+//  e: 2016.01.18
+//    Viewtex debugged  ( Title changed to verb )
+//  e: 2016.01.21
+//    Drwxy debugged
+//    Help of Drwpt added
+//    Sciform patched
+//  e: 2016.02.02
+//    Helpkey changed  ( for 2 keywords )
+//  e: 2016.02.10
+//    Putoncurve changed ( option :"Msg=no" )
+//    Setwindow changed ( option :"Msg=no" )
+//  e: 2016.02.16
+//    Help of ExtractData changed 
+//  e: 2016.02.18
+//    Deffun ( help ) changed
+//  e: 2016.02.22
+//   Ptonseg changed  ( par option added )
+//  e: 2016.03.05
+//   Drwpt changed  ( point/pointlist allowed)
+//  e: 2016.03.07
+//   ReadOutData changed  ( change of path supported)
+//  e: 2016.03.09
+//   ReadOutData debugged  ( in case of no path)
+//  e: 2016.03.25
+//   Figpdf added
+//  e: 2016.03.26
+//   Figpdf changed  ( for various unitlen )
+//  e: 2016.03.28
+//    Mkshell, Mkbat changed ( for "mv" )
+//  e: 2016.04.07
+//    Viewtex changed  ( by \ketcindy)
+//    Figpdf changed  ( options "4,3,2" effective )
+//  e: 2016.04.08
+//    Figpdf,Makeshell, Makebat  changed  ( FigPdfList )
+//    Figpdf changed  ( options )
+//  e: 2016.04.09
+//    Drwpt,Pointdata changed  ( boundary )
+//  e: 2016.04.11
+//    BBdata added
+//    BBdata changed  ( to look at fig.txt)
+//  e: 2016.04.12
+//    BBdata changed  ( prec=2, option of width/heigh )
+//  e: 2016.04.17
+//    ReadOutData changed  ( for file of no "." => ".txt" )  
+//    Writebezier, Readbezier added
+//  e: 2016.04.18
+//    Sciform debugged
+//  e: 2016.04.19
+//    Sciform changed
+//  e: 2016.04.22
+//    Writebezier, Readbezier changed
+//  e: 2016.05.11
+//    Presentation changed  (for url  //// )
+//  e: 2016.05.15
+//    Makeshell changed  (sh added )
+//  e: 2016.05.16
+//    Addpackage added
+//    Viewtex,Figpdf changed ( for  Addpackage )
+//////  To Reverse sequence //////
+

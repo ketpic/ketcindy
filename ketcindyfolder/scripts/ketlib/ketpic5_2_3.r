@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_3(17.11.24)" 
+ThisVersion<- "KeTpic for R  v5_2_3(17.11.26)" 
 
+# 2017.11.26
+#   Exprrot, Letterrot debugged  ( `)
 # 2017.11.24
 #  Deqplot debugged (Looprange)
 # 2017.11.20
@@ -2370,7 +2372,7 @@ Exprrot<- function(...)
   if (mode(Tmp)=="numeric"){
     Nmov<- Tmp; N<- N+1
   }
-  Mojiretu<- paste("$",varargin[[N]],"$",sep="")
+  Mojiretu<- paste("$",Assign(varargin[[N]]),"$",sep="") # 2017.11.26
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
   P<- P+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
@@ -3870,7 +3872,7 @@ Letterrot<- function(...)
   if (mode(Tmp)=="numeric"){
     Nmov<- Tmp; N<- N+1
   }
-  Mojiretu<- varargin[[N]]
+  Mojiretu<- Assign(varargin[[N]]) #2017.11.26
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
   P<- P+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv

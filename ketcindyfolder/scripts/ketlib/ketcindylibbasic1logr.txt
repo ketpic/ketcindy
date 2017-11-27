@@ -1,3 +1,6 @@
+// s:2017.11.27
+//    Setparent added  ( for Texparent)
+//    Getcdyname added  ( name of the current cdy file)
 // s:2017.11.24
 //    Changework changed ( for the case of double pathsep() in dir, subdir )
 // s:2017.11.20

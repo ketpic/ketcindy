@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.3(2017.11.24");
+println("KETCindy V.3.1.3(2017.11.27");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.11.25) loaded");
+println("ketcindylibbasic1(2017.11.27) loaded");
 
 //help:start();
 
@@ -132,6 +132,11 @@ Ketinit(sy,rangex,rangey):=(
   );//17.09.29upto
 );
 
+Getcdyname():=( //17.11.27
+//help:Getcdyname();
+text(curkernel());
+);
+
 Setwindow():=Setwindow("Msg=yes");
 Setwindow(str):=(
   regional(tmp,tmp1,tmp2,msg);
@@ -178,6 +183,11 @@ Setfiles(file):=( // 17.01.16
     FnameR=Fhead+".r"; //17.10.14
     FnamebodyR=Fhead+"body.sce";
     Fnameout=Fhead+".txt";
+);
+
+Setparent(file):=( // 17.11.27
+//help:Setparent(file);
+    Texparent=file;
 );
 
 Setcindyname():=Setcindyname("");//16.12.25

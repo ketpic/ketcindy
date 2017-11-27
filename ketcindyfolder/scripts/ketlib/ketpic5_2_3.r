@@ -16,8 +16,14 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_3(17.11.26)" 
+ThisVersion<- "KeTpic for R  v5_2_3(17.11.27)" 
 
+# 2017.11.27
+#   Anglemark changed ( Scilab 16.12.29)
+#   Plotdata,Paramplot,Spacecurve changed ( Scilab 16.12.13)
+#   Enclosing changed ( Scilab 16.10.09)
+#   Arrowhead,Arrowline changed ( Scilab 15.06.11)
+#   Definecolor added ( Scilab 15.05.04)
 # 2017.11.26
 #   Exprrot, Letterrot debugged  ( `)
 # 2017.11.24
@@ -589,6 +595,10 @@ Anglemark<- function(...)
   if (Nargs>=4){
     r<-  varargin[[4]]*r  
   }
+  Out=c()
+  if(r>min(Norm(PA-PB),Norm(PC-PB))){
+    return(Out)
+  }
   Cir<- Circledata(PB,r)
   Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PB))
   P1<- Op(2,Op(1,Tmp))
@@ -765,7 +775,9 @@ Arrowhead<-function(...)
     Tmp<- Listplot(list(A,P,B,C,A))   # 12.01.07
     Tmp1<- Unscaling(Tmp)
     Shade(Tmp1)
-    Drwline(Tmp1,1)
+    Tmp=Listplot(c(A,P,B,C,A,P))  # 15.6.20
+    Tmp1=Unscaling(Tmp)
+    Drwline(Tmp1,0.1)  # 15.06.11, 15.06.14
   }
 }
 
@@ -894,7 +906,8 @@ Arrowline<- function(...)
     }
   }
   R<- P+Yapos*(Q-P)
-  Drwline(Listplot(c(P,Q)),Futosa)
+  Tmp=Q-Unscaling(0.2*Ookisa/2*(Q-P)/Norm(Q-P)) # 15.10.24
+  Drwline(Listplot(c(P,Tmp)),Futosa)
   Arrowhead(R,Q-P,Ookisa,Hiraki,Futosa,Cutstr,Str)
 }
 
@@ -1559,6 +1572,31 @@ Dashline<- function(...)
 }
 
 ##############################################
+#  17.11.27
+
+Definecolor<- function(Name,Data){
+  Tmp1=length(Data)
+  if((Tmp1<3) || (Tmp1>4)){
+    cat("Size of data should be 3 or 4.")
+    return()
+  }
+  if(Tmp1==4){
+    Tp="cmyk"
+  }else{
+    Tp="rgb"
+  }
+  Tmp=""
+  for(J in 1:Tmp1){
+    Tmp=paste(Tmp, as.character(Data[J]),sep="")
+    if(J<Tmp1){
+      Tmp=paste(Tmp,",",sep="")
+    }
+  }
+  Tmp=paste("\\definecolor{",Name,"}{",Tp,"}{",Tmp,"}",sep="")
+  Texcom(Tmp)
+}
+
+##############################################
 
 Diagcelldata<- function(Tb,Nc,Nr)
 {
@@ -2096,6 +2134,7 @@ Drwxy<-function(...)
 
 Enclosing<- function(...)
 {
+  Eps=10^(-7) # Scilab 16.12.05
   varargin<- list(...)
   Nargs<- length(varargin)
   P<- varargin[[1]]
@@ -2104,9 +2143,14 @@ Enclosing<- function(...)
     if (mode(Tmp)!="numeric" || length(Tmp)>1){
       AnsL<- EnclosingS(...)
 	  AnsL<- Joincrvs(AnsL)  # 10.12.04
-      return(AnsL)
     }
   }
+  Tmp1=Op(1,AnsL) # Scilab 16.12.05from
+  Tmp2=Op(nrow(AnsL),AnsL)
+  if(Norm(Tmp2-Tmp1)>Eps){
+    AnsL=appendrow(AnsL,Tmp1)
+  }
+  return(AnsL)
 }
 
 #########################################
@@ -3617,7 +3661,7 @@ Kyoukai<- function(...)
 {
   varargin<- list(...)
   Nargs<- length(varargin)
-  Eps0<- 10^(-5)
+  Eps0<- 10^(-7)
   DataL<-list()
   for (I in 1:Nargs){
     Tmp<- varargin[[I]]
@@ -4824,20 +4868,8 @@ Paramplot<- function(...)
   varargin<- list(...)
   Eps<- 10^(-5)
   Nargs<- length(varargin)
-#  if type(varargin(1))==13
-#    Fnflg=1;
-#    Fnx=varargin(1);
-#    Fny=varargin(2); Is=3;
-#    if type(varargin(Is))==13
-#      Fnflg=Fnflg+1;
-#      Fnargx=varargin(Is);
-#      Fnargy=varargin(Is+1);
-#      Is=Is+2;
-#    end;
-#  else
-    Fnflg<- 0
-    Fnstr<- varargin[[1]]; Is=2
-#  end;
+  Fnflg<- 0
+  Fnstr<- varargin[[1]]; Is=2
   Rgstr<- varargin[[Is]]; Is<- Is+1
   Range<- c(0,2*pi)
   N<- 50      # Numpoints
@@ -4872,6 +4904,11 @@ Paramplot<- function(...)
    if (Fnflg==0)
   {
     Str<-  gsub(Vname,"t",Fnstr)
+  }
+  if(abs(Dt)<Eps){ # 16.12.13
+    t=T1
+    P=eval(parse(text=Str))
+    return(P)
   }
   P<-c()
   if (length(E)>0)
@@ -5082,6 +5119,11 @@ Plotdata<- function(...)
   dx<- (X2-X1)/N # 17.09.22
   if (Fnflg==0){
     Str<-  gsub(Vname,"x",Fnstr,fixed=TRUE)
+  }
+  if(abs(dx)<Eps){  # Scilab 16.12.13
+    x=X1
+    P=c(X1,eval(parse(text=Str)))
+    return(P)
   }
   Exfun<- gsub(Vname,"x",Exfun,fixed=TRUE)
   P<-c()
@@ -9924,6 +9966,11 @@ Spacecurve<- function(...){
   T1<- Rng[1]; T2<- Rng[2]
   Dt<- (T2-T1)/N #17.09.22
   Str<- gsub(Vname,"t",Fnstr)
+  if(abs(Dt)<Eps){ # 16.12.13
+    t=T1
+    P=eval(parse(text=Str))
+    return(P)
+  }
   P<- c()
 #  E<- sort(E,decreasing=FALSE)
   E<- c(E,Inf)

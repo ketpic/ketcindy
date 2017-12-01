@@ -18,6 +18,8 @@
 
 ThisVersion<- "KeTpic for R  v5_2_3(17.11.27)" 
 
+# 2017.11.29
+#   Anglemark, Arrowhead, Ovaldata debugged ( Circldeta included )
 # 2017.11.27
 #   Anglemark changed ( Scilab 16.12.29)
 #   Plotdata,Paramplot,Spacecurve changed ( Scilab 16.12.13)
@@ -599,7 +601,7 @@ Anglemark<- function(...)
   if(r>min(Norm(PA-PB),Norm(PC-PB))){
     return(Out)
   }
-  Cir<- Circledata(PB,r)
+  Cir<- Circledata(c(PB,r)) #17.11.29
   Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PB))
   P1<- Op(2,Op(1,Tmp))
   Tmp<- IntersectcrvsPp(Cir,Listplot(PC,PB))
@@ -733,7 +735,7 @@ Arrowhead<-function(...)
     Tmp<-Nearestpt(P,Houkou)
     A<-Tmp[[1]]
     I<-floor(Tmp[[2]])
-    G<-Circledata(P,Ookisa*cos(Theta),N=10)
+    G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
     for (J in JL){
@@ -826,7 +828,7 @@ Arrowheaddata<- function(...)
     Tmp<-Nearestpt(P,Houkou)
     A<-Tmp[[1]]
     I<-floor(Tmp[[2]])
-    G<-Circledata(P,Ookisa*cos(Theta),N=10)
+    G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
     for (J in JL){
@@ -4788,7 +4790,7 @@ Ovaldata<- function(...) #17.09.11
   }
   Out<- c()
   P<- C+c(Dx-Rc,Dy-Rc)
-  Tmp1<- Circledata(P,Rc,"R=c(0,pi/2)","N=10")
+  Tmp1<- Circledata(c(P,Rc),"R=c(0,pi/2)","N=10") #17.11.29
   Tmp2<- Listplot(C+c(Dx-Rc,Dy),C+c(0,Dy))
   Tmp3<- Listplot(C+c(Dx,0),C+c(Dx,Dy-Rc))
   G<- Joincrvs(Tmp3,Tmp1,Tmp2)

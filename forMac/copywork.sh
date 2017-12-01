@@ -59,5 +59,10 @@ if [ ${ans} = "o" ]; then
 else
   echo  "Mackc=\"sh\";" >>${ketcindyhead}
 fi
+read -p 'Do you copy ketcindy manual? (y,n)' ans
+if [ ${ans} = "y" ]; then
+  cd ${ketsrc}/misc/ketmanual
+  cp -p  KeTCindyReferenceJ.pdf ${dist}/ketcindy
+fi
 sleep 1
 exit 0

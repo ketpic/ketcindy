@@ -1,3 +1,5 @@
+// s:2017.11.30
+//    Ketinit() changed  (same as R version)
 // s:2017.10.14
 //    Ketinit() changed  (Fhead)
 // s:2017.08.23

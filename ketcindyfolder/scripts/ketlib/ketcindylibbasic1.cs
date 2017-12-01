@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.3.1(2017.10.15)");
+println("KETCindy V.3.3.1(2017.11.30)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.10.13) loaded");
+println("ketcindylibbasic1(2017.11.30) loaded");
 
 //help:start();
 
@@ -41,7 +41,7 @@ Ketinit():=Ketinit(1);
 //help:Ketinit();
 Ketinit(sy):=Ketinit(sy,[-5,5],[-5,5]);
 Ketinit(sy,rangex,rangey):=(
-  regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc,sep);
+  regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
   PenThickInit=8;
   ULEN="1cm";
   MARKLEN=0.2; //16.11.01
@@ -66,8 +66,6 @@ Ketinit(sy,rangex,rangey):=(
   COM0thlist=[];
   COM1stlist=[];
   COM2ndlist=[];
-  SCIWRLIST=[];
-  SCIRELIST=[];
   ADDAXES="1";
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
@@ -80,18 +78,33 @@ Ketinit(sy,rangex,rangey):=(
   ADDPACK=[]; // 16.05.16
   ErrFlag=0;
   setdirectory(Dirwork);
-  if(!isstring(Fhead),  // 17.10.15from
+//  if(!isstring(Fhead),  // 17.10.13from, 17.11.12
     Fhead=text(curkernel());
     Fhead=replace(Fhead,".cdy","");
-  );
-  if(isstring(Fhead),    // 15.04.06
-    Fnametex=Fhead+".tex";
-    Fnamesci=Fhead+".sce";
-    Fnamescibody=Fhead+"body.sce";
-    Fnameout=Fhead+".txt";
-  );
+    Slidename=Fhead; //17.10.24
+//  );//17.11.12
+  Fnametex=Fhead+".tex";
+  Fnamesci=Fhead+".sce";
+  Fnamebody=Fhead+"body.sce";
+  Fnameout=Fhead+".txt";  // 17.10.13upto
   if(!isstring(Mackc),// 16.06.07
     Mackc="sh"; 
+  );
+  if(iswindows(),
+    Batparent="\kc.bat";
+  ,
+    Shellparent="/kc.sh";
+    if(!isexists(Dirwork,""),
+      println(Dirwork+" not exist");
+    ,
+      if(!iskcexists(Dirwork),
+        setdirectory(Dirwork);
+        SCEOUTPUT = openfile(Shellparent);
+        closefile(SCEOUTPUT);
+        println(Shellparent+" generated");
+      );
+      println(setexec(Dirwork,Shellparent));
+    );
   );
   ArrowlineNumber=1;  // 15.01.05
   ArrowheadNumber=1;
@@ -110,14 +123,13 @@ Ketinit(sy,rangex,rangey):=(
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   ThinDense=0.1;//17.01.08
-  if(indexof(PathS,"-6.")>0,//17.04.14from
-    if(iswindows(),sep="\",sep="/");
+  if(indexof(PathS,"-6.")>0,//17.09.29
     if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
-        Libname=Dirlib+sep+"ketpicscifiles6";
+        Libname=Dirlib+pathsep()+"ketpicscifiles6";
     ,
-        Libname=Dirlib+sep+"ketpic2escifiles6";
+        Libname=Dirlib+pathsep()+"ketpic2escifiles6";
     );
-  );//17.04.14upto
+  );//17.09.29upto
 );
 
 Setwindow():=Setwindow("Msg=yes");

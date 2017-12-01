@@ -1,3 +1,5 @@
+// s:2017.12.01
+//    Ketinit changed (to modify Dircdy )
 // s:2017.11.27
 //    Setparent added  ( for Texparent)
 //    Getcdyname added  ( name of the current cdy file)

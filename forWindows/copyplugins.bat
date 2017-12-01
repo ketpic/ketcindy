@@ -1,9 +1,13 @@
-REM 2017.11.18
+REM 2017.11.30
 echo off
 set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
 set prgcin=C:\Program Files (x86)
 if not exist "%prgcin%\Cinderella" (
   set prgcin=C:\Program Files
+)
+set prgsci=C:\Program Files (x86)
+if not exist "%prgsci%\scilab-6.0.0" (
+  set prgsci=C:\Program Files
 )
 NET SESSION > NUL 2>&1
 if %ERRORLEVEL% == 0 (
@@ -54,18 +58,29 @@ echo Files will be copied to "%cindyplug%\"
 cd "%pathT%%kind%%scripts%"
 copy /Y "ketjava\KetCindyPlugin.jar" "%cindyplug%\"
 cd "%cindyplug%"
-echo PathThead="%pathT%%kind%%bin%\"; > dirhead.txt
 set homehead=C:\Users
 set /P STR_INPUT="Input head of user home d(efault)=C:\Users :"
 if not "%STR_INPUT%" == "d" (
   homehead=%STR_INPUT%
 )
 echo %homehead%
+echo PathThead="%pathT%%kind%%bin%\"; > dirhead.txt
 echo Homehead="%homehead%"; >> dirhead.txt
 echo Dirhead="%pathT%%kind%%scripts%"; >> dirhead.txt
 echo setdirectory(Dirhead); >> dirhead.txt
 echo import("setketcindy.txt"); >> dirhead.txt
 echo import("ketoutset.txt"); >> dirhead.txt
+
+rem for Scilab from
+echo PathThead="%pathT%%kind%%bin%\"; > dirheadsci.txt
+echo Homehead="%homehead%"; >> dirheadsci.txt
+echo Dirhead="%pathT%%kind%%scripts%"; >> dirheadsci.txt
+echo setdirectory(Dirhead); >> dirheadsci.txt
+echo import("setketcindysci.txt"); >> dirheadsci.txt
+echo import("ketoutset.txt"); >> dirheadsci.txt
+echo PathS="%prgsci%\scilab-6.0.0\bin\scilex"; >> dirheadsci.txt
+rem for Scilab upto
+
 set /P STR_INPUT="Input version of R d(efault)=3.4.2 :"
 if "%STR_INPUT:~0,1%" == "d" (
   set verR=3.4.2
@@ -76,9 +91,13 @@ echo %verR%
 set prg=C:\Program Files
 if exist "%prg%\R\R-%verR%\bin\" (
   echo PathR="%prg%\R\R-%verR%\bin"; >> dirhead.txt
+  rem for Scilab
+  echo PathR="%prg%\R\R-%verR%\bin"; >> dirheadsci.txt
 ) else (
   if exist "%prg% (x86)\R\R-%verR%\bin\" (
     echo "%prg% (x86)\R\R-%verR%\bin"; >> dirhead.txt
+    rem for Scilab
+    echo "%prg% (x86)\R\R-%verR%\bin"; >> dirheadsci.txt
   ) else (
     echo "R-%verR% not found"
   )
@@ -93,6 +112,8 @@ echo %verM%
 set prg=C:\maxima-%verM%\bin\maxima.bat
 if exist "%prg%" (
   echo PathM="%prg%"; >> dirhead.txt
+  rem for Scilab
+  echo PathM="%prg%"; >> dirheadsci.txt
 ) else (
   echo "Maxima-%verM% not found"
   )
@@ -102,5 +123,8 @@ if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
 echo Pathpdf="%prgSm%"; >> dirhead.txt
+rem for Scilab
+echo Pathpdf="%prgSm%"; >> dirheadsci.txt
+
 echo "KetCindyPlugin and others have been copied"
 pause

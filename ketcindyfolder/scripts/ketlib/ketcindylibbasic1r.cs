@@ -78,11 +78,17 @@ Ketinit(sy,rangex,rangey):=(
   ADDPACK=[]; // 16.05.16
   ErrFlag=0;
   setdirectory(Dirwork);
-//  if(!isstring(Fhead),  // 17.10.13from, 17.11.12
+  if(!isstring(Fhead),  // 17.10.13from, 17.11.12
     Fhead=text(curkernel());
     Fhead=replace(Fhead,".cdy","");
     Slidename=Fhead; //17.10.24
-//  );//17.11.12
+  );//17.11.12
+  if(isstring(Dircdy) & iswindows(),  //17.12.01
+    Dircdy=replace(Dircdy,"/",pathsep());
+    if(substring(Dircdy,0,1)==pathsep(),
+      Dircdy=substring(Dircdy,1,length(Dircdy));
+    );
+  );
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
   FnamebodyR=Fhead+"body.r";

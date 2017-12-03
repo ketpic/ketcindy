@@ -1,0 +1,12 @@
+// e:2017.12.03
+Dirlib=Dirhead+pathsep()+"ketlib";
+//Libname=Dirlib+pathsep()+"ketpicscifiles6";
+DirlibC=Dirhead+pathsep()+"ketlibC";
+setdirectory(Dirlib);
+import("ketcindylibbasic1.cs");
+import("ketcindylibbasic2.cs");
+import("ketcindylibout.cs");
+import("ketcindylib3d.cs");
+import("ketcindylibmv.cs");
+
+setdirectory(Dirhead);

@@ -1,3 +1,5 @@
+// s:2017.12.03
+//    Ketinit changed (definition of LibnameS )
 // s:2017.12.01
 //    Ketinit changed (to modify Dircdy )
 // s:2017.11.27

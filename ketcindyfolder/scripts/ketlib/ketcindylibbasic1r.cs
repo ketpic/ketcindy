@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.3(2017.11.27");
+println("KETCindy V.3.1.3(2017.12.03");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.11.27) loaded");
+println("ketcindylibbasic1(2017.12.03) loaded");
 
 //help:start();
 
@@ -129,13 +129,14 @@ Ketinit(sy,rangex,rangey):=(
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   ThinDense=0.1;//17.01.08
-  if(indexof(PathS,"-6.")>0,//17.09.29
-    if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
-        LibnameS=Dirlib+pathsep()+"ketpicscifiles6";
-    ,
-        LibnameS=Dirlib+pathsep()+"ketpic2escifiles6";
-    );
-  );//17.09.29upto
+  if(indexof(PathS,"-5.")>0,//17.12.03from
+    LibnameS=Dirlib+pathsep()+"ketpicsciL5";
+  ,
+    LibnameS=Dirlib+pathsep()+"ketpicscifiles6";
+  );
+  if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0,
+    LibnameS=replace(LibnameS,"ketpic","ketpic2e");
+  );//17.12.03upto
 );
 
 Getcdyname():=( //17.11.27

@@ -8,7 +8,7 @@ if(iswindows(),
 //  PathT=PathThead+"pdflatex";
 //  PathT=PathThead+"lualatex";
 //  PathS="C:\Program Files\scilab-5.5.2\bin\scilex";
-  PathS="C:\Program Files\scilab-6.6.0\bin\scilex";
+  PathS="C:\Program Files\scilab-6.0.0\bin\scilex";
   PathC="C:\MinGW\bin\gcc.exe";
 //  PathC="C:\MinGW32\bin\gcc.exe";
   Pathpdf="C:\Program Files\SumatraPDF\SumatraPDF.exe";
@@ -62,10 +62,10 @@ if(islinux(),
 );
 
 if(isstring(Homehead),
-  setdirectory(Homehead+"/"+getname());
+  setdirectory(Homehead+pathsep()+getname());
   import("ketcidyhead.txt");
 ,
-  Dirfile=gethome();
+  Dirfile=gethome()+pathsep()+"ketcindy";
 );
 println(makedir(Dirfile,"ketwork"));
 Dirwork=Dirfile+pathsep()+"ketwork";

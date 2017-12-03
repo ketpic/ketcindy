@@ -3313,9 +3313,9 @@ Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
     name2+"=Projpara",[name3],
     name3h+"=BorderHiddenData()",[],
     name2h+"=Projpara",[name3h],
-    "function Ot=Hiddend(),global HIDDENDATA,Ot=HIDDENDATA,endfunction)"
+    "function Ot=Hiddend(),global HIDDENDATA,Ot=HIDDENDATA,endfunction;"
        ,[],  // 16.08.20from
-    "function Ot=Otherp(),global OTHERPARTITION,Ot=OTHERPARTITION,endfunction)"
+    "function Ot=Otherp(),global OTHERPARTITION,Ot=OTHERPARTITION,endfunction;"
        ,[],
     "HIDDENDATA=Hiddend()",[],
     "PARTITIONPT=PartitionPt()",[],
@@ -3444,11 +3444,11 @@ Wireparadata(nm,outstr,fdorg,wr1,wr2,optionorg,optionsh):=(
     "disp('Running Wireparadata')",[],
     "tmp=ReadOutData",[Dq+outfname+Dq],
     "execstr(tmp)",[],
-    "function SetHidd(Dt),global HIDDENDATA,HIDDENDATA=Dt,endfunction)",
+    "function SetHidd(Dt),global HIDDENDATA,HIDDENDATA=Dt,endfunction;",
         [], // 16.08.20from
-    "function SetPart(Dt),global PARTITIONPT,PARTITIONPT=Dt,endfunction)",
+    "function SetPart(Dt),global PARTITIONPT,PARTITIONPT=Dt,endfunction;",
         [], 
-    "function SetOther(Dt),global OTHERPARTITION,OTHERPARTITION=Dt,endfunction)",
+    "function SetOther(Dt),global OTHERPARTITION,OTHERPARTITION=Dt,endfunction;",
         [], 
     "if type(HIDDENDATA)~=15,HIDDENDATA=list(HIDDENDATA),end",[],
     "if type(PARTITIONPT)~=15,PARTITIONPT=list(PARTITIONPT),end",[],
@@ -3587,11 +3587,11 @@ Crvsfparadata(nm,gdstr,outstr,fdorg,optionorg,optionsh):=(
     "disp('Running Crvsfparadata')",[],
     "tmp=ReadOutData",[Dq+outfname+Dq],
     "execstr(tmp)",[],
-    "function SetHidd(Dt),global HIDDENDATA,HIDDENDATA=Dt,endfunction)",
+    "function SetHidd(Dt),global HIDDENDATA,HIDDENDATA=Dt,endfunction;",
         [], // 16.08.20from
-    "function SetPart(Dt),global PARTITIONPT,PARTITIONPT=Dt,endfunction)",
+    "function SetPart(Dt),global PARTITIONPT,PARTITIONPT=Dt,endfunction;",
         [], 
-    "function SetOther(Dt),global OTHERPARTITION,OTHERPARTITION=Dt,endfunction)",
+    "function SetOther(Dt),global OTHERPARTITION,OTHERPARTITION=Dt,endfunction;",
         [], 
     "if type(HIDDENDATA)~=15,HIDDENDATA=list(HIDDENDATA),end",[],
     "if type(PARTITIONPT)~=15,PARTITIONPT=list(PARTITIONPT),end",[],

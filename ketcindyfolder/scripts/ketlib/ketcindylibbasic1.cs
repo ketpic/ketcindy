@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.3.1(2017.11.30)");
+println("KETCindy V.3.3.1(2017.12.03)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.11.30) loaded");
+println("ketcindylibbasic1(2017.12.03) loaded");
 
 //help:start();
 
@@ -106,6 +106,12 @@ Ketinit(sy,rangex,rangey):=(
       println(setexec(Dirwork,Shellparent));
     );
   );
+  if(isstring(Dircdy) & iswindows(),  //17.12.01
+    Dircdy=replace(Dircdy,"/",pathsep());
+    if(substring(Dircdy,0,1)==pathsep(),
+      Dircdy=substring(Dircdy,1,length(Dircdy));
+    );
+  );
   ArrowlineNumber=1;  // 15.01.05
   ArrowheadNumber=1;
   BezierNumber=1; //15.01.03
@@ -123,13 +129,14 @@ Ketinit(sy,rangex,rangey):=(
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   ThinDense=0.1;//17.01.08
-  if(indexof(PathS,"-6.")>0,//17.09.29
-    if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
-        Libname=Dirlib+pathsep()+"ketpicscifiles6";
-    ,
-        Libname=Dirlib+pathsep()+"ketpic2escifiles6";
-    );
-  );//17.09.29upto
+  if(indexof(PathS,"-5.")>0,//17.12.03from
+    Libname=Dirlib+pathsep()+"ketpicsciL5";
+  ,
+    Libname=Dirlib+pathsep()+"ketpicscifiles6";
+  );
+  if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0,
+    Libname=replace(Libname,"ketpic","ketpic2e");
+  );//17.12.03upto
 );
 
 Setwindow():=Setwindow("Msg=yes");

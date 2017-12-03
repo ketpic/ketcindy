@@ -1,3 +1,5 @@
+// s: 2017.12.02
+//   Sfbdparadata,Wireparadata,Crvsfparadata debugged  ( endfunction) => endfunction; )
 // s: 2017.07.13
 //   Spaceline debugged  ( ["A3d","B3d"] =>[A3d,B3d] )
 // s: 2017.07.01

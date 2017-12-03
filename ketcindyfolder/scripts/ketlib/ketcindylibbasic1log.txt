@@ -1,3 +1,7 @@
+// s:2017.12.03
+//    Ketinit() changed  (definition of Libname )
+// s:2017.12.01
+//    Ketinit() changed  (for Dircdy)
 // s:2017.11.30
 //    Ketinit() changed  (same as R version)
 // s:2017.10.14

@@ -54,4 +54,9 @@ if "%STR_INPUT%" == "lu" (
   set tex=lualatex
 )
 echo PathT=PathThead+"%tex%"; >> %ketcindyhead%
+set /P STR_INPUT="Do you copy ketcindy manual? (y,n):"
+if "%STR_INPUT%" == "y" (
+  cd "%ketsrc%\misc\ketmanual"
+  copy /Y "KeTCindyReferenceJ.pdf" "%dist%\"
+)
 pause

@@ -125,6 +125,10 @@ if not exist "%prgSm%" (
 echo Pathpdf="%prgSm%"; >> dirhead.txt
 rem for Scilab
 echo Pathpdf="%prgSm%"; >> dirheadsci.txt
+echo setdirectory(Homehead+pathsep()+getname()); >> dirhead.txt
+echo setdirectory(Homehead+pathsep()+getname()); >> dirheadsci.txt
+echo import("ketcidyhead.txt"); >> dirhead.txt
+echo import("ketcidyhead.txt"); >> dirheadsci.txt
 
 echo "KetCindyPlugin and others have been copied"
 pause

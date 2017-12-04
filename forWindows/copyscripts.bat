@@ -64,6 +64,6 @@ if "%STR_INPUT%" == "y" (
   )
   echo Copying ketcindy styles
   %xcp% /Y /Q /S /E /R "%ketsrc%\%stylesrc%\*.*" "%pathT%%kind%%styles%\"
-  "%pathT%\kind%%bin%\mktexlsr"
+  "%pathT%\%kind%%bin%\mktexlsr"
 )
 pause

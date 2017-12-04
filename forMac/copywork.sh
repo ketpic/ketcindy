@@ -1,10 +1,10 @@
 #!/bin/sh
 #      2017.11.17
-ketsrc=/Volumes/ketcindyfolder
-if [ ! -e $ketsrc ]; then
-  ketsrc=~/Desktop/ketcindyfolder
+ketfolder=/Volumes/ketcindyfolder
+if [ ! -e $ketfolder ]; then
+  ketfolder=~/Desktop/ketcindyfolder
 fi
-ketsrc=${ketsrc}/work
+ketsrc=${ketfolder}/work
 echo ${ketsrc} will be used
 ketcindyhead=~/ketcidyhead.txt
 folder=ketcindy
@@ -61,8 +61,8 @@ else
 fi
 read -p 'Do you copy ketcindy manual? (y,n)' ans
 if [ ${ans} = "y" ]; then
-  cd ${ketsrc}/misc/ketmanual
-  cp -p  KeTCindyReferenceJ.pdf ${dist}/ketcindy
+  cd ${ketfolder}/misc/ketmanual
+  cp -p  KeTCindyReferenceJ.pdf ${dist}
 fi
 sleep 1
 exit 0

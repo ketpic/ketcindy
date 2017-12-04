@@ -67,6 +67,11 @@ else
 fi
 # for Scilab upto
 
+echo "setdirectory(Homehead+pathsep()+getname());" >> ${cindyplug}/dirhead.txt
+echo "import(\"ketcidyhead.txt\");" >> ${cindyplug}/dirhead.txt
+echo "setdirectory(Homehead+pathsep()+getname());" >> ${cindyplug}/dirheadsci.txt
+echo "import(\"ketcidyhead.txt\");" >> ${cindyplug}dirheadsci.txt
+
 echo "KetCindyPlugin and others copied to Cinderella"
 sleep 1
 exit 0

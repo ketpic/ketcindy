@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Nov. 17th  2017
+Install of KeTCindy(Mac)       Modified : Dec. 9th  2017
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -10,7 +10,7 @@ Install of KeTCindy(Mac)       Modified : Nov. 17th  2017
       (1) It is efficient to display "Macintosh HD" on Desktop.
                Finder > Preference > General
              Check "Hard Disk".
-      (2) Password of Administrator will be required in 1), 2) and 3)(1)(2).
+      (2) Password of Administrator will be required in 1), 2) and 3)(1).
       (3) Download/Copy the followings and make their virtual disks.
                   Winstart.dmg
                   ketcindyfolder.dmg
@@ -39,19 +39,17 @@ Install of KeTCindy(Mac)       Modified : Nov. 17th  2017
 
 3) Setting of KeTCdindy
                 Open ketcindyfolder.
-      (1) Double-click copyscripts.sh.
+      (1) Double-click copyfilsesetcindy.sh.
                * Path of TeX : choose 1 in the case of kettex.
-               *  Contents of scripts are copied into TeX.
-               *  If you select to copy ketcindy styles, 
-                      ketcindystyle files will be copied and be executed mktexlsr.
-      (2) Double-click copyplugins.sh.
-               * Head of userhome : choose "d" in the case of /Users.
-               * KetcindyPluign.jar and dirhead.txt are copied into Cinderella/Plugins.
+               * Contents of scripts will be copied into TeX.
+               * ketcindystyle files will be copied and be executed mktexlsr.
+               * Head of userhome : choose usually "d".
+               * KetcindyPluign.jar and dirhead.txt will be copied into Cinderella/Plugins.
                * Contents of dirhead.txt
                      PathThead   root path of TeX
                      Homehead   head of user home
                      Dirhead   path of libraries of KeTCindy
-      (3) Double-click copywork.sh.
+      (2) Double-click copywork.sh.
                * Name of working directory : input "d"  in the case of ketcindy.
                * Path of working directory
                       userhome(u), desktop(d), other(o)

@@ -12,8 +12,8 @@ new::Animation1//
 \end{center}//
 
 %%%%%%%%%%%%%%%%//
-new::Animation2//
+%new::Animation2//
 
-\begin{center}//
-\input{fig/animsinemove2}//
-\end{center}//
+%\begin{center}//
+%\input{fig/animsinemove2}//
+%\end{center}//

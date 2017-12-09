@@ -1,4 +1,4 @@
-KETCindyのインストール（Windows）　　　修正日：2017.11.17
+KETCindyのインストール（Windows）　　　修正日：2017.12.09
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -6,7 +6,7 @@ KETCindyのインストール（Windows）　　　修正日：2017.11.17
 　　　　　　更新後必要なファイルを移動（コピー）する．
 　　　・これまでのcdyファイルを使うときは，立ち上げた後
 　　　　　　CindyScript/ketlib
-　　　　の中身を作業ディレクトリ(work)にあるScriptInitializationで置き換えてギヤを押す．
+　　　　の中身を作業ディレクトリ(work)にあるScriptketlibで置き換えてギヤを押す．
 
 ０）準備
 
@@ -47,18 +47,14 @@ KETCindyのインストール（Windows）　　　修正日：2017.11.17
 ３）KeTCindyのインストール
 
 　（１）ketcindyfolder を開く．
-　（２）copyscripts.batを右クリック,「管理者として実行」を選ぶ．
+　（２）copyfilessetcindy.batを右クリック,「管理者として実行」を選ぶ．
 　　　　　　（管理者としてログインしてもこれを選択する）
 　　　　・TeXのパス　kettexの場合は１を選択する．
-　　　　・scriptsの内容がTeXの中にコピーされる
-　　　　・Do you copy ketcindy styles?でyを選択すると
-　　　　　　ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
-　　　　　　　注）kettexの場合は通常はnでよい．
-　（２）copyplugin.batを右クリック,「管理者として実行」を選ぶ．
+　　　　・scripts,style,docの内容がTeXの中にコピーされる
 　　　　・ユーザホームのヘッド　ユーザー名の前のパス
-　　　　　　注）C:\Users の場合は単に d でもよい．
-　　　　・Rのバージョン　3.4.2の場合は単に d でもよい．
-　　　　・Maximaのバージョン　5.37.3の場合は単に d でもよい．
+　　　　　　注）通常は単に d でよい．
+　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
+　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとdirhead.txtがコピーされる．
 　（３）copywork.batをクリックする．
 　　　　・作業ディレクトリ名　ketcindyの場合は単に d でもよい．
@@ -107,6 +103,13 @@ KETCindyのインストール（Windows）　　　修正日：2017.11.17
                                 $synctexoption
                                 $fullname
 　　　　　　OKボタンを押し，デフォルトを変更してOKボタンを押す．
+
+　（２）EasyTeXをuplatexまたはplatexのエディタとして使うときもできる．
+　　　　　・EasyTeX（最新版）をダウンロードする．
+　　　　　・オプションのTeX環境設定を設定する．
+　　　　　・PDFはAdobeを選択する（インストールしていなければインストールする）．
+　　　　　
+
 
 ６）その他のインストール
 

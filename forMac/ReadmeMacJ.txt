@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2017.11.17
+KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -13,7 +13,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.11.17
 　（１）以後の操作では，「Macintosh HD」を表示しておいた方がやりやすい．
 　　　　Finderで次のようにする．
 　　　　　Finder => 環境設定 => 一般 => ハードディスクにチェック
-　（２）以下の１)，２)，３)(１)(２)では管理者としてログインしておく必要がある．
+　（２）以下の１)，２)，３)(１)では管理者としてログインしておく必要がある．
 　（３）以下の圧縮ファイルをデスクトップにコピーして，ダブルクリック
 　　　　　　Macstart.dmg
 　　　　　　ketcindyfolder.dmg
@@ -64,14 +64,10 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.11.17
 
 ３）KeTCindyのインストール
 
-　（１）仮想ディスクketcindyfolderを開く．
-　（２）copyscripts.shをダブルクリック（管理者権限必要）
+　（ 1）copyfilessetcindy.shをダブルクリック（管理者権限必要）
 　　　　・TeXのパス　kettexの場合は１を選択する．
 　　　　・scriptsの内容が選択したTeXの中にコピーされる
-　　　　・Do you copy ketcindy styles?でyを選択すると
-　　　　　　ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
-　　　　　　　注）kettexの場合は通常はnでよい．
-　（２）copyplugin.shをダブルクリック（管理者権限必要）
+　　　　・ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
 　　　　・ユーザホームのヘッド　ユーザー名の前のパス
 　　　　　　注）通常の/Users の場合は単に d でもよい．
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとdirhead.txtがコピーされる．
@@ -83,7 +79,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.11.17
 　　　　　　　import("setketcindy.txt");
 　　　　　　　import("ketoutset.txt");
 　　　　　　　Pathpdf="skim" または "preview";
-　（３）copywork.shをダブルクリック（管理者権限不要）
+　（２）copywork.shをダブルクリック（管理者権限不要）
 　　　　・作業ディレクトリ名
 　　　　　　　通常のketcindyの場合は単に d でもよい．
 　　　　・作業ディレクトリのパス
@@ -179,3 +175,11 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.11.17
 　（２）cfepを使うときは，XQuartzを更新して以下からダウンロードする．
                 http://www.math.kobe-u.ac.jp/Asir/asir-ja.html
             さらに，asirをコピーする．
+・High SierraでScilab5.5.2を動かすとき
+　（１）scilab-5.5.2.app/Contents/MacOS/lib/thirdparty/libz.1.dylib を
+　　　　libz.1.dylib.bak にリネーム
+　（２）scilab-5.52.app/Contents/MacOS/lib/thirdparty/libBLAS.dylib を
+　　　　libBLAS.dylib.bak にリネーム
+
+　　注）6.0.0でも同様
+

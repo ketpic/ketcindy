@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2017.11.24) loaded");
+println("ketcindybasic2(2017.12.09) loaded");
 
 //help:start();
 
@@ -77,7 +77,7 @@ Scalepoint(point,ratio,center):=(
 Reflectpoint(point,symL):=(
 //help:Reflectpoint(A,B);
 //help:Reflectpoint(A,[[2,3]]);
-//help:Reflectpoint(A,[C,E]);\\
+//help:Reflectpoint(A,[C,E]);
   regional(X1,X2,Y1,Y2,Us,Vs,Pt1,Pt2,Cx,Cy,tmp);
   tmp=Lcrd(point);
   X1=tmp_1; Y1=tmp_2;
@@ -428,14 +428,14 @@ Mkcircles(options):=(
   );
 );
 
-Makesciarg(arglist):=(
+MakeRarg(arglist):=(
   regional(str,tmpstr);
   str="";
   forall(arglist,
     if(isstring(#),
-      tmpstr=Dq+#+Dq;
+      tmpstr=Dq+RSslash(#)+Dq;
     ,
-      tmpstr=textformat(#,5);
+      tmpstr=textformat(#,6);
     );
     str=str+tmpstr+",";
   );
@@ -447,7 +447,7 @@ Setax(arglist):=(
 //help:Setax(["l","x","e","y","n","O","sw"]);
 //help:Setax([7,"nw"]);
   regional(tmp);
-  tmp=Makesciarg(arglist);
+  tmp=MakeRarg(arglist);
   Com1st("Setax("+tmp+")");
 );
 
@@ -455,14 +455,14 @@ Htickmark(arglist):=(
 //help:Htickmark([1,"1",2,"sw","2"]);
   regional(tmp);
   tmp="";
-  tmp=Makesciarg(arglist);
+  tmp=MakeRarg(arglist);
   Com2nd("Htickmark("+tmp+")");
 );
 
 Vtickmark(arglist):=(
 //help:Vtickmark([1,"1",2,"sw","2"]);
   regional(tmp);
-  tmp=Makesciarg(arglist);
+  tmp=MakeRarg(arglist);
   Com2nd("Vtickmark("+tmp+")");
 );
 
@@ -4756,7 +4756,11 @@ Mkslides():=(
     if(iswindows(),
       tmp2=Batparent;
       parent=replace(Dirwork+Batparent,sep+"fig","");// 16.05.29
-      Makebat(Texparent,"tv"); // 16.07.21
+      if(indexof(Pathpdf,"Adobe")>0, //17.12.09from
+        Makebat(Texparent,"ttv");
+      ,
+        Makebat(Texparent,"tv");
+      ); //17.12.09upto
       kc():=(
         println("kc : "+kc(parent,Dirlib,Fnametex)); // 16.06.10, 17.02.19
       );
@@ -4766,7 +4770,11 @@ Mkslides():=(
       tmp2=Shellparent;
       parent=replace(Dirwork+Shellparent,sep+"fig","");// 16.05.29
       Shellparent=replace(Shellparent,sep+"fig","");
-      Makeshell(Texparent,"tv"); // 16.07.21
+      if(indexof(Pathpdf,"Adobe")>0, //17.12.09from
+        Makeshell(Texparent,"ttv");
+      ,
+        Makeshell(Texparent,"tv");
+      ); //17.12.09upto
       kc():=(
         println("kc : "+kc(parent,Mackc+Dirlib,Fnametex)); // 16.06.10
       );

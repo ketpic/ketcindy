@@ -1,4 +1,4 @@
-Install of KeTCindy(Win)       Modified : Nov. 17th  2017
+Install of KeTCindy(Win)       Modified : Dec. 9th  2017
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -31,17 +31,15 @@ Install of KeTCindy(Win)       Modified : Nov. 17th  2017
 
 3) Setting of KeTCdindy
                 Open ketcindyfolder.
-      (1) Right-click copyscripts.bat and select "Run as administrator".
+      (1) Right-click copyfilessetcindy.bat and select "Run as administrator".
                * Path of TeX : choose 1 in the case of kettex.
-               *  Contents of scripts are copied into TeX.
-               *  If you select to copy ketcindy styles, 
-                      ketcindystyle files will be copied and be executed mktexlsr.
-      (2) Right-click copyplugins.bat and select "Run as administrator".
-               * Head of userhome : choose "d" in the case of C:\Users.
+               * Contents of scripts will be copied into TeX.
+               * ketcindystyle files will be copied and be executed mktexlsr.
+               * Head of userhome : choose usually "d".
                * Version of R : choose "d" in the case of 3.4.2.
                * Version of Maxima : choose "d" in the case of 5.37.3.
-               *  KetcindyPluign.jar and dirhead are copied into Cinderella/Plugins.
-      (3) Double-click copywork.bat.
+               *  KetcindyPluign.jar and dirhead will be copied into Cinderella/Plugins.
+      (2) Double-click copywork.bat.
                * Name of work directory : choose 1 in the case of ketcindy.
                * Path of work directory
                       if User name contains "space", choose C:\ (c).

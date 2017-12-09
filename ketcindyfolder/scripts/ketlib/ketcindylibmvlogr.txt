@@ -1,3 +1,9 @@
+//2017.12.09
+//   Parafolder debugged (Viewtex ->WritetoRS)
+//   Mkanimation debugged ( \ -> / for windows )
+//2017.12.07
+//   Setpara options changed
+//   Animatefile changed   (\figsize, OpA)
 //2017.11.24
 //   Mkflipanime added
 //   Old movie function removed

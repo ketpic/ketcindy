@@ -25,8 +25,10 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
 //help:Setpara("folder name","funstr","range",options,optionsanim);
 //help:Setpara(folder,funstr,range,options);
 //help:Setpara(options=["m/r","Div=25"]);
-//help:Setpara(optionsanim1=["Frate=10","Scale=1","OpA=[loop]"]);
-//help:Setpara(optionsanim2=["Mag=1600","Title=folder"]);
+//help:Setpara(options2anim1=["Frate=10","Scale=1"]);
+//help:Setpara(options2anim2=["OpA=[loop,controls,buttonsize=3mm]"]);
+//help:Setpara(options2anim3=["OpA=+step"]);
+//help:Setpara(options2anim4=["Mag=1600","Title=folder"]);
   regional(path);//17.04.10
   if(length(pathorg)==0, path=Slidename,path=pathorg);//17.04.10
   ParaPath=path;
@@ -115,7 +117,9 @@ Parafolder(path,fstr,sLorg,optionorg):=(
         sL=[];
       );
     ,
-      if(mkr=="Y",
+      tmp=fileslist(Dirwork+pathsep()+path); //17.12.09(3lines);
+      tmp=length(tmp);
+      if((mkr=="Y") & (tmp>0),
         tmp1=replace(Dirwork,"\","/");//17.10.13
         cmdL=[
           "setwd",[Dq+tmp1+"/"+path+Dq],
@@ -132,7 +136,6 @@ Parafolder(path,fstr,sLorg,optionorg):=(
     );
     sfL=[];
     forall(1..(length(sL)),nn,
-      clrscr();  // 16.12.28
       GLIST=GLISTback;
       GCLIST=GCLISTback;
       GOUTLIST=GOUTLISTback;
@@ -152,7 +155,7 @@ Parafolder(path,fstr,sLorg,optionorg):=(
       Movieframe(sL_nn); //17.10.13
       if(!isexists(Dirwork,FnameR) % mkr=="Y",
         if(ErrFlag!=-1,
-          Viewtex();
+          WritetoRS(2); //17.12.09
         );
       );
     ); 
@@ -208,7 +211,7 @@ Animatefile(path,folder):=(
   eqL=tmp_5;
   FRate="10";
   Scale="1";
-  OpA="";
+  OpA="loop,controls,buttonsize=3mm";
   remflg=0;
   forall(eqL,
     tmp1=Toupper(substring(#,0,2));
@@ -220,11 +223,19 @@ Animatefile(path,folder):=(
     if(tmp1=="SC",
       Scale=tmp2;
     );
-    if(tmp1=="OP",
-      if(substring(tmp2,0,1)!="[",tmp2="["+tmp2+"]");
-      OpA=tmp2;
+    if(tmp1=="OP",  // 17.12.07from
+      if(length(tmp2)>0,
+	    tmp2=replace(tmp2,"[","");
+        tmp2=replace(tmp2,"]","");
+        if(substring(tmp2,0,1)=="+",
+          OpA=OpA+","+substring(tmp2,1,length(tmp2));
+        ,
+          OpA=tmp2;
+        );
+      );
     );
   );
+  if(length(OpA)>0,OpA="["+OpA+"]");
   pa=replace(path,"\","/");
   fname="anim"+folder+".tex";
   tmp=Dirwork+"/"+folder;
@@ -235,13 +246,14 @@ Animatefile(path,folder):=(
   tmp1=select(tmp1,indexof(#,".tex")>0);
   SCEOUTPUT= openfile(fname);
   println(SCEOUTPUT,"\def\parapath{"+pa+"}%"); //17.06.22
+  println(SCEOUTPUT,"\def\figsize{"+Scale+"}%"); //17.12.07
   println(SCEOUTPUT,"\begin{animateinline}"+OpA+"{"+FRate+"}%");
   forall(1..(length(tmp1)),
     if(Scale==1, // 17.08.30from
       tmp="\input{\parapath/";
       tmp=tmp+folder+"/"+tmp1_#+"}%"; 
     ,
-      tmp="\scalebox{"+Scale+"}{\input{\parapath/";//17.06.22(3lines)
+      tmp="\scalebox{\figsize}{\input{\parapath/";//17.12.07
       tmp=tmp+folder+"/"+tmp1_#+"}}%"; 
     ); // 17.08.30upto
     println(SCEOUTPUT,tmp);
@@ -379,7 +391,8 @@ Mkanimation(path,folder):=(
   tmp1=(tmp-(XMAX-XMIN)*tmp1)/2;
   tmp1=tmp1+parse("("+mag+"-1000)/100*1.3");
   print(SCEOUTPUT,"\hspace*{"+text(tmp1)+"mm}");
-  println(SCEOUTPUT,"\input{"+path+"/anim"+folder+".tex}");
+  tmp=replace(path,"\","/"); //17.12.09(2lines)
+  println(SCEOUTPUT,"\input{"+tmp+"/anim"+folder+".tex}");
   println(SCEOUTPUT,"\end{document}");
   closefile(SCEOUTPUT);
   if(iswindows(),

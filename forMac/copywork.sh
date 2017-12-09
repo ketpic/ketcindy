@@ -1,5 +1,5 @@
 #!/bin/sh
-#      2017.11.17
+#      2017.12.08
 ketfolder=/Volumes/ketcindyfolder
 if [ ! -e $ketfolder ]; then
   ketfolder=~/Desktop/ketcindyfolder
@@ -61,7 +61,7 @@ else
 fi
 read -p 'Do you copy ketcindy manual? (y,n)' ans
 if [ ${ans} = "y" ]; then
-  cd ${ketfolder}/misc/ketmanual
+  cd ${ketfolder}/doc/ketmanual
   cp -p  KeTCindyReferenceJ.pdf ${dist}
 fi
 sleep 1

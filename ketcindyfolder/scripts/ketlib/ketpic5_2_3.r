@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_3(17.11.27)" 
+ThisVersion<- "KeTpic for R  v5_2_3(17.12.11)" 
 
+# 2017.12.11
+#   Enclosing debugged  ( appendrow -> Appendrow )
 # 2017.11.29
 #   Anglemark, Arrowhead, Ovaldata debugged ( Circldeta included )
 # 2017.11.27
@@ -2150,7 +2152,7 @@ Enclosing<- function(...)
   Tmp1=Op(1,AnsL) # Scilab 16.12.05from
   Tmp2=Op(nrow(AnsL),AnsL)
   if(Norm(Tmp2-Tmp1)>Eps){
-    AnsL=appendrow(AnsL,Tmp1)
+    AnsL=Appendrow(AnsL,Tmp1)
   }
   return(AnsL)
 }

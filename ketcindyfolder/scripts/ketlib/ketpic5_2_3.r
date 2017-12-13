@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_3(17.12.11)" 
+ThisVersion<- "KeTpic for R  v5_2_3(17.12.13)" 
 
+# 2017.12.13
+#   ReadOutData debugged
 # 2017.12.11
 #   Enclosing debugged  ( appendrow -> Appendrow )
 # 2017.11.29
@@ -6074,7 +6076,6 @@ WriteOutData<- function(...){
 
 ######  Old  ####################################
 #  2015.10.23
-
 ReadOutData<- function(...){
   varargin<- list(...)
   Nargs<- length(varargin)
@@ -6137,7 +6138,7 @@ ReadOutData<- function(...){ #2017.10.23
   Fname=varargin[[1]]
   cmdall=readLines(Fname)
   cmdall=gsub("//","",cmdall,fixed=TRUE)
-  varname=cmdall[1]
+  varname=""#17.12.13 cmdall[1]
   outdt=list()
   varL=c()
   ptL=list()
@@ -6165,6 +6166,12 @@ ReadOutData<- function(...){ #2017.10.23
         }
       }
       else{
+          # 17.12.13from
+          if(nchar(varname)>0){
+            tmp=paste("if(length(",varname,")==1){",varname,"<<- ",varname,"[[1]]}",sep="")
+            eval(parse(text=tmp))
+          }
+          # 17.12.13upto
         varname=cmd
         tmp=paste(varname,"<<- list()",sep="")
         eval(parse(text=tmp))
@@ -6176,6 +6183,10 @@ ReadOutData<- function(...){ #2017.10.23
       }
     }
   }
+  # 17.12.13from
+  tmp=paste("if(length(",varname,")==1){",varname,"<<- ",varname,"[[1]]}",sep="")
+  eval(parse(text=tmp))
+  # 17.12.13upto
 }
 
 ####################################################

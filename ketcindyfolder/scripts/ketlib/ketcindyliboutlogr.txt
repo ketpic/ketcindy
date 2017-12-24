@@ -1,3 +1,12 @@
+// 2017.12.24
+//   Mkobjpoly,Mkobjplate debugged
+//   Changeobjscalce changed for R
+// 2017.12.23
+//   Mkobjsymbcmd debugged
+//   Setoptions changed
+//   Mkobjthickcmd added
+// 2017.12.22
+//   Mkobjcrvcmd debugged
 // 2017.10.24
 //   Maxima2Cindydata added
 // 2017.10.12

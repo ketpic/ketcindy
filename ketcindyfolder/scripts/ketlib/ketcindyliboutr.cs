@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2017.11.20) loaded");
+println("ketcindyout(2017.12.24) loaded");
 
 //help:start();
 
@@ -3318,10 +3318,18 @@ kcV3(path,fname):=(
   );
 );
 
-Changeobjscale(fname):=Changeobjscale(ULEN,fname,fname,[]);
+Changeobjscale(fname):=(
+  regional(fout);
+  fout=replace(fname,".obj","");
+  fout=fout+"out.obj";
+  Changeobjscale(ULEN,fname,fout,[]);
+);
 Changeobjscale(fname,Arg):=(
+  regional(fout);
   if(islist(Arg),
-    Changeobjscale(ULEN,fname,fname,Arg);
+    fout=replace(fname,".obj","");
+    fout=fout+"out.obj";
+    Changeobjscale(ULEN,fname,fout,Arg);
   ,
     Changeobjscale(ULEN,fname,Arg,[]);
   );
@@ -3334,10 +3342,10 @@ Changeobjscale(Arg1,Arg2,Arg3):=(
   );
 );
 Changeobjscale(unitlen,fnameorg,foutorg,optionorg):=(
-//help:Changeobjscale("20mm",fnamei,fmediate);
+//help:Changeobjscale("20mm",fname,fnameout);
 //help:Changeobjscale(options=["Unit=mm",[0,0,0]]);
   regional(fname,fout,fmd,unit,val,options,eqL,reL,
-    origin,outunit,sc,stL,nn,tmp,tmp1,tmp2);
+      origin,outunit,sc,stL,nn,tmp,tmp1,tmp2);
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
@@ -3386,24 +3394,27 @@ Changeobjscale(unitlen,fnameorg,foutorg,optionorg):=(
   fout=foutorg;
   if(indexof(fout,".")==0,fout=fout+".obj");
   tmp1=Textformat(origin,4);
-  tmp1=replace(tmp1,",",";");
+  tmp1=RSform(tmp1);
   cmdL=[
-    "Origin="+tmp1+";",[],
-    "Sc="+format(sc,6)+";",[],
-    "Stv=mgetl",[Dq+fname+Dq],
-    "for nn=1:size(Stv,1),Tmp=Stv(nn);",[],
-    "  if part(Tmp,1:2)=='v ' then,Tmp=tokens(Tmp,' ');",[],
-    "    Tmp=evstr(Tmp(2:4));",[],
-    "    Tmp=Origin+Sc*(Tmp-Origin);",[],
-    "    Tmp='v '+msprintf('%7.4f %7.4f %7.4f',Tmp(1),Tmp(2),Tmp(3));",[],
-    "    Stv(nn,1)=Tmp;",[],
-    "  end;",[],
-    "end;",[],
-    "mputl",["Stv",Dq+fout+Dq],
-    "mputl",["['finished////']",Dq+fmd+Dq]
+    "Origin="+tmp1,[],
+    "Sc="+format(sc,6),[],
+    "Stv=readLines",[Dq+fname+Dq],
+    "cat('',file="+Dq+fout+Dq+")",[],
+    "for(nn in Looprange(1,length(Stv))){",[],
+    "  if(substring(Stv[nn],1,2)=='v '){",[],
+    "    Tmp1=paste('c(',substring(Stv[nn],3),')',sep='')",[],
+    "    Tmp1=gsub(' ',',',Tmp1,fixed=TRUE)",[],
+    "    Tmp1=gsub(',,',',',Tmp1,fixed=TRUE)",[],
+    "    Tmp1=gsub('(,','(',Tmp1,fixed=TRUE)",[],
+    "    Tmp=eval(parse(text=Tmp1))",[],
+    "    Tmp=Origin+Sc*(Tmp-Origin)",[],
+    "    Stv[nn]=paste('v ',sprintf('%8.5f %8.5f %8.5f',Tmp[1],Tmp[2],Tmp[3]),sep='')",[],
+    "  }",[],
+    "  cat(Stv[nn],'\n',sep='',file="+Dq+fout+Dq+",append=TRUE)",[],
+    "}",[]
   ];
   options=concat(["Wait=3","Cat=n","File="+fmd],options); // 16.06.26
-  CalcbyS("cs",cmdL,options);
+  CalcbyR("cs",cmdL,options);
   println("Scale of "+fname+" changed");
 );
 
@@ -3494,7 +3505,7 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   );
   if(make==1,
     if(isstring(cmdL_1),
-      cmdlist=MkprecommandS(); // 16.04.23
+      cmdlist=MkprecommandR();
       cmdlist=concat(cmdlist,["Openobj",[Dq+path+fname+Dq]]);
       cmdlist=concat(cmdlist,cmdL);
       tmp=["Closeobj()",[],"ans="+Dq+"||||"+Dq,[]];//16.12.26
@@ -3505,7 +3516,7 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
       if(length(tmp1)==0,
         tmp=append(tmp,"Wait=5");
       );// 16.04.23upto
-      CalcbyS("ans",cmdlist,tmp);
+      CalcbyR("ans",cmdlist,tmp);
       wait(WaitUnit*100); // 16.03.18
     ,
       vtx=cmdL_1;
@@ -3551,15 +3562,21 @@ SetObj(str):=Objname(str,["m","v"]); //17.01.12
 SetObj(str,options):=Objname(str,options); //17.01.12
 Objnameoptions(str,options):=Objname(str,options);// 16.11.29
 Objname(str):=Objname(str,["m","v"]); // 16.11.29
-Objname(str,options):=(
+Objname(str,optionsorg):=(
 //help:Objname("sample");
 //help:Objname(options=["m","v"]);
 //help:Setobj("sample");
 //help:Setobj(options=["m","v"]);
+  regional(options);
   if(length(str)>0,
     OCNAME=str;
   );
-  OCOPTION=options;
+  options=select(optionsorg,length(#)>0); //17.12.23from
+  if(length(options)>0,
+    OCOPTION=options;
+  ,
+    OCOPTION=["m","v"];
+  ); //17.12.23upto
   println([OCNAME,OCOPTION]);
 );
 
@@ -3588,15 +3605,15 @@ Mkobjcmd(nm,fd,options):=(
   side="'"+side+"'";
   ffd=Fullformfunc(fd);
   tmp=indexof(ffd_5,"=");
-  tmp1=substring(ffd_5,0,tmp-1);
-  tmp2=substring(ffd_5,tmp,length(ffd_5));
+  tmp1=RSform(substring(ffd_5,0,tmp-1));
+  tmp2=RSform(substring(ffd_5,tmp,length(ffd_5)));
   tmp=indexof(ffd_6,"=");
-  tmp3=substring(ffd_6,0,tmp-1);
-  tmp4=substring(ffd_6,tmp,length(ffd_6));
-  out=["function Out=Fun"+nm+"("+tmp1+","+tmp3+")",[]];
-  tmp="  Out=["+ffd_2+","+ffd_3+","+ffd_4+"]";
+  tmp3=RSform(substring(ffd_6,0,tmp-1));
+  tmp4=RSform(substring(ffd_6,tmp,length(ffd_6)));
+  out=["Fun"+nm+"<- function("+tmp1+","+tmp3+"){",[]];
+  tmp="  Out=c("+ffd_2+","+ffd_3+","+ffd_4+")";
   out=concat(out,[tmp,[]]);
-  out=concat(out,["endfunction",[]]);
+  out=concat(out,["}",[]]);
   tmp1=["Objsurf",
      ["Fun"+nm,tmp2,tmp4,div1,div2,side]];
   out=concat(out,tmp1);
@@ -3769,35 +3786,34 @@ Mkobjthickcmd(nm,fd,fnrm,optionorg):=(
   ffd=Fullformfunc(fd);
   tmp=indexof(ffd_5,"=");
   tmp1=substring(ffd_5,0,tmp-1);
-  tmp2=substring(ffd_5,tmp,length(ffd_5));
+  tmp2=RSform(substring(ffd_5,tmp,length(ffd_5)));
   tmp=indexof(ffd_6,"=");
   tmp3=substring(ffd_6,0,tmp-1);
-  tmp4=substring(ffd_6,tmp,length(ffd_6));
+  tmp4=RSform(substring(ffd_6,tmp,length(ffd_6)));
   fst=text(ffd_(2..4));
   tmp=indexof(ffd_5,"=");
   xst=substring(ffd_5,0,tmp-1);
   tmp=indexof(ffd_6,"=");
   yst=substring(ffd_6,0,tmp-1);
-  out=["function Out=Fun"+nm+"("+tmp1+","+tmp3+")",[]];
-  tmp="  Out=["+ffd_2+","+ffd_3+","+ffd_4+"]";
+  out=["Fun"+nm+"<- function("+tmp1+","+tmp3+"){",[]];
+  tmp="  c("+ffd_2+","+ffd_3+","+ffd_4+")";
   out=concat(out,[tmp,[]]);
-  out=concat(out,["endfunction",[]]);
-  tmp=["function Out=Fnrm"+nm+"("+xst+","+yst+")",[]];
+  out=concat(out,["}",[]]);
+  tmp=["Fnrm"+nm+"<- function("+xst+","+yst+"){",[]];
   out=concat(out,tmp);
   if(fnrm=="",
     tmp=Mkobjnrm(nm,fd,options);
-    tmp1="Out="+tmp; // 16.05.17 
+    tmp1=RSform(tmp);
     tmp="Fnrmden"+nm+"("+xst+","+yst+"):="+tmp_2;
     parse(tmp);
   ,
-//    tmp1="  Out="+fnrm; // 16.04.30
-    tmp1=fnrm; // 16.04.30
-    if(indexof(tmp1,"Out=")==0,  // 16.05.09from
-      tmp1="Out="+tmp1;
-    ); // 16.05.09upto
+    tmp1=RSform(fnrm);
+//    if(indexof(tmp1,"Out=")==0,  // 16.05.09from
+//      tmp1="Out="+tmp1;
+//    ); // 16.05.09upto
   );
   out=concat(out,[tmp1,[]]);
-  out=concat(out,["endfunction",[]]);
+  out=concat(out,["}",[]]);
   tmp1=["Objthicksurf",
      ["Fun"+nm,tmp2,tmp4,div1,div2,"Fnrm"+nm,thick1,thick2,side]];
   out=concat(out,tmp1);
@@ -3868,7 +3884,9 @@ Mkobjpolycmd(nm,pd,optionorg):=(
       face_#=reverse(face_#);
     );
   );
-  out=["Objpolyhedron",[vtx,face]];
+  tmp1=RSform(textformat(vtx,5),2);//17.12.24from
+  tmp2=RSform(textformat(face,5),2);
+  out=["Objpolyhedron",[tmp1,tmp2]];//17.12.24upto
   tmp2=[]; // 16.06.10from
   forall(out,tmp1,
     if(islist(tmp1),
@@ -3890,7 +3908,7 @@ Mkobjplatecmd(nm,pdorg,optionorg):=( // 16.06.18
 //help:Mkobjplatecmd("1",vtxlist);
 //help:Mkobjplatecmd(options1=[0.05,-0.05]);
   regional(pd,options,cmd,out,thick1,thick2,nn,pdn,
-     reL,vtx,face,nv,npttmp,tmp1,tmp2,tmp3);
+     reL,vtx,face,nv,npttmp,tmp1,tmp2,tmp3,tmp4);
   pd=pdorg;
   if(MeasureDepth(pd)==1,pd=[pd]);
   if(MeasureDepth(pd)==2,pd=[pd]);//16.10.04from
@@ -3938,7 +3956,9 @@ Mkobjplatecmd(nm,pdorg,optionorg):=( // 16.06.18
       tmp2=concat(tmp2,tmp);
       tmp=[npt,npt+npt,1+npt,1];
       tmp2=append(tmp2,tmp);
-      out=concat(out,["Objpolyhedron",[vtx,tmp2]]);
+      tmp3=RSform(textformat(vtx,5),2);//17.12.24from
+      tmp4=RSform(textformat(tmp2,5),2);
+      out=concat(out,["Objpolyhedron",[tmp3,tmp4]]);//17.12.24upto
     );
   );
   tmp3="["; // 16.06.10from
@@ -4002,7 +4022,7 @@ Mkobjcrvcmd(nm,pstorg,options):=(
   if(flg==1,  // 16.04.23upto
     if(!isstring(tmp1_1),
       forall(1..length(tmp1),
-        tmp=["Objcurve",[pst+"("+text(#)+")",thick,poly,dir]];
+        tmp=["Objcurve",[pst+"[["+text(#)+"]]",thick,poly,dir]];//17.12.22
         out=concat(out,tmp);
        );
     ,
@@ -4044,7 +4064,7 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
 //help:Mkobjsymbcmd("x",0.5,0,V3d,A3d);
 //help:Mkobjsymbcmd("P",0.5,0,V3d,A3d);
 //help:Mkobjsymbcmd(options=[0.05,4,"'yz'"]);
-  regional(symb,options,opbez,eqL,reL,stL,dtL,dt,
+  regional(symb,options,opbez,eqL,reL,stL,dtLstr,dtL,dt,
       alpha,Alpha,out,mx,Mx,my,My,center,tmp,tmp1,tmp2);
   alpha="abcdefghijklmnopqrstuvwxyz";
   Alpha=Toupper(alpha);
@@ -4067,12 +4087,14 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
   if(length(stL)==0,
     options=concat(options,[tmp1_3]);
   );
+  out=[];
   tmp=parse(symb);
-  if(islist(tmp),
-    tmp1=select(GLIST,substring(#,0,length(symb))==symb);
-    tmp1=tmp1_1;
-    out=[tmp1,[]];
-    dtL=symb;
+  if((islist(symb)) % (islist(tmp)), //17.12.24from
+    if(islist(tmp),
+      dtL=[symb];
+    ,
+      dtL=symb;
+    ); //17.12.24upto
   ,
     tmp=substring(symb,0,1);
     if(tmp>="a" & tmp<="z",tmp1=tmp+"s");
@@ -4089,21 +4111,22 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
       );
     );
     if(length(symb)==2,symb=tmp1+substring(symb,1,2));
-    out=[];
     if(length(path)>0,  // 16.04.23from
       setdirectory(path);
     ,
-//      tmp=Dirhead+"/ketsample/samples/s13meshlab/fontF";
       tmp=Dirhead+"/data/fontF";  // 16.05.10
       setdirectory(tmp);
     ); // 16.04.23upto
     dtL=Readbezier(symb,opbez);
+    dtLstr=dtL; //17.12.23
 	setdirectory(Dirwork);
     forall(dtL,dt,
       tmp=dt+"=";
       tmp1=select(GLIST,indexof(#,tmp)>0);
-      tmp1=tmp1_1;
-      out=concat(out,[tmp1,[]]);    
+      if(length(tmp1)>0,//17.12.23from
+        tmp1=tmp1_1;
+        out=concat(out,[tmp1,[]]);
+      ); //17.12.23upto  
     );
     mx=100;Mx=-100;my=100;My=-100;
     forall(dtL,dt,
@@ -4117,7 +4140,7 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
     center=[(mx+Mx)/2,(my+My)/2];
     tmp1=[];
     forall(dtL,dt,
-      Rotatedata(dt,dt,rot,[center,"nodisp"]); // 16.04.23
+      Rotatedata(dt,dt,rot,[center,"nodisp"]);
       Translatedata(dt,"rt"+dt,-center,["nodisp"]);
       tmp1=append(tmp1,"tr"+dt);
     );
@@ -4125,14 +4148,21 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
     forall(dtL,dt,
       tmp=dt+"=";
       tmp1=select(GLIST,indexof(#,tmp)>0);
-      tmp1=tmp1_1;
-      out=concat(out,[tmp1,[]]);    
+      if(length(tmp1)>0,  //17.12.23from
+        tmp1=tmp1_1;
+        out=concat(out,[tmp1,[]]);
+      ); //17.12.23upto
     );
   );
   tmp1=text(options);
   tmp1=substring(tmp1,1,length(tmp1)-1);
+  tmp2=""; //17.12.23from
+  forall(dtL,
+    tmp2=tmp2+","+#;
+  );
+  tmp2="list("+substring(tmp2,1,length(tmp2))+")"; //17.12.23upto
   out=concat(out,[
-    "Sd=Symb3data",[dtL,size,0,dir,pos], // 16.04.23
+    "Sd=Symb3data",[tmp2,size,0,dir,pos], //17.12.23
     "Objsymb(Sd,"+tmp1+")",[]
   ]);
   tmp2=[]; // 16.06.10from

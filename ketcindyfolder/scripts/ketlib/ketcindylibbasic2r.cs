@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2017.12.09) loaded");
+println("ketcindybasic2(2017.12.24) loaded");
 
 //help:start();
 
@@ -151,12 +151,10 @@ Rotatedata(nm,plist,angle,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
-//    tmp1=textformat(plist,5);
-    tmp1=text(plist); // 15.10.15
-    tmp1=replace(tmp1,"[","list(");
-    tmp1=replace(tmp1,"]",")");
+    tmp1=text(plist); 
+    tmp1=RSform(tmp1);// 17.12.23(2lines)
     tmp=name+"=Rotatedata("+tmp1+","
-	  +textformat(angle,5)+","+textformat(Pt,5)+")";
+	  +textformat(angle,5)+","+RSform(textformat(Pt,5))+")"; //17.12.23
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -214,11 +212,9 @@ Translatedata(nm,plist,mov,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
-//    tmp1=textformat(plist,5);
-    tmp1=text(plist); // 15.10.15
-    tmp1=replace(tmp1,"[","list(");
-    tmp1=replace(tmp1,"]",")");
-    tmp=name+"=Translatedata("+tmp1+","+textformat(mov,5)+")";
+    tmp1=text(plist); 
+    tmp1=RSform(tmp1);// 17.12.23
+    tmp=name+"=Translatedata("+tmp1+","+RSform(textformat(mov,5))+")";
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -294,11 +290,10 @@ Scaledata(nm,plist,rx,ry,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
-    tmp1=text(plist);  // 15.10.15
-    tmp1=replace(tmp1,"[","list(");
-    tmp1=replace(tmp1,"]",")");
+    tmp1=text(plist); 
+    tmp1=RSform(tmp1); // 17.12.23
     tmp=name+"=Scaledata("+tmp1+","
-	  +textformat(rx,5)+","+textformat(ry,5)+","+textformat(Pt,5)+")";
+	  +textformat(rx,5)+","+textformat(ry,5)+","+RSform(textformat(Pt,5))+")";
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -372,11 +367,9 @@ Reflectdata(nm,plist,symL,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
 	tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
-//    tmp1=textformat(plist,5);
-    tmp1=text(plist); // 15.10.15
-    tmp1=replace(tmp1,"[","list(");
-    tmp1=replace(tmp1,"]",")");
-    tmp=name+"=Reflectdata("+tmp1+","+textformat(symL,5)+")";
+    tmp1=text(plist); 
+    tmp1=RSform(tmp1);// 17.12.23
+    tmp=name+"=Reflectdata("+tmp1+","+RSform(textformat(symL,5))+")";//17.12.23
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -826,9 +819,9 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
     tmp=name+"="+textformat(out,5);
     parse(tmp);
     tmp1=textformat(ptlist,5);
-    tmp1="list("+substring(tmp1,1,length(tmp1)-1)+")";
+    tmp1=RSform(tmp1,2); //17.12.23
     tmp2=textformat(ctrlist,5);
-    tmp2="list("+substring(tmp2,1,length(tmp2)-1)+")";
+    tmp2=RSform(tmp2,3); //17.12.23
     GLIST=append(GLIST,name+"=Bezier("+tmp1+","+tmp2+opstr+")");
   );
   if(Noflg<2,
@@ -2279,6 +2272,7 @@ Sciform(list):=(
 
 RSform(str):=RSform(str,3);
 RSform(str,listfrom):=(
+//help:RSform(string,listfrom);
   regional(posL,mxlv,rep1,rep2,rep3,prev,out,
     tmp,tmp1,tmp2);
   rep1="c("; rep2="c("; rep3="list(";
@@ -2378,137 +2372,108 @@ Defvar(name,value):=(
   VLIST=prepend([name,value],VLIST);
 );
 
-IftoR(strorg):=( // 17.09.16
-  regional(str,ifL,ppL,cpL,kk,Lv,no,out,prev,
-      tmp,tmp1,tmp2);
-  str=replace(strorg,LFmark,"");
-  ifL=Indexall(str,"if(");
-  ifL=apply(ifL,#+2);
-  if(length(ifL)>0,
+IftoR(strorg):=(
+  regional(str,pre,post,sub,ppL,ifstr,out,tmp,tmp1,tmp2);
+  str=strorg;
+  ifstr=indexof(str,"if(");
+  if(ifstr==0,
+    out=replace(str,",","}else{");
+  ,
+    pre=substring(str,0,ifstr-1)+"if(";
     ppL=Bracket(str,"()");
-    tmp2=[];
-    forall(ifL,kk,
-      tmp=select(ppL,#_1==kk);
-      tmp1=select(ppL,#_2==-tmp_1_2);
-      tmp2=append(tmp2,[kk,tmp1_1_1,tmp_1_2]);
-    );
-    ifL=tmp2;
-    cpL=[];
-    forall(1..(length(str)),kk,
-      if(substring(str,kk-1,kk)==",",
-        tmp1=select(ifL,#_1<kk & kk<#_2);
-        Lv=max(apply(tmp1,#_3));
-        tmp=select(cpL,#_2==Lv);
-        no=length(tmp)+1;
-        cpL=append(cpL,[kk,Lv,no]);
-      );
-      if(contains(ifL,kk),
-        tmp1=select(ifL,#_1<kk & kk<#_2);
-        Lv=max(apply(tmp1,#_3));
-        tmp=select(cpL,#_2==Lv);
-        no=length(tmp)+1;
-        cpL=append(cpL,[kk,Lv,no]);
-      );
-    );
-    forall(ifL,
-      str_(#_2)="}";
-    );
-    out="";
-    prev=0;
-    forall(cpL,
-      out=out+substring(str,prev,#_1-1);
-      prev=#_1;
-      if(#_3==1,out=out+"){");
-      if(#_3==2,out=out+"}else{");
-    );
-    out=out+substring(str,prev,length(str));
+    tmp1=ifstr+2;
+    tmp=select(ppL,#_1==tmp1);
+    tmp=select(ppL,#_2==-tmp_1_2);
+    tmp2=tmp_1_1;
+    sub=substring(str,tmp1,tmp2-1);
+    post="}"+substring(str,tmp2,length(str));
+    tmp=indexof(sub,",");
+    tmp1=substring(sub,0,tmp-1);
+    tmp2=substring(sub,tmp,length(sub));
+    sub=tmp1+"){"+tmp2;
+    tmp=IftoR(sub);
+    out=pre+tmp+"}";
   );
+  out;
 );
 
-FortoR(strorg):=( // 17.09.16
-  regional(str,frL,ppL,cpL,kk,Lv,no,out,prev,
-      tmp,tmp1,tmp2);
-  str=replace(strorg,LFmark,"");
-  frL=Indexall(str,"forall(");
-  frL=apply(frL,#+6);
-  if(length(frL)>0,
+FortoR(strorg):=(
+  regional(str,pre,post,sub,ppL,forstr,out,tmp,tmp1,tmp2);
+  str=strorg;
+  forstr=indexof(str,"forall(");
+  if(forstr==0,
+    out=str;
+  ,
+    pre=substring(str,0,forstr-1)+"for(";
     ppL=Bracket(str,"()");
-    tmp2=[];
-    forall(frL,kk,
-      tmp=select(ppL,#_1==kk);
-      tmp1=select(ppL,#_2==-tmp_1_2);
-      tmp2=append(tmp2,[kk,tmp1_1_1,tmp_1_2]);
-    );
-    frL=tmp2;
-    cpL=[];
-    forall(1..(length(str)),kk,
-      if(substring(str,kk-1,kk)==",",
-        tmp1=select(frL,#_1<kk & kk<#_2);
-        Lv=max(apply(tmp1,#_3));
-        tmp=select(cpL,#_2==Lv);
-        no=length(tmp)+1;
-        cpL=append(cpL,[kk,Lv,no]);
-      );
-      if(contains(frL,kk),
-        tmp1=select(frL,#_1<kk & kk<#_2);
-        Lv=max(apply(tmp1,#_3));
-        tmp=select(cpL,#_2==Lv);
-        no=length(tmp)+1;
-        cpL=append(cpL,[kk,Lv,no]);
-      );
-    );
-    forall(frL,
-      str_(#_2)="}";
-    );
-    out="";
-    prev=0;
-    forall(cpL,
-      if(#_3==1,
-        tmp1=substring(str,prev,#_1-1);
-        tmp=indexof(tmp1,"(");
-        tmp1=substring(tmp1,tmp,length(tmp1));
-        tmp1=replace(tmp1,"..",":");
-      );
-      if(#_3==2,
-        tmp2=substring(str,prev,#_1-1);
-        out=out+"for("+tmp2+" in "+tmp1+"){";
-      );
-      prev=#_1;
-    );
-    out=out+substring(str,prev,length(str));
+    tmp1=forstr+6;
+    tmp=select(ppL,#_1==tmp1);
+    tmp=select(ppL,#_2==-tmp_1_2);
+    tmp2=tmp_1_1;
+    sub=substring(str,tmp1,tmp2-1);
+    post="}"+substring(str,tmp2,length(str));
+    tmp=indexof(sub,",");
+    tmp1=substring(sub,0,tmp-1);
+    tmp2=substring(sub,tmp,length(sub));
+    sub=tmp1+"){"+tmp2;
+    tmp1=indexof(sub,"{");
+    tmp2=indexof(sub,",");
+    tmp=substring(sub,tmp1,tmp2-1);
+    pre=pre+tmp+" in "+substring(sub,0,tmp1-1)+"{";
+    sub=substring(sub,tmp2,length(sub));
+    tmp=FortoR(sub);
+    out=pre+tmp+"}";
   );
+  out=replace(out,"..",":");
+  out;
 );
 
 Deffun(name,bodylist):=(
 //help:Deffun("f(x)",["regional(y)","y=x^2*(x-3)","y"]);
-  regional(funstr,tmp,tmp1,str,Pos);
+  regional(funstr,str,Pos,nbody,bdy,ppL,bpL,excma,tmp,tmp1,tmp2);
   funstr=name+":=(";
   forall(bodylist,
     funstr=funstr+#+";";
   );
   funstr=funstr+");";
   parse(funstr);
-  tmp=indexof(name,"("); // 17.09.15from
+  tmp=indexof(name,"("); 
   str=substring(name,0,tmp-1)+"<-function(";
   str=str+substring(name,tmp,length(name))+"{";
-  forall(1..(length(bodylist)-1),
-    tmp1=bodylist_#;
-    tmp1=replace(tmp1,LFmark,"");
-    tmp1=replace(tmp1," ","");
-    Pos=indexof(tmp1,"regional")+indexof(tmp1,"local");
+  forall(1..(length(bodylist)-1),nbody,
+    bdy=bodylist_nbody;
+    Pos=indexof(bdy,"regional")+indexof(bdy,"local");
     if(Pos==0,
-      tmp=RSform(tmp1);
-      if(indexof(tmp,"if(")>0,
-        tmp=iftoR(tmp);
+      bdy=replace(bdy,LFmark,"");
+      bdy=replace(bdy," ","");
+      ppL=Bracket(bdy,"()");
+      bpL=Bracket(bdy,"[]");
+      tmp1=select(bpL,#_2==1);
+      tmp2=select(bpL,#_2==-1);
+      excma=[];
+      forall(1..(length(tmp1)),
+        excma=append(excma,[tmp1_#_1,tmp2_#_1]);
       );
-      if(indexof(tmp,"forall(")>0, 
-        tmp=FortoR(tmp);
-      ); 
-      str=str+tmp+";";
+      tmp1=Indexall(bdy,",");
+      forall(tmp1,cma,
+        tmp=select(excma,(#_1<cma)&(cma<#_2));
+        if(length(tmp)>0,
+          bdy=substring(bdy,0,cma-1)+"'"+substring(bdy,cma,length(bdy));
+        );
+      );
+      tmp=indexof(bdy,"forall");
+      if(tmp>0,
+        bdy=FortoR(bdy);
+      );
+      tmp=indexof(bdy,"if(");
+      if(tmp>0,
+        bdy=IftoR(bdy);
+      );
+      bdy=RSform(replace(bdy,"'",","));
+      str=str+bdy+";";
     );
   );
   str=str+"return("+bodylist_(length(bodylist))+")}";
-  //17.09.15upto
   FUNLIST=append(FUNLIST,str);
 );
 
@@ -2587,6 +2552,7 @@ Windispg(pltdata):=(
   layer(0);
 );
 
+WritetoSci():=WritetoRS(); //17.12.19
 WritetoRS():=WritetoRS(FnameR);// 17.09.17from
 WritetoRS(Arg):=(
   regional(string,filename,shch,tmp1,tmp2);
@@ -3804,49 +3770,71 @@ Setslidebody(str,style,density):=( // 16.12.22,17.01.06,01.08
   ThinDense=density;//17.01.08
 );
 
-Setslidehyper():=Setslidehyper(["cl=true,lc=blue,fc=blue",125,70,1]);
-// 16.12.31from
+Setslidehyper():=( 17.12.16from
+  Setslidehyper(["cl=true,lc=blue,fc=blue",125,70,1]);
+);
 Setslidehyper(Arg):=(
   if(isstring(Arg),
-    if(length(Arg)==0, //17.01.29from
-      Setslidehyper();
-    ,
-      Setslidehyper(Arg,[]);
-    );//17.01.29upto
-  ,  
-    Setslidehyper("dvipdfmx",Arg);
+    Setslidehyper(Arg,["cl=true,lc=blue,fc=blue",125,70,1]);
+  ,
+    Setslidehyper("",Arg);
   );
 );
-Setslidehyper(driver,options):=(
+Setslidehyper(driverorg,options):=(
 //help:Setslidehyper();
-//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue",125,70,1]);
-  regional(reL,stL,tmp,tmp1,tmp2,str,reL);
-  str="";
-  reL=[];
-  forall(options,
-    if(isstring(#),
-      str=#
-    ,
-      reL=append(reL,#);
+//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue","Pos=[125,70]","Size=1"]);
+  regional(driver,eqL,reL,stL,,str,tmp,tmp1,tmp2);
+  driver=driverorg;
+  if(length(driver)==0,
+    if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
+      driver="dvipdfmx";
     );
   );
-  if(length(str)>0,str=","+str);
-  tmp1="";
-  if(length(driver+str)>0,
-    tmp1="["+driver+str+"]";
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  reL=tmp_6;
+  stL=tmp_7;
+  if(length(stL)>0,
+    str=stL_1;
+  ,
+    str="";
+  );
+  if(length(str)==0,
+    str="cl=true,lc=blue,fc=blue";
+  );
+  if(length(driver)==0,
+    tmp1="["+str+"]";
+  ,
+    tmp1="["+driver+","+str+"]";
   );
   tmp1=replace(tmp1,"cl=","colorlinks=");
   tmp1=replace(tmp1,"lc=","linkcolor=");
   tmp1=replace(tmp1,"fc=","filecolor=");
   tmp1=replace(tmp1,"uc=","urlcolor=");
+  ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
   Addpackage(tmp1+"{hyperref}");
   LinkPosH=125;
   LinkPosV=70;
   LinkSize=1;
-  if(length(reL)>0,LinkPosH=reL_1);
-  if(length(reL)>1,LinkPosV=reL_2);
-  if(length(reL)>2,LinkSize=max(reL_3,0.1)); // 17.07.31
-);
+  if(length(reL)>0,
+    LinkPosH=reL_1;
+    if(length(reL)>1,LinkPosV=reL_2);
+    if(length(reL)>2,LinkSize=max(reL_3,0.1));
+  );
+  forall(eqL,
+    tmp=indexof(#,"=");
+    tmp1=Toupper(substring(#,0,1));
+    tmp2=substring(#,tmp,length(#));
+    tmp2=parse(tmp2);
+    if(tmp1=="P",
+      LinkPosH=tmp2_1;
+      LinkPosV=tmp2_2;
+    );
+    if(tmp1=="S",
+      LinkSize=max(tmp2,0.1);
+    );
+  );
+); //17.12.16upto
 
 Settitle(cmdL):=Settitle("slide0",cmdL,[]);
 Settitle(Arg1,Arg2):=(

@@ -1,3 +1,5 @@
+// 2017.10.23
+//    Rotatedata3d, Translatedata3d debugged  ([])
 // 2017.10.08
 //    Bezier3,Putbezier3data,Mkbezierptcrv3d greatly changed
 // 2017.10.07

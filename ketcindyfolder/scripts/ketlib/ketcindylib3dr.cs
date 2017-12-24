@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(2017.10.07) loaded");
+println("ketcindylib3d(2017.12.23) loaded");
 
 //help:start();
 
@@ -1290,9 +1290,10 @@ Rotate3data(nm,P3data,w1,w2,options):=(
     tmp1=Projpara(name3,["nodata"]);
     tmp=name2+"="+textformat(tmp1,5);
     parse(tmp);
-    tmp=text(P3data);
-    tmp=replace(tmp,"[","list(");
-    tmp=replace(tmp,"]",")");
+    tmp=textformat(P3data,5); // 17.12.23
+    tmp=RSform(tmp); // 17.12.23
+//    tmp=replace(tmp,"[","list(");
+//    tmp=replace(tmp,"]",")");
     tmp=name3+"=Rotate3data("+tmp+","
 	       +textformat(w1,5)+","+textformat(w2,5)+opstr+")";
     GLIST=append(GLIST,tmp);
@@ -1377,9 +1378,11 @@ Translate3data(nm,P3data,w1,options):=(
     tmp1=Projpara(name3,["nodata"]);
     tmp=name2+"="+textformat(tmp1,5);
     parse(tmp);
-    tmp=text(P3data);
-    tmp=replace(tmp,"[","list(");
-    tmp=replace(tmp,"]",")");
+    tmp=textformat(P3data,5); // 17.12.23
+    tmp=RSform(tmp); // 17.12.23
+//    tmp=text(P3data);
+//    tmp=replace(tmp,"[","list(");
+//    tmp=replace(tmp,"]",")");
     tmp=name3+"=Translate3data("+tmp+","+textformat(w1,5)+")";
     GLIST=append(GLIST,tmp);
     tmp=name2+"=Projpara("+name3+")";

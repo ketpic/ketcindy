@@ -1,3 +1,12 @@
+//2017.12.24
+//    IftoR, FortoR,Deffun rewritten
+//2017.12.23
+//    Bezier, Translatedata,Rotatedata,Reflectdata debugged  ( [ ] )
+//    RSform : help added
+//2017.12.19
+//    WritetoSci() added (=WritetoR(),  for old Parent button ) 
+//2017.12.16
+//    Setslidehyper changed ("Size=","Pos=[]")
 //2017.12.09
 //    Mkslides changed (for animation)
 //    MakeRarg (from Makesciarg ) added ( RSslash )

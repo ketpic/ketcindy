@@ -29,9 +29,12 @@ then
         echo "Cannot find $BinaryName!" >&2
         exit 1
       fi
+      ;;
     *)
       echo "Cannot find $BinaryName!" >&2
       exit 1
+      ;;
+  esac
 fi
 
 if [ ! -x "$cinderella" ] ; then

@@ -11,34 +11,36 @@ fi
 
 mkdir texmf
 git archive --format=tar --prefix=ketcindy/ HEAD | (cd texmf && tar xf -)
-mkdir -p texmf/doc/support/ketcindy
-mkdir -p texmf/scripts/ketcindy/ketfiles
-mkdir -p texmf/tex/latex/ketcindy
+mkdir -p texmf/doc/support/ketcindy/
+mkdir -p texmf/scripts/ketcindy/
+mkdir -p texmf/tex/latex/ketcindy/
 
 cd texmf
 
 # tex hierarchy
-mv ketcindy/ketpicstyle/*.sty tex/latex/ketcindy
-rmdir ketcindy/ketpicstyle
+mv ketcindy/ketcindyfolder/style/* tex/latex/ketcindy/
+rmdir ketcindy/ketcindyfolder/style
 
 # scripts
-mv ketcindy/ketlib ketcindy/ketlibC ketcindy/ketoutset.txt ketcindy/setketcindy.txt \
-   ketcindy/data ketcindy/scripts/ketcindy.sh ketcindy/ketjava \
-   scripts/ketcindy
-mv ketcindy/ketfiles/allbuttons.cdy ketcindy/ketfiles/template.cdy scripts/ketcindy/ketfiles
+mv ketcindy/ketcindyfolder/scripts/* scripts/ketcindy/
+rmdir ketcindy/ketcindyfolder/scripts
+
+mv ketcindy/scripts/ketcindy.sh scripts/ketcindy/
 chmod 0755 scripts/ketcindy/ketcindy.sh
 
 # doc
-mv ketcindy/CindyJS ketcindy/ketmanual ketcindy/ketfiles/ketsample \
-   ketcindy/LICENSE ketcindy/source \
-   ketcindy/ketfiles/ScriptDraw.txt ketcindy/ketfiles/ScriptInitialization.txt \
-   ketcindy/ketfiles/ScriptKeytyped.txt \
-   doc/support/ketcindy
-for i in TODO README.TeXLive ; do
+mv ketcindy/ketcindyfolder/doc/* doc/support/ketcindy/
+for i in LICENSE README.TeXLive ; do
   if [ -r ketcindy/$i ] ; then
     mv ketcindy/$i doc/support/ketcindy
   fi
 done
+rmdir ketcindy/ketcindyfolder/doc
+# 
+mv ketcindy/ketcindyfolder/work doc/support/ketcindy/
+
+# now the ketcindyfolder dir should be empty
+rmdir ketcindy/ketcindyfolder
 
 # the rest should be files that can be removed:
 rm ketcindy/scripts/update-permissions.sh
@@ -46,11 +48,8 @@ rm ketcindy/scripts/export-to-texmf.sh
 # now the scripts dir should be empty
 rmdir ketcindy/scripts
 
-# now the ketfiles dir should be empty
-rmdir ketcindy/ketfiles
-
-rm ketcindy/setketcindyr.txt
-rm ketcindy/setketcindysci.txt
+# dropped unpacked files
+rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows
 
 # now all should be gone
 rmdir ketcindy

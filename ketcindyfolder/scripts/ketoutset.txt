@@ -63,7 +63,7 @@ if(islinux(),
 
 if(isstring(Homehead),
   setdirectory(Homehead+pathsep()+getname());
-  import("ketcidyhead.txt");
+  import("ketcindyhead.txt");
 ,
   Dirfile=gethome()+pathsep()+"ketcindy";
 );

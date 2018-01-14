@@ -146,7 +146,7 @@ rem for Scilab
 echo Pathpdf="%prgSm%"; >> dirheadsci.txt
 echo setdirectory(Homehead+pathsep()+getname()); >> dirhead.txt
 echo setdirectory(Homehead+pathsep()+getname()); >> dirheadsci.txt
-echo import("ketcidyhead.txt"); >> dirhead.txt
-echo import("ketcidyhead.txt"); >> dirheadsci.txt
+echo import("ketcindyhead.txt"); >> dirhead.txt
+echo import("ketcindyhead.txt"); >> dirheadsci.txt
 echo "Plugins of Cindy has been set"
 pause

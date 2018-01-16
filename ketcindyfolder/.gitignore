@@ -1,1 +1,5 @@
 .Rhistory
+*.aux
+*.log
+*.synctex.gz
+*.toc

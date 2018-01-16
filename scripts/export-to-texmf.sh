@@ -35,9 +35,6 @@ for i in LICENSE README.TeXLive ; do
     mv ketcindy/$i doc/support/ketcindy
   fi
 done
-for i in CindyJS ketsample ; do
-  mv doc/support/ketcindy/work/$i doc/support/ketcindy
-done
 rmdir ketcindy/ketcindyfolder/doc
 # 
 mv ketcindy/ketcindyfolder/work doc/support/ketcindy/

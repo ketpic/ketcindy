@@ -36,8 +36,16 @@ for i in LICENSE README.TeXLive ; do
   fi
 done
 rmdir ketcindy/ketcindyfolder/doc
-# 
-mv ketcindy/ketcindyfolder/work doc/support/ketcindy/
+
+# work stuff
+mv ketcindy/ketcindyfolder/work/CindyJS doc/support/ketcindy/
+mv ketcindy/ketcindyfolder/work/ketsample doc/support/ketcindy/
+mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/template2advanced.cdy scripts/ketcindy/
+for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt ; do
+  mv ketcindy/ketcindyfolder/work/$i doc/support/ketcindy/
+done
+rmdir ketcindy/ketcindyfolder/work
 
 # now the ketcindyfolder dir should be empty
 rmdir ketcindy/ketcindyfolder
@@ -45,6 +53,7 @@ rmdir ketcindy/ketcindyfolder
 # the rest should be files that can be removed:
 rm ketcindy/scripts/update-permissions.sh
 rm ketcindy/scripts/export-to-texmf.sh
+rm ketcindy/.gitignore
 # now the scripts dir should be empty
 rmdir ketcindy/scripts
 

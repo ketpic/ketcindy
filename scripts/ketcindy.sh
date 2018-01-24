@@ -7,7 +7,7 @@
 #
 
 BinaryName=Cinderella2
-TemplateFile=template.cdy
+TemplateFile=template1basic.cdy
 systype=`uname`
 
 if [ "$1" = "-c" ]

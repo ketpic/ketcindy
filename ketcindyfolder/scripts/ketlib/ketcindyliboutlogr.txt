@@ -1,3 +1,5 @@
+// 2018.01.07
+//   Hatchdata debugged  (fun removed )
 // 2017.12.24
 //   Mkobjpoly,Mkobjplate debugged
 //   Changeobjscalce changed for R

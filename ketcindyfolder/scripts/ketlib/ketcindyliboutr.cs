@@ -1119,17 +1119,10 @@ Hatchdata(nm,iostr,pltlist):=Hatchdata(nm,iostr,pltlist,[]);
 Hatchdata(nm,iostr,pltlist,optionorg):=( //17.09.18
 //help:Hatchdata("1","ii",[["gr1"],["gr2","n"]]);
 //help:Hatchdata(options=["Wait=5"]);
-  regional(options,name,fun,eqL,reL,strL,
+  regional(options,name,eqL,reL,strL,
      plt,fname,options,tmp,tmp1,tmp2,tmp3,flg,wflg,waiting);
   name="ha"+nm;
   fname=Fhead+name+".txt";
-  fun=fnorg;
-  tmp=indexof(fun,"=");
-  if(tmp>0,
-    tmp1=substring(fun,0,tmp-1);
-    tmp2=substring(fun,tmp,length(fun));
-    fun=tmp1+"-("+tmp2+")";
-  );
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;

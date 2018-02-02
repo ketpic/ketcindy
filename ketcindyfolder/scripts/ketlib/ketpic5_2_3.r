@@ -16,8 +16,16 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_3(17.12.24)" 
+ThisVersion<- "KeTpic for R  v5_2_3(18.02.02)" 
 
+# 2018.02.02
+#   Enclosing2 changed ( for distant curves, startpt option removed )
+# 2018.02.01
+#   Intersectline,Intersectseg,...,Intersectcuves added
+#   Quicksort added
+#   Enclosing2 added (incomplete)
+# 2018.01.29
+#   Length added
 # 2017.12.24
 #   Objpolyhedron added
 # 2017.12.23
@@ -541,6 +549,34 @@ return(c())
 Stripblanks<- function(Ch){
   Tmp<- gsub(" ","",Ch,fixed=TRUE)
   return(Tmp)
+}
+
+Quicksort<- function(seqL,key){ #18.02.01
+  if(length(seqL)<2){
+    out=seqL
+  }else{
+    tmp1=Op(1,seqL)
+    tmp2=Op(2,seqL)
+    if(Op(key,tmp1)>=Op(key,tmp2)){
+      pivot = tmp1
+    }else{
+      pivot=tmp2
+    }
+    left = list()
+    right = list()
+    for(ii in 1:length(seqL)){
+      tmp=Op(ii,seqL)
+      if(Op(key,tmp)< Op(key,pivot)){
+        left=c(left,list(tmp))
+      }else{
+        right=c(right,list(tmp))
+      }
+    }
+    left = Quicksort(left,key)
+    right = Quicksort(right,key)
+    out=c(left,right)
+  }
+  return(out)
 }
 
 Derivative<- function(...)
@@ -4545,62 +4581,50 @@ Naigai<- function(A,Bdy)
 
 ########################################
 
-Nearestpt<-function(...)
-{
-  varargin<-list(...)
-  Nargs<-length(varargin)
-  PL1<-varargin[[1]]
-  if (!is.matrix(PL1))
-  {
-    Tmp<-matrix(PL1);
-    PL1<-t(Tmp)
+Nearestpt<- function(...){
+  varargin<- list(...)
+  Nargs<- length(varargin)
+  PL1<- varargin[[1]]
+  if (!is.matrix(PL1)){
+    Tmp<- matrix(PL1);
+    PL1<- t(Tmp)
   }
   if (Nrow(PL1)==1) Flg=0
   else Flg=1
-  Eps<-10.0^(-6)
-  PL<-varargin[[2]]
-  Ans<-list(PL1[1,],1,PL[1,],1,Norm(PL1[1,]-PL[1,]))
-  for (N in 1:Nrow(PL1))
-  {
-    PA<-PL1[N,]
-    Pm<-PL[1,]
-    Im<-1
-    Sm<-Norm(Pm-PA)
-    for (I in 1:(Nrow(PL)-1))
-    {
-      A1<-PL[I,1]; A2<-PL[I,2]
-      B1<-PL[I+1,1]; B2<-PL[I+1,2]
-      V1<-B1-A1; V2<-B2-A2
-      X1<-PA[1]; X2<-PA[2]
+  Eps<- 10.0^(-6)
+  PL<- varargin[[2]]
+  Ans<- list(PL1[1,],1,PL[1,],1,Norm(PL1[1,]-PL[1,]))
+  for(N in Looprange(1,Nrow(PL1))){
+    PA<- PL1[N,]
+    Pm<- PL[1,]
+    Im<- 1
+    Sm<- Norm(Pm-PA)
+    for(I in Looprange(1,Nrow(PL)-1)){
+      A1<- PL[I,1]; A2<-PL[I,2]
+      B1<- PL[I+1,1]; B2<-PL[I+1,2]
+      V1<- B1-A1; V2<-B2-A2
+      X1<- PA[1]; X2<-PA[2]
       Tmp<-V2^2+V1^2
       if (abs(Tmp)<Eps) next
-      T<-(-A2*V2-V1*A1+V1*X1+X2*V2)/Tmp
-      if (T< -Eps)
-      {
-        P<-c(A1,A2)
-      }
-      else
-      {
-        if (T>1+Eps)
-        {
-          P<-c(B1,B2)
-        }
-        else
-        {
-          P<-c(A1+T*V1,A2+T*V2)
+      T<- (-A2*V2-V1*A1+V1*X1+X2*V2)/Tmp
+      if (T< -Eps){
+        P<- c(A1,A2)
+      }else{
+        if (T>1+Eps){
+          P<- c(B1,B2)
+        }else{
+          P<- c(A1+T*V1,A2+T*V2)
         }
       }
-      S<-Norm(P-PA)
-      if (S<Sm-Eps)
-      {
-        Tmp<-Paramoncrv(P,I,PL)
-        Pm<-P; Im<-Tmp; Sm<-S
+      S<- Norm(P-PA)
+      if (S<Sm-Eps){
+        Tmp<- Paramoncrv(P,I,PL)
+        Pm<- P; Im<- Tmp; Sm<- S
       }
     }
-    if (Sm<Ans[[5]]) Ans<-list(PA,N,Pm,Im,Sm)
-    if (Flg==0)
-    {
-      Ans<-Ans[3:5]
+    if (Sm<Op(5,Ans)) Ans<- list(PA,N,Pm,Im,Sm)
+    if (Flg==0){
+      Ans<- Ans[3:5]
     }
   }
   return(Ans)
@@ -4623,6 +4647,13 @@ Newlength<- function()
 Numptcrv<-function(Fig)
 {
   return(Nrow(Fig))
+}
+
+# 2018.01.29
+Length<- function(Data){
+  if(is.matrix(Data)){return(nrow(Data))}
+  if(is.character(Data)){return(nchar(Data))}
+  return(length(Data))
 }
 
 #########################################
@@ -12096,3 +12127,534 @@ Symb3data<- function(Moji,Size,Kaiten,NV,Pos){
   Flattenlist(GY1)
 }
 
+############## New Intersect 18.02.01 #############
+
+Intersectline<- function(p1,v1,p2,v2){
+  Eps=10^(-5)
+  tmp=Dotprod(v1,v2)
+  tmp1=c(tmp,Norm(v1)^2)
+  tmp2=c(-Norm(v2)^2,-tmp)
+  tmp3=c(Dotprod(p2-p1,v2),Dotprod(p2-p1,v1))
+  d=Crossprod(tmp1,tmp2)
+  tmp=abs(Crossprod(v1,v2))
+  if(tmp>Eps){
+    dt=Crossprod(tmp3,tmp2)
+    ds=Crossprod(tmp1,tmp3)
+    t=dt/d
+    s=ds/d
+    pt=p1+v1*t
+    out=list(pt,t,s)
+  }else{
+    tmp1=Crossprod(p2-p1,v1)/Norm(v1)
+    out=list(abs(tmp1))
+  }
+  return(out)
+}
+
+Intersectseg<- function(...){
+  varargin=list(...)
+  Nargs=length(varargin)
+  Eps=10^(-4)
+  Eps1=0.01
+  seg1=varargin[[1]]
+  seg2=varargin[[2]]
+  if(Nargs>2){Eps1=varargin[[3]]}
+  p1=Op(1,seg1); q1=Op(2,seg1)
+  p2=Op(1,seg2); q2=Op(2,seg2)
+  if((Norm(q1-p1)<Eps)||(Norm(q2-p2)<Eps)){
+    out=list(-1)
+  }else{
+    tmp=Intersectline(p1,q1-p1,p2,q2-p2)
+    if(length(Op(1,tmp))>1){
+      pt=Op(1,tmp); t=Op(2,tmp); s=Op(3,tmp)
+      if((t*(t-1)<Eps)&&(s*(s-1)<Eps)){
+        out=list(0,pt,t,s)
+      }else{
+        t=min(max(t,0),1)
+        s=min(max(s,0),1)
+        tmp3=c(Norm(p1-p2),Norm(p1-q2),Norm(p2-p1),Norm(p2-q1))
+        tmp1=c(Op(2,q2-p2),-Op(1,q2-p2))
+        tmp=Intersectline(p1,tmp1,p2,q2-p2)
+        if(length(Op(1,tmp))>1){
+          if(Op(3,tmp)*(Op(3,tmp)-1)<Eps){
+            tmp3=c(tmp3,Norm(Op(1,tmp)-p1))
+          }
+        }
+        tmp=Intersectline(q1,tmp1,p2,q2-p2)
+        if(length(Op(1,tmp))>1){
+          if(Op(3,tmp)*(Op(3,tmp)-1)<Eps){
+            tmp3=c(tmp3,Norm(Op(1,tmp)-q1))
+          }
+        }
+        tmp1=c(Op(2,q1-p1),-Op(1,q1-p1))
+        tmp=Intersectline(p2,tmp1,p1,q1-p1);
+        if(length(Op(1,tmp))>1){
+          if(Op(3,tmp)*(Op(3,tmp)-1)<Eps){
+            tmp3=c(tmp3,Norm(Op(1,tmp)-p2))
+          }
+        }
+        if(length(Op(1,tmp))>1){
+          if(Op(3,tmp)*(Op(3,tmp)-1)<Eps){
+            tmp3=c(tmp3,Norm(Op(1,tmp)-q2))
+          }
+        }
+        out=list(min(tmp3),pt,t,s)
+      }
+    }else{
+      dist=tmp[[1]]
+      tmp1=q1-p1
+      n=c(tmp1[2],-tmp1[1])/Norm(tmp1)
+      pts=list()
+      tmp=Intersectline(p1,n,p2,q2-p2)
+      if(tmp[[3]]*(tmp[[3]]-1)<Eps){
+        tmp1=(1-tmp[[3]])*p2+tmp[[3]]*q2
+        pts=c(pts,list(list(tmp1,0,tmp[[3]])))
+      }
+      tmp=Intersectline(q1,n,p2,q2-p2)
+      if(tmp[[3]]*(tmp[[3]]-1)<Eps){
+        tmp1=(1-tmp[[3]])*p2+tmp[[3]]*q2
+        pts=c(pts,list(list(tmp1,1,tmp[[3]])))
+      }
+      tmp=Intersectline(p2,n,p1,q1-p1)
+      if(tmp[[3]]*(tmp[[3]]-1)<Eps){
+        tmp1=(1-tmp[[3]])*p1+tmp[[3]]*q1
+        pts=c(pts,list(list(tmp1,tmp[[3]],0)))
+      }
+      tmp=Intersectline(q2,n,p1,q1-p1)
+      if(tmp[[3]]*(tmp[[3]]-1)<Eps){
+        tmp1=(1-tmp[[3]])*p1+tmp[[3]]*q1
+        pts=c(pts,list(list(tmp1,tmp[[3]],2)))
+      }
+      if(length(pts)==0){
+        tmp1=min(Norm(p2-p1),Norm(q2-p1),Norm(p2-q1),Norm(q2-q1))
+        out=list(tmp1)
+      }else{
+        if(dist>Eps1){
+          out=list(dist)
+        }else{
+          tmp=c();
+          for(j in 1:length(pts)){
+            tmp=Appendrow(tmp,Op(1,pts[[j]]))
+          }
+          tmp1=sum(tmp[,1])/(length(pts))
+          tmp2=sum(tmp[,2])/(length(pts))
+          tmp3=c(tmp1,tmp2)
+          tmp=Nearestpt(tmp3,seg1)
+          tmp1=tmp[[2]]
+          tmp=Nearestpt(tmp3,seg2)
+          tmp2=tmp[[2]]
+          out=list(dist,tmp3,tmp1,tmp2)
+        }
+      }
+    }
+  }
+  return(out)
+}
+
+Osplineseg<- function(...){
+  varargin=list(...)
+  Nargs=length(varargin)
+  Eps=10^(-2)
+  Eps0=10^(-6)
+  list=varargin[[1]]
+  Numstr="Num=20"
+  if(Nargs>1){
+    Numstr=varargin[[2]]
+  }
+  p0=Op(1,list); p1=Op(2,list); p2=Op(3,list); p3=Op(4,list)
+  tmp=Norm(p2-p0)*Norm(p3-p1)
+  tmp=1+sqrt((1+Dotprod(p2-p0,p3-p1)/tmp)/2)
+  cc=4*Norm(p2-p1)/3/(Norm(p2-p0)+Norm(p3-p1))/tmp
+  pQ=p1+cc*(p2-p0)
+  pR=p2+cc*(p1-p3)
+  ctrL=list(c(pQ,pR))
+  out=Bezier(list(p1,p2),ctrL,Numstr)
+  return(out)
+}
+
+Intersectpartseg<- function(...){
+  varargin=list(...)
+  Nargs=length(varargin)
+  crv1=varargin[[1]]
+  crv2=varargin[[2]]
+  ii=varargin[[3]]
+  jj=varargin[[4]]
+  Eps1=varargin[[5]]
+  Eps2=varargin[[6]]
+  Dist=10*Eps2
+  if(Nargs>6){Dist=varargin[[7]]}
+  Eps=10^(-4)
+  out=list()
+  seg1=Listplot(Op(ii,crv1),Op(ii+1,crv1))
+  seg2=Listplot(Op(jj,crv2),Op(jj+1,crv2))
+  tmp1=Op(2,seg1)-Op(1,seg1)
+  tmp2=Op(2,seg2)-Op(1,seg2)
+  snang=abs(Crossprod(tmp1,tmp2))/(Norm(tmp1)*Norm(tmp2))
+  tmp=Intersectseg(seg1,seg2,Eps1)
+  dst=Op(1,tmp)
+  if(dst<Eps){
+    out=list(Op(2,tmp),ii+Op(3,tmp),jj+Op(4,tmp),dst,snang)
+  }else{
+    if(dst<Eps2){
+      if((Length(crv1)==2)||(Norm(Op(2,seg1)-Op(1,seg1))>Dist-Eps)){
+        os1=seg1
+      }else{
+        p1=Op(1,seg1); p2=Op(2,seg1)
+        if(ii==1){
+          p3=Op(3,crv1)
+          tmp=p2-p1
+          tmp=(p1+p2)/2+c(Op(2,tmp),-Op(1,tmp))
+          p0=Reflectdata(p3,c((p1+p2)/2,tmp))
+        }else{
+          if(ii==Length(crv1)-1){
+            p0=Op(ii-1,crv1)
+            tmp=p2-p1
+            tmp=(p1+p2)/2+c(Op(2,tmp),-Op(1,tmp))
+            p3=Reflectdata(p0,c((p1+p2)/2,tmp))
+          }else{
+            p0=Op(ii-1,crv1); p3=Op(ii+2,crv1)
+          }
+        }
+        os1=Osplineseg(list(p0,p1,p2,p3))
+      }
+      if((Length(crv2)==2)||(Norm(Op(2,seg2)-Op(1,seg2))>Dist-Eps)){
+        os2=seg2
+      }else{
+        p1=Op(1,seg2); p2=Op(2,seg2)
+        if(jj==1){
+          p3=Op(3,crv2)
+          tmp=p2-p1
+          tmp=(p1+p2)/2+c(Op(2,tmp),-Op(1,tmp))
+          p0=Reflectdata(p3,c((p1+p2)/2,tmp))
+        }else{
+          if(jj==Length(crv2)-1){
+            p0=Op(jj-1,crv2)
+            tmp=p2-p1
+            tmp=(p1+p2)/2+c(Op(2,tmp),-Op(1,tmp))
+            p3=Reflectdata(p0,c((p1+p2)/2,tmp))
+          }else{
+            p0=Op(jj-1,crv2); p3=Op(jj+2,crv2)
+          }
+        }
+        os2=Osplineseg(list(p0,p1,p2,p3))
+      }
+      tmp2=list()
+      for(kk in Looprange(1,Length(os1)-1)){
+        for(II in Looprange(1,Length(os2)-1)){
+          seg1=Listplot(Op(kk,os1),Op(kk+1,os1))
+          seg2=Listplot(Op(II,os2),Op(II+1,os2))
+          tmp=Intersectseg(seg1,seg2,Eps1)
+          if(Op(1,tmp)<Eps1){
+            if(Op(1,tmp)<dst+Eps){
+              dst=Op(1,tmp)
+              tmp3=list()
+              for( nn in Looprange(1,length(tmp2))){
+                if(Op(1,tmp2[[nn]])<dst){
+                  tmp3=c(tmp3,list(tmp2[[n]]))
+                }
+              }
+              tmp2=c(tmp3,list(list(dst,Op(2,tmp))))
+            }
+          }
+        }
+      }
+      if(length(tmp2)>0){
+        tmp1=c()
+        for(nn in Looprange(1,length(tmp2))){
+          tmp1=Appendrow(tmp1,Op(2,tmp2[[nn]]))
+        }
+        tmp=sum(tmp1[,1])/length(tmp2)
+        tmp=c(tmp,sum(tmp1[,2])/length(tmp2))
+        out=list(tmp)
+        p1=Op(ii,crv1); p2=Op(ii+1,crv1)
+        tmp=c(Op(2,p2-p1),-Op(1,p2-p1))
+        tmp=Intersectline(Op(1,out),tmp,p1,p2-p1)
+        tmp=min(max(Op(3,tmp),0),1)
+        out=list(tmp1,ii+tmp)
+        p1=Op(jj,crv2); p2=Op(jj+1,crv2)
+        tmp=c(Op(2,p2-p1),-Op(1,p2-p1))
+        tmp=Intersectline(Op(1,out),tmp,p1,p2-p1)
+        tmp=min(max(Op(3,tmp),0),1)
+        out=c(out,list(jj+tmp,dst,snang))
+      }
+    }
+  }
+  return(out)
+}
+
+Collectnear<- function(ptdL,Eps2){
+  Eps=10^(-4);
+  gL=list(Op(1,ptdL))
+  rL=ptdL[2:(length(ptdL))]
+  flg=0
+  for( ii in Looprange(1,length(ptdL)-1)){
+    if(flg==0){
+      numL=c()
+      for(jj in Looprange(1,length(rL))){
+        tmp1=100
+        for(kk in Looprange(1,length(gL))){
+          tmp=Norm(Op(1,gL[[kk]])-Op(1,rL[[jj]]))
+          if(tmp<tmp1){tmp1=tmp}
+        }
+        if(tmp1<Eps2){numL=c(numL,jj)}
+      }
+      if(length(numL)==0){
+        flg=1
+      }else{
+        gL=c(gL,rm[numL])
+        tmp=setdiff(1:(length(rL)),numL)
+        rL=rL[tmp]
+      }
+    }
+  }
+  return(list(gL,rL))
+}
+
+IntersectcurvesPp<- function(...){
+  varargin=list(...)
+  Nargs=length(varargin)
+  Eps=10^(-4)
+  Eps1=0.01
+  Eps2=0.1
+  Dist=10*Eps2
+  if(Nargs>2){Eps1=varargin[[3]]}
+  if(Nargs>3){Eps2=varargin[[4]]}
+  if(Nargs>4){Dist=varargin[[5]]}  
+  tmp1=varargin[[1]]
+  crv1=matrix(Op(1,tmp1),nrow=1)
+  for(ii in Looprange(2,Length(tmp1))){
+    tmp=Op(Length(crv1),crv1)
+    if(Norm(tmp-Op(ii,tmp1))>Eps){
+      crv1=Appendrow(crv1,Op(ii,tmp1))
+    }
+  }
+  tmp2=varargin[[2]]
+  crv2=matrix(Op(1,tmp2),nrow=1)
+  for(ii in Looprange(2,Length(tmp2))){
+    tmp=Op(Length(crv2),crv2)
+    if(Norm(tmp-Op(ii,tmp2))>Eps){
+      crv2=Appendrow(crv2,Op(ii,tmp2))
+    }
+  }
+  if(Length(crv1)!=Length(crv2)){
+    self=0
+  }else{
+    self=1
+    for(ii in Looprange(1,Length(crv1))){
+      if(Norm(Op(ii,crv1)-Op(ii,crv2))>0){
+        self=0
+        break
+      }
+    }
+  }
+  out=list()
+  for(ii in Looprange(1,Length(crv1)-1)){
+    if(self==0){
+      loopL=Looprange(1,Length(crv2)-1)
+    }else{
+      loopL=Looprange(ii+2,Length(crv2)-1)
+    }
+    for(jj in loopL){
+      tmp=Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2,Dist)
+      if(length(tmp)>0){
+        if(length(out)==0){
+          out=list(tmp)
+        }else{
+          tmp1=Op(length(out),out)
+          if(Norm(Op(1,tmp1)-Op(1,tmp))>Eps1){
+            out=c(out,list(tmp))
+          }
+        }
+        if(self==1){
+          tmp=list(Op(1,tmp),Op(3,tmp),Op(2,tmp),Op(4,tmp),Op(5,tmp))
+          out=c(out,list(tmp))
+        }
+      }
+    }
+  }
+  tmp2=out
+  out=list()
+  tmp1=tmp2
+  flg=0
+  for(ii in Looprange(1,length(tmp2))){
+    if(flg==0){
+      tmp=Collectnear(tmp1,Eps2)
+      out=c(out,list(Op(1,tmp)))
+      if(length(Op(2,tmp))==0){
+        flg=1
+      }else{
+        tmp1=Op(2,tmp)
+      }
+    }
+  }
+  for(ii in Looprange(1,length(out))){
+    tmp1=Op(ii,out)
+    if(length(tmp1)==1){
+      out[[ii]]=Op(1,tmp1)
+    }else{
+      tmp=c()
+      for(jj in Looprange(1,length(tmp1))){
+        tmp=c(tmp,Op(4,tmp1[[jj]]))
+      }
+      dst=min(tmp)
+      tmp=list()
+      for(jj in Looprange(1,length(tmp1))){
+        if(Op(4,tmp1[[jj]])<dst+Eps){
+          tmp=c(tmp,list(tmp1[[jj]]))
+        }
+      }
+      tmp1=tmp
+      tmp=c()
+      for(jj in Looprange(1,length(tmp1))){
+        tmp=c(tmp,Op(1,tmp1[[jj]]))
+      }
+      tmp=sum(tmp)/length(tmp1);
+      tmp2=list(tmp)
+      tmp=Nearestpt(Op(1,tmp2),crv1)
+      tmp2=c(tmp2,list(Op(2,tmp)))
+      tmp=Nearestpt(Op(1,tmp2),crv2)
+      tmp2=c(tmp2,list(Op(2,tmp)))
+      tmp2=c(tmp2,list(list(dst,Op(5,tmp1[[1]]))))
+      out[[ii]]=tmp2
+    }
+  }
+  return(out)
+}
+
+Intersectcurves<- function(...){
+  tmp=IntersectcurvesPp(...)
+  out=list()
+  for(ii in Looprange(1,length(tmp))){
+    out=c(out,list(Op(1,tmp[[ii]])))
+  }
+  return(out)
+}
+
+############## end of New Intersect  #############
+
+############## New Enclosing2 #############
+
+Enclosing2<- function(...){
+  varargin=list(...)
+  Nargs=length(varargin)
+  plist=varargin[[1]]
+  Eps=10^(-5)
+  Eps1=0.01
+  Eps2=0.1
+  Start=c()
+  flg=0
+  for(ii in Looprange(2,Nargs)){
+    tmp=varargin[[ii]]
+    if(length(tmp)>1){
+#      Start=tmp
+    }else{
+     if(flg==0){Eps1=tmp}
+     if(flg==1){Eps2=tmp}
+     flg=flg+1
+    }
+  }
+  flg=0
+  AnsL=c()
+  if(length(plist)==1){
+    Fdata=plist[[1]]
+    tmp1=Op(1,Fdata)
+    tmp2=Op(Length(Fdata),Fdata)
+    if(Norm(tmp1-tmp2)<Eps){
+      AnsL=Fdata
+    }else{
+      AnsL=Appendrow(Fdata,tmp1)
+    }
+    flg=1
+  }
+  if(flg==0){
+    Fdata=Op(1,plist)
+    Gdata=Op(length(plist),plist)
+    KL=IntersectcurvesPp(Fdata,Gdata)
+    if(length(KL)==0){
+      tmp1=Op(Length(Gdata),Gdata)
+      tmp2=Op(1,Fdata)
+      tmp=Listplot(tmp1,tmp2)
+      plist=c(plist,list(tmp))
+      Start=tmp2
+      tst=1
+#      flg=1
+    }else{
+      if(length(KL)==1){
+        tmp=Op(1,KL)
+        tst=Op(2,tmp)
+        Start=Pointoncrv(tst,Fdata)
+      }
+      if(length(KL)>1){
+        KL=Quicksort(KL,2)
+        if(length(Start)==0){
+          tmp=Op(1,KL)
+          tst=Op(2,tmp)
+          Start=Pointoncrv(tst,Fdata)
+        }else{
+          tmp=c()
+          for(ii in Looprange(1,length(KL))){
+            tmp=c(tmp,Norm(Op(1,KL[[ii]]-Start)))
+          }
+          tmp=min(tmp)
+          tmp1=list()
+          for(ii in Looprange(1,length(KL))){
+            tmp2=Op(1,KL[[ii]])
+            if(Norm(tmp2-Start)==tmp){
+              tmp1=c(tmp1,list(tmp2))
+            }
+          }
+          tmp=Op(1,tmp1)
+          tst=Op(2,tmp)
+          Start=Pointoncrv(tst,Fdata)
+        }
+      }
+    }
+  }
+  if(flg==0){
+    t1=tst
+    for(nn in Looprange(1,length(plist))){
+      Fdata=Op(nn,plist)
+      if(nn==length(plist)){
+        nxtno=1
+      }else{
+        nxtno=nn+1
+      }
+      Gdata=Op(nxtno,plist)
+      KL=IntersectcurvesPp(Fdata,Gdata)
+      if(length(KL)==0){
+        tmp=matrix(Op(Length(Fdata),Fdata),nrow=1) #18.02.02from
+        Gdata=Appendrow(tmp,Gdata)
+        plist[[nxtno]]=Gdata
+        t2=Length(Fdata)
+        ss=1 #18.02.02upto
+      }else{
+        tmp=Op(1,KL)
+        t2=Op(2,tmp)
+        ss=Op(3,tmp)
+        if(abs(t2-t1)<Eps){
+          if(length(KL)>1){
+            tmp=Op(2,KL)
+            t2=Op(2,tmp)
+            ss=Op(3,tmp)
+          }else{
+#            println(text(nn)+" and "+text(nn+1)+" not intersect");
+#            flg=1
+          }
+        }
+      }
+      if(flg==0){
+        tmp=Partcrv(t1,t2,Fdata)
+        if(nn==1){
+          AnsL=tmp
+        }else{
+          tmp=tmp[2:Length(tmp),]
+          AnsL=Appendrow(AnsL,tmp)
+        }
+        t1=ss
+      }
+    }
+  }
+  return(AnsL)
+}
+
+############## end of Enclosing2 #############

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.5(2018.01.26");
+println("KETCindy V.3.1.5(2018.02.02");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2018.01.26) loaded");
+println("ketcindylibbasic1(2018.02.02) loaded");
 
 //help:start();
 
@@ -815,7 +815,10 @@ Textformat(value,dig):=(
     forall(value,
       tmp1=tmp1+Textformat(#,dig)+",";
     );
-    tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
+    if(length(tmp1)>1, //18.01.29from
+      tmp1=substring(tmp1,0,length(tmp1)-1);
+    );
+    tmp1=tmp1+"]"; //18.01.29upto
   ,
     if(ispoint(value) % isstring(value),
 //      vv=Lcrd(value);
@@ -1448,11 +1451,16 @@ Intersectline(p1,v1,p2,v2):=(
   out;
 );
 
-Intersectseg(seg1,seg2,Eps1):=(
-  regional(Eps,p1,p2,q1,q2,t,s,pt,n,pts,out,dist,
+Intersectseg(seg1,seg2):=Intersectseg(seg1,seg2,0.01);
+Intersectseg(seg1org,seg2org,Eps1):=(
+  regional(Eps,seg1,seg2,p1,p2,q1,q2,t,s,pt,n,pts,out,dist,
     tmp,tmp1,tmp2,tmp3);
   Eps=10^(-4);
   //Eps1=0.01;
+  seg1=seg1org;
+  seg2=seg2org;
+  if(isstring(seg1),seg1=parse(seg1));
+  if(isstring(seg2),seg2=parse(seg2));
   out=[];
   p1=seg1_1; q1=seg1_2;
   p2=seg2_1; q2=seg2_2;
@@ -1462,36 +1470,39 @@ Intersectseg(seg1,seg2,Eps1):=(
     tmp=Intersectline(p1,q1-p1,p2,q2-p2);
     if(islist(tmp_1),
       pt=tmp_1; t=tmp_2; s=tmp_3;
-      tmp1=t*(t-1); tmp2=s*(s-1);
-      if((tmp1<Eps)&(tmp2<Eps),
+      if((t*(t-1)<Eps)&(s*(s-1)<Eps),
         out=[0,pt,t,s];
       ,
         t=min([max([t,0]),1]);
         s=min([max([s,0]),1]);
-        if((tmp1>=Eps)&(tmp2<Eps),
-          min([|p1-pt|,|q1-pt|]);
-          if(tmp<Eps1,
-            out=[tmp,pt,t,s];
-          ,
-            out=[tmp];
+        tmp3=[|p1-p2|,|p1-q2|,|p2-p1|,|p2-q1|]; //18.01.30from
+        tmp1=[Op(2,q2-p2),-Op(1,q2-p2)];
+        tmp=Intersectline(p1,tmp1,p2,q2-p2);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-p1|);
           );
         );
-        if((tmp1<Eps)&(tmp2>=Eps),
-          tmp=min([|p2-pt|,|q2-pt|]);
-          if(tmp<Eps1,
-            out=[tmp,pt,t,s];
-          ,
-            out=[tmp];
+        tmp=Intersectline(q1,tmp1,p2,q2-p2);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-q1|);
           );
         );
-        if((tmp1>=Eps)&(tmp2>=Eps),
-          tmp=min([|p1-pt|,|q1-pt|,|p2-pt|,|q2-pt|]);
-          if(tmp<Eps1,
-            out=[tmp,pt,t,s];
-          ,
-            out=[tmp];
+        tmp1=[Op(2,q1-p1),-Op(1,q1-p1)];
+        tmp=Intersectline(p2,tmp1,p1,q1-p1);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-p2|);
           );
         );
+        tmp=Intersectline(q2,tmp1,p1,q1-p1);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-q2|);
+          );
+        );
+        out=[min(tmp3),pt,t,s]; //18.01.30upto
       );
     ,
       dist=tmp_1;
@@ -1564,9 +1575,12 @@ Osplineseg(ptlist,optionsorg):=(
 Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2):=(
   Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2,10*Eps2);
 );
-Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2,Dist):=(
-  regional(Eps,dst,kk,ll,seg1,seg2,snang,
+Intersectpartseg(crv1org,crv2org,ii,jj,Eps1,Eps2,Dist):=(
+  regional(crv1,crv2,Eps,dst,kk,ll,seg1,seg2,snang,
      p0,p1,p2,p3,os1,os2,out,tmp,tmp1,tmp2,flg);
+  crv1=crv1org; crv2=crv2org;
+  if(isstring(crv1),crv1=parse(crv1));
+  if(isstring(crv2),crv2=parse(crv2));
   Eps=10^(-4);
 //  Eps1=0.01;
 //  Eps2=0.1;
@@ -5252,12 +5266,14 @@ EnclosingS(nm,plist,options):=(
 /////////// new enclosing ///////////
 
 Enclosing2(nm,plist):=Enclosing2(nm,plist,[]);
-Enclosing2(nm,plist,options):=(
+Enclosing2(nm,plistorg,options):=(
 //help:Enclosing2("1",["sc2","crAB","sc2","Invert(sc1)"]);
-//help:Enclosing2(options=[startpt,Eps1(0.01),Eps2(0.1)]);
-  regional(name,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
-      t1,t2,tst,ss,ii,nn,tmp,tmp1,tmp2,Ltype,Noflg,realL,eqL,opstr,opcindy);
+//help:Enclosing2(options=[Eps1(0.01),Eps2(0.1)]);
+  regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
+      t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
+      tmp,tmp1,tmp2);
   name="en"+nm;
+  plist=plistorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -5272,7 +5288,7 @@ Enclosing2(nm,plist,options):=(
   flg=0;
   forall(realL,
     if(isList(#) % ispoint(#),
-      Start=Lcrd(#); // 15.09.12
+//      Start=Lcrd(#); // 18.02.02
     ,
       if(flg==0,Eps1=#);
       if(flg==1,Eps2=#);
@@ -5288,7 +5304,7 @@ Enclosing2(nm,plist,options):=(
     if(|tmp1-tmp2|<Eps,
       AnsL=Fdata;
     ,
-      AnsL=append(Fdata,Fdata_1);
+      AnsL=append(Fdata,tmp1);
     );
     flg=1;
   );
@@ -5296,19 +5312,22 @@ Enclosing2(nm,plist,options):=(
     Fdata=plist_1;
     Gdata=plist_(length(plist));
     KL=IntersectcurvesPp(Fdata,Gdata);
-    KL=sort(KL,[#_2]);
     if(length(KL)==0,
-      println("1 and "+text(length(plist))+" not intersect");
-      flg=1;
-//      if(Start==[],  //18.01.24
-//        tst=0;
-//      );
+      tmp=parse(Gdata);
+      tmp1=LLcrd(Op(length(tmp),tmp)); //18.02.02from
+      tmp=parse(Fdata);
+      tmp2=LLcrd(Op(1,tmp));
+      tmp=Listplot(name,[tmp1,tmp2],["nodisp"]);
+      plist=append(plist,"sg"+name);
+      Start=tmp2;
+      tst=1; //18.02.02upto
     ,
       if(length(KL)==1,
         tst=KL_1_2;
         Start=Pointoncurve(tst,Fdata);
       );
       if(length(KL)>1,
+        KL=sort(KL,[#_2]);
         if(Start==[],
           tst=KL_1_2;
           Start=Pointoncurve(tst,Fdata);
@@ -5327,12 +5346,20 @@ Enclosing2(nm,plist,options):=(
     println("Start point of enclosing is "+text(Start));
     forall(1..(length(plist)),nn,
       Fdata=plist_nn;
-      if(nn==length(plist),tmp=1,tmp=nn+1);
-      Gdata=plist_tmp;
+      if(nn==length(plist),nxtno=1,nxtno=nn+1);
+      Gdata=plist_nxtno;
       KL=IntersectcurvesPp(Fdata,Gdata);
       if(length(KL)==0,
-        println(text(nn)+" and "+text(nn+1)+" not intersect");
-        flg=1;
+        tmp1=parse(Fdata); //18.02.02from
+        tmp2=parse(Gdata); 
+        tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
+        Gdata=replace(Gdata,"(","");
+        Gdata=replace(Gdata,")","");
+        tmp=Gdata+"="+textformat(tmp2,6);
+        parse(tmp);
+        plist_nxtno=Gdata;
+        t2=Length(tmp1);
+        ss=1; //18.02.02upto
       ,
         t2=KL_1_2;
         ss=KL_1_3;
@@ -5341,7 +5368,7 @@ Enclosing2(nm,plist,options):=(
             t2=KL_2_2;
             ss=KL_2_3;
           ,
-            println(text(nn)+" and "+text(nn+1)+" not intersect");
+            println(text(nn)+" and "+text(nxtno)+" not intersect");
             flg=1;
           );
         );
@@ -5364,12 +5391,12 @@ Enclosing2(nm,plist,options):=(
     println("generate Enclosing "+name);
     tmp=name+"="+textformat(AnsL,5);
     parse(tmp);
-    tmp=name+"=Enclosing(";//16.11.07from
+    tmp=name+"=Enclosing2(";//16.11.07from
     tmp1="list(";
-    forall(plist,
+    forall(plistorg, //18.02.02
       tmp1=tmp1+#+",";
     );
-    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+"),"+textformat(Start,5)+")";
+    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+"))";//18.02.02
     GLIST=append(GLIST,tmp);//16.11.07upto
   );
   if(Noflg<2,
@@ -5383,6 +5410,10 @@ Enclosing2(nm,plist,options):=(
   tmp=apply(AnsL,LLcrd(#));//16.10.20
   tmp;
 );
+
+/////////// end of new enclosing ///////////
+
+/////////// new Hatchdata(cindy) ///////////
 
 Makehatch(iolistorg,pt,vec,bdylist):=(
   regional(Eps,iolist,sg,bdy,out,nb,tenL,ns,ne,ioL,
@@ -5413,20 +5444,9 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
         p1=bdy_jj;
         p2=bdy_(mod(jj+1-1,nbdy)+1);
         tmp=Intersectseg(sg,[p1,p2],Eps);
-        if(length(tmp)>1,
+        if(abs(tmp_1)<Eps, //18.02.01
           p0=tmp_2; t=tmp_3; s=tmp_4;
-          if((s>Eps)&(s<1-Eps),
-            pL=append(pL,[p0,t,s,ii]);
-          ,
-            if(s>=1-Eps,
-              tmp=bdy_(mod(#+2-1,nbdy)+1);
-              tmp1=Crossprod(sg_2-sg_1,tmp-p1)/|sg_2-sg_1|;
-              tmp2=Crossprod(sg_2-sg_1,p2-p1)/|sg_2-sg_1|;
-              if(tmp1*tmp2>Eps,
-                pL=append(pL,[p0,t,s,ii]);
-              );
-            );
-          );
+          pL=append(pL,[p0,t,s,ii]);
         );
       );
       if(length(pL)>0,
@@ -5471,8 +5491,6 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
   SCALEY=Scalebkup;
   out;
 );
-
-/////////// Using new Enclosing(2) /////////////
 
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);
 Hatchdatacindy(nm,iostr,bdylistorg,options):=(
@@ -5605,6 +5623,9 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   );
   tmp2;
 );
+
+/////////// end of new Hatchdata(cindy) ///////////
+
 
 Shade(plist):=Shade(plist,[]);
 Shade(plist,options):=(

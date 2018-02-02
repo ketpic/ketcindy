@@ -1,3 +1,11 @@
+// 2018.02.01
+//   CalcbyR  changed (for matrix, wait=5 )
+// 2018.01.31
+//   CalcbyR  changed (for list of list )
+// 2018.01.29
+//   CalcbyR  debugged and changed (case of result is null )
+// 2018.01.27
+//   CalcbyR  changed ( output like Maxima(::),"Out")
 // 2018.01.07
 //   Hatchdata debugged  (fun removed )
 // 2017.12.24

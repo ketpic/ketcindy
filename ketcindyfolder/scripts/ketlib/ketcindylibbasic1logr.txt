@@ -1,3 +1,12 @@
+// 2018.02.02
+//    Enclosing2 changed (for distanted curves, startpt option removed )
+// 2018.02.01
+//    Makehatch changed ( in accordance with Intersectseg )
+// 2018.01.30
+//    Intersectseg changed ( for the case of no intersect )
+// 2018.01.29
+//    Intersectpartseg changed ( for the case curves are strings )
+//    Textformat changed ( for null list )
 // 2018.01.26
 //    Enclosing2 (new enclosing ), Makehatch, Hatchdatacindy added
 // 2018.01.15

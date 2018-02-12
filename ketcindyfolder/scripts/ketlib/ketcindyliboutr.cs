@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2017.12.24) loaded");
+println("ketcindyout(2018.02.01) loaded");
 
 //help:start();
 
@@ -655,10 +655,10 @@ CalcbyR(name,Arg1,Arg2):=(
   );
 );
 CalcbyR(name,path,cmd,optionorg):=(
-//help:CalcbyR("Pr",cmd);
-//help:CalcbyR(options=["m/r","Wait=2","Cat=yes","File=result" ]);
+//help:CalcbyR(name,cmd);
+//help:CalcbyR(options=["m/r","Wait=2","Out=yes","Pre=yes","File=result" ]);
   regional(options,tmp,tmp1,tmp2,tmp3,realL,strL,eqL,
-       cat,dig,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,ext,waiting);
+       cat,dig,preflg,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,waiting);
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
@@ -667,13 +667,13 @@ CalcbyR(name,path,cmd,optionorg):=(
   dig=5;
   cat="Y";
   wfile="";
-  ext=".txt";
-  waiting=2;
+  preflg=1;
+  waiting=5;
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="C",
+    if((tmp1=="C")%(tmp1=="O"),
       cat=Toupper(substring(tmp2,0,1));
       options=remove(options,[#]);
     );
@@ -681,8 +681,10 @@ CalcbyR(name,path,cmd,optionorg):=(
       waiting=parse(tmp2);
       options=remove(options,[#]);
     );
-    if(tmp1=="E",
-      if(indexof(tmp2,".")==0,ext="."+tmp2,ext=tmp2);
+    if(tmp1=="P", //18.01.27
+      tmp2=substring(Toupper(tmp2),0,1);
+      if(tmp2=="Y",preflg=1);
+      if(tmp2=="N",preflg=0);
       options=remove(options,[#]);
     );
     if(tmp1=="D",
@@ -696,9 +698,9 @@ CalcbyR(name,path,cmd,optionorg):=(
   );
   if(wfile=="",
     if(cat=="Y",
-      wfile=Fhead+name+ext;
+      wfile=Fhead+name+".txt";
     ,
-      wfile="resultR"+ext;
+      wfile="resultR.txt";
     );
   );
   wflg=0;
@@ -720,8 +722,11 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
   );
   file=Fhead+name;
-//  cmdR=flatten(cmd);
-  cmdR=cmd;
+  cmdR=[];
+  if(preflg==1, //18.01.27from
+    cmdR=MkprecommandR();
+  );
+  cmdR=concat(cmdR,cmd); //18.01.27upto
   cmdlist=[];
   if(dig>5, //16.10.28from
     cmdlist=append(cmdlist,"options(digits="+text(dig+2)+");");
@@ -758,6 +763,20 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
     cmdlist=append(cmdlist,tmp1);
   );
+  tmp1=cmdlist_(length(cmdlist));
+  if(indexof(tmp1,"=")==0,
+    tmp1=tokenize(tmp1,"::");
+    if(length(tmp1)==1,
+      tmp2=name+"="+tmp1_1;
+    ,
+      tmp2=name+"=list(";
+      forall(tmp1,
+        tmp2=tmp2+#+",";
+      );
+      tmp2=substring(tmp2,0,length(tmp2)-1)+")";
+    );
+    cmdlist_(length(cmdlist))=tmp2;
+  );
   if(CONTINUED==1,
     ComOutList=concat(ComOutList,cmdlist);
   ,
@@ -766,20 +785,45 @@ CalcbyR(name,path,cmd,optionorg):=(
       cmdlist=append(cmdlist,tmp);
       tmp="sharps=paste(sharp,sharp,'\n',sep='')";
       cmdlist=append(cmdlist,tmp);
+      tmp="if(Length("+name+")==0){"+name+"='nodata'}"; //18.01.29
+      cmdlist=append(cmdlist,tmp);
       cmdlist=append(cmdlist,"if(is.matrix("+name+")){");
-      cmdlist=append(cmdlist,"  "+name+"=as.data.frame("+name+")");
-      cmdlist=append(cmdlist,"}");
+      cmdlist=append(cmdlist,"  tmp=list()");//18.02.01from
+      cmdlist=append(cmdlist,"  for(ii in 1:Length("+name+")){");
+      cmdlist=append(cmdlist,"    tmp=c(tmp,list(Op(ii,ans)))");
+      cmdlist=append(cmdlist,"  }");
+      cmdlist=append(cmdlist,"  ans=tmp");
+      cmdlist=append(cmdlist,"}");//18.02.01upto
       cmdlist=append(cmdlist,"if(is.list("+name+")){");
-      tmp="  cat(names("+name+"),file='"+wfile+"',sep=',')";
+//      tmp="  cat(names("+name+"),file='"+wfile+"',sep=',')"; //18.01.27deleted
+//      cmdlist=append(cmdlist,tmp);
+//      tmp="  cat(sharps,file='"+wfile+"',append=TRUE)";
+//      cmdlist=append(cmdlist,tmp);
+      cmdlist=append(cmdlist,"  for(ii in Looprange(1,length("+name+"))){");
+      cmdlist=append(cmdlist,"    if(is.list("+name+"[[ii]])){");
+      tmp="      cat('[',file='"+wfile+"',sep='',append=TRUE)";
       cmdlist=append(cmdlist,tmp);
-      tmp="  cat(sharps,file='"+wfile+"',append=TRUE)";
+      tmp="      cat(sharps,file='"+wfile+"',sep='',append=TRUE)";
       cmdlist=append(cmdlist,tmp);
-      cmdlist=append(cmdlist,"  for(ii in 1:length("+name+")){");
-      tmp="    cat("+name+"[[ii]],file='"+wfile+"',";
+      tmp="      for(jj in Looprange(1,length(ans[[ii]]))){";
+      cmdlist=append(cmdlist,tmp);
+      tmp="        cat("+name+"[[ii]][[jj]],file='"+wfile+"',sep=',',append=TRUE)";
+      cmdlist=append(cmdlist,tmp);
+      tmp="        cat(sharps,file='"+wfile+"',append=TRUE)";
+      cmdlist=append(cmdlist,tmp);
+      cmdlsit=append(cmdlist,"      }");
+      cmdlist=append(cmdlist,"      }");
+      tmp="      cat(']',file='"+wfile+"',sep=',',append=TRUE)";
+      cmdlist=append(cmdlist,tmp);
+      tmp="      cat(sharps,file='"+wfile+"',append=TRUE)";
+      cmdlist=append(cmdlist,tmp);
+      cmdlist=append(cmdlist,"    }else{");
+      tmp="      cat("+name+"[[ii]],file='"+wfile+"',";
       tmp=tmp+"sep=',',append=TRUE)";
       cmdlist=append(cmdlist,tmp);
-      tmp="    cat(sharps,file='"+wfile+"',append=TRUE)";
+      tmp="      cat(sharps,file='"+wfile+"',append=TRUE)";
       cmdlist=append(cmdlist,tmp);
+      cmdlist=append(cmdlist,"    }");
       cmdlist=append(cmdlist,"  }");
       cmdlist=append(cmdlist,"}else{");
       tmp="  cat("+name+",file='"+wfile+"',sep=',')";
@@ -858,18 +902,39 @@ CalcbyR(name,path,cmd,optionorg):=(
         tmp1=tmp1_(1..(length(tmp1)-1));
         tmp2=[];
         forall(tmp1,tmp3,
-          if(!isstring(tmp3),tmp3=format(tmp3,dig));
-          tmp=tokenize(tmp3,",");
-          tmp=apply(tmp,if(isstring(#),Dq+#+Dq,format(#,dig)));
+          if(!isstring(tmp3),
+            tmp=format(tmp3,dig);
+          ,
+            if(indexof(tmp3,",")==0,
+              tmp=tmp3;
+            ,
+             tmp=tokenize(tmp3,",");
+             tmp=textformat(tmp,dig);
+            );
+          );
           tmp2=append(tmp2,tmp);
         );
         if(length(tmp2)==1,
           tmp2=tmp2_1;
-          if(length(tmp2)==1,tmp2=tmp2_1);//16.10.24
+          if(length(tmp2)==1,tmp2=tmp2_1);
+          if(isstring(tmp2),
+            if(indexof(tmp2,"nodata")>0,tmp2=[]);
+          );
+          tmp=name+"="+textformat(tmp2,dig);
         ,
-          tmp2=[tmp2_1,tmp2_(2..(length(tmp2)))];
+          tmp3="";
+          forall(tmp2,
+            if(length(#)==0,
+              tmp3=tmp3+"[],";
+            ,
+              tmp3=tmp3+#+",";
+            );
+          );
+          tmp3="["+substring(tmp3,0,length(tmp3)-1)+"]";
+          tmp3=replace(tmp3,"[,","[");
+          tmp3=replace(tmp3,",]","]");
         );
-        tmp=name+"="+text(tmp2); //16.10.23upto
+        tmp=name+"="+tmp3;
         parse(tmp);
       );
     );
@@ -1119,17 +1184,10 @@ Hatchdata(nm,iostr,pltlist):=Hatchdata(nm,iostr,pltlist,[]);
 Hatchdata(nm,iostr,pltlist,optionorg):=( //17.09.18
 //help:Hatchdata("1","ii",[["gr1"],["gr2","n"]]);
 //help:Hatchdata(options=["Wait=5"]);
-  regional(options,name,fun,eqL,reL,strL,
+  regional(options,name,eqL,reL,strL,
      plt,fname,options,tmp,tmp1,tmp2,tmp3,flg,wflg,waiting);
   name="ha"+nm;
   fname=Fhead+name+".txt";
-  fun=fnorg;
-  tmp=indexof(fun,"=");
-  if(tmp>0,
-    tmp1=substring(fun,0,tmp-1);
-    tmp2=substring(fun,tmp,length(fun));
-    fun=tmp1+"-("+tmp2+")";
-  );
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;

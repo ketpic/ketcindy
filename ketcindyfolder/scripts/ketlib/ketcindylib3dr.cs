@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(2017.12.23) loaded");
+println("ketcindylib3d(2018.01.05) loaded");
 
 //help:start();
 
@@ -3696,286 +3696,13 @@ Intersectcrvsf(nm,gdstr,fdorg,optionorg):=(
   );
 );
 
-Skeletonparadata2(nm):=Skeletonparadata2(nm,[]);
-Skeletonparadata2(nm,options):=(
-  regional(tmp,tmp2,tmp3); 
-  //  tmp=apply(GCLIST,#_1);
-  //  tmp=select(tmp,indexo(#,"2d")>0);
-  //  tmp2=select(tmp,indexof(#,"sub")==0);
-  tmp3=Datalist3d();
-  Changestyle3d(tmp3,["nodisp"]);  // 15.06.02, 07.22
-  //  tmp3=apply(tmp2,replace(#,"2d","3d"));
-  Skeletonparadata2(nm,"",tmp3,tmp3,options);
-);
-Skeletonparadata2(nm,Arg1,Arg2):=(
-  regional(nme,pltdata1,pltdata2,options);
-  if(isstring(Arg1) & islist(Arg2),
-    nme=Arg1;
-//    pltdata1=parse("phe3d"+nme);
-    pltdata1="phe3d"+nme;
-    pltdata2=pltdata1;
-    options=Arg2;
-  ,
-    nme="";
-    pltdata1=Arg1;
-    pltdata2=Arg2;
-    options=[];
-  );
-  Skeletonparadata2(nm,nme,pltdata1,pltdata2,options);
-);
-Skeletonparadata2(nm,Arg1,Arg2,Arg3):=(
-  regional(nme,pltdata1,pltdata2,options);
-  if(!isstring(Arg1),
-    nme="";
-    pltdata1=Arg1;
-    pltdata2=Arg2;
-    options=Arg3;
-  ,
-    if(isstring(Arg2) & !isstring(Arg3),
-      nme="";
-      pltdata1=Arg1;
-      pltdata2=Arg2;
-      options=Arg3;
-    ,
-      nme=Arg1;
-      pltdata1=Arg2;
-      pltdata2=Arg3;
-      options=[];
-    );
-  );
-  Skeletonparadata2(nm,nme,pltdata1,pltdata2,options); // 15.07.09
-);
-Skeletonparadata2(nm,nme,pltdata1,pltdata2,options):=(
-  regional(name2,name3,count,Ltype,Noflg,PdL,tmp,tmp1,tmp2,
-      opstr,opcindy,Str,Outflg,Inflg,realL,pdata1,pdata2,level);
-  name2="sk2d"+nm;
-  name3="sk3d"+nm;
-  tmp=Divoptions(options);
-  Ltype=tmp_1;
-  Noflg=tmp_2;
-  Inflg=tmp_3;
-  Outflg=tmp_4;
-  if(Inflg==0 & Outflg==0, Inflg=1;Outflg=1); // 15.05.15
-  realL=tmp_6;
-  opstr=tmp_(length(tmp)-1);
-  opcindy=tmp_(length(tmp));
-  if(Noflg<3,
-    if(Outflg>=1,
-      println("Output   Skeletonparadata2 "+name3);
-      if(isstring(pltdata1),  // 15.05.27 from
-        tmp1=pltdata1;
-      ,
-        tmp1="";
-        forall(pltdata1,
-          tmp1=tmp1+#+",";
-        );
-        tmp1="list("+substring(tmp1,0,length(tmp1)-1)+")";
-      );
-	  if(isstring(pltdata2),
-        tmp2=pltdata2;
-      ,
-        tmp2="";
-        forall(pltdata2,
-          tmp2=tmp2+#+",";
-        );
-        tmp2="list("+substring(tmp2,0,length(tmp2)-1)+")";
-	);
-      Str="Skeletonpara3data("+tmp1+","+tmp2+opstr+")"; // 15.05.27 upto
-      GLIST=append(GLIST,name3+"="+Str);
-      tmp=name2+"=Projpara("+name3+")";
-      GLIST=append(GLIST,tmp);
-    );
-  );
-  if(Noflg<2,
-    if(isstring(Ltype),
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-    ,
-      if(Noflg==1,Ltype=0);
-    );
-    if(Inflg==1,
-//      tmp=apply(pltdata1,replace(#,"3d","2d"));  // 15.05.18 from
-      if(nme!="",   // 15.05.27
-        Changestyle3d("phe3d"+nme,["nodisp"]);
-      ,
-        forall(pltdata1,  // 15.07.16
-          tmp=replace(#,"3d","2d");
-          if(contains(GCLIST,tmp),
-            Changestyle3d(#,["nodisp"]);
-          );
-        );
-      );
-      GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
-    );
-  ); 
-);
+////////////// new skeleton  2018.01.04from ////////////////
 
-Skeletonparadata(nm):=Skeletonparadata(nm,[]);
-Skeletonparadata(nm,options):=(
-  regional(tmp,tmp2,tmp3); 
-  tmp3=Datalist3d();
-  Skeletonparadata(nm,"",tmp3,tmp3,options);
-//  Changestyle3d(tmp3,["nodisp"]);  // 15.06.02, 07.22
-);
-Skeletonparadata(nm,Arg1,Arg2):=(
-//help:Skeletonparadata("1");
-//help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
-//help:Skeletonparadata(options2=[width(1), "Wait=20]);
-  regional(nme,pltdata1,pltdata2,options);
-  if(isstring(Arg1) & islist(Arg2),
-    nme=Arg1;
-//    pltdata1=parse("phe3d"+nme);
-    pltdata1="phe3d"+nme;
-    pltdata2=pltdata1;
-    options=Arg2;
-  ,
-    nme="";
-    pltdata1=Arg1;
-    pltdata2=Arg2;
-    options=[];
-  );
-  Skeletonparadata(nm,nme,pltdata1,pltdata2,options);
-);
-Skeletonparadata(nm,Arg1,Arg2,Arg3):=(
-  regional(nme,pltdata1,pltdata2,options);
-  if(!isstring(Arg1),
-    nme="";
-    pltdata1=Arg1;
-    pltdata2=Arg2;
-    options=Arg3;
-  ,
-    if(isstring(Arg2) & !isstring(Arg3),
-      nme="";
-      pltdata1=Arg1;
-      pltdata2=Arg2;
-      options=Arg3;
-    ,
-      nme=Arg1;
-      pltdata1=Arg2;
-      pltdata2=Arg3;
-      options=[];
-    );
-  );
-  Skeletonparadata(nm,nme,pltdata1,pltdata2,options); // 15.07.09
-);
-Skeletonparadata(nm,nme,pltdata1org,pltdata2org,optionorg):=(
-  regional(name2,name3,eqL,strL,options,fname,outreg,waiting,
-    reL, pltdata1,pltdata2,wflg,opcindy,width,pdata,
-    tmp,tmp1,tmp2);
-  name2="sk2d"+nm;
-  name3="sk3d"+nm;
-  fname=Fhead+"sk"+nm+".txt";
-  pltdata1=[];// 16.01.31
-  forall(pltdata1org,tmp1,
-    tmp=parse(tmp1);
-    if(isstring(tmp_1), 
-       pltdata1=concat(pltdata1,tmp);
-    ,
-       pltdata1=append(pltdata1,tmp1);
-    );
-  );
-  pltdata2=[];// 16.01.31
-  forall(pltdata2org,tmp1,
-    tmp=parse(tmp1);
-    if(isstring(tmp_1), 
-       pltdata2=concat(pltdata2,tmp);
-    ,
-       pltdata2=append(pltdata2,tmp1);
-    );
-  );
-  options=optionorg;
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  reL=tmp_6; //16.02.28 
-  strL=tmp_7;
-  opcindy=tmp_9;
-  waiting=20;
-  outreg=0;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
-    if(tmp1=="W",
-      waiting=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="O",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="T" % tmp=="Y", outreg=1,outreg=0);
-      options=remove(options,[#]);
-    );
-  );
-  wflg=0;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="M",
-      wflg=1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="R",
-      wflg=-1;
-      options=remove(options,[#]);
-    );
-  );
-  width=1;
-  if(length(reL)>0, //16.02.28 
-    width=reL_1;
-  );
-  forall(pltdata1,pdata,
-    tmp=select(GLIST,indexof(#,pdata+"=")>0);
-    if(tmp==0,
-      Defvar(pdata,parse(pdata));
-    );
-  );
-  forall(pltdata2,pdata,
-    tmp=select(GLIST,indexof(#,pdata+"=")>0);
-    if(tmp==0,
-      tmp=select(VLIST,#_1==pdata);
-      if(tmp==0,
-        Defvar(pdata,parse(pdata));
-      );
-    );
-  );
-  cmdL=MkprecommandS(4); 
-  tmp2=[
-    Dq+fname+Dq,
-    Dq+name3+Dq,name3,
-    Dq+name2+Dq,name2
-  ];
-  cmdL=concat(cmdL,[
-    "Setangle",[THETA,PHI]*180/pi,
-    name3+"=Skeletonpara3data",[pltdata1,pltdata2,width,"Error"],
-    name2+"=Projpara",[name3],
-    "WriteOutData",tmp2
-  ]);
-  options=append(options,"Wait="+text(waiting));
-  if(wflg==1,options=concat(options,["m"]));
-  if(wflg==-1,options=concat(options,["r"]));
-  if(ErrFlag==0,
-    CalcbyS("sk"+nm,cmdL,options);
-  );
-  if(ErrFlag==1,
-    err("Skeletonparadata not completed");
-  ,
-    if(outreg==1,
-      OutFileList=remove(OutFileList,[fname]);
-      OutFileList=append(OutFileList,fname);
-    );
-    ReadOutData(fname);
-    if(islist(parse(name2)),
-      Extractdata(name2,options);
-//      if(isstring(pltdata1_1),   // 16.01.31
-        tmp=apply(pltdata1,replace(#,"3d","2d"));
-//      ,
-//        tmp=replace(pltdata1org,"3d","2d");
-//      );
-      Changestyle(tmp,["nodisp"]);
-//      Changestyle3d(pltdata1,["nodisp"]);
-    ,
-      ErrFlag=1;
-    );
-  );
-);
-
+Skeletonparadata(nm):=Skeletondatacindy(nm,[]);
+Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
+Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
+Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
+    Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
 Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
 Skeletondatacindy(nm,options):=(
   regional(tmp); 
@@ -3985,11 +3712,11 @@ Skeletondatacindy(nm,options):=(
 Skeletondatacindy(nm,pltdata1,pltdata2):=
      Skeletondatacindy(nm,pltdata1,pltdata2,[]);
 Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
-//help:Skeletondatacindy("1");
-//help:Skeletondatacindy("1",[pdata1,pdata2],[pdata3]);
-//help:Skeletondatacindy(options2=[1(width)]);
+//help:Skeletonparadata("1");
+//help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
+//help:Skeletondata(options2=[1(width)]);
   regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,
-     Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
+     Data,Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2);
   name2="sk2d"+nm;
   name3="sk3d"+nm;
@@ -4008,7 +3735,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   Noflg=tmp_2;
   reL=tmp_6; //16.02.28 
   opcindy=tmp_9;
-  Rr=0.075*1000/2.54/MilliIn;
+  Rr=0.15*1000/2.54/MilliIn;
   size=1;
   Eps2=0.05;
   if(length(reL)>0, //16.02.28 
@@ -4018,34 +3745,14 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   );
   Eps=10^(-4);
   ObjL=Flattenlist(pltdata1);
-  Plt3L=Flattenlist(pltdata2);
-  tmp=apply(Plt3L,ProjcoordCurve(#));
-  Plt2L=Flattenlist(tmp);
-///////////  tmp=apply(pltdata1,replace(#,"3d","2d"));
-  Out=[];
-  forall(1..(length(ObjL)),ii,
-    Obj3=ObjL_ii;
-    tmp=ProjcoordCurve(Obj3);
-    Data=Makeskeletondata([tmp],Plt2L,Rr,Eps2);
-    forall(1..(length(Data)),jj,
-      Gd=Data_jj;
-      if((length(Gd)>1) 
-       & (norm(Ptcrv(1,Gd)-Ptcrv(2,Gd))>Eps),
-        PtD=[];
-        forall(1..(length(Gd)),
-          tmp=Gd_#;
-          tmp1=Invparapt(tmp,Obj3);
-          PtD=append(PtD,tmp1);
-        );
-        Out=append(Out,PtD);
-      );
-    );
-  );
-  Out=select(Out,length(Projcurve(#))>0); // 16.12.19
+  PltL=Flattenlist(pltdata2);
+  Data=Makeskeletondata(ObjL,PltL,Rr);
+  Out=select(Data,length(Projcurve(#))>0);
+  Out=Flattenlist(Out);
   tmp1=apply(Out,textformat(#,5));
   tmp=name3+"="+tmp1;
   parse(tmp);
-  tmp=name2+"=Projcurve("+tmp1+");";
+  tmp=name2+"=Projcurve("+name3+");";
   parse(tmp);
   Changestyle3d(pltdata1org,["nodisp"]);
   if(Noflg<3,
@@ -4074,261 +3781,120 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   Out;
 );
 
-Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
-  regional(Allres,Eps,Dmat,Dind,ii,Dt,nn1,nn2,Nind,Nobj,
-      Plt2,PhL,ClipL,ns,pt1,pt2,pt,pta,ptb,za,zb,z1,z2,t1,t2,te,
-	  koc,KukanL,nn,tt,Rr,Flg,ii,jj,ptq,hh,Ku,Res,contflg,breakflg);
-  Eps=10.0^(-4);
-  Dmat=[];
-  Dind=[];
-  forall(1..(length(Plt2L)),ii,
-    Dt=Plt2L_ii;
-    nn1=length(Dmat)+1;
-    Dmat=concat(Dmat,Dt);
-    nn2=length(Dmat);
-    Dind=append(Dind,[nn1,nn2]);
-  );
-  Nind=length(Dind);
+Makeskeletondata(ObjL,PltL,R0):=(
+  regional(Allres,res,Eps1,obj,plt,obj2,remov,flg,koc,z1,z2,Rr,str,
+         mm,nn,kk,ptk,pL,pt,ptL,tmp,tmp1,tmp2,tmp3,tmp3d);
+  Eps1=10.0^(-2);
   Allres=[];
-  forall(1..(length(Obj2L)),Nobj,
-    Plt2=Obj2L_Nobj;
-    PhL=Columnlist(Plt2,1..2);
-	ClipL=[];
-    forall(1..(length(PhL)-1),ns,
-      pt1=PhL_(ns..(ns+1));
-      forall(1..(length(Dind)),ii,
-        tmp=Dind_ii;
-        tmp=Dmat_(Dind_ii_1..Dind_ii_2);
-        pt2=Columnlist(tmp,1..2);
-        koc=IntersectcrvsPp(pt1,pt2,[Eps]);
-        if(length(koc)>0,
-          breakflg=0;
-          forall(1..(length(koc)),jj,
-            contflg=0;
-            if(breakflg==0,
-              pt=Op(1,Op(jj,koc));
-              tmp=Op(2,Op(jj,koc));
-              if((tmp<1+Eps) & (ns==1), 
-                contflg=1;
-              );    
-              if(contflg==0,
-                if((tmp>length(pt1)-Eps) 
-                 & (ns==length(PhL)-1),
-                  contflg=1;
-                );
-              );
-              if(contflg==0,
-                nn1=ns;
-                nn2=Op(3,Op(jj,koc));
-                tmp=Plt2_nn1;
-                pta=tmp_(1..2);
-                za=tmp_3;
-                tmp=Plt2_(nn1+1);
-                ptb=tmp_(1..2);
-                zb=tmp_3;
-                if(norm(pta-ptb)<Eps,
-                  contflg=1;
-                );
-              );
-              if(contflg==0,
-                t1=norm(pta-pt)/norm(pta-ptb);
-                z1=(1-t1)*za+t1*zb;
-                tmp=Dmat_(Dind_ii_1..Dind_ii_2);
-                tmp1=tmp_nn2;
-                pta=tmp1_(1..2);
-                za=tmp1_3;
-                tmp2=tmp_(nn2+1);
-                ptb=tmp2_(1..2);
-                zb=tmp2_3;
-                if(norm(pta-ptb)<Eps,
-                  contflg=1;
-                );
-              );
-              if(contflg==0,
-                t2=norm(pta-pt)/norm(pta-ptb);
-                z2=(1-t2)*za+t2*zb;
-                if(z1<z2-Eps2,
-                   if(length(ClipL)==0, 
-                    tmp=1;
-                  ,
-                    tmp1=column(ClipL,1);
-                    tmp1=apply(tmp1,#-pt_1);
-                    tmp2=column(ClipL,2);
-                    tmp2=apply(tmp2,#-pt_2);
-                    tmp3=apply(tmp1,#^2)+apply(tmp2,#^2);
-                    tmp=min(tmp3);         
-                  );
-                  if(tmp>Eps^2,
-                    tmp1=pt1_2-pt1_1;
-                    tmp2=ptb-pta;
-                    tmp3=Dotprod(tmp1,tmp2);
-                    tmp3=tmp3/norm(tmp1)/norm(tmp2);
-                    tmp=1-0.5*tmp3^2;
-                    tmp1=concat(pt,[nn1,t1,R0/tmp]);
-                    ClipL=append(ClipL,tmp1);
-                  );
-                );
+  forall(1..(length(ObjL)),mm,
+	obj=ObjL_mm;
+    remov=[];
+    obj2=Projcurve(obj);
+    forall(1..(length(PltL)),nn,
+
+	  plt=PltL_nn;
+      tmp=Projcurve(plt);
+      koc=Intersectcurves(obj2,tmp);
+      forall(1..(length(koc)),kk,
+        ptk=koc_kk;
+        tmp=PointonCurve(ptk_2,obj);
+        z1=Zparapt(tmp);
+        tmp=PointonCurve(ptk_3,plt);
+        z2=Zparapt(tmp);
+        if(z1<z2-Eps1,
+          tmp=max([sqrt(1-(ptk_5)^2),0.75]);
+          Rr=R0/tmp;
+          tmp2=[];
+          flg=0;
+          tmp=reverse(1..(floor(ptk_2)));
+          forall(tmp,
+            if(flg==0,
+              if(|obj2_#-ptk_1|>Rr,
+                tmp2=[#];
+                flg=1;
               );
             );
           );
-        );
-      );
-    );
-    te=length(Plt2);
-    KukanL=[[1.0,te]];
-    pt1=PhL;
-    if(length(ClipL)>0,
-      forall(1..(length(ClipL)),ii,
-        tmp=ClipL_ii;
-        pt=tmp_(1..2);
-        nn=tmp_3;
-        tt=nn+tmp_4;
-        Rr=tmp_5;
-        Flg=0;
-        breakflg=0;
-        forall(reverse(1..nn),jj,
-          contflg=0;
-          if(breakflg==0,
-            ptq=PointonCurve(jj,pt1);
-            if(norm(pt-ptq)<Rr,
-              contflg=1;
-            );
-            if(contflg==0,
-              Flg=jj;
-              breakflg=1;
-              contflg=1;
+          if(length(tmp2)==0,tmp2=[1]);
+          flg=0;
+          tmp=(ceil(ptk_2))..(length(obj2));
+          forall(tmp,
+            if(flg==0,
+              if(|obj2_#-ptk_1|>Rr,
+                tmp2=append(tmp2,#);
+                flg=1;
+              );
             );
           );
-        );
-        if(Flg==0,
-          t1=1;
-        ,
-          t1=Flg; t2=tt;
-          hh=t2-t1;
-          forall(1..10,
-            hh=hh*0.5;
-            ptq=PointonCurve(t1+hh,pt1);
-            if(norm(pt-ptq)<Rr,
-              t2=t2-hh;
+          if(length(tmp2)==1,tmp2=append(tmp2,length(obj2)));
+          tmp=obj2_((tmp2_1)..(tmp2_2));
+          tmp1=Circledata("",[ptk_1,ptk_1+[Rr,0]],["Num=8","nodata"]);
+          tmp1=Intersectcurves(tmp,tmp1);
+          if(length(tmp1)==2,
+            tmp=sort([tmp1_1_2,tmp1_2_2]);
+            tmp=[[tmp2_1-1+tmp_1,1],[tmp2_1-1+tmp_2,-1]];
+            remov=concat(remov,tmp);
+          );
+          if(length(tmp1)==1,
+            if(tmp2_1==1,
+              tmp=[[1,1],[tmp2_1-1+tmp1_1_2,-1]];
             ,
-              t1=t1+hh;
+              tmp=[[tmp2_1-1+tmp1_1_2,1],[length(obj2),-1]];
             );
+            remov=concat(remov,tmp);
           );
         );
-        Ku=[t1];
-        Flg=0;
-        breakflg=0;
-        forall((nn+1)..te,jj,
-          contflg=0;
-          if(breakflg==0,
-            ptq=PointonCurve(jj,pt1);
-            if(norm(pt-ptq)<Rr,
-              contflg=1;
-            );
-            if(contflg==0,
-              Flg=jj;
-              breakflg=1;
-              contflg=1;
-            );
-          );
-        );
-        if(Flg==0,
-          t2=te;
-        ,
-          t1=tt; t2=Flg;
-          hh=t2-t1;
-          forall(1..10,
-            hh=hh*0.5;
-            ptq=PointonCurve(t1+hh,pt1);
-            if(norm(pt-ptq)<Rr,
-              t1=t1+hh;
-            ,
-              t2=t2-hh;
-            );
-          );
-        );
-        Ku=append(Ku,t2);
-        KukanL=Kukannozoku(Ku,KukanL);
-	  );
+      );
     );
-    Res=[];
-    forall(1..(length(KukanL)),ii,
-      tmp=KukanL_ii;
-      t1=tmp_1; nn1=floor(t1);
-      t2=tmp_2; nn2=floor(t2);
-      PtL=[];
-      if(t1-nn1<1-Eps,
-        tmp=PointonCurve(t1,pt1);
-        PtL=[tmp];
+    if(length(remov)==0,
+      res=obj; 
+    ,
+      res=[];
+      remov=sort(remov,[#_1,#_2]);
+      tmp=select(remov,#_1<1-Eps1);
+      if(length(tmp)==0,
+        flg=0;
+        res=[1];
+      ,
+        flg=length(tmp);
+        res=[];
       );
-      forall((nn1+1)..nn2,jj,
-        tmp=PointonCurve(jj,pt1);
-        PtL=append(PtL,tmp);
+      forall(remov,
+        tmp=flg;
+        if(#_2==-1,
+          flg=flg-1;
+          if(flg==0,res=append(res,#_1));
+        );
+        if(#_2==1,
+          flg=flg+1;
+          if(tmp==0,res=append(res,#_1));
+        );
       );
-      if(t2-nn2>Eps,
-        tmp=PointonCurve(t2,pt1);
-        PtL=append(PtL,tmp);
+      if((flg==0)&(res_(length(res))<length(obj)),
+        res=append(res,length(obj));
       );
-      tmp=Listplot("",PtL,["nodata"]);
-      Res=append(Res,tmp);
+      tmp=res;
+      res=[];
+      forall(1..(length(tmp)/2),nn,
+        tmp1=tmp_(2*nn-1);
+        tmp2=tmp_(2*nn);
+        pL=(ceil(tmp1))..(floor(tmp2));
+        if(tmp1<ceil(tmp1)-Eps1,pL=prepend(tmp1,pL));
+        if(tmp2>floor(tmp2)+Eps1,pL=append(pL,tmp2));
+        ptL=[];
+        forall(pL,
+          pt=PointonCurve(#,obj);
+          ptL=append(ptL,pt);
+        );
+        res=append(res,ptL);
+      );
     );
-    Allres=concat(Allres,Res);
+	Allres=append(Allres,res);
   );
   Allres;
 );
 
-Kukannozoku(Jokyo,KukanL):=(
-  regional(Res,Eps,nn,ii,t1,t2,Ku,Flg,contflg,tmp,tmp1);
-  Eps=10^(-6);
-  nn=length(KukanL);
-  t1=Jokyo_1; t2=Jokyo_2;
-  tmp=KukanL_1;
-  t1=max(t1,tmp_1);
-  tmp=KukanL_nn;
-  t2=min(t2,tmp_2);
-  Res=[];
-  Flg=0;
-  contflg=0;
-  forall(1..nn,ii,
-    if(contflg==0,
-      Ku=KukanL_ii;
-      if(Flg==0,
-        if(Ku_2<t1,
-          Res=append(Res,Ku);
-        ,
-          Flg=1;
-          if(Ku_1<t1-Eps, 
-            tmp=[Ku_1,t1];
-            Res=append(Res,tmp);
-          );
-          if(Ku_2>t2+Eps,
-            tmp=[t2,Ku_2];
-            Res=append(Res,tmp);
-          );
-        );
-      ,
-        if(Flg==1,
-          if(Ku_2<t2,
-            contflg=1;
-          ,
-            if(contflg==0,
-              Flg=2;
-              if(Ku_1<t2-Eps,
-                Ku=[t2,Ku_2];
-              );
-              Res=append(Res,Ku);
-            );
-          );
-        ,
-          if(contflg==0,
-            Res=append(Res,Ku);
-          );
-        );
-      );
-    );
-  );
-  Res;
-);
+////////////// new skeleton  2018.01.04upto ////////////////
 
 ProjcoordCurve(Curve):=(
   regional(SP,CP,ST,CT,Out,jj,pt,x,y,z,xz,yz,zz);

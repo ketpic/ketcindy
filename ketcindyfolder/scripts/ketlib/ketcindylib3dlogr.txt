@@ -1,3 +1,5 @@
+// 2018.01.04
+//    Skeletonparadata(Skeletondatacindy) majorly changed
 // 2017.10.23
 //    Rotatedata3d, Translatedata3d debugged  ([])
 // 2017.10.08

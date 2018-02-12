@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.4(2017.12.24");
+println("KETCindy V.3.1.5(2018.02.02");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2017.12.03) loaded");
+println("ketcindylibbasic1(2018.02.02) loaded");
 
 //help:start();
 
@@ -44,7 +44,13 @@ Ketinit(sy,rangex,rangey):=(
   regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
   PenThickInit=8;
   ULEN="1cm";
-  MARKLEN=0.2; //16.11.01
+  MEMORI=0.05;//18.01.15from
+  MEMORIInit=MEMORI;
+  MEMORINow=MEMORI;
+  MARKLEN=0.05;
+  MARKLENInit=MARKLEN:
+  MARKLENNow= MARKLEN;
+  GENTEN=[0,0];//18.01.15upto
   KETPICLAYER=20;
   MilliIn=1/2.54*1000;
   PenThick=round(MilliIn*0.02);
@@ -139,9 +145,12 @@ Ketinit(sy,rangex,rangey):=(
   );//17.12.03upto
 );
 
-Getcdyname():=( //17.11.27
-//help:Getcdyname();
-text(curkernel());
+Cdyname():=Getcdyname();
+Getcdyname():=( //17.12.27
+//help:Cdyname();
+  regional(out);
+  out=text(curkernel());
+  out=replace(out,".cdy","");
 );
 
 Setwindow():=Setwindow("Msg=yes");
@@ -806,7 +815,10 @@ Textformat(value,dig):=(
     forall(value,
       tmp1=tmp1+Textformat(#,dig)+",";
     );
-    tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
+    if(length(tmp1)>1, //18.01.29from
+      tmp1=substring(tmp1,0,length(tmp1)-1);
+    );
+    tmp1=tmp1+"]"; //18.01.29upto
   ,
     if(ispoint(value) % isstring(value),
 //      vv=Lcrd(value);
@@ -1127,12 +1139,14 @@ ParamonCurve(pP,nN,plist):=(
 );
 
 Pointoncrv(tT,PtL):=PointonCurve(tT,PtL);
-PointonCurve(tT,Gdata):=(
+PointonCurve(tTorg,Gdata):=(
 //help:PointonCurve(20.5,"gr1");
-  regional(Out,Eps,nN,sS,Pa,Pb,PtL);
+  regional(tT,Out,Eps,nN,sS,Pa,Pb,PtL);
   if(isstring(Gdata),PtL=parse(Gdata),PtL=Gdata);
   if(length(PtL)==1,PtL=PtL_1);
-  Eps=10^(-4);
+  tT=max([tTorg,1]); //18.01.04
+  tT=min([tT,length(PtL)]); //18.01.04
+  Eps=10^(-5); //18.01.04
   nN=floor(tT+Eps);
   sS=max([tT-nN,0]);
   if(nN==length(PtL),
@@ -1254,6 +1268,8 @@ Koutenseg(pA,pB,pC,pD,options):=(
   );
  Out;
 );
+
+///////// Start of old Intersect ////////////
 
 IntersectcrvsPp(Gr1,Gr2):=IntersectcrvsPp(Gr1,Gr2,[]);
 IntersectcrvsPp(Gr1,Gr2,options):=(
@@ -1407,6 +1423,402 @@ Intersectcrvs(Gr1,Gr2,options):=(
   tmp1=IntersectcrvsPp(Gr1,Gr2,options);
   apply(tmp1,#_1);
 );
+///////// End of old Intersect ////////////
+
+/////////// Start of new Intersect //////////////
+
+Intersectline(p1,v1,p2,v2):=(
+  regional(Eps,d,dt,ds,t,s,pt,out,tmp,tmp1,tmp2,tmp3);
+  Eps=10^(-5);
+  out=[];
+  tmp=Dotprod(v1,v2);
+  tmp1=[tmp,|v1|^2];
+  tmp2=[-|v2|^2,-tmp];
+  tmp3=[Dotprod(p2-p1,v2),Dotprod(p2-p1,v1)];
+  d=Crossprod(tmp1,tmp2);
+  tmp=abs(Crossprod(v1,v2));
+  if(tmp>Eps,
+    dt=Crossprod(tmp3,tmp2);
+    ds=Crossprod(tmp1,tmp3);
+    t=dt/d;
+    s=ds/d;
+    pt=p1+v1*t;
+    out=[pt,t,s];
+  ,
+    tmp1=Crossprod(p2-p1,v1)/|v1|; //18.01.05
+    out=[abs(tmp1)]; //18.01.05
+  );
+  out;
+);
+
+Intersectseg(seg1,seg2):=Intersectseg(seg1,seg2,0.01);
+Intersectseg(seg1org,seg2org,Eps1):=(
+  regional(Eps,seg1,seg2,p1,p2,q1,q2,t,s,pt,n,pts,out,dist,
+    tmp,tmp1,tmp2,tmp3);
+  Eps=10^(-4);
+  //Eps1=0.01;
+  seg1=seg1org;
+  seg2=seg2org;
+  if(isstring(seg1),seg1=parse(seg1));
+  if(isstring(seg2),seg2=parse(seg2));
+  out=[];
+  p1=seg1_1; q1=seg1_2;
+  p2=seg2_1; q2=seg2_2;
+  if((|q1-p1|<Eps)%(|q2-p2|<Eps),
+    out=[-1];
+  ,
+    tmp=Intersectline(p1,q1-p1,p2,q2-p2);
+    if(islist(tmp_1),
+      pt=tmp_1; t=tmp_2; s=tmp_3;
+      if((t*(t-1)<Eps)&(s*(s-1)<Eps),
+        out=[0,pt,t,s];
+      ,
+        t=min([max([t,0]),1]);
+        s=min([max([s,0]),1]);
+        tmp3=[|p1-p2|,|p1-q2|,|p2-p1|,|p2-q1|]; //18.01.30from
+        tmp1=[Op(2,q2-p2),-Op(1,q2-p2)];
+        tmp=Intersectline(p1,tmp1,p2,q2-p2);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-p1|);
+          );
+        );
+        tmp=Intersectline(q1,tmp1,p2,q2-p2);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-q1|);
+          );
+        );
+        tmp1=[Op(2,q1-p1),-Op(1,q1-p1)];
+        tmp=Intersectline(p2,tmp1,p1,q1-p1);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-p2|);
+          );
+        );
+        tmp=Intersectline(q2,tmp1,p1,q1-p1);
+        if(islist(tmp_1),
+          if(tmp_3*(tmp_3-1)<Eps,
+            tmp3=append(tmp3,|tmp_1-q2|);
+          );
+        );
+        out=[min(tmp3),pt,t,s]; //18.01.30upto
+      );
+    ,
+      dist=tmp_1;
+      tmp1=q1-p1;      
+      n=[tmp1_2,-tmp1_1]/|tmp1|;
+      pts=[];
+      tmp=Intersectline(p1,n,p2,q2-p2);
+      if(tmp_3*(tmp_3-1)<Eps,
+        tmp1=(1-tmp_3)*p2+tmp_3*q2;
+        pts=append(pts,[tmp1,0,tmp_3]);
+      );
+      tmp=Intersectline(q1,n,p2,q2-p2);
+      if(tmp_3*(tmp_3-1)<Eps,
+        tmp1=(1-tmp_3)*p2+tmp_3*q2;
+        pts=append(pts,[tmp1,1,tmp_3]);
+      );
+      tmp=Intersectline(p2,n,p1,q1-p1);
+      if(tmp_3*(tmp_3-1)<Eps,
+        tmp1=(1-tmp_3)*p1+tmp_3*q1;
+        pts=append(pts,[tmp1,tmp_3,0]);
+      );
+      tmp=Intersectline(q2,n,p1,q1-p1);
+      if(tmp_3*(tmp_3-1)<Eps,
+        tmp1=(1-tmp_3)*p1+tmp_3*q1;
+        pts=append(pts,[tmp1,tmp_3,2]);
+      );
+      if(length(pts)==0,
+        tmp1=min([|p2-p1|,|q2-p1|,|p2-q1|,|q2-q1|]);
+        out=[tmp1];
+      ,
+        if(dist>Eps1,
+          out=[dist];
+        ,
+          tmp=apply(pts,#_1_1);
+          tmp1=sum(tmp)/(length(pts));
+          tmp=apply(pts,#_1_2);
+          tmp2=sum(tmp)/(length(pts));
+          tmp3=[tmp1,tmp2];
+          tmp=Nearestpt(tmp3,seg1);
+          tmp1=tmp_2;
+          tmp=Nearestpt(tmp3,seg2);
+          tmp2=tmp_2;
+          out=[dist,tmp3,tmp1,tmp2];
+        );
+      );
+    );
+  );
+  out;
+);
+
+Osplineseg(list):=Osplineseg(list,[]);
+Osplineseg(ptlist,optionsorg):=(
+  regional(tmp,tmp1,tmp2,list,ptL,ctrL,Eps,Eps0,
+      p0,p1,p2,p3,pQ,pR,cc,p01,p02,p11,p12,p21,p22,p31,p32,out);
+  Eps=10^(-2);
+  Eps0=10^(-6);
+  if(isstring(ptlist),list=parse(ptlist),list=ptlist);
+  p0=list_1; p1=list_2; p2=list_3; p3=list_4;
+  tmp=1+sqrt((1+Dotprod(p2-p0,p3-p1)/|p2-p0|/|p3-p1|)/2);
+  cc=4*|p2-p1|/3/(|p2-p0|+|p3-p1|)/tmp;
+  pQ=p1+cc*(p2-p0); // 15.09.21  // 16.08.16
+  pR=p2+cc*(p1-p3);  // 16.08.16
+  ctrL=[pQ,pR];
+  options=optionorg;
+  options=concat(options,["Num=20","nodata"]);
+  out=Bezier("",[p1,p2],ctrL,options);
+  out;
+);
+
+Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2):=(
+  Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2,10*Eps2);
+);
+Intersectpartseg(crv1org,crv2org,ii,jj,Eps1,Eps2,Dist):=(
+  regional(crv1,crv2,Eps,dst,kk,ll,seg1,seg2,snang,
+     p0,p1,p2,p3,os1,os2,out,tmp,tmp1,tmp2,flg);
+  crv1=crv1org; crv2=crv2org;
+  if(isstring(crv1),crv1=parse(crv1));
+  if(isstring(crv2),crv2=parse(crv2));
+  Eps=10^(-4);
+//  Eps1=0.01;
+//  Eps2=0.1;
+//  Dist=10*Eps2;
+  out=[];
+  seg1=[crv1_ii,crv1_(ii+1)];
+  seg2=[crv2_jj,crv2_(jj+1)];
+  tmp1=seg1_2-seg1_1;
+  tmp2=seg2_2-seg2_1;
+  snang=abs(Crossprod(tmp1,tmp2))/(norm(tmp1)*norm(tmp2));
+  tmp=Intersectseg(seg1,seg2,Eps1);
+  dst=tmp_1;
+  if(dst<Eps,
+    out=[tmp_2,ii+tmp_3,jj+tmp_4,dst,snang];
+  ,
+    if(dst<Eps2,
+      if((length(crv1)==2)%(|seg1_2-seg1_1|>Dist-Eps),
+        os1=seg1;
+      ,
+        p1=seg1_1; p2=seg1_2;
+        if(ii==1,
+          p3=crv1_3;
+          tmp=p2-p1;
+          tmp=(p1+p2)/2+[tmp_2,-tmp_1];
+          p0=Reflectpoint(p3,[(p1+p2)/2,tmp]);
+        ,
+          if(ii==length(crv1)-1,
+            p0=crv1_(ii-1);
+            tmp=p2-p1;
+            tmp=(p1+p2)/2+[tmp_2,-tmp_1];
+            p3=Reflectpoint(p0,[(p1+p2)/2,tmp]);
+          ,
+            p0=crv1_(ii-1); p3=crv1_(ii+2);
+          );
+        );
+        os1=Osplineseg([p0,p1,p2,p3]);
+      );
+      if((length(crv2)==2)%(|seg2_2-seg2_1|>Dist-Eps), //18.01.05
+        os2=seg2;
+      ,
+        p1=seg2_1; p2=seg2_2;
+        if(jj==1,
+          p3=crv2_3;
+          tmp=p2-p1;
+          tmp=(p1+p2)/2+[tmp_2,-tmp_1];
+          p0=Reflectpoint(p3,[(p1+p2)/2,tmp]);
+        ,
+          if(jj==length(crv2)-1,
+            p0=crv2_(jj-1);
+            tmp=p2-p1;
+            tmp=(p1+p2)/2+[tmp_2,-tmp_1];
+            p3=Reflectpoint(p0,[(p1+p2)/2,tmp]);
+          ,
+            p0=crv2_(jj-1); p3=crv2_(jj+2);
+          );
+        );
+        os2=Osplineseg([p0,p1,p2,p3]);
+      );
+      tmp2=[];
+      forall(1..(length(os1)-1),kk,
+        forall(1..(length(os2)-1),ll,
+          seg1=[os1_kk,os1_(kk+1)];
+          seg2=[os2_ll,os2_(ll+1)];
+          tmp=Intersectseg(seg1,seg2,Eps1);
+          if(tmp_1<Eps1,
+            if(tmp_1<dst+Eps,
+              dst=tmp_1;
+              tmp2=select(tmp2,#_1<dst);
+              tmp2=append(tmp2,[dst,tmp_2]);
+            );
+          );
+        );
+      );
+      if(length(tmp2)>0,
+        tmp=apply(tmp2,#_2_1);
+        tmp1=[sum(tmp)/length(tmp2)];
+        tmp=apply(tmp2,#_2_2);
+        tmp1=append(tmp1,sum(tmp)/length(tmp2));
+        out=[tmp1];
+        p1=crv1_ii; p2=crv1_(ii+1);
+        tmp=[Op(2,p2-p1),-Op(1,p2-p1)];
+        tmp=Intersectline(out_1,tmp,p1,p2-p1);
+        tmp=min([max([tmp_3,0]),1]);
+        out=[tmp1,ii+tmp];
+        p1=crv2_jj; p2=crv2_(jj+1);
+        tmp=[Op(2,p2-p1),-Op(1,p2-p1)];
+        tmp=Intersectline(out_1,tmp,p1,p2-p1);
+        tmp=min([max([tmp_3,0]),1]);
+        out=concat(out,[jj+tmp,dst,snang]);
+      );
+    );
+  );
+  out;
+);
+
+Collectnear(ptdL,Eps2):=(
+  regional(Eps,gL,rL,numL,ii,jj,flg,tmp,tmp1);
+  Eps=10^(-4);
+  gL=[ptdL_1];
+  rL=ptdL_(2..(length(ptdL)));
+  flg=0;
+  forall(1..(length(ptdL)-1),ii,
+    if(flg==0,
+      numL=[];
+      forall(1..(length(rL)),jj,
+        tmp1=100;
+        forall(gL,
+          tmp=|#_1-rL_jj_1|;
+          if(tmp<tmp1,tmp1=tmp);
+        );
+        if(tmp1<Eps2,numL=append(numL,jj));
+      );
+      if(length(numL)==0,
+        flg=1;
+      ,
+        gL=concat(gL,rL_(numL));
+        rL=remove(rL,rL_(numL));
+      );
+    );
+  ); 
+  [gL,rL];
+);
+
+IntersectcurvesPp(crv1org,crv2org):=IntersectcurvesPp(crv1org,crv2org,[]);
+IntersectcurvesPp(crv1org,crv2org,options):=(
+//help:IntersectcurvesPp(crv1,crv2);
+//help:IntersectcurvesPp(options=[Eps1(0.01),Eps2(0.1),Dist(2)])
+  regional(Eps,Eps1,Eps2,Dist,crv1,crv2,ii,jj,seg1,seg2,self,loopL,out,
+          flg,tmp,tmp1,tmp2);
+  Eps=10^(-4);
+  Eps1=0.01;
+  Eps2=0.1;
+  Dist=10*Eps2;
+  if(length(options)>0,
+    Eps1=options_1;
+    if(length(options)>1,
+      Eps2=options_2;
+      Dist=10*Eps2;
+      if(length(options)>2,
+        Dist=options_3;
+      );
+    );
+  );
+  if(isstring(crv1org),tmp1=parse(crv1org),tmp1=crv1org);//18.01.05from
+  if(isstring(crv2org),tmp2=parse(crv2org),tmp2=crv2org);
+  tmp1=apply(tmp1,LLcrd(#));
+  tmp2=apply(tmp2,LLcrd(#));
+  crv1=[tmp1_1];
+  forall(tmp1,
+    tmp=crv1_(length(crv1));
+    if(|tmp-#|>Eps,
+      crv1=append(crv1,#);
+    );
+  );
+  crv2=[tmp2_1];
+  forall(tmp2,
+    tmp=crv2_(length(crv2));
+    if(|tmp-#|>Eps,
+      crv2=append(crv2,#);
+    );
+  );//18.01.05upto
+  if(crv1==crv2,
+    self=1;
+  ,
+    self=0;
+  );
+  out=[];
+  forall(1..(length(crv1)-1),ii,
+    if(self==0,
+      loopL=1..(length(crv2)-1);
+    ,
+      loopL=(ii+2)..(length(crv2)-1);
+    );
+    forall(loopL,jj,
+      tmp=Intersectpartseg(crv1,crv2,ii,jj,Eps1,Eps2,Dist);
+      if(length(tmp)>0,
+        if(length(out)==0,
+          out=[tmp];
+        ,
+          tmp1=out_(length(out));
+          if(|tmp1_1-tmp_1|>Eps1,
+            out=append(out,tmp);
+          );
+        );
+        if(self==1,
+          tmp=[tmp_1,tmp_3,tmp_2,tmp_4,tmp_5];
+          out=append(out,tmp);
+        );
+      );
+    );
+  );
+  tmp2=out;
+  out=[];
+  tmp1=tmp2;
+  flg=0;
+  forall(1..(length(tmp2)),
+    if(flg==0,
+      tmp=Collectnear(tmp1,Eps2);
+      out=append(out,tmp_1);
+      if(length(tmp_2)==0,
+        flg=1;
+      ,
+        tmp1=tmp_2;
+      );
+    );
+  );
+  forall(1..(length(out)),ii,
+    tmp1=out_ii;
+    if(length(tmp1)==1,
+      out_ii=tmp1_1;
+    ,
+      tmp=apply(tmp1,#_4);
+      dst=min(tmp);
+      tmp1=select(tmp1,#_4<dst+Eps);
+      tmp=apply(tmp1,#_1);
+      tmp=sum(tmp)/length(tmp1);
+      tmp2=[tmp];
+      tmp=Nearestpt(tmp2_1,crv1org);
+      tmp2=append(tmp2,tmp_2);
+      tmp=Nearestpt(tmp2_1,crv2org);
+      tmp2=append(tmp2,tmp_2);
+      tmp2=concat(tmp2,[dst,tmp1_1_5]);
+      out_ii=tmp2;
+    );
+  );
+  out;
+);
+
+Intersectcurves(crv1org,crv2org):=Intersectcurves(crv1org,crv2org,[]);
+Intersectcurves(crv1org,crv2org,options):=(
+//help:Intersectcurves(crv1,crv2);
+//help:Intersectcurves(options=[Eps1(0.1),Dist(2)])
+  regional(tmp);
+  tmp=IntersectcurvesPp(crv1org,crv2org,options);
+  tmp=apply(tmp,#_1);
+);
+
+///////////End of new Intersect //////////////
 
 NearestptcrvPhy(point,PL):=(
   regional(tmp,pP,plist);
@@ -1827,10 +2239,57 @@ Drawlinetype(name,type):=(
   );
 );
 
-Setunitlen(string):=(
-//help:Setunitlen("5mm");
-  ULEN=string;
-  GLIST=append(GLIST,"Setunitlen("+Dq+string+Dq+")");
+Setunitlen():=(
+  println(ULEN);
+); 
+Setunitlen(UI):=(
+  regional(Dx,Dy,Sym,SL,OL,Is,VL,Ucode,ii,cha,
+     str,Unit,Valu,flg,tmp);
+  Dx=XMAX-XMIN;
+  Dy=YMAX-YMIN;
+  Sym=".0123456789 +-*/";
+  SL=Sym;
+  OL="+-*/";
+  if(length(UI)>0,
+    ULEN=UI;
+    GLIST=append(GLIST,"Setunitlen("+Dq+string+Dq+")");
+  );
+  Is=1;
+  VL="";
+  Ucode=ULEN;
+  flg=0;
+  forall(1..(length(Ucode)),ii,
+    if(flg==0,
+      cha=substring(Ucode,ii-1,ii);
+      if(indexof(SL,cha)>0,
+        if(indexof(OL,cha)>0,
+          tmp=substring(Ucode,Is-1,ii);
+          str=VL+tmp+cha;
+          VL=str;
+          Is=ii+1;
+        );
+      ,
+        Unit=substring(Ucode,ii-1,ii+1);
+        str=substring(Ucode,Is-1,ii-1);
+        VL=VL+str;
+        flg=1;
+      );
+    );
+  );
+  Valu=parse(VL);
+  str=format(Valu,6);
+  ULEN=str+Unit;
+  if(Unit=="cm",MilliIn=1000/2.54*Valu);
+  if(Unit=="mm",MilliIn=1000/2.54*Valu/10);
+  if(Unit=="in",MilliIn=1000*Valu);
+  if(Unit=="pt",MilliIn=1000/72.27*Valu);
+  if(Unit=="pc",MilliIn=000/6.022*Valu);
+  if(Unit=="bp",MilliIn=1000/72*Valu);
+  if(Unit=="dd2",MilliIn=1000/1238/1157/72.27*Valu);
+  if(Unit=="cc",MilliIn=1000/1238/1157/72.27*12*Valu);
+  if(Unit=="sp",MilliIn=1000/72.27/65536*Valu/10);
+  MARKLEN=MARKLENNow*1000/2.54/MilliIn;
+  MEMORI=MEMORINow*1000/2.54/MilliIn;
 );
 
 Setmarklen(ratio):=(
@@ -4634,6 +5093,8 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
 );
 
+////////// old enclosing ///////////////
+
 Enclosing(nm,plist):=EnclosingS(nm,plist);
 Enclosing(nm,plist,options):=EnclosingS(nm,plist,options);
 EnclosingS(nm,plist):=EnclosingS(nm,plist,[]);
@@ -4801,6 +5262,370 @@ EnclosingS(nm,plist,options):=(
   tmp=apply(AnsL,LLcrd(#));//16.10.20
   tmp;
 );
+
+/////////// new enclosing ///////////
+
+Enclosing2(nm,plist):=Enclosing2(nm,plist,[]);
+Enclosing2(nm,plistorg,options):=(
+//help:Enclosing2("1",["sc2","crAB","sc2","Invert(sc1)"]);
+//help:Enclosing2(options=[Eps1(0.01),Eps2(0.1)]);
+  regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
+      t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
+      tmp,tmp1,tmp2);
+  name="en"+nm;
+  plist=plistorg;
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  eqL=tmp_5;
+  realL=tmp_6;
+  opstr=tmp_(length(tmp)-1);
+  opcindy=tmp_(length(tmp));
+  Eps=10^(-5); // 16.12.05
+  Eps1=0.01;
+  Eps2=0.1;
+  Start=[];
+  flg=0;
+  forall(realL,
+    if(isList(#) % ispoint(#),
+//      Start=Lcrd(#); // 18.02.02
+    ,
+      if(flg==0,Eps1=#);
+      if(flg==1,Eps2=#);
+      flg=flg+1;
+    );
+  );
+  flg=0;
+  AnsL=[];
+  if(length(plist)==1,
+    Fdata=parse(plist_1);
+    tmp1=Fdata_1;
+    tmp2=Fdata_(length(Fdata));
+    if(|tmp1-tmp2|<Eps,
+      AnsL=Fdata;
+    ,
+      AnsL=append(Fdata,tmp1);
+    );
+    flg=1;
+  );
+  if(flg==0,
+    Fdata=plist_1;
+    Gdata=plist_(length(plist));
+    KL=IntersectcurvesPp(Fdata,Gdata);
+    if(length(KL)==0,
+      tmp=parse(Gdata);
+      tmp1=LLcrd(Op(length(tmp),tmp)); //18.02.02from
+      tmp=parse(Fdata);
+      tmp2=LLcrd(Op(1,tmp));
+      tmp=Listplot(name,[tmp1,tmp2],["nodisp"]);
+      plist=append(plist,"sg"+name);
+      Start=tmp2;
+      tst=1; //18.02.02upto
+    ,
+      if(length(KL)==1,
+        tst=KL_1_2;
+        Start=Pointoncurve(tst,Fdata);
+      );
+      if(length(KL)>1,
+        KL=sort(KL,[#_2]);
+        if(Start==[],
+          tst=KL_1_2;
+          Start=Pointoncurve(tst,Fdata);
+        ,
+          tmp=apply(KL,|#_1-Start|);
+          tmp=min(tmp);
+          tmp1=select(KL,|#_1-Start|==tmp);
+          tst=tmp1_1_2;
+          Start=Pointoncurve(tst,Fdata);
+        );
+      );
+    );
+  );
+  if(flg==0,
+    t1=tst;
+    println("Start point of enclosing is "+text(Start));
+    forall(1..(length(plist)),nn,
+      Fdata=plist_nn;
+      if(nn==length(plist),nxtno=1,nxtno=nn+1);
+      Gdata=plist_nxtno;
+      KL=IntersectcurvesPp(Fdata,Gdata);
+      if(length(KL)==0,
+        tmp1=parse(Fdata); //18.02.02from
+        tmp2=parse(Gdata); 
+        tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
+        Gdata=replace(Gdata,"(","");
+        Gdata=replace(Gdata,")","");
+        tmp=Gdata+"="+textformat(tmp2,6);
+        parse(tmp);
+        plist_nxtno=Gdata;
+        t2=Length(tmp1);
+        ss=1; //18.02.02upto
+      ,
+        t2=KL_1_2;
+        ss=KL_1_3;
+        if(abs(t2-t1)<Eps,
+          if(length(KL)>1,
+            t2=KL_2_2;
+            ss=KL_2_3;
+          ,
+            println(text(nn)+" and "+text(nxtno)+" not intersect");
+            flg=1;
+          );
+        );
+      );
+      if(flg==0,
+        tmp=Partcrv("",t1,t2,Fdata,["nodata"]);
+        if(nn==1,
+          AnsL=tmp;
+        ,
+          AnsL=concat(AnsL,tmp_(2..(length(tmp))));
+        );
+        t1=ss;
+      );
+    );
+  );
+  if(flg==0,
+    AnsL=apply(AnsL,Pcrd(#)); 
+  );
+  if(Noflg<3,
+    println("generate Enclosing "+name);
+    tmp=name+"="+textformat(AnsL,5);
+    parse(tmp);
+    tmp=name+"=Enclosing2(";//16.11.07from
+    tmp1="list(";
+    forall(plistorg, //18.02.02
+      tmp1=tmp1+#+",";
+    );
+    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+"))";//18.02.02
+    GLIST=append(GLIST,tmp);//16.11.07upto
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+  );
+  tmp=apply(AnsL,LLcrd(#));//16.10.20
+  tmp;
+);
+
+/////////// end of new enclosing ///////////
+
+/////////// new Hatchdata(cindy) ///////////
+
+Makehatch(iolistorg,pt,vec,bdylist):=(
+  regional(Eps,iolist,sg,bdy,out,nb,tenL,ns,ne,ioL,
+         ii,jj,kk,nvec,nbdy,sgn1,sgn2,flg,rmL,p0,p1,p2,pL,
+         Scalebkup,tmp,tmp1,tmp2);
+  Eps=10^(-6);
+  nvec=[-vec_2,vec_1];
+  nvec=nvec/|nvec|;
+  if(!islist(iolistorg),iolist=[iolistorg],iolist=iolistorg);
+  forall(1..(length(iolist)),
+    tmp=replace(iolist_#,"i","1,");
+    tmp=replace(tmp,"o","0,");
+    tmp="["+substring(tmp,0,length(tmp)-1)+"]";
+    iolist_#=parse(tmp);
+  );
+  Scalebkup=SCALEY;
+  SCALEY=1;
+  sg=Lineplot("",[pt,pt+vec],["nodata"]);
+  nb=length(bdylist);
+  if(nb>0,
+    tenL=[];
+    forall(1..nb,ii,
+      rmL=[];
+      bdy=bdylist_ii;
+      nbdy=length(bdy)-1;
+      pL=[];
+      forall(1..nbdy,jj,
+        p1=bdy_jj;
+        p2=bdy_(mod(jj+1-1,nbdy)+1);
+        tmp=Intersectseg(sg,[p1,p2],Eps);
+        if(abs(tmp_1)<Eps, //18.02.01
+          p0=tmp_2; t=tmp_3; s=tmp_4;
+          pL=append(pL,[p0,t,s,ii]);
+        );
+      );
+      if(length(pL)>0,
+        pL=sort(pL,[#_2]);
+        pL=apply(1..(length(pL)),append(pL_#,mod(#,2)));
+        tenL=concat(tenL,pL);
+      );
+    );
+    tenL=sort(tenL,[#_2]);
+    ioL=apply(1..nb,0);
+    ns=1;
+    ne=length(tenL);
+    if(ne>0,tmp=tenL_1_1,tmp=sg_2);
+    if(|sg_1-tmp|>Eps,
+      tmp=[sg_1,-1,1,ioL];
+      tenL=prepend(tmp,tenL);
+      ns=ns+1;
+      ne=ne+1;
+    );
+    if(|sg_2-tenL_(length(tenL))_1|>Eps,
+      tmp=[sg_2,-1,2,ioL];
+      tenL=append(tenL,tmp);
+    );
+    forall(ns..ne,ii,
+      tmp=tenL_ii;
+      tmp1=tmp_4;
+      tmp2=tmp_5;
+      ioL_tmp1=tmp2;
+      tmp=[tmp_1,tmp_2,tmp_4,ioL];
+      tenL_ii=tmp;
+    );
+    out=[];
+    forall(1..(length(tenL)-1),ii,
+      tmp1=tenL_ii;
+      if(contains(iolist,tmp1_4),
+        tmp2=tenL_(ii+1);
+        tmp=Listplot("",[tmp1_1,tmp2_1],["nodata"]);
+        out=append(out,tmp);  
+      );
+    );
+  );
+  SCALEY=Scalebkup;
+  out;
+);
+
+Hatchdatacindy(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);
+Hatchdatacindy(nm,iostr,bdylistorg,options):=(
+//help:Hatchdatacindy("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
+//help:Hatchdatacindy(options=[angle,width]);
+  regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,startP,angle,
+     interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2);
+  name="ha"+nm;
+  bdylist=[]; 
+  bdynameL=[];
+  forall(1..(length(bdylistorg)),kk,
+    tmp1=bdylistorg_kk;
+    if(length(tmp1)==1,
+      bname=tmp1_1;
+    ,
+      tmp=tmp1_(length(tmp1));
+      if(contains(["n","s","e","w"],tmp),
+        tmp2=parse(tmp1_1);
+        if(tmp=="s",
+          Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,YMIN],
+                 [tmp2_(length(tmp2))_1,YMIN],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
+          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          bname="join"+text(kk)+name;
+        );
+        if(tmp=="n",
+           Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,YMAX],
+                      [tmp2_(length(tmp2))_1,YMAX],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
+          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          bname="join"+text(kk)+name;
+        );
+        if(tmp=="e",
+          Listplot(name,apply([tmp2_1,[XMAX,tmp2_1_2],
+                      [XMAX,tmp2_(length(tmp2))_2],tmp2_(length(tmp2))],LLcrd(#)),["nodisp"]);
+          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          bname="join"+text(kk)+name;
+        );
+        if(tmp=="w",
+          Listplot(name,apply( [tmp2_1,[XMIN,tmp2_1_2],
+                      [XMIN,tmp2_(length(tmp2))_2],tmp2_(length(tmp2))],LLcrd(#)),["nodisp"]);
+          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          bname="join"+text(kk)+name;
+        );
+	  ,
+        Enclosing2(text(#)+name,tmp,["nodisp"]);
+        bname="en"+text(#)+name;
+      );
+    );
+    bdylist=append(bdylist,parse(bname));
+    bdynameL=append(bdynameL,bname);
+  );
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  opstr=tmp_(length(tmp)-1);
+  opcindy=tmp_(length(tmp));
+  reL=tmp_6;
+  angle=45;
+  interval=0.125*1000/2.54/MilliIn;
+  startP=[(XMIN+XMAX)/2, (YMIN+YMAX)/2];
+  tmp1=1;
+  forall(reL,
+    if(islist(#),
+      startP=#;
+    ,
+      if(tmp1==1,
+        angle=#;
+        tmp1=tmp1+1;
+      ,
+        interval= interval*#;
+      );
+    );
+  );
+  angle=angle*pi/180;
+  vec=[cos(angle),sin(angle)];
+  nvec=[-sin(angle),cos(angle)];
+  AnsL=[]; 
+  flg=0;
+  forall(0..100,kk,
+    pt=startP+kk*interval*nvec;
+    if(flg==0,
+      sha=Makehatch(iostr,pt,vec,bdylist);
+      if((sha==-1)%(length(sha)==0),
+//        flg=1;
+      ,
+        AnsL=concat(AnsL,sha);
+      );
+    );
+  );
+  flg=0;
+  forall(1..100,kk,
+    pt=startP-kk*interval*nvec;
+    if(flg==0,
+      sha=Makehatch(iostr,pt,vec,bdylist);
+      if((sha==-1)%(length(sha)==0),
+//        flg=1;
+      ,
+        AnsL=concat(AnsL,sha);
+      );
+    );
+  );
+  if(Noflg<3,
+    println("generate Hatchdata "+name);
+    tmp=name+"="+textformat(AnsL,5);
+    parse(tmp);
+    if(!islist(iostr),tmp1=[iostr],tmp1=iostr);
+    tmp="c(";
+    forall(tmp1,
+      tmp=tmp+Dq+#+Dq+",";
+    );
+    tmp=substring(tmp,0,length(tmp)-1)+")";
+    tmp2=name+"=Hatchdata("+tmp;
+    forall(bdynameL,
+      tmp2=tmp2+",list("+#+")";
+    );
+    tmp2=tmp2+opstr+")";
+    GLIST=append(GLIST,tmp2);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+  );
+  tmp2=[];
+  forall(AnsL,tmp1,
+    tmp=apply(tmp1,LLcrd(#));
+    tmp2=append(tmp2,tmp);
+  );
+  tmp2;
+);
+
+/////////// end of new Hatchdata(cindy) ///////////
+
 
 Shade(plist):=Shade(plist,[]);
 Shade(plist,options):=(

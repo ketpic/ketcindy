@@ -1,3 +1,30 @@
+// 2018.02.02
+//    Enclosing2 changed (for distanted curves, startpt option removed )
+// 2018.02.01
+//    Makehatch changed ( in accordance with Intersectseg )
+// 2018.01.30
+//    Intersectseg changed ( for the case of no intersect )
+// 2018.01.29
+//    Intersectpartseg changed ( for the case curves are strings )
+//    Textformat changed ( for null list )
+// 2018.01.26
+//    Enclosing2 (new enclosing ), Makehatch, Hatchdatacindy added
+// 2018.01.15
+//    Setunitlen changed ( as R )
+//    Ketinit changed (Marklennow,... added as R )
+// 2018.01.07
+//    Collectnear added 
+//    Intersectcurves changed (Collectnear used)
+// 2018.01.05
+//    Intersectcurves changed (LLcrd)
+//    Intersectcurvespt added
+//    Intersectpartseg debugged
+//    Intersectline changed 
+// s:2018.01.04
+//    PointonCurve debugged   ( t >=1, t<=length(g) )
+//    Intersectcurves....  added
+// s:2017.12.27
+//    Getcdyname(Cdyname) changed 
 // s:2017.12.03
 //    Ketinit changed (definition of LibnameS )
 // s:2017.12.01

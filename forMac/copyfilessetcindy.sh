@@ -1,24 +1,28 @@
 #!/bin/sh
-#      2017.12.08
+#      2018.02.26
 ketsrc=/Volumes/ketcindyfolder
 if [ ! -e $ketsrc ]; then
   ketsrc=~/Desktop/ketcindyfolder
 fi
 echo ${ketsrc} will be used
 echo 1. "/Applications/KeTTeX/texlive (default)"
-echo 2. "/Library/TeX (TeXLive)"
-#echo 3. "/Applications/KeTTeX.app/texlive"
-echo 3. other
+echo 2. "/Applications/KeTTeX.app/texlive"
+echo 3. "/Library/TeX (TeXLive)"
+echo 4. other
 read -p 'Choose path of TeX from the above (number) : ' ans
 if [ ${ans} = "1" ]; then 
   texpath=/Applications/KeTTeX/texlive
   texbinpath=${texpath}/bin/x86_64-darwin
 fi
-if [ ${ans} = "2" ]; then
+if [ ${ans} = "2" ]; then 
+  texpath=/Applications/KeTTeX.app/texlive
+  texbinpath=${texpath}/bin/x86_64-darwin
+fi
+if [ ${ans} = "3" ]; then
   texpath=/Library/TeX/Root
   texbinpath=/Library/TeX/texbin
 fi
-if [ ${ans} = "3" ]; then
+if [ ${ans} = "4" ]; then
   read -p 'Path of TeX (ex)/Applications/UpTeX.app/teTex/share : ' ans
   texpath=${ans}
   read -p 'Path of texbin (ex)/Applications/UpTeX.app/teTex/bin : ' ans

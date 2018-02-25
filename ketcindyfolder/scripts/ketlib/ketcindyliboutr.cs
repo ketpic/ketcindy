@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2018.02.01) loaded");
+println("ketcindyout(2018.02.22) loaded");
 
 //help:start();
 
@@ -656,7 +656,7 @@ CalcbyR(name,Arg1,Arg2):=(
 );
 CalcbyR(name,path,cmd,optionorg):=(
 //help:CalcbyR(name,cmd);
-//help:CalcbyR(options=["m/r","Wait=2","Out=yes","Pre=yes","File=result" ]);
+//help:CalcbyR(options=["m/r","Wait=2","Out=yes","Pre=yes","Res=" ]);
   regional(options,tmp,tmp1,tmp2,tmp3,realL,strL,eqL,
        cat,dig,preflg,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,waiting);
   options=optionorg;
@@ -692,7 +692,11 @@ CalcbyR(name,path,cmd,optionorg):=(
       options=remove(options,[#]);
     );
     if(tmp1=="F",
-      wfile=tmp2;
+      wfile=tmp2+".txt"; //18.02.22
+      options=remove(options,[#]);
+    );
+    if(tmp1=="R",
+      wfile="result"+tmp2+".txt"; //18.02.22
       options=remove(options,[#]);
     );
   );
@@ -790,9 +794,9 @@ CalcbyR(name,path,cmd,optionorg):=(
       cmdlist=append(cmdlist,"if(is.matrix("+name+")){");
       cmdlist=append(cmdlist,"  tmp=list()");//18.02.01from
       cmdlist=append(cmdlist,"  for(ii in 1:Length("+name+")){");
-      cmdlist=append(cmdlist,"    tmp=c(tmp,list(Op(ii,ans)))");
+      cmdlist=append(cmdlist,"    tmp=c(tmp,list(Op(ii,"+name+")))");
       cmdlist=append(cmdlist,"  }");
-      cmdlist=append(cmdlist,"  ans=tmp");
+      cmdlist=append(cmdlist,"  "+name+"=tmp");
       cmdlist=append(cmdlist,"}");//18.02.01upto
       cmdlist=append(cmdlist,"if(is.list("+name+")){");
 //      tmp="  cat(names("+name+"),file='"+wfile+"',sep=',')"; //18.01.27deleted
@@ -805,7 +809,7 @@ CalcbyR(name,path,cmd,optionorg):=(
       cmdlist=append(cmdlist,tmp);
       tmp="      cat(sharps,file='"+wfile+"',sep='',append=TRUE)";
       cmdlist=append(cmdlist,tmp);
-      tmp="      for(jj in Looprange(1,length(ans[[ii]]))){";
+      tmp="      for(jj in Looprange(1,length("+name+"[[ii]]))){";
       cmdlist=append(cmdlist,tmp);
       tmp="        cat("+name+"[[ii]][[jj]],file='"+wfile+"',sep=',',append=TRUE)";
       cmdlist=append(cmdlist,tmp);
@@ -862,6 +866,9 @@ CalcbyR(name,path,cmd,optionorg):=(
         closefile(SCEOUTPUT);
       );
       WritetoR(file+".r",cmdlist); //17.10.08
+      SCEOUTPUT=openfile("errormessageR.txt");//18.02.20from
+      println(SCEOUTPUT,"");
+      closefile(SCEOUTPUT);//18.02.20upto
       kcR(PathR,file,concat(options,["m"])); // 15.09.25
     );
     flg=0;
@@ -881,6 +888,11 @@ CalcbyR(name,path,cmd,optionorg):=(
             flg=-1;
           ,
             wait(WaitUnit);
+            tmp=load("errormessageR.txt");//18.02.20
+            if(length(tmp)>1,
+              println(tmp);
+              flg=-2;
+            );//18.02.20
           );
         );
       );
@@ -890,10 +902,10 @@ CalcbyR(name,path,cmd,optionorg):=(
       if(flg==-1,
         println(wfile+" does not exist");
       ,
-        tmp="("+text(waiting)+" s )";
-        println(wfile+" not generated "+tmp);
-        tmp=load("errormessageR.txt");//16.10.22
-        if(length(tmp)>1,println(tmp));//16.10.22
+        if(flg==0,
+          tmp="("+text(waiting)+" s )";
+          println(wfile+" not generated "+tmp);
+        );
       );
     ,
       println("      CalcbyR succeeded "+name+" ("+text(tmp2)+" sec)");
@@ -1897,6 +1909,8 @@ MkprecommandR(prec):=(
     cmdL=concat(cmdL,[Plist_#,[]]);
   );
   tmp2=sort(apply(VLIST,#_1)); // 16.02.03 from
+  tmp=apply(allpoints(),text(#));//18.02.11
+  tmp2=remove(tmp2,tmp);
   tmp1=[];
   forall(tmp2,tmp,
     tmp1=concat(tmp1,select(VLIST,#_1==tmp));
@@ -1928,11 +1942,14 @@ MkprecommandR(prec):=(
     cmdL=concat(cmdL,[#,[]]);
   ); 
   forall(GLIST,
-    tmp1=Rform(#); 
-    cmdL=concat(cmdL,[tmp1,[]]); 
+    if(indexof(#,"ReadOutData")==0, //18.02.12
+      tmp1=Rform(#); 
+      cmdL=concat(cmdL,[tmp1,[]]); 
+    );
   );
   cmdL;
 );
+
 
 MkprecommandS():=MkprecommandS(6);
 MkprecommandS(prec):=(
@@ -2096,96 +2113,6 @@ PlotdataS(nm,fun,variable,optionorg):=(
     tmp1=name+"="+textformat(tmp,5);
     parse(tmp1);
 //    Addgraph(name);  // 16.04.04
-    tmp2=apply(tmp,Lcrd(#));
-    tmp2;
-  );
-);
-
-Implicitplot(nm,fun,varx,vary):=
-   Implicitplot(nm,fun,varx,vary,[]);
-Implicitplot(nm,fnorg,varx,vary,optionorg):=(
-//help:Implicitplot("1","3*x^2+y^2=1","x=[-3,3]","y=[-3,3]");
-//help:Implicitplot(options2=["Wait=10","Out=no","Mx=no"]);
-  regional(options,name,fun,waiting,mxcheck,outreg,
-     eqL,reL,strL,fname,var,rng,val,tmp,tmp1,tmp2,cmdL,flg,wflg);
-  name="imp"+nm;
-  fname=Fhead+name+".txt";
-  fun=fnorg;
-  tmp=indexof(fun,"=");
-  if(tmp>0,
-    tmp1=substring(fun,0,tmp-1);
-    tmp2=substring(fun,tmp,length(fun));
-    fun=tmp1+"-("+tmp2+")";
-  );
-  options=optionorg;
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  reL=tmp_6;
-  strL=tmp_7;
-  waiting=5;  // 16.02.29
-  mxcheck=0; // 16.02.29
-  outreg=0;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,2));
-    tmp2=substring(#,tmp,length(#));
-    if(tmp1=="WA",
-      waiting=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="OU",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="T" % tmp=="Y", outreg=1);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="MX",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="T" % tmp=="Y", mxcheck=1);
-      options=remove(options,[#]);
-    );
-  );
-  wflg=0;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(length(#)==0,
-      options=remove(options,[#]);
-    );
-    if(tmp=="M",
-      wflg=1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="R",
-      wflg=-1;
-      options=remove(options,[#]);
-    );
-  );
-  tmp1=Testfunstr(fun,varx,vary);
-  tmp=apply([fun,varx,vary],Dq+Rsform(#)+Dq); //17.09.30
-//  tmp_1=RSform(tmp_1);
-  tmp=concat(tmp,reL);
-//  tmp=append(tmp,"Error"); // 16.02.29
-  cmdL=MkprecommandR();//17.09.30
-  cmdL=concat(cmdL,[
-//    "evstr",[tmp1,"Error"], 
-    name+"=Implicitplot",tmp,  // 16.03.15
-    "WriteOutData",[Dq+fname+Dq,Dq+name+Dq,name]
-  ]);
-  options=concat(options,["Wait="+text(waiting),"Cat=n"]);
-  if(wflg==1,options=append(options,"m"));
-  if(wflg==-1,options=append(options,"r"));
-  CalcbyR(name,cmdL,options);
-  if(ErrFlag==1,
-    println("    Implicitplot not completed");
-  ,
-    if(outreg==1,
-      OutFileList=remove(OutFileList,[fname]);
-      OutFileList=append(OutFileList,fname);
-    );
-    ReadOutData(fname); 
-    Extractdata(name,options);  
-    tmp=parse(name);
-    tmp1=name+"="+textformat(tmp,5);
-    parse(tmp1);
     tmp2=apply(tmp,Lcrd(#));
     tmp2;
   );

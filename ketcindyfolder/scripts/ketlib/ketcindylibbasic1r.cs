@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.1.5(2018.02.02");
+println("KETCindy V.3.1.6(2018.02.11");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2018.02.02) loaded");
+println("ketcindylibbasic1(2018.02.11) loaded");
 
 //help:start();
 
@@ -260,7 +260,11 @@ Cindyfile():=( // 16.12.26
   out;
 );
 
-DqDq(str):=unicode("0022")+str+unicode("0022");
+Dqq(str):=DqDq(str); //18.02.11
+DqDq(str):=(
+//help(Dqq("ab"); => Dq+"ab"+Dq)
+  unicode("0022")+str+unicode("0022");
+);
 
 Tab2list(dtstr):=Tab2list(dtstr,[]);
 Tab2list(dtstrorg,options):=(
@@ -1645,7 +1649,7 @@ Intersectpartseg(crv1org,crv2org,ii,jj,Eps1,Eps2,Dist):=(
           seg1=[os1_kk,os1_(kk+1)];
           seg2=[os2_ll,os2_(ll+1)];
           tmp=Intersectseg(seg1,seg2,Eps1);
-          if(tmp_1<Eps1,
+          if((tmp_1<Eps1)&(length(tmp)>1), //18.02.06
             if(tmp_1<dst+Eps,
               dst=tmp_1;
               tmp2=select(tmp2,#_1<dst);
@@ -1796,7 +1800,7 @@ IntersectcurvesPp(crv1org,crv2org,options):=(
       dst=min(tmp);
       tmp1=select(tmp1,#_4<dst+Eps);
       tmp=apply(tmp1,#_1);
-      tmp=sum(tmp)/length(tmp1);
+      tmp=sum(tmp)/length(tmp);
       tmp2=[tmp];
       tmp=Nearestpt(tmp2_1,crv1org);
       tmp2=append(tmp2,tmp_2);

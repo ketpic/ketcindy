@@ -1,3 +1,21 @@
+// 2018.02.26
+//   Sfcutparadata (renamed from Sfcutdata) changed
+// 2018.02.24
+//   Sfcutdata added
+// 2018.02.23
+//   Crvonsfparadata added
+//   Wireparadata added
+//   Skeletonparadata rechanged to old version
+// 2018.02.22
+//    Intersectcrvsf added (changed to R)
+//    Sdbdpradata,Crvsfparadata,Intersectcrvsf changed (title printing)
+// 2018.02.20
+//    Addpoints added
+//    PthiddenQ,Meetpoints debugged
+// 2018.02.18
+//    Sfbdparadata debuggded  (OTHERPARTITION )
+// 2018.02.11
+//    Sfbdparadata,   added
 // 2018.01.04
 //    Skeletonparadata(Skeletondatacindy) majorly changed
 // 2017.10.23

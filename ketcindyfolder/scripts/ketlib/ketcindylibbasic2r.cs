@@ -2733,7 +2733,7 @@ Extractdata(number,name,options):=(
     );
   );
   if(length(tmp1)==0,
-    println(varname+" not found");
+    println(name+" not found");
   ,
     tmp1=tmp1_number;
     tmp2=GOUTLIST_tmp1;

@@ -83,34 +83,14 @@ echo "setdirectory(Dirhead);"  >> ${cindyplug}/dirhead.txt
 echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/dirhead.txt
 echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/dirhead.txt
 
-# for Scilab from
-echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/dirheadsci.txt
-echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/dirheadsci.txt
-echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/dirheadsci.txt
-echo "setdirectory(Dirhead);"  >> ${cindyplug}/dirheadsci.txt
-echo "import(\"setketcindysci.txt\");"  >> ${cindyplug}/dirheadsci.txt
-echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/dirheadsci.txt
-# for Scilab upto
-
 read -p 'Choose pdfviewer from preview(p),skim(s): ' ans
 if [ ${ans} = "s" ]; then
   echo  "Pathpdf=\"skim\";" >> ${cindyplug}/dirhead.txt
 else
   echo  "Pathpdf=\"preview\";" >> ${cindyplug}/dirhead.txt
 fi
-
-# for Scilab from
-if [ ${ans} = "s" ]; then
-  echo  "Pathpdf=\"skim\";" >> ${cindyplug}/dirheadsci.txt
-else
-  echo  "Pathpdf=\"preview\";" >> ${cindyplug}/dirheadsci.txt
-fi
-# for Scilab upto
-
 echo "setdirectory(Homehead+pathsep()+getname());" >> ${cindyplug}/dirhead.txt
 echo "import(\"ketcindyhead.txt\");" >> ${cindyplug}/dirhead.txt
-echo "setdirectory(Homehead+pathsep()+getname());" >> ${cindyplug}/dirheadsci.txt
-echo "import(\"ketcindyhead.txt\");" >> ${cindyplug}dirheadsci.txt
 
 echo "KetCindyPlugin and others copied to Cinderella"
 sleep 1

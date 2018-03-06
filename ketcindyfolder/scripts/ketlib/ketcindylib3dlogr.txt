@@ -1,3 +1,5 @@
+// 2018.02.27
+//   Sfbdpara,... changed ("Res=" made from fname)
 // 2018.02.26
 //   Sfcutparadata (renamed from Sfcutdata) changed
 // 2018.02.24
@@ -15,7 +17,7 @@
 // 2018.02.18
 //    Sfbdparadata debuggded  (OTHERPARTITION )
 // 2018.02.11
-//    Sfbdparadata,   added
+//    Sfbdparadata added
 // 2018.01.04
 //    Skeletonparadata(Skeletondatacindy) majorly changed
 // 2017.10.23

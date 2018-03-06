@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(2018.02.26) loaded");
+println("ketcindylib3d(2018.02.27) loaded");
 
 //help:start();
 
@@ -3281,7 +3281,8 @@ Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
     "WriteOutData",tmp1,
     "save",["CUSPPT","OTHERPARTITION","file='"+tmp2+"'"]
   ];
-  options=concat(options,["Out=no","Wait="+text(waiting)]);
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=append(options,"m"));
   if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,
@@ -3393,7 +3394,8 @@ Wireparadata(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
     name2h+"=Projpara",[name3h],
     "WriteOutData",tmp1
   ];
-  options=concat(options,["Out=no","Wait="+text(waiting)]);
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=concat(options,["m"]));
   if(wflg==-1,options=concat(options,["r"]));
   if(ErrFlag==0,
@@ -3496,7 +3498,8 @@ Crvsfparadata(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
     name2h+"=Projpara",[name3h],
     "WriteOutData",tmp1
   ]);
-  options=concat(options,["Out=no","Wait="+text(waiting)]);
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=append(options,"m"));
   if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,
@@ -3595,7 +3598,8 @@ Crvonsfparadata(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
     name2h+"=Projpara",[name3h],
     "WriteOutData",tmp1
   ];
-  options=concat(options,["Out=no","Wait="+text(waiting)]);
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=append(options,"m"));
   if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,
@@ -3629,6 +3633,7 @@ Intersectcrvsf(nm,crvstr,fdorg,bdyeq,optionorg):=(
 //help:Intersectcrvsf(options=[Np([50,50]),Eps(0.01)]);
   regional(name,crv,fd,options,reL,fname,crvfname,argR,
      waiting,tmp,tmp1,tmp2,flg,wflg,pts);  name="crvsf"+nm;
+  name="crvsf"+nm;
   fname=Fhead+name+".txt";
   crvfname=Fhead+"crv"+nm+".txt";
 //  crv=parse(crvstr);
@@ -3677,23 +3682,31 @@ Intersectcrvsf(nm,crvstr,fdorg,bdyeq,optionorg):=(
   if(length(tmp)>0,
     argR=argR+","+tmp;
   );
+  tmp1=[Dqq(fname),Dqq(name),"tmp"];
   cmdL=[
     "print",[Dqq("crvsf"+nm)], //18.02.22
     "crv="+crvstr,[],
     "fd="+fd,[],
-    "tmp=Intersectcrvsf(crv,fd"+argR+")",[],
+    "tmp1=Intersectcrvsf(crv,fd"+argR+")",[],
+    "tmp=c()",[],
+    "for(j in Looprange(1,length(tmp1))){",[],
+    "  tmp=Appendrow(tmp,tmp1[[j]])",[],
+    "}",[],
+    "WriteOutData",tmp1,
     "tmp",[]
   ];
-  options=concat(options,["Out=yes","Wait="+text(waiting)]);
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=append(options,"m"));
   if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==1,
 	err("Crvsfparadata not completed");
   ,
-	CalcbyR("crvsf"+nm,cmdL,options);
-    println("generate crvsf"+nm);
-    parse("crvsf"+nm);
+	CalcbyR("ans",cmdL,options);
+    ReadOutData(fname);
   );
+  println("generate "+name);
+  parse(name);
 );
 
 Sfcutparadata(nm,eqstr,sf,fd):=
@@ -3768,7 +3781,8 @@ Sfcutparadata(nm,eqstr,sf,fdorg,optionorg,optionsh):=(
     name2h+"=Projpara",[name3h],
     "WriteOutData",tmp1
   ];
-  options=concat(options,["Out=no","Wait="+text(waiting)]);
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=append(options,"m"));
   if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,

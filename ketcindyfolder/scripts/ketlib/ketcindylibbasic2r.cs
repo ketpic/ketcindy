@@ -593,12 +593,8 @@ Letter(list,options):=(
     tmp=replace(tmp,".x","(1)");
     Str=replace(tmp,".y","(2)");
     Str=RSslash(Str); // 17.09.24
-    if(indexof(Str,"`")>0,
-//      tmp=Dq+",Assign('"+Str+"','`',Prime()))";
-      tmp=Dq+",Assign('"+Str+"'))"; // 15.02.22
-    ,
-      tmp=Dq+","+Dq+Str+Dq+")";
-    );
+    Str=replace(Str,"`","'");//180303
+    tmp=Dq+","+Dq+Str+Dq+")";
     if(Noflg==0,
       Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
     );

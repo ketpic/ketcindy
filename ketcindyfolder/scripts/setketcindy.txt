@@ -1,7 +1,6 @@
-// e:2017.10.30
+// e:2018.02.26
 Dirlib=Dirhead+pathsep()+"ketlib";
-Libname=Dirlib+pathsep()+"ketpic5_2_3";
-//LibnameS=Dirlib+pathsep()+"ketpicsciL6";
+Libname=Dirlib+pathsep()+"ketpiccurrent";
 DirlibC=Dirhead+pathsep()+"ketlibC";
 setdirectory(Dirlib);
 import("ketcindylibbasic1r.cs");

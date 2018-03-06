@@ -1,3 +1,9 @@
+// 2018.03.03
+//   ConvertFdtoC changed  ( varnames converted to u,v )
+// 2018.03.01
+//   Cform,ConvertFdtoC added
+// 2018.02.27
+//   Rfun debugged
 // 2018.02.22
 //   CalcbyR changed (adding ".txt" to wfile)
 // 2018.02.20

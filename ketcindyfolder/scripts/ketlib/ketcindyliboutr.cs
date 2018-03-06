@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2018.02.22) loaded");
+println("ketcindyout(2018.03.01) loaded");
 
 //help:start();
 
@@ -692,11 +692,11 @@ CalcbyR(name,path,cmd,optionorg):=(
       options=remove(options,[#]);
     );
     if(tmp1=="F",
-      wfile=tmp2+".txt"; //18.02.22
+      wfile=tmp2; //18.02.27
       options=remove(options,[#]);
     );
     if(tmp1=="R",
-      wfile="result"+tmp2+".txt"; //18.02.22
+      wfile=tmp2; //180227
       options=remove(options,[#]);
     );
   );
@@ -704,7 +704,7 @@ CalcbyR(name,path,cmd,optionorg):=(
     if(cat=="Y",
       wfile=Fhead+name+".txt";
     ,
-      wfile="resultR.txt";
+      wfile="result.txt";
     );
   );
   wflg=0;
@@ -918,9 +918,13 @@ CalcbyR(name,path,cmd,optionorg):=(
             tmp=format(tmp3,dig);
           ,
             if(indexof(tmp3,",")==0,
-              tmp=tmp3;
+              tmp=Dqq(tmp3); //180227
             ,
-             tmp=tokenize(tmp3,",");
+             tmp=tmp3;
+             if(substring(tmp3,0,2)=="c(",
+               tmp=substring(tmp3,2,length(tmp3)-1);
+             );
+			 tmp=tokenize(tmp,",");
              tmp=textformat(tmp,dig);
             );
           );
@@ -930,9 +934,10 @@ CalcbyR(name,path,cmd,optionorg):=(
           tmp2=tmp2_1;
           if(length(tmp2)==1,tmp2=tmp2_1);
           if(isstring(tmp2),
-            if(indexof(tmp2,"nodata")>0,tmp2=[]);
+            if(indexof(tmp2,"nodata")>0,tmp2="[]"); //180227from
+            tmp2=parse(tmp2);
           );
-          tmp=name+"="+textformat(tmp2,dig);
+          tmp3=textformat(tmp2,dig);//180227upto
         ,
           tmp3="";
           forall(tmp2,
@@ -946,7 +951,7 @@ CalcbyR(name,path,cmd,optionorg):=(
           tmp3=replace(tmp3,"[,","[");
           tmp3=replace(tmp3,",]","]");
         );
-        tmp=name+"="+tmp3;
+        tmp=name+"="+tmp3;//180227
         parse(tmp);
       );
     );
@@ -982,7 +987,7 @@ Rfun(name,fun,argL,optionorg):=(
   );
   cmdL=[];
   cmdL=concat(cmdL,[
-    nm+"="+fun,argL
+    nm+"="+fun,argL,
   ]);
   options=concat(options,["Wait=2"]);
   CalcbyR(nm,cmdL,options);
@@ -4648,6 +4653,119 @@ Mkketcindyjs(libname,options):=( //17.11.18
     drawtext(mouse().xy-[0,1],"First export to CindyJS",size->24,color->[1,0,0]);
     wait(3000);
   );
+);
+
+///////////////// C function //////////////////
+
+Cform(strorg):=(
+//help:Cform(str)
+  regional(str,ter,out,hat,ns,ne,nn,jj,flg,
+    lv,str1,str2,tmp,tmp1,tmp2);
+  ter=["+","-","*","/","(",")"];
+  str=replace(strorg,"pi","M_PI");
+  hat=Indexall(str,"^");
+  out="";
+  ns=0;
+  forall(hat,nn,
+    tmp=substring(str,nn-2,nn-1);
+    if(tmp==")",
+      tmp1=substring(str,ns,nn-1);
+      tmp2=Parlevel(tmp1);
+	  tmp=tmp2_(length(tmp2))_2;
+      lv=select(tmp2,#_2==-tmp);
+      tmp=lv_1_1;
+      out=out+substring(str,ns,ns+tmp-1);
+      str1=substring(str,ns+tmp,nn-2);
+    ,
+      flg=0;
+      tmp2=reverse(ns..(nn-1));
+      forall(tmp2,jj,
+        if(flg==0,
+          tmp1=substring(str,jj-1,jj);
+		  if(contains(ter,tmp1),
+            tmp=jj;
+            flg=1;
+          );
+        );
+      );
+      tmp1=substring(str,ns,tmp);
+      out=out+tmp1;
+      str1=substring(str,tmp,nn-1);
+    );
+    tmp=substring(str,nn,nn+1);
+    if(tmp=="(",
+      tmp1=substring(str,nn,length(str));
+      tmp2=Parlevel(tmp1);
+      lv=select(tmp2,#_2==-1);
+      tmp=lv_1_1;
+      str2=substring(tmp1,1,tmp-1);
+      ns=nn+tmp;
+    ,
+      flg=0;tmp=0;
+      forall(nn..(length(str)),jj,
+        if(flg==0,
+          tmp1=substring(str,jj,jj+1);
+          if((length(tmp1)==0)%(contains(ter,tmp1)),
+            tmp=jj;
+            flg=1;
+          );
+        );
+      );
+      str2=substring(str,nn,tmp);
+      ns=nn+1;
+    );
+    out=out+"pow("+str1+","+str2+")";
+  );
+  str=out+substring(str,ns,length(str));
+  str=str+"#";
+  ter=apply(0..9,text(#));
+  ter=append(ter,".");
+  out="";
+  tmp=substring(str,0,1);
+  if(contains(ter,tmp),
+    flg=1;out="";tmp1=tmp;
+  ,
+    flg=0;out=tmp;tmp1="";
+  );
+  forall(2..(length(str)),
+    tmp=substring(str,#-1,#);
+    if(contains(ter,tmp),
+      if(flg==1,
+        tmp1=tmp1+tmp;
+      ,
+        tmp1=tmp;
+      );
+      flg=1;
+    ,
+      if(flg==1,
+        if(indexof(tmp1,".")==0,
+          tmp1=tmp1+".0";
+        );
+        out=out+tmp1+tmp;
+      ,
+        out=out+tmp;
+      );
+      tmp1="";flg=0;
+    );
+  );
+  out=substring(out,0,length(out)-1);
+  out;
+);
+
+ConvertFdtoC(Fd):=ConvertFdtoC(Fd,["x","y","z"]);
+ConvertFdtoC(Fd,name):=(
+//help:ConvertFd(Fd);
+  regional(FdL,FdC,uvar,vvar,tmp,tmp1);
+  FdL=Fullformfunc(Fd);
+  tmp=indexof(FdL_5,"="); //180303from
+  uvar=substring(FdL_5,0,tmp-1);
+  tmp=indexof(FdL_6,"=");
+  vvar=substring(FdL_6,0,tmp-1);
+  tmp1=apply(2..6,replace(FdL_#,uvar,"u"));
+  tmp1=apply(tmp1,replace(#,vvar,"v"));
+  tmp1=concat(tmp1,FdL_(7..8));
+  FdC=apply(1..3,name_#+"="+Cform(tmp1_#)); 
+  FdC=concat([FdC],tmp1_(4..7)); //180303upto// may be changed
 );
 
 Cheader():=Cheader(FdC,FheadC+"header.h");

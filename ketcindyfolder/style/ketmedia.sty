@@ -1,12 +1,36 @@
-\newcommand{\inputsound}[3][90.1]{
-% #1:h-position(90.1), #2:dir(/), #3:file
-%2017.12.25  main, \inputsound changed
-%2018.02.15  default of #1 changed
-\ifnum #1=90
-\vspace{-20mm}
+\newcommand{\inputsound}[3][90]{
+% 20180305 changed
 
-\vfill
-\fi
+% #1:hspace(mm), #2:dir(add /), #3:file
+
+%\vspace{-20mm}
+
+%\vfill
+
+\noindent%
+\hspace*{#1mm}\hspace{8mm}%
+\mediabutton[
+mediacommand=#3:playPause,
+overface={\color{blue}\small \strut \fbox{$\oplus\triangleright$}},
+%downface={\color{red}\small\strut Pause/Pause}%
+]{\small\strut \fbox{$\oplus\triangleright$}}%
+\mediabutton[
+mediacommand=#3:rewind,
+overface={\color{blue}\small \strut \fbox{$\ll$}}
+%downface={\color{red}\small\strut Pause/Pause}%
+]{\small\strut \fbox{$\ll$}}%
+%\mediabutton[
+%mediacommand=#3:seek[(15)],
+%overface={\color{blue}\small \strut \fbox{1}}
+%downface={\color{red}\small\strut Pause/Pause}%
+%]{\small\strut \fbox{1}}%
+%\mediabutton[
+%mediacommand=#3:seek[(30)],
+%overface={\color{blue}\small \strut \fbox{2}}
+%%downface={\color{red}\small\strut Pause/Pause}%
+%]{\small\strut \fbox{2}}%
+
+\vspace{-7mm}
 
 \noindent%
 \hspace*{#1mm}%
@@ -18,19 +42,14 @@
       source=#2#3.mp3
      &autoPlay=true
     }
-]{\color{blue}\fbox{　}}{APlayer.swf}%
-\mediabutton[
-mediacommand=#3:playPause,
-overface={\color{blue}\small \strut \fbox{$\oplus\triangleright$}},
-]{\small\strut \fbox{$\oplus\triangleright$}}%
-\mediabutton[
-mediacommand=#3:rewind,
-overface={\color{blue}\small \strut \fbox{$\ll$}}
-%downface={\color{red}\small\strut Pause/Pause}%
-]{\small\strut \fbox{$\ll$}}%
+%    transparent,
+%    passcontext
+]{\color{blue}\fbox{　}}{APlayer.swf}
+
 }
 
 \newcommand{\inputmovie}[3][0.8]{
+
 \includemedia[
   label=#3,
   width=#1\linewidth,height=0.6\linewidth,
@@ -47,4 +66,5 @@ overface={\color{blue}\small \strut \fbox{$\ll$}}
   }
 %]{}{player_flv_maxi.swf}
 ]{}{VPlayer.swf}
+
 }

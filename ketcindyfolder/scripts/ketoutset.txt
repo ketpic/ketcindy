@@ -61,18 +61,6 @@ if(islinux(),
   PathAd="";
 );
 
-if(isstring(Homehead),
-  setdirectory(Homehead+pathsep()+getname());
-  import("ketcindyhead.txt");
-,
-  Dirfile=gethome()+pathsep()+"ketcindy";
-);
-println(makedir(Dirfile,"ketwork"));
-Dirwork=Dirfile+pathsep()+"ketwork";
-Dirwork=replace(Dirwork,pathsep()+pathsep(),pathsep());
-
-setdirectory(Dirwork);
-
 if(indexof(PathT,"platex")>0,
   Helplist(["+","+3d","+mv"],"helpJ");
 ,

@@ -13,7 +13,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
 
     @CindyScript("ketjavaversion")
     public String ketjavaversion() {
-        return "Ketjava 2017.11.08";
+        return "Ketjava 20180401";
     }
 
 	public String getName() {
@@ -39,9 +39,15 @@ public class KetCindyPlugin extends CindyScriptPlugin {
         return (c.getBlue() + c.getRed() + c.getGreen()) / 3.;
     }
 
-    @CindyScript("testarray")
-    public String writeArray(ArrayList<Double> al) {
-        return Arrays.toString(al.toArray());
+    @CindyScript("isincludefull")//180331
+    public static boolean isincludefull(String str){
+      char[] chars = str.toCharArray();
+      for (int i = 0; i < chars.length; i++) {
+        if (String.valueOf(chars[i]).getBytes().length==2) {
+          return true;
+        }
+      }
+      return false;
     }
     
     @CindyScript("getdir")
@@ -61,7 +67,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
     }
 	
     @CindyScript("iswindows")
-    static public boolean iswindows(){
+    public static boolean iswindows(){
         String os=System.getProperty("os.name").toLowerCase();
         if(os!=null && os.startsWith("windows")){
             return true;
@@ -70,6 +76,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
             return false;
         }
     }
+
     @CindyScript("ismacosx")
     public static boolean ismacosx(){
         String os=System.getProperty("os.name").toLowerCase();
@@ -102,6 +109,46 @@ public class KetCindyPlugin extends CindyScriptPlugin {
       return "Improper call";
     }
 
+	@CindyScript("nkfwin") //180401
+    public static int nkfwin(String dir,String fname,String ext) throws IOException {
+      String src=dir+File.separator+fname+"."+ext;
+      String out=dir+File.separator+fname+".out";
+      ProcessBuilder pb = new ProcessBuilder();
+      pb.command("cmd","/c",File.separator+"nkf32","<"+src,">"+out);
+      Process process = pb.start();
+      return 0;
+  }
+
+  	@CindyScript("nkfcpdel") //180401
+    public static int nkfcpdel(String dir,String fname,String ext) throws IOException {
+      String src=dir+File.separator+fname+"."+ext;
+      String out=dir+File.separator+fname+".out";
+      ProcessBuilder pb = new ProcessBuilder();
+      pb.command("cmd","/c","copy","/Y",out,src,"|","del",out);
+      Process process = pb.start();
+      return 0;
+  }
+  
+	@CindyScript("nkfdelout") //180401
+    public static int nkfdelout(String dir,String fname) throws IOException {
+      String out=dir+File.separator+fname+".out";
+      ProcessBuilder pb = new ProcessBuilder();
+      pb.command("cmd","/c","del",out);
+      Process process = pb.start();
+      return 0;
+  }
+  
+  	@CindyScript("nkfren") //180401
+    public static int nkfren(String dir,String fname,String ext) throws IOException {
+      String src=fname+"."+ext;
+      String out=dir+File.separator+fname+".out";
+      ProcessBuilder pb = new ProcessBuilder();
+      pb.command("cmd","/c","ren",out,src);
+      Process process = pb.start();
+//      int ret = process.waitFor();
+      return 0;
+  }
+ 
     @CindyScript("kc")
     public static String kc(String args,String args2,String args3) throws IOException {
     ProcessBuilder pb = new ProcessBuilder();
@@ -200,7 +247,11 @@ public class KetCindyPlugin extends CindyScriptPlugin {
     }
     if(flg==0){
       if(iswindows()){
-        pb.command("cmd.exe","/c","start",args);
+        if((args.indexOf(" ")==-1)&&(args.indexOf("-")==-1)){ //180331from
+          pb.command("cmd.exe","/c","start",args);
+        }else{
+          pb.command("cmd.exe","/c","",args);//180331to
+        }
       }
       else{
         if(ismacosx()){
@@ -313,6 +364,14 @@ public class KetCindyPlugin extends CindyScriptPlugin {
      else{
        return false;
      }
+  }
+  
+      @CindyScript("filepath")
+     // 18.03.29
+      public static String isexists(String fname){
+      File file = new File(fname);
+      String path = file.getAbsolutePath();
+      return path;
   }
 
     @CindyScript("makedir")

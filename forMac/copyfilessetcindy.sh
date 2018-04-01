@@ -1,5 +1,5 @@
 #!/bin/sh
-#      2018.02.26
+#      20180401
 ketsrc=/Volumes/ketcindyfolder
 if [ ! -e $ketsrc ]; then
   ketsrc=~/Desktop/ketcindyfolder
@@ -82,16 +82,12 @@ echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/dirhead.txt
 echo "setdirectory(Dirhead);"  >> ${cindyplug}/dirhead.txt
 echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/dirhead.txt
 echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/dirhead.txt
-
 read -p 'Choose pdfviewer from preview(p),skim(s): ' ans
 if [ ${ans} = "s" ]; then
   echo  "Pathpdf=\"skim\";" >> ${cindyplug}/dirhead.txt
 else
   echo  "Pathpdf=\"preview\";" >> ${cindyplug}/dirhead.txt
 fi
-echo "setdirectory(Homehead+pathsep()+getname());" >> ${cindyplug}/dirhead.txt
-echo "import(\"ketcindyhead.txt\");" >> ${cindyplug}/dirhead.txt
-
 echo "KetCindyPlugin and others copied to Cinderella"
 sleep 1
 exit 0

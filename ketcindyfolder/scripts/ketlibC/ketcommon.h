@@ -1,76 +1,8 @@
-int length2(double gdata[][2]);
-int length3(double gdata[][3]);
-int length4(double gdata[][4]);
-int length5(double gdata[][5]);
-int length2i(int gdata[][2]);
-void copyd(int from, int upto, double q[], double p[]);
-void copyi(int from, int upto, int q[], int p[]);
-int addptd2(double gdata[][2], double pt[2]);
-int addptd3(double gdata[][3], double pt[3]);
-int addptd4(double gdata[][4], double pt[4]);
-int addptd5(double gdata[][5], double pt[5]);
-int add2(double gdata[][2], double x, double y);
-int add3(double gdata[][3], double x, double y, double z);
-int push2(double x, double y, double ptL[][2]);
-int push3(double x, double y, double z, double ptL[][3]);
-int push4(double x, double y, double z, double w, double ptL[][4]);
-int push5(double x, double y, double z, double w, double u, double ptL[][5]);
-void pull2(int num, double ptL[][2],double pt[2]);
-void pull3(int num, double ptL[][3],double pt[3]);
-void pull4(int num, double ptL[][4],double pt[4]);
-void pull5(int num, double ptL[][5],double pt[5]);
-int appendd2(int level, int from,int upto, double gdata[][2],double mat[][2]);
-int appendd3(int level, int from,int upto, double gdata[][3],double mat[][3]);
-int prependd2(int from,int upto, double gdata[][2],double mat[][2]);
-int appendd1(double numvec[], double num);
-int appendi1(int numvec[],int num);
-int prependi1(int num, int numvec[]);
-int removei2(int nrmv,int mat[][2]);
-int dataindexi1(int out[],int din[][2]);
-int dataindexd1(double out[],int din[][2]);
-int dataindexd2(int level,double out[][2],int din[][2]);
-int dataindexd3(int level, double out[][3],int din[][2]);
-int dataindexd4(int level, double out[][4],int din[][2]);
-void dispmatd1(int from, int upto, double mat[]);
-void dispmatd2(int from, int upto, double mat[][2]);
-void dispmatd3(int from, int upto, double mat[][3]);
-void dispmatd4(int from, int upto, double mat[][4]);
-void dispmatd5(int from, int upto, double mat[][5]);
-void dispmatd6(int from, int upto, double mat[][6]);
-void dispmati2(int from, int upto, int mat[][2]);
-void dispmati1(int from, int upto, int mat[]);
-int readdata3(const char *fname, double out[][3]);
-int readdata2(const char *fname, double out[][2]);
-int output2(const char *var, const char *fname, int level, double out[][2]);
-void simplesort(double number[]);
-int memberi(int a, int list[]);
-double dotprod(int dim, double p[], double q[]);
-double dist(int dim, double p[], double q[]);
-void pointoncurve(double t, double gdata[][2], double eps, double pt[]);
-int partcrv(double a,double b,double pkL[][2], double pL[][2]);
-int partcrv3(double a,double b,double pkL[][3], double pL[][3]);
-int connectseg(double pdata[][2], double eps, double out[][2]);
-void koutenseg(double a[2], double b[2], double c[2], double d[2],
-          double eps, double eps2, double out[4]);
-double paramoncurve(double p[2], int n, double ptL[][2]);
-void nearestptpt(double pa[2], double pL[][2], double ans[4]);
-int intersectselfPp(double data1[][2],double eps,double eps1s,double kL[][4]);
-int intersectcrvsPp(double data1[][2], double data2[][2],
-         double eps,double eps1s, double kL[][4]);
-int dropnumlistcrv(double qd[][2], double eps1, int out[]);
-int increasept2(double ptL[][2], int nn, double out[][2]);
-int increasept3(double ptL[][3], int nn, double out[][3]);
-void bezierpt(double t, double p0[2], double p3[2], 
-        double p1[2], double p2[2], double ptout[2]);
-int bezier(double ptL[][2], double ctrL[][4], int num, double out[][2]);
-int ospline(int level, double ptL[][2], int num, double out[][2]);
-void bezierpt3(double t, double p0[3], double p3[3], 
-        double p1[3], double p2[3], double ptout[3]);
-int bezier3(double ptL[][3], double ctrL[][6], int num, double out[][3]);
-int ospline3(int level, double ptL[][3], int num, double out[][3]);
+//20180308 norm added
 
-const double Inf=99999;
-const int Infint=30000;
+int length1(double gdata[]){
+  return floor(gdata[0]+0.5);
+}
 
 int length2(double gdata[][2]){
   return floor(gdata[0][0]+0.5);
@@ -85,6 +17,10 @@ int length4(double gdata[][4]){
 }
 
 int length5(double gdata[][5]){
+  return floor(gdata[0][0]+0.5);
+}
+
+int length6(double gdata[][6]){
   return floor(gdata[0][0]+0.5);
 }
 
@@ -140,6 +76,15 @@ int push5(double x, double y, double z, double w, double u, double ptL[][5]){
   return nall;
 }
 
+int push6(double x, double y, double z, double w, double u, double v,double ptL[][6]){
+  int nall=ptL[0][0];
+  nall++;
+  ptL[nall][0]=x; ptL[nall][1]=y;ptL[nall][2]=z;
+  ptL[nall][3]=w; ptL[nall][4]=u; ptL[nall][5]=v; 
+  ptL[0][0]=nall;
+  return nall;
+}
+
 void pull3(int num, double ptL[][3],double pt[3]){
   pt[0]=ptL[num][0]; pt[1]=ptL[num][1]; pt[2]=ptL[num][2]; 
 }
@@ -156,6 +101,11 @@ void pull4(int num, double ptL[][4],double pt[4]){
 void pull5(int num, double ptL[][5],double pt[5]){
   pt[0]=ptL[num][0]; pt[1]=ptL[num][1];
   pt[2]=ptL[num][2]; pt[3]=ptL[num][3]; pt[4]=ptL[num][4];
+}
+
+void pull6(int num, double ptL[][6],double pt[6]){
+  pt[0]=ptL[num][0]; pt[1]=ptL[num][1]; pt[2]=ptL[num][2]; 
+  pt[3]=ptL[num][3]; pt[4]=ptL[num][4]; pt[5]=ptL[num][5]; 
 }
 
 int add2(double gdata[][2], double x, double y){
@@ -191,6 +141,12 @@ int addptd4(double gdata[][4], double pt[4]){
 int addptd5(double gdata[][5], double pt[5]){
   int nall;
   nall=push5(pt[0],pt[1],pt[2],pt[3],pt[4],gdata);
+  return nall;
+}
+
+int addptd6(double gdata[][6], double pt[6]){
+  int nall;
+  nall=push6(pt[0],pt[1],pt[2],pt[3],pt[4],pt[5],gdata);
   return nall;
 }
 
@@ -423,11 +379,20 @@ int dataindexi1(int out[],int din[][2]){
   return ctr;
 }
 
-void dispmatd1(int from, int upto, double mat[]){
-  int i;
-  for(i=from; i<upto+1; i++){
-    printf("%d %7.5f\n",i,mat[i]);
-  }
+void dispvec(int n,double dt[]){
+ int i;
+ for(i=0; i<n; i++){
+   printf("%f ",dt[i]);
+ }
+ printf("\n");
+}
+
+void dispveci(int n,int dt[]){
+ int i;
+ for(i=0; i<n; i++){
+   printf("%d ",dt[i]);
+ }
+ printf("\n");
 }
 
 void dispmatd2(int from, int upto, double mat[][2]){
@@ -468,6 +433,49 @@ void dispmatd6(int from, int upto, double mat[][6]){
   }
 }
 
+void dispmatd2all(double mat[][2]){
+  int i;
+  if(mat[0][0]==0){printf("%s\n","no data");return;}
+  for(i=1; i<mat[0][0]+1; i++){
+    printf("%3d %7.5f %7.5f\n",i,mat[i][0],mat[i][1]);
+  }
+}
+
+void dispmatd3all(double mat[][3]){
+  int i;
+  if(mat[0][0]==0){printf("%s\n","no data");return;}
+  for(i=1; i<mat[0][0]+1; i++){
+    printf("%3d %7.5f %7.5f %7.5f\n",i,mat[i][0],mat[i][1],mat[i][2]);
+  }
+}
+
+void dispmatd4all(double mat[][4]){
+  int i;
+  if(mat[0][0]==0){printf("%s\n","no data");return;}
+  for(i=1; i<mat[0][0]+1; i++){
+    printf("%3d %7.5f %7.5f ",i,mat[i][0],mat[i][1]);
+    printf("%7.5f %7.5f\n",mat[i][2],mat[i][3]);
+  }
+}
+
+void dispmatd5all(double mat[][5]){
+  int i;
+  if(mat[0][0]==0){printf("%s\n","no data");return;}
+  for(i=1; i<mat[0][0]+1; i++){
+    printf("%3d %7.5f %7.5f ",i,mat[i][0],mat[i][1]);
+    printf("%7.5f %7.5f %7.5f\n",mat[i][2],mat[i][3],mat[i][4]);
+  }
+}
+
+void dispmatd6all(double mat[][6]){
+  int i;
+  if(mat[0][0]==0){printf("%s\n","no data");return;}
+  for(i=1; i<mat[0][0]+1; i++){
+    printf("%3d %7.5f %7.5f %7.5f ",i,mat[i][0],mat[i][1],mat[i][2]);
+    printf("%7.5f %7.5f %7.5f\n",mat[i][3],mat[i][4],mat[i][5]);
+  }
+}
+
 void dispmati2(int from, int upto, int mat[][2]){
   int i;
   for(i=from; i<upto+1; i++){
@@ -482,19 +490,19 @@ void dispmati1(int from, int upto, int mat[]){
   }
 }
 
-int readdata3(const char *fname, double out[][3]){
+void readdata3(const char *fname, double out[][3]){
   double data[DsizeL][4];
   int i, j, ndata, nall;
   FILE *fp;
   fp=fopen(fname,"r");
   if(fp==NULL){
     printf("file not found\n");
-    return 0;
+    return;
   }
   ndata=0;
   i=1;
   while( ! feof(fp) && i<DsizeL){
-    for(j=0;j<=3;j++){
+    for(j=0;j<4;j++){
       fscanf(fp,"%lf",&data[i][j]);
     }
     i++;
@@ -504,9 +512,36 @@ int readdata3(const char *fname, double out[][3]){
   fclose(fp);
   out[0][0]=0; nall=0;
   for(i=1; i<=ndata; i++){
-    nall=add3(out, data[i][1], data[i][2], data[i][3]);
+    nall=add3(out, data[i][0], data[i][1], data[i][2]);
   }
-  return nall;
+  return;
+}
+
+void readdata2(const char *fname, double out[][2]){
+  double data[DsizeL][3];
+  int i, j, ndata, nall;
+  FILE *fp;
+  fp=fopen(fname,"r");
+  if(fp==NULL){
+    printf("file not found\n");
+    return;
+  }
+  ndata=0;
+  i=1;
+  while( ! feof(fp) && i<DsizeL){
+    for(j=0;j<3;j++){
+      fscanf(fp,"%lf",&data[i][j]);
+    }
+    i++;
+    ndata++;
+  }
+  ndata--;
+  fclose(fp);
+  out[0][0]=0; nall=0;
+  for(i=1; i<=ndata; i++){
+    nall=add2(out, data[i][0], data[i][1]);
+  }
+  return;
 }
 
 int output2(const char *var, const char *fname, int level, double out[][2]){
@@ -542,33 +577,6 @@ int output2(const char *var, const char *fname, int level, double out[][2]){
   return 0;
 }
 
-int readdata2(const char *fname, double out[][2]){
-  double data[DsizeL][3];
-  int i, j, ndata, nall;
-  FILE *fp;
-  fp=fopen(fname,"r");
-  if(fp==NULL){
-    printf("file not found\n");
-    return 0;
-  }
-  ndata=0;
-  i=1;
-  while( ! feof(fp) && i<DsizeL){
-    for(j=0;j<=2;j++){
-      fscanf(fp,"%lf",&data[i][j]);
-    }
-    i++;
-    ndata++;
-  }
-  ndata--;
-  fclose(fp);
-  out[0][0]=0; nall=0;
-  for(i=1; i<=ndata; i++){
-    nall=add2(out, data[i][1], data[i][2]);
-  }
-  return nall;
-}
-
 void simplesort(double number[]){
   int i,j, total=number[0];
   double tmp;
@@ -602,6 +610,12 @@ double dotprod(int dim, double p[], double q[]){
   return ans;
 }
 
+double norm(int dim, double p[]){
+  double ans;
+  ans=dotprod(dim,p,p);
+  return sqrt(ans);
+}
+
 double dist(int dim, double p[], double q[]){
   double tmp;
   tmp=pow(q[0]-p[0],2)+pow(q[1]-p[1],2);
@@ -609,6 +623,34 @@ double dist(int dim, double p[], double q[]){
     tmp=tmp+pow(q[2]-p[2],2);
   }
   return sqrt(tmp);
+}
+
+void crossprod(int dim,double a[3],double b[3], double out[3]){
+  if(dim==3){
+    out[0]=a[1]*b[2]-a[2]*b[1];
+    out[1]=a[2]*b[0]-a[0]*b[2];
+    out[2]=a[0]*b[1]-a[1]*b[0];
+  }else{
+    out[0]=a[0]*b[1]-a[1]*b[0];
+    out[1]=Inf;
+  }
+}
+
+void reflectpoint(double p1[2],double regard[][2],double p2[2]){
+  double pa[2],pb[2],u,v,a,b,u2,v2;
+  pull2(1,regard,pa);
+  if(length2(regard)==1){
+    p2[0]=2*pa[0]-p1[0]; p2[1]=2*pa[1]-p1[1];
+  }else{
+    pull2(2,regard,pb);
+    u=pb[0]-pa[0]; u2=pow(u,2.0);
+    v=pb[1]-pa[1]; v2=pow(v,2.0);
+    a=pa[0]; b=pa[1];
+    p2[0]=(u2-v2)/(u2+v2)*p1[0]+2*u*v/(u2+v2)*p1[1];
+    p2[0]=p2[0]-2*v*(u*b-v*a)/(u2+v2);
+    p2[1]=2*u*v/(u2+v2)*p1[0]-(u2-v2)/(u2+v2)*p1[1];
+    p2[1]=p2[1]+2*u*(u*b-v*a)/(u2+v2);
+  }
 }
 
 void pointoncurve(double t, double gdata[][2], double eps, double pt[]){
@@ -1556,4 +1598,530 @@ int ospline3(int level, double ptL[][3], int num, double out[][3]){
     }
   }
   return nall;
+}
+
+void segplot(double x1,double y1,double x2,double y2,double seg[][2]){
+  seg[0][0]=0;
+  push2(x1,y1,seg);
+  push2(x2,y2,seg);
+}
+
+void addsegplot(double x1,double y1,double seg[][2]){
+  push2(x1,y1,seg);
+}
+
+void circledata(double cx,double cy,double r, int num,double out[][2]){
+  double t,dt,pt[2];
+  int i;
+  dt=2*M_PI/num;
+  out[0][0]=0;
+  for(i=0; i<=num; i++){
+    push2(cx+r*cos(i*dt),cy+r*sin(i*dt),out);
+  }
+}
+
+void intersectline(double p1[2],double v1[2], double p2[2],double v2[2],double out[4]){
+  double tmp,d,dt,ds,t,s,tmp1[2],tmp2[2],tmp3[2],pt[2];
+  tmp=dotprod(2,v1,v2);
+  tmp1[0]=tmp; tmp1[1]=pow(norm(2,v1),2.0);
+  tmp2[0]=-pow(norm(2,v2),2.0);tmp2[1]=-tmp;
+  pt[0]=p2[0]-p1[0];pt[1]=p2[1]-p1[1];
+  tmp3[0]=dotprod(2,pt,v2);tmp3[1]=dotprod(2,pt,v1);
+  crossprod(2,tmp1,tmp2,pt); d=pt[0];
+  crossprod(2,v1,v2,pt); tmp=fabs(pt[0]);
+  if(tmp>Eps){
+    crossprod(2,tmp3,tmp2,pt); dt=pt[0];
+    crossprod(2,tmp1,tmp3,pt); ds=pt[0];
+    t=dt/d;
+    s=ds/d;
+    pt[0]=p1[0]+v1[0]*t; pt[1]=p1[1]+v1[1]*t;
+    out[0]=pt[0];out[1]=pt[1];out[2]=t; out[3]=s;
+  }else{
+    pt[0]=p2[0]-p1[0];pt[1]=p2[1]-p1[1];
+    crossprod(2,pt,v1,tmp1);
+    tmp=tmp1[0]/norm(2,v1); 
+    out[0]=fabs(tmp); out[1]=Inf;
+  }
+}
+
+void intersectseg(double seg1[][2],double seg2[][2], double out[5]){
+  double p1[2],q1[2],p2[2],q2[2],pt[2],pt1[2],nv[2],pts[DsizeS][4];
+  double q1p1[2],q2p2[2],p1q2[2],q1p2[2],p1p2[2],q1q2[2];
+  double tmp[2],tmp1[2],tmp2[2],tmp3[2],tmp4[2];
+  double tmpd1,x,y,t,s,t1,s1,distance,tmpd[4],tmp3d[7];
+  int ctr=0, i;
+  pull2(1,seg1,p1); pull2(2,seg1,q1);
+  pull2(1,seg2,p2); pull2(2,seg2,q2);
+  q1p1[0]=q1[0]-p1[0];q1p1[1]=q1[1]-p1[1];
+  q2p2[0]=q2[0]-p2[0];q2p2[1]=q2[1]-p2[1];
+  p1q2[0]=p1[0]-q2[0];p1q2[1]=p1[1]-q2[1];
+  q1p2[0]=q1[0]-p2[0];q1p2[1]=q1[1]-p2[1];
+  p1p2[0]=p1[0]-p2[0];p1p2[1]=p1[1]-p2[1];
+  p1q2[0]=p1[0]-q2[0];p1q2[1]=p1[1]-q2[1];
+  q1q2[0]=q1[0]-q2[0];q1q2[1]=q1[1]-q2[1];
+  if((norm(2,q1p1)<Eps)||(norm(2,q2p2)<Eps)){
+    out[0]=-1; out[1]=Inf;
+  }else{
+    intersectline(p1,q1p1,p2,q2p2,tmpd);
+    if(tmpd[1]<Inf-Eps){
+      pt[0]=tmpd[0];pt[1]=tmpd[1];t=tmpd[2];s=tmpd[3];
+      if((t*(t-1)<Eps)&&(s*(s-1)<Eps)){
+        out[0]=0;out[1]=pt[0];out[2]=pt[1];out[3]=t;out[4]=s;
+      }else{
+        if(t<0){t=0;}; if(t>1){t=1;};
+        if(s<0){s=0;}; if(s>1){s=1;};
+        tmp3d[ctr]=norm(2,p1p2);ctr++;
+        tmp3d[ctr]=norm(2,p1q2);ctr++;
+        tmp3d[ctr]=norm(2,q1p2);ctr++;
+        tmp3d[ctr]=norm(2,q1q2);ctr++;
+        tmp1[0]=q2p2[1];tmp1[1]=-q2p2[0];
+        intersectline(p1,tmp1,p2,q2p2,tmpd);
+        if(tmpd[1]!=Inf){
+          pt1[0]=tmpd[0];pt1[1]=tmpd[1];s1=tmpd[3];
+          if(s1*(s1-1)<Eps){
+            tmp3d[ctr]=dist(2,pt1,p1);ctr++;
+          }
+        }
+        intersectline(q1,tmp1,p2,q2p2,tmpd);
+        if(tmpd[1]!=Inf){
+          pt1[0]=tmpd[0];pt1[1]=tmpd[1];s1=tmpd[3];
+          if(s1*(s1-1)<Eps){
+            tmp3d[ctr]=dist(2,pt1,q1);ctr++;
+          }
+        }
+        tmp1[0]=q1p1[1];tmp1[1]=-q1p1[0];
+        intersectline(p2,tmp1,p1,q1p1,tmpd);
+		if(tmpd[1]!=Inf){
+          pt1[0]=tmpd[0];pt1[1]=tmpd[1];s1=tmpd[3];
+          if(s1*(s1-1)<Eps){
+            tmp3d[ctr]=dist(2,pt1,p2);ctr++;
+          }
+        }
+        intersectline(q2,tmp1,p1,q1p1,tmpd);
+        if(tmpd[1]!=Inf){
+          pt1[0]=tmpd[0];pt1[1]=tmpd[1];s1=tmpd[3];
+          if(s1*(s1-1)<Eps){
+            tmp3d[ctr]=dist(2,pt1,q2);ctr++;
+          }
+        }
+        tmpd1=tmp3d[0];
+        for(i=1;i<ctr;i++){
+          if(tmp3d[i]<tmpd1){tmpd1=tmp3d[i];};
+        }
+        out[0]=tmpd1;out[1]=pt[0];out[2]=pt[1];
+        out[3]=t;out[4]=s;
+      }
+    }else{
+      distance=tmpd[0];
+      nv[0]=q1p1[1]/norm(2,q1p1);nv[1]=-q1p1[0]/norm(2,q1p1);
+      pts[0][0]=0;
+      intersectline(p1,nv,p2,q2p2,tmpd);
+      s1=tmpd[3];
+      if((tmpd[1]!=Inf)&&(s1*(s1-1)<Eps)){
+        x=(1-s1)*p2[0]+s1*q2[0];y=(1-s1)*p2[1]+s1*q2[1];
+        push4(x,y,0,s1,pts);
+      }
+      intersectline(q1,nv,p2,q2p2,tmpd);
+      s1=tmpd[3];
+      if((tmpd[1]!=Inf)&&(s1*(s1-1)<Eps)){
+        x=(1-s1)*p2[0]+s1*q2[0];y=(1-s1)*p2[1]+s1*q2[1];
+        push4(x,y,1,s1,pts);
+      }
+      intersectline(p2,nv,p1,q1p1,tmpd);
+      s1=tmpd[3];
+      if((tmpd[1]!=Inf)&&(s1*(s1-1)<Eps)){
+        x=(1-s1)*p1[0]+s1*q1[0];y=(1-s1)*p1[1]+s1*q1[1];
+        push4(x,y,s1,0,pts);
+      }
+      intersectline(q2,nv,p1,q1p1,tmpd);
+      if((tmpd[1]!=Inf)&&(s1*(s1-1)<Eps)){
+        x=(1-s1)*p1[0]+s1*q1[0];y=(1-s1)*p1[1]+s1*q1[1];
+        push4(x,y,s1,2,pts);
+      }
+      if(length4(pts)==0){
+        tmpd1=norm(2,p1p2);
+        if(norm(2,p1q2)<tmpd1){tmpd1=norm(2,p1q2);}
+        if(norm(2,q1p2)<tmpd1){tmpd1=norm(2,q1p2);}
+        if(norm(2,q1q2)<tmpd1){tmpd1=norm(2,q1q2);}
+        out[0]=tmpd1;out[1]=Inf;
+      }else{
+        if(distance>Eps1){
+          out[0]=distance;out[1]=Inf;
+        }else{
+          x=0; y=0;
+          for(i=1; i<=length4(pts); i++){
+            x=x+pts[i][0];
+            y=y+pts[i][1];
+          }
+          tmp3[0]=x/length4(pts); tmp3[1]=y/length4(pts);
+          nearestptpt(tmp3,seg1,tmpd);
+          t=tmpd[2];
+          nearestptpt(tmp3,seg2,tmpd);
+          s=tmpd[2];
+          out[0]=distance; out[1]=tmp3[0]; out[2]=tmp3[1];
+          out[3]=t;out[4]=s;
+        }
+      }
+    }
+  }
+}
+
+int osplineseg(double ptlist[5][2],int num,double out[][2]){
+  double p0[2],p1[2],p2[2],p3[2],p2p0[2],p3p1[2],p2p1[2];
+  double tmp,cc,pq[2],pr[2],knots[3][2],ctrlist[2][4];
+  pull2(1,ptlist,p0); pull2(2,ptlist,p1);
+  pull2(3,ptlist,p2); pull2(4,ptlist,p3);
+  p2p0[0]=p2[0]-p0[0];p2p0[1]=p2[1]-p0[1];
+  p3p1[0]=p3[0]-p1[0];p3p1[1]=p3[1]-p1[1];
+  p2p1[0]=p2[0]-p1[0];p2p1[1]=p2[1]-p1[1];
+  tmp=norm(2,p2p0)*norm(2,p3p1);
+  tmp=1+sqrt((1+dotprod(2,p2p0,p3p1)/tmp)/2);
+  cc=4*norm(2,p2p1)/3/(norm(2,p2p0)+norm(2,p3p1))/tmp;
+  pq[0]=p1[0]+cc*p2p0[0]; pq[1]=p1[1]+cc*p2p0[1];
+  pr[0]=p2[0]-cc*p3p1[0];pr[1]=p2[1]-cc*p3p1[1];
+  ctrlist[0][0]=0;
+  push4(pq[0],pq[1],pr[0],pr[1],ctrlist);
+  knots[0][0]=0;
+  addptd2(knots,p1);addptd2(knots,p2);
+  bezier(knots,ctrlist,num,out);
+  return length2(out);
+}
+
+void intersectpartseg(double crv1[][2],double crv2[][2],int ii, int jj,int num,double out[6]){
+  double distance=10*Eps2,seg1[3][2],seg2[3][2],tmpd[2],tmp1d[2],tmp2d[2];
+  double tmp,snang,dst,tmpd5[5],os1[DsizeS][2],os2[DsizeS][2];
+  double p0[2],p1[2],p2[2],p3[2],ptlist[5][2],regard[3][2];
+  double tmp1md[20][2],tmpd3[3],tmp3md3[20][3],tmp2md3[20][3];
+  double tmpd4[4],Eps00=pow(10,-8.0);
+  double sx,sy;
+  int kk,ll,nn;
+  out[0]=Inf;
+  for(kk=1;kk<6;kk++){out[kk]=0;}
+  seg1[0][0]=0;seg2[0][0]=0;
+  appendd2(1,ii,ii+1,crv1,seg1);
+  appendd2(1,jj,jj+1,crv2,seg2);
+  pull2(2,seg1,tmp1d);
+  pull2(1,seg1,tmpd);
+  tmp1d[0]=tmp1d[0]-tmpd[0]; tmp1d[1]=tmp1d[1]-tmpd[1];
+  pull2(2,seg2,tmp2d);
+  pull2(1,seg2,tmpd);
+  tmp2d[0]=tmp2d[0]-tmpd[0]; tmp2d[1]=tmp2d[1]-tmpd[1];
+  crossprod(2,tmp1d,tmp2d,tmpd);
+  snang=fabs(tmpd[0])/(norm(2,tmp1d)*norm(2,tmp2d));
+  intersectseg(seg1,seg2,tmpd5);
+  dst=tmpd5[0];
+  if(dst<Eps){
+    if(dst>-Eps){
+      out[0]=tmpd5[1];out[1]=tmpd5[2];out[2]=ii+tmpd5[3];
+      out[3]=jj+tmpd5[4];out[4]=dst;out[5]=snang;
+    }
+  }else{
+    if(dst<Eps2){
+      os1[0][0]=0;os2[0][0]=0;
+      pull2(1,seg1,tmp1d);
+      pull2(2,seg1,tmp2d);
+      tmpd[0]=tmp2d[0]-tmp1d[0];tmpd[1]=tmp2d[1]-tmp1d[1];
+      if((length2(crv1)==2)||(norm(2,tmpd)>distance-Eps)){
+        appendd2(1,1,2,seg1,os1);
+      }else{
+        pull2(1,seg1,p1);pull2(2,seg1,p2);
+        if(ii==1){
+          pull2(3,crv1,p3);
+          tmpd[0]=p2[0]-p1[0];tmpd[1]=p2[1]-p1[1];
+          tmp1d[0]=(p1[0]+p2[0])/2;
+          tmp1d[1]=(p1[1]+p2[1])/2;
+          tmp2d[0]=tmp1d[0]+tmpd[1];
+          tmp2d[1]=tmp1d[1]-tmpd[0];
+          regard[0][0]=0;
+          addptd2(regard,tmp1d); addptd2(regard,tmp2d);
+	      reflectpoint(p3,regard,p0);
+        }else{
+          if(ii==length2(crv1)-1){
+            pull2(ii-1,crv1,p0);
+            tmpd[0]=p2[0]-p1[0]; tmpd[1]=p2[1]-p1[1];
+            tmp1d[0]=(p1[0]+p2[0])/2;
+            tmp1d[1]=(p1[1]+p2[1])/2;
+            tmp2d[0]=tmp1d[0]+tmpd[1];
+            tmp2d[1]=tmp1d[1]-tmpd[0];
+            regard[0][0]=0;
+            addptd2(regard,tmp1d); addptd2(regard,tmp2d);
+	        reflectpoint(p0,regard,p3);
+          }else{
+            pull2(ii-1,crv1,p0);pull2(ii+2,crv1,p3);
+          }
+        }
+        ptlist[0][0]=0;
+        addptd2(ptlist,p0);addptd2(ptlist,p1);
+        addptd2(ptlist,p2);addptd2(ptlist,p3);
+        osplineseg(ptlist,num,os1);
+      }
+      pull2(1,seg2,tmp1d);
+      pull2(2,seg2,tmp2d);
+      if((length2(crv2)==2)||(dist(2,tmp2d,tmp1d)>distance-Eps)){
+        appendd2(1,1,2,seg2,os2);
+      }else{
+        pull2(1,seg2,p1);pull2(2,seg2,p2);
+        if(jj==1){
+          pull2(3,crv2,p3);
+          tmpd[0]=p2[0]-p1[0];tmpd[1]=p2[1]-p1[1];
+          tmp1d[0]=(p1[0]+p2[0])/2;
+          tmp1d[1]=(p1[1]+p2[1])/2;
+          tmp2d[0]=tmp1d[0]+tmpd[1];
+          tmp2d[1]=tmp1d[1]-tmpd[0];
+          regard[0][0]=0;
+          addptd2(regard,tmp1d); addptd2(regard,tmp2d);
+	      reflectpoint(p3,regard,p0);
+        }else{
+          if(jj==length2(crv2)-1){
+            pull2(jj-1,crv2,p0);
+            tmpd[0]=p2[0]-p1[0]; tmpd[1]=p2[1]-p1[1];
+            tmp1d[0]=(p1[0]+p2[0])/2;
+            tmp1d[1]=(p1[1]+p2[1])/2;
+            tmp2d[0]=tmp1d[0]+tmpd[1];
+            tmp2d[1]=tmp1d[1]-tmpd[0];
+            regard[0][0]=0;
+            addptd2(regard,tmp1d); addptd2(regard,tmp2d);
+	        reflectpoint(p0,regard,p3);
+          }else{
+            pull2(jj-1,crv2,p0);pull2(jj+2,crv2,p3);
+          }
+        }
+        ptlist[0][0]=0;
+        addptd2(ptlist,p0);addptd2(ptlist,p1);
+        addptd2(ptlist,p2);addptd2(ptlist,p3);
+        osplineseg(ptlist,num,os2);
+      }
+      tmp2md3[0][0]=0;
+      for(kk=1;kk<length2(os1);kk++){
+        for(ll=1;ll<length2(os2);ll++){
+          seg1[0][0]=0; seg2[0][0]=0;
+          pull2(kk,os1,tmpd);addptd2(seg1,tmpd);
+          pull2(kk+1,os1,tmpd);addptd2(seg1,tmpd);
+          pull2(ll,os2,tmpd);addptd2(seg2,tmpd);
+          pull2(ll+1,os2,tmpd);addptd2(seg2,tmpd);
+          intersectseg(seg1,seg2,tmpd5);
+          if((tmpd5[0]<Eps1)&&(tmpd5[1]<Inf-Eps)){
+            if(tmpd5[0]<dst+Eps00){
+              dst=tmpd5[0];
+              tmp3md3[0][0]=0;
+              for(nn=1;nn<=length3(tmp2md3);nn++){
+                pull3(nn,tmp2md3,tmpd3);
+                if(tmpd3[0]<dst+Eps00){
+                  addptd3(tmp3md3,tmpd3);
+                }
+              }
+              tmp2md3[0][0]=0;
+              for(nn=1;nn<=length3(tmp3md3);nn++){
+                pull3(nn,tmp3md3,tmpd3);
+                addptd3(tmp2md3,tmpd3);
+              }
+              push3(dst,tmpd5[1],tmpd5[2],tmp2md3);
+            }
+          }
+        }
+      }
+      if(length3(tmp2md3)>0){
+        tmp1md[0][0]=0;
+        sx=0; sy=0;
+        for(nn=1;nn<=length3(tmp2md3);nn++){
+          pull3(nn,tmp2md3,tmpd3);
+          push2(tmpd3[1],tmpd3[2],tmp1md);
+          sx=sx+tmpd3[1];
+          sy=sy+tmpd3[2];
+        }
+        sx=sx/length3(tmp2md3);
+        sy=sy/length3(tmp2md3);
+        p0[0]=sx; p0[1]=sy;
+        pull2(ii,crv1,p1); pull2(ii+1,crv1,p2);
+        tmp1d[0]=p2[0]-p1[0];tmp1d[1]=p2[1]-p1[1];
+        tmpd[0]=tmp1d[1];tmpd[1]=-tmp1d[0]; 
+        intersectline(p0,tmpd,p1,tmp1d,tmpd4);
+        tmp=tmpd4[3];
+        if(tmp<0){tmp=0;}
+        if(tmp>1){tmp=1;}
+        out[0]=sx;out[1]=sy;out[2]=ii+tmp;
+        pull2(jj,crv2,p1); pull2(jj+1,crv2,p2);
+        tmp1d[0]=p2[0]-p1[0];tmp1d[1]=p2[1]-p1[1];
+        tmpd[0]=tmp1d[1];tmpd[1]=-tmp1d[0]; 
+        intersectline(p0,tmpd,p1,tmp1d,tmpd4);
+        tmp=tmpd4[3];
+        if(tmp<0){tmp=0;}
+        if(tmp>1){tmp=1;}
+        out[3]=jj+tmp;out[4]=dst;out[5]=snang;
+      }
+    }
+  }
+}
+
+void collectsameseg(double ptdL[][6],double rL[][6]){
+  double Eps00=pow(10,-8.0),tmp1d[2],tmp2d[2],tmp1d6[6],tmp2d6[6];
+  int ii,jj,kk,nr,ctr,numL[40],diffL[40];
+  double s1,e1,s2,e2,dst,tmp1,tmp2,tmp1md6[40][6];
+  rL[0][0]=0;
+  if(length6(ptdL)==0){
+    return;
+  }
+  for(ii=2;ii<=length6(ptdL);ii++){
+    pull6(ii,ptdL,tmp1d6);addptd6(rL,tmp1d6);
+  }
+  tmp1md6[0][0]=0;
+  pull6(1,ptdL,tmp1d6);
+  addptd6(tmp1md6,tmp1d6);
+  kk=tmp1d6[2];
+  if(tmp1d6[2]<kk+Eps00){
+    s1=kk-1-Eps00;e1=s1+2+2*Eps00;
+  }else{
+    s1=kk-Eps00; e1=s1+1+2*Eps00;
+  }
+  kk=tmp1d6[3];
+  if(tmp1d6[3]<kk+Eps00){
+    s2=kk-1-Eps00;e2=s2+2+2*Eps00;
+  }else{
+    s2=kk-Eps00; e2=s2+1+2*Eps00;
+  }
+  ctr=1;numL[0]=0;
+  for(ii=1;ii<=length6(rL);ii++){
+    pull6(ii,rL,tmp1d6);
+    tmp1=tmp1d6[2]; tmp2=tmp1d6[3];
+    if((tmp1>s1)&&(tmp1<e1)&&(tmp2>s2)&&(tmp2<e2)){
+      addptd6(tmp1md6,tmp1d6);
+      numL[ctr]=ii;ctr++;
+    }
+  }
+  dst=100;
+  for(ii=1;ii<=length6(tmp1md6);ii++){
+    pull6(ii,tmp1md6,tmp1d6);
+    if(tmp1d6[4]<dst){
+      dst=tmp1d6[4];
+    }
+  }
+  ptdL[0][0]=0;
+  for(ii=1;ii<=length6(tmp1md6);ii++){
+    pull6(ii,tmp1md6,tmp1d6);
+    if(tmp1d6[4]<dst+Eps00){
+      addptd6(ptdL,tmp1d6);
+    }
+  }
+  for(ii=0;ii<=length6(rL);ii++){
+    diffL[ii]=0;
+  }
+  for(ii=1;ii<=ctr;ii++){
+    kk=numL[ii];
+    diffL[kk]=1;
+  }
+  nr=length6(rL);
+  rL[0][0]=0;
+  for(ii=1;ii<=nr;ii++){
+    if(diffL[ii]==0){
+      pull6(ii,rL,tmp1d6);addptd6(rL,tmp1d6);
+    }
+  }
+}
+
+void intersectcurvesPp(double crv1s[][2],double crv2s[][2],int num,double out[][6]){
+  double Eps00=pow(10,-8.0),Dist=10*Eps2, crv1[DsizeL][2],crv2[DsizeL][2];
+  double tmp1md6[DsizeS][6],tmp2md6[DsizeS][6];
+  double tmpd[2],tmp1d[2],tmp2d[2],tmpd6[6],tmp1d6[6];
+  double sx,sy,dst,ans[4];
+  int ii,jj,kk,nall,self,js,je;
+  crv1[0][0]=0;
+  pull2(1,crv1s,tmpd);addptd2(crv1,tmpd);
+  for(ii=2;ii<=length2(crv1s);ii++){
+    pull2(length2(crv1),crv1,tmp1d);
+    pull2(ii,crv1s,tmp2d);
+    if(dist(2,tmp1d,tmp2d)>Eps){
+      addptd2(crv1,tmp2d);
+    }
+  }
+  crv2[0][0]=0;
+  pull2(1,crv2s,tmpd);
+  addptd2(crv2,tmpd);
+  for(ii=2;ii<=length2(crv2s);ii++){
+    pull2(length2(crv2),crv2,tmp1d);
+    pull2(ii,crv2s,tmp2d);
+    if(dist(2,tmp1d,tmp2d)>Eps){
+      addptd2(crv2,tmp2d);
+    }
+  }
+  if(length2(crv1)!=length2(crv2)){
+    self=0;
+  }else{
+    self=1;
+    for(ii=1;ii<=length2(crv1);ii++){
+      pull2(ii,crv1,tmp1d);pull2(ii,crv2,tmp2d);
+      if(dist(2,tmp1d,tmp2d)>0){
+        self=0;
+        break;
+      }
+    }
+  }
+  tmp1md6[0][0]=0;
+  for(ii=1;ii<=length2(crv1)-1;ii++){ 
+	if(self==0){
+      js=1; je=length2(crv2)-1;
+    }else{
+      js=ii+2; je=length2(crv2)-1;
+    }
+    for(jj=js;jj<=je;jj++){
+      intersectpartseg(crv1,crv2,ii,jj,num,tmpd6);
+      if(tmpd6[0]<Inf-Eps){
+		tmpd[0]=tmpd6[0];tmpd[1]=tmpd6[1];
+        if(length6(tmp1md6)==0){
+          addptd6(tmp1md6,tmpd6);
+        }else{
+          pull6(length6(tmp1md6),tmp1md6,tmp1d6);
+          tmp1d[0]=tmp1d6[0];tmp1d[1]=tmp1d6[1];
+          if(dist(2,tmp1d,tmpd)>Eps1){
+            addptd6(tmp1md6,tmpd6);
+          }
+        }
+        if(self==1){
+		  push6(tmpd6[0],tmpd6[1],tmpd6[3],tmpd6[2],tmpd6[4],tmpd6[5],tmp1md6);
+        }
+      }
+    }
+  }
+  out[0][0]=0;
+  tmp2md6[0][0]=0;
+  while(length6(tmp1md6)>0){
+	collectsameseg(tmp1md6,tmp2md6);
+	dst=100;
+    for(ii=1;ii<=length6(tmp1md6);ii++){
+      pull6(ii,tmp1md6,tmpd6);
+      if(tmpd6[4]<dst){
+        dst=tmpd6[4];
+      }
+    }
+    sx=0; sy=0;nall=0;
+    for(ii=1;ii<=length6(tmp1md6);ii++){
+      pull6(ii,tmp1md6,tmpd6);
+      if(tmpd6[4]<dst+Eps00){
+        nall++;
+        sx=sx+tmpd6[0]; sy=sy+tmpd6[1];
+      }
+      tmp1d[0]=sx/nall; tmp1d[1]=sy/nall;
+      tmp1d6[0]=tmp1d[0];tmp1d6[1]=tmp1d[1];
+      nearestptpt(tmp1d,crv1,ans);
+      tmp1d6[2]=ans[2];
+      nearestptpt(tmp1d,crv2,ans);
+      tmp1d6[3]=ans[2];
+      tmp1d6[4]=dst;
+      tmp1d6[5]=tmpd6[5];
+      addptd6(out,tmp1d6);
+    }
+    tmp1md6[0][0]=0;
+    for(ii=1;ii<=length6(tmp2md6);ii++){
+      pull6(ii,tmp2md6,tmpd6);addptd6(tmp1md6,tmpd6);
+    }
+  }
+}
+
+void intersectcurves(double crv1[][2],double crv2[][2],int num,double out[][2]){
+  double out6[DsizeS][6],tmpd[2],tmpd6[6];
+  int jj;
+  intersectcurvesPp(crv1,crv2,num,out6);
+  out[0][0]=0;
+  for(jj=1;jj<=length6(out6);jj++){
+    pull6(jj,out6,tmpd6);push2(tmpd6[0],tmpd6[1],out);
+  }
 }

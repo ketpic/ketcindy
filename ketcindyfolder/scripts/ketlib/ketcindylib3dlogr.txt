@@ -1,3 +1,5 @@
+// 2018.03.27
+//   Start3d changed (for C)
 // 2018.02.27
 //   Sfbdpara,... changed ("Res=" made from fname)
 // 2018.02.26

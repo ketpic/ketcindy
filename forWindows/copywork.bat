@@ -1,31 +1,20 @@
-REM 2017.11.09
+REM 20180401
 echo off
 set xcp="\Windows\System32\xcopy"
 set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
-set ketcindyhead=%HOMEPATH%\ketcidyhead.txt
-set /P STR_INPUT="ketcindy folder d(efault)=ketcindy :"
-if "%STR_INPUT%" == "d" (
-  set folder=ketcindy
-) else (
-  set folder=%STR_INPUT%
-)
-set /P STR_INPUT="path of the folder? userhome(u) C:\(c) desktop(d) other(o) :"
+set change=\changesetting.txt
+set /P STR_INPUT="Path to that folder userhome(u) drive C(c) desktop(d) :"
 if "%STR_INPUT%" == "u" (
-  set dist=%HOMEPATH%\%folder%
-  echo Dirfile="%HOMEPATH%\%folder%"; > "%ketcindyhead%"
+  set dist=%HOMEPATH%\ketcindy
 )
 if "%STR_INPUT%" == "c" (
-  set dist=C:\%folder%
-  echo Dirfile="C:\%folder%"; > "%ketcindyhead%"
+  set dist=C:\ketcindy
+)
+if "%STR_INPUT%" == "C" (
+  set dist=C:\ketcindy
 )
 if "%STR_INPUT%" == "d" (
-  set dist=%HOMEPATH%\Desktop\%folder%
-  echo Dirfile="%HOMEPATH%\Desktop\%folder%"; > "%ketcindyhead%"
-)
-if "%STR_INPUT%" == "o" (
-  set /P STR_INPUT_PATH="Input path (Desktop\work etc):"
-  set dist=%HOMEPATH%\%STR_INPUT_PATH%\%folder%
-  echo Dirfile="%HOMEPATH%\%STR_INPUT_PATH%\%folder%"; > "%ketcindyhead%"
+  set dist=%HOMEPATH%\Desktop\ketcindy
 )
 if exist "%dist%\." (
   echo Deleting "%dist%"
@@ -53,10 +42,11 @@ if "%STR_INPUT%" == "pd" (
 if "%STR_INPUT%" == "lu" (
   set tex=lualatex
 )
-echo PathT=PathThead+"%tex%"; >> %ketcindyhead%
+echo  // Re-setting PathT,Pathpdf,PathAd > "%dist%%change%"
+echo PathT=PathThead+"%tex%"; >> "%dist%%change%"
 set /P STR_INPUT="Do you copy ketcindy manual? (y,n):"
 if "%STR_INPUT%" == "y" (
-  cd "%ketsrc%\misc\ketmanual"
+  cd "%ketsrc%\doc\ketmanual"
   copy /Y "KeTCindyReferenceJ.pdf" "%dist%\"
 )
 pause

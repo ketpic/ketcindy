@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(2018.02.27) loaded");
+println("ketcindylib3d(2018.03.27) loaded");
 
 //help:start();
 
@@ -79,12 +79,15 @@ Ketinit3d(subflg,position):=(
   ErrFlg=0;
 );
 
-Start3d():=Start3d([]); //16.11.12
-Start3d(ptexception):=( //16.11.12
+Start3d():=Start3d([]); 
+Start3d(ptexception):=(
 //help:Start3d();
 //help:Start3d(execptionptlist);
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+  ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
+  FuncListC=[];
+  CommandListC=[];
   GCLIST=[];
   GLIST=[];
   FUNLIST=[];
@@ -97,7 +100,7 @@ Start3d(ptexception):=( //16.11.12
   ErrFlag=0;
   OBJCMD=[]; // 16.11.29from
   OCNAME=Fhead;
-  OCOPTION=["m","v"];// 16.11.29upto
+  OCOPTION=["m","v"];// 16.11.29until
   ArrowlineNumber=1;  // 16.01.31
   ArrowheadNumber=1;
   BezierNumber=1; //16.01.31
@@ -124,7 +127,7 @@ Start3d(ptexception):=( //16.11.12
     +format((FI.x-xPos)*40,5)+")";
   GLIST=append(GLIST,tmp);
   THETA=(TH.x-xPos)*20*pi/180;
-  PHI=(FI.x-xPos)*40*pi/180; // 16.06.20upto
+  PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until
   if(isselected(TH) % isselected(FI), // 17.05.18from
     if(length(Ch)>0,
       ChNum=Ch_(length(Ch));
@@ -133,7 +136,7 @@ Start3d(ptexception):=( //16.11.12
       ChNum=1;
     );
     Ch=[0];
-  );// 17.05.18upto
+  );// 17.05.18until
   if(length(VLIST)==0, // 16.06.20
     tmp=remove(allpoints(),[NE,SW,TH,FI,O,X,Y,Z]);//17.06.02
     tmp4=remove(tmp,ptexception);
@@ -145,7 +148,7 @@ Start3d(ptexception):=( //16.11.12
         pt3=Xyzcoord(pt.x,pt.y,tmp);
         Defvar(tmp1+"3d",pt3);
         pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28upto
+        Defvar(tmp1+"2d",pt2);  // 16.05.28until
       );
     );
   ,
@@ -199,7 +202,7 @@ Start3d(ptexception):=( //16.11.12
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
-  ThinDense=0.1; //17.07.01upto
+  ThinDense=0.1; //17.07.01until
    Ptseg3data(ptexception);  //16.08.23
 );
 
@@ -231,7 +234,7 @@ Setangle(theta,phi):=( //16.12.24
         pt3=Xyzcoord(pt.x,pt.y,tmp);
         Defvar(tmp1+"3d",pt3);
         pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28upto
+        Defvar(tmp1+"2d",pt2);  // 16.05.28until
       );
     );
   ,
@@ -554,7 +557,7 @@ Spaceline(Arg1,Arg2):=(
     name="-"+replace(tmp,",","");
     Spaceline(name,Arg1,Arg2);
   );
-); // 16.02.22 upto
+); // 16.02.22 until
 Spaceline(nm,ptlistorg,optionorg):=(
 //help:Spaceline("1",[[2,5,1],[4,2,3]]);
 //help:Spaceline([A,B]);
@@ -609,7 +612,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
       );
     );
     tmp=substring(tmp,0,length(tmp)-1)+"]";
-    tmp=name3+"=Spaceline("+tmp+")"; //17.07.13upto
+    tmp=name3+"=Spaceline("+tmp+")"; //17.07.13until
 //    tmp=name3+"=Spaceline("+textformat(ptlist,5)+")"; //17.05.24
     GLIST=append(GLIST,tmp);
     tmp=name2+"=Projpara("+name3+")";
@@ -962,7 +965,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
         );
       );
     );
-  ); // 16.08.14upto
+  ); // 16.08.14until
   tmp1=indexof(Xrange,"=");
   tmp=parse(substring(Xrange,tmp1,length(Xrange)));
   Px=[tmp_1,0,0]; Qx=[tmp_2,0,0];
@@ -1008,7 +1011,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
       if(length(Origin)>0,
         Letter([Parapt([0,0,0]),Origin,"O"]);
       );
-    );  // 16.08.14upto
+    );  // 16.08.14until
     if(SUBSCR==1, //  15.02.11
       Subgraph(name3,opcindy);
     );
@@ -1722,11 +1725,11 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
     ptslist=Arg1;
     fixstr=Arg2;
   ); 
-  if(islist(fixstr),fixstr=fixstr_1);// 16.03.02 upto
+  if(islist(fixstr),fixstr=fixstr_1);// 16.03.02 until
   nn=length(ptslist)/2;
   forall(1..nn,kk, // 16.08.19from
     tmp1=ptslist_(2*kk-1);
-    pt3=ptslist_(2*kk); // 16.08.19upto
+    pt3=ptslist_(2*kk); // 16.08.19until
     VLIST=select(VLIST,#_1!=tmp1+"3d");
     tmp2=parse(tmp1);
     if(ispoint(tmp2), // 16.05.26from
@@ -1740,7 +1743,7 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
       Defvar(tmp1+"3d",tmp);
     ,
       Defvar(tmp1+"3d",pt3);
-    );   // 16.05.26upto
+    );   // 16.05.26until
     Defvar(tmp1+"fix",0);
     pt=Parapt(pt3);
     Putpoint(tmp1,pt,parse(tmp1+".xy"));
@@ -1898,7 +1901,7 @@ Putaxes3d(size):=(
   Putpoint3d(["Y",[0,sL_2,0]],"fix");
   Putpoint3d(["Z",[0,0,sL_3]],"fix"); 
 //  Fixpoint3d(["O",[0,0,0]]);
-//  Fixpoint3d(["X",[sL_1,0,0],"Y",[0,sL_2,0],"Z",[0,0,sL_3]]);//17.06.02fupto
+//  Fixpoint3d(["X",[sL_1,0,0],"Y",[0,sL_2,0],"Z",[0,0,sL_3]]);//17.06.02funtil
 );
 
 IntersectsgpL(name,sgstr,pLstr):=
@@ -2103,7 +2106,7 @@ Putbezier3data(name,pt3Lorg,options):=( // 17.10.08 greatly changed
     ,
       tmp1=name+numstr+"p";
       tmp2=(pt3L_(nn-1)+pt3L_nn)/2;
-	  VLIST=select(VLIST,#_1!=tmp1+"3d"); // 16.08.19upto
+	  VLIST=select(VLIST,#_1!=tmp1+"3d"); // 16.08.19until
       Putpoint3d([tmp1,tmp2]); 
       ctrpts=append(ctrpts,tmp1);
     );
@@ -2329,7 +2332,7 @@ Concatobj(objL,options):=(
       );
     );
     vL=concat(vL,vadd);
-    fL=concat(fL,fnew);   // 16.02.11 upto
+    fL=concat(fL,fnew);   // 16.02.11 until
   );
   tmp2=apply(1..length(fL),1);
   if(rmf=="y",
@@ -2397,7 +2400,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   );
   if(length(vfnL)==1,
     vfnL=[vfnL_1,[1..length(vfnL_1)]];
-  );  // 16.06.19upto
+  );  // 16.06.19until
   tmp=Divoptions(options);
   Noflg=tmp_2;
   eqL=tmp_5;
@@ -2439,7 +2442,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
         Putpoint3d(["v"+text(#),vtx],"fix"); 
       );
     );
-    vL=append(vL,vname); // 16.02.10 upto
+    vL=append(vL,vname); // 16.02.10 until
   );
   eL=[];
   forall(vfnL_2,face,
@@ -2590,7 +2593,7 @@ Phparadata(nm,nmvf,vfL,options):=(
           tmp2=tmp2+text(#)+",";
         );
         tmp2=substring(tmp2,0,length(tmp2)-1)+")";
-      );   // 2015.05.27 upto
+      );   // 2015.05.27 until
       tmp=name3+"=Phparadata("+tmp1+","+tmp2+opstr+")";
       GLIST=append(GLIST,tmp);
       tmp=name2+"=Projpara("+name3+")";
@@ -2844,7 +2847,7 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
     );
   );
   segL=tmp2;
-  Changestyle3d(segL,["nodisp"]); // 16.02.29 upto
+  Changestyle3d(segL,["nodisp"]); // 16.02.29 until
   if(islist(segL),
     if(isstring(segL_1),
       segL=apply(segL,parse(#));
@@ -2857,14 +2860,14 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
       faceL=parse(facestr);
       tmp=replace(facestr,"phf","phv"); // 16.02.10 from
       tmp=parse(tmp);
-      vtxL=apply(tmp,replace(#,"3d","")); // 16.02.10 upto
+      vtxL=apply(tmp,replace(#,"3d","")); // 16.02.10 until
       flg=1;
     ,
       faceL=parse(facestr);
     );
   );
   if(flg==0,
-    if(length(faceL)==2, // 16.08.19upto
+    if(length(faceL)==2, // 16.08.19until
       vtxL=facestr_1;
       faceL=facestr_2;
     ,
@@ -3490,7 +3493,7 @@ Crvsfparadata(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
     cmdL=concat(cmdL,[
       "ReadOutData",[Dqq(tmp3)]
     ]);
-  ); //18.02.22upto
+  ); //18.02.22until
   cmdL=concat(cmdL,[
     name3+"=Crvsfparadata",tmp,
     name2+"=Projpara",[name3],

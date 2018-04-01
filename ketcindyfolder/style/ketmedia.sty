@@ -1,39 +1,28 @@
 \newcommand{\inputsound}[3][90]{
 % 20180305 changed
-
-% #1:hspace(mm), #2:dir(add /), #3:file
-
-%\vspace{-20mm}
-
-%\vfill
-
-\noindent%
-\hspace*{#1mm}\hspace{8mm}%
+% 20180317 changed
+\def\soundbuttona{\color{blue}\small\fbox{\strut$\oplus\triangleright$}}
+\def\soundbuttonb{\color{blue}\small\fbox{\strut$\ll$}}
+{\unitlength=1pt
+\ketcalcwidth[0]{\soundbuttona}
+\setcounter{ketpicctrb}{\theketpicctra}
+\ketcalcwidth[0]{\soundbuttonb}
+\addtocounter{ketpicctrb}{\theketpicctra}
+\addtocounter{ketpicctrb}{20}
+ 
+\noindent
+\hspace*{#1mm}\hspace{20pt}%
 \mediabutton[
 mediacommand=#3:playPause,
-overface={\color{blue}\small \strut \fbox{$\oplus\triangleright$}},
-%downface={\color{red}\small\strut Pause/Pause}%
-]{\small\strut \fbox{$\oplus\triangleright$}}%
+overface={\soundbuttona}%,
+%downface={\color{red}\strut Pause/Pause}%
+]{\soundbuttona}%
 \mediabutton[
 mediacommand=#3:rewind,
-overface={\color{blue}\small \strut \fbox{$\ll$}}
-%downface={\color{red}\small\strut Pause/Pause}%
-]{\small\strut \fbox{$\ll$}}%
-%\mediabutton[
-%mediacommand=#3:seek[(15)],
-%overface={\color{blue}\small \strut \fbox{1}}
-%downface={\color{red}\small\strut Pause/Pause}%
-%]{\small\strut \fbox{1}}%
-%\mediabutton[
-%mediacommand=#3:seek[(30)],
-%overface={\color{blue}\small \strut \fbox{2}}
-%%downface={\color{red}\small\strut Pause/Pause}%
-%]{\small\strut \fbox{2}}%
-
-\vspace{-7mm}
-
-\noindent%
-\hspace*{#1mm}%
+overface={\soundbuttonb}
+%downface={\color{red}\strut Pause/Pause}%
+]{\soundbuttonb}%
+\hspace{-\theketpicctrb pt}%
 \includemedia[
     label=#3,
     addresource=#2#3.mp3,
@@ -44,27 +33,76 @@ overface={\color{blue}\small \strut \fbox{$\ll$}}
     }
 %    transparent,
 %    passcontext
-]{\color{blue}\fbox{　}}{APlayer.swf}
+]{\color{blue}\small\fbox{\Ctab{15pt}{\strut}}}{APlayer.swf}
+}}
 
-}
+\newcommand{\inputsoundclick}[3][90]{
+% 20180317 added
+\def\soundbuttona{\color{blue}\small\fbox{\strut$\oplus\triangleright$}}
+\def\soundbuttonb{\color{blue}\small\fbox{\strut$\ll$}}
+{\unitlength=1pt
+\ketcalcwidth[0]{\soundbuttona}
+\setcounter{ketpicctrb}{\theketpicctra}
+\ketcalcwidth[0]{\soundbuttonb}
+\addtocounter{ketpicctrb}{\theketpicctra}
+\addtocounter{ketpicctrb}{20}
+ 
+\noindent
+\hspace*{#1mm}\hspace{20pt}%
+\mediabutton[
+mediacommand=#3:playPause,
+overface={\soundbuttona}%,
+%downface={\color{red}\strut Pause/Pause}%
+]{\soundbuttona}%
+\mediabutton[
+mediacommand=#3:rewind,
+overface={\soundbuttonb}
+%downface={\color{red}\strut Pause/Pause}%
+]{\soundbuttonb}%
+\hspace{-\theketpicctrb pt}%
+\includemedia[
+    label=#3,
+    addresource=#2#3.mp3,
+    activate=onclick,
+    flashvars={
+      source=#2#3.mp3
+     &autoPlay=true
+    }
+%    transparent,
+%    passcontext
+]{\color{blue}\small\fbox{\Ctab{15pt}{\strut}}}{APlayer.swf}
+}}
 
-\newcommand{\inputmovie}[3][0.8]{
+\newcommand{\inputmovie}[5][90]{
+% 20180306 changed
+% width,height,dir,name
+\def\soundbuttona{\small\fbox{\strut$\oplus\triangleright$}}
+\def\soundbuttonb{\small\fbox{\strut$\ll$}}
+
+\hspace*{#1 mm}\mediabutton[
+  mediacommand=#5:playPause,
+  overface={\color{blue}\soundbuttona},
+  downface={\color{red}\soundbuttona}
+]{\fbox{\soundbuttona}}
+\mediabutton[
+  mediacommand=#5:rewind,
+  overface={\color{blue}\soundbuttonb},
+  downface={\color{red}\soundbuttonb}
+]{\fbox{\soundbuttonb}}
 
 \includemedia[
-  label=#3,
-  width=#1\linewidth,height=0.6\linewidth,
-%  width=60mm,height=45mm,
-  activate=pagevisible,
-  addresource=#2#3.mp4,
+  label=#5,
+  width=#2\linewidth,totalheight=#3\linewidth,
+  activate=pageopen,
+  addresource=#4#5.mp4,
   flashvars={
-        source=#2#3.mp4
+        source=#4#5.mp4
 %        &showloading=never
 %        &autoRewind=true
         &autoplay=true
 %        &loop=1
 %        &buffer=0.2
   }
-%]{}{player_flv_maxi.swf}
 ]{}{VPlayer.swf}
 
 }

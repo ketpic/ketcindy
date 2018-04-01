@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2017.12.24) loaded");
+println("ketcindybasic2(2018.03.30) loaded");
 
 //help:start();
 
@@ -521,13 +521,13 @@ Drawpoint(ptlistorg,nn):=(
   );
   thick=PenThick/PenThickInit;// 16.04.09 from
   tmp1=max(TenSize/TenSizeInit,1)/8; 
-  Setpen(tmp1); // 16.04.09 upto
+  Setpen(tmp1); // 16.04.09 until
   forall(ptlist,
     tmp=textformat(#,5)+","+text(nn);
     Com2nd("Drwpt("+tmp+")"); // 16.04.09
   );
   Setpen(thick); // 16.04.09
-);// 16.03.05 upto
+);// 16.03.05 until
 
 Addax(param):=(
 //help:Addax(0);
@@ -572,7 +572,7 @@ Letter(list,options):=(
     if(tmp1=="color",clr=parse(tmp2));
     if(tmp1=="bold",bld=parse(tmp2));
     if(tmp1=="ita",ita=parse(tmp2));
-  );//16.10.09upto
+  );//16.10.09until
   Off=-4;
   Dmv=8;
   Nj=1;
@@ -586,7 +586,7 @@ Letter(list,options):=(
       if(tmp==0,
         Dir="c"+Dir;//16.10.08
       );
-    );//16.10.19upto
+    );//16.10.19until
     Str=list_(Nj+2);
     if(!isstring(Str),Str=format(Str,5)); // 16.09.30,10.09
     tmp=replace(Str,".xy","");
@@ -621,7 +621,7 @@ Letter(list,options):=(
         Xmv=0;//16.10.13
         Off=0;
         if(Ymv==0,Ymv=-4);//16.10.08
-        aln="mid"; // 16.09.30upto
+        aln="mid"; // 16.09.30until
       );
       Str=list_(Nj+2);  //17.10.17
       drawtext(Pcrd(Pos),Str,offset->[Off+Xmv,Off+Ymv],
@@ -1004,7 +1004,7 @@ Writebezier(head,seL):=(
       tmp=select(bz,indexof(#,"bz"+tmp)>0);
       tmp1=concat(tmp1,tmp);
     );
-    bz=tmp1;// 16.04.22upto
+    bz=tmp1;// 16.04.22until
   );
   dt=[head+"n",[[length(bz),0]]];
   forall(1..length(bz),
@@ -1082,7 +1082,7 @@ Readbezier(file,optionorg):=(
       );
       BezierNumber=BezierNumber+1;
     );
-    Bezier(file+text(nc),tmp1,tmp2,options);// 16.04.22upto
+    Bezier(file+text(nc),tmp1,tmp2,options);// 16.04.22until
     out=append(out,"bz"+tmp);
   );
   out;
@@ -1424,7 +1424,7 @@ PutonLine(name,p1org,p2org,options):=(
   tmp1=(1-par)*p1+par*p2;
   if(abs(dx)>abs(dy),    
     tmp=name+".x";
-    tmp2="["+tmp+",dy/dx*("+tmp+"-p1_1)+p1_2]";//16.10.11upto
+    tmp2="["+tmp+",dy/dx*("+tmp+"-p1_1)+p1_2]";//16.10.11until
     Putpoint(name,tmp1,parse(tmp2));
   ,
     if(abs(dy)>0,
@@ -1471,7 +1471,7 @@ PutonSeg(name,p1org,p2org,options):=(
     if(|p-p1|<|p-p2|,
       parse(name+".xy=Pcrd(p1)");
     ,
-      parse(name+".xy=Pcrd(p2)");//16.10.11upto
+      parse(name+".xy=Pcrd(p2)");//16.10.11until
     );
   );
 );
@@ -1489,7 +1489,7 @@ PutonCurve(pn,crv,options):=(
     if(isstring(#),  // 16.02.10 from
       tmp=indexof(#,"=");
       tmp1=Toupper(substring(#,tmp,tmp+1));
-      if(tmp1=="N", Msg="n"); // 16.02.10 upto
+      if(tmp1=="N", Msg="n"); // 16.02.10 until
     ,
       if(Flg==0,
         leftlim=#;
@@ -1665,7 +1665,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       rng=tmp2;
       options=remove(options,[#]);
     );
-  );//16.12.16upto
+  );//16.12.16until
   tick=1;
   flg=0;
   forall(reL,
@@ -1760,7 +1760,7 @@ Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
       rng=tmp2;
       options=remove(options,[#]);
     );
-  );//16.12.16upto
+  );//16.12.16until
   tick=1;
   flg=0;
   forall(reL,
@@ -1984,7 +1984,7 @@ ChangeTablestyle(nameL,style):=(
       tmp=indexof(tmp2,sb);
       tmp2=substring(tmp2,0,tmp-1);
       if(head==tmp2,segall=append(segall,#));
-    );// 16.12.06upto
+    );// 16.12.06until
     sg=[];
     forall(segall,
       tmp=Indexall(#,sb);
@@ -2251,12 +2251,12 @@ Sciform(list):=(
         tmp=apply(1..length(tmp1),
             indexof(tmp2,substring(tmp1,#-1,#)));
         tmp=min(tmp);
-        if(tmp==0,  // 16.04.19 upto
+        if(tmp==0,  // 16.04.19 until
           out2=out2+"'+Assign('";
         ,
           tmp=indexof(out,"'");
           out=substring(out,0,tmp)+substring(out,tmp+1,length(out)); 
-          // 16.04.18 upto
+          // 16.04.18 until
         );
       );
     );
@@ -2341,7 +2341,7 @@ Defvar(varstr):=(
       name=varstr_(2*#-1);
       value=varstr_(2*#);
       Defvar(name,value);
-    ); // 16.11.16upto
+    ); // 16.11.16until
   );
 );
 
@@ -2508,7 +2508,7 @@ Windispg():=(
 //    draw([0,YMIIN],[0,YMAX],color->[0,0.2,0]);
 //    Letter([[XMAX,0],"e","x",[0,YMAX],"n","y"]);
 //    Letter([[0,0],"sw","O"]);
-//  ); // 16.10.08upto
+//  ); // 16.10.08until
   grestore(); 
   layer(0);
 );
@@ -2703,7 +2703,7 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,"#quit()");
   );
   closefile(SCEOUTPUT);
-); //17.09.17upto
+); //17.09.17until
 
 Extractdata(name):=Extractdata(1,name,[]);
 Extractdata(Arg1,Arg2):=(
@@ -2785,7 +2785,7 @@ ReadOutData(pathorg,filenameorg):=(
     if(indexof(path,"\")>0,tmp1="\",tmp1="/");
     tmp=substring(path,length(path)-1,length(path));
     if(tmp!=tmp1,path=path+tmp1);
-  );   //16.03.07 upto
+  );   //16.03.07 until
   filename=filenameorg;  // 16.04.17
   if(indexof(filename,".")==0,filename=filename+".txt");
   tmp=load(filename);
@@ -3008,7 +3008,7 @@ Makeshell(texmainfile,flow):=(
     tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
-  );//16.11.22upto
+  );//16.11.22until
   if(tex=="lualatex",//16.12.16
     tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
     println(SCEOUTPUT,tmp); 
@@ -3023,11 +3023,37 @@ Makeshell(texmainfile,flow):=(
    tmp="open -a "+Dq+tmp+Dq+" "+texmainfile+".pdf";
   ,
     tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
-  );// 16.09.09upto
-  println(SCEOUTPUT,tmp); // 16.07.21upto
+  );// 16.09.09until
+  println(SCEOUTPUT,tmp); // 16.07.21until
   println(SCEOUTPUT,"exit 0");
   closefile(SCEOUTPUT);
   setdirectory(Dirwork);
+);
+
+Convsjiswin(dir,fname,ext):=( //180401
+  regional(ctr,flg,mx,tmp);
+  mx=200;
+  ctr=0;flg=0;
+  nkfwin(dir,fname,ext);
+  while((!isexists(dir,fname+".out"))&(ctr<mx),
+    wait(100);ctr=ctr+1;
+  );
+  if(ctr==mx,flg=1);
+  if(flg==0,
+    wait(100);ctr=0;
+    nkfcpdel(dir,fname,ext);
+    while((isexists(dir,fname+".out"))&(ctr<mx),
+      wait(100);ctr=ctr+1;
+    );
+    if(ctr==mx,flg=2);
+  );
+  tmp=dir+pathsep()+fname+"."+ext;
+  if(flg==0,
+    tmp=
+    println(tmp+" converted");
+  ,
+    println(tmp+" not converted "+text(flg));
+  );
 );
 
 Makebat():=(
@@ -3102,6 +3128,10 @@ Makebat(texmainfile,flow):=(
     tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r";
       // 17.09.14
     println(SCEOUTPUT,tmp);
+    if(isincludefull(Dirwork), //180401from
+      wait(100);
+      Convsjiswin(Dirwork,Fhead,"r"); 
+    ); //180401to
   );
   if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
     tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
@@ -3125,7 +3155,7 @@ Makebat(texmainfile,flow):=(
     tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
-  );//16.11.22upto
+  );//16.11.22until
   if(tex=="lualatex",//16.12.16
     tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
     println(SCEOUTPUT,tmp); 
@@ -3141,6 +3171,10 @@ Makebat(texmainfile,flow):=(
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"exit 0");
   closefile(SCEOUTPUT);
+  if(isincludefull(Dirwork), //180401from
+    wait(100);
+    Convsjiswin(Dirwork,"kc","bat"); 
+  ); //180401to
   if(indexof(Dirwork,":")==0,  // 14.01.15
     drive="C:";
   ,
@@ -3166,7 +3200,7 @@ Addpackage(packorg):=(
       packL_#="{"+tmp+"}";
     );
   );
-  ADDPACK=concat(ADDPACK,packL); //17.06.25upto
+  ADDPACK=concat(ADDPACK,packL); //17.06.25until
 );
 
 Viewtex():=(
@@ -3180,8 +3214,8 @@ Viewtex():=(
     tmp=replace(tmp,"article","jarticle");
     if(indexof(PathT,"uplatex")>0, //17.08.13from
       tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13upto
-  ); // 16.06.09upto
+    );//17.08.13until
+  ); // 16.06.09until
   println(SCEOUTPUT,tmp);
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0) ,
           //16.11.23,12.16
@@ -3210,13 +3244,13 @@ Viewtex():=(
       println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
       println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
     );
-  );//17.10.30upto
+  );//17.10.30until
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{graphicx}");
   println(SCEOUTPUT,"\usepackage{color}");
   forall(ADDPACK, // 16.05.16from
     println(SCEOUTPUT,"\usepackage"+#); //17.05.25
-  );// 16.05.16upto
+  );// 16.05.16until
   println(SCEOUTPUT,"");
 //  println(SCEOUTPUT,"\def\ketcindy{{K\kern-.20em%"); // deleted 16.11.27,recovered11.29 redeleted17.04.07
 //  println(SCEOUTPUT,"\lower.5ex\hbox{E}\kern-.125em{TCindy}}}");
@@ -3389,7 +3423,7 @@ Figpdf(fnameorg,optionorg):=(
   tmp=4-length(options);
   tmp1=apply(1..tmp,5);
   mar=concat(options,tmp1);
-  mar=apply(mar,if(length(#)==0,5,#));//16.11.08upto
+  mar=apply(mar,if(length(#)==0,5,#));//16.11.08until
   pos=[mar_1+dp_1,mar_3+dp_2];
   sc=10;
   tmp=indexof(ULEN,"cm");
@@ -3407,9 +3441,9 @@ Figpdf(fnameorg,optionorg):=(
     tmp=replace(tmp,"article","jarticle");
     if(indexof(PathT,"uplatex")>0, //17.08.13from
       tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13upto
+    );//17.08.13until
   );
-  FigPdfList=append(FigPdfList,tmp); // 16.06.09upto
+  FigPdfList=append(FigPdfList,tmp); // 16.06.09until
   tmp1="\special{papersize=W mm,H mm}";
   tmp=(XMAX-XMIN)*sc+(mar_1+mar_2);
   tmp1=replace(tmp1,"W",text(tmp));
@@ -3444,14 +3478,14 @@ Figpdf(fnameorg,optionorg):=(
         ["\usepackage{"+tmp+"/ketpic}",
          "\usepackage{"+tmp+"/ketlayer}"]);
     );
-  );//17.11.05upto
+  );//17.11.05until
   FigPdfList=append(FigPdfList,
     "\usepackage{amsmath,amssymb}");
   FigPdfList=append(FigPdfList,
     "\usepackage{graphicx,color}");
   forall(ADDPACK, // 16.05.16from
     tmp1="\usepackage"+#; //17.07.10
-    FigPdfList=append(FigPdfList,tmp1);  // 16.09.05upto
+    FigPdfList=append(FigPdfList,tmp1);  // 16.09.05until
   );
   FigPdfList=append(FigPdfList,"");
   FigPdfList=append(FigPdfList,
@@ -3565,7 +3599,7 @@ Helplist(dir,files,help):=(
 //  tmp=remove(tmp,["ketcindylibout"]); 
 //  tmp=apply(tmp,replace(#,"basic",""));
   tmp=apply(tmp,#+help+".txt"); 
-  ketfiles=concat(ketfiles,tmp);// 15.11.05 upto
+  ketfiles=concat(ketfiles,tmp);// 15.11.05 until
   tmp1=[];
   forall(ketfiles,
     tmp=Makehelplist(#);
@@ -3575,7 +3609,7 @@ Helplist(dir,files,help):=(
     HLIST=sort(tmp1);
   ,
     HLIST=sort(concat(HLIST,tmp1));
-  ); // 16.12.31upto
+  ); // 16.12.31until
   setdirectory(Dirwork);
 );
 
@@ -3663,12 +3697,12 @@ Slidework(dirorg):=(
   tmp=length(dir);
   if(substring(dir,tmp-1,tmp)==pathsep(),
     dir=substring(dir,0,tmp-1);
-  );//17.11.20upto
+  );//17.11.20until
   if(isexists(dir,""), // 16.12.20
     Changework(dir);
     println(makedir(dir,"fig"));//17.11.23
     tmp=dir+pathsep()+"fig";  //17.04.16from
-    Changework(tmp);// 17.02.19upto
+    Changework(tmp);// 17.02.19until
   ,
     println(dir+ " not exists");
   );
@@ -3830,22 +3864,15 @@ Setslidehyper(driverorg,options):=(
       LinkSize=max(tmp2,0.1);
     );
   );
-); //17.12.16upto
+); //17.12.16until
 
-Settitle(cmdL):=Settitle("slide0",cmdL,[]);
-Settitle(Arg1,Arg2):=(
-  if(isstring(Arg1),
-    Settitle(Arg1,Arg2,[]);
-  ,
-    Settitle("slide0",Arg1,Arg2);
-  );
-);
-Settitle(name,cmdL,options):=(
+Settitle(cmdL):=Settitle(cmdL,[]); // 180330changed
+Settitle(cmdL,options):=(
 //help:Settitle(cmdL);
 //help:Settitle(name,cmdL);
-//help:Settitle(options=["Layery=0","Color=blue"]);
+//help:Settitle(options=["Title=slide0","Layery=0","Color=blue"]);
   regional(tmp,tmp1,tmp2,eqL,layery,color,size,font);
-  TitleName=name;
+  TitleName="slide0"; //180330
   layery="0";
   color="blue";
   size="\Large";
@@ -3869,7 +3896,10 @@ Settitle(name,cmdL,options):=(
     if(tmp1=="F",
       font=tmp2;
       if(substring(font,0,1)!="\",font="\"+font);
-   );      
+   );
+    if(tmp1=="T", //180330
+      TitleName=tmp2;
+   ); 
   );
   TitleCmdL=["{"+size+font];
   if(indexof(color,"[")>0,
@@ -3904,7 +3934,7 @@ Maketitle():=(
   if(!isstring(TitleName), //17.04.13from
     drawtext(mouse().xy,"Settitle not defined",
       size->24,color->[1,0,0]);
-  , //17.04.13upto
+  , //17.04.13until
     Maketitle(TitleName);
   );
 );
@@ -3924,7 +3954,7 @@ Maketitle(name):=(
     tmp=replace(tmp,"article","jarticle");
     if(indexof(PathT,"uplatex")>0, //17.08.13from
       tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13upto
+    );//17.08.13until
   ); 
   println(SCEOUTPUT,tmp);
   tmp="\special{papersize=\the\paperwidth,\the\paperheight}";
@@ -3938,7 +3968,7 @@ Maketitle(name):=(
     println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
     println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
     println(SCEOUTPUT,"\usepackage{"+tmp+"/ketslide}");
-  );//17.11.01upto
+  );//17.11.01until
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{bm,enumerate}");
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
@@ -4025,7 +4055,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             str=replace(str,tmp+" ","");
             str=replace(str,tmp,"");
           );
-        );//17.05.28upto
+        );//17.05.28until
         if(contains(seL,1),
           if(substring(str,0,1)!="%", 
             if(NonThinFlg==0,
@@ -4061,7 +4091,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             );
             if(NonThinFlg==1,
               tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
-              tmp1=[tmp1,str];//17.01.08upto
+              tmp1=[tmp1,str];//17.01.08until
             );
             if(NonThinFlg==2,
               tmp1=[str,"}%"];
@@ -4069,9 +4099,9 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             RepeatList_tmp=concat( RepeatList_tmp,tmp1);
           );
         );
-      );//16.01.05upto
+      );//16.01.05until
     );
-  );//16.12.05upto
+  );//16.12.05until
 );
 
 Presentation(texfile):=Presentation(texfile,texfile);
@@ -4101,7 +4131,7 @@ Presentation(texfile,txtfile):=(
   tmp=select(1..length(slideL),length(slideL_#)>0); // 16.07.11from
   slideL=apply(tmp,slideL_#);
   slideorgL=apply(tmp,slideorgL_#);
-//  slideL=select(slideL,length(#)>0); // 16.07.11upto
+//  slideL=select(slideL,length(#)>0); // 16.07.11until
   flg=0; // 16.06.09from
   forall(1..10,
     if(flg==0,
@@ -4112,7 +4142,7 @@ Presentation(texfile,txtfile):=(
         slideorgL=slideorgL_(2..length(slideorgL));
       );
     );
-  ); // 16.06.09upto
+  ); // 16.06.09until
   flgL=[];
   SCEOUTPUT = openfile(file);
   tmp=tokenize(slideL_1,"::");
@@ -4126,11 +4156,12 @@ Presentation(texfile,txtfile):=(
   );
   wall=""; // 16.06.10
   if(length(tmp3)>0,//16.06.25from
-    if(substring(tmp3_1,0,1)!="\" & indexof(tmp3_1,"=")==0, 
+    tmp=substring(tmp3_1,0,1);//180330
+    if((tmp!="\")&(tmp!="%")&(indexof(tmp3_1,"=")==0), //180330
       wall=tmp3_1;
       tmp3=tmp3_(2..length(tmp3));
     );
-  );//16.06.25upto
+  );//16.06.25until
   tmp="%%% "+tmp1+" "+txtfile;// 16.06.09from
   println(SCEOUTPUT,tmp);
   tmp="\documentclass[landscape,10pt]{article}"; 
@@ -4138,7 +4169,7 @@ Presentation(texfile,txtfile):=(
     tmp=replace(tmp,"article","jarticle");
     if(indexof(PathT,"uplatex")>0, //17.08.13from
       tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13upto
+    );//17.08.13until
   );
   println(SCEOUTPUT,tmp);// 16.06.09from
   tmp=select(1..(length(tmp3)),indexof(tmp3_#,"\usepackage")>0);//17.06.18from
@@ -4146,7 +4177,7 @@ Presentation(texfile,txtfile):=(
     println(SCEOUTPUT,tmp3_#);
   );
   tmp=remove(1..(length(tmp3)),tmp);
-  tmp3=tmp3_tmp;//17.06.18upto
+  tmp3=tmp3_tmp;//17.06.18until
 //  if(iswindows(),sep="\",sep="/"); // 17.04.08
 //  sep="/";
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
@@ -4157,7 +4188,7 @@ Presentation(texfile,txtfile):=(
     println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");// 17.04.08from
   ,
     println(SCEOUTPUT,"\special{papersize=\the\paperwidth,\the\paperheight}");
-  );// 17.04.08upto
+  );// 17.04.08until
   tmp=replace(Dirhead,"\","/");//17.11.01from
   tmp=replace(tmp,"scripts","tex/latex");
   if(isexists(tmp,""),
@@ -4185,7 +4216,7 @@ Presentation(texfile,txtfile):=(
       tmp=replace(Dirhead+"/ketpicstyle","\","/");
       println(SCEOUTPUT,"\usepackage{"+tmp+"/ketslide2}");
     );
-  );//17.04.08upto
+  );//17.04.08until
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{bm,enumerate}");
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
@@ -4201,7 +4232,7 @@ Presentation(texfile,txtfile):=(
 //  if(!islist(SlideColorList), //17.03.02from
 //    SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
 //                  letterc,mboxc,mboxc,mboxc,62,2,letterc];
-//  , //17.03.02upto
+//  , //17.03.02until
   tmp4="abcdefghijklmno";
   forall(1..15,
     tmp=SlideColorList_#;
@@ -4213,7 +4244,7 @@ Presentation(texfile,txtfile):=(
       );
       if(length(SlideColorList_#)==3,
         println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{rgb}{"+tmp+"}");
-      );//17.01.07upto
+      );//17.01.07until
       SlideColorList_#="slidecolor"+tmp4_#;
     );
   );
@@ -4226,12 +4257,12 @@ Presentation(texfile,txtfile):=(
 //    ,
       println(SCEOUTPUT,"\usepackage"+#);  //17.07.10
 //    );
-  );// 16.06.09upto
+  );// 16.06.09until
   tmp=select(ADDPACK,indexof(#,"{hyperref}")>0);//16.12.31from
   if(length(tmp)>0,
     hyperflg=1;
   ,
-    hyperflg=0; //16.12.31upto
+    hyperflg=0; //16.12.31until
   );
   forall(tmp3,
     println(SCEOUTPUT,#);
@@ -4271,7 +4302,7 @@ Presentation(texfile,txtfile):=(
       println(SCEOUTPUT,"");
       println(SCEOUTPUT,"\vspace*{"+top+"}");
       println(SCEOUTPUT,"");
-    ); // 16.11.11upto
+    ); // 16.11.11until
   );
   println(SCEOUTPUT,"\def\mainslidetitley{22}");
   forall(1..14, //16.12.22from
@@ -4281,7 +4312,7 @@ Presentation(texfile,txtfile):=(
       tmp="\def"+slidecmd_#+"{"+tmp+"}";
       println(SCEOUTPUT,tmp);
     );
-  );//16.12.22upto
+  );//16.12.22until
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\color{"+SlideColorList_(15)+"}");
   println(SCEOUTPUT,BodyStyle);//17.01.07
@@ -4322,7 +4353,7 @@ Presentation(texfile,txtfile):=(
         tmp=indexof(tmp5,",");
         if(tmp>0,//17.01.03from
           tmp5=substring(tmp5,0,tmp-1);
-        );//17.01.03upto
+        );//17.01.03until
         repeatflg=1;
         if(length(tmp5)>0,
           nrep=parse(tmp5);
@@ -4338,7 +4369,7 @@ Presentation(texfile,txtfile):=(
         if(tmp>0,
           sld="%"+substring(sld,tmp,length(sld));
           if(indexof(sld,"=")==0,sld=sld+"=");
-        );//17.01.03upto
+        );//17.01.03until
       );
       if(substring(sld,1,5)=="para",
         paractr=paractr+1;
@@ -4357,7 +4388,7 @@ Presentation(texfile,txtfile):=(
               if(tmp0>0,
                 paradt=append(paradt,substring(paradt_4,tmp0,length(paradt_4)));
                 paradt_4=substring(paradt_4,0,tmp0-1);
-              );//17.01.29upto
+              );//17.01.29until
               parafiles=select(parafiles,indexof(#,".tex")>0);
               if(indexof(paradt_4,"\input")==0,paradt_4="\"+paradt_4);//16.12.17
             );
@@ -4383,7 +4414,7 @@ Presentation(texfile,txtfile):=(
           tmp4=[]; //16.12.31from
           if(hyperflg>0,
             tmp4=["\hypertarget{para"+text(paractr)+"pg"+text(#)+"}{}"];
-          );//16.12.31upto
+          );//16.12.31until
           if(npara>0, //17.01.03
             tmp4=concat(tmp4,["","\begin{layer}{120}"+paradt_2]);
             if(#<=npara, //16.12.28from
@@ -4440,12 +4471,12 @@ Presentation(texfile,txtfile):=(
                   +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
                   +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
             tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
-            tmp4=concat(tmp4,tmp3);// 17.01.12uptor
+            tmp4=concat(tmp4,tmp3);// 17.01.12untilr
             tmp="\putnotew{"+text(LinkPosH)+"}{"+text(LinkPosV+6)+"}";//17.10.21from
             tmp=tmp+"{\scriptsize\color{black} "+text(#)+"/"+text(nrep)+"}";
-            tmp4=append(tmp4,tmp);//17.10.21upto
+            tmp4=append(tmp4,tmp);//17.10.21until
           );
-          tmp4=concat(tmp4,["\end{layer}",""]);//16.12.31upto
+          tmp4=concat(tmp4,["\end{layer}",""]);//16.12.31until
           Repeatsameslide(repeatflg,text([#]),tmp4);
         );
       );
@@ -4453,7 +4484,7 @@ Presentation(texfile,txtfile):=(
     if(substring(sld,0,2)=="%%", //17.06.23from
       println(SCEOUTPUT,sld);
       flg=1;
-    ); //17.06.23upto
+    ); //17.06.23until
     if(flg==0,  
 	  if(indexof(sld,"\begin{verbatim}")==1, // 16.06.28from
         Repeatsameslide(repeatflg,sestr,[slideL_ns]);
@@ -4464,7 +4495,7 @@ Presentation(texfile,txtfile):=(
         Repeatsameslide(repeatflg,sestr,[slideL_ns]);
         verbflg=0;
         flg=1;
-      ); // 16.06.28upto
+      ); // 16.06.28until
       if(flg==0,
         tmp=replace(sld,"||||","//"); // 16.05.11
         tmp=tokenize(tmp,"::"); // 16.05.11
@@ -4480,7 +4511,7 @@ Presentation(texfile,txtfile):=(
           );
           if(tmp1=="same",
              if(length(tmp2)==0,tmp2=newoption); 
-          );// 16.11.09upto
+          );// 16.11.09until
           println(SCEOUTPUT,"");
           println(SCEOUTPUT,"%%%%%%%%%%%%%%%%%%%%");
           println(SCEOUTPUT,"");
@@ -4599,7 +4630,7 @@ Presentation(texfile,txtfile):=(
         tmp3="";
         verbflg=1;
         flg=1;
-      ); //16.06.28upto
+      ); //16.06.28until
       if(flg==0&tmp1=="layer",
         Repeatsameslide(repeatflg,sestr,[""]);
         tmp="\begin{layer}";
@@ -4655,7 +4686,7 @@ Presentation(texfile,txtfile):=(
         if(tmp=="v",  // 16.06.28from
           Repeatsameslide(repeatflg,sestr,["\end{verbatim}",""]);
           verbflg=0;
-        ); // 16.06.28upto
+        ); // 16.06.28until
         flgL=flgL_(1..(length(flgL)-1));
         tmp2="";
         tmp3="";
@@ -4669,7 +4700,7 @@ Presentation(texfile,txtfile):=(
           tmp2=replace(tmp2,"||","//"); // 16.07.10
           tmp3="";
         );
-      ); // 16.06.28upto
+      ); // 16.06.28until
       if(length(tmp2)>0,
         if(tmp2=="...", tmp2="");
           if(NonThinFlg==1,NonThinFlg=2);
@@ -4731,12 +4762,12 @@ Mkslides():=(
   texparentorg=Texparent; //17.04.10from
   if(isstring(Slidename),  // 15.08.14 from
     Texparent=Slidename;
-  );//17.04.10upto
+  );//17.04.10until
   if(!isexists(Dirwork,Texparent+".txt"), // 17.04.12from
     drawtext(mouse().xy,Texparent+".txt not exist in "+Dirwork,
       size->24,color->[1,0,0]);
-  ,  // 17.04.12upto
-    Presentation(Texparent);  // 15.08.14 upto
+  ,  // 17.04.12until
+    Presentation(Texparent);  // 15.08.14 until
     if(iswindows(),
       tmp2=Batparent;
       parent=replace(Dirwork+Batparent,sep+"fig","");// 16.05.29
@@ -4744,7 +4775,7 @@ Mkslides():=(
         Makebat(Texparent,"ttv");
       ,
         Makebat(Texparent,"tv");
-      ); //17.12.09upto
+      ); //17.12.09until
       kc():=(
         println("kc : "+kc(parent,Dirlib,Fnametex)); // 16.06.10, 17.02.19
       );
@@ -4758,7 +4789,7 @@ Mkslides():=(
         Makeshell(Texparent,"ttv");
       ,
         Makeshell(Texparent,"tv");
-      ); //17.12.09upto
+      ); //17.12.09until
       kc():=(
         println("kc : "+kc(parent,Mackc+Dirlib,Fnametex)); // 16.06.10
       );

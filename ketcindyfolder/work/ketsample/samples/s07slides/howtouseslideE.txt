@@ -1,146 +1,79 @@
-Presentation with ketslide    2017.09.28
+Presentation with ketslide    2018.03.30
 
-0. Making a file for slides.
+0. Flow of making slides.
 
   1) Copy ketsample/s07slideのs0701basic.cdy to your work directory and rename it.
-         Here, assume the file copied to Userhome/Desktop/work and renamed to sample.cdy.
-  2) Copy s0701basic.txt and rename it with the same head, too.
-  3) Double clicsample.cdy, modify Cindyscript/figures as follows.
-           Line 5 : Slidework(gethome()+"/Desktop/work");
-           Line11: Edit the title.
-  4) Press Gear mark on the top.
+         Ex) s0701basic.cdy , s0701basic.txt
+         Rem) Rename both files.
+       Here, let files sample.cdy and sample.txt.
+  2) Double-click sample.cdy, edit Settitle.
+  3) Press Gear mark on the top.
+  4) Press button "Title" on the screen.
+  5) Press button "Slide".
 
-1. Modify sample.txt.
+1.  Editing the .txt file.
 
-  0) The first line should be :
-            title::slide0//
-        注１)バックグラウンド(例えばkabegamiとする)を入れるとき
-                ・kabegami.texを作成してfigフォルダに入れる. 
-                ・sample.txtの指定は
-                      タイトル::slide0::kabegami//
-        注２)タイトル画面が不要の場合は，
-                タイトル(またはtitle):://
-
-  １)すべての行の最後は必ず // をつける. 
-        注)urlの指定で//を用いるとき，||||とすると//に変換される. 
-  ２)各ブロックの引数の区切りは ::
-  ３)コマンド
-        ・タイトル::読込ファイル名(::壁紙ファイル)//
-            最初のタイトルページ
-              注)スライドに置く文字はslide0.cdyで作成
-              注)壁紙をつけるときは，もう１つ :: で区切ってファイル名を書く
-              注)preambleに追加するとき，::区切りで書き加え，最後に//をおく. 
-        ・new(::行下げ)::タイトル((::位置)::読み込みファイル)//
-            mainslide
-            例)new::[10]::最初に::{50}{20}::figure//
-            注)読み込みファイルのサイズ変更するとき
-                  new::[10]::最初に::{50}{20}::figure,0.8//
-                他も同様
-        ・same(::行下げ)((::位置)::読込ファイル)//
-            sameslide
-        ・enumerate(::書式)//
-            enumerate環境の始まり
-        ・itemize//
-            itemize環境の始まり
-        ・layer(::範囲)//
-            layer環境の始まり
-        ・item::文//
-            itemを追加
-        ・putnote::方向と位置::読み込みファイル//
-            layer環境の中に図を入れる
-            例)putonote::se{30}{10}::figure( , 倍率)//(inputのとき)
-            例)putonote::se{30}{10}::include[width=5cm]::figure.pdf//
-                      (includegraphicsのとき)
-        ・end//
-            enumerate,itemize,layer環境の終わり
-        ・上記以外//
-            そのままTeXに書き出す. 
-
-  ４)空白行を入れたいときは，...// とする. 
-
-  ５)必要な図はすべてfigに入れる. 
-
-  ６)newの後，複数のスライドを同時に作り順に表示するとき，
-      ・newの次の行に
-          %repeat=(newを含むスライドの枚数),para//
-      ・表示したいページは
-            %[2,-]::本文//
-        のように書く. 
-          注)[2,- ]は2ページ以降全部
-              [-, 2,- ]は2ページまで表示
-              [1..3,5 ]は1ページから3ページと5ページ
-      ・repeat=...の後に「,para」を追加するとリンクを作成
-      ・他のページで薄文字にしたいときは  %thin[2]::本文
-          注１)薄文字の濃さのデフォルトは0.1だが，Setslidebodyで変更可能
-          注２)また，sample.txtに以下を記述すれば，その後が変わる. 
-                  \setthin{濃さ}//
-
-  ７)figの中にあるサブフォルダ(例えばsubfig)の図ファイルすべてを順に表示するとき
-      ・newの次の行に
+  1) Put // at the last of every lines.
+           Rm) Use |||| for //.
+		              http::||||.... //
+  2) Use :: for separators of each command.
+  3) Commands
+          title::titleslidename(::wallpaper)//
+                Rm) Put the first line.
+          main::mainttitlename//
+          new::pagetitlename//
+          enumerate//
+                =\begin{enumerate}
+          itemize//
+                =\begin{itemize}
+          layer::{xsize}{ysize}//
+                =\begin{layer}{xsize}{ysize}
+          item::sentence//
+                =\item sentence
+          putnote::dir{xpos}{ypos}::filename(,scale)//
+                =putnotedir{xpos}{ypos}{\input{fig/filename}}
+          end//
+                =\end{itemize,enumerate,layer}
+        Rm) Any other TeX command is available.
+  4) Use ...// for inserting a blank line.
+  5) To display a page step by step
+          Put just after new,
+               %repeat=number of steps//
+          Put at the head of each line as
+             %[2,-]::sentence
+                   display at all steps from 2
+              %[-,2]::sentence
+                   display at all steps until 2
+              %[1..3,5]::sentence
+                   display at steps of 1,2,3 and 5
+          Use %thin to display with thin letters.
+                  %thin::[2,-]::sentence
+             Rm) the dencity can be changed with Setslidebody.
+  6) To display all figures in the sub folder in folder "fig"
           %repeat=//
-          %para=subfig:{0}:s{60}{10}:input(:倍率)//
-             ＝＞ layer{120}{0}, \putnotes{60}{10}{\input...}
-        注)%repeat=,para=...と続けて書いてもよい. 
+          %para=subfig:{0}:s{60}{10}:input(:scale)//
 
-２. スライドの作成
+2. Setting commands described in the cdy file.
+          Setslidemain([letterc,boxc,boxd,framec,xpos,size]); 
+          Setslidepage([letterc,boxc,boxd,framec,shadowc,shadowd,xpos,size]); 
+          Setslidebody(bodycolor,bodystyle,density);
+          Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue",90,70,1]);
 
-  １)sample.cdyのスクリーンにTitle, Para, Slide のボタンがある. 
+3. Making flip animation
 
-  ２)Fheadは，図を作成するときのファイル名
-
-  ３)Slidenameは，スライドのファイル名
-          .txt(内容)，.tex , .pdf
-
-  ４)Slideworkで，作業フォルダを指定
-        注１)作業フォルダの中に自動的にfigというサブフォルダを作る. (新規の場合)
-        注２)Dirworkはfigに設定されるので，図はfigの中に作られる. 
-        注３)slideボタンを押すと，Dirworkは一時的にworkになる. 
-
-  ５)タイトルの編集
-        Settitle(name,cmdL,options);
-            options=["Layery=0","Color=blue"]  
-            nameは省略可(デフォルトは  "slide0")
-
-      ・maintitleはcmdLの最初に書く(文字サイズ\Huge，他は\large)
-
-      ・Titleボタンを押すとタイトル画面を作成して表示する. 
-
-  ６)各種設定
-        Setslidemain([letterc,boxc,boxd,framec,xpos,size]); 
-            メイン(章に該当)の設定
-          注)一部をデフォルト値とする場合は [,,]などとする. 以下同様
-        Setslidepage([letterc,boxc,boxd,framec,shadowc,shadowd,xpos,size]); 
-            ページの設定
-        Setslidebody(bodycolor,bodystyle,density);
-            全体の文字色と薄文字の濃さ(0-1)の設定
-            bodystyleのデフォルトは  "\Large\bf\boldmath"
-        Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue",90,70,1]);
-            hyperrefを利用する，
-          注)Setslidehyper();とすると，hyperref.styを読み込み，
-            かつ，上のデフォルト値が与えられる. 
-          注)数字は，ページ移動ボタン列について，右端の水平位置，垂直サイズ，倍率
-
-  ７)パラパラ動画の作成
-      ・mf(s)にパラメータ値sのときの図を記述する. 
-
-      ・パラパラの設定
+  1) Define Mf(s) the state at s.
+  2) Add Setpara as
           Setpara(foldername,funcitonstr,range,options); 
-                options=["m/r", "Div=25"];
-          注)rangeの記述
-            i) "s=[0,1]"   区間をDivで分割
-            ii) [0.2, 0.6]  リストの要素をsに代入
+              options=["m/r", "Div=25"];
+  3) Press button Flip
+  4) Describe in the .txt file as 1. 6).
+  5) Press button Slide.
 
-      ・ParaFボタンを押すと，フォルダ及びパラパラの図(複数)が生成される. 
-      ・templateslide.txtに，１(７)のように記述する. 
-      ・Slideボタンを押す. 
+4. Making animation.
 
-  ８)animateを使うとき
-        (１)ParaFを作った後，Shift+"A"を押すとfigにanim+フォルダ名のファイルができる. 
-        (２)Apppackage(["[dvipdfmx]{animate}"]を追加する. 
-        (３)読み込み場所に，\inputを使って入れる. (layerは使えない)
-        (４)Setparaのオプション
-                "Frate="(１秒間のフレーム数), "Scale="(スケール倍率), "OpA=[loop]" 
-
-  ９)Slideボタンを押すと，スライド(PDF)が作成される. 
-
-  １０)Sum ボタンを押すと，概要PDF(各ページの最終ページのみ)が作成される. 
+  1) Add in the .cdy file
+         Addpackage(["[dvipdfmx]{animate}"]);
+  2) Add in the option of Setpara,
+         "Frate=num of frame in the second, "Scale=scale, "OpA=optin of animation" 
+  3) Define mf(s), Press button Anime.
+  4) Use \input, not layer.

@@ -1,4 +1,4 @@
-REM 2018.02.26
+REM 20180401
 echo off
 set xcp="\Windows\System32\xcopy"
 set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
@@ -121,7 +121,5 @@ if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
 echo Pathpdf="%prgSm%"; >> dirhead.txt
-echo setdirectory(Homehead+pathsep()+getname()); >> dirhead.txt
-echo import("ketcindyhead.txt"); >> dirhead.txt
 echo "Plugins of Cindy has been set"
 pause

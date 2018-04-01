@@ -1,4 +1,4 @@
-Install of KeTCindy(Win)       Modified : Dec. 9th  2017
+Install of KeTCindy(Win)       Modified : Mar. 27th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -47,7 +47,7 @@ Install of KeTCindy(Win)       Modified : Dec. 9th  2017
                   And ketcindyhead.txt is generated in User's home.
 
 5) Test run of KeTCindy
-      (1) Double-click "template.cdy" in "ketcindy\ketfiles".
+      (1) Double-click "template1basic.cdy" in "ketcindy\ketfiles".
            A frame in white appear on the screen.
                 if not, check as follows:
                     a) From top menu of Cinderella,

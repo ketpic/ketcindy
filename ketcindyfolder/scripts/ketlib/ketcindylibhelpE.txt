@@ -24,9 +24,8 @@
 //help:Integrate*(numerical integration);
 //help:Findarea*(calculate the area of the region surrounded by a closed curve);
 //help:Findlength*(calculate the length of curve);
-//help:Com2nd*(add the Scilab command to write out plot data into TeX);
+//help:Com2nd*(add the R command to write out plot data into TeX);
 //help:Texcom*(write command into TeX output exactly as written here);
-//help:SetEnglish*(display Scilab messages in English language);
 //help:Setunitlen*(specify the unit length);
 //help:Setmarklen*(specify the unit length of the tickmarks on coordinate axis);
 //help:Setorigin*(specify the position the origin);
@@ -107,8 +106,8 @@
 //help:PutcoL*(write letters in a specific column of the table));
 //help:PutcoLexpr*(write mathematical expressions in a specific column of the table));
 //help:Setwindow*(specify the area of drawing);
-//help:Defvar*(the definition of a variable is called by Scilab);
-//help:Deffun*(the definition of a function is called by Scilab);
+//help:Defvar*(the definition of a variable is called by R);
+//help:Deffun*(the definition of a function is called by R);
 //help:Extractdata*(endow attribute to the imported plot data);
 //help:ReadOutData*(import the plot data);
 //help:WriteOutData*(export the plot data);

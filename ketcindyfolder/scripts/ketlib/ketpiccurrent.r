@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(180327)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180327)" 
 
 print(ThisVersion)
 
+# 20180402
+#  Implicitplot greatly changed
 # 20180327
 #  Kyoukai debugged
 # 20180317
@@ -11374,136 +11376,99 @@ Connectseg<- function(...){
   return(PlotL)
 }
 
-Makevaltable<- function(MS){
-  Eps=10^(-6)
-  Nargs=length(MS)
-  Fstr=Op(1,MS)
-  Tmp=Op(2,MS)
-  Tmp1=strsplit(Tmp,"=",fixed=TRUE)
-  Tmp1=Tmp1[[1]]
-  Xname=Tmp1[1]
-  Xrange=eval(parse(text=Tmp1[2]))
-  Tmp=Op(3,MS)
-  Tmp1=strsplit(Tmp,"=",fixed=TRUE)
-  Tmp1=Tmp1[[1]]
-  Yname=Tmp1[1]
-  Yrange=eval(parse(text=Tmp1[2]))
-  Tmp=gsub(Xname,"x",Fstr)
-  Fstr=gsub(Yname,"y",Tmp)
-  Tmp=grep(Xname,Fstr)
-  if(length(Tmp)==0){
-    Fstr=paste(Fstr,'+0*x',sep="")
-  }
-  Mdv=50
-  Ndv=50
-  if(Nargs>=4){
-    Tmp=Op(4,MS)
-    if(Length(Tmp)>1){ #18.02.09
-      Mdv=Op(1,Tmp)
-      Ndv=Op(2,Tmp)
-    }else{
-      Mdv=Tmp
-      if(Nargs==4){
+Implicitplot<- function(...){ #180402
+  varargin=list(...)
+  Eps=10^(-4)
+  Nargs=length(varargin)
+  Func=varargin[[1]]
+  Xrng=varargin[[2]]
+  Yrng=varargin[[3]]
+  Mdv=50;Ndv=50
+  for (I in Looprange(4,length(varargin))){
+    Str= varargin[[I]]
+    Tmp=strsplit(Str,"=",fixed=TRUE)
+    Tmp=Tmp[[1]]
+	Tmp1=toupper(Tmp[1])
+    if(substring(Tmp1,1,1)=="N"){
+      Mdv=eval(parse(text=Tmp[2]))
+      if(length(Mdv)==1){
         Ndv=Mdv
       }else{
-        Tmp1=Op(5,MS)
-        if((is.numeric(Tmp1))&&(length(Tmp1)==1)){
-          Ndv=Tmp1
-        }else{
-          Ndv=Mdv
-        }
+        Ndv=Mdv[2]
+        Mdv=Mdv[1]
       }
     }
   }
-  X1=Xrange[1]; X2=Xrange[2]
-  Y1=Yrange[1]; Y2=Yrange[2]
-  Dx=(X2-X1)/Mdv
-  Dy=(Y2-Y1)/Ndv
-  Xval=c()
-  Tmp=X1
-  for(ii in 1:(Mdv+1)){
-    Tmp=X1+(ii-1)*Dx
-    Xval=c(Xval,Tmp)
-   }
-  Yval=c()
-  Tmp=Y1
-  for(jj in 1:(Ndv+1)){
-    Tmp=Y1+(jj-1)*Dy
-    Yval=c(Yval,Tmp)
-  }
-  Zval=matrix(nrow=Ndv+1,ncol=Mdv+1)
-  I=1
-  for(y in Yval){
-    J=1
-    for(x in Xval){
-      Zval[I,J]=eval(parse(text=Fstr))
-      J=J+1
-    }
-    I=I+1
-  }
-  return(list(Zval,Xval,Yval))
-}
-
-Implicitplot<- function(...){
-  varargin=list(...)
-  Eps0=10^(-4)
-  Nargs=length(varargin)
-  Fstr=varargin[[1]]
-  if(is.list(Fstr)){
-    MS=Fstr
-    Tmp=Makevaltable(MS)
-    Zval=Tmp[[1]]; Xval=Tmp[[2]]; Yval=Tmp[[3]]
-  }else if(is.character(Fstr)){
-#    MS=list()
-#    for(I in 1:Nargs){
-#      MS=c(MS,varargin[I])
-#    }
-#    Tmp=Makevaltable(MS)
-    Tmp=Makevaltable(varargin) #18.02.24
-    Zval=Tmp[[1]]; Xval=Tmp[[2]]; Yval=Tmp[[3]]
+  Tmp=strsplit(Func,"=",fixed=TRUE)
+  Tmp=Tmp[[1]]
+  if(length(Tmp)==1){
+    Fn=Func
   }else{
-    Zval=varargin[[1]]
-    Xval=varargin[[2]]
-    Yval=varargin[[3]]
+    Fn=paste(Tmp[1],"-(",Tmp[2],")",sep="")
   }
-  Out=c()
-  for(J in Looprange(1,length(Yval)-1)){
-    for(I in Looprange(1,length(Xval)-1)){
-      a1=Xval[I]; b1=Yval[J]; c1=Zval[J,I]
-      a2=Xval[I+1]; b2=Yval[J]; c2=Zval[J,I+1]
-      a3=Xval[I+1]; b3=Yval[J+1]; c3=Zval[J+1,I+1]
-      a4=Xval[I];b4=Yval[J+1];c4=Zval[J+1,I]
-      PL=matrix(c(a1,b1,a2,b2,a3,b3,a4,b4,a1,b1),ncol=2,byrow=TRUE)
-      VL=c(c1,c2,c3,c4,c1)
-      QL=c()
-      for(K in 1:4){
-        if(abs(VL[K])<=Eps0){
-          QL=Appendrow(QL,PL[K,])
-        }else if(VL[K]>Eps0){
-          if(VL[K+1]< -Eps0){
-            Tmp=1/(VL[K]-VL[K+1])*(-VL[K+1]*PL[K,]+VL[K]*PL[K+1,])
-            QL=Appendrow(QL,Tmp)
-          }
+  Tmp=strsplit(Xrng,"=",fixed=TRUE)
+  Tmp=Tmp[[1]]
+  Varx=Tmp[1]
+  Rngx=eval(parse(text=Tmp[2]))
+  Tmp=strsplit(Yrng,"=",fixed=TRUE)
+  Tmp=Tmp[[1]]
+  Vary=Tmp[1]
+  Rngy=eval(parse(text=Tmp[2]))
+  Tmp=paste("Impfun<- function(",Varx,",",Vary,"){",Fn,"}",sep="")
+  eval(parse(text=Tmp))
+  dx=(Rngx[2]-Rngx[1])/Mdv
+  dy=(Rngy[2]-Rngy[1])/Ndv
+  out=list()  
+  for(jj in 1:Ndv){
+    yval1=Rngy[1]+(jj-1)*dy
+    yval2=Rngy[1]+jj*dy
+    xval1=Rngx[1]
+    eval11=Impfun(xval1,yval1)
+    eval12=Impfun(xval1,yval2)
+    for(ii in 1:Mdv){
+      xval2=Rngx[1]+ii*dx
+      eval21=Impfun(xval2,yval1)
+      eval22=Impfun(xval2,yval2)
+      pL=list(c(xval1,yval1));vL=c(eval11)
+      pL=c(pL,list(c(xval2,yval1)));vL=c(vL,eval21)
+      pL=c(pL,list(c(xval2,yval2)));vL=c(vL,eval22)
+      pL=c(pL,list(c(xval1,yval2)));vL=c(vL,eval12)
+      pL=c(pL,list(c(xval1,yval1)));vL=c(vL,eval11)
+      qL=c()
+      for(kk in 1:4){
+        if(abs(vL[kk])<=Eps){
+          qL=Appendrow(qL,pL[[kk]])
         }else{
-          if(VL[K+1]>Eps0){
-            Tmp=1/(-VL[K]+VL[K+1])*(VL[K+1]*PL[K,]-VL[K]*PL[K+1,])
-            QL=Appendrow(QL,Tmp)
+          if(vL[kk]>Eps){
+            if(vL[kk+1]< -Eps){
+              tmp=1/(vL[kk]-vL[kk+1])*
+                    (-vL[kk+1]*pL[[kk]]+vL[kk]*pL[[kk+1]])
+              qL=Appendrow(qL,tmp)
+			}
+          }else{
+            if(vL[kk+1]>Eps){
+              tmp=1/(-vL[kk]+vL[kk+1])*
+                    (vL[kk+1]*pL[[kk]]-vL[kk]*pL[[kk+1]])
+              qL=Appendrow(qL,tmp)
+			}
           }
         }
       }
-	  if(Length(QL)==2){
-        Out=Appendrow(Out,c(Inf,Inf))
-        Out=Appendrow(Out,QL)
+      xval1=xval2
+      eval11=eval21
+      eval12=eval22
+	  if(Length(qL)==2){
+        out=c(out,list(qL))
       }
     }
   }
-  Out=Out[2:nrow(Out),]
-  if(Length(Out)>0){
-    Out=Connectseg(Out)
-  }else{
-    Out=c()
+  if(length(out)>0){
+    out=Connectseg(out)
   }
-  return(Out)
+  if(length(out)==1){
+    out=out[[1]]
+  }
+  return(out)
 }
 
 #########################

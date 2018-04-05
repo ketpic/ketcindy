@@ -1,3 +1,7 @@
+//20180405
+//   Ketinit changed (order of changesettiing, Dircdy)
+//20180402
+//   Implicitplot, Connectseg added
 //20180329
 //   Ketinit changed  (changing of Dircdy)
 //   Changesetting added

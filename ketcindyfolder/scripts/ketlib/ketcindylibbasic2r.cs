@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(2018.03.30) loaded");
+println("ketcindybasic2(20180405) loaded");
 
 //help:start();
 
@@ -1960,9 +1960,18 @@ Tlistplot(Ag1,Ag2):=(
 Tlistplot(nm,ptL,options):=(
 //help:Tlistplot(["c0r0","c0r4"]);
 //help:Tlistplot("1",["c0r0","c0r4"]);
-  regional(tmp);
+//help:Tlistplot([options2="Msg=y"]);
+  regional(tmp,tmp1);
+  tmp1=divoptions(options);//180404from
+  tmp1=tmp1_5;
+  tmp1=apply(tmp1,Toupper(substring(#,0,1)));
+  if(contains(tmp1,"M"),
+    tmp1=options;
+  ,
+    tmp1=append(options,"Msg=n");
+  );//180404to
   tmp=apply(ptL,Tgrid(#)); // 15.06.03
-  Listplot(nm,tmp,append(options,"Msg=no"));
+  Listplot(nm,tmp,tmp1);
 );
 
 ChangeTablestyle(nameL,style):=(
@@ -2593,13 +2602,9 @@ WritetoRS(filename,shchoice):=(
   ,
     println(SCEOUTPUT,"");
   );
-  tmp=replace(Dirwork,"\","/"); //17.09.24
-  println(SCEOUTPUT,"setwd('"+tmp+"')"); //17.09.24
-//  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
-//    Libname=Libname+"2e";
-//  ); //  17.10.07removed
+//  tmp1=replace(Dirwork,"\","/");//180403(2lines removed)
+//  println(SCEOUTPUT,"setwd('"+tmp1+"')"); 
   tmp=replace(Libname,"\","/"); //17.09.24from
-//  println(SCEOUTPUT,"load('"+tmp+".Rdata')"); //17.10.11
   println(SCEOUTPUT,"source('"+tmp+".r')");//temporary
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
        //  17.10.07added
@@ -2677,9 +2682,10 @@ WritetoRS(filename,shchoice):=(
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"if(1==1){");
   println(SCEOUTPUT,"");
-  tmp=replace(Dirwork,"\","/"); //17.10.28(3lines)
-  tmp="Openfile('"+tmp+pathsep()+Fnametex+"','"+ULEN+"'";
-  tmp=tmp+",'Cdy="+loaddirectory+text(curkernel());
+//  tmp=replace(Dirwork,"\","/"); //180403from
+//  tmp="Openfile('"+tmp+pathsep()+Fnametex+"','"+ULEN+"'";
+  tmp="Openfile('"+Fnametex+"','"+ULEN+"'"; //180403to
+  tmp=tmp+",'Cdy="+text(curkernel()); //180404
   tmp=replace(tmp,"\","\\");
   println(SCEOUTPUT,tmp+"')");
   forall(COM2ndlist,
@@ -2703,7 +2709,7 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,"#quit()");
   );
   closefile(SCEOUTPUT);
-); //17.09.17until
+); //17.09.17to
 
 Extractdata(name):=Extractdata(1,name,[]);
 Extractdata(Arg1,Arg2):=(
@@ -3101,14 +3107,26 @@ Makebat(texmainfile,flow):=(
     setdirectory(drive+tmp1);
   );
   SCEOUTPUT = openfile(tmp2);
-  fname=Dirwork;
+  fname=replace(Dirwork,"/","\");
   tmp=indexof(fname,":");
   if(tmp>0,
     drive=substring(Dirwork,0,tmp);
     fname=substring(Dirwork,tmp,length(Dirwork));
     println(SCEOUTPUT,drive);
   );
-  println(SCEOUTPUT,"cd "+Dq+fname+Dq);// 15.07.16
+  tmp1=indexof(fname,"Users");//180405
+  tmp2=indexof(fname,Homehead);//180403from
+  if((tmp1>0)%(tmp2>0),
+    if(tmp1>0,
+      fname=substring(fname,tmp1+length("Users")-1,length(fname));
+    ,
+      fname=substring(fname,tmp2+length(Homehead)-1,length(fname));
+    );
+    tmp=Indexall(fname,"\");//180403from
+    fname=substring(fname,tmp_2,length(fname));
+    fname="%HOMEPATH%\"+fname;
+  );//180403to
+  println(SCEOUTPUT,"cd "+Dq+fname+Dq);// 150716
   flg=0;
   tmp=replace(PathT,"\","/");
   forall(reverse(1..length(PathT)),
@@ -3128,10 +3146,6 @@ Makebat(texmainfile,flow):=(
     tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r";
       // 17.09.14
     println(SCEOUTPUT,tmp);
-    if(isincludefull(Dirwork), //180401from
-      wait(100);
-      Convsjiswin(Dirwork,Fhead,"r"); 
-    ); //180401to
   );
   if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
     tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
@@ -3171,10 +3185,6 @@ Makebat(texmainfile,flow):=(
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"exit 0");
   closefile(SCEOUTPUT);
-  if(isincludefull(Dirwork), //180401from
-    wait(100);
-    Convsjiswin(Dirwork,"kc","bat"); 
-  ); //180401to
   if(indexof(Dirwork,":")==0,  // 14.01.15
     drive="C:";
   ,
@@ -4830,9 +4840,9 @@ Mkslidesummary(inputfile,outputfile,options):=(
    "Dt=Dt[setdiff(1:length(Dt),num)]",[],
    "Smain=c();Snew=c();Ssame=c()",[],
    "for(J in 1:length(Dt)){",[],
-   "  Tmp=length(grep('\\mainslide',Dt[J],fixed=TRUE))",[],
+   "  Tmp=length(grep('\\mainslide{',Dt[J],fixed=TRUE))",[],
    "  if(Tmp>0){Smain=c(Smain,1)}else{Smain=c(Smain,0)}",[],
-   "  Tmp=length(grep('\\newslide',Dt[J],fixed=TRUE))",[],
+   "  Tmp=length(grep('\\newslide{',Dt[J],fixed=TRUE))",[],
    "  if(Tmp>0){Snew=c(Snew,1)}else{Snew=c(Snew,0)}",[],
    "  Tmp=length(grep('\\sameslide',Dt[J],fixed=TRUE))",[],
    "  if(Tmp>0){Ssame=c(Ssame,1)}else{Ssame=c(Ssame,0)}",[],
@@ -4843,9 +4853,9 @@ Mkslidesummary(inputfile,outputfile,options):=(
    "  if(Ssame[J]==1){Nsame=c(Nsame,J)}",[],
    "}",[],
    "Out=Dt[1:Nnew[1]]",[],
-   "for(J in 2:length(Nnew)){",[],
-    "  Tmp=max(Nsame[Nsame<Nnew[J]])",[],
-    "  Tmp=max(c(Nsame[Tmp],Nnew[J-1]))+1",[],
+   "for(J in Looprange(2,length(Nnew))){",[],
+    "  Tmp=max(c(1,Nsame[Nsame<Nnew[J]]))",[],
+    "  Tmp=max(c(Tmp,Nnew[J-1]))+1",[],
     "  Out=c(Out,Dt[Tmp:Nnew[J]])",[],
    "}",[],
    "Tmp=max(c(Nsame[-1],Nnew[-1]))+1",[],

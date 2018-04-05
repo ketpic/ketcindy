@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(2018.03.27) loaded");
+println("ketcindyout(20180327) loaded");
 
 //help:start();
 

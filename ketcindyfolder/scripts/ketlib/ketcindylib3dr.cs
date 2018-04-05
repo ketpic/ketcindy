@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(2018.03.27) loaded");
+println("ketcindylib3d(20180327) loaded");
 
 //help:start();
 

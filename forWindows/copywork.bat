@@ -1,9 +1,9 @@
-REM 20180401
+REM 20180405
 echo off
 set xcp="\Windows\System32\xcopy"
 set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
 set change=\changesetting.txt
-set /P STR_INPUT="Path to that folder userhome(u) drive C(c) desktop(d) :"
+set /P STR_INPUT="Path to that folder userhome(u) drive C(c) :"
 if "%STR_INPUT%" == "u" (
   set dist=%HOMEPATH%\ketcindy
 )
@@ -12,9 +12,6 @@ if "%STR_INPUT%" == "c" (
 )
 if "%STR_INPUT%" == "C" (
   set dist=C:\ketcindy
-)
-if "%STR_INPUT%" == "d" (
-  set dist=%HOMEPATH%\Desktop\ketcindy
 )
 if exist "%dist%\." (
   echo Deleting "%dist%"

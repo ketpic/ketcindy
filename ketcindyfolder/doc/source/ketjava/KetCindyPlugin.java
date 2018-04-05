@@ -13,7 +13,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
 
     @CindyScript("ketjavaversion")
     public String ketjavaversion() {
-        return "Ketjava 20180401";
+        return "Ketjava 20180405";
     }
 
 	public String getName() {
@@ -247,10 +247,11 @@ public class KetCindyPlugin extends CindyScriptPlugin {
     }
     if(flg==0){
       if(iswindows()){
-        if((args.indexOf(" ")==-1)&&(args.indexOf("-")==-1)){ //180331from
+        if((args.indexOf(" ")==-1)&&(args.indexOf("-")==-1)
+                  &&(args.indexOf("　")==-1)){ //180405
           pb.command("cmd.exe","/c","start",args);
         }else{
-          pb.command("cmd.exe","/c","",args);//180331to
+          pb.command("cmd.exe","/c","","\""+args+"\"");//180331to
         }
       }
       else{

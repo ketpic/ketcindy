@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20180401
+#      20180403
 ketsrc=/Volumes/ketcindyfolder
 if [ ! -e $ketsrc ]; then
   ketsrc=~/Desktop/ketcindyfolder
@@ -63,7 +63,7 @@ else
 fi
 
 cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
-read -p 'Path of Cinderella d(efault)=/Applications/Cinderella2 : ' ans
+read -p 'Input path of Cinderella d(efault)=/Applications/Cinderella2 : ' ans
 if [ ${ans} != "d" ]; then
  cindyplug=${ans}.app/Contents/PlugIns
 fi
@@ -71,14 +71,14 @@ echo Cinderella Plugins=${cindyplug}
 cd ${ketcindyscripts}
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
 homehead=/Users
-read -p 'Head to user home d(efault)=/Users : ' ans
-echo $ans
-if [ ${ans} != "d" ]; then
-  homehead=$ans
-fi
+#read -p 'Head to user home d(efault)=/Users : ' ans
+#echo $ans
+#if [ ${ans} != "d" ]; then
+#  homehead=$ans
+#fi
 echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/dirhead.txt
-echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/dirhead.txt
 echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/dirhead.txt
+echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/dirhead.txt
 echo "setdirectory(Dirhead);"  >> ${cindyplug}/dirhead.txt
 echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/dirhead.txt
 echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/dirhead.txt

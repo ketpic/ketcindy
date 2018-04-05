@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.2.0(2018.03.29");
+println("KETCindy V.3.2.0(20180405");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(2018.03.17) loaded");
+println("ketcindylibbasic1(20180402) loaded");
 
 //help:start();
 
@@ -89,6 +89,7 @@ Ketinit(sy,rangex,rangey):=(
     Fhead=replace(Fhead,".cdy","");
     Slidename=Fhead; //17.10.24
   );//17.11.12
+  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
     tmp1=append(tmp1,length(Dircdy));
@@ -105,7 +106,7 @@ Ketinit(sy,rangex,rangey):=(
     if(substring(Dircdy,0,1)==pathsep(),
       Dircdy=substring(Dircdy,1,length(Dircdy));
     );
-    Changesetting(["C:",gethome(), gethome()+"\Desktop"]);
+    Changesetting([gethome(), gethome()+"\Desktop","C:"]); //180405
   ,
     Changesetting([gethome(),gethome(),gethome()+"/Desktop"]);
   );
@@ -3772,6 +3773,195 @@ Paramplot(name1,funstr,variable,options):=(
   );
 );
 
+Connectseg(Pdata):=(
+  regional(Eps,PlotL,vL,ctr,qd,ah,ao,flg,jj,
+      pp,qq,tmp,tmp1,tmp2);
+  Eps=10^(-4);
+  PlotL=[Pdata_1];
+  vL=2..(length(Pdata));
+  ctr=0;
+  while((length(vL)>0)&(ctr<1000),
+    ctr=ctr+1;
+	qd=PlotL_(length(PlotL));
+    ah=qd_1; ao=qd_(length(qd));
+    flg=0;
+    forall(1..(length(vL)),jj,
+      if(flg==0,
+        tmp1=Pdata_(vL_jj);
+        pp=tmp1_1; qq=tmp1_(length(tmp1));
+        if(Norm(pp-ao)<Eps,
+	      tmp=tmp1_(2..(length(tmp1)));
+           if(length(tmp)>0,
+            qd=concat(qd,tmp);
+          );
+          PlotL_(length(PlotL))=qd;
+          vL=remove(vL,[vL_jj]);
+          flg=1;
+        );
+      );
+      if(flg==0,
+        if(Norm(qq-ao)<Eps,
+          tmp=tmp1_(1..(length(tmp1)-1));
+          tmp=reverse(tmp);
+          qd=concat(qd,tmp);
+          PlotL_(length(PlotL))=qd;
+          vL=remove(vL,[vL_jj]);
+          flg=1;
+        );
+      );
+      if(flg==0,
+        if(Norm(pp-ah)<Eps,
+          tmp=tmp1_(2..(length(tmp1)));
+          qd=concat(tmp,qd);
+          PlotL_(length(PlotL))=qd;
+          vL=remove(vL,[vL_jj]);
+         flg=1;
+        );
+      );
+      if(flg==0,
+        if(Norm(qq-ah)<Eps,
+          tmp=tmp1_(1..(length(tmp1)-1));
+          tmp=reverse(tmp);
+          qd=concat(tmp,qd);
+          PlotL_(length(PlotL))=qd;
+          vL=remove(vL,[vL_jj]);
+          flg=1;
+        );
+      );
+    );
+    if(flg==0,
+      PlotL=concat(PlotL,Pdata_(vL_1));
+      vL=remove(vL,[vL_1]);
+    );
+  );
+  PlotL;
+);
+
+Implicitplot(name1,func,xrng,yrng):=Implicitplot(name1,func,xrng,yrng,[]);
+Implicitplot(name1,func,xrng,yrng,options):=(
+//help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
+//help:Implicitplot(options=["Num=[50,50]"]);
+  regional(name,Fn,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
+      Eps,Ltype,Noflg,eqL,opsr,opcindy,dx,dy,out,jj,ii,kk,
+      yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
+  name="imp"+name1;
+  Eps=10^(-4);
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  eqL=tmp_5;
+  opstr=tmp_(length(tmp)-1);
+  opcindy=tmp_(length(tmp));
+  Mdv=50;Ndv=50;
+  forall(eqL,
+    tmp=indexof(#,"=");
+    tmp1=Toupper(substring(#,0,tmp-1));
+    tmp2=substring(#,tmp,length(#));
+    opstr=opstr+",'"+#+"'";
+    if(substring(#,0,1)=="N",
+      Mdv=parse(tmp2);
+      if(!islist(Mdv),
+        Ndv=Mdv;
+      ,
+        Ndv=Mdv_2;
+        Mdv=Mdv_1;
+      );
+    );
+  );
+  tmp=indexof(func,"=");
+  if(tmp==0,
+    Fn=func;
+  ,
+    tmp1=substring(func,0,tmp-1);
+    tmp2=substring(func,tmp,length(func));
+    Fn=tmp1+"-("+tmp2+")";
+  );
+  tmp=indexof(xrng,"=");
+  varx=substring(xrng,0,tmp-1);
+  rngx=parse(substring(xrng,tmp,length(xrng)));
+  tmp=indexof(yrng,"=");
+  vary=substring(yrng,0,tmp-1);
+  rngy=parse(substring(yrng,tmp,length(yrng)));
+  tmp="Impfun("+varx+","+vary+"):="+Fn;
+  parse(tmp);
+  dx=(rngx_2-rngx_1)/Mdv;
+  dy=(rngy_2-rngy_1)/Ndv;
+  out=[];  
+  forall(1..Ndv,jj,
+    yval1=rngy_1+(jj-1)*dy;
+    yval2=rngy_1+jj*dy;
+    xval1=rngx_1;
+    eval11=Impfun(xval1,yval1);
+    eval12=Impfun(xval1,yval2);
+    forall(1..Mdv,ii,
+      xval2=rngx_1+ii*dx;
+      eval21=Impfun(xval2,yval1);
+      eval22=Impfun(xval2,yval2);
+      pL=[[xval1,yval1]];vL=[eval11];
+      pL=append(pL,[xval2,yval1]);vL=append(vL,eval21);
+      pL=append(pL,[xval2,yval2]);vL=append(vL,eval22);
+      pL=append(pL,[xval1,yval2]);vL=append(vL,eval12);
+      pL=append(pL,[xval1,yval1]);vL=append(vL,eval11);
+      qL=[];
+      forall(1..4,kk,
+        if(abs(vL_kk)<=Eps,
+          qL=append(qL,pL_kk);
+        ,
+          if(vL_kk>Eps,
+            if(vL_(kk+1)< -Eps,
+              tmp=1/(vL_kk-vL_(kk+1))*
+                    (-vL_(kk+1)*pL_kk+vL_kk*pL_(kk+1));
+              qL=append(qL,tmp);
+            );
+          ,
+            if(vL_(kk+1)>Eps,
+              tmp=1/(-vL_kk+vL_(kk+1))*
+                    (vL_(kk+1)*pL_kk-vL_kk*pL_(kk+1));
+              qL=append(qL,tmp);
+            );
+          );
+        );
+      );
+      xval1=xval2;
+      eval11=eval21;
+      eval12=eval22;
+	  if(length(qL)==2,
+        out=append(out,qL);
+      );
+    );
+  );
+  if(length(out)>0,
+    out=Connectseg(out);
+  );
+  if(length(out)==1,
+    out=out_1;
+  );
+  if(Noflg<3,
+    println("generate Implicitplotdata "+name);
+    if(MeasureDepth(out)==1,
+      tmp1=apply(out,Pcrd(#));
+    ,
+      tmp1=[];
+      forall(out,tmp2,
+        tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
+      );
+    );
+    tmp=name+"="+textformat(tmp1,5);
+    parse(tmp);
+    tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")";
+    GLIST=append(GLIST,tmp);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+  );
+  out;
+);
+
 Circledata(cenrad):=Circledata(cenrad,[]);
 Circledata(para1,para2):=(
 //help:Circledata([A,B],["Rng=[0,pi/2]"]);
@@ -4491,6 +4681,7 @@ Arrowdata(Arg1,Arg2):=(
 );
 Arrowdata(Arg1,Arg2,options):=(
 //help:Arrowdata([A,B],[2,10]);
+//help:Arrowdata("1",[p1,p2]);
   regional(Retflg,nm,ptlist,name,opstr,opcindy,realL,strL,size,
       flg,Ltype,Noflg,lineflg,tmp,tmp1,tmp2,pA,pB,segpos);
   Retflg=0;

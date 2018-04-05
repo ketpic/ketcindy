@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20180401
+#      20180405
 ketfolder=/Volumes/ketcindyfolder
 if [ ! -e $ketfolder ]; then
   ketfolder=~/Desktop/ketcindyfolder
@@ -7,12 +7,9 @@ fi
 ketsrc=${ketfolder}/work
 echo ${ketsrc} will be used
 changesetting=/changesetting.txt
-read -p 'Path of working folder : userhome(u) desktop(d) :' ans
+read -p 'Path of working folder : userhome(u) :' ans
 if [ ${ans} = "u" ]; then
   dist=~/ketcindy
-fi
-if [ ${ans} = "d" ]; then
-  dist=~/Desktop/ketcindy
 fi
 cp -r -p ${ketsrc}/  ${dist}/
 if [ $? -gt 0 ]; then

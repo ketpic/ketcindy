@@ -26,7 +26,6 @@
 //help:Findlength*(曲線の長さ);
 //help:Com2nd*(TeXの書き出しコマンドを入れる);
 //help:Texcom*(TeXのコマンドを直接記述);
-//help:SetEnglish*(Scilabのメッセージを英語にする);
 //help:Setunitlen*(単位長を指定);
 //help:Setmarklen*(微小単位長を指定);
 //help:Setorigin*(原点の位置を指定);
@@ -107,8 +106,8 @@
 //help:PutcoL*(表の列に文字を書き入れる));
 //help:PutcoLexpr*(表の列に数式を書き入れる));
 //help:Setwindow*(描画領域を指定);
-//help:Defvar*(変数をScilabに渡す);
-//help:Deffun*(関数をScilabに渡す);
+//help:Defvar*(変数をRに渡す);
+//help:Deffun*(関数をRに渡す);
 //help:Extractdata*(読み込んだデータに属性を与える);
 //help:ReadOutData*(データを読み込む);
 //help:WriteOutData*(データを書き出す);

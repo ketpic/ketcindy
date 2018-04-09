@@ -5,7 +5,7 @@
 set -e
 
 if [ -d texmf ] ; then
-  echo "directory texmf already present, not exporting to it!\n" >&2
+  echo "directory texmf already present, not exporting to it!" >&2
   exit 1
 fi
 
@@ -53,6 +53,9 @@ rm ketcindy/ketcindyfolder/copywork.sh
 
 # now the ketcindyfolder dir should be empty
 rmdir ketcindy/ketcindyfolder
+
+# use our TeX Live dirhead
+mv ketcindy/scripts/dirhead.txt scripts/ketcindy/
 
 # the rest should be files that can be removed:
 rm ketcindy/scripts/update-permissions.sh

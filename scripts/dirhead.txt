@@ -1,0 +1,6 @@
+Dirhead=loaddirectory;
+Dirwork=gethome()+"ketcindy";
+setdirectory(Dirhead);
+import("setketcindy.txt");
+import("ketoutset.txt");
+setdirectory(Dirwork);

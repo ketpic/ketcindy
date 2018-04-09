@@ -47,10 +47,6 @@ for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt
 done
 rmdir ketcindy/ketcindyfolder/work
 
-# remove more stuff
-rm ketcindy/ketcindyfolder/copyfilessetcindy.sh
-rm ketcindy/ketcindyfolder/copywork.sh
-
 # now the ketcindyfolder dir should be empty
 rmdir ketcindy/ketcindyfolder
 

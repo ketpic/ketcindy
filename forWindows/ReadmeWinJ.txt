@@ -1,4 +1,4 @@
-KETCindyのインストール（Windows）　　　修正日：2018.01.06
+KETCindyのインストール（Windows）　　　修正日：2018.04.04
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -29,12 +29,12 @@ KETCindyのインストール（Windows）　　　修正日：2018.01.06
 　　　　　iii) texmf-dist/doc/support/ketcindy　各種マニュアルとソースファイル
 　　　・kettexnormal.exeをデスクトップで解凍し，copykettex.batを右クリック
 　　　　　「管理者として実行」を選ぶ．
+　　　　　注）copykettexが動かない場合，kettexフォルダを直接Cの直下に入れる．
 　　　　　注）多少の時間がかかる．
 
 　（２）既にインストールしている他のTeXを用いる場合
-　　　・３)(１)を実行すれば，必要なファイルがコピーされる．
-　　　・TeXLive以外では，TeXのパスとtexbinのパスを入力する．
-　　　・「ketpic stylesをコピーする」を選ぶ．
+　　　・３)(１)（２）を実行すれば，必要なファイルがコピーされる．
+　　　　　注）TeXのパスを入力する必要がある．
 
 ２） Cinderella, R, Sumatra, Maximaのインストール（コピー）
 
@@ -51,8 +51,6 @@ KETCindyのインストール（Windows）　　　修正日：2018.01.06
 　　　　　　（管理者としてログインしてもこれを選択する）
 　　　　・TeXのパス　kettexの場合は１を選択する．
 　　　　・scripts,style,docの内容がTeXの中にコピーされる
-　　　　・ユーザホームのヘッド　ユーザー名の前のパス
-　　　　　　注）通常は単に d でよい．
 　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
 　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとdirhead.txtがコピーされる．

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180405) loaded");
+println("ketcindybasic2(20180409) loaded");
 
 //help:start();
 
@@ -2602,8 +2602,21 @@ WritetoRS(filename,shchoice):=(
   ,
     println(SCEOUTPUT,"");
   );
-//  tmp1=replace(Dirwork,"\","/");//180403(2lines removed)
-//  println(SCEOUTPUT,"setwd('"+tmp1+"')"); 
+  tmp1=replace(Dirwork,"\","/");
+  if((iswindows())&(indexof(tmp1,"Users")>0),
+    tmp=Indexall(tmp1,"/");
+    tmp2=substring(tmp1,tmp_3-1,length(tmp1));
+    tmp1=substring(tmp1,0,tmp_3-1);
+    println(SCEOUTPUT,"Drv=shell('echo %HOMEDRIVE%',intern=TRUE)");
+    println(SCEOUTPUT,"Drv=Drv[length(Drv)]");
+    println(SCEOUTPUT,"Hpath=shell('echo %HOMEPATH%',intern=TRUE)");
+    println(SCEOUTPUT,"Hpath=Hpath[length(Hpath)]");
+    println(SCEOUTPUT,"Rest="+Dqq(tmp2));
+    println(SCEOUTPUT,"Path=paste(Drv,Hpath,Rest,sep='')");
+    println(SCEOUTPUT,"setwd(Path)"); 
+  ,
+    println(SCEOUTPUT,"setwd('"+tmp1+"')"); 
+  );//180409to
   tmp=replace(Libname,"\","/"); //17.09.24from
   println(SCEOUTPUT,"source('"+tmp+".r')");//temporary
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
@@ -2658,7 +2671,7 @@ WritetoRS(filename,shchoice):=(
   tmp=text(Pnamelist);
   tmp=replace(tmp,"[","list(");
   Pnamelist=replace(tmp,"]",")");
-  println(SCEOUTPUT,"PtL="+Pnamelist+";");
+  println(SCEOUTPUT,"PtL="+Pnamelist);
   tmp=select(GCLIST,#_2==-1);
   GrL=apply(tmp,#_1);
   tmp=text(GrL);
@@ -2682,10 +2695,14 @@ WritetoRS(filename,shchoice):=(
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"if(1==1){");
   println(SCEOUTPUT,"");
-//  tmp=replace(Dirwork,"\","/"); //180403from
-//  tmp="Openfile('"+tmp+pathsep()+Fnametex+"','"+ULEN+"'";
-  tmp="Openfile('"+Fnametex+"','"+ULEN+"'"; //180403to
-  tmp=tmp+",'Cdy="+text(curkernel()); //180404
+  tmp1=replace(Dirwork,"\","/"); //180408to
+  if((iswindows())&(indexof(tmp1,"Users")>0),
+    println(SCEOUTPUT,"Path=paste(Path,"+Dqq("/"+Fnametex)+",sep='')");
+    tmp="Openfile(Path,'"+ULEN+"'";
+  ,
+    tmp="Openfile('"+tmp1+"/"+Fnametex+"','"+ULEN+"'";
+  );
+  tmp=tmp+",'Cdy="+Cindyname()+".cdy"; //180404
   tmp=replace(tmp,"\","\\");
   println(SCEOUTPUT,tmp+"')");
   forall(COM2ndlist,
@@ -3114,8 +3131,16 @@ Makebat(texmainfile,flow):=(
     fname=substring(Dirwork,tmp,length(Dirwork));
     println(SCEOUTPUT,drive);
   );
-  tmp1=indexof(fname,"Users");//180405
-  tmp2=indexof(fname,Homehead);//180403from
+  tmp=Dirwork;//180408form
+  if(iswindows(),
+    if((isincludefull(Dirwork))&(isexists(Dirwork,"sjis.txt")),
+      import("sjis.txt");
+    );
+  );
+//  tmp=replace(tmp,"\","/"); //180408
+//  println(SCEOUTPUT,"cd "+Dq+tmp+Dq); //180408
+  tmp1=indexof(fname,"Users");//180409from
+  tmp2=indexof(fname,Homehead);
   if((tmp1>0)%(tmp2>0),
     if(tmp1>0,
       fname=substring(fname,tmp1+length("Users")-1,length(fname));
@@ -3126,7 +3151,7 @@ Makebat(texmainfile,flow):=(
     fname=substring(fname,tmp_2,length(fname));
     fname="%HOMEPATH%\"+fname;
   );//180403to
-  println(SCEOUTPUT,"cd "+Dq+fname+Dq);// 150716
+  println(SCEOUTPUT,"cd "+Dq+fname+Dq);//180409to
   flg=0;
   tmp=replace(PathT,"\","/");
   forall(reverse(1..length(PathT)),

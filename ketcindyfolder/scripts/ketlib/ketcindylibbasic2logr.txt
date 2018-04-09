@@ -1,3 +1,8 @@
+//20180409
+//    WritetoRS,Makebat changed ( "shell" used )
+//20180408
+//    WritetoRS debugged ( setwd )
+//    WriteoRS,Makebat changed ( use "sjis.txt")
 //20180405
 //    Makebat debugged
 //20180404

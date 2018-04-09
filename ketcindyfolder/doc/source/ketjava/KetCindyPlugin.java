@@ -13,7 +13,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
 
     @CindyScript("ketjavaversion")
     public String ketjavaversion() {
-        return "Ketjava 20180405";
+        return "Ketjava 20180408";
     }
 
 	public String getName() {
@@ -109,46 +109,17 @@ public class KetCindyPlugin extends CindyScriptPlugin {
       return "Improper call";
     }
 
-	@CindyScript("nkfwin") //180401
-    public static int nkfwin(String dir,String fname,String ext) throws IOException {
-      String src=dir+File.separator+fname+"."+ext;
-      String out=dir+File.separator+fname+".out";
+	@CindyScript("nkfwin") //180408
+    public static String nkfwin(String path,String dir,String fn1,String fn2)
+              throws IOException {
+      String src="\""+dir+"\\"+fn1+"\"";
+      String out="\""+dir+"\\"+fn2+"\"";
       ProcessBuilder pb = new ProcessBuilder();
-      pb.command("cmd","/c",File.separator+"nkf32","<"+src,">"+out);
+      pb.command("cmd","/c","\""+path+"\\nkf32\"","-s","<"+src,">"+out);
       Process process = pb.start();
-      return 0;
+      return out+" generated";
   }
 
-  	@CindyScript("nkfcpdel") //180401
-    public static int nkfcpdel(String dir,String fname,String ext) throws IOException {
-      String src=dir+File.separator+fname+"."+ext;
-      String out=dir+File.separator+fname+".out";
-      ProcessBuilder pb = new ProcessBuilder();
-      pb.command("cmd","/c","copy","/Y",out,src,"|","del",out);
-      Process process = pb.start();
-      return 0;
-  }
-  
-	@CindyScript("nkfdelout") //180401
-    public static int nkfdelout(String dir,String fname) throws IOException {
-      String out=dir+File.separator+fname+".out";
-      ProcessBuilder pb = new ProcessBuilder();
-      pb.command("cmd","/c","del",out);
-      Process process = pb.start();
-      return 0;
-  }
-  
-  	@CindyScript("nkfren") //180401
-    public static int nkfren(String dir,String fname,String ext) throws IOException {
-      String src=fname+"."+ext;
-      String out=dir+File.separator+fname+".out";
-      ProcessBuilder pb = new ProcessBuilder();
-      pb.command("cmd","/c","ren",out,src);
-      Process process = pb.start();
-//      int ret = process.waitFor();
-      return 0;
-  }
- 
     @CindyScript("kc")
     public static String kc(String args,String args2,String args3) throws IOException {
     ProcessBuilder pb = new ProcessBuilder();

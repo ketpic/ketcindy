@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.2.0(20180405");
+println("KETCindy V.3.2.0(20180409)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(20180402) loaded");
+println("ketcindylibbasic1(20180408) loaded");
 
 //help:start();
 
@@ -108,7 +108,7 @@ Ketinit(sy,rangex,rangey):=(
     );
     Changesetting([gethome(), gethome()+"\Desktop","C:"]); //180405
   ,
-    Changesetting([gethome(),gethome(),gethome()+"/Desktop"]);
+    Changesetting([gethome(),gethome()+"/Desktop"]);
   );
   Changework(Dircdy+pathsep()+"fig"); //180329to
   Fnametex=Fhead+".tex";
@@ -593,6 +593,13 @@ Changework(dirorg):=( //16.10.21
         closefile(SCEOUTPUT);
         println(setexec(Dirwork,"/kc.sh"));
       );
+    ,
+      if(isincludefull(Dirwork),//180408from
+        SCEOUTPUT = openfile("utf8.txt");
+        println(SCEOUTPUT,"tmp="+Dqq(Dirwork)+";");
+        closefile(SCEOUTPUT);
+        nkfwin("C:",Dirwork,"utf8.txt","sjis.txt");//180408to
+      );
     );
   );
 );
@@ -1016,9 +1023,11 @@ Divoptions(options):=(
         Ltype=#;
         flg=1;
       );
-    if(flg==0,
-        strL=append(strL,#);
-        opstr=opstr+","+Dq+#+Dq;
+      if(flg==0,
+        if(length(#)>0, //180408
+          strL=append(strL,#);
+          opstr=opstr+","+Dq+#+Dq;
+        );
       );
     );
   );
@@ -1450,7 +1459,6 @@ Intersectseg(seg1org,seg2org,Eps1):=(
     out=[-1];
   ,
     tmp=Intersectline(p1,q1-p1,p2,q2-p2);
-println([1475,textformat(tmp,6)]);
     if(islist(tmp_1),
       pt=tmp_1; t=tmp_2; s=tmp_3;
       if((t*(t-1)<Eps)&(s*(s-1)<Eps),
@@ -1950,9 +1958,9 @@ Derivative(fun,var,value,options):=(
     eps=10^(-6);
     x1=max(XMIN,value-eps);
     x2=min(XMAX,value+eps);
-    tmp=Assign(fun,[var,format(x1,6)]);
+    tmp=Assign(fun,[var,"("+format(x1,6)+")"]);//180408
     y1=parse(tmp);
-    tmp=Assign(fun,[var,format(x2,6)]);
+    tmp=Assign(fun,[var,"("+format(x2,6)+")"]);//180408
     y2=parse(tmp);
     (y2-y1)/(x2-x1);
   );
@@ -4435,13 +4443,13 @@ Hyperbolaplot(nm,ptlist,rng,optionsorg):=(
   tmp="["+format(pM_1,5)+"-"+format(a,5)+"*(exp(t)+exp(-t))/2,";
   tmp=tmp+format(pM_2,5)+"+"+format(b,5)+"*(exp(t)-exp(-t))/2]";
   Paramplot(nm+"hyp2",tmp,"t="+rng,append(options,"nodisp"));
-  tmp=["gp"+nm+"hyp1","gp"+nm+"hyp2"];
-  Rotatedata(nm+"hyp",tmp,angle,append(options,pA));
+  Rotatedata(nm+"hyp1","gp"+nm+"hyp1",angle,append(options,pA));//180408
+  Rotatedata(nm+"hyp2","gp"+nm+"hyp2",angle,append(options,pA));//180408
   if(length(opasy)>0,
     Lineplot(nm+"asy1",[pM+[a,b],pM+[-a,-b]],["nodisp"]);
     Lineplot(nm+"asy2",[pM+[-a,b],pM+[a,-b]],["nodisp"]);
-    tmp=["ln"+nm+"asy1","ln"+nm+"asy2"];
-    Rotatedata(nm+"asy",tmp,angle,append(opasy,pA));
+    Rotatedata(nm+"asy1","ln"+nm+"asy1",angle,append(opasy,pA));//180408
+    Rotatedata(nm+"asy2","ln"+nm+"asy2",angle,append(opasy,pA));//180408
   );
 );
 

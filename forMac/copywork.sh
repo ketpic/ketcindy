@@ -1,30 +1,15 @@
 #!/bin/sh
-#      2017.12.08
+#      20180405
 ketfolder=/Volumes/ketcindyfolder
 if [ ! -e $ketfolder ]; then
   ketfolder=~/Desktop/ketcindyfolder
 fi
 ketsrc=${ketfolder}/work
 echo ${ketsrc} will be used
-ketcindyhead=~/ketcidyhead.txt
-folder=ketcindy
-read -p 'Name of working folder d(efault)=ketcindy :' ans
-if [ ${ans} != "d" ]; then
-  folder=${ans}
-fi
-read -p 'Path of working folder : userhome(u) desktop(d) other(o) ' ans
+changesetting=/changesetting.txt
+read -p 'Path of working folder : userhome(u) :' ans
 if [ ${ans} = "u" ]; then
-  dist=~/${folder}
-  echo "Dirfile=gethome()+\"/${folder}\";" > ${ketcindyhead}
-fi
-if [ ${ans} = "d" ]; then
-  dist=~/Desktop/${folder}
-  echo "Dirfile=gethome()+\"/Desktop/${folder}\";"  > ${ketcindyhead}
-fi
-if [ ${ans} = "o" ]; then 
-  read -p 'pathname in user home (ex. work for ~/work):' ans
-  dist=~/${ans}/${folder}
-  echo "Dirfile=gethome()+\"/${ans}/${folder}\";" > ${ketcindyhead}
+  dist=~/ketcindy
 fi
 cp -r -p ${ketsrc}/  ${dist}/
 if [ $? -gt 0 ]; then
@@ -52,12 +37,13 @@ fi
 if [ ${tex} = "lu" ]; then
   tex="lualatex"
 fi
-echo  "PathT=PathThead+\"${tex}\";" >>${ketcindyhead}
+echo  // Re-setting PathT,PathR,Pathpdf,PathM,PathAd >${dist}${changesetting}
+echo  "PathT=PathThead+\"${tex}\";" >>${dist}${changesetting}
 read -p 'Execute kc.sh with sh(s),open(o):' ans
 if [ ${ans} = "o" ]; then
-  echo  "Mackc=\"open\";" >>${ketcindyhead}
+  echo  "Mackc=\"open\";" >>${dist}${changesetting}
 else
-  echo  "Mackc=\"sh\";" >>${ketcindyhead}
+  echo  "Mackc=\"sh\";" >>${dist}${changesetting}
 fi
 read -p 'Do you copy ketcindy manual? (y,n)' ans
 if [ ${ans} = "y" ]; then

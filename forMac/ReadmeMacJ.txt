@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
+KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -19,10 +19,10 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
 　　　　　　ketcindyfolder.dmg
 　　　　　　kettexnormal.dmg（kettexを用いる場合）
 　　　　それぞれの仮想ディスクができる．
-　（４）ketcindyfolderのcopyscripts.shを選択，「情報を見る」を開いて，
+　（４）ketcindyfolderのcopyfilessetcindy.shを選択，「情報を見る」を開いて，
 　　　　　「このアプリケーションで開く」を「ターミナル」に変更
 　　　　　　　その他＞すべてのアプリケーション＞ユーティリティ＞ターミナル＞追加
-　　　　　「すべてを変更する」をクリック（管理者権限がある場合）
+　　　　　「すべてを変更する」をクリック
 　　注１）ターミナルは以下の場所にある．
 　　　　　　Macintosh HD>アプリケーション>ユーティリティ>ターミナル
 　　注２）Sierra以降の場合
@@ -65,7 +65,8 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
 ３）KeTCindyのインストール
 
 　（ 1）copyfilessetcindy.shをダブルクリック（管理者権限必要）
-　　　　・TeXのパス　kettexの場合は１を選択する．
+　　　　・TeXのパス
+　　　　　　　kettexの場合は１，kettex.appの場合は２を選択する．
 　　　　・scriptsの内容が選択したTeXの中にコピーされる
 　　　　・ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
 　　　　・ユーザホームのヘッド　ユーザー名の前のパス
@@ -98,9 +99,9 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
 
 ４）KeTCindyのテストラン
 
-　（１）作業ディレクトリの中のtemplate.cdyを選び，「情報を見る」を開く．
+　（１）作業ディレクトリの中のtemplate1basic.cdyを選び，「情報を見る」を開く．
 　　　　　・アプリケーションが所定のCinderella2になっていることを確かめる．
-　　　　　・「情報」を閉じて，template.cdyダブルクリックする．
+　　　　　・「情報」を閉じて，template1basic.cdyをダブルクリックする．
 　　　　　・画面に白い枠が出れば，ライブラリは読み込まれている．
 　　　　　・そうでないとき
 　　　　　　・トップメニューから，次を選択
@@ -127,7 +128,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
 　　　　　　　　TeXworks > 環境設定 > タイプセット
 　　　　　・上の欄（パス）に以下を追加
                             /Applications/kettex/texlive/bin/x86_64-darwin
-　　　　　　　注）上の１行目を上の欄の先頭になるように移動する．
+　　　　　　　注）上の行を上の欄の先頭になるように移動する．
  　　　　　・下の欄の横にある + をクリック
 　　　　　　　　名前：uplatex(ptex2pdf)またはplatex(ptex2pdf)
 　　　　　　　　プログラム : ptex2pdf
@@ -151,7 +152,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2017.12.09
 
 ６）その他のインストール
 
-・Meshlab など，他のソフトのインストーラはRelatedsoftwares.dmgにある．
+・Meshlab など，他のソフトのインストーラはRelatedsoftwares.zipにある．
 ・曲面描画を高速化するには，gccが必要である．
 　　Xcodeがインストールされていなければ，インストールする．
 　　注）ターミナルで次を実行すれば，gccだけがインストールされる．

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(2018.01.05) loaded");
+println("ketcindylib3d(20180327) loaded");
 
 //help:start();
 
@@ -79,12 +79,15 @@ Ketinit3d(subflg,position):=(
   ErrFlg=0;
 );
 
-Start3d():=Start3d([]); //16.11.12
-Start3d(ptexception):=( //16.11.12
+Start3d():=Start3d([]); 
+Start3d(ptexception):=(
 //help:Start3d();
 //help:Start3d(execptionptlist);
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+  ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
+  FuncListC=[];
+  CommandListC=[];
   GCLIST=[];
   GLIST=[];
   FUNLIST=[];
@@ -97,7 +100,7 @@ Start3d(ptexception):=( //16.11.12
   ErrFlag=0;
   OBJCMD=[]; // 16.11.29from
   OCNAME=Fhead;
-  OCOPTION=["m","v"];// 16.11.29upto
+  OCOPTION=["m","v"];// 16.11.29until
   ArrowlineNumber=1;  // 16.01.31
   ArrowheadNumber=1;
   BezierNumber=1; //16.01.31
@@ -124,7 +127,7 @@ Start3d(ptexception):=( //16.11.12
     +format((FI.x-xPos)*40,5)+")";
   GLIST=append(GLIST,tmp);
   THETA=(TH.x-xPos)*20*pi/180;
-  PHI=(FI.x-xPos)*40*pi/180; // 16.06.20upto
+  PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until
   if(isselected(TH) % isselected(FI), // 17.05.18from
     if(length(Ch)>0,
       ChNum=Ch_(length(Ch));
@@ -133,7 +136,7 @@ Start3d(ptexception):=( //16.11.12
       ChNum=1;
     );
     Ch=[0];
-  );// 17.05.18upto
+  );// 17.05.18until
   if(length(VLIST)==0, // 16.06.20
     tmp=remove(allpoints(),[NE,SW,TH,FI,O,X,Y,Z]);//17.06.02
     tmp4=remove(tmp,ptexception);
@@ -145,7 +148,7 @@ Start3d(ptexception):=( //16.11.12
         pt3=Xyzcoord(pt.x,pt.y,tmp);
         Defvar(tmp1+"3d",pt3);
         pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28upto
+        Defvar(tmp1+"2d",pt2);  // 16.05.28until
       );
     );
   ,
@@ -199,7 +202,7 @@ Start3d(ptexception):=( //16.11.12
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
-  ThinDense=0.1; //17.07.01upto
+  ThinDense=0.1; //17.07.01until
    Ptseg3data(ptexception);  //16.08.23
 );
 
@@ -231,7 +234,7 @@ Setangle(theta,phi):=( //16.12.24
         pt3=Xyzcoord(pt.x,pt.y,tmp);
         Defvar(tmp1+"3d",pt3);
         pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28upto
+        Defvar(tmp1+"2d",pt2);  // 16.05.28until
       );
     );
   ,
@@ -554,7 +557,7 @@ Spaceline(Arg1,Arg2):=(
     name="-"+replace(tmp,",","");
     Spaceline(name,Arg1,Arg2);
   );
-); // 16.02.22 upto
+); // 16.02.22 until
 Spaceline(nm,ptlistorg,optionorg):=(
 //help:Spaceline("1",[[2,5,1],[4,2,3]]);
 //help:Spaceline([A,B]);
@@ -609,7 +612,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
       );
     );
     tmp=substring(tmp,0,length(tmp)-1)+"]";
-    tmp=name3+"=Spaceline("+tmp+")"; //17.07.13upto
+    tmp=name3+"=Spaceline("+tmp+")"; //17.07.13until
 //    tmp=name3+"=Spaceline("+textformat(ptlist,5)+")"; //17.05.24
     GLIST=append(GLIST,tmp);
     tmp=name2+"=Projpara("+name3+")";
@@ -962,7 +965,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
         );
       );
     );
-  ); // 16.08.14upto
+  ); // 16.08.14until
   tmp1=indexof(Xrange,"=");
   tmp=parse(substring(Xrange,tmp1,length(Xrange)));
   Px=[tmp_1,0,0]; Qx=[tmp_2,0,0];
@@ -1008,7 +1011,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
       if(length(Origin)>0,
         Letter([Parapt([0,0,0]),Origin,"O"]);
       );
-    );  // 16.08.14upto
+    );  // 16.08.14until
     if(SUBSCR==1, //  15.02.11
       Subgraph(name3,opcindy);
     );
@@ -1722,11 +1725,11 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
     ptslist=Arg1;
     fixstr=Arg2;
   ); 
-  if(islist(fixstr),fixstr=fixstr_1);// 16.03.02 upto
+  if(islist(fixstr),fixstr=fixstr_1);// 16.03.02 until
   nn=length(ptslist)/2;
   forall(1..nn,kk, // 16.08.19from
     tmp1=ptslist_(2*kk-1);
-    pt3=ptslist_(2*kk); // 16.08.19upto
+    pt3=ptslist_(2*kk); // 16.08.19until
     VLIST=select(VLIST,#_1!=tmp1+"3d");
     tmp2=parse(tmp1);
     if(ispoint(tmp2), // 16.05.26from
@@ -1740,7 +1743,7 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
       Defvar(tmp1+"3d",tmp);
     ,
       Defvar(tmp1+"3d",pt3);
-    );   // 16.05.26upto
+    );   // 16.05.26until
     Defvar(tmp1+"fix",0);
     pt=Parapt(pt3);
     Putpoint(tmp1,pt,parse(tmp1+".xy"));
@@ -1898,7 +1901,7 @@ Putaxes3d(size):=(
   Putpoint3d(["Y",[0,sL_2,0]],"fix");
   Putpoint3d(["Z",[0,0,sL_3]],"fix"); 
 //  Fixpoint3d(["O",[0,0,0]]);
-//  Fixpoint3d(["X",[sL_1,0,0],"Y",[0,sL_2,0],"Z",[0,0,sL_3]]);//17.06.02fupto
+//  Fixpoint3d(["X",[sL_1,0,0],"Y",[0,sL_2,0],"Z",[0,0,sL_3]]);//17.06.02funtil
 );
 
 IntersectsgpL(name,sgstr,pLstr):=
@@ -2103,7 +2106,7 @@ Putbezier3data(name,pt3Lorg,options):=( // 17.10.08 greatly changed
     ,
       tmp1=name+numstr+"p";
       tmp2=(pt3L_(nn-1)+pt3L_nn)/2;
-	  VLIST=select(VLIST,#_1!=tmp1+"3d"); // 16.08.19upto
+	  VLIST=select(VLIST,#_1!=tmp1+"3d"); // 16.08.19until
       Putpoint3d([tmp1,tmp2]); 
       ctrpts=append(ctrpts,tmp1);
     );
@@ -2329,7 +2332,7 @@ Concatobj(objL,options):=(
       );
     );
     vL=concat(vL,vadd);
-    fL=concat(fL,fnew);   // 16.02.11 upto
+    fL=concat(fL,fnew);   // 16.02.11 until
   );
   tmp2=apply(1..length(fL),1);
   if(rmf=="y",
@@ -2397,7 +2400,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   );
   if(length(vfnL)==1,
     vfnL=[vfnL_1,[1..length(vfnL_1)]];
-  );  // 16.06.19upto
+  );  // 16.06.19until
   tmp=Divoptions(options);
   Noflg=tmp_2;
   eqL=tmp_5;
@@ -2439,7 +2442,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
         Putpoint3d(["v"+text(#),vtx],"fix"); 
       );
     );
-    vL=append(vL,vname); // 16.02.10 upto
+    vL=append(vL,vname); // 16.02.10 until
   );
   eL=[];
   forall(vfnL_2,face,
@@ -2590,7 +2593,7 @@ Phparadata(nm,nmvf,vfL,options):=(
           tmp2=tmp2+text(#)+",";
         );
         tmp2=substring(tmp2,0,length(tmp2)-1)+")";
-      );   // 2015.05.27 upto
+      );   // 2015.05.27 until
       tmp=name3+"=Phparadata("+tmp1+","+tmp2+opstr+")";
       GLIST=append(GLIST,tmp);
       tmp=name2+"=Projpara("+name3+")";
@@ -2844,7 +2847,7 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
     );
   );
   segL=tmp2;
-  Changestyle3d(segL,["nodisp"]); // 16.02.29 upto
+  Changestyle3d(segL,["nodisp"]); // 16.02.29 until
   if(islist(segL),
     if(isstring(segL_1),
       segL=apply(segL,parse(#));
@@ -2857,14 +2860,14 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
       faceL=parse(facestr);
       tmp=replace(facestr,"phf","phv"); // 16.02.10 from
       tmp=parse(tmp);
-      vtxL=apply(tmp,replace(#,"3d","")); // 16.02.10 upto
+      vtxL=apply(tmp,replace(#,"3d","")); // 16.02.10 until
       flg=1;
     ,
       faceL=parse(facestr);
     );
   );
   if(flg==0,
-    if(length(faceL)==2, // 16.08.19upto
+    if(length(faceL)==2, // 16.08.19until
       vtxL=facestr_1;
       faceL=facestr_2;
     ,
@@ -3220,22 +3223,23 @@ Sfbdparadata(nm,fd,options):=
    Sfbdparadata(nm,fd,options,["nodisp"]);
 Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
 //help:Sfbdparadata("1",Fd);
-//help:Sfbdparadata(options2=["Wait=30",limit1([0.05,1], limit2(0.2)]);
+//help:Sfbdparadata(options2=["Wait=60",division(c(50,50)),Eps1(c(0.01,1)), Eps2(0.05)]);
   regional(fd,options,name2,name3,name2h,name3h,waiting,
-     eqL,reL,strL,fname,outreg,tmp,tmp1,tmp2,flg,wflg);
+     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg);
   name2="sfbd2d"+nm;
   name3="sfbd3d"+nm;
   name2h="sfbdh2d"+nm;
   name3h="sfbdh3d"+nm;
   fname=Fhead+"sfbd"+nm+".txt";
-  fd=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  tmp=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  tmp=text(tmp);
+  fd=RSform(tmp,2);
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=30;
-  outreg=0;  // 16.08.20
+  waiting=120;
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=Toupper(substring(#,0,1));
@@ -3244,11 +3248,6 @@ Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
       waiting=parse(tmp2);
       options=remove(options,[#]);
     );
-//    if(tmp1=="O",  // 16.08.20
-//      tmp=Toupper(substring(tmp2,0,1));
-//      if(tmp=="T" % tmp=="Y", outreg=1,outreg=0);
-//      options=remove(options,[#]);
-//    );
   );
   options=remove(options,reL);
   wflg=0;
@@ -3263,55 +3262,38 @@ Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
       options=remove(options,[#]);
     );
   );
-  cmdL=MkprecommandS(5);  // 16.02.01
-  tmp=[
-    Dq+fname+Dq,
-    Dq+name3+Dq,name3,
-    Dq+name2+Dq,name2,
-    Dq+name3h+Dq,name3h,
-    Dq+name2h+Dq,name2h,
-    Dq+"HIDDENDATA"+Dq,"HIDDENDATA",  // 16.08.20from
-    Dq+"PARTITIONPT"+Dq,"PARTITIONPT", 
-    Dq+"OTHERPARTITION"+Dq,"OTHERPARTITION"  // 16.08.20upto
-  ];
-  fd=apply(fd,replace(#,"_1","(1)")); // 16.05.25from
-  fd=apply(fd,replace(#,"_2","(2)"));
-  fd=apply(fd,replace(#,"_3","(3)"));  // 16.05.25upto
-  cmdL=concat(cmdL,[
-    name3+"=Sfbdparadata",concat([fd,"Error"],reL),
+  tmp=["fd"+nm];
+  if(length(reL)>0,
+    reL=textformat(reL,4);
+    reL=substring(reL,1,length(reL)-1);
+    reL=Rsform(reL);
+    tmp=append(tmp,reL);
+  );
+  tmp1=[Dqq(fname),Dqq(name3),name3,Dqq(name2),name2];
+  tmp1=concat(tmp1,[Dqq(name3h),name3h,Dqq(name2h),name2h]);
+//  tmp1=concat(tmp1,[Dqq("CUSPPT"),"CUSPPT"]);
+//  tmp1=concat(tmp1,[Dqq("OTHERPARTITION"),"OTHERPARTITION"]); 
+  tmp2=replace(fname,".txt",".dat"); //18.02.18
+  cmdL=[
+    "print",[Dqq("fd"+nm)], //18.02.22
+    "fd"+nm+"="+fd,[],
+    name3+"=Sfbdparadata",tmp,
     name2+"=Projpara",[name3],
-    name3h+"=BorderHiddenData()",[],
+    name3h+"=HIDDENDATA",[],
     name2h+"=Projpara",[name3h],
-    "function Ot=Hiddend(),global HIDDENDATA,Ot=HIDDENDATA,endfunction)"
-       ,[],  // 16.08.20from
-    "function Ot=Otherp(),global OTHERPARTITION,Ot=OTHERPARTITION,endfunction)"
-       ,[],
-    "HIDDENDATA=Hiddend()",[],
-    "PARTITIONPT=PartitionPt()",[],
-    "OTHERPARTITION=Otherp()",[], 
-    "for J=1:length(OTHERPARTITION)",[],
-    "  Tmp1=OTHERPARTITION(J)",[],
-    "  Tmp2=[]",[],
-    "  for K=1:length(Tmp1)",[],
-    "    Tmp2=[Tmp2;Tmp1(K),1000]",[],
-    "  end",[],
-    "  OTHERPARTITION(J)=Tmp2",[],
-    "end",[],
-    "WriteOutData",tmp
-  ]);
-  options=append(options,"Wait="+text(waiting));
-  if(wflg==1,options=concat(options,["m"])); // 16.08.20
-  if(wflg==-1,options=concat(options,["r"]));
+    "WriteOutData",tmp1,
+    "save",["CUSPPT","OTHERPARTITION","file='"+tmp2+"'"]
+  ];
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
+  if(wflg==1,options=append(options,"m"));
+  if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,
-    CalcbyS("sfbd"+nm,cmdL,options);
+    CalcbyR("sfbd"+nm,cmdL,options);
   );
   if(ErrFlag==1,
     err("Sfbdparadata not completed");
   ,
-    if(outreg==1,
-      OutFileList=remove(OutFileList,[fname]);
-      OutFileList=append(OutFileList,fname);
-    );
     ReadOutData(fname);
     if(islist(parse(name2)),
       Extractdata(name2,options);
@@ -3323,32 +3305,48 @@ Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
   );
 );
 
-Wireparadata(nm,out,wr1,wr2,fd):=
-  Wireparadata(nm,out,fd,wr1,wr2,[],["nodisp"]);
-Wireparadata(nm,out,fd,wr1,wr2,options):=
-   Wireparadata(nm,out,fd,wr1,wr2,options,["nodisp"]);
-Wireparadata(nm,outstr,fdorg,wr1,wr2,optionorg,optionsh):=(
+Addpoints():=(//18.02.20
+  if(isstring(ADDPOINT),
+    ADDPOINT;
+  ,
+    "list()";
+  );
+);
+Addpoints(ptlist):=(
+//help:Addpoints(list of 3d points);
+  if(length(ptlist)==0,
+    ADDPOINT="list()";
+  ,
+    ADDPOINT=Rsform(textformat(ptlist,6),2);
+  );
+  ADDPOINT;
+);
+
+Wireparadata(nm,sf,wr1,wr2,fd):=
+  Wireparadata(nm,sf,fd,wr1,wr2,[],["nodisp"]);
+Wireparadata(nm,sf,fd,wr1,wr2,options):=
+   Wireparadata(nm,sf,fd,wr1,wr2,options,["nodisp"]);
+Wireparadata(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
 //help:Wireparadata("1","sfbd3d1",fd,5,5);
-//help:Wireparadata(options2=["Wait=40"]);
-  regional(out,fd,options,name2,name3,name2h,name3h,outreg,
-     eqL,reL,strL,fname,outfname,waiting,tmp,tmp1,tmp2,flg,wflg);
+//help:Wireparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]); 
+  regional(fd,options,name2,name3,name2h,name3h,outreg,
+     eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,flg,wflg);
   name2="wire2d"+nm;
   name3="wiref3d"+nm;
   name2h="wireh2d"+nm;
   name3h="wireh3d"+nm;
   fname=Fhead+"wire"+nm+".txt";
-  tmp=replace(outstr,"3d","");
-  outfname=Fhead+tmp+".txt"; // 16.08.20
-  out=parse(outstr);
-  if(!islist(out), ErrFlag=1);
-  fd=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  rfname=Fhead+sfstr+".txt";
+  rfname=replace(rfname,"3d","");
+  tmp=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  tmp=text(tmp);
+  fd=RSform(tmp,2);
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
-  outreg=0;
+  waiting=600;
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=Toupper(substring(#,0,1));
@@ -3357,11 +3355,6 @@ Wireparadata(nm,outstr,fdorg,wr1,wr2,optionorg,optionsh):=(
       waiting=parse(tmp2);
       options=remove(options,[#]);
     );
-//    if(tmp1=="O", // 16.08.20from
-//      tmp=Toupper(substring(tmp2,0,1));
-//      if(tmp=="T" % tmp=="Y", outreg=1,outreg=0);
-//      options=remove(options,[#]);
-//    );// 16.08.20upto
   );
   options=remove(options,reL);
   wflg=0;
@@ -3376,117 +3369,82 @@ Wireparadata(nm,outstr,fdorg,wr1,wr2,optionorg,optionsh):=(
       options=remove(options,[#]);
     );
   );
-  flg=0;
-  tmp1=floor(5*1000/WaitUnit);
-  repeat(tmp1,
-    if(flg==0,
-      tmp=load(Fhead+replace(outstr,"3d","")+".txt");
-      if(length(tmp)>=4,
-        tmp2=substring(tmp,length(tmp)-4,length(tmp));
-        if(tmp2=="////",
-          flg=1;
-        );
-      ,
-        wait(WaitUnit);
-      );
-    );
+  tmp1=textformat(wr1,6);
+  tmp1=Rsform(tmp1,1);
+  tmp2=textformat(wr2,6);
+  tmp2=Rsform(tmp2,1);
+  tmp=[sfstr,"fd"+nm,tmp1,tmp2];
+  reL=RSform(text(reL),2);
+  reL=substring(reL,5,length(reL)-1);
+  if(length(reL)>0,
+    reL=textformat(reL,4);
+    reL=substring(reL,1,length(reL)-1);
+    reL=Rsform(reL);
+    tmp=append(tmp,reL);
   );
-  if(flg==0,
-    Err(outstr+" file not copleted");
-    ErrFlag=1;
-  );
-  if(ErrFlag==0,
-//    Writeoutdata(outfname,["Out",out]);
-  );
-  cmdL=MkprecommandS(5);  // 16.02.01
-  tmp=[
-    Dq+fname+Dq,
-    Dq+name3+Dq,name3,
-    Dq+name2+Dq,name2,
-    Dq+name3h+Dq,name3h,
-    Dq+name2h+Dq,name2h
-  ];
-  fd=apply(fd,if(isstring(#),replace(#,"_1","(1)"),#)); // 16.05.25 08.17from
-  fd=apply(fd,if(isstring(#),replace(#,"_2","(2)"),#)); 
-  fd=apply(fd,if(isstring(#),replace(#,"_3","(3)"),#)); // 16.05.25 08.17upto
-  cmdL=concat(cmdL,[
-    "disp('Running Wireparadata')",[],
-    "tmp=ReadOutData",[Dq+outfname+Dq],
-    "execstr(tmp)",[],
-    "function SetHidd(Dt),global HIDDENDATA,HIDDENDATA=Dt,endfunction)",
-        [], // 16.08.20from
-    "function SetPart(Dt),global PARTITIONPT,PARTITIONPT=Dt,endfunction)",
-        [], 
-    "function SetOther(Dt),global OTHERPARTITION,OTHERPARTITION=Dt,endfunction)",
-        [], 
-    "if type(HIDDENDATA)~=15,HIDDENDATA=list(HIDDENDATA),end",[],
-    "if type(PARTITIONPT)~=15,PARTITIONPT=list(PARTITIONPT),end",[],
-    "if type(OTHERPARTITION)~=15,OTHERPARTITION=list(OTHERPARTITION),end",[],
-    "for J=1:length(OTHERPARTITION)",[],
-    "  Tmp=OTHERPARTITION(J)",[],
-    "  OTHERPARTITION(J)=Tmp(:,1)",[],
-    "end",[],
-    "SetHidd(HIDDENDATA)",[],
-    "SetPart(PARTITIONPT)",[],
-    "SetOther(OTHERPARTITION)",[],
-    "if type("+outstr+")~=15,"+outstr+"=list("+outstr+"),end",[],  // 16.08.20upto
-    name3+"=Wireparadata",concat([outstr,fd,wr1,wr2,"Error"],reL),
+  tmp1=[Dqq(fname),Dqq(name3),name3,Dqq(name2),name2];
+  tmp1=concat(tmp1,[Dqq(name3h),name3h,Dqq(name2h),name2h]);
+  tmp2=replace(rfname,".txt",".dat");
+  cmdL=[
+    "print",[Dqq("wire"+nm)], //18.02.22
+    "fd"+nm+"="+fd,[],
+    "ReadOutData",[Dqq(rfname)],
+    "load",[Dqq(tmp2)],
+    "Addpoints",[Addpoints()],
+    name3+"=Wireparadata",tmp,
     name2+"=Projpara",[name3],
-    name3h+"=WireHiddenData()",[],
+    name3h+"=WIREHIDDENDATA",[],
     name2h+"=Projpara",[name3h],
-    "WriteOutData",tmp
-  ]);
-  options=append(options,"Wait="+text(waiting));
+    "WriteOutData",tmp1
+  ];
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
   if(wflg==1,options=concat(options,["m"]));
   if(wflg==-1,options=concat(options,["r"]));
   if(ErrFlag==0,
-    CalcbyS("wire"+nm,cmdL,options);
+    CalcbyR("wire"+nm,cmdL,options);
   );
   if(ErrFlag==1,
     err("Wireparadata not completed");
   ,
-    if(outreg==1,
-//      OutFileList=remove(OutFileList,[fname]);
-//      OutFileList=append(OutFileList,fname);
-    );
     ReadOutData(fname);
-    if(!islist(parse(name2)), ErrFlag=1);
-    if(ErrFlag==0,
+    if(islist(parse(name2)),
       Extractdata(name2,options);
       if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);
       Extractdata(name2h,tmp);
+    ,
+      ErrFlag=1;
     );
   );
 );
 
-Crvsfparadata(nm,gd,out,fd):=
-  Crvsfparadata(nm,gd,out,fd,[],["nodisp"]);
-Crvsfparadata(nm,gd,out,fd,options):=
-   Crvsfparadata(nm,gd,out,fd,options,["nodisp"]);
-Crvsfparadata(nm,gdstr,outstr,fdorg,optionorg,optionsh):=(
+Crvsfparadata(nm,crv,sf,fd):=
+  Crvsfparadata(nm,crv,sf,fd,[],["nodisp"]);
+Crvsfparadata(nm,crv,sf,fd,options):=
+   Crvsfparadata(nm,crv,sf,fd,options,["nodisp"]);
+Crvsfparadata(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
 //help:Crvsfparadata("1","ax3d","sfbd3d1",fd);
-//help:Crvsfparadata(options2=["Wait=20"]);
-  regional(gd,out,fd,options,name2,name3,name2h,name3h,outreg,
-     eqL,reL,strL,fname,gdfname,outfname,waiting,tmp,tmp1,tmp2,flg,wflg);
+//help:Crvsfparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+  regional(gd,out,fd,options,name2,name3,name2h,name3h,
+     eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
+  tmp=replace(crvstr,"3d","2d");
+  Changestyle(tmp,["nodisp"]);
   name2="crvsf2d"+nm;
   name3="crvsf3d"+nm;
   name2h="crvsfh2d"+nm;
   name3h="crvsfh3d"+nm;
   fname=Fhead+"crvsf"+nm+".txt";
-  gdfname=Fhead+"crv"+nm+".txt";
-  tmp=replace(outstr,"3d","");
-  outfname=Fhead+tmp+".txt"; // 16.08.20
-  gd=parse(gdstr);
-  out=parse(outstr);
-  if(!islist(out), ErrFlag=1);
-  fd=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  rfname=Fhead+sfstr+".txt";
+  rfname=replace(rfname,"3d","");
+  tmp=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  tmp=text(tmp);
+  fd=RSform(tmp,2);
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=20;
-  outreg=1;
+  waiting=120;
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=Toupper(substring(#,0,1));
@@ -3495,11 +3453,6 @@ Crvsfparadata(nm,gdstr,outstr,fdorg,optionorg,optionsh):=(
       waiting=parse(tmp2);
       options=remove(options,[#]);
     );
-//    if(tmp1=="O",
-//      tmp=Toupper(substring(tmp2,0,1));
-//      if(tmp=="T" % tmp=="Y", outreg=1,outreg=0);
-//      options=remove(options,[#]);
-//    );
   );
   options=remove(options,reL);
   wflg=0;
@@ -3514,111 +3467,86 @@ Crvsfparadata(nm,gdstr,outstr,fdorg,optionorg,optionsh):=(
       options=remove(options,[#]);
     );
   );
-  flg=0;
-  tmp1=floor(5*1000/WaitUnit);
-  repeat(tmp1,
-    if(flg==0,
-      tmp=load(Fhead+replace(outstr,"3d","")+".txt");
-      if(length(tmp)>=4,
-        tmp2=substring(tmp,length(tmp)-4,length(tmp));
-        if(tmp2=="////",
-          flg=1;
-        );
-      ,
-        wait(WaitUnit);
-      );
-    );
+  reL=RSform(text(reL),2);
+  reL=substring(reL,5,length(reL)-1);
+  tmp=[crvstr,sfstr,"fd"+nm];
+  if(length(reL)>0,
+    reL=textformat(reL,4);
+    reL=substring(reL,1,length(reL)-1);
+    reL=Rsform(reL);
+    tmp=append(tmp,reL);
   );
-  if(flg==0,
-    Err(outstr+" file not copleted");
-    ErrFlag=1;
-  );
-  if(wflg==0,
-    tmp=load(fname);
-    if(length(tmp)==0,wflg=1);
-  );
-  if(ErrFlag==0,
-//    Writeoutdata(outfname,["Gc",gd,"Out",out]);
-//    wait(WaitUnit);
-  );
-  cmdL=MkprecommandS(5); // 16.02.01
-  tmp=[
-    Dq+fname+Dq,
-    Dq+name3+Dq,name3,
-    Dq+name2+Dq,name2,
-    Dq+name3h+Dq,name3h,
-    Dq+name2h+Dq,name2h
+  tmp1=[DqDq(fname),DqDq(name3),name3,DqDq(name2),name2];
+  tmp1=concat(tmp1,[DqDq(name3h),name3h,DqDq(name2h),name2h]);
+  tmp2=replace(rfname,".txt",".dat");
+  cmdL=[
+    "print",[Dqq("crv"+nm)], //18.02.22
+    "fd"+nm+"="+fd,[],
+    "ReadOutData",[Dqq(rfname)],
+    "load",[Dqq(tmp2)],
+    "Addpoints",[Addpoints()]
   ];
-  fd=apply(fd,if(isstring(#),replace(#,"_1","(1)"),#)); // 16.05.25 08.17from
-  fd=apply(fd,if(isstring(#),replace(#,"_2","(2)"),#)); 
-  fd=apply(fd,if(isstring(#),replace(#,"_3","(3)"),#)); // 16.05.25 08.17upto
+  tmp3=select(GLIST,indexof(#,crvstr+"=")>0); //18.02.22from
+  if(length(tmp3)==0,
+    tmp3=Fhead+crvstr+".txt";
+    tmp3=replace(tmp3,"3d","");
+    cmdL=concat(cmdL,[
+      "ReadOutData",[Dqq(tmp3)]
+    ]);
+  ); //18.02.22until
   cmdL=concat(cmdL,[
-    "disp('Running Crvsfparadata')",[],
-    "tmp=ReadOutData",[Dq+outfname+Dq],
-    "execstr(tmp)",[],
-    "function SetHidd(Dt),global HIDDENDATA,HIDDENDATA=Dt,endfunction)",
-        [], // 16.08.20from
-    "function SetPart(Dt),global PARTITIONPT,PARTITIONPT=Dt,endfunction)",
-        [], 
-    "function SetOther(Dt),global OTHERPARTITION,OTHERPARTITION=Dt,endfunction)",
-        [], 
-    "if type(HIDDENDATA)~=15,HIDDENDATA=list(HIDDENDATA),end",[],
-    "if type(PARTITIONPT)~=15,PARTITIONPT=list(PARTITIONPT),end",[],
-    "if type(OTHERPARTITION)~=15,OTHERPARTITION=list(OTHERPARTITION),end",[],
-    "for J=1:length(OTHERPARTITION)",[],
-    "  Tmp=OTHERPARTITION(J)",[],
-    "  OTHERPARTITION(J)=Tmp(:,1)",[],
-    "end",[],
-    "SetHidd(HIDDENDATA)",[],
-    "SetPart(PARTITIONPT)",[], 
-    "SetOther(OTHERPARTITION)",[], 
-    "if type("+outstr+")~=15,"+outstr+"=list("+outstr+"),end",[],  // 16.08.20upto
-    name3+"=Crvsfparadata",concat([gdstr,outstr,fd,"Error"],reL),
+    name3+"=Crvsfparadata",tmp,
     name2+"=Projpara",[name3],
-    name3h+"=CrvsfHiddenData()",[],
+    name3h+"=CRVSFHIDDENDATA",[],
     name2h+"=Projpara",[name3h],
-    "WriteOutData",tmp
+    "WriteOutData",tmp1
   ]);
-  options=append(options,"Wait="+text(waiting));
-  if(wflg==1,options=concat(options,["m"]));
-  if(wflg==-1,options=concat(options,["r"]));
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
+  if(wflg==1,options=append(options,"m"));
+  if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,
-    CalcbyS("crvsf"+nm,cmdL,options);
+    CalcbyR("crvsf"+nm,cmdL,options);
   );
   if(ErrFlag==1,
     err("Crvsfparadata not completed");
   ,
-    if(outreg==1,
-      OutFileList=remove(OutFileList,[fname]);
-      OutFileList=append(OutFileList,fname);
-    );
     ReadOutData(fname);
-    tmp=replace(gdstr,"3d","2d");
-    Changestyle([tmp],["nodisp"]);
-    Extractdata(name2,options);
-    if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);
-    Extractdata(name2h,tmp);
+    if(islist(parse(name2)),
+      Extractdata(name2,options);
+      if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);
+      Extractdata(name2h,tmp);
+    ,
+      ErrFlag=1;
+    );
   );
 );
 
-Intersectcrvsf(nm,gd,fd):=
-  Intersectcrvsf(nm,gd,fd,[]);
-Intersectcrvsf(nm,gdstr,fdorg,optionorg):=(
-//help:Intersectcrvsf("1",ax3d_1,fd);
-//help:Intersectcrvsf(options=["Wait=10",50,0.05]);
-  regional(name,gd,fd,options,reL,fname,gdfname,
-     waiting,tmp,tmp1,tmp2,flg,wflg,pts);
-  name="intpts"+nm;
-  fname=Fhead+name+".txt";
-  gdfname=Fhead+"crv"+nm+".txt";
-  gd=parse(gdstr);
-  fd=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+Crvonsfparadata(nm,crv2d,sf,fd):=
+  Crvsonfparadata(nm,crv2d,sf,fd,[],["nodisp"]);
+Crvonsfparadata(nm,crv2d,sf,fd,options):=
+   Crvonsfparadata(nm,crv2d,sf,fd,options,["nodisp"]);
+Crvonsfparadata(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
+//help:Crvonsfparadata("1",["[1,t]","t=[0,2*pi]","Num=50"],"sfbd3d1",fd);
+//help:Crvonsfparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+  regional(gd,out,fd,options,name2,name3,name2h,name3h,
+     eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
+  name2="crvonsf2d"+nm;
+  name3="crvonsf3d"+nm;
+  name2h="crvonsfh2d"+nm;
+  name3h="crvonsfh3d"+nm;
+  fname=Fhead+"crvonsf"+nm+".txt";
+  rfname=Fhead+sfstr+".txt";
+  rfname=replace(rfname,"3d","");
+  tmp=apply(fdorg,if(isstring(#),Dqq(#),#));
+  tmp=text(tmp);
+  fd=RSform(tmp,2);
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=10;
+  waiting=120;
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=Toupper(substring(#,0,1));
@@ -3641,68 +3569,251 @@ Intersectcrvsf(nm,gdstr,fdorg,optionorg):=(
       options=remove(options,[#]);
     );
   );
-  if(wflg>-1,
-    Writeoutdata(gdfname,["Gd",gd]);
-//    wait(WaitUnit);
+  if(isstring(crv2dstr),
+    crv=Rsform(crv2dstr);
+  ,
+    crv=apply(crv2dstr,Dqq(#));
+    crv=Rsform(text(crv));
+    crv="Paramplot"+substring(crv,1,length(crv));
   );
-  fd=apply(fd,replace(#,"_1","(1)")); // 16.05.25from
-  fd=apply(fd,replace(#,"_2","(2)"));
-  fd=apply(fd,replace(#,"_3","(3)"));  // 16.05.25upto
+  reL=RSform(text(reL),2);
+  reL=substring(reL,5,length(reL)-1);
+  tmp=["crv",sfstr,"fd"+nm];
+  if(length(reL)>0,
+    reL=textformat(reL,4);
+    reL=substring(reL,1,length(reL)-1);
+    reL=Rsform(reL);
+    tmp=append(tmp,reL);
+  );
+  tmp1=[Dqq(fname),Dqq(name3),name3,Dqq(name2),name2];
+  tmp1=concat(tmp1,[Dqq(name3h),name3h,Dqq(name2h),name2h]);
+  tmp2=replace(rfname,".txt",".dat");
   cmdL=[
-    "disp('Finding Intersectcrvsf')",[],
-    "Setangle",[THETA,PHI]*180/pi,
-    "tmp=ReadOutData",[Dq+gdfname+Dq],
-    "execstr(tmp)",[],
-    "Intpts=Intersectcrvsf",concat(["Gd",fd,"Error"],reL),
-    "tmp1='['",[],
-    "for J=1:length(Intpts)",[],
-    "  tmp2=Intpts(J)",[],
-    "  for K=1:length(tmp2)",[],
-    "    if K==1",[],
-    "      tmp1=tmp1+'['",[],
-    "    end",[],
-    "    tmp1=tmp1+string(tmp2(K))",[],
-    "    if K<length(tmp2)",[],
-    "      tmp1=tmp1+','",[],
-    "    else",[],
-    "      tmp1=tmp1+']'",[],
-    "    end",[],
-    "  end",[],
-    "  if J<length(Intpts)",[],
-    "    tmp1=tmp1+','",[],
-    "  else",[],
-    "    tmp1=tmp1+']||||'",[], //16.08.09
-    "  end",[],
-    "end",[],
-    "fid=mopen('"+fname+"','w')",[],
-    "  mputl(tmp1,fid)",[],
-    "mclose(fid)",[]
+    "print",[Dqq("crvonsf"+nm)], //18.02.22
+    "fd"+nm+"="+fd,[],
+    "ReadOutData",[Dqq(rfname)],
+    "load",[Dqq(tmp2)],
+    "Addpoints",[Addpoints()],
+    "crv="+crv,[],
+    name3+"=Crvonsfparadata",tmp,
+    name2+"=Projpara",[name3],
+    name3h+"=HIDDENDATA",[],
+    name2h+"=Projpara",[name3h],
+    "WriteOutData",tmp1
   ];
-  options=append(options,"Wait="+text(waiting));
-  if(wflg==1,options=concat(options,["m"]));
-  if(wflg==-1,options=concat(options,["r"]));
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
+  if(wflg==1,options=append(options,"m"));
+  if(wflg==-1,options=append(options,"r"));
   if(ErrFlag==0,
-    CalcbyS(name,cmdL,options); // 16.08.14
+    CalcbyR("crvonsf"+nm,cmdL,options);
   );
   if(ErrFlag==1,
-    err("Intersectcrvsf not completed");
+    err("Crvonsfparadata not completed");
   ,
-    println(name+" obtained");  //16.08.14from
-    pts=load(fname);
-    pts=replace(pts,"||||","");
-    tmp=name+"="+pts;
-    parse(tmp);
-    parse(pts);  //16.08.14upto
+    ReadOutData(fname);
+    if(islist(parse(name2)),
+      Extractdata(name2,options);
+      if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);
+      Extractdata(name2h,tmp);
+    ,
+      ErrFlag=1;
+    );
   );
 );
 
-////////////// new skeleton  2018.01.04from ////////////////
+Intersectcrvsf(nm,crv,fd):=Intersectcrvsf(nm,crv,fd,"",[]);
+Intersectcrvsf(nm,crv,fd,Arg):=(
+  if(isstring(Arg),
+    Intersectcrvsf(nm,crv,fd,Arg,[]);
+  ,
+    Intersectcrvsf(nm,crv,fd,"",Arg);
+  );
+);
+Intersectcrvsf(nm,crvstr,fdorg,bdyeq,optionorg):=(
+//help:Intersectcrvsf("1",curve,fd);
+//help:Intersectcrvsf("1",curve,fd,curveequation);
+//help:Intersectcrvsf(options=[Np([50,50]),Eps(0.01)]);
+  regional(name,crv,fd,options,reL,fname,crvfname,argR,
+     waiting,tmp,tmp1,tmp2,flg,wflg,pts);  name="crvsf"+nm;
+  name="crvsf"+nm;
+  fname=Fhead+name+".txt";
+  crvfname=Fhead+"crv"+nm+".txt";
+//  crv=parse(crvstr);
+//  crv=textformat(crv,6);
+//  crv=Rsform(crv,2);
+  fd=apply(fdorg,if(isstring(#),Dqq(#),#));
+  options=optionorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  reL=tmp_6;
+  strL=tmp_7;
+  waiting=120;
+  forall(eqL,
+    tmp=indexof(#,"=");
+    tmp1=Toupper(substring(#,0,1));
+    tmp2=substring(#,tmp,length(#));
+    if(tmp1=="W",
+      waiting=parse(tmp2);
+      options=remove(options,[#]);
+    );
+  );
+  options=remove(options,reL);
+  wflg=0;
+  forall(strL,
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="M",
+      wflg=1;
+      options=remove(options,[#]);
+    );
+    if(tmp=="R",
+      wflg=-1;
+      options=remove(options,[#]);
+    );
+  );
+  tmp=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  tmp=text(tmp);
+  fd=RSform(tmp,2);
+  tmp=textformat(reL,4);
+  tmp=substring(tmp,1,length(tmp)-1);
+  tmp=Rsform(tmp);
+  if(length(bdyeq)>0,
+    argR=","+Dqq(bdyeq);
+  ,
+    argR="";
+  );
+  if(length(tmp)>0,
+    argR=argR+","+tmp;
+  );
+  tmp1=[Dqq(fname),Dqq(name),"tmp"];
+  cmdL=[
+    "print",[Dqq("crvsf"+nm)], //18.02.22
+    "crv="+crvstr,[],
+    "fd="+fd,[],
+    "tmp1=Intersectcrvsf(crv,fd"+argR+")",[],
+    "tmp=c()",[],
+    "for(j in Looprange(1,length(tmp1))){",[],
+    "  tmp=Appendrow(tmp,tmp1[[j]])",[],
+    "}",[],
+    "WriteOutData",tmp1,
+    "tmp",[]
+  ];
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
+  if(wflg==1,options=append(options,"m"));
+  if(wflg==-1,options=append(options,"r"));
+  if(ErrFlag==1,
+	err("Crvsfparadata not completed");
+  ,
+	CalcbyR("ans",cmdL,options);
+    ReadOutData(fname);
+  );
+  println("generate "+name);
+  parse(name);
+);
+
+Sfcutparadata(nm,eqstr,sf,fd):=
+  Sfcutparadata(nm,eqstr,sf,fd,[]);
+Sfcutparadata(nm,eqstr,sf,fd,options):=
+  Sfcutparadata(nm,eqstr,sf,fd,options,["nodisp"]);
+Sfcutparadata(nm,eqstr,sf,fdorg,optionorg,optionsh):=(
+//help:Sfcutparadata("1","x+y+z=1","sfbd3d1",fd,"x+y+z=1");
+//help:Sfcutparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+  regional(gd,out,fd,options,name2,name3,name2h,name3h,
+     eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
+  tmp=replace(sfcut,"3d","2d");
+  Changestyle(tmp,["nodisp"]);
+  name2="sfcut2d"+nm;
+  name3="sfcut3d"+nm;
+  name2h="sfcuth2d"+nm;
+  name3h="sfcuth3d"+nm;
+  fname=Fhead+"sfcut"+nm+".txt";
+  rfname=Fhead+sf+".txt";
+  rfname=replace(rfname,"3d","");
+  tmp=apply(fdorg,if(isstring(#),"'"+#+"'",#));
+  tmp=text(tmp);
+  fd=RSform(tmp,2);
+  options=optionorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  reL=tmp_6;
+  strL=tmp_7;
+  waiting=120;
+  forall(eqL,
+    tmp=indexof(#,"=");
+    tmp1=Toupper(substring(#,0,1));
+    tmp2=substring(#,tmp,length(#));
+    if(tmp1=="W",
+      waiting=parse(tmp2);
+      options=remove(options,[#]);
+    );
+  );
+  options=remove(options,reL);
+  wflg=0;
+  forall(strL,
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="M",
+      wflg=1;
+      options=remove(options,[#]);
+    );
+    if(tmp=="R",
+      wflg=-1;
+      options=remove(options,[#]);
+    );
+  );
+  reL=RSform(text(reL),2);
+  reL=substring(reL,5,length(reL)-1);
+  tmp=[Dqq(eqstr),sf,"fd"+nm];
+  if(length(reL)>0,
+    reL=textformat(reL,4);
+    reL=substring(reL,1,length(reL)-1);
+    reL=Rsform(reL);
+    tmp=append(tmp,reL);
+  );
+  tmp1=[DqDq(fname),DqDq(name3),name3,DqDq(name2),name2];
+  tmp1=concat(tmp1,[DqDq(name3h),name3h,DqDq(name2h),name2h]);
+  tmp2=replace(rfname,".txt",".dat");
+  cmdL=[
+    "print",[Dqq("sfcut"+nm)], //18.02.22
+    "fd"+nm+"="+fd,[],
+    "ReadOutData",[Dqq(rfname)],
+    "load",[Dqq(tmp2)],
+    name3+"=Sfcutparadata",tmp,
+    name2+"=Projpara",[name3],
+    name3h+"=CRVONSFHIDDENDATA",[],
+    name2h+"=Projpara",[name3h],
+    "WriteOutData",tmp1
+  ];
+  tmp=replace(fname,".txt","end.txt");
+  options=concat(options,["Out=no","Wait="+text(waiting),"Res="+tmp]);
+  if(wflg==1,options=append(options,"m"));
+  if(wflg==-1,options=append(options,"r"));
+  if(ErrFlag==0,
+    CalcbyR("sfcut"+nm,cmdL,options);
+  );
+  if(ErrFlag==1,
+    err("Sfcutparadata not completed");
+  ,
+    ReadOutData(fname);
+    if(islist(parse(name2)),
+      Extractdata(name2,options);
+      if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);
+      Extractdata(name2h,tmp);
+    ,
+      ErrFlag=1;
+    );
+  );
+);
 
 Skeletonparadata(nm):=Skeletondatacindy(nm,[]);
 Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
 Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
 Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
     Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
+
+
+////////////// new skeleton  2018.01.04 not completed and slow////////////////
+
 Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
 Skeletondatacindy(nm,options):=(
   regional(tmp); 
@@ -3791,10 +3902,9 @@ Makeskeletondata(ObjL,PltL,R0):=(
     remov=[];
     obj2=Projcurve(obj);
     forall(1..(length(PltL)),nn,
-
 	  plt=PltL_nn;
       tmp=Projcurve(plt);
-      koc=Intersectcurves(obj2,tmp);
+      koc=IntersectcurvesPp(obj2,tmp);
       forall(1..(length(koc)),kk,
         ptk=koc_kk;
         tmp=PointonCurve(ptk_2,obj);
@@ -3894,7 +4004,363 @@ Makeskeletondata(ObjL,PltL,R0):=(
   Allres;
 );
 
-////////////// new skeleton  2018.01.04upto ////////////////
+////////////// current skeleton  2018.01.04 ////////////////
+
+Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
+Skeletondatacindy(nm,options):=(
+  regional(tmp); 
+  tmp=Datalist3d();
+  Skeletondatacindy(nm,tmp,tmp,options);
+);
+Skeletondatacindy(nm,pltdata1,pltdata2):=
+     Skeletondatacindy(nm,pltdata1,pltdata2,[]);
+Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
+//help:Skeletondatacindy("1");
+//help:Skeletondatacindy("1",[pdata1,pdata2],[pdata3]);
+//help:Skeletondatacindy(options2=[1(width)]);
+  regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,
+     Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
+     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2);
+  name2="sk2d"+nm;
+  name3="sk3d"+nm;
+  pltdata1=[];// 16.01.31
+  forall(pltdata1org,tmp1,
+    tmp=parse(tmp1);
+    pltdata1=append(pltdata1,tmp);
+  );
+  pltdata2=[];// 16.01.31
+  forall(pltdata2org,tmp1,
+    tmp=parse(tmp1);
+    pltdata2=append(pltdata2,tmp);
+  );
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  reL=tmp_6; //16.02.28 
+  opcindy=tmp_9;
+  Rr=0.075*1000/2.54/MilliIn;
+  size=1;
+  Eps2=0.05;
+  if(length(reL)>0, //16.02.28 
+    size=reL_1;
+    Rr=size*Rr;
+    if(length(reL)>1,Eps2=reL_2);
+  );
+  Eps=10^(-4);
+  ObjL=Flattenlist(pltdata1);
+  Plt3L=Flattenlist(pltdata2);
+  tmp=apply(Plt3L,ProjcoordCurve(#));
+  Plt2L=Flattenlist(tmp);
+///////////  tmp=apply(pltdata1,replace(#,"3d","2d"));
+  Out=[];
+  forall(1..(length(ObjL)),ii,
+    Obj3=ObjL_ii;
+    tmp=ProjcoordCurve(Obj3);
+    Data=Makeskeletondata([tmp],Plt2L,Rr,Eps2);
+    forall(1..(length(Data)),jj,
+      Gd=Data_jj;
+      if((length(Gd)>1) 
+       & (norm(Ptcrv(1,Gd)-Ptcrv(2,Gd))>Eps),
+        PtD=[];
+        forall(1..(length(Gd)),
+          tmp=Gd_#;
+          tmp1=Invparapt(tmp,Obj3);
+          PtD=append(PtD,tmp1);
+        );
+        Out=append(Out,PtD);
+      );
+    );
+  );
+  Out=select(Out,length(Projcurve(#))>0); // 16.12.19
+  tmp1=apply(Out,textformat(#,5));
+  tmp=name3+"="+tmp1;
+  parse(tmp);
+  tmp=name2+"=Projcurve("+tmp1+");";
+  parse(tmp);
+  Changestyle3d(pltdata1org,["nodisp"]);
+  if(Noflg<3,
+    println("generate skeleton :"+name3);
+    tmp1=text(pltdata1org);
+    tmp1="list("+substring(tmp1,1,length(tmp1)-1)+")";
+    tmp2=text(pltdata2org);
+    tmp2="list("+substring(tmp2,1,length(tmp2)-1)+")";
+    tmp=name3+"=Skeletonpara3data("+tmp1+","+tmp2+",";
+    tmp=tmp+text(size)+")";
+    GLIST=append(GLIST,tmp);  
+    tmp=name2+"=Projpara("+name3+")";
+    GLIST=append(GLIST,tmp);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+    GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
+    if(SUBSCR==1,
+      Subgraph(name3,opcindy);
+    );
+  );
+  Out;
+);
+
+Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
+  regional(Allres,Eps,Dmat,Dind,ii,Dt,nn1,nn2,Nind,Nobj,
+      Plt2,PhL,ClipL,ns,pt1,pt2,pt,pta,ptb,za,zb,z1,z2,t1,t2,te,
+	  koc,KukanL,nn,tt,Rr,Flg,ii,jj,ptq,hh,Ku,Res,contflg,breakflg);
+  Eps=10.0^(-4);
+  Dmat=[];
+  Dind=[];
+  forall(1..(length(Plt2L)),ii,
+    Dt=Plt2L_ii;
+    nn1=length(Dmat)+1;
+    Dmat=concat(Dmat,Dt);
+    nn2=length(Dmat);
+    Dind=append(Dind,[nn1,nn2]);
+  );
+  Nind=length(Dind);
+  Allres=[];
+  forall(1..(length(Obj2L)),Nobj,
+    Plt2=Obj2L_Nobj;
+    PhL=Columnlist(Plt2,1..2);
+	ClipL=[];
+    forall(1..(length(PhL)-1),ns,
+      pt1=PhL_(ns..(ns+1));
+      forall(1..(length(Dind)),ii,
+        tmp=Dind_ii;
+        tmp=Dmat_(Dind_ii_1..Dind_ii_2);
+        pt2=Columnlist(tmp,1..2);
+        koc=IntersectcrvsPp(pt1,pt2,[Eps]);
+        if(length(koc)>0,
+          breakflg=0;
+          forall(1..(length(koc)),jj,
+            contflg=0;
+            if(breakflg==0,
+              pt=Op(1,Op(jj,koc));
+              tmp=Op(2,Op(jj,koc));
+              if((tmp<1+Eps) & (ns==1), 
+                contflg=1;
+              );    
+              if(contflg==0,
+                if((tmp>length(pt1)-Eps) 
+                 & (ns==length(PhL)-1),
+                  contflg=1;
+                );
+              );
+              if(contflg==0,
+                nn1=ns;
+                nn2=Op(3,Op(jj,koc));
+                tmp=Plt2_nn1;
+                pta=tmp_(1..2);
+                za=tmp_3;
+                tmp=Plt2_(nn1+1);
+                ptb=tmp_(1..2);
+                zb=tmp_3;
+                if(norm(pta-ptb)<Eps,
+                  contflg=1;
+                );
+              );
+              if(contflg==0,
+                t1=norm(pta-pt)/norm(pta-ptb);
+                z1=(1-t1)*za+t1*zb;
+                tmp=Dmat_(Dind_ii_1..Dind_ii_2);
+                tmp1=tmp_nn2;
+                pta=tmp1_(1..2);
+                za=tmp1_3;
+                tmp2=tmp_(nn2+1);
+                ptb=tmp2_(1..2);
+                zb=tmp2_3;
+                if(norm(pta-ptb)<Eps,
+                  contflg=1;
+                );
+              );
+              if(contflg==0,
+                t2=norm(pta-pt)/norm(pta-ptb);
+                z2=(1-t2)*za+t2*zb;
+                if(z1<z2-Eps2,
+                   if(length(ClipL)==0, 
+                    tmp=1;
+                  ,
+                    tmp1=column(ClipL,1);
+                    tmp1=apply(tmp1,#-pt_1);
+                    tmp2=column(ClipL,2);
+                    tmp2=apply(tmp2,#-pt_2);
+                    tmp3=apply(tmp1,#^2)+apply(tmp2,#^2);
+                    tmp=min(tmp3);         
+                  );
+                  if(tmp>Eps^2,
+                    tmp1=pt1_2-pt1_1;
+                    tmp2=ptb-pta;
+                    tmp3=Dotprod(tmp1,tmp2);
+                    tmp3=tmp3/norm(tmp1)/norm(tmp2);
+                    tmp=1-0.5*tmp3^2;
+                    tmp1=concat(pt,[nn1,t1,R0/tmp]);
+                    ClipL=append(ClipL,tmp1);
+                  );
+                );
+              );
+            );
+          );
+        );
+      );
+    );
+    te=length(Plt2);
+    KukanL=[[1.0,te]];
+    pt1=PhL;
+    if(length(ClipL)>0,
+      forall(1..(length(ClipL)),ii,
+        tmp=ClipL_ii;
+        pt=tmp_(1..2);
+        nn=tmp_3;
+        tt=nn+tmp_4;
+        Rr=tmp_5;
+        Flg=0;
+        breakflg=0;
+        forall(reverse(1..nn),jj,
+          contflg=0;
+          if(breakflg==0,
+            ptq=PointonCurve(jj,pt1);
+            if(norm(pt-ptq)<Rr,
+              contflg=1;
+            );
+            if(contflg==0,
+              Flg=jj;
+              breakflg=1;
+              contflg=1;
+            );
+          );
+        );
+        if(Flg==0,
+          t1=1;
+        ,
+          t1=Flg; t2=tt;
+          hh=t2-t1;
+          forall(1..10,
+            hh=hh*0.5;
+            ptq=PointonCurve(t1+hh,pt1);
+            if(norm(pt-ptq)<Rr,
+              t2=t2-hh;
+            ,
+              t1=t1+hh;
+            );
+          );
+        );
+        Ku=[t1];
+        Flg=0;
+        breakflg=0;
+        forall((nn+1)..te,jj,
+          contflg=0;
+          if(breakflg==0,
+            ptq=PointonCurve(jj,pt1);
+            if(norm(pt-ptq)<Rr,
+              contflg=1;
+            );
+            if(contflg==0,
+              Flg=jj;
+              breakflg=1;
+              contflg=1;
+            );
+          );
+        );
+        if(Flg==0,
+          t2=te;
+        ,
+          t1=tt; t2=Flg;
+          hh=t2-t1;
+          forall(1..10,
+            hh=hh*0.5;
+            ptq=PointonCurve(t1+hh,pt1);
+            if(norm(pt-ptq)<Rr,
+              t1=t1+hh;
+            ,
+              t2=t2-hh;
+            );
+          );
+        );
+        Ku=append(Ku,t2);
+        KukanL=Kukannozoku(Ku,KukanL);
+	  );
+    );
+    Res=[];
+    forall(1..(length(KukanL)),ii,
+      tmp=KukanL_ii;
+      t1=tmp_1; nn1=floor(t1);
+      t2=tmp_2; nn2=floor(t2);
+      PtL=[];
+      if(t1-nn1<1-Eps,
+        tmp=PointonCurve(t1,pt1);
+        PtL=[tmp];
+      );
+      forall((nn1+1)..nn2,jj,
+        tmp=PointonCurve(jj,pt1);
+        PtL=append(PtL,tmp);
+      );
+      if(t2-nn2>Eps,
+        tmp=PointonCurve(t2,pt1);
+        PtL=append(PtL,tmp);
+      );
+      tmp=Listplot("",PtL,["nodata"]);
+      Res=append(Res,tmp);
+    );
+    Allres=concat(Allres,Res);
+  );
+  Allres;
+);
+
+Kukannozoku(Jokyo,KukanL):=(
+  regional(Res,Eps,nn,ii,t1,t2,Ku,Flg,contflg,tmp,tmp1);
+  Eps=10^(-6);
+  nn=length(KukanL);
+  t1=Jokyo_1; t2=Jokyo_2;
+  tmp=KukanL_1;
+  t1=max(t1,tmp_1);
+  tmp=KukanL_nn;
+  t2=min(t2,tmp_2);
+  Res=[];
+  Flg=0;
+  contflg=0;
+  forall(1..nn,ii,
+    if(contflg==0,
+      Ku=KukanL_ii;
+      if(Flg==0,
+        if(Ku_2<t1,
+          Res=append(Res,Ku);
+        ,
+          Flg=1;
+          if(Ku_1<t1-Eps, 
+            tmp=[Ku_1,t1];
+            Res=append(Res,tmp);
+          );
+          if(Ku_2>t2+Eps,
+            tmp=[t2,Ku_2];
+            Res=append(Res,tmp);
+          );
+        );
+      ,
+        if(Flg==1,
+          if(Ku_2<t2,
+            contflg=1;
+          ,
+            if(contflg==0,
+              Flg=2;
+              if(Ku_1<t2-Eps,
+                Ku=[t2,Ku_2];
+              );
+              Res=append(Res,Ku);
+            );
+          );
+        ,
+          if(contflg==0,
+            Res=append(Res,Ku);
+          );
+        );
+      );
+    );
+  );
+  Res;
+);
+
+////////////////// end of current skeleton//////////////
 
 ProjcoordCurve(Curve):=(
   regional(SP,CP,ST,CT,Out,jj,pt,x,y,z,xz,yz,zz);

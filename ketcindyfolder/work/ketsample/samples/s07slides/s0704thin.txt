@@ -1,5 +1,4 @@
-%%タイトル::slide0::kabegami//
-タイトル::slide0//
+タイトル::slide0::%wallpaper/
 
 %%%%%%%%%%%%%%%%//
 main::メインスライド１//

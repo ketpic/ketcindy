@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(2017.11.24) loaded");
+println("ketcindymv(20171124) loaded");
 
 //help:start();
 
@@ -132,7 +132,7 @@ Parafolder(path,fstr,sLorg,optionorg):=(
         repeat(1..30,
           if(length(fileslist(tmp))>0,wait(10));
          );
-      );//17.02.20upto
+      );//17.02.20until
     );
     sfL=[];
     forall(1..(length(sL)),nn,
@@ -255,7 +255,7 @@ Animatefile(path,folder):=(
     ,
       tmp="\scalebox{\figsize}{\input{\parapath/";//17.12.07
       tmp=tmp+folder+"/"+tmp1_#+"}}%"; 
-    ); // 17.08.30upto
+    ); // 17.08.30until
     println(SCEOUTPUT,tmp);
 //    println(SCEOUTPUT,""); //17.06.25
     if(#<length(tmp1),
@@ -272,7 +272,7 @@ Mkanimation():=(
   if(!isexists(Dirwork,ParaPath), //17.10.14from
     Parafolder();
   );
-  Animatefile(); //17.10.14upto
+  Animatefile(); //17.10.14until
   Mkanimation(Dirwork,ParaPath);
 );
 Mkanimation(folder):=Mkanimation(Dirwork,folder);
@@ -295,7 +295,7 @@ Mkanimation(path,folder):=(
     if(tmp1=="T",
       title=tmp2;
     );
-  ); //17.11.25upto
+  ); //17.11.25until
   Fheadbkup=Fhead;
   Fhead="animate"+folder; 
   Pathpdfbkup=Pathpdf;
@@ -306,7 +306,7 @@ Mkanimation(path,folder):=(
     tex=substring(tmp1,tmp_(length(tmp)),length(tmp1));
   ,
     tex=tmp1;
-  );//17.10.14upto
+  );//17.10.14until
   if((tex=="platex")%(tex=="uplatex"),
     if(tex=="platex",article="jarticle",article="ujarticle");
   ,
@@ -441,7 +441,7 @@ Mkflipanime(path,folder):=(
     if(tmp1=="T",
       title=tmp2;
     );
-  ); //17.11.25upto
+  ); //17.11.25until
   Fheadbkup=Fhead;
   Fhead="flipanime"+folder; 
   tmp1=replace(PathT,pathsep(),"/");
@@ -450,7 +450,7 @@ Mkflipanime(path,folder):=(
     tex=substring(tmp1,tmp_(length(tmp)),length(tmp1));
   ,
     tex=tmp1;
-  );//17.10.14upto
+  );//17.10.14until
   if((tex=="platex")%(tex=="uplatex"),
     if(tex=="platex",article="jarticle",article="ujarticle");
   ,

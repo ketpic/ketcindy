@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Dec. 9th  2017
+Install of KeTCindy(Mac)       Modified : Mar. 27th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -12,10 +12,10 @@ Install of KeTCindy(Mac)       Modified : Dec. 9th  2017
              Check "Hard Disk".
       (2) Password of Administrator will be required in 1), 2) and 3)(1).
       (3) Download/Copy the followings and make their virtual disks.
-                  Winstart.dmg
+                  Macstart.dmg
                   ketcindyfolder.dmg
                   kettexnormal.dmg (when you use kettex)
-      (4) Select copyscripts.sh in ketcindyfoler and "get info".
+      (4) Select copyfilessetketcindy.sh in ketcindyfoler and "get info".
                  Change "Open with " to "Terminal".
              Rem) "Terminal" will be sometimes used. It is in "/Applications/Utilities".
              Rem)  if OS is Sierra, start up "Terminal", and execute:
@@ -63,7 +63,7 @@ Install of KeTCindy(Mac)       Modified : Dec. 9th  2017
                       Mkkc    "sh" or "open"
 
 4) Test run of KeTCindy
-      (1) Double-click "template.cdy" in "ketcindy/ketfiles".
+      (1) Double-click "template1basic.cdy" in "ketcindy/ketfiles".
             Then a frame in white appear on the screen.
                 if not, check as follows:
                     a) From top menu of Cinderella,
@@ -94,5 +94,5 @@ Install of KeTCindy(Mac)       Modified : Dec. 9th  2017
        (2) Make the work directory as 3)(3).
 
 7) Install other softwares
-      (1) Use Softwares.dmg.
+      (1) Use Relatedsoftwares.zip.
       (2) Install Xcode if you use gcc to speed up drawings of surface.

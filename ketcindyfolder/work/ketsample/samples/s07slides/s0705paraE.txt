@@ -1,5 +1,4 @@
-%%title::slideE::kabegami//
-title::slideE//
+title::slideE::%wallpaperi//
 
 %%%%%%%%%%%%%%%%//
 new::parapara//

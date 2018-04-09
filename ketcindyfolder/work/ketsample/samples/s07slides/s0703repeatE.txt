@@ -1,5 +1,4 @@
-%%title::slide0::kabegami//
-title::slideE//
+title::slideE::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//

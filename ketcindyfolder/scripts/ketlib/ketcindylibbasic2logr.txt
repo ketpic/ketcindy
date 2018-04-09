@@ -1,3 +1,20 @@
+//20180405
+//    Makebat debugged
+//20180404
+//    Tlistplot changed ("Msg");
+//    WritetoRS debugged  ( openfie(..,Cdy= ))
+//20180403
+//    WritetoRS, Makebat changed  (for Zenkaku)
+//    Convsjiswin removed
+//    Mkslidesummary debugged
+//20180401
+//    Convsjiswin added
+//    Makebat changed (for convsjis )
+//20180330
+//    Presentation  changed  (for wallpaper )
+//    Settitle changed (Title option )
+//20180303
+//    Letter debugged  (for ` )
 //2017.12.24
 //    IftoR, FortoR,Deffun rewritten
 //2017.12.23

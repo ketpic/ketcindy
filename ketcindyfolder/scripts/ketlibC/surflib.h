@@ -1,7 +1,7 @@
 // 17.06.16 crvsfparadata changed ( num of devision )
 
 int output3(const char *var, const char *fname, int level, double out[][3]){
-  int nall=floor(out[0][0]+0.5), ndin, din[DsizeM][2],i,j;
+  int nall=floor(out[0][0]+0.5), ndin, din[DsizeM][2],i,j,ctr;
   double tmpd[3];
   FILE *fp;
   fp=fopen(fname,"w");
@@ -16,11 +16,18 @@ int output3(const char *var, const char *fname, int level, double out[][3]){
   for(i=1; i<=ndin; i++){
     fprintf(fp,"start//\n");
     fprintf(fp,"[");
+    ctr=0;
     for(j=din[i][0]; j<=din[i][1]; j++){
       pull3(j,out,tmpd);
       fprintf(fp,"[ %7.5f, %7.5f, %7.5f]",tmpd[0],tmpd[1],tmpd[2]);
-      if(j<din[i][1]){
-        fprintf(fp,",");
+      ctr++;
+      if(ctr==5){
+        fprintf(fp,"]//\n[");
+        ctr=0;
+      }else{
+        if(j<din[i][1]){
+          fprintf(fp,",");
+        }
       }
     }
     fprintf(fp,"]//\n");
@@ -38,7 +45,7 @@ int output3(const char *var, const char *fname, int level, double out[][3]){
 int output3h(const char *var, const char *varh, const char *fname, double out[][3]){
   // 17.06.09
   double out1[DsizeLL][3], tmpd[3];
-  int din1[DsizeM][2],ndin2, din2[DsizeM][2], i, j;
+  int din1[DsizeM][2],din2[DsizeM][2], i, j,ctr;
   FILE *fp;
   fp=fopen(fname,"w");
   if (fp == NULL) { 
@@ -48,16 +55,25 @@ int output3h(const char *var, const char *varh, const char *fname, double out[][
   dataindexd3(3,out,din1);
   out1[0][0]=0;
   appendd3(0, din1[1][0],din1[1][1],out,out1);
-  ndin2=dataindexd3(2, out1,din2);
+  dataindexd3(2, out1,din2);
   fprintf(fp,"%s//\n",var); 
-  for(i=1; i<=ndin2; i++){
+  for(i=1; i<=length2i(din2); i++){
     fprintf(fp,"start//\n");
     fprintf(fp,"[");
+    ctr=0;
     for(j=din2[i][0]; j<=din2[i][1]; j++){
       pull3(j,out1,tmpd);
       fprintf(fp,"[ %7.5f, %7.5f, %7.5f]",tmpd[0],tmpd[1],tmpd[2]);
-      if(j<din2[i][1]){
-        fprintf(fp,",");
+      ctr++;
+      if(ctr==5){
+        if(j<din2[i][1]){
+          fprintf(fp,"]//\n[");
+          ctr=0;
+        }
+      }else{
+        if(j<din2[i][1]){
+          fprintf(fp,",");
+        }
       }
     }
     fprintf(fp,"]//\n");
@@ -66,15 +82,23 @@ int output3h(const char *var, const char *varh, const char *fname, double out[][
   out1[0][0]=0;
   fprintf(fp,"%s//\n",varh); //17.06.16from
   appendd3(0, din1[2][0],din1[2][1],out,out1);
-  ndin2=dataindexd3(2, out1,din2);
-  for(i=1; i<=ndin2; i++){
+  dataindexd3(2, out1,din2);
+  for(i=1; i<=length2i(din2); i++){
     fprintf(fp,"start//\n");
     fprintf(fp,"[");
     for(j=din2[i][0]; j<=din2[i][1]; j++){
       pull3(j,out1,tmpd);
       fprintf(fp,"[ %7.5f, %7.5f, %7.5f]",tmpd[0],tmpd[1],tmpd[2]);
-      if(j<din2[i][1]){
-        fprintf(fp,",");
+      ctr++;
+      if(ctr==5){
+        if(j<din2[i][1]){
+          fprintf(fp,"]//\n[");
+          ctr=0;
+        }
+      }else{
+        if(j<din2[i][1]){
+          fprintf(fp,",");
+        }
       }
     }
     fprintf(fp,"]//\n");
@@ -174,14 +198,14 @@ double invparapt(double ph, double fh[][2], double fk[][3],double out[3]){
   return n+s0;
 }
 
-int surfcurve(int level, double crv[][2], double pdata[][3]){
+int surfcurve(short ch,int level, double crv[][2], double pdata[][3]){
   double p2[2], pt[3];
   int i, n, nall;
   n=length2(crv);
   pdata[0][0]=0;
   for(i=1; i<=n; i++){
     pull2(i,crv,p2);
-    surffun(p2[0],p2[1],pt);
+    surffun(ch,p2[0],p2[1],pt);
     nall=addptd3(pdata,pt);
   }
   return nall;
@@ -205,24 +229,25 @@ int xyzax3data(double x0, double x1, double y0, double y1, double z0, double z1,
   return nall;
 }
 
-void evlptablepara(void){
+void evlptablepara(short ch){
   int i, j;
   double u,v,u1,u2,v1,v2,pt1[3],pt2[3],pt2d1[2],pt2d2[2],dxu,dyu,dxv,dyv;
   double du=(Urng[1]-Urng[0])/Mdv, dv=(Vrng[1]-Vrng[0])/Ndv;
+  double eps=0.00001;
   for (j= 0; j < Ndv+1; j++) {
     v=Vrng[0]+j*dv;
-    v1=v-Eps/2; v2=v+Eps/2;
+    v1=v-eps/2; v2=v+eps/2;
     for (i = 0; i < Mdv+1; i++) {
       u=Urng[0]+i*du;
-      u1=u-Eps/2; u2=u+Eps/2;
-      surffun(u1,v,pt1); parapt(pt1,pt2d1);
-	  surffun(u2,v,pt2); parapt(pt2,pt2d2);	  
-      dxu=(pt2d2[0]-pt2d1[0])/Eps;
-      dyu=(pt2d2[1]-pt2d1[1])/Eps;
-      surffun(u,v1,pt1); parapt(pt1,pt2d1);
-      surffun(u,v2,pt2); parapt(pt2,pt2d2);
-      dxv=(pt2d2[0]-pt2d1[0])/Eps;
-      dyv=(pt2d2[1]-pt2d1[1])/Eps;
+      u1=u-eps/2; u2=u+eps/2;
+      surffun(ch,u1,v,pt1); parapt(pt1,pt2d1);
+	  surffun(ch,u2,v,pt2); parapt(pt2,pt2d2);	  
+      dxu=(pt2d2[0]-pt2d1[0])/eps;
+      dyu=(pt2d2[1]-pt2d1[1])/eps;
+      surffun(ch,u,v1,pt1); parapt(pt1,pt2d1);
+      surffun(ch,u,v2,pt2); parapt(pt2,pt2d2);
+      dxv=(pt2d2[0]-pt2d1[0])/eps;
+      dyv=(pt2d2[1]-pt2d1[1])/eps;
       Zval[j][i]=dxu*dyv-dxv*dyu;     
     }
   }
@@ -233,6 +258,100 @@ void evlptablepara(void){
     Yval[j]=Vrng[0]+j*dv;
   }
 };
+
+double evlpfun(short ch, double u, double v){
+  double u1,u2,v1,v2,pt1[3],pt2[3],pt2d1[2],pt2d2[2],dxu,dyu,dxv,dyv;
+  double du=(Urng[1]-Urng[0])/Mdv, dv=(Vrng[1]-Vrng[0])/Ndv;
+  double eps=0.00001;
+  u1=u-eps/2; u2=u+eps/2;
+  if(u1<Urng[0]){u1=Urng[0];}
+  if(u2>Urng[1]){u2=Urng[1];}
+  surffun(ch,u1,v,pt1); parapt(pt1,pt2d1);
+  surffun(ch,u2,v,pt2); parapt(pt2,pt2d2);	  
+  dxu=(pt2d2[0]-pt2d1[0])/(u2-u1);
+  dyu=(pt2d2[1]-pt2d1[1])/(u2-u1);
+  v1=v-eps/2; v2=v+eps/2;
+  if(v1<Vrng[0]){v1=Vrng[0];}
+  if(v2>Vrng[1]){v2=Vrng[1];}
+  surffun(ch,u,v1,pt1); parapt(pt1,pt2d1);
+  surffun(ch,u,v2,pt2); parapt(pt2,pt2d2);
+  dxv=(pt2d2[0]-pt2d1[0])/(v2-v1);
+  dyv=(pt2d2[1]-pt2d1[1])/(v2-v1);
+  return dxu*dyv-dxv*dyu;     
+};
+
+int envelopedata(short ch, double out[][2]){
+  int i, j, k, ctrq=0,ctr, nall;
+  double uval1,uval2,vval1,vval2,eval11,eval12,eval21,eval22;
+  double pl[5][2], vl[5], ql[11][2], out2[DsizeM][2];
+  double du=(Urng[1]-Urng[0])/Mdv;
+  double dv=(Vrng[1]-Vrng[0])/Mdv;
+  ctr=0;
+  for (j = 0; j < Ndv; j++) {
+    vval1=Vrng[0]+j*dv;
+    vval2=Vrng[0]+(j+1)*dv;
+    uval1=Urng[0];
+    eval11=evlpfun(ch,uval1,vval1);
+    eval12=evlpfun(ch,uval1,vval2);
+    for (i = 0; i < Mdv; i++) {
+      uval2=Urng[0]+(i+1)*du;
+      eval21=evlpfun(ch,uval2,vval1);
+      eval22=evlpfun(ch,uval2,vval2);
+	  pl[0][0]=uval1; pl[0][1]=vval1; vl[0]=eval11;
+      pl[1][0]=uval2; pl[1][1]=vval1; vl[1]=eval21;
+      pl[2][0]=uval2; pl[2][1]=vval2; vl[2]=eval22;
+      pl[3][0]=uval1; pl[3][1]=vval2; vl[3]=eval12;
+	  pl[4][0]=uval1; pl[4][1]=vval1; vl[4]=eval11;
+      ctrq=0;
+      for (k = 0; k < 4; k++) {
+        if(fabs(vl[k])<=Eps){
+          ql[ctrq][0]=pl[k][0];
+          ql[ctrq][1]=pl[k][1];
+          ctrq++;
+        }
+        else if(vl[k]>Eps){
+          if(vl[k+1]< -Eps){
+            ql[ctrq][0]=1/(vl[k]-vl[k+1])*(-vl[k+1]*pl[k][0]+vl[k]*pl[k+1][0]);
+            ql[ctrq][1]=1/(vl[k]-vl[k+1])*(-vl[k+1]*pl[k][1]+vl[k]*pl[k+1][1]);
+            ctrq++;
+          }
+        }
+        else{
+          if(vl[k+1]>Eps){
+            ql[ctrq][0]=1/(-vl[k]+vl[k+1])*(vl[k+1]*pl[k][0]-vl[k]*pl[k+1][0]);
+            ql[ctrq][1]=1/(-vl[k]+vl[k+1])*(vl[k+1]*pl[k][1]-vl[k]*pl[k+1][1]);
+            ctrq++;
+          }
+        }
+      }
+      uval1=uval2;
+      eval11=eval21;
+      eval12=eval22;
+      if(ctrq==2){
+        if(ctr>0){
+          ctr++;
+          out[ctr][0]=Inf;
+          out[ctr][1]=2;  // 2 <- 0 ?
+        }
+        ctr++;
+        out[ctr][0]=ql[0][0];
+        out[ctr][1]=ql[0][1];
+        ctr++;
+        out[ctr][0]=ql[1][0];
+        out[ctr][1]=ql[1][1];
+      }
+    }
+  }
+  out[0][0]=ctr;
+  if(ctr>0){
+    nall=connectseg(out, Eps, out2);
+    out[0][0]=0;
+    nall=appendd2(2,1,nall,out2,out);
+  }
+  return nall;
+}
+
+/*
 
 int implicitplot(double out[][2]){
   int i, j, k, ctrq=0,ctr, nall;
@@ -291,7 +410,9 @@ int implicitplot(double out[][2]){
   return nall;
 }
 
-int cuspsplitpara(double pdata[][2], double outkL[][3]){
+*/
+
+int cuspsplitpara(short ch,double pdata[][2], double outkL[][3]){
   int i, j, ng, n, nd, ndd, ndrop, is, ncusp=0, ncusppt,st, en, npk,nph, cflg;
   int cusp[DsizeM], cuspflg;
   int ntmp,ntmp1,ntmp2, ntmpnum, noutkL=0, noutk=0, nout=0;
@@ -314,7 +435,7 @@ int cuspsplitpara(double pdata[][2], double outkL[][3]){
     npk=0; nph=0;
     for(i=1; i<=en-st+1; i++){
       pull2(st+i-1,pdata,tmp);
-      surffun(tmp[0],tmp[1],pt3d);
+      surffun(ch,tmp[0],tmp[1],pt3d);
       parapt(pt3d,pt2d);
       if(i==1){
         npk=addptd3(ptk,pt3d);
@@ -476,7 +597,7 @@ int cuspsplitpara(double pdata[][2], double outkL[][3]){
   return noutkL;
 }
 
-int makexybdy(double ehL[][2]){
+int makexybdy(short ch,double ehL[][2]){
   int i, nehL, ntmpd2;
   double ptd3[3],ptd2[2],tmpd2[DsizeM][2],du,dv;
   ehL[0][0]=0; nehL=0;
@@ -485,7 +606,7 @@ int makexybdy(double ehL[][2]){
   if(DrawE==1){
     tmpd2[0][0]=0; ntmpd2=0;
     for(i=0; i<=Ndv; i++){
-      surffun(Urng[1],Vrng[0]+i*dv,ptd3);
+      surffun(ch,Urng[1],Vrng[0]+i*dv,ptd3);
       ntmpd2=push2(ptd3[0],ptd3[1],tmpd2);
     }
     nehL=appendd2(2,1,ntmpd2,tmpd2,ehL);
@@ -493,7 +614,7 @@ int makexybdy(double ehL[][2]){
   if(DrawN==1){
     tmpd2[0][0]=0; ntmpd2=0;
     for(i=0; i<=Mdv; i++){
-      surffun(Urng[0]+i*du,Vrng[1],ptd3);
+      surffun(ch,Urng[0]+i*du,Vrng[1],ptd3);
       ntmpd2=push2(ptd3[0],ptd3[1],tmpd2);
     }
     nehL=appendd2(2,1,ntmpd2,tmpd2,ehL);
@@ -501,7 +622,7 @@ int makexybdy(double ehL[][2]){
   if(DrawW==1){
     tmpd2[0][0]=0; ntmpd2=0;
     for(i=0; i<=Ndv; i++){
-      surffun(Urng[0],Vrng[0]+i*dv,ptd3);
+      surffun(ch,Urng[0],Vrng[0]+i*dv,ptd3);
       ntmpd2=push2(ptd3[0],ptd3[1],tmpd2);
     }
     nehL=appendd2(2,1,ntmpd2,tmpd2,ehL);
@@ -509,7 +630,7 @@ int makexybdy(double ehL[][2]){
   if(DrawS==1){
     tmpd2[0][0]=0; ntmpd2=0;
     for(i=0; i<=Mdv; i++){
-      surffun(Urng[0]+i*du,Vrng[0],ptd3);
+      surffun(ch,Urng[0]+i*du,Vrng[0],ptd3);
       ntmpd2=push2(ptd3[0],ptd3[1],tmpd2);
     }
     nehL=appendd2(2,1,ntmpd2,tmpd2,ehL);
@@ -517,142 +638,98 @@ int makexybdy(double ehL[][2]){
   return nehL;
 }
 
-int partitionseg(double fig[][2],double gL[][2], int ns, double out[]){
-  int nother, ndin, din[DsizeM][2], ndin2, din2[DsizeM][2];
-  int npar,nkouL, nout, ng;
-  int npt=length2(fig), ngL=length2(gL), npp;
-  int i, j, jj, n, k, ntmp1, ntmp2, ntmp3,tmp2i1[DsizeM], flg;
-  double eps0=pow(10,-5.0),tmp1d2[2], tmp2d2[2],tmpd4[4], dtmp, s;
-  double p[2], q[2], pd3[3], ans[4], tmp1d1[DsizeM], tmp2d1[DsizeM], tmp3d1[DsizeM];
-  double other[DsizeM], parL[DsizeM], g[DsizeM][2], kouL[DsizeM][4];
+void partitionseg(double fig[][2],double gL[][2], int ns, double parL[]){
+  int ii,jj,kk,n,din[DsizeM][2],din2[DsizeM][2];
+  double eps0=pow(10,-5.0),tmpd4[4], tmpd6[6],tmp,tmp2;
+  double p[2], q[2], pd3[3], ans[4], tmp1d1[DsizeM], tmp2d1[DsizeM];
+  double other[DsizeM], g[DsizeM][2], kouL[DsizeS][4],kouL6[DsizeS][6];
   if(ns>1){
-    ndin=dataindexd1(Otherpartition,din);
-    other[0]=0; nother=0;
-    for(i=din[ns][0]; i<=din[ns][1]; i++){
-      dtmp=Otherpartition[i];
-      nother++;
-      other[nother]=dtmp;
+    dataindexd1(Otherpartition,din);
+    other[0]=0;
+    for(ii=din[ns][0]; ii<=din[ns][1]; ii++){
+      appendd1(other,Otherpartition[ii]);
+    }
+  }else{
+    other[0]=0;
+  }
+  parL[0]=0;
+  appendd1(parL,1);
+  appendd1(parL,length2(fig));
+  if(length1(other)>0){
+    for(ii=1; ii<=length1(other); ii++){
+      appendd1(parL,other[ii]);
     }
   }
-  else{
-    other[0]=0; nother=0;
-    Otherpartition[0]=0;
-    ndin=dataindexd2(2,gL,din);
-    for(i=1; i<=ndin-1; i++){
-      Otherpartition[i]=Inf; Otherpartition[0]++;
-    }
-  }
-  parL[1]=1; parL[2]=npt; 
-  parL[0]=2; npar=2;
-  if(nother>0){
-    for(i=1; i<=nother; i++){
-      npar=appendd1(parL,other[i]);
-    }
-  }
-  ndin=dataindexd2(2,gL,din);
-  for(n=ns; n<=ndin; n++){
+  dataindexd2(2,gL,din);
+  for(n=ns; n<=din[0][0]; n++){
     g[0][0]=0; 
-    ng=appendd2(0,din[n][0],din[n][1],gL,g);
-	flg=0;
-    for(i=1; i<=ng; i++){
-      pull2(i,fig,tmp1d2);
-      pull2(i,g,tmp2d2);
-      if(dist(2,tmp1d2,tmp2d2)>Eps){
-        flg=1;
-        break;
+    appendd2(2,din[n][0],din[n][1],gL,g);
+    intersectcurvesPp(fig,g,20,kouL6);
+    kouL[0][0]=0;
+    for(ii=1;ii<=length6(kouL6);ii++){
+      pull6(ii,kouL6,tmpd6);
+      push4(tmpd6[0],tmpd6[1],tmpd6[2],tmpd6[3],kouL);
+    }
+    tmp1d1[0]=0;tmp2d1[0]=0;
+    for(jj=1;jj<=length4(kouL);jj++){
+      pull4(jj,kouL,tmpd4);
+      tmp=tmpd4[2];
+      if((tmp>1+Eps)&&(tmp<length2(fig)-Eps)){
+        appendd1(tmp1d1,tmp);
+      }
+      tmp=tmpd4[3];
+      if((tmp>1+Eps)&&(tmp<length2(g)-Eps)){
+        appendd1(tmp2d1,tmp);
       }
     }
-    if(flg==0){
-      nkouL=intersectselfPp(fig,Eps1, Eps2,kouL);
-	}
-    else{
-	  nkouL=intersectcrvsPp(fig, g, Eps1, Eps2, kouL);
-	  pull2(1,fig,tmp1d2);
-      nearestptpt(tmp1d2,g,ans);
-      if((ans[3]>eps0)&&(ans[3]<Eps1)){
-        tmpd4[0]=ans[0]; tmpd4[1]=ans[1];
-        tmpd4[2]=1; tmpd4[3]=floor(ans[2]+Eps);
-        nkouL=addptd4(kouL, tmpd4);
-      }
-      pull2(npt,fig,tmp1d2);
-      nearestptpt(tmp1d2,g, ans);
-      tmpd4[0]=ans[0]; tmpd4[1]=ans[1];
-      tmpd4[2]=ans[2]; tmpd4[3]=ans[3];
-      if((tmpd4[3]>eps0)&&(tmpd4[3]<Eps1)){
-        tmpd4[2]=npt; tmpd4[3]=floor(ans[2]+Eps);
-        nkouL=addptd4(kouL, tmpd4);
-	  }
+    for(jj=1;jj<=length1(tmp1d1);jj++){
+      appendd1(parL,tmp1d1[jj]);
     }
-    for(i=1; i<=nkouL; i++){
-      p[0]=kouL[i][0]; p[1]=kouL[i][1];  //dim(kouL)=4
-      s=kouL[i][2];
-      npar=appendd1(parL,s);
-	  k=floor(kouL[i][3]+Eps);
-      s=paramoncurve(p,k,g);
-	  ndin2=dataindexd1(Otherpartition,din2);
-      ntmp1=din2[n][1]-din2[n][0]+1;
-	  for(j=1; j<=ntmp1; j++){
-        tmp1d1[j]=Otherpartition[din2[n][0]+j-1];
-      }
-      tmp1d1[0]=ntmp1;
-      ntmp1=appendd1(tmp1d1,s);
-      simplesort(tmp1d1);
-      tmp2d1[0]=0; ntmp2=0;
-      for(j=1; j<=ndin2; j++){
-        tmp3d1[0]=0; ntmp3=0;
-        ndin2=dataindexd1(Otherpartition,din2);
-        for(jj=din2[j][0]; jj<=din2[j][1]; jj++){
-          ntmp3=appendd1(tmp3d1,Otherpartition[jj]);
-        }
-        if(j!=n){
-          for(jj=1; jj<=ntmp3; jj++){
-            ntmp2=appendd1(tmp2d1,tmp3d1[jj]);
+    if((ns>0)&&(n>ns)&&(length1(tmp2d1)>0)){
+      dataindexd1(Otherpartition,din);
+      tmp1d1[0]=0;
+      for(ii=1;ii<=length2i(din);ii++){
+        if(ii==n){
+          for(kk=1;kk<=length1(tmp2d1);kk++){
+            appendd1(tmp1d1,tmp2d1[kk]);
           }
         }
-        else{
-          for(jj=1; jj<=ntmp1; jj++){
-            ntmp2=appendd1(tmp2d1,tmp1d1[jj]);
-          }
+        for(jj=din[ii][0]; jj<=din[ii][1];jj++){
+           appendd1(tmp1d1,Otherpartition[jj]);
         }
-        ntmp2=appendd1(tmp2d1,Inf);
+        if(ii<length2i(din)){
+          appendd1(tmp1d1,Inf);
+        }
       }
-      ntmp2--;
-      for(j=1; j<=ntmp2; j++){
-        Otherpartition[j]=tmp2d1[j];
+    }
+    dataindexd1(tmp1d1,din);
+    Otherpartition[0]=0;
+    for(ii=1;ii<=length2i(din);ii++){
+      for(jj=din[ii][0];jj<=din[ii][1];jj++){
+        appendd1(Otherpartition,tmp1d1[jj]);
       }
-      Otherpartition[0]=ntmp2;
     }
   }
   simplesort(parL);
-  parL[1]=1;
-  out[1]=parL[1];
-  out[0]=1; nout=1;
-  pointoncurve(parL[1],fig, Eps, p);
-  Partitionpt[0][0]=0;
-  npp=addptd2(Partitionpt, p);  
-  for(i=1; i<=npar; i++){
-    pointoncurve(parL[i],fig, Eps, p);
-    dtmp=out[nout]; 
-    pointoncurve(dtmp,fig, Eps, q);
-    if(dist(2,p,q)>Eps1){
-      nout=appendd1(out,parL[i]);
-	  npp=addptd2(Partitionpt,p);
+  tmp1d1[0]=0;
+  for(ii=1;ii<=length1(parL);ii++){
+    appendd1(tmp1d1,parL[ii]);
+  }
+  parL[0]=0;
+  tmp2=-1;
+  for(jj=1;jj<=length1(tmp1d1);jj++){
+    tmp=tmp1d1[jj];
+    if(fabs(tmp-tmp2)>Eps1){
+      appendd1(parL,tmp);
+      tmp2=tmp;
     }
   }
-  if(out[nout]!=npt){
-    out[nout]=npt;
-  }
-  if(nout==1){
-    out[1]=1; out[2]=npt;
-    out[0]=2;  nout=2;
-  }
-  return nout;
 }
 
-double funpthiddenQ(double u, double v, double pa[3]){
+double funpthiddenQ(short ch,double u, double v, double pa[3]){
   double Vec[3]={sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA)};
   double eps0=pow(10,-4.0)*(XMAX-XMIN)/10, pt[3], out;
-  surffun(u, v, pt);
+  surffun(ch,u, v, pt);
   if((fabs(Vec[1])>eps0)||(fabs(Vec[0])>eps0)){
     out=(Vec[1]*(pt[0]-pa[0])-Vec[0]*(pt[1]-pa[1]));
   }
@@ -671,7 +748,7 @@ void makevaltable(double pta[3]){
     v=Vrng[0]+j*dv;
     for(i=0; i<=Mdv; i++){
       u=Urng[0]+i*du;
-      Zval[j][i]=funpthiddenQ(u, v, pta);
+      Zval[j][i]=funpthiddenQ(Ch,u, v, pta);
     }
   }
   for(i=0; i<=Mdv; i++){
@@ -682,7 +759,7 @@ void makevaltable(double pta[3]){
   }
 }
 
-int pthiddenQ(double pta[3], int uveq, double eps[2]){
+int pthiddenQ(short ch,double pta[3], int uveq, double eps[2]){
   int i, j, k, out, nqL, nsL, nptL, flg, nxt;
   double Vec[3]={sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA)};
   double eps0, epspt, vec1[3], po[3]={0,0,0}, tmpd1, tmp1d1, tmp2d1, m1, m2;
@@ -737,8 +814,8 @@ int pthiddenQ(double pta[3], int uveq, double eps[2]){
       if(nqL==2){
         puv1[0]=qL[1][0]; puv1[1]=qL[1][1]; 
         puv2[0]=qL[2][0]; puv2[1]=qL[2][1];  
-        surffun(puv1[0],puv1[1],p1d3);
-        surffun(puv2[0],puv2[1],p2d3);
+        surffun(ch,puv1[0],puv1[1],p1d3);
+        surffun(ch,puv2[0],puv2[1],p2d3);
         if(dist(2,p1d3,p2d3)<eps0){
           continue;
         }
@@ -935,18 +1012,18 @@ int nohiddenpara2(double paL[], double fk[][3], int uveq, double figkL[][3]){
     s=(paL[n]+paL[n+1])/2.0;
     ntmp=invparapt(s,fh,fk, pta);
     parapt(pta,ptap);
-    epstmp[0]=Eps1; epstmp[1]=Eps3;
+    epstmp[0]=Eps1; epstmp[1]=1;
     if((n==1)&&(cspflg % 2==0)){
       pull2(1,fh,p1);
       dtmp=fmin(Eps1*dist(2,ptap, p1),Eps1); 
-	  epstmp[0]=dtmp; epstmp[1]=Eps3; 
+	  epstmp[0]=dtmp; epstmp[1]=1; 
     }
     if((n==npaL-1)&&(cspflg % 3==0)){
       pull2(nfh,fh,p1);
       dtmp=fmin(Eps1*dist(2, ptap, p1), Eps1); 
-	  epstmp[0]=dtmp; epstmp[1]=Eps3; 
+	  epstmp[0]=dtmp; epstmp[1]=1; 
     }
-    flg=pthiddenQ(pta, uveq, epstmp);
+    flg=pthiddenQ(Ch,pta, uveq, epstmp);
     if(flg==0){
       nseL=appendi1(seL,n);
     }
@@ -1050,7 +1127,7 @@ int nohiddenpara2(double paL[], double fk[][3], int uveq, double figkL[][3]){
   return nfigkL;
 }
 
-int borderparadata(double fkL[][3], double fsL[][3]){
+int borderparadata(short ch,double fkL[][3], double fsL[][3]){
   double ekL[DsizeL][3], fall[DsizeL][2], fbdxy[DsizeL][2];
   double tmpd3[DsizeM][3],  tmpd2[DsizeM][2], p[2], p3[3];
   double figkL[DsizeM][3], du, dv;
@@ -1067,7 +1144,7 @@ int borderparadata(double fkL[][3], double fsL[][3]){
     for(j=0; j<=Ndv; j++){
       nall=add2(tmpd2, Urng[1], Vrng[0]+j*dv);
     }
-    nall=surfcurve(2, tmpd2,tmpd3);
+    nall=surfcurve(ch,2, tmpd2,tmpd3);
     nekL=appendd3(2,1,nall,tmpd3,ekL);
   }
   if(DrawN==1){
@@ -1075,7 +1152,7 @@ int borderparadata(double fkL[][3], double fsL[][3]){
     for(j=0; j<=Mdv; j++){
       nall=add2(tmpd2, Urng[0]+j*du, Vrng[1]);
     }
-    nall=surfcurve(2, tmpd2,tmpd3);
+    nall=surfcurve(ch,2, tmpd2,tmpd3);
     nekL=appendd3(2,1,nall,tmpd3,ekL);
   }
   if(DrawW==1){
@@ -1083,7 +1160,7 @@ int borderparadata(double fkL[][3], double fsL[][3]){
     for(j=0; j<=Ndv; j++){
       nall=add2(tmpd2, Urng[0], Vrng[0]+j*dv);
     }
-    nall=surfcurve(2, tmpd2,tmpd3);
+    nall=surfcurve(ch,2, tmpd2,tmpd3);
     nekL=appendd3(2,1,nall,tmpd3,ekL);
   }
   if(DrawS==1){
@@ -1091,29 +1168,28 @@ int borderparadata(double fkL[][3], double fsL[][3]){
     for(j=0; j<=Mdv; j++){
       nall=add2(tmpd2, Urng[0]+j*du, Vrng[0]);
     }
-    nall=surfcurve(2, tmpd2,tmpd3);
+    nall=surfcurve(ch,2, tmpd2,tmpd3);
     nekL=appendd3(2,1,nall,tmpd3,ekL);
   }
   if(nekL>0){
     nfkL=appendd3(2,1,nekL,ekL,fkL);
   }
   nfall=projpara(fkL,fall);
-  nfbdxy=makexybdy(fbdxy);
-  Otherpartition[0]=0;
+  nfbdxy=makexybdy(ch,fbdxy);
   ndin=dataindexd2(2,fall,din);
   Borderpt[0][0]=0;
+  Otherpartition[0]=0;
   for(i=1; i<=ndin-1; i++){
     Otherpartition[i]=Inf; Otherpartition[0]++;
   }
   Borderhiddendata[0][0]=0;  
-  ndin=dataindexd2(2,fall,din);
   ndin2=dataindexd3(2,fkL,din2);
   for(i=1; i<= ndin2; i++){
 	tmpd3[0][0]=0;
     ntmpd3=appendd3(0,din2[i][0],din2[i][1],fkL,tmpd3);
     ntmpd2=projpara(tmpd3,tmpd2);
-    npar=partitionseg(tmpd2,fall, 1,par);
-    if(npar>2){
+    partitionseg(tmpd2,fall, 1,par);
+	if(length1(par)>2){
       ntmp=npar-1;
       tmpd2[0][0]=0; ntmpd2=0;
       for(j=2; j<=ntmp; j++){
@@ -1139,24 +1215,152 @@ int borderparadata(double fkL[][3], double fsL[][3]){
   return nfsL;
 }
 
-int sfbdparadata(double outd3[][3]){
-  double pdata[DsizeL][2], pdatad3[DsizeL][3];
-  int nall, n;
-  int cusp[DsizeM];  // remove?
-  evlptablepara();
-  nall=implicitplot(pdata);
-  nall=cuspsplitpara(pdata, pdatad3);
+int dropnumlistcrv3(double qd[][3], double eps1, int out[]){
+  int i,j,k,nout,nall=length3(qd), nd, se, en, npd, nptL;
+  int din[DsizeM][2],ptL[DsizeL];
+  double eps=pow(10.0,-6.0), pd[DsizeL][3], p[3], tmp2d[3];
+  out[0]=0; nout=0;
+  nd=dataindexd3(2,qd,din);
+  for(j=1; j<=nd; j++){
+    se=din[j][0]; en=din[j][1];
+    pd[0][0]=0; npd=0;
+    npd=appendd3(0,se,en,qd,pd);
+    ptL[0]=0; nptL=0;
+    nptL=appendi1(ptL,1);
+    pull3(1,pd,p);
+    for(k=2; k<=npd-1; k++){
+      pull3(k,pd,tmp2d);
+      if(dist(3,p,tmp2d)>eps1){
+        nptL=appendi1(ptL,k);
+        pull3(k,pd,p);
+      }
+    }
+    pull3(npd-1,pd,p);
+    pull3(npd,pd,tmp2d);
+    if(dist(3,p,tmp2d)>eps){  // eps -> eps1 ? 
+      nptL=appendi1(ptL,npd);
+    }
+//    if(nptL==1){ptL[0]=0; nptL=0;}//180318db
+    if(nout>0){
+      nout=appendi1(out,Infint);
+    }
+    for(i=1; i<=nptL; i++){
+      nout=appendi1(out,ptL[i]);
+    }
+  }
+  out[0]=nout;
+  return nout;
+}
+
+int sfbdparadata(short ch,double outd3[][3]){
+  double pdatad3[DsizeL][3];
+  double pts[DsizeL][2],out3md[DsizeL][2],eps;
+  double tmpmd[DsizeL][2],tmp1md[DsizeL][2],tmp2md[DsizeL][2],tmp3md[DsizeL][2];
+  double tmpd[2],tmp1d[2],tmpd3[3],tmp1d3[3],tmp2d3[3],tmp2md3[DsizeL][3];
+  int din[DsizeS][2],nlist[DsizeL];
+  int ii,jj,kk,n,nall,flg;
+  envelopedata(ch, tmp3md);
+  out3md[0][0]=0;
+  pts[0][0]=0;
+  dataindexd2(2,tmp3md,din);
+  for(jj=1;jj<=length2i(din);jj++){
+	tmp1md[0][0]=0;
+    tmp2md3[0][0]=0;
+    for(kk=din[jj][0];kk<=din[jj][1];kk++){
+      pull2(kk,tmp3md,tmpd);
+      addptd2(tmp1md,tmpd);
+      surffun(ch,tmpd[0],tmpd[1],tmpd3);
+      addptd3(tmp2md3,tmpd3);
+    }
+    dropnumlistcrv3(tmp2md3,Eps1,nlist);
+    if(nlist[0]==1){
+      pull2(nlist[1],tmp1md,tmpd);
+      addptd2(pts,tmpd);
+    }else{
+      tmpmd[0][0]=0;
+      for(kk=1;kk<=nlist[0];kk++){
+        pull2(nlist[kk],tmp1md,tmpd);
+        addptd2(tmpmd,tmpd);
+      }
+      if(length2(tmpmd)>0){
+        appendd2(2,1,length2(tmpmd),tmpmd,out3md);
+      }
+    }      
+  }
+  tmp3md[0][0]=0;
+  appendd2(2,1,length2(pts),pts,tmp3md);
+  pts[0][0]=0;
+  for(ii=1;ii<=length2(tmp3md);ii++){
+    pull2(ii,tmp3md,tmpd);
+    surffun(ch,tmpd[0],tmpd[1],tmp1d3);
+    flg=0;
+    for(jj=1;jj<=length2(pts);jj++){
+      pull2(jj,pts,tmpd);
+      surffun(ch,tmpd[0],tmpd[1],tmp2d3);
+      if(dist(3,tmp1d3,tmp2d3)<Eps1){
+        flg=1; break;
+      }
+    }
+    if(flg==0){
+      pull2(ii,tmp3md,tmpd);
+      addptd2(pts,tmpd);
+    }
+  }
+  for(ii=1;ii<=length2(pts);ii++){
+    tmp3md[0][0]=0;
+    appendd2(2,1,length2(out3md),out3md,tmp3md);
+    out3md[0][0]=0;
+    pull2(ii,pts,tmpd);
+    surffun(ch,tmpd[0],tmpd[1],tmp1d3);
+    dataindexd2(2,tmp3md,din);
+    for(jj=1;jj<=length2i(din);jj++){
+      tmp2md[0][0]=0;
+      appendd2(2,din[jj][0],din[jj][1],tmp3md,tmp2md);
+      pull2(jj,tmp3md,tmpd);
+      surffun(ch,tmpd[0],tmpd[1],tmp2d3);
+      eps=1;
+      for(kk=1;kk<=length2(tmp2md)-1;kk++){
+        pull2(kk,tmp2md,tmpd);
+        surffun(ch,tmpd[0],tmpd[1],tmp1d3);
+        pull2(kk+1,tmp2md,tmpd);
+        surffun(ch,tmpd[0],tmpd[1],tmpd3);
+        if(eps>dist(3,tmp1d3,tmpd3)){
+          eps=dist(3,tmp1d3,tmpd3);
+        }
+      }
+      pull2(1,tmp2md,tmpd);
+      surffun(ch,tmpd[0],tmpd[1],tmpd3);
+      if(dist(3,tmp1d3,tmpd3)<eps+Eps){
+        appendd2(2,ii,ii,pts,out3md);
+        for(kk=1;kk<=length2(tmp2md);kk++){
+          pull2(kk,tmp2md,tmpd);
+          addptd2(out3md,tmpd);
+        }
+        continue;
+      }
+      pull2(length2(tmp2md),tmp2md,tmpd);
+      surffun(ch,tmpd[0],tmpd[1],tmpd3);
+      if(dist(3,tmp1d3,tmpd3)<eps+Eps){
+        appendd2(2,1,length2(tmp2md),tmp2md,out3md);
+        pull2(ii,pts,tmpd);
+        addptd2(out3md,tmpd);
+        continue;
+      }
+    }
+    appendd2(2,1,length2(tmp2md),tmp2md,out3md);
+  }
+  nall=cuspsplitpara(ch,out3md, pdatad3);
   n=length2(Cuspsplitpt);
   Cusppt[0][0]=0;
   nall=appendd2(0, 1,n,Cuspsplitpt,Cusppt);
-  nall= borderparadata(pdatad3, outd3);
+  nall= borderparadata(ch,pdatad3, outd3);
   push3(Inf,3,0,outd3);
   nall=appendd3(0,1,length3(Borderhiddendata),Borderhiddendata,outd3);
   push3(Inf,3,0,outd3);
   return nall;
 }
 
-void makevaltablemeet(double pa[3], double vec[3], double eps0){
+void makevaltablemeet(short ch,double pa[3], double vec[3], double eps0){
   double u, v, du, dv, pt[3];
   int i, j;
   du=(Urng[1]-Urng[0])/Mdv;
@@ -1165,7 +1369,7 @@ void makevaltablemeet(double pa[3], double vec[3], double eps0){
     v=Vrng[0]+j*dv;
     for(i=0; i<=Mdv; i++){
       u=Urng[0]+i*du;
-      surffun(u, v, pt);
+      surffun(ch,u, v, pt);
       if((fabs(vec[1])>eps0)||(fabs(vec[0])>eps0)){
         Zval[j][i]=(vec[1]*(pt[0]-pa[0])-vec[0]*(pt[1]-pa[1]));
       }
@@ -1182,7 +1386,7 @@ void makevaltablemeet(double pa[3], double vec[3], double eps0){
   }
 }
 
-int meetpoints(double pta[3], double ptb[3], double eps, double ptL[][3]){
+int meetpoints(short ch,double pta[3], double ptb[3], double eps, double ptL[][3]){
   double eps0=pow(10,-4.0), vec[3], out[DsizeM], pL[5][2], vL[5];
   double qL[DsizeM][2], p1d2[2], p2d2[2], tmpd2[2], puv1d2[2], puv2d2[2];
   double m1,m2, p1d3[3], p2d3[3], v1, v2, v3, ptd3[3], ptuvd2[2], tmp1d1;
@@ -1191,7 +1395,7 @@ int meetpoints(double pta[3], double ptb[3], double eps, double ptL[][3]){
   vec[0]=ptb[0]-pta[0];  vec[1]=ptb[1]-pta[1];  vec[2]=ptb[2]-pta[2]; 
   out[0]=0; nout=0;
   ptL[0][0]=0; nptL=0;
-  makevaltablemeet(pta,vec,eps0);
+  makevaltablemeet(Ch,pta,vec,eps0);
   for(j=0; j<=Ndv-2; j++){
     for(i=0; i<=Mdv-2; i++){
       pL[0][0]=Xval[i]; pL[0][1]=Yval[j]; vL[0]=Zval[j][i];
@@ -1225,8 +1429,8 @@ int meetpoints(double pta[3], double ptb[3], double eps, double ptL[][3]){
       if(nqL==2){
         pull2(1, qL, puv1d2);
         pull2(2, qL, puv2d2);
-        surffun(puv1d2[0], puv1d2[1], p1d3);
-        surffun(puv2d2[0], puv2d2[1], p2d3);
+        surffun(ch,puv1d2[0], puv1d2[1], p1d3);
+        surffun(ch,puv2d2[0], puv2d2[1], p2d3);
         v1=vec[0]; v2=vec[1]; v3=vec[2];
         if(fabs(v1)>eps0){
           m1=pta[2]+v3/v1*(p1d3[0]-pta[0])-p1d3[2];
@@ -1296,7 +1500,7 @@ int crvsfparadata(double fkL[][3], double fbdkL[][3], int sepflg, double out[][3
   double fbdy[DsizeL][2], fk[DsizeM][3],fkp[DsizeM][3], outh[DsizeL][3];
   double fh[DsizeM][2], parL[DsizeM], tmpmd3[DsizeM][3];
   double ptL[DsizeM][3], tmpd2[2], tmpd3[3], tmp1d1, tmp2d1, dt;
-  double po[2]={0,0}, epsd2[2]={Eps1,Eps3}, pa[3], pb[3];
+  double po[2]={0,0}, epsd2[2]={Eps1,1}, pa[3], pb[3];
   int nbor=length3(Borderhiddendata), nfkL,nfbdkL, nfbdy, nfk, nall;
   int ncshidden, npar, ndin, din[DsizeM][2], ndin2,din2[DsizeS][2];
   int nn, i, j, k, n, nptL, nout;
@@ -1321,12 +1525,12 @@ int crvsfparadata(double fkL[][3], double fbdkL[][3], int sepflg, double out[][3
     }
     nfk=appendd3(0,nfk,nfk,fkp,fk);
     nall=projpara(fk,fh);
-    npar=partitionseg(fh, fbdy,1, parL);
+    partitionseg(fh, fbdy,1, parL);
     if(sepflg>=0){
       for(i=1; i<=nfk-1; i++){
         pull3(i,fk,pa);
         pull3(i+1,fk,pb);
-        nptL=meetpoints(pa,pb, Eps2,ptL);
+        nptL=meetpoints(Ch,pa,pb, Eps2,ptL);
         for(j=1; j<=nptL; j++){
           pull3(j,ptL,tmpd3);
           parapt(tmpd3,tmpd2);
@@ -1394,7 +1598,7 @@ int wireparadata(double bdyk[][3], double udv[], double vdv[],  int num,
       nv=appendd1(vdiv,vdv[i]);
     }
   }
-  nfbdxy=makexybdy(fbdxy);
+  nfbdxy=makexybdy(Ch,fbdxy);
   Wirept[0][0]=0;
   fsL[0][0]=0; nfsL=0;
   fsLh[0][0]=0;
@@ -1407,13 +1611,13 @@ int wireparadata(double bdyk[][3], double udv[], double vdv[],  int num,
       p[0]=u; p[1]=v;
       ntmp=addptd2(tmpmd2,p);
     }
-    nfkL=cuspsplitpara(tmpmd2, fkL); 
+    nfkL=cuspsplitpara(Ch,tmpmd2, fkL); 
     ndin=dataindexd3(2,fkL,din);
     for(j=1; j<=ndin; j++){
       fk[0][0]=0;
       nfk=appendd3(0, din[j][0], din[j][1], fkL,fk);
       ntmp=projpara(fk,tmpmd2);
-	  npar=partitionseg(tmpmd2, fbdy, 1, par);
+	  partitionseg(tmpmd2, fbdy, 1, par);
 	  ntmp=length2(Partitionpt);
       if(ntmp>2){
         for(k=2; k<=ntmp; k++){
@@ -1436,13 +1640,13 @@ int wireparadata(double bdyk[][3], double udv[], double vdv[],  int num,
       p[0]=u; p[1]=v;
       ntmp=addptd2(tmpmd2,p);
     }
-    nfkL=cuspsplitpara(tmpmd2, fkL); 
+    nfkL=cuspsplitpara(Ch,tmpmd2, fkL); 
     ndin=dataindexd3(2,fkL,din);
     for(j=1; j<=ndin; j++){
       fk[0][0]=0;
       nfk=appendd3(0, din[j][0], din[j][1], fkL,fk);
       ntmp=projpara(fk,tmpmd2);
-      npar=partitionseg(tmpmd2, fbdy, 1, par);
+      partitionseg(tmpmd2, fbdy, 1, par);
 	  ntmp=length2(Partitionpt);
       if(ntmp>2){
         for(k=2; k<=ntmp; k++){
@@ -1464,13 +1668,13 @@ int wireparadata(double bdyk[][3], double udv[], double vdv[],  int num,
 /*
 double cutfun(int ch, double u, double v){
   double p[3],val ;
-  surffun(u,v,p);
+  surffun(ch,u,v,p);
   val=p[0]+p[1]-0.5;
   return val;
 }
 */
 
-void makevaltablecut(int ch){
+void makevaltablecut(int chcut){
   double eps0=pow(10,-6.0), u, v, du, dv;
   int i, j, nx=0, ny=0; ;
   du=(Urng[1]-Urng[0])/Mdv;
@@ -1479,7 +1683,7 @@ void makevaltablecut(int ch){
     v=Vrng[0]+j*dv;
     for(i=0; i<=Mdv; i++){
       u=Urng[0]+i*du;
-      Zval[j][i]=cutfun(ch, u,v);
+      Zval[j][i]=cutfun(Ch,chcut, u,v);
     }
   }
   for(i=0; i<=Mdv; i++){
@@ -1493,8 +1697,8 @@ void makevaltablecut(int ch){
 int sfcutdata(int ch, double ekL[][3]){
   double cutuvL[DsizeL][2], out1[DsizeM][2], out2[DsizeM][3], pt[3];
   int i, j, nall, ndin, din[DsizeM][2], nekL,nout1,nout2;
-  makevaltablecut(ch);
-  nall=implicitplot(cutuvL);
+//  makevaltablecut(ch); //180320
+//  nall=implicitplot(cutuvL); //180320
   ekL[0][0]=0; nekL=0;
   ndin=dataindexd2(2,cutuvL,din);
   for(i=1; i<=ndin; i++){
@@ -1502,7 +1706,7 @@ int sfcutdata(int ch, double ekL[][3]){
     nout1=appendd2(2,din[i][0],din[i][1],cutuvL,out1);
     out2[0][0]=0;
     for(j=1; j<=nout1; j++){
-      surffun(out1[j][0], out1[j][1], pt);
+      surffun(ch,out1[j][0], out1[j][1], pt);
       nout2=addptd3(out2,pt);
     }
     nekL=appendd3(2,1,nout2,out2,ekL);
@@ -1598,7 +1802,7 @@ int kukannozoku(double jokyo[2], double kukanL[][2], double res[][2]){
 int skeletondata3(double data[][3], double r00, 
          double eps1, double eps2, double allres[][3]){
   double objL[DsizeLL][3], pltL[DsizeLL][3];
-  double clipL[DsizeL][5];
+  double clipL[DsizeL][5],koc2d6[DsizeM][6],tmpd6[6];
   double pts1[DsizeL][2],koc[DsizeM][4], koc2[DsizeM][4], kukanL[DsizeL][2];
   double r0, t1, t2, z1, z2, tt, rr, origin[2], te, hh, ku[2], za, zb, ds[DsizeM],dmin;
   double pt[2], pta[2], ptb[2], ptq[2];
@@ -1642,7 +1846,13 @@ int skeletondata3(double data[][3], double r00,
       for(j=1; j<=length3(pltp); j++){
         push2(pltp[j][0],pltp[j][1],plt2d);
       }
-      nkoc2=intersectcrvsPp(obj2d,plt2d,eps1,eps2,koc2);
+      intersectcurvesPp(obj2d,plt2d,20,koc2d6); //180324from
+      nkoc2=length6(koc2d6);
+      koc2[0][0]=0;
+      for(ii=1;ii<=nkoc2;ii++){
+        pull6(ii,koc2d6,tmpd6);
+        push4(tmpd6[0],tmpd6[1],tmpd6[2],tmpd6[3],koc2);
+      }//180324to
       if(nkoc2>0){
         koc[0][0]=0; nkoc=0;
         pull2(1,plt2d,pta);

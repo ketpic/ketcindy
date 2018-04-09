@@ -1,5 +1,4 @@
-title::slideE//
-%%title::slideE::kabegami//
+title::slideE::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//
@@ -8,7 +7,7 @@ main::Main Slide//
 new::input and layer//
 
 layer::{100}{0}//
-putnote::se{10}{15}::figsin,0.8//
+putnote::s{65}{10}::figsin,1.2//
 end//
 
 %%%%%%%%%%%%%%%%//

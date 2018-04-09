@@ -1,3 +1,21 @@
+//20180405
+//   Ketinit changed (order of changesettiing, Dircdy)
+//20180402
+//   Implicitplot, Connectseg added
+//20180329
+//   Ketinit changed  (changing of Dircdy)
+//   Changesetting added
+//   Derivative changed  ( Numerical method supportted )
+//20180328
+//   Cindyname (=Cdyname ) added
+//   Cindyfile,Cindypath deleted
+//20180317
+//    IntersectcurvesPp changed
+//    Collectsameseg added, Collectnear commented out
+// 2018.02.11
+//    Dqq added  ( = DqDq)
+// 2018.02.06
+//    Intersectpartseg debugged 
 // 2018.02.02
 //    Enclosing2 changed (for distanted curves, startpt option removed )
 // 2018.02.01

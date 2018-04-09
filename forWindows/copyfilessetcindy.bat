@@ -1,14 +1,10 @@
-REM 2017.12.08
+REM 20180401
 echo off
 set xcp="\Windows\System32\xcopy"
 set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
 set prgcin=C:\Program Files (x86)
 if not exist "%prgcin%\Cinderella" (
   set prgcin=C:\Program Files
-)
-set prgsci=C:\Program Files (x86)
-if not exist "%prgsci%\scilab-6.0.0" (
-  set prgsci=C:\Program Files
 )
 NET SESSION > NUL 2>&1
 if %ERRORLEVEL% == 0 (
@@ -89,17 +85,6 @@ echo Dirhead="%pathT%%scripts%"; >> dirhead.txt
 echo setdirectory(Dirhead); >> dirhead.txt
 echo import("setketcindy.txt"); >> dirhead.txt
 echo import("ketoutset.txt"); >> dirhead.txt
-
-rem for Scilab from
-echo PathThead="%pathT%%bin%\"; > dirheadsci.txt
-echo Homehead="%homehead%"; >> dirheadsci.txt
-echo Dirhead="%pathT%%scripts%"; >> dirheadsci.txt
-echo setdirectory(Dirhead); >> dirheadsci.txt
-echo import("setketcindysci.txt"); >> dirheadsci.txt
-echo import("ketoutset.txt"); >> dirheadsci.txt
-echo PathS="%prgsci%\scilab-6.0.0\bin\scilex"; >> dirheadsci.txt
-rem for Scilab upto
-
 set /P STR_INPUT="Input version of R d(efault)=3.4.2 :"
 if "%STR_INPUT:~0,1%" == "d" (
   set verR=3.4.2
@@ -110,13 +95,9 @@ echo %verR%
 set prg=C:\Program Files
 if exist "%prg%\R\R-%verR%\bin\" (
   echo PathR="%prg%\R\R-%verR%\bin"; >> dirhead.txt
-  rem for Scilab
-  echo PathR="%prg%\R\R-%verR%\bin"; >> dirheadsci.txt
 ) else (
   if exist "%prg% (x86)\R\R-%verR%\bin\" (
     echo "%prg% (x86)\R\R-%verR%\bin"; >> dirhead.txt
-    rem for Scilab
-    echo "%prg% (x86)\R\R-%verR%\bin"; >> dirheadsci.txt
   ) else (
     echo "R-%verR% not found"
   )
@@ -131,8 +112,6 @@ echo %verM%
 set prg=C:\maxima-%verM%\bin\maxima.bat
 if exist "%prg%" (
   echo PathM="%prg%"; >> dirhead.txt
-  rem for Scilab
-  echo PathM="%prg%"; >> dirheadsci.txt
 ) else (
   echo "Maxima-%verM% not found"
   )
@@ -142,11 +121,5 @@ if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
 echo Pathpdf="%prgSm%"; >> dirhead.txt
-rem for Scilab
-echo Pathpdf="%prgSm%"; >> dirheadsci.txt
-echo setdirectory(Homehead+pathsep()+getname()); >> dirhead.txt
-echo setdirectory(Homehead+pathsep()+getname()); >> dirheadsci.txt
-echo import("ketcindyhead.txt"); >> dirhead.txt
-echo import("ketcindyhead.txt"); >> dirheadsci.txt
 echo "Plugins of Cindy has been set"
 pause

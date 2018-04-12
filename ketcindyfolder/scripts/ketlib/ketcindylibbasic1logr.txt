@@ -1,3 +1,5 @@
+//20180413
+//   Ketinit changed ( utf for windows removed )
 //20180408
 //   Divoptions changed ( to remove null string )
 //   Changework changed (nkfwin)

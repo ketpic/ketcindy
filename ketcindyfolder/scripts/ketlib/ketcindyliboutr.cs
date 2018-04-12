@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindyout(20180327) loaded");
+println("ketcindyout(20180412) loaded");
 
 //help:start();
 
@@ -704,7 +704,7 @@ CalcbyR(name,path,cmd,optionorg):=(
     if(cat=="Y",
       wfile=Fhead+name+".txt";
     ,
-      wfile="result.txt";
+      wfile="resultR.txt";
     );
   );
   wflg=0;
@@ -725,7 +725,11 @@ CalcbyR(name,path,cmd,optionorg):=(
       if(length(tmp)==0,wflg=1);
     );
   );
-  file=Fhead+name;
+  if(length(name)>0,//180412from
+    file=Fhead+name;
+  ,
+    file=Cindyname();
+  );//180412to
   cmdR=[];
   if(preflg==1, //18.01.27from
     cmdR=MkprecommandR();
@@ -769,17 +773,19 @@ CalcbyR(name,path,cmd,optionorg):=(
   );
   tmp1=cmdlist_(length(cmdlist));
   if(indexof(tmp1,"=")==0,
-    tmp1=tokenize(tmp1,"::");
-    if(length(tmp1)==1,
-      tmp2=name+"="+tmp1_1;
-    ,
-      tmp2=name+"=list(";
-      forall(tmp1,
-        tmp2=tmp2+#+",";
+    if(length(name)>0, //180412
+      tmp1=tokenize(tmp1,"::");
+      if(length(tmp1)==1,
+        tmp2=name+"="+tmp1_1;
+      ,
+        tmp2=name+"=list(";
+        forall(tmp1,
+          tmp2=tmp2+#+",";
+        );
       );
       tmp2=substring(tmp2,0,length(tmp2)-1)+")";
+      cmdlist_(length(cmdlist))=tmp2;
     );
-    cmdlist_(length(cmdlist))=tmp2;
   );
   if(CONTINUED==1,
     ComOutList=concat(ComOutList,cmdlist);
@@ -4542,8 +4548,17 @@ Mkketcindyjs(Arg):=(
 );
 Mkketcindyjs(libname,options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options="Tex=y","Net=y"]);
-  regional(texflg,netflg,tmp,tmp1,tmp2);
+//help:Mkketcindyjs(options=["Tex=y","Net=y"]);
+  regional(texflg,netflg,tmp,tmp1,tmp2,dirfile,dirwork,dirketjs);
+  dirwork=replace(Dirwork,"\","/");
+  tmp=replace(Dircdy,"\","/");
+  if(substring(tmp,length(tmp)-1,length(tmp))=="/",//180411from
+    dirfile=substring(tmp,0,length(tmp)-1);
+  ,
+    dirfile=tmp;
+  );//180411to
+  tmp=replace(Dirlib,"\","/");
+  dirketjs=replace(tmp,"ketlib","ketcindyjs");//180411to
   texflg="Y";
   netflg="Y";
   forall(options,
@@ -4557,15 +4572,15 @@ Mkketcindyjs(libname,options):=( //17.11.18
       netflg=Toupper(substring(tmp1,tmp,tmp+1));
     );
   );
-  if(isexists(Dirwork,Fhead+".html"),
+  if(isexists(dirfile,Fhead+".html"),//180411to
     SCEOUTPUT = openfile(Fhead+".r");
     println(SCEOUTPUT,"Looprange<- function(a,b){");
     println(SCEOUTPUT,"  if (a<=b) return(a:b)");
     println(SCEOUTPUT,"  return(c())");
     println(SCEOUTPUT,"}");
-    println(SCEOUTPUT,"setwd('"+Dirfile+"/CindyJS')");
+    println(SCEOUTPUT,"setwd('"+dirketjs+"')");
     println(SCEOUTPUT,"Dtket=readLines('"+libname+".txt')");
-    println(SCEOUTPUT,"setwd('"+Dirwork+"')");
+    println(SCEOUTPUT,"setwd('"+dirfile+"')");//180411
     println(SCEOUTPUT,"Dtjs=readLines('"+Fhead+".html')");
     println(SCEOUTPUT,"Qt=rawToChar(as.raw(34))");
     println(SCEOUTPUT,
@@ -4579,7 +4594,7 @@ Mkketcindyjs(libname,options):=( //17.11.18
       println(SCEOUTPUT,
         "    if(length(grep('link rel=',Tmp,fixed=TRUE))>0){");
       println(SCEOUTPUT,
-        "      Tmp1='file:///"+Dirfile+"/CindyJS/CindyJS.css'");
+        "      Tmp1='file:///"+dirketjs+"/CindyJS.css'");//180411
       println(SCEOUTPUT,
         "      Tmp=paste('    <link rel=',Qt,'stylesheet',Qt,' href=',Qt,Tmp1,Qt,'>',sep='')");
       println(SCEOUTPUT,
@@ -4591,7 +4606,7 @@ Mkketcindyjs(libname,options):=( //17.11.18
       println(SCEOUTPUT,
         "    if(Tmp1>0){");
       println(SCEOUTPUT,
-        "      Tmp1='file:///"+Dirfile+"/CindyJS/Cindy.js'");
+        "      Tmp1='file:///"+dirketjs+"/Cindy.js'");//180411
       println(SCEOUTPUT,
         "      Tmp=paste('    <script type=',Qt,'text/javascript',Qt,' src=',Qt,Tmp1,Qt,'>',sep='')");
       println(SCEOUTPUT,
@@ -4633,7 +4648,7 @@ Mkketcindyjs(libname,options):=( //17.11.18
        "    if(length(grep(paste(Qt,'Parent',sep=''),Dtjs[I],fixed=TRUE))>0){next}");
     println(SCEOUTPUT,
        "    if(length(grep(paste(Qt,'KeTJS',sep=''),Dtjs[I],fixed=TRUE))>0){next}");
-  println(SCEOUTPUT,
+    println(SCEOUTPUT,
          "  }");
     println(SCEOUTPUT,"  Dt=c(Dt,Dtjs[I])");
     if(texflg=="Y",
@@ -4645,12 +4660,14 @@ Mkketcindyjs(libname,options):=( //17.11.18
         "  }");
     );
     println(SCEOUTPUT,"}");
+    println(SCEOUTPUT,"setwd('"+dirfile+"')");//180411
     println(SCEOUTPUT,"writeLines(Dt,'"+Fhead+"ketcindy.html',sep='\n')");
     println(SCEOUTPUT,"quit()");
     closefile(SCEOUTPUT);
     kcR(PathR,Fhead+".r",["m"]);
+    println(Fhead+"ketcindy.html generated successfully");
   ,
-    drawtext(mouse().xy-[0,1],"First export to CindyJS",size->24,color->[1,0,0]);
+    drawtext(mouse().xy-[0,1],"use 'write to CindyJS' before that",size->24,color->[1,0,0]);
     wait(3000);
   );
 );

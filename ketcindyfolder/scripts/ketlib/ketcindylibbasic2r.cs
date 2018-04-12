@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180409) loaded");
+println("ketcindybasic2(20180412) loaded");
 
 //help:start();
 
@@ -4860,16 +4860,16 @@ Mkslidesummary(inputfile,outputfile,options):=(
   fout=outputfile;
   if(indexof(fout,".")==0,fout=fout+".tex");
   cmdL=[
-   "Dt=readLines('"+fin+"')",[],
-   "num=grep('\\hypertarget',Dt,fixed=TRUE)",[],
+   "Dt=readLines('"+fin+"',encoding='UTF-8')",[],
+   "num=grep('hypertarget',Dt,fixed=TRUE)",[], //180412
    "Dt=Dt[setdiff(1:length(Dt),num)]",[],
    "Smain=c();Snew=c();Ssame=c()",[],
    "for(J in 1:length(Dt)){",[],
-   "  Tmp=length(grep('\\mainslide{',Dt[J],fixed=TRUE))",[],
+   "  Tmp=length(grep('mainslide{',Dt[J],fixed=TRUE))",[], //180412
    "  if(Tmp>0){Smain=c(Smain,1)}else{Smain=c(Smain,0)}",[],
-   "  Tmp=length(grep('\\newslide{',Dt[J],fixed=TRUE))",[],
+   "  Tmp=length(grep('newslide{',Dt[J],fixed=TRUE))",[], //180412
    "  if(Tmp>0){Snew=c(Snew,1)}else{Snew=c(Snew,0)}",[],
-   "  Tmp=length(grep('\\sameslide',Dt[J],fixed=TRUE))",[],
+   "  Tmp=length(grep('sameslide',Dt[J],fixed=TRUE))",[], //180412
    "  if(Tmp>0){Ssame=c(Ssame,1)}else{Ssame=c(Ssame,0)}",[],
    "}",[],
    "Nnew=c();Nsame=c()",[],
@@ -4885,11 +4885,9 @@ Mkslidesummary(inputfile,outputfile,options):=(
    "}",[],
    "Tmp=max(c(Nsame[-1],Nnew[-1]))+1",[],
    "Out=c(Out,Dt[Tmp:length(Dt)])",[],
-   "writeLines(Out,'"+fout+"',sep='\n')",[],
-   "cat('////',file='resultR.txt',sep='')",[],
-   "quit()",[]
+   "writeLines(Out,'"+fout+"',sep='\n')",[] //180412(2lines removed)
   ];
-  CalcbyR("out",cmdL,append(options,"Cat=n"));
+  CalcbyR("",cmdL,append(options,"Cat=n"));//180412
   wait(1000);
   Changework(dirtop);//17.04.10
   tmp=replace(fout,".tex","");

@@ -36,7 +36,7 @@ if(islinux(),
   PathAd="acroread";
 );
 
-if(indexof(PathT,"platex")>0,
+if(indexof(PathT,"uplatex")>0,
   Helplist(["+","+3d","+mv"],"helpJ");
 ,
   Helplist(["+","+3d","+mv"],"helpE");

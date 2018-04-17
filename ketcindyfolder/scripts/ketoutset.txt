@@ -1,64 +1,39 @@
+if(!isstring(PathThead),
+ PathThead="";
+);
+PathT=PathThead+"uplatex";
 if(iswindows(),
-//  PathThead="C:\kettex\texlive\bin\win32\";
-//  PathThead="";
-//  PathT=PathThead+"platex";
-  PathT=PathThead+"uplatex";
-//  PathT=PathThead+"platex";
-//  PathT=PathThead+"latex";
-//  PathT=PathThead+"pdflatex";
-//  PathT=PathThead+"lualatex";
-//  PathS="C:\Program Files\scilab-5.5.2\bin\scilex";
   PathS="C:\Program Files\scilab-6.0.0\bin\scilex";
   PathC="C:\MinGW\bin\gcc.exe";
-//  PathC="C:\MinGW32\bin\gcc.exe";
   Pathpdf="C:\Program Files\SumatraPDF\SumatraPDF.exe";
   PathR="C:\Program Files\R\R-3.4.2\bin";
   PathA="C:\Program Files\asir\bin\asir";
   PathM="C:\maxima-5.37.3\bin\maxima.bat";
   PathV3="C:\Program Files\VCG\MeshLab\meshlab";
   PathF="C:\cygwin\bin";
-//  PathAd="C:\Program Files (x86)\Adobe\Reader 11.0\Reader\AcroRd32.exe";
   PathAd="C:\Program Files\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
 );
 if(ismacosx(),
-//  PathThead="/Applications/kettex/texlive/bin/x86_64-darwin/";
-// PathThead="/Library/TeX/texbin/";
-// PathThead="";
-//  PathT=PathThead+"platex";
-  PathT=PathThead+"uplatex";
-//  PathT=PathThead+"latex";
-//  PathT=PathThead+"xelatex";
-//  PathT=PathThead+"pdflatex";
-//  PathT=PathThead+"lualatex";
-//  PathS="/Applications/scilab-5.5.2.app/Contents/MacOS/bin/scilab";
   PathS="/Applications/scilab-6.0.0.app/Contents/MacOS/bin/scilab";
   Pathpdf="preview";
-//  Pathpdf="skim";
-//  Pathpdf="/Applications/skim.app/Contents/MacOS/Skim";
   PathC="gcc";
-//  PathR="R";
-//  PathR="/Library/Frameworks/R.framework/Versions/3.3/Resources/bin/R";
   PathR="/Library/Frameworks/R.framework/Versions/Current/Resources/bin/R";
   PathA="/Applications/cfep.app/OpenXM/rc/asir";
   PathM="/Applications/Maxima.app/Contents/Resources/maxima.sh";
   PathV3="/Applications/meshlab.app/Contents/MacOS/MeshLab";
   PathF="/Applications/FriCAS.app/Contents/Resources/bin/fricas";
-//  PathAd="Adobe Reader";
   PathAd="/Applications/Adobe Acrobat Reader DC.app/Contents/MacOS/AdobeReader";
   Mackc="sh";
-//  Mackc="open";
 );
 if(islinux(),
-  PathT="uplatex";
   PathS="scilab";
   Pathpdf="evince";
-//  Pathpdf="/usr/bin/xpdf";
   PathR="R";
-  PathA="";
+  PathA="asir";
   PathM="maxima";
-  PathV3="";
-  PathF="";
-  PathAd="";
+  PathV3="Meshlab";
+  PathF="fricas";
+  PathAd="acroread";
 );
 
 if(indexof(PathT,"platex")>0,
@@ -66,3 +41,4 @@ if(indexof(PathT,"platex")>0,
 ,
   Helplist(["+","+3d","+mv"],"helpE");
 );
+

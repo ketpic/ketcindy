@@ -25,12 +25,12 @@ rmdir ketcindy/ketcindyfolder/style
 mv ketcindy/ketcindyfolder/scripts/* scripts/ketcindy/
 rmdir ketcindy/ketcindyfolder/scripts
 
-mv ketcindy/scripts/ketcindy.sh scripts/ketcindy/
+mv ketcindy/tl-integration/ketcindy.sh scripts/ketcindy/
 chmod 0755 scripts/ketcindy/ketcindy.sh
 
 # doc
 mv ketcindy/ketcindyfolder/doc/* doc/support/ketcindy/
-for i in LICENSE README.TeXLive ; do
+for i in LICENSE tl-integration/README.TeXLive ; do
   if [ -r ketcindy/$i ] ; then
     mv ketcindy/$i doc/support/ketcindy
   fi
@@ -38,8 +38,7 @@ done
 rmdir ketcindy/ketcindyfolder/doc
 
 # work stuff
-mv ketcindy/ketcindyfolder/work/CindyJS doc/support/ketcindy/
-mv ketcindy/ketcindyfolder/work/ketsample doc/support/ketcindy/
+mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template2advanced.cdy scripts/ketcindy/
 for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt ; do
@@ -51,14 +50,14 @@ rmdir ketcindy/ketcindyfolder/work
 rmdir ketcindy/ketcindyfolder
 
 # use our TeX Live dirhead
-mv ketcindy/scripts/dirhead.txt scripts/ketcindy/
+mv ketcindy/tl-integration/dirhead.txt scripts/ketcindy/
 
 # the rest should be files that can be removed:
-rm ketcindy/scripts/update-permissions.sh
-rm ketcindy/scripts/export-to-texmf.sh
+rm ketcindy/tl-integration/update-permissions.sh
+rm ketcindy/tl-integration/export-to-texmf.sh
 rm ketcindy/.gitignore
 # now the scripts dir should be empty
-rmdir ketcindy/scripts
+rmdir ketcindy/tl-integration
 
 # dropped unpacked files
 rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows

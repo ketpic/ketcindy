@@ -427,4 +427,82 @@ public class KetCindyPlugin extends CindyScriptPlugin {
       return date.toString();
   }
 
+  @CindyScript("gettexmfdist")
+  public static String gettexmfdist() {
+    try {
+      return kpsewhich("-var-value=TEXMFDIST");
+    } catch ( Exception e ) {
+      e.printStackTrace();
+      return "";
+    }
+  }
+
+
+   /** 
+    * The following function is copied from TeXOSQuery.java
+    * which is under LPPL
+    */
+   /**
+    * Runs kpsewhich and returns the result. This is for single
+    * argument lookups through kpsewhich, such as a file location
+    * or variable value.
+    * @param arg The argument to pass to kpsewhich
+    * @return The result read from the first line of STDIN
+    * @since 1.2
+    */
+   protected static String kpsewhich(String arg)
+      throws IOException,InterruptedException
+   {
+      // Create and start the process.
+      Process process = 
+        new ProcessBuilder("kpsewhich", arg).start();
+
+      int exitCode = process.waitFor();
+
+      String line = null;
+
+      if (exitCode == 0)
+      {
+         // kpsewhich completed with exit code 0.
+         // Read STDIN to find the result.
+                
+         InputStream stream = process.getInputStream();
+                    
+         if (stream == null)
+         {
+            throw new IOException(String.format(
+             "Unable to open input stream from process: kpsewhich '%s'",
+             arg));
+         }
+
+         BufferedReader reader = null;
+
+         try
+         {
+            reader = new BufferedReader(new InputStreamReader(stream));
+
+            // only read a single line, nothing further is required
+            // for a variable or file location query.
+            line = reader.readLine();
+         }
+         finally
+         {
+            if (reader != null)
+            {
+               reader.close();
+            }
+         }
+      }
+      else
+      {
+         // kpsewhich failed.
+
+         throw new IOException(String.format(
+           "\"kpsewhich '%s'\" failed with exit code: %d", arg, exitCode));
+      }
+
+      return line;
+   }
+
+
 }

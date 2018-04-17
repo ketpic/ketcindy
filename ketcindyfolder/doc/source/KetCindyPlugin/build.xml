@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ExamplePlugin" default="copy">
+
+    <target name="init" description="setup paths">
+        <mkdir dir="target"/>
+        <property name="cindy2jar" location="lib/cindy2.jar"/>
+        <property name="pluginfolder" location="target/Plugins"/>
+        <property name="plugin" location="KetCindyPlugin.jar"/>
+        <mkdir dir="target/Plugins"/>
+    </target>
+    <path id="libraries">
+        <fileset dir="lib" includes="*.jar"/>
+    </path>
+
+    <!-- no changes necessary below this line -->
+
+
+    <target name="compile" depends="init" description="compile Example Plugin for Cinderella">
+        <mkdir dir="target/classes"/>
+        <javac encoding="utf-8" debug="on" optimize="on"
+               srcdir="src" destdir="target/classes" target="1.6"
+               source="1.6">
+            <classpath>
+                <pathelement location="${cindy2jar}"/>
+                <path refid="libraries"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile" description="create the complete jRealityPlugin for Cinderella">
+
+        <delete file="${plugin}"/>
+
+        <!-- add compiled classes -->
+        <jar basedir="target/classes" destfile="${plugin}" includes="**/*">
+        </jar>
+
+        <!-- add class path -->
+        <pathconvert property="mf.classpath" pathsep=" ">
+            <path refid="libraries"/>
+            <flattenmapper/>
+        </pathconvert>
+        <jar destfile="${plugin}" update="true" index="true">
+            <manifest>
+                <attribute name="Class-Path" value="${mf.classpath}"/>
+            </manifest>
+            <zipgroupfileset dir="lib" includes="*.jar">
+                <exclude name="cindy2.jar"/>
+            </zipgroupfileset>
+        </jar>
+
+        <!-- Add services file -->
+        <jar destfile="${plugin}" basedir="config" update="true">
+            <file file="META-INF/services/de.cinderella.api.cs.CindyScriptPlugin"/>
+        </jar>
+    </target>
+
+    <target name="copy" depends="build" description="Copy plugin to Plugins folder">
+        <copy file="${plugin}" todir="${pluginfolder}"/>
+    </target>
+
+
+    <target name="clean">
+        <delete dir="target"/>
+    </target>
+
+</project>

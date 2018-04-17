@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.2.0(20180409)");
+println("KETCindy V.3.2.0(20180413)");
 println(ketjavaversion());//17.06.05
 println("ketcindylibbasic1(20180408) loaded");
 
@@ -592,13 +592,6 @@ Changework(dirorg):=( //16.10.21
         SCEOUTPUT = openfile("/kc.sh");
         closefile(SCEOUTPUT);
         println(setexec(Dirwork,"/kc.sh"));
-      );
-    ,
-      if(isincludefull(Dirwork),//180408from
-        SCEOUTPUT = openfile("utf8.txt");
-        println(SCEOUTPUT,"tmp="+Dqq(Dirwork)+";");
-        closefile(SCEOUTPUT);
-        nkfwin("C:",Dirwork,"utf8.txt","sjis.txt");//180408to
       );
     );
   );

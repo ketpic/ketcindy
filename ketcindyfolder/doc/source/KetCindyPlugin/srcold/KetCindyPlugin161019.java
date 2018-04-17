@@ -7,16 +7,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.*;
-import java.util.Date;
 
 public class KetCindyPlugin extends CindyScriptPlugin {
 
-    @CindyScript("ketjavaversion")
-    public String ketjavaversion() {
-        return "Ketjava 20180408";
-    }
-
-	public String getName() {
+    public String getName() {
         return "KetCindy Plugin";
     }
 
@@ -39,15 +33,9 @@ public class KetCindyPlugin extends CindyScriptPlugin {
         return (c.getBlue() + c.getRed() + c.getGreen()) / 3.;
     }
 
-    @CindyScript("isincludefull")//180331
-    public static boolean isincludefull(String str){
-      char[] chars = str.toCharArray();
-      for (int i = 0; i < chars.length; i++) {
-        if (String.valueOf(chars[i]).getBytes().length==2) {
-          return true;
-        }
-      }
-      return false;
+    @CindyScript("testarray")
+    public String writeArray(ArrayList<Double> al) {
+        return Arrays.toString(al.toArray());
     }
     
     @CindyScript("getdir")
@@ -59,15 +47,9 @@ public class KetCindyPlugin extends CindyScriptPlugin {
     public String gethome() {
         return System.getProperty("user.home");
     }
-
-	@CindyScript("getname")
-    // 17.10.08
-    public String getname() {
-        return System.getProperty("user.name");
-    }
 	
     @CindyScript("iswindows")
-    public static boolean iswindows(){
+    static public boolean iswindows(){
         String os=System.getProperty("os.name").toLowerCase();
         if(os!=null && os.startsWith("windows")){
             return true;
@@ -76,7 +58,6 @@ public class KetCindyPlugin extends CindyScriptPlugin {
             return false;
         }
     }
-
     @CindyScript("ismacosx")
     public static boolean ismacosx(){
         String os=System.getProperty("os.name").toLowerCase();
@@ -108,17 +89,6 @@ public class KetCindyPlugin extends CindyScriptPlugin {
     public static String kc(String args){
       return "Improper call";
     }
-
-	@CindyScript("nkfwin") //180408
-    public static String nkfwin(String path,String dir,String fn1,String fn2)
-              throws IOException {
-      String src="\""+dir+"\\"+fn1+"\"";
-      String out="\""+dir+"\\"+fn2+"\"";
-      ProcessBuilder pb = new ProcessBuilder();
-      pb.command("cmd","/c","\""+path+"\\nkf32\"","-s","<"+src,">"+out);
-      Process process = pb.start();
-      return out+" generated";
-  }
 
     @CindyScript("kc")
     public static String kc(String args,String args2,String args3) throws IOException {
@@ -218,12 +188,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
     }
     if(flg==0){
       if(iswindows()){
-        if((args.indexOf(" ")==-1)&&(args.indexOf("-")==-1)
-                  &&(args.indexOf("　")==-1)){ //180405
-          pb.command("cmd.exe","/c","start",args);
-        }else{
-          pb.command("cmd.exe","/c","","\""+args+"\"");//180331to
-        }
+        pb.command("cmd.exe","/c","start",args);
       }
       else{
         if(ismacosx()){
@@ -311,8 +276,6 @@ public class KetCindyPlugin extends CindyScriptPlugin {
       public static boolean iskcexists(String dir){
       File file = new File(dir+"/kc.sh");
       if(file.exists()){
-        file.setExecutable(true,false);
-        //16.10.19
         return true;
      }
      else{
@@ -320,16 +283,10 @@ public class KetCindyPlugin extends CindyScriptPlugin {
      }
   }
 
-    @CindyScript("pathsep")
-     // 17.09.06
-      public static String pathsep(){
-      return File.separator;
-  }
-
     @CindyScript("isexists")
      // 16.10.02
-      public static boolean isexists(String dir,String fname){
-      File file = new File(dir+File.separator+fname);
+      public static boolean isheadexists(String dir,String fname){
+      File file = new File(dir+"/"+fname);
       if(file.exists()){
         return true;
      }
@@ -337,94 +294,18 @@ public class KetCindyPlugin extends CindyScriptPlugin {
        return false;
      }
   }
-  
-      @CindyScript("filepath")
-     // 18.03.29
-      public static String isexists(String fname){
-      File file = new File(fname);
-      String path = file.getAbsolutePath();
-      return path;
-  }
 
-    @CindyScript("makedir")
-     // 17.09.06
-      public static String makedir(String dir,String dirname){
-      File newfile = new File(dir+File.separator+dirname);
-      if (newfile.mkdir()){
-        return dirname+" created";
-      }else{
-        return dirname+" already exists";
-      }
-  }
-
-    @CindyScript("fileslength")
-     // 16.12.09
-      public static int fileslength(String dirname){
-      File dir=new File(dirname);
-      File[] files=dir.listFiles();
-      String str;
-      String head;
-      int ctr=0;
-      if(dir.exists()){
-        for(int i=0;i<files.length;i++){
-          str=files[i].getName();
-          head=str.substring(0,1);
-          if(head.equals(".")){ctr=ctr+1;}
-        }
-        return files.length-ctr;
-     }
-     else{
-       return -1;
-     }
-  }
-  
-      @CindyScript("fileslist")
-     // 16.12.09
-      public static String fileslist(String dirname){
-      File dir=new File(dirname);
-      File[] files=dir.listFiles();
-      String str;
-      String head;
-      String strall="";
-      if(dir.exists()){
-        for(int i=0;i<files.length;i++){
-          str=files[i].getName();
-          head=str.substring(0,1);
-          if(!head.equals(".")){strall=strall+","+str;}
-        }
-        return strall.substring(1);
-     }
-     else{
-       return "";
-     }
-  }
-  
     @CindyScript("setexec")
      // 16.10.19
-      public static String setexec(String dir,String fname){
-      File file = new File(dir+File.separator+fname);
-      File path = new File(dir);
-      if(path.exists()){
-        if(file.exists()){
-          file.setExecutable(true,false);
-          return fname+" executable";
-        }
-        else{
-//          file.createNewFile();
-//          file.setExecutable(true,false);
-          return fname+" not exists";
-        }
-      }
-      else{
-        return dir+" not exists";
-      }
-   }
-
-    @CindyScript("getdatetime")
-     // 16.10.21
-      public static String getdatetime(){
-      Date date=new Date();
-      return date.toString();
+      public static boolean setexec(String dir,String fname){
+      File file = new File(dir+"/"+fname);
+      if(file.exists()){
+        file.setExecutable(true);
+        return true;
+     }
+     else{
+       return false;
+     }
   }
 
 }

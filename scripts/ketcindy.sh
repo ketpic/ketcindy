@@ -2,13 +2,14 @@
 #
 # KETCindy starter script
 #
-# (C) 2017 Norbert Preining
+# (C) 2017-2018 Norbert Preining
 # Licensed under the same license terms as ketpic itself, that is GPLv3+
 #
 
 BinaryName=Cinderella2
 TemplateFile=template1basic.cdy
 systype=`uname`
+workdir="$HOME/ketcindy"
 
 if [ "$1" = "-c" ]
 then
@@ -52,11 +53,13 @@ case $systype in
 esac
 
 plugin="$plugindir/KetCindyPlugin.jar"
+dirheadplugin="$plugindir/dirhead.txt"
 
 # find Jar
 KetCdyJar=`kpsewhich -format=texmfscripts KetCindyPlugin.jar`
 # search for template.cdy
 TempCdy=`kpsewhich -format=texmfscripts $TemplateFile`
+DirHead=`kpsewhich -format=texmfscripts dirhead.txt`
 
 if [ -z "$TempCdy" -o -z "$KetCdyJar" ]
 then
@@ -65,10 +68,11 @@ then
 fi
 
 
-if [ ! -r "$plugin" ] ; then
+if [ ! -r "$plugin" -o ! -r "$dirheadplugin" ] ; then
   echo "Cinderella is *NOT* set up for KETCindy!"
   echo "You need to copy"
   echo "   $KetCdyJar"
+  echo "   $DirHead"
   echo "into"
   echo "   $plugindir"
   echo ""
@@ -94,7 +98,8 @@ then
 fi
 
 
-mkdir -p ~/ketcindy
+mkdir -p "$workdir"
+cp "$TempCdy" "$workdir"
 
-exec "$cinderella" "$TempCdy"
+exec "$cinderella" "$workdir/$TemplateFile"
 

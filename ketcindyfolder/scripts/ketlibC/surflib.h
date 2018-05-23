@@ -1284,27 +1284,13 @@ void crvsfparadata(short ch, double fkL[][3], double fbdkL[][3], int sepflg, dou
   double ptL[DsizeM][3], tmpd2[2], tmpd3[3], tmp1d1, tmp2d1;
   double po[2]={0,0}, epsd2[2]={Eps1,1}, pa[3], pb[3];
   int nbor=length3(Borderhiddendata);
-  int ncshidden, npar, din[DsizeM][2],din2[DsizeS][2];
+  int ncshidden,din[DsizeM][2],din2[DsizeS][2];
   int nn, i, j, k, n;
   projpara(fbdkL,fbdy);
   out[0][0]=0;
   outh[0][0]=0;
   dataindexd3(2,fkL,din);
   for(nn=1; nn<=length2i(din); nn++){
-//    fkp[0][0]=0;
-//    appendd3(0,din[nn][0],din[nn][1],fkL,fkp);
-//    n=fmax(1,floor((fmax(Mdv,Ndv)+1)/(length3(fkp)-1)+0.5)); //17.06.16
-//    dt=1.0/n;
-//	fk[0][0]=0;
-//    for(i=1; i<length3(fkp); i++){
-//      for(j=0; j<n; j++){
-//        tmpd3[0]=fkp[i][0]+(fkp[i+1][0]-fkp[i][0])*j*dt;
-//        tmpd3[1]=fkp[i][1]+(fkp[i+1][1]-fkp[i][1])*j*dt;
-//        tmpd3[2]=fkp[i][2]+(fkp[i+1][2]-fkp[i][2])*j*dt;
-//        addptd3(fk,tmpd3);
-//      }
-//    }
-//    appendd3(0,length3(fkp),length3(fkp),fkp,fk);
     fk[0][0]=0;
     appendd3(0,din[nn][0],din[nn][1],fkL,fk);
     projpara(fk,fh);
@@ -1314,18 +1300,18 @@ void crvsfparadata(short ch, double fkL[][3], double fbdkL[][3], int sepflg, dou
         pull3(i,fk,pa);
         pull3(i+1,fk,pb);
         meetpoints(ch,pa,pb,1,ptL);
-		for(j=1; j<=length3(ptL); j++){
-		  pull3(j,ptL,tmpd3);
+        for(j=1; j<=length3(ptL); j++){
+	      pull3(j,ptL,tmpd3);
           parapt(tmpd3,tmpd2);
           tmp1d1=paramoncurve(tmpd2,i,fh);
           tmp2d1=Inf;
-          for(k=1; k<=npar; k++){
+          for(k=1; k<=length1(parL); k++){
              tmp2d1=fmin(tmp2d1,fabs(parL[k]-tmp1d1));
           }
           tmpd3[0]=pb[0]-pa[0]; tmpd3[1]=pb[1]-pa[1]; 
           tmpd3[2]=pb[2]-pa[2]; 
           if(tmp2d1*dist(3,tmpd3,po)>Eps1){
-            npar=appendd1(tmp1d1,parL);
+            appendd1(tmp1d1,parL);
           }
         }
         simplesort(parL);

@@ -1,3 +1,0 @@
- 警告メッセージ: 
- readLines("s1602diffeq2.html") で: 
-   's1602diffeq2.html' で不完全な最終行が見つかりました 

@@ -1,5 +1,7 @@
 // 20180523
 //   Cheadsurf,Ctopsurf debugged  (case => break added )
+//   Cheadsurf debugged ( Dirname "\" => "/")
+//   CalcbyC debugged  ( "////" )
 // 20180521
 //   IntersectcrvsfC added
 // 20180517

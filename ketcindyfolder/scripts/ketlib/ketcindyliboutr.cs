@@ -5354,6 +5354,7 @@ kcC(cname):=(
     tmp=PathC+" %path%\"+cname+".c";
     tmp=tmp+" -o %path%\main.exe"; 
     println(SCEOUTPUT,tmp);
+    println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
     println(SCEOUTPUT,"%path%\main.exe");
     println(SCEOUTPUT,"echo //// > %path%\"+rfile);
     println(SCEOUTPUT,"exit");
@@ -5547,7 +5548,8 @@ Cheadsurf():=(
   tmp=tmp+", Eps1="+tmp1_2;
   tmp=tmp+", Eps2="+tmp1_3+";";
   cmd=append(cmd,tmp);
-  tmp="const char Dirname[]="+Dq+Dirwork+"/"+Dq+";";
+  tmp=replace(Dirwork,"\","/"); //180523(2lines)
+  tmp="const char Dirname[]="+Dq+tmp+"/"+Dq+";";
   cmd=append(cmd,tmp);
   cmd=append(cmd,"double Urng[2],Vrng[2];");
   cmd=append(cmd,  "int DrawE,DrawW,DrawS,DrawN;");
@@ -5684,7 +5686,7 @@ CalcbyC(name,path,cmd,optionorg):=(
   tmp=divoptions(options);
 //  eqL=tmp_5;
   strL=tmp_7;
-  waiting=30;
+  waiting=40;
   wfile=Fhead+name+"end.txt"; //180517
   hfile=Fhead+name+"header.h";
   println(Dirwork);
@@ -5745,13 +5747,9 @@ CalcbyC(name,path,cmd,optionorg):=(
   repeat(tmp1,
     if(flg==0,
       tmp=load(wfile);
-      if(length(tmp)>=4,
-        tmp2=substring(tmp,length(tmp)-4,length(tmp));
-        if(tmp2=="////",
-          tmp=substring(tmp,0,length(tmp)-4);
-          flg=1;
-          tmp2=#*WaitUnit/1000;
-        );
+      if(indexof(tmp,"////")>0, //180523from
+        flg=1;
+        tmp2=#*WaitUnit/1000;//180523to
       ,
         if(wflg==-1,
           flg=-1;
@@ -5797,7 +5795,7 @@ SfbdparadataC(nm,fdorg,optionorg,optionsh):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
+  waiting=60;
   wflg=0;
   forall(strL,
     tmp=Toupper(substring(#,0,1));
@@ -5882,7 +5880,7 @@ CrvsfparadataC(nm,Fk,fbdy,fdorg,optionorg,optionsh):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
+  waiting=60;
   wflg=0;
   forall(strL,
     tmp=Toupper(substring(#,0,1));
@@ -6015,7 +6013,7 @@ Crv3onsfparadataC(nm,crv3d,fbdy,fdorg,optionorg,optionsh):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
+  waiting=60;
   wflg=0;
   forall(strL,
     tmp=Toupper(substring(#,0,1));
@@ -6164,7 +6162,7 @@ WireparadataC(nm,fbdy,fdorg,wr1,wr2,optionorg,optionsh):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
+  waiting=60;
   wflg=0;
   options=remove(options,reL);
   wflg=0;
@@ -6303,7 +6301,7 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
+  waiting=60;
   wflg=0;
   forall(strL,
     tmp=Toupper(substring(#,0,1));
@@ -6395,7 +6393,7 @@ SfcutparadataC(nm,cutfunLorg,fbdy,fdorg,optionorg,optionsh):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  waiting=40;
+  waiting=60;
   wflg=0;
   options=remove(options,reL);
   wflg=0;

@@ -35,6 +35,9 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   ParaFstr=fstr;
   ParaSL=sL;
   ParaOp=options;
+  if((!contains(Paraop,"r"))&(!contains(Paraop,"m")), //180515(3lines)
+    ParaOp=append(Paraop,"m");
+  );
   ParaOpAnim=optionsanim;  //17.11.25
   GLISTback=GLIST;
   GCLISTback=GCLIST;

@@ -1,3 +1,13 @@
+//20180513
+//   Setunitlen debugged  ( string => UI )
+//20180506
+//   Anglemark changed  ( [A,B,angle] supported )
+//20180505
+//   Strsplit added
+//20180501
+//   MeasureDepth debugged  ( for blank list )
+//20180420
+//   Ketinit changed ( Changesetting moved to ketoutset.txt )
 //20180413
 //   Ketinit changed ( utf for windows removed )
 //20180408

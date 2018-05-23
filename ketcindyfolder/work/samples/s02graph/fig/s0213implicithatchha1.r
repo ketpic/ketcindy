@@ -1,0 +1,12 @@
+setwd("/Users/takatoosetsuo/ketcindy/ketsample/samples/s02graph/fig")##
+source('/Applications/KeTTeX.app/texlive/texmf-dist/scripts/ketcindy/ketlib/ketpiccurrent.r')##
+Ketinit()##
+Setwindow(c((-5),(5)),c((-5),(5)))####
+imp1=Implicitplot('x^2+x*y+2*y^2=1','x=c(-3,3)','y=c(-3,3)')##
+imp1=Implicitplot('x^2+x*y+2*y^2=1','x=c(-3,3)','y=c(-3,3)')##
+Setscaling(1)##
+Setunitlen("1cm")##
+ha1=Hatchdata("i",list(imp1))##
+ha1=WriteOutData("s0213implicithatchha1.txt","ha1",ha1)##
+cat('////',file='result.txt',sep='')##
+quit()##

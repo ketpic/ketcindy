@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.2.0(20180413)");
+println("KETCindy V.3.2.0(20180523)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(20180408) loaded");
+println("ketcindylibbasic1(20180515) loaded");
 
 //help:start();
 
@@ -48,7 +48,7 @@ Ketinit(sy,rangex,rangey):=(
   MEMORIInit=MEMORI;
   MEMORINow=MEMORI;
   MARKLEN=0.05;
-  MARKLENInit=MARKLEN:
+  MARKLENInit=MARKLEN; //180504
   MARKLENNow= MARKLEN;
   GENTEN=[0,0];//18.01.15until
   KETPICLAYER=20;
@@ -106,9 +106,9 @@ Ketinit(sy,rangex,rangey):=(
     if(substring(Dircdy,0,1)==pathsep(),
       Dircdy=substring(Dircdy,1,length(Dircdy));
     );
-    Changesetting([gethome(), gethome()+"\Desktop","C:"]); //180405
+//    Changesetting([gethome(), gethome()+"\Desktop","C:"]); //180405
   ,
-    Changesetting([gethome(),gethome()+"/Desktop"]);
+//    Changesetting([gethome(),gethome()+"/Desktop"]);
   );
   Changework(Dircdy+pathsep()+"fig"); //180329to
   Fnametex=Fhead+".tex";
@@ -433,6 +433,18 @@ Indexall(str,key):=(
       );
     );
   );
+  out;
+);
+
+Strsplit(str,key):=( //180505
+  regional(start,out,tmp1,tmp2);
+  tmp1=Indexall(str,key);
+  out=[]; start=0;
+  forall(tmp1,
+    out=append(out,substring(str,start,#-1));
+    start=#;
+  );
+  out=append(out,substring(str,start,length(str)));
   out;
 );
 
@@ -901,24 +913,26 @@ MeasureDepth(list):=(
   regional(tmp,tmp1,Depth,Flg);
   Flg=0;
   Depth=0;
-  if(ispoint(list),  // 15.01.22
-    Depth=0;
-    Flg=1;
-  ,
-    tmp1=select(1..(length(list)),length(list_#)>0);//17.05.21from
-    tmp=list_(tmp1_1);//17.05.21until
-  );
-  repeat(4,
-    if(Flg==0,
-      if(islist(tmp),
-        tmp=tmp_1;
-        Depth=Depth+1;
-      ,
-        if(ispoint(tmp),Depth=Depth+1);
-        Flg=1;
+  if(length(list)>0, //180501
+    if(ispoint(list), 
+      Depth=0;
+      Flg=1;
+    ,
+      tmp1=select(1..(length(list)),length(list_#)>0);//17.05.21from
+      tmp=list_(tmp1_1);//17.05.21until
+    );
+    repeat(4,
+      if(Flg==0,
+        if(islist(tmp),
+          tmp=tmp_1;
+          Depth=Depth+1;
+        ,
+          if(ispoint(tmp),Depth=Depth+1);
+          Flg=1;
+        );
       );
     );
-  );
+  );//180501
   Depth;
 );
 
@@ -2299,6 +2313,7 @@ Setunitlen():=(
   println(ULEN);
 ); 
 Setunitlen(UI):=(
+//help:Setunitlen("1.5cm");
   regional(Dx,Dy,Sym,SL,OL,Is,VL,Ucode,ii,cha,
      str,Unit,Valu,flg,tmp);
   Dx=XMAX-XMIN;
@@ -2308,7 +2323,7 @@ Setunitlen(UI):=(
   OL="+-*/";
   if(length(UI)>0,
     ULEN=UI;
-    GLIST=append(GLIST,"Setunitlen("+Dq+string+Dq+")");
+    GLIST=append(GLIST,"Setunitlen("+Dq+UI+Dq+")");//180513
   );
   Is=1;
   VL="";
@@ -4804,10 +4819,11 @@ Anglemark(Arg1,Arg2):=(           // 2015.04.28 from
     nm=substring(tmp,1,length(tmp)-1);
     Anglemark(nm,plist,options);
   );
-);                    // until
+);                    // to
 Anglemark(nm,plist,options):=(
-//help:Anglemark([A,B,C],["E=\theta",2]);
+//help([A,B,C],["E=\theta",2]);
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
+//help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=["E/L=(sep,)letter",size]);
   regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,
        Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg);
@@ -4839,11 +4855,16 @@ Anglemark(nm,plist,options):=(
       Brat=parse(substring(tmp,0,tmp1-1));
     );
   );
-  pB=Lcrd(plist_1); pA=Lcrd(plist_2); pC=Lcrd(plist_3);
-  Ctr=Lcrd(pA);
-  sab=pB-pA;
-  sac=pC-pA;
-  Rg=[arctan2(sab)+0,arctan2(sac)+0];
+  pB=Lcrd(plist_1); pA=Lcrd(plist_2); sab=pB-pA;
+  Ctr=pA;
+  if((length(plist_3)>1)%(ispoint(plist_3)), //180506from
+    pC=Lcrd(plist_3);
+    sac=pC-pA;
+    Rg=[arctan2(sab)+0,arctan2(sac)+0];
+  ,
+    sac=pB-pA;
+    Rg=[arctan2(sab)+0,arctan2(sab)+plist_3];   
+  ); //180506to
   if(Rg_2<Rg_1,Rg_2=Rg_2+2*pi);
   Out=[];
   if(ra>min(|sab|,|sac|),  // 16.12.29

@@ -1,3 +1,32 @@
+// 20180523
+//   Cheadsurf,Ctopsurf debugged  (case => break added )
+// 20180521
+//   IntersectcrvsfC added
+// 20180517
+//   Cform debugged ( "=", tmp=0)
+//   SfbdparadataC,... changed ( "" removed from optionh )
+//   CalcbyC changed  ( "result" => "end" )
+// 20180516
+//   Ctopsurf debugged  ( : => ;)
+// 20180510
+//   CalcbyR changed  ( for the last command )
+//   Crv2sfparadataC added
+// 20180508
+//   MkprecommandR changed (PVOFG)
+//   CalcbyR changed (option Pre)
+// 20180505
+//   Ctopsurf changed ( for mult cutfun)
+// 20180504
+//   Ketinit debuggde  (MARKLEN  : )
+// 20180502
+//   CostC removed
+//   SetconstantC added
+// 20180428
+//   CrvsfparadataC changed  (Changestyle => "nodisp")
+//   Ctopsurf changed  (data[DsizeLL][3] removed )
+// 20180426
+//   CrvsfparadataC largely changed
+//   WritedataC changed  ( \n removed at the last line )
 // 2018.04.12
 //   CalcbyR changed ( for blank name )
 // 2018.04.11

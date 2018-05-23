@@ -36,9 +36,18 @@ if(islinux(),
   PathAd="acroread";
 );
 
+if(iswindows(), //180420from
+  Changesetting([gethome(), gethome()+"\Desktop","C:"]);
+,
+  Changesetting([gethome(),gethome()+"/Desktop"]);
+);//180420to
+
 if(indexof(PathT,"platex")>0,
   Helplist(["+","+3d","+mv"],"helpJ");
 ,
   Helplist(["+","+3d","+mv"],"helpE");
 );
+
+setdirectory(Dircdy);
+
 

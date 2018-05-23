@@ -1,3 +1,19 @@
+// 20180522
+//   Sfbdparadata debugged  ( "Proj" )
+// 20180517
+//   Isangle(isAngle),Getangle added
+//   kcC changed  ( "resultC" => "end")
+// 20180510
+//   Wireparadata,Sfcutparadata debugged
+// 20180509
+//   Sfbdparadata,... changed  ( name2,name2h removed)
+//   Crvsfparadata renamed to Crv3sfparadata
+//   Crvs3fparadata, changed  ( Proj from GLIST removed)
+// 20180508
+//   Sfbdparadata,... changed  ( to Projpara(name3) )
+// 20180426
+//   Sfbdparadata,... changed  (.dat => .Rdata )
+//   WriteCdata,ReadCdata => WritedataC,ReaddataC
 // 2018.03.27
 //   Start3d changed (for C)
 // 2018.02.27

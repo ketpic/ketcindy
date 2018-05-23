@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180412) loaded");
+println("ketcindybasic2(20180514) loaded");
 
 //help:start();
 
@@ -2602,6 +2602,9 @@ WritetoRS(filename,shchoice):=(
   ,
     println(SCEOUTPUT,"");
   );
+  if(iswindows(),
+    println(SCEOUTPUT,"options(encoding='UTF-8')"); //180513
+  );
   tmp1=replace(Dirwork,"\","/");
   if((iswindows())&(indexof(tmp1,"Users")>0),
     tmp=Indexall(tmp1,"/");
@@ -2726,7 +2729,25 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,"#quit()");
   );
   closefile(SCEOUTPUT);
-); //17.09.17to
+  if(iswindows(), //180513from
+    SCEOUTPUT = openfile("execsrc.r");//180514
+    tmp1=replace(Dirwork,"\","/");
+    if(indexof(tmp1,"Users")>0,
+      tmp=Indexall(tmp1,"/");
+      tmp2=substring(tmp1,tmp_3-1,length(tmp1));
+      tmp1=substring(tmp1,0,tmp_3-1);
+      println(SCEOUTPUT,"Drv=shell('echo %HOMEDRIVE%',intern=TRUE)");
+      println(SCEOUTPUT,"Drv=Drv[length(Drv)]");
+      println(SCEOUTPUT,"Hpath=shell('echo %HOMEPATH%',intern=TRUE)");
+      println(SCEOUTPUT,"Hpath=Hpath[length(Hpath)]");
+      println(SCEOUTPUT,"Rest="+Dqq(tmp2));
+      println(SCEOUTPUT,"Path=paste(Drv,Hpath,Rest,sep='')");
+      println(SCEOUTPUT,"setwd(Path)"); 
+      println(SCEOUTPUT,"source('"+filename+"',encoding='UTF-8')");
+    );
+    closefile(SCEOUTPUT);
+  ); //180513to
+);
 
 Extractdata(name):=Extractdata(1,name,[]);
 Extractdata(Arg1,Arg2):=(
@@ -3168,7 +3189,7 @@ Makebat(texmainfile,flow):=(
     path="";
   );
   if(indexof(flow,"r")>0,
-    tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r";
+    tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < execsrc.r";//180514
       // 17.09.14
     println(SCEOUTPUT,tmp);
   );

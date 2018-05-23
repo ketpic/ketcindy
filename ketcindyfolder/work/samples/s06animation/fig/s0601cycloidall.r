@@ -1,0 +1,40 @@
+setwd("/Users/takatoosetsuo/ketcindy/ketsample/samples/s06animation/fig")##
+source('/Applications/KeTTeX.app/texlive/texmf-dist/scripts/ketcindy/ketlib/ketpiccurrent.r')##
+Ketinit()##
+Setwindow(c((-3.721681),(10.122974)),c((-3.27508),(3.523192)))####
+A=c(-3.72168,-4.27508);Assignadd('A',A)##
+B=c(10.12297,-4.27508);Assignadd('B',B)##
+C=c(1.41424,-4.27508);Assignadd('C',C)##
+sgAB=Listplot(c(A,B))##
+cr1=Circledata(c(c(0,1),c(1,1)))##
+Setax("","","sw","","sw")##
+cr2=Circledata(c(c(10,1),c(11,1)))##
+pt2=Pointdata(list(10.544021,1.839072))##
+gp2=Paramplot('c(t-sin(t),1-cos(t))','t=c(0,(10))')##
+setwd("/Users/takatoosetsuo/ketcindy/ketsample/samples/s06animation/fig/cycloid")##
+Mkallfile=function(fname){##
+  Ctr<<- Ctr+1##
+  tmp=readLines(fname)##
+  first=1##
+  if(Ctr>1){##
+    first=7##
+    cat('Ketinit()\n',file='all.r',append=TRUE)##
+  }##
+  for(J in first:(length(tmp)-1)){##
+    cat(paste(tmp[J],'\n',sep=''),file='all.r',append=TRUE)##
+  }##
+  cat('print(',Ctr,')\n',file='all.r',append=TRUE)##
+  Tmp=proc.time()-Tm##
+  cat('print(',Tmp[3],')\n',file='all.r',append=TRUE)##
+}##
+if(file.exists('all.r')){file.remove('all.r')}##
+fL=list.files()##
+Ctr=0##
+Tm<-invisible(proc.time())##
+for(fname in fL){##
+  if(length(grep('.r',fname))>0){Mkallfile(fname)}##
+}##
+source('all.r')##
+all=setwd("/Users/takatoosetsuo/ketcindy/ketsample/samples/s06animation/fig")##
+cat('////',file='result.txt',sep='')##
+quit()##

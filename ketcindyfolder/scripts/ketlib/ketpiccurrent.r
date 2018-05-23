@@ -16,12 +16,29 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180327)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180523)" 
 
 print(ThisVersion)
 
+# 20180523
+#  Mkskeletondata debugged
+# 20180517
+#  Sfbdparadata debugged  ( tmp2[]=>tmp[2])
+# 20180511
+#  Arrowhead,Arrowheaddata debugged  ( for closed curve)
+# 20180510
+#  Plotdata,Paramplot changed  ( Assign added for KeTCindy )
+#  Texsetctr debugged  (grep, fixed=T)
+#   Anglemark debugged ( for PB,PA,angle)
+# 20180509
+#  Crvonsfparadata renamed to Crv2onsfparadata
+#  Makecurves debugged  ( Looprange used )
+# 20180506
+#  Anglemark changed  ( PB,PA,angle) supported
+# 20180501
+#  Wireparadata changed and debugged ( is.numeric => length==1 )
 # 20180402
-#  Implicitplot greatly changed
+#  Implicitplot largely changed
 # 20180327
 #  Kyoukai debugged
 # 20180317
@@ -768,41 +785,62 @@ Integrate<- function(...)
 #--------------------------------------
 
 #########################
+# 180506   (pB,pA,angle) supported
 
 Anglemark<- function(...)
 {
   varargin<- list(...) 
   Nargs<- length(varargin)
   Eps<- 10^(-3)
-  PA<- varargin[[1]]
-  PB<- varargin[[2]]
+  PB<- varargin[[1]]
+  PA<- varargin[[2]]
   PC=varargin[[3]]
   r <-  0.5
   if(Nargs>=4){
     r<-  varargin[[4]]*r  
   }
   Out=c()
-  if(r>min(Norm(PA-PB),Norm(PC-PB))){
+  if(length(PC)>1){ #180506from
+    Tmp=min(Norm(PB-PA),Norm(PC-PA))
+  }else{
+    Tmp=Norm(PB-PA)
+  }
+  if(r>Tmp){ #180506to
     return(Out)
   }
-  Cir<- Circledata(c(PB,r)) #17.11.29
+  Cir<- Circledata(c(PA,r)) #17.11.29
   Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PB))
   P1<- Op(2,Op(1,Tmp))
-  Tmp<- IntersectcrvsPp(Cir,Listplot(PC,PB))
-  P2<- Op(2,Op(1,Tmp))
-  if(abs(P1-P2)<Eps){
-    Out<-c()
-    return(Out)
+  if(length(PC)>1){
+    Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PC))
+    P2<- Op(2,Op(1,Tmp))
+    if(abs(P1-P2)<Eps){
+      Out<-c()
+      return(Out)
+    }
+    if(P1<P2-Eps){
+      Out<- Partcrv(P1,P2,Cir)
+    }
+    else{  
+      Tmp<- Numptcrv(Cir)
+      Tmp1<- Partcrv(P1,Tmp,Cir)
+      Tmp2<- Partcrv(1,P2,Cir)
+      Out<- Joincrvs(Tmp1,Tmp2)
+    }
+  }else{
+    Tmp1=Pointoncurve(1,Cir)-PA
+    Tmp2=Pointoncurve(2,Cir)-PA
+    Tmp=Dotprod(Tmp1,Tmp2)/(Norm(Tmp1)*Norm(Tmp2))
+	Tmp=PC/acos(Tmp)
+    if(P1+Tmp<Length(Cir)){
+      Out<- Partcrv(P1,P1+Tmp,Cir)
+    }else{
+      Tmp1= Partcrv(P1,Length(Cir),Cir)
+      Tmp2= Partcrv(1,P1+Tmp-Length(Cir)+1,Cir)
+      Out<- Joincrvs(Tmp1,Tmp2)
+    }
   }
-  if(P1<P2-Eps){
-    Out<- Partcrv(P1,P2,Cir)
-  }
-  else{  
-    Tmp<- Numptcrv(Cir)
-    Tmp1<- Partcrv(P1,Tmp,Cir)
-    Tmp2<- Partcrv(1,P2,Cir)
-    Out<- Joincrvs(Tmp1,Tmp2)
-  }
+  Out
 }
 
 ##############################################
@@ -876,6 +914,7 @@ Arrowdata<- function(...)
 Arrowhead<-function(...)
 {       ## Scaling is implemented
         ## 12.01.08  Kirikomi 
+  Eps=10^(-3)
   varargin<-list(...)
   Nargs<-length(varargin)
   P<-varargin[[1]]
@@ -916,15 +955,20 @@ Arrowhead<-function(...)
   if(Nrow(Houkou)>1){
     P<- Doscaling(P)
     Houkou<- Doscaling(Houkou)
-    Tmp<-Nearestpt(P,Houkou)
+    Tmp<-Nearestpt(P,Houkou) 
     A<-Tmp[[1]]
     I<-floor(Tmp[[2]])
+    if(I==1){# 180511
+      if(Norm(Ptend(Houkou)-Ptstart(Houkou))<Eps){
+        I=Numptcrv(Houkou)
+      }
+    }
     G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
     for (J in JL){
       B<-Ptcrv(J,Houkou)
-      Tmp<-IntersectcrvsPp(Listplot(list(A,B)),G)
+      Tmp<-IntersectcurvesPp(Listplot(list(A,B)),G) #180510
       if(length(Tmp)>0){
          Flg<- 1
          break
@@ -951,7 +995,7 @@ Arrowhead<-function(...)
   }
   A<-P+Ookisa*cos(Theta)*Ev+Ookisa*sin(Theta)*Nv
   B<-P+Ookisa*cos(Theta)*Ev-Ookisa*sin(Theta)*Nv
-  if(length(grep("l",Str))>0){
+  if(length(grep("l",Str,fixed=TRUE))>0){
     Tmp<-Listplot(list(A,P,B))
     Tmp1<- Unscaling(Tmp)  
     Drwline(Tmp1,Futosa)
@@ -973,6 +1017,7 @@ Arrowhead<-function(...)
 
 Arrowheaddata<- function(...)
 {  ## Scaling is implemented
+  Eps=10^(-3)
   varargin<- list(...)
   Nargs<- length(varargin)
   P<- varargin[[1]]
@@ -1012,6 +1057,11 @@ Arrowheaddata<- function(...)
     Tmp<-Nearestpt(P,Houkou)
     A<-Tmp[[1]]
     I<-floor(Tmp[[2]])
+    if(I==1){# 180511
+      if(Norm(Ptend(Houkou)-Ptstart(Houkou))<Eps){
+        I=Numptcrv(Houkou)
+      }
+    }
     G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
@@ -4267,9 +4317,9 @@ MakeCurves<-function(...){        ## Scaling is implemented
   Eps<-10.0^(-6)
   IndM<-Dataindex(Figdata)
   Atos<-c()
-  for (Nd in 1:Nrow(IndM)){
+  for (Nd in Looprange(1,Nrow(IndM))){  #180509
     Tmp<-IndM[Nd,]
-    Motos<-Figdata[Tmp[1]:Tmp[2],]
+    Motos<- Figdata[Tmp[1]:Tmp[2],]
     All<-Nrow(Motos)
     if(Nrow(Motos)==1){ 
       if(InWindow(Motos)=="o"){
@@ -5046,7 +5096,9 @@ Paramplot<- function(...)
   Nargs<- length(varargin)
   Fnflg<- 0
   Fnstr<- varargin[[1]]; Is=2
+  Fnstr=Assign(Fnstr) #180510(for KeTCindy)
   Rgstr<- varargin[[Is]]; Is<- Is+1
+  Rgstr=Assign(Rgstr) #180510(for KeTCindy)
   Range<- c(0,2*pi)
   N<- 50      # Numpoints
   E<-c()       # Exclusions
@@ -5260,8 +5312,10 @@ Plotdata<- function(...)
   varargin<- list(...)
   Eps<- 10^(-5)
   Fnstr<- varargin[[1]]; Is<- 2
+  Fnstr=Assign(Fnstr) #180510(for KeTCindy)
   Fnflg<- 0
   Rgstr<- varargin[[Is]]; Is<- Is+1
+  Rgstr=Assign(Rgstr) #180510(for KeTCindy)
   Tmp<- strsplit(Rgstr,"=")
   K<-Tmp[[1]]
   if(length(K)>1){
@@ -7462,7 +7516,7 @@ Texsetctr<- function(Nctr,Opstr)
       Va<- paste(Va,Tmp,sep="")
       next
     }
-    if(length(grep(Tmp,OperL))==0){
+    if(length(grep(Tmp,OperL,fixed=TRUE))==0){ #180510
       Va<- paste(Va,Tmp,sep="")
     }
     else{
@@ -8441,7 +8495,7 @@ Kukannozoku<- function(Jokyo,KukanL){
 ########################################
 
 Makeskeletondata<- function(Obj2L,Plt2L,R0,Eps2){
-  Eps<- 10.0^(-3)
+ Eps<- 10.0^(-3)
   Dmat<- c()
   Dind<- c()
   for (I in Looprange(1,Mixlength(Plt2L))){
@@ -8467,7 +8521,7 @@ Makeskeletondata<- function(Obj2L,Plt2L,R0,Eps2){
       for (I in Looprange(1,Nrow(Dind))){
         Tmp<- Dmat[Dind[I,1]:Dind[I,2],]
         P2<- Tmp[,1:2]
-        KC<- IntersectcrvsPp(P1,P2,Eps)
+        KC<- IntersectcrvsPp(P1,P2)
         if(Mixlength(KC)>0){
           for (J in 1:Mixlength(KC)){
             P<- Op(1,Op(J,KC))
@@ -8858,8 +8912,8 @@ MakeveLfaceL<- function(VfL){
 }
 
 ###########################
-#// 09.10.29
-#// 09.11.15
+# 09.10.29
+# 09.11.15
 
 Menkakusi2<- function(Face,Nf,Ptype){
 #  global THETA PHI EyePoint FocusPoint VELNO VELHI
@@ -8955,7 +9009,7 @@ Menkakusi2<- function(Face,Nf,Ptype){
         Tmp1<- Invparapt(P,Spaceline(Face))
       }
       P3<- Tmp[[1]]; Q3<- Tmp1[[1]]
-      if(Ts>1-Eps){#  // P3, Q3 are necessary
+      if(Ts>1-Eps){#   P3, Q3 are necessary
         Flg<- I
         break
       }
@@ -9067,8 +9121,8 @@ Parapt<- function(Plist){  # 18.02.19 changed (for point list)
 
 Partcrv3<- function(T1,T2,Fk){
   Eps0=10^(-4)
-#// Tmp=Mixop(1,Fk)
-#// new part from
+# Tmp=Mixop(1,Fk)
+# new part from
   if(T1>(T2+Eps0)){
     Npt<- Nrow(Fk)
     Out1<- Partcrv3(T1,Npt,Fk)
@@ -10464,7 +10518,7 @@ Xyzaxpersname<- function(...){
 
 #########################
 #100815
-Zparapt<- function(P){#function Out=Zparapt(P)
+Zparapt<- function(P){
   x<- P[1]; y<- P[2]; z<- P[3]
   Out<- x*cos(PHI)*sin(THETA)+y*sin(PHI)*sin(THETA)+z*cos(THETA)
   return(Out)
@@ -12622,7 +12676,7 @@ IntersectcurvesPp<- function(...){
   for(ii in Looprange(1,length(tmp2))){
     tmp=Collectsameseg(tmp1)
     out=c(out,list(Op(1,tmp)))
-   if(length(Op(2,tmp))==0){
+    if(length(Op(2,tmp))==0){
       break
     }else{
       tmp1=Op(2,tmp)
@@ -13208,10 +13262,7 @@ Envelopedata<- function(...){
     Eval11=Evlpfun(Uval1,Vval1)
     Eval12=Evlpfun(Uval1,Vval2)
     for(I in 1:(Mdv)){
-#      Uval1=URNG[1]+(I-1)*Du
       Uval2=URNG[1]+I*Du
-#      Eval11=Evlpfun(Uval1,Vval1)
-#      Eval12=Evlpfun(Uval1,Vval2)
       Eval21=Evlpfun(Uval2,Vval1)
       Eval22=Evlpfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -13276,8 +13327,6 @@ Dropnumlistcrv<- function(QdL,Eps1){
     if(Norm(P-Op(K,Pd))>Eps1){ #18.02.12 eps
       PtL=c(PtL,K)
     }
-#    if(length(PtL)==1){ #180306
-#    }
     OutL=c(OutL,list(PtL))
   }
   return(OutL)
@@ -13460,12 +13509,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps1,Eps2){
     Uval1=URNG[1] #180306(3lines)
     Eval11=Eqfun(Uval1,Vval1)
     Eval12=Eqfun(Uval1,Vval2)
-    Uval1=URNG[1]  #180305(3lines)
     for(I in Looprange(1,Np[1])){ #180227
-#      Uval1=URNG[1]+(I-1)*Dx
       Uval2=URNG[1]+I*Dx
-#      Eval11=Eqfun(Uval1,Vval1)
-#      Eval12=Eqfun(Uval1,Vval2)
       Eval21=Eqfun(Uval2,Vval1)
       Eval22=Eqfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -13483,7 +13528,6 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps1,Eps2){
           next
         }
         if(abs(M2)<Eps0){
-#          QL=Appendrow(QL,P2)
           next
         }
         if((M1> 0) && (M2> 0)){
@@ -13547,8 +13591,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps1,Eps2){
           }
         }
         Tmp1=Crossprod(Pt-PtA,Vec)
-        if(Norm(Tmp1)<Eps1){ #18.02.19
-          if(Zparapt(Pt)>Zparapt(PtA)+Eps2){
+       if(Norm(Tmp1)<Eps1){ #18.02.19
+		  if(Zparapt(Pt)>Zparapt(PtA)+Eps2){
             return(list(1,Pt,Zparapt(Pt),Zparapt(PtA)))
           }else{
             Out=Appendrow(Out,Pt)
@@ -13599,14 +13643,14 @@ Nohiddenpara2<- function (Par,Fk,Uveq,Np,Eps1,Eps2){
     PaL[length(PaL)]=tmp2
   }else{
     PaL=c(PaL,tmp2)
-  } #18.02.26until
+  } #18.02.26to
   SeL=c()
   for(N in Looprange(1,length(PaL)-1)){
     S=(PaL[N]+PaL[N+1])/2
     Tmp=Invparapt(S,Fh,Fk)
-	PtA=Op(1,Tmp)
+    PtA=Op(1,Tmp)
     PtAp=Parapt(PtA)
-	Vec=c(sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA))
+    Vec=c(sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA))
     Flg=PthiddenQ(PtA,Vec,Uveq,Np,Eps1,Eps2)
     if(Flg[[1]]==0){
       SeL=c(SeL,N)
@@ -13838,9 +13882,6 @@ Sfbdparadata<- function(...){
     }
   }
   starttime=proc.time()
-#  tmp=Evlptablepara(Np)
-#  Zval=tmp[[1]]; Xval=tmp[[2]]; Yval=tmp[[3]]
-#  Out3=Implicitplot(Zval,Xval,Yval)
   Out3=Envelopedata(Fd) #180306
   tmp3=list()
   pts=list() #180306
@@ -13857,7 +13898,6 @@ Sfbdparadata<- function(...){
       tmp=Op(1,Nlist)
       tmp=Op(tmp,tmp1)
       pts=c(pts,list(tmp))
-#      pts=c(pts,list(XYZfunc(tmp[1],tmp[2])))#180306until
     }else{      
       tmp=c()
       for(kk in Looprange(1,length(Nlist))){
@@ -13873,11 +13913,11 @@ Sfbdparadata<- function(...){
   pts=list()
   for(ii in Looprange(1,length(tmp3))){
     tmp=Op(ii,tmp3)
-    tmp1=XYZfunc(tmp[1],tmp2[])
+    tmp1=XYZfunc(tmp[1],tmp[2])
     flg=0
     for(jj in Looprange(1,length(pts))){
       tmp=Op(jj,pts)
-      tmp2=XYZfunc(tmp[1],tmp2[])
+      tmp2=XYZfunc(tmp[1],tmp[2]) #180517
       if(Norm(tmp1-tmp2)<Eps1){
         flg=1; break
       }
@@ -13908,7 +13948,7 @@ Sfbdparadata<- function(...){
         next
       }
     }
-  } #180306until
+  } #180306to
   IMPLICITDATA<<- Out3
   Tmp=proc.time()-starttime
   print(paste('ImplicitData obtained : Time =',sprintf("%6.3f",Tmp[1]),sep=''))
@@ -13950,10 +13990,7 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps1){
     Eval11=Eqfun(Uval1,Vval1)
     Eval12=Eqfun(Uval1,Vval2)
     for(I in Looprange(1,Np[1])){ 
-#      Uval1=URNG[1]+(I-1)*Dx
       Uval2=URNG[1]+I*Dx
-#      Eval11=Eqfun(Uval1,Vval1)
-#      Eval12=Eqfun(Uval1,Vval2)
       Eval21=Eqfun(Uval2,Vval1)
       Eval22=Eqfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -13971,7 +14008,6 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps1){
           next
         }
         if(abs(M2)<Eps0){
-#          QL=Appendrow(QL,P2)
           next
         }
         if((M1> 0) && (M2> 0)){
@@ -14037,7 +14073,7 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps1){
         Tmp1=Crossprod(Pt-PtA,Vec)
         if(Norm(Tmp1)<Eps1){ #18.02.19
           Tmp1=Dotprod(Pt-PtA,Vec) #18.02.21
-          if((Tmp1>-Eps0)&&(Tmp1<Norm(PtB-PtA)+Eps0)){
+          if((Tmp1>-Eps0)&&(Norm(Pt-PtA)<Norm(PtB-PtA)+Eps0)){#180429
             Out=c(Out,list(Pt))
           }
         }
@@ -14253,7 +14289,7 @@ Crv3onsfparadata<- function(...){
   return(Out)
 }
 
-Crvonsfparadata<- function(...){
+Crv2onsfparadata<- function(...){
   starttime=proc.time()
   varargin=list(...)
   Nargs=length(varargin)
@@ -14306,7 +14342,7 @@ Wireparadata<- function(...){
   DvL=varargin[[4]]
   Np=c(50,50)
   Eps1=0.01
-  Eps2=0.05
+  Eps2=0.1
   ctr=0
   for(jj in Looprange(5,Nargs)){
     tmp=varargin[[jj]]
@@ -14321,7 +14357,7 @@ Wireparadata<- function(...){
       if(ctr==2){Eps2=tmp}
     }
   }
-  if(is.numeric(DuL)){
+  if(length(DuL)==1){ #180430
     tmp1=DuL
     DuL=list()
     for(jj in Looprange(1,tmp1)){
@@ -14329,7 +14365,7 @@ Wireparadata<- function(...){
       DuL=c(DuL,list(tmp))
     }
   }
-  if(is.numeric(DvL)){
+  if(length(DvL)==1){ #180430
     tmp1=DvL
     DvL=list()
     for(jj in Looprange(1,tmp1)){
@@ -14519,10 +14555,7 @@ Sfcutparadata<- function(...){
     Eval11=Eqfun(Uval1,Vval1)
     Eval12=Eqfun(Uval1,Vval2)
     for(I in Looprange(1,Np[1])){
-#      Uval1=URNG[1]+(I-1)*Du
       Uval2=URNG[1]+I*Du
-#      Eval11=Eqfun(Uval1,Vval1)
-#      Eval12=Eqfun(Uval1,Vval2)
       Eval21=Eqfun(Uval2,Vval1)
       Eval22=Eqfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -14540,7 +14573,6 @@ Sfcutparadata<- function(...){
           next
         }
         if(abs(M2)<Eps0){
-#          QL=Appendrow(QL,P2)
           next
         }
         if((M1> 0) && (M2> 0)){

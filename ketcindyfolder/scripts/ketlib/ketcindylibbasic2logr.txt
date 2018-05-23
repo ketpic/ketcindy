@@ -1,3 +1,9 @@
+//20180515
+//    Setpara changed ( "m" as default)
+//20180514
+//    WritetoRS,Makebat changed ( to execsrc.r)
+//20180513
+//    WritetoRS,Makebat changed ( UTF-8)
 //20180412
 //    Mksummary changed ( calcbyR, quit )
 //20180409

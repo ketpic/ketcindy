@@ -2,9 +2,11 @@ title::slide0::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::How to use itemize//
+\slidepage//
 
 itemize//
 item::Contents//
@@ -13,6 +15,7 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::How to use enumerate//
+\slidepage//
 
 enumerate::[(1)]//
 item::Change the style of number adding, for example, [(1)]//

@@ -1,3 +1,10 @@
+//20180529
+//    Presentation debugged (for repeat=1)
+//20180526
+//    Repeatsameslide debugged (for minipage with thin)
+//    Presentation changed ( page jump button )
+//20180524
+//    Presentation changed ( pageend, \slidepage, pagestyle{empty})
 //20180515
 //    Setpara changed ( "m" as default)
 //20180514

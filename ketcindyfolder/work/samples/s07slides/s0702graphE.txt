@@ -2,18 +2,22 @@ title::slideE::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::input and layer//
+%repeat=2//
+\slidepage//
 
 layer::{100}{0}//
-putnote::s{65}{10}::figsin,1.2//
+%[1]::putnote::se{10}{15}::sinecurve,0.8//
+%[2]::putnote::se{60}{25}::sinecurve,0.8//
 end//
 
 %%%%%%%%%%%%%%%%//
 new::includegrpahics and layer//
+\slidepage//
 
 layer::{100}{0}//
-putnote::s{60}{5}
-::include[bb=0.00 0.00 803.00 285.00,width=100mm]::cindyscreen.pdf//
+putnote::s{60}{15}::include[bb=0.00 0.00 283.46 113.39,width=100mm]::diffeq.pdf//
 end//

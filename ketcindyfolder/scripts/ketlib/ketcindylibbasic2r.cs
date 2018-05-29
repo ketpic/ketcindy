@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180514) loaded");
+println("ketcindybasic2(20180529) loaded");
 
 //help:start();
 
@@ -3868,7 +3868,7 @@ Setslidehyper(Arg):=(
 );
 Setslidehyper(driverorg,options):=(
 //help:Setslidehyper();
-//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue","Pos=[125,70]","Size=1"]);
+//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue","Pos=[125,73]","Size=1"]);
   regional(driver,eqL,reL,stL,,str,tmp,tmp1,tmp2);
   driver=driverorg;
   if(length(driver)==0,
@@ -3900,27 +3900,29 @@ Setslidehyper(driverorg,options):=(
   ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
   Addpackage(tmp1+"{hyperref}");
   LinkPosH=125;
-  LinkPosV=70;
+  LinkPosV=73;//180524
   LinkSize=1;
-  if(length(reL)>0,
-    LinkPosH=reL_1;
-    if(length(reL)>1,LinkPosV=reL_2);
-    if(length(reL)>2,LinkSize=max(reL_3,0.1));
-  );
+//  if(length(reL)>0,
+//    LinkPosH=reL_1;
+//    if(length(reL)>1,LinkPosV=reL_2);
+//    if(length(reL)>2,LinkSize=max(reL_3,0.1));
+//  );
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
-    tmp2=parse(tmp2);
-    if(tmp1=="P",
-      LinkPosH=tmp2_1;
-      LinkPosV=tmp2_2;
-    );
-    if(tmp1=="S",
-      LinkSize=max(tmp2,0.1);
-    );
+    tmp=Indexall(#,"=");//180524from
+    if(length(tmp)==1,
+      tmp1=Toupper(substring(#,0,1));
+      tmp2=substring(#,tmp_1,length(#));
+      tmp2=parse(tmp2);
+      if(tmp1=="P",
+        LinkPosH=tmp2_1;
+        LinkPosV=tmp2_2;
+      );
+      if(tmp1=="S",
+        LinkSize=max(tmp2,0.1);
+      );
+    );//180524to
   );
-); //17.12.16until
+); //17.12.16to
 
 Settitle(cmdL):=Settitle(cmdL,[]); // 180330changed
 Settitle(cmdL,options):=(
@@ -4060,7 +4062,7 @@ Maketitle(name):=(
 
 Repeatsameslide(repeatflg,sestr,addedL):=(
   regional(seL,flg1,ss,nn,nrep,tmp,tmp1,tmp2,tmp3,str,j,k);
-  // global RepeatList, SCEOUTPUT
+  // global RepeatList, SCEOUTPUT, NonThinFlg
   nrep=length(RepeatList);
   flg1=0;
   forall(addedL,ss,
@@ -4102,6 +4104,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
         if(flg1==1,seL=append(seL,1));
         seL=remove(1..nrep,seL);
         str=ss; // 17.05.28from
+        if(substring(str,0,16)=="\begin{minipage}",MiniFlg=1);//180526
         repeat(10,
           tmp1=Indexall(str,"{\color");
           if(length(tmp1)>0,
@@ -4111,28 +4114,50 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             str=replace(str,tmp+" ","");
             str=replace(str,tmp,"");
           );
-        );//17.05.28until
+        );//17.05.28to
         if(contains(seL,1),
           if(substring(str,0,1)!="%", 
             if(NonThinFlg==0,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
-                println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
-                println(SCEOUTPUT,str);
-                println(SCEOUTPUT,"}%");
+			    if(MiniFlg==0, //180526from
+                  println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
+                  println(SCEOUTPUT,str);
+                  println(SCEOUTPUT,"}%");
+                ,
+                  println(SCEOUTPUT,str);
+                  if(indexof(str,"\end{minipage}")>0, //180526from
+                    println(SCEOUTPUT,"}%");
+                  ); 
+                ); //180526to
               ,
                 println(SCEOUTPUT,str);
+                if(indexof(str,"\end{minipage}")>0, //180526from
+                  println(SCEOUTPUT,"}%");
+                  MiniFlg=0;
+                ); 
               );
             );
             if(NonThinFlg==1,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
                 println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
+                println(SCEOUTPUT,str);
+              ,
+                println(SCEOUTPUT,str);
+                if(indexof(str,"\end{minipage}")>0, //180526from
+                  println(SCEOUTPUT,"}%");
+                  MiniFlg=0;
+                ); 
               );
-              println(SCEOUTPUT,str);
             );
             if(NonThinFlg==2,
               println(SCEOUTPUT,str);
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
                 println(SCEOUTPUT,"}%");
+              ,  //180526from
+                if(indexof(str,"\end{minipage}")>0, 
+                  println(SCEOUTPUT,"}%");
+                  MiniFlg=0;
+                ); //180526from
               );
             );
             seL=remove(seL,[1]);
@@ -4140,24 +4165,56 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
         );
         if(substring(ss,0,1)!="%", //16.01.04
           forall(1..(length(seL)),nn,
+            if(substring(str,0,16)=="\begin{minipage}",MiniFlg=1);//180526
             tmp=seL_nn;
             if(NonThinFlg==0,
-              tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
-              tmp1=[tmp1,str,"}%"];
+              if(!contains(["\begi","\end{"],substring(str,0,5)),//180526from
+			    if(MiniFlg==0, 
+                  tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
+                  tmp1=[tmp1,str,"}%"];
+                ,
+                  tmp1=[str];
+                  if(indexof(str,"\end{minipage}")>0, //180526from
+                    tmp1=append(tmp1,"}%");
+                  );
+                );
+              ,
+                tmp1=[str];
+                if(indexof(str,"\end{minipage}")>0,
+                  tmp1=append(tmp1,"}%");
+                  MiniFlg=0;
+                ); 
+              );
             );
             if(NonThinFlg==1,
-              tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
-              tmp1=[tmp1,str];//17.01.08until
+              if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
+                tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
+                tmp1=[tmp1,str];
+              ,
+                tmp1=[str];
+                if(indexof(str,"\end{minipage}")>0,
+                  tmp1=append(tmp1,"}%");
+                  MiniFlg=0;
+                ); 
+              );
             );
             if(NonThinFlg==2,
-              tmp1=[str,"}%"];
+              tmp1=[str];
+              if(!contains(["\begi","\end{"],substring(str,0,5)),
+                tmp1=append(tmp1,"}%");
+              ,
+                if(indexof(str,"\end{minipage}")>0, 
+                  tmp1=append(tmp1,"}%");
+                  MiniFlg=0;
+                );
+              );
             );
             RepeatList_tmp=concat( RepeatList_tmp,tmp1);
           );
         );
-      );//16.01.05until
+      );//16.01.05to
     );
-  );//16.12.05until
+  );//16.12.05to
 );
 
 Presentation(texfile):=Presentation(texfile,texfile);
@@ -4167,6 +4224,7 @@ Presentation(texfile,txtfile):=(
      tmp2,tmp3,tmp4,tmp5,newoption,top,repeatflg,nrep,nrepprev,,repstr,
      sestr,npara,paradt,parafiles,hyperflg,paractr,
      letterc,boxc,shadowc,mboxc,sep);
+  MiniFlg=0;//180526
   slidecmd=["\ketcletter","\ketcbox","\ketdbox","\ketcframe",
          "\ketcshadow","\ketdshadow","\slidetitlex","\slidetitlesize",
          "\mketcletter","\mketcbox","\mketdbox","\mketcframe",
@@ -4280,15 +4338,9 @@ Presentation(texfile,txtfile):=(
   ,
     println(SCEOUTPUT,"\usepackage[dvipdfmx]{graphicx}");
   );
-//  println(SCEOUTPUT,"\usepackage[usenames]{color}");
-//  println(SCEOUTPUT,"\usepackage{color}");//17.06.14
   println(SCEOUTPUT,"\usepackage{xcolor}");//17.07.31
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow";
-//  if(!islist(SlideColorList), //17.03.02from
-//    SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
-//                  letterc,mboxc,mboxc,mboxc,62,2,letterc];
-//  , //17.03.02until
   tmp4="abcdefghijklmno";
   forall(1..15,
     tmp=SlideColorList_#;
@@ -4304,16 +4356,18 @@ Presentation(texfile,txtfile):=(
       SlideColorList_#="slidecolor"+tmp4_#;
     );
   );
-//  ); //17.03.02
   println(SCEOUTPUT,"\def\setthin#1{\def\thin{#1}}");//17.08.23
   println(SCEOUTPUT,"\setthin{"+text(ThinDense)+"}");//17.08.23
+  println(SCEOUTPUT,"\newcommand{\slidepage}[1][s]{%");//180524from
+  println(SCEOUTPUT,"\setcounter{ketpicctra}{19}%");
+  println(SCEOUTPUT,"\if#1m \setcounter{ketpicctra}{1}\fi");
+  println(SCEOUTPUT,"\hypersetup{linkcolor=black}%");
+  println(SCEOUTPUT,"\begin{layer}{118}{0}");
+  println(SCEOUTPUT,"\putnotee{122}{-\theketpicctra.65}{\small\thepage/\pageref{pageend}}");
+  println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor=blue}}");//189524to
   forall(ADDPACK,// 16.06.09from
-//    if(indexof(#,"[")==0,  // 16.09.05from
-//      println(SCEOUTPUT,"\usepackage{"+#+"}");
-//    ,
-      println(SCEOUTPUT,"\usepackage"+#);  //17.07.10
-//    );
-  );// 16.06.09until
+    println(SCEOUTPUT,"\usepackage"+#); 
+  );// 16.06.09to
   tmp=select(ADDPACK,indexof(#,"{hyperref}")>0);//16.12.31from
   if(length(tmp)>0,
     hyperflg=1;
@@ -4330,8 +4384,9 @@ Presentation(texfile,txtfile):=(
   forall(tmp, // 15.07.21
     if(substring(#,0,1)=="\", println(SCEOUTPUT,#));
   );
-  if(!isstring(PageStyle),PageStyle="headings");//17.04.09
-  println(SCEOUTPUT,"\pagestyle{"+PageStyle+"}");//17.04.09
+//  if(!isstring(PageStyle),PageStyle="headings");//180524from
+//  println(SCEOUTPUT,"\pagestyle{"+PageStyle+"}");
+   println(SCEOUTPUT,"\pagestyle{empty}");//180524to
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\begin{document}");
   println(SCEOUTPUT,"");
@@ -4372,7 +4427,7 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\color{"+SlideColorList_(15)+"}");
   println(SCEOUTPUT,BodyStyle);//17.01.07
-  println(SCEOUTPUT,"\thispagestyle{empty}");//17.01.29
+//  println(SCEOUTPUT,"\thispagestyle{empty}");//180524
   println(SCEOUTPUT,"\addtocounter{page}{-1}");//17.01.29
   println(SCEOUTPUT,"");
   verbflg=0; //16.06.28
@@ -4395,7 +4450,9 @@ Presentation(texfile,txtfile):=(
         tmp=indexof(sld,"]::");
         if(tmp>0,
           if(substring(sld,1,2)!="%",//17.05.31
-            if(substring(sld,1,5)=="thin", ThinFlg=1); // 17.05.28
+            if(substring(sld,1,5)=="thin",
+              ThinFlg=1;
+            ); 
             sestr=substring(sld,1,tmp);
             sld=substring(sld,tmp+2,length(sld));
             tmp=indexof(sestr,"[");
@@ -4417,7 +4474,8 @@ Presentation(texfile,txtfile):=(
           if(length(wall)>0,
             tmp=["","\input{fig/"+wall+".tex}"];
           );
-          tmp=concat(tmp,["","\sameslide"+NewSlideOption,"","\vspace*{18mm}",""]);
+          tmp=concat(tmp,
+             ["","\sameslide"+NewSlideOption,"","\vspace*{18mm}",""]);//180524
           RepeatList=apply(1..nrep,if(#==1,[],tmp));
         );
         if(sestr=="",flg=1);
@@ -4462,7 +4520,8 @@ Presentation(texfile,txtfile):=(
             if(length(wall)>0,
               tmp=["","\input{fig/"+wall+".tex}"];
             );
-            tmp=concat(tmp,["","\sameslide"+NewSlideOption,"","\vspace*{18mm}",""]);
+            tmp=concat(tmp,
+                ["","\sameslide"+NewSlideOption,"","\vspace*{18mm}",""]);//180524
             RepeatList=apply(1..nrep,if(#==1,[],tmp));
           );
         );
@@ -4470,7 +4529,7 @@ Presentation(texfile,txtfile):=(
           tmp4=[]; //16.12.31from
           if(hyperflg>0,
             tmp4=["\hypertarget{para"+text(paractr)+"pg"+text(#)+"}{}"];
-          );//16.12.31until
+          );//16.12.31to
           if(npara>0, //17.01.03
             tmp4=concat(tmp4,["","\begin{layer}{120}"+paradt_2]);
             if(#<=npara, //16.12.28from
@@ -4495,43 +4554,47 @@ Presentation(texfile,txtfile):=(
             tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
             tmp1=tmp+text(paractr)+"pg";
             tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);
-            if(#>1,tmp=tmp1+text(1),tmp=tmp2);
+            tmp=tmp2; //180526from
             tmp3=[text(LinkPosH-29*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
                   +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                  +"}{\scriptsize $\mathstrut|\!\lhd$}}}}}"];
-            if(#>1,tmp=tmp1+text(max(#-3,1)),tmp=tmp2);
-            tmp3=append(tmp3,
-                text(LinkPosH-24*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                  +"}{\scriptsize $\mathstrut||\!\lhd$}}}}}"];
+            if(nrep>1,//180526
+              tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
+              tmp1=tmp+text(paractr)+"pg";
+              tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);
+              tmp=tmp1+text(1);
+              tmp3=append(tmp3,
+                 text(LinkPosH-24*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                    +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                    +"}{\scriptsize $\mathstrut|\!\lhd$}}}}}"); //180526to
+              if(#>1,tmp=tmp1+text(#-1),tmp=tmp2);
+              tmp3=append(tmp3,
+                 text(LinkPosH-17*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                    +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                    +"}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}");
+              if(#<nrep,tmp=tmp1+text(#+1),tmp=tmp1+text(nrep));
+              tmp3=append(tmp3,
+                 text(LinkPosH-10*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                    +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                    +"}{\scriptsize $\mathstrut\!\rhd\!$}}}}}");
+              tmp=tmp1+text(nrep); //180526from
+              tmp3=append(tmp3,
+              text(LinkPosH-5*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
                   +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                  +"}{\scriptsize $\mathstrut\!\! \lhd\!\!\lhd\!$}}}}}");
-            if(#>1,tmp=tmp1+text(#-1),tmp=tmp2);
-            tmp3=append(tmp3,
-               text(LinkPosH-17*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                  +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                  +"}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}");
-            tmp="{"+text(LinkPosV)+"}{\hyperlink{para";
-            tmp2=tmp+text(paractr+1)+"pg"+text(1);
-            if(#<nrep,tmp=tmp1+text(#+1),tmp=tmp2);
-            tmp3=append(tmp3,
-               text(LinkPosH-10*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                  +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                  +"}{\scriptsize $\mathstrut\!\rhd\!$}}}}}");
-            if(#<nrep,tmp=tmp1+text(min(#+3,nrep)),tmp=tmp2);
-            tmp3=append(tmp3,
-               text(LinkPosH-5*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
-                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                  +"}{\scriptsize $\mathstrut\!\!\rhd\!\!\rhd\!$}}}}}");
-            if(#<nrep,tmp=tmp1+text(nrep),tmp=tmp2);
+                  +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
+            );
+            tmp="{"+text(LinkPosV)+"}{\hyperlink{para";  //180529(2lines)
+            tmp=tmp+text(paractr+1)+"pg"+text(1);
             tmp3=append(tmp3,
                text(LinkPosH)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
                   +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
-                  +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
-            tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
-            tmp4=concat(tmp4,tmp3);// 17.01.12untilr
-            tmp="\putnotew{"+text(LinkPosH)+"}{"+text(LinkPosV+6)+"}";//17.10.21from
-            tmp=tmp+"{\scriptsize\color{black} "+text(#)+"/"+text(nrep)+"}";
-            tmp4=append(tmp4,tmp);//17.10.21until
+                  +"}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}");  //180526to
           );
+          tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
+          tmp4=concat(tmp4,tmp3);// 17.01.12to
+          tmp="\putnotee{"+text(LinkPosH+1)+"}{"+text(LinkPosV)+"}";//180524
+          tmp=tmp+"{\scriptsize\color{blue} "+text(#)+"/"+text(nrep)+"}"; //180524(blue)
+          tmp4=append(tmp4,tmp);
           tmp4=concat(tmp4,["\end{layer}",""]);//16.12.31until
           Repeatsameslide(repeatflg,text([#]),tmp4);
         );
@@ -4540,7 +4603,7 @@ Presentation(texfile,txtfile):=(
     if(substring(sld,0,2)=="%%", //17.06.23from
       println(SCEOUTPUT,sld);
       flg=1;
-    ); //17.06.23until
+    ); //17.06.23to
     if(flg==0,  
 	  if(indexof(sld,"\begin{verbatim}")==1, // 16.06.28from
         Repeatsameslide(repeatflg,sestr,[slideL_ns]);
@@ -4594,6 +4657,7 @@ Presentation(texfile,txtfile):=(
         );
         println(SCEOUTPUT,"\mainslide{"+tmp2+"}");
         println(SCEOUTPUT,"");
+        println(SCEOUTPUT,"");
         tmp2="";
         flg=1;
       );
@@ -4626,7 +4690,7 @@ Presentation(texfile,txtfile):=(
           tmp4=tmp5;
         );
         tmp=tmp+"{"+tmp2+"}";
-        Repeatsameslide(repeatflg,sestr,[tmp,"","\vspace*{18mm}",""]);
+        Repeatsameslide(repeatflg,sestr,[tmp,"","\vspace*{18mm}",""]);//180524
         tmp2="";
         flg=1;
       );
@@ -4656,7 +4720,7 @@ Presentation(texfile,txtfile):=(
 //          tmp3=tmp4;
 //        );
         println(SCEOUTPUT,tmp);
-        println(SCEOUTPUT,"");
+        println(SCEOUTPUT,""); //180524
         println(SCEOUTPUT,"\vspace*{18mm}");
         println(SCEOUTPUT,"");
         tmp4=tmp3;
@@ -4728,9 +4792,9 @@ Presentation(texfile,txtfile):=(
         tmp3="";
         flg=1;
       );
-      if(flg==0&tmp1=="end",
+      if(flg==0&tmp1=="end"&(length(flgL)>0), //180526 
         tmp=flgL_(length(flgL));
-        if(tmp=="i",
+		if(tmp=="i",
           Repeatsameslide(repeatflg,sestr,["\end{itemize}"]);
         );
         if(tmp=="e",
@@ -4792,8 +4856,9 @@ Presentation(texfile,txtfile):=(
          );
        );
     );
-    println(SCEOUTPUT,"");
+//    println(SCEOUTPUT,"");
   );
+  println(SCEOUTPUT,"\label{pageend}\mbox{}"); //180529
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\end{document}");
   closefile(SCEOUTPUT);

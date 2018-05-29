@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.2.0(20180523)");
+println("KETCindy V.3.2.0(20180529)");
 println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(20180515) loaded");
+println("ketcindylibbasic1(20180527) loaded");
 
 //help:start();
 
@@ -5256,9 +5256,9 @@ Deqplot(nm,deq,rng,Arg1,Arg2):=(
   Deqplot(nm,deq,rng,initt,initf,options);
 );
 Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
-//help:Deqplot("2","y`=y*(1-y)","x",0, 0.5,["Num=100"]);
-//help:Deqplot("1","y``=-y","x",0, [1,0]);
-//help:Deqplot("3","[x,y]`=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",0,[1,0.5]);
+//help:Deqplot("2","y'=y*(1-y)","x",0, 0.5,["Num=100"]);
+//help:Deqplot("1","y''=-y","x",0, [1,0]);
+//help:Deqplot("3","[x,y]'=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",0,[1,0.5]);
   regional(deq,rng,Ltype,Noflg,eqL,opcindy,Num,name,nn,pdL,phase,
                   sel,tmp,tmp1,tmp2);
   name="de"+nm;
@@ -5282,6 +5282,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     rng=rng+"="+textformat([XMIN,XMAX],6);
   );
   deq=deqorg;
+  deq=replace(deq,"'","`"); //180527
   tmp=indexof(deq,"=");
   tmp1=substring(deq,0,tmp-1);
   if(indexof(tmp1,"[")==0,

@@ -2,10 +2,12 @@
 
 %%%%%%%%%%%%%%%%//
 main::メインスライド１//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::itemize環境の使い方//
-%repeat=2//
+%repeat=2,para//
+\slidepage//
 
 itemize//
 item::内容//
@@ -14,7 +16,8 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::enumerate環境の使い方//
-%repeat=3//
+%repeat=3,para//
+\slidepage//
 
 enumerate::[(1)]//
 %thin[2,-]::item::番号を変えるには，例えば [(1)]//
@@ -23,10 +26,11 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::グラフとrepeat//
-%repeat=2//
+%repeat=2,para//
+\slidepage//
 
 layer::{100}{0}//
-%[1]::putnote::se{10}{15}::figsin,0.8//
-%[2]::putnote::se{30}{40}::figsin,0.8//
+%[1]::putnote::se{10}{15}::sinecurve,0.8//
+%[2]::putnote::se{30}{40}::sinecurve,0.8//
 end//
 

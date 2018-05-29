@@ -1,3 +1,5 @@
+//20180527
+//   Deqplot changed  ( ' as default )
 //20180513
 //   Setunitlen debugged  ( string => UI )
 //20180506

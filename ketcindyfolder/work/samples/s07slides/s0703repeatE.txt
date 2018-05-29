@@ -2,10 +2,12 @@ title::slideE::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::itemize and repeat//
-%repeat=2//
+%repeat=2,para//
+\slidepage//
 
 itemize//
 item::Contents//
@@ -14,7 +16,8 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::enumerate and repeat//
-%repeat=3//
+%repeat=3,para//
+\slidepage//
 
 enumerate::[(1)]//
 %thin[2,-]::item::Contents//
@@ -23,10 +26,10 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::Graph and repeat//
-%repeat=2//
+%repeat=2,para//
+\slidepage//
 
 layer::{100}{0}//
-%[1]::putnote::se{10}{15}::figsin,0.8//
-%[2]::putnote::se{30}{40}::figsin,0.8//
+%[1]::putnote::se{10}{15}::sinecurve,0.8//
+%[2]::putnote::se{30}{40}::sinecurve,0.8//
 end//
-

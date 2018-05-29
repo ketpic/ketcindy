@@ -2,9 +2,11 @@
 
 %%%%%%%%%%%%%%%%//
 main::メインスライド１//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::itemize環境の使い方//
+\slidepage//
 
 itemize//
 item::内容//
@@ -13,6 +15,7 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::enumerate環境の使い方//
+\slidepage//
 
 enumerate::[(1)]//
 item::番号を変えるには，例えば [(1)]//

@@ -2,9 +2,11 @@
 
 %%%%%%%%%%%%%%%%//
 main::メインスライド１//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::画面上のボタン//
+\slidepage//
 
 itemize//
 item::\Ltab{20mm}{Figure}静止画（Fhead+".tex"）をfigに作成//
@@ -17,7 +19,8 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::enumerate環境の使い方//
-%repeat=3//
+%repeat=3,para//
+\slidepage//
 
 %[2,-]::enumerate::[(1)]//
 %[2,-]::item::番号を変えるには，例えば [(1)]//
@@ -27,7 +30,8 @@ new::enumerate環境の使い方//
 
 %%%%%%%%%%%%%%%%//
 new::薄文字の使い方//
-%repeat=4//
+%repeat=4,para//
+\slidepage//
 
 itemize//
 %thin[2,-]::item::Setslidebodyの3番目の引数で濃さを変更\\//
@@ -38,7 +42,8 @@ end//
 
 %%%%%%%%%%%%%%%%//
 new::layerの使い方//
-%repeat=5//
+%repeat=5,para//
+\slidepage//
 
 \setthin{0}//
 

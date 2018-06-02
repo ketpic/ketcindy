@@ -20,8 +20,10 @@ double Crvdata[DsizeL][3];
 
 int output3(short head,const char *wa,const char *var, const char *fname,double out[][3]);
 int output3h(const char *wa,const char *var, const char *varh, const char *fname, double out[][3]);
+void outputend(const char *fname);
 int writedataC(const char *fname, double out[][3]);
 int readdataC(const char *fname, double data[][3]);
+void readoutdata3(const char *fname, const char *var, double data[][3]);
 void parapt(double pt3[3],double pt2[2]);
 double zparapt(double p[3]);
 int projpara(double p3[][3], double p2[][2]);
@@ -43,6 +45,7 @@ void meetpoints(short ch,double pta[3], double ptb[3], int uveq,double out[][3])
 void crvsfparadata(short ch,double fkL[][3], double fbdkL[][3], int sepflg, double out[][3]);
 void crv3onsfparadata(short ch,double fk[][3], double fbdyd3[][3], double out[][3]);
 void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], double out[][3]);
+void intersectcrvsf(const char *wa, short chfd,double crv[][3],const char *fname);
 void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],const char *fname,const char *fnameh);
 void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,const char *fnameh);
 int projcoordcurve(double curve[][3], double out[][3]);

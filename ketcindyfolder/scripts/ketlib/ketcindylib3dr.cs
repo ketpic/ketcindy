@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180522) loaded");
+println("ketcindylib3d(20180602) loaded");
 
 //help:start();
 
@@ -87,7 +87,9 @@ Start3d(ptexception):=(
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
   ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
   FuncListC=[];
-  CommandListC=[];
+  CommandListC=[]; //180531
+  CutFunList=[];//180601
+  EraseList=[];//180601
   GCLIST=[];
   GLIST=[];
   FUNLIST=[];
@@ -293,15 +295,17 @@ Changestyle3d(nameL,style):=(
   tmp1=[];
   forall(nmL,name,
     tmp=parse(name);
-    if(isstring(tmp_1),
-      tmp1=concat(tmp1,tmp);
-    ,
-      tmp1=append(tmp1,name);
+    if(islist(tmp),
+      if(isstring(tmp_1),
+        tmp1=concat(tmp1,tmp);
+      ,
+        tmp1=append(tmp1,name);
+      );
+      tmp=apply(tmp1,replace(#,"3d","2d"));
+      Changestyle(tmp,style);
+      tmp=apply(tmp,"sub"+#); // 15.05.24
+      Changestyle(tmp,style);
     );
-    tmp=apply(tmp1,replace(#,"3d","2d"));
-    Changestyle(tmp,style);
-    tmp=apply(tmp,"sub"+#); // 15.05.24
-    Changestyle(tmp,style);
   );
 );
 
@@ -429,12 +433,25 @@ ProjCurve(crv):=(
 );
 
 Projpara(ptdata):=Projpara(ptdata,[]);
-Projpara(ptdata,options):=(
-  regional(name2,name3,Ltype,Noflg,opcindy,dtL,ptL,tmp,Out);
+Projpara(ptdata,optionsorg):=(
+//help:Projpara("sf3d1");
+  regional(options,name2,name3,Ltype,Noflg,eqL,opcindy,
+     dtL,ptL,tmp,tmp1,Out,color,msgflg);
+  options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
+  msgflg=1; //180602from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    if(Toupper(tmp_1)=="MSG",
+      if(Toupper(tmp_2)=="N", msgflg=0);
+      options=remove(options,[#]);
+    );
+  );//180602to
   Out=[];
   if(islist(ptdata),dtL=ptdata,dtL=[ptdata]);
   forall(dtL,name3,
@@ -450,7 +467,9 @@ Projpara(ptdata,options):=(
     );
     Out=append(Out,ptL);
     if(Noflg<3,
-      println("generate projparadata  "+name2);
+      if(msgflg==1,//180602from
+        println("generate projparadata  "+name2);
+      );//180602to
       tmp=name2+"="+textformat(ptL,5);
       parse(tmp);
       tmp=name2+"=Projpara("+name3+")";
@@ -458,7 +477,9 @@ Projpara(ptdata,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -568,7 +589,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
 //help:Spaceline("1",[[2,5,1],[4,2,3]]);
 //help:Spaceline([A,B]);
   regional(name2,name3,options,Out,tmp,tmp1,tmp2,
-        opstr,opcindy,Ltype,Noflg,eqL,ptlist, Msg);
+        opstr,opcindy,Ltype,Noflg,eqL,ptlist, Msg,color);
   ptlist=apply(ptlistorg,if(ispoint(#),parse(text(#)+"3d"),#)); // 16.02.10
   if(substring(nm,0,2)=="bz",
     name2=replace(nm,"bz","bz2d");
@@ -588,6 +609,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Msg=1;
   forall(eqL,
@@ -626,7 +648,9 @@ Spaceline(nm,ptlistorg,optionorg):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -642,7 +666,7 @@ Spacecurve(nm,funstr,variable):=Spacecurve(nm,funstr,variable,[]);
 Spacecurve(nm,funstr,variable,optionorg):=(
 //help:Spacecurve("1","[cos(t),sin(t),0.5*t]","t=[0,4*pi]",["Num=200"]);
   regional(name2,name3,options,Out,tmp,tmp1,tmp2,vname,tmpfn,str,Rng,Num,Msg,
-     Ec,Exfun,Dc,opstr,opcindy,Fntmp,Vatmp,Ltype,Noflg,eqL,t1,t2,dt,tt,pa,ke);
+     Ec,Exfun,Dc,opstr,opcindy,Fntmp,Vatmp,Ltype,Noflg,eqL,t1,t2,dt,tt,pa,ke,color);
   if(substring(nm,0,2)=="bz",
     name2=replace(nm,"bz","bz2d");
     name3=replace(nm,"bz","bz3d");
@@ -660,6 +684,7 @@ Spacecurve(nm,funstr,variable,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Msg=1;
@@ -784,7 +809,9 @@ Spacecurve(nm,funstr,variable,optionorg):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -832,7 +859,7 @@ Partcrv3d(nm,pA,pB,PkLstr,options):=(
   dt1=partcrv("",p1,p2,tmp,["nodata"]);
   dts=partcrv("",q1,q2,"sub"+tmp,["nodata"]);
   dt=apply(1..length(dt1),
-    Xyzcoord(dt1_#_1,dt1_#_2,dts_#_2));
+  Xyzcoord(dt1_#_1,dt1_#_2,dts_#_2));
   Spaceline("-part3d"+nm,dt,options);
 );
 
@@ -840,7 +867,7 @@ Joincrvs3d(nm,plotstrL):=Joincrvs3d(nm,plotstrL,[]);//16.10.06
 Joincrvs3d(nm,plotstrL,options):=(
 //help:Joincrvs3d("1",["bz3da1","bz3da1"]);
   regional(PtL,Eps,QdL,Flg,Ni,Qd,pP,pS,pQ,pR,rMN,
-        opcindy,tmp,tmp1,tmp2,str,name2,name3,Ltype,Noflg);
+        opcindy,tmp,tmp1,tmp2,str,name2,name3,Ltype,Noflg,color);
   name2="join2d"+nm;
   name3="join3d"+nm;
   QdL=[];
@@ -856,6 +883,7 @@ Joincrvs3d(nm,plotstrL,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Eps=tmp1_1);
@@ -911,7 +939,9 @@ Joincrvs3d(nm,plotstrL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -932,7 +962,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
 //help:Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
 //help:Xyzax3data(Options2=["a1","Osw"]);
   regional(name2,name3,Out,tmp,tmp1,tmp2,eqL,reL,strL,
-    opstr,opcindy,Ltype,Noflg,Axname,Arrow,Origin);
+    opstr,opcindy,Ltype,Noflg,Axname,Arrow,Origin,color);
   name2="ax2d"+nm;
   name3="ax3d"+nm;
   tmp=Divoptions(options);
@@ -941,6 +971,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Axname=1;
   Arrow=0;  // 16.08.14
@@ -1000,7 +1031,9 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1090,7 +1123,7 @@ Embed(nm,Pd2str,funstr,varstr):=
 Embed(nm,Pd2str,funstr,varstr,options):=(
 //help:Embed("1",["gr1"],"A3d+x*(B3d-A3d)+y*(C3d-A3d)","[x,y]");
   regional(name2,name3,Pd2L,Pd2,tmp,tmp1,xstr,ystr,
-     Ltype,Noflg,opstr,opcindy,Out);
+     Ltype,Noflg,opstr,opcindy,Out,color);
   name2="em2d"+nm;
   name3="em3d"+nm;
   if(!islist(Pd2str),Pd2L=[Pd2str],Pd2L=Pd2str); // 15.03.06
@@ -1117,6 +1150,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Out=[];
   forall(Pd2L,Pd2,
@@ -1154,7 +1188,9 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1265,13 +1301,14 @@ Rotatedata3d(nm,P3data,w1,w2,options):=
 Rotate3data(nm,P3data,w1,w2):=Rotate3data(nm,P3data,w1,w2,[]);
 Rotate3data(nm,P3data,w1,w2,options):=(
   regional(name3,name2,center,pdata,Pd3,Pd,Out,tmp,tmp1,
-       Ltype,Noflg,opcindy,opstr);
+       Ltype,Noflg,opcindy,opstr,color);
   name3="rot3d"+nm;
   name2="rot2d"+nm;
   center=[0,0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
@@ -1311,7 +1348,9 @@ Rotate3data(nm,P3data,w1,w2,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1359,12 +1398,13 @@ Translatedata3d(nm,P3data,w1,options):=
 Translate3data(nm,P3data,w1):=Translate3data(nm,P3data,w1,[]);
 Translate3data(nm,P3data,w1,options):=(
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
-      Ltype,Noflg,opcindy);
+      Ltype,Noflg,opcindy,color);
   name3="tra3d"+nm;
   name2="tra2d"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   if(islist(P3data) & isstring(P3data_1),Pd3=P3data,Pd3=[P3data]);
   Out=[];
@@ -1399,7 +1439,9 @@ Translate3data(nm,P3data,w1,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2007,7 +2049,7 @@ Bezier3(nm,Ag1,Ag2):=(
 );
 Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
   regional(name,name3,name2,tmp,tmp1,tmp2,
-      Ltype,Noflg,opstr,eqL,Num,ii,knt,ctr,out);
+      Ltype,Noflg,opstr,eqL,Num,ii,knt,ctr,out,color);
   name="bz"+nm;
   name3="bz3d"+nm;
   name2="bz2d"+nm;
@@ -2015,6 +2057,7 @@ Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Num=20;
   forall(eqL,
@@ -2068,7 +2111,9 @@ Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2556,7 +2601,7 @@ Phparadata(nm,nmvf,Arg1):=(
 Phparadata(nm,nmvf,vfL,options):=(
 //help:Phparadata("1","1",["do"]);
   regional(name2,name3,nameh2,nameh3,Ltype,Noflg,eqL,Hidden,
-      opstr,opcindy,Outflg,Inflg,pdata1,tmp,tmp1,tmp2);
+      opstr,opcindy,Outflg,Inflg,pdata1,tmp,tmp1,tmp2,color);
   name2="php2d"+nm;
   name3="php3d"+nm;
   nameh2="phh2d"+nm;
@@ -2568,6 +2613,7 @@ Phparadata(nm,nmvf,vfL,options):=(
   Outflg=tmp_4;
   if(Inflg==0 & Outflg==0, Inflg=1;Outflg=1); // 15.05.15
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Hidden="";
@@ -2612,7 +2658,9 @@ Phparadata(nm,nmvf,vfL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2956,7 +3004,7 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
 Faceremovaldata(nm,vfdata,crvdata):=Faceremovaldata(nm,vfdata,crvdata,[]);
 Faceremovaldata(nm,vfdata,crvdata,options):=(
   regional(name2,name3,nameh2,nameh3,Ltype,Noflg,eqL,Hidden,
-      opstr,opcindy,Outflg,Inflg,tmp,tmp1,tmp2);
+      opstr,opcindy,Outflg,Inflg,tmp,tmp1,tmp2,color);
   name2="frc2d"+nm;
   name3="frc3d"+nm;
   nameh2="frch2d"+nm;
@@ -2968,6 +3016,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
   Outflg=tmp_4;
   if(Inflg==0 & Outflg==0, Inflg=1;Outflg=1); // 15.05.15
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Hidden="";
@@ -3005,7 +3054,9 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3950,7 +4001,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
 //help:Skeletonparadata("1");
 //help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
 //help:Skeletondata(options2=[1(width)]);
-  regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,
+  regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,color,
      Data,Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2);
   name2="sk2d"+nm;
@@ -3969,7 +4020,8 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   reL=tmp_6; //16.02.28 
-  opcindy=tmp_9;
+  color=tmp_(length(tmp)-2);
+  opcindy=tmp_(length(tmp));
   Rr=0.15*1000/2.54/MilliIn;
   size=1;
   Eps2=0.05;
@@ -4004,7 +4056,9 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4144,7 +4198,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
 //help:Skeletondatacindy(options2=[1(width)]);
   regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
-     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2);
+     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color);
   name2="sk2d"+nm;
   name3="sk3d"+nm;
   pltdata1=[];// 16.01.31
@@ -4161,7 +4215,8 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   reL=tmp_6; //16.02.28 
-  opcindy=tmp_9;
+  color=tmp_(length(tmp)-2);
+  opcindy=tmp_(length(tmp));
   Rr=0.075*1000/2.54/MilliIn;
   size=1;
   Eps2=0.05;
@@ -4216,7 +4271,9 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );

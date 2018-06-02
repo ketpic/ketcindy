@@ -1,3 +1,10 @@
+//20180602
+//   Divoptions changed  ( "Color=" supported )
+//   Changestyle,.... changed  ("Color=" supported)
+//   Changetyle changed (case in which name not found)
+//20180530
+//   Anglemark changed  (opstr,Brat=1.2)
+//   Pointdata degugged  (for single point)
 //20180527
 //   Deqplot changed  ( ' as default )
 //20180513

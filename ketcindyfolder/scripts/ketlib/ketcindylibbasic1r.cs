@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KETCindy V.3.2.0(20180529)");
-println(ketjavaversion());//17.06.05
-println("ketcindylibbasic1(20180527) loaded");
+println("KeTCindy V.3.2.1(20180602)");
+println(ketjavaversion());
+println("ketcindylibbasic1(20180602) loaded");
 
 //help:start();
 
@@ -611,24 +611,30 @@ Changework(dirorg):=( //16.10.21
 
 Changestyle(nameL,style):=(
 //help:Changestyle(["sgAB"],["da"]);
-  regional(nmL,name,Ltype,Ltypeorg,Noflg,opcindy,tmp);
+  regional(nmL,name,Ltype,Ltypeorg,Noflg,color,opcindy,tmp);
   tmp=Divoptions(style);
   Ltypeorg=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   forall(nmL,name,
-    Ltype=Ltypeorg;
-    GCLIST=select(GCLIST,#_1!=name);
-    COM2ndlist=select(COM2ndlist,
-      (indexof(#,"("+name)==0)%(indexof(#,"Shade")>0)); // 15.05.23,16.12.13
-    if(Noflg<2,
-      if(isstring(Ltype),
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      ,
-        if(Noflg==1,Ltype=0);
+    tmp=select(GCLIST,#_1==name);
+    if(length(tmp)>0,
+      Ltype=Ltypeorg;
+      GCLIST=select(GCLIST,#_1!=name);
+      COM2ndlist=select(COM2ndlist,
+        (indexof(#,"("+name)==0)%(indexof(#,"Shade")>0)); // 15.05.23,16.12.13
+      if(Noflg<2,
+        if(isstring(Ltype),
+          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+          Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        ,
+          if(Noflg==1,Ltype=0);
+        );
+        GCLIST=append(GCLIST,[name,Ltype,opcindy]);
       );
-      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
     );
   );
 );
@@ -960,7 +966,7 @@ Flattenlist(pltlist):=(
 
 Divoptions(options):=(
 //help:Divoptions(options);
-  regional(Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,opstr,opcindy,flg,tmp,tmp1);
+  regional(Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy,flg,tmp,tmp1,tmp2);
   Ltype="dr";  // 2015.01.13
   Noflg=0;
   Inflg=0;
@@ -968,6 +974,7 @@ Divoptions(options):=(
   eqL=[];
   realL=[];
   strL=[];
+  color=[0,0,0]; //180602
   opstr="";
   opcindy="";
   forall(options,
@@ -981,7 +988,28 @@ Divoptions(options):=(
     );
     if(flg==0,
       if(indexof(#,"=")>0,
-        eqL=append(eqL,#);
+        tmp=Strsplit(#,"="); //180602from
+        tmp1=Toupper(tmp_1);
+        tmp2=tmp_2;
+        if(tmp1=="COLOR",
+          if(substring(tmp2,0,1)=="[",
+            tmp1=parse(tmp2);
+            color=tmp1;
+            if(length(tmp1)==4,
+              tmp1=colorCmyk2Rgb(tmp1);
+            );
+          ,
+            if(tmp2=="red",tmp1=[1,0,0];color=tmp1);
+            if(tmp2=="green",tmp1=[0,1,0];color=tmp1);
+            if(tmp2=="blue",tmp1=[0,0,1];color=tmp1);
+            if(tmp2=="black",tmp1=[0,0,0];color=tmp1);
+            if(tmp2=="white",tmp1=[1,1,1];color=tmp1);
+          );
+          tmp="color->"+text(tmp1);
+          opcindy=opcindy+","+tmp;
+        ,
+          eqL=append(eqL,#);
+        );//180602to
         flg=1; 
       );
     );
@@ -1041,7 +1069,7 @@ Divoptions(options):=(
   if(indexof(opcindy,"color->")==0,// 16.10.07from
     opcindy=opcindy+",color->[0,0,0]";
   );
-  [Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,opstr,opcindy];
+  [Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy];
 );
 
 Dotprod(vec1,vec2):=(
@@ -2982,23 +3010,11 @@ Chunderscore(str):=(
   tmp1;
 );
 
-//AddGraph(pltdata):=AddGraph("-"+pltdata,pltdata,[]);
-AddGraph(nm,pltdata):=AddGraph(nm,pltdata,[]);
-//  if(isstring(Arg2),
-//    AddGraph(Arg1,Arg2,[]);
-//  ,
-//    if(MeasureDepth(Arg2)>0,
-//      Addgraph(Arg1,Arg2,[]);
-//    ,
-//      Addgraph("-"+Arg1,Arg1,Arg2);
-//    );
-//  );
-//);
 AddGraph(nm,pltdata,options):=(
 //help:AddGraph("1","imp1"); // 16.04.04
 //help:Addgraph("1",["[pt1]","gr1"],["nodisp"]);
   regional(name,Ltype,Noflg,opcindy,pdata,fname,flg,
-    tmp,tmp1,tmp2,tmp3);
+    tmp,tmp1,tmp2,tmp3,color);
   if(substring(nm,0,1)=="-",
     name=substring(nm,1,length(nm));
   ,
@@ -3007,7 +3023,8 @@ AddGraph(nm,pltdata,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  opcindy=tmp_9;
+  color=tmp_(length(tmp)-2);
+  opcindy=tmp_(length(tmp));
   if(isstring(pltdata),
     pdata=parse(pltdata)
   ,
@@ -3080,7 +3097,9 @@ AddGraph(nm,pltdata,options):=(
   );  // 16.04.04 until
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3092,7 +3111,7 @@ Joincrvs(nm,plotstrL):=Joincrvs(nm,plotstrL,[]);
 Joincrvs(nm,plotstrL,options):=(
 //help:Joincrvs("1",["sgAB","sgDCB"]);
   regional(plotlist,PtL,Eps,QdL,Flg,Ni,Qd,pP,pS,pQ,pR,rMN,
-        opcindy,tmp,tmp1,tmp2,str,name,Ltype,Noflg);
+        opcindy,tmp,tmp1,tmp2,str,name,Ltype,Noflg,color);
   name="join"+nm;
   plotlist=[];
   forall(plotstrL,str,
@@ -3108,6 +3127,7 @@ Joincrvs(nm,plotstrL,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Eps=tmp1_1);
@@ -3170,7 +3190,9 @@ Joincrvs(nm,plotstrL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3184,7 +3206,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
 //help:Partcrv("1",A,B,"sgABC");
 //help:Partcrv("1",1.3,2.5,"sgABC");
   regional(PkL,Ans,Eps,Npt,Out1,Out2,tmp,tmp1,Flg,nS,nE,PPL,pP,
-        opcindy,Ta,Tb,name,Ltype,Noflg,DepthFlg);
+        opcindy,Ta,Tb,name,Ltype,Noflg,DepthFlg,color);
   name="part"+nm;
   if(isstring(PkLstr),PkL=parse(PkLstr),PkL=PkLstr);
   DepthFlg=0;
@@ -3196,6 +3218,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Eps=10^(-3);
   Flg=0;
@@ -3254,7 +3277,9 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3300,6 +3325,7 @@ Pointdata(nm,listorg,options):=(
     );
   );
   if(isstring(listorg),list=parse(listorg),list=listorg); //17.10.23
+  if(MeasureDepth(list)==0,list=[list]);//180530
   tmp=MeasureDepth(list);
   if(tmp>0,  // 2015.02.21
     if(tmp==1,ptlist=list,ptlist=list_1);
@@ -3360,7 +3386,7 @@ Listplot(nm,list,options):=(
 // help:Listplot(["A","B"]);
 //help:Listplot("1",[[2,1],[3,3]]);
 //help:Listplot(options2=["Msg=yes"]);
-  regional(name,tmp,tmp1,ptlist,Ltype,opcindy,Noflg,eqL,Msg);
+  regional(name,tmp,tmp1,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color);
   if(substring(nm,0,1)=="-",  // 16.01.27 from
     name=substring(nm,1,length(nm));
   ,
@@ -3370,6 +3396,7 @@ Listplot(nm,list,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Msg=1;  // 15.09.17
   forall(eqL,
@@ -3394,7 +3421,9 @@ Listplot(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3425,13 +3454,14 @@ Lineplot(nm,list,options):=(
 //help:Lineplot([A,B]);
 //help:Lineplot("1",[[2,1],[3,3]]);
   regional(name,Out,tmp,tmp1,opstr,opcindy,Mag,Semi,
-      Vec,pA,pB,Ltype,Noflg);
+      Vec,pA,pB,Ltype,Noflg,color);
   name="ln"+nm;
   Mag=100;
   Semi="";
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1);
   tmp1=tmp_6;
@@ -3458,7 +3488,9 @@ Lineplot(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3491,7 +3523,7 @@ Plotdata(name1,func,variable,options):=(
 //help:Plotdata("3","Fout(x)","x",["out"]);
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
          PdL,QdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,
-         Ltype,Noflg,Inflg,Outflg,opstr,opcindy);
+         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
   name="gr"+name1;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -3499,6 +3531,7 @@ Plotdata(name1,func,variable,options):=(
   Inflg=tmp_3;
   Outflg=tmp_4;
   opstr=tmp_(length(tmp)-1);
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   Num=50;
@@ -3625,7 +3658,9 @@ Plotdata(name1,func,variable,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3635,7 +3670,9 @@ Plotdata(name1,func,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3651,7 +3688,7 @@ Paramplot(name1,funstr,variable,options):=(
 //help:Paramplot("1","[2*cos(t),sin(t)]","t=[0,2*pi]");
   regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,
         Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke,
-        Ltype,Noflg,Inflg,Outflg,opstr,opcindy);
+        Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
   name="gp"+name1; 
   Eps=10^(-4);
   tmp=Divoptions(options);
@@ -3659,6 +3696,7 @@ Paramplot(name1,funstr,variable,options):=(
   Noflg=tmp_2;
   Inflg=tmp_3;
   Outflg=tmp_4;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
@@ -3768,7 +3806,9 @@ Paramplot(name1,funstr,variable,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3778,7 +3818,9 @@ Paramplot(name1,funstr,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3858,7 +3900,7 @@ Implicitplot(name1,func,xrng,yrng,options):=(
 //help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
 //help:Implicitplot(options=["Num=[50,50]"]);
   regional(name,Fn,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
-      Eps,Ltype,Noflg,eqL,opsr,opcindy,dx,dy,out,jj,ii,kk,
+      Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,
       yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
   name="imp"+name1;
   Eps=10^(-4);
@@ -3866,6 +3908,7 @@ Implicitplot(name1,func,xrng,yrng,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Mdv=50;Ndv=50;
@@ -3969,7 +4012,9 @@ Implicitplot(name1,func,xrng,yrng,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3998,15 +4043,16 @@ Circledata(para1,para2):=(
   Circledata(name,cenrad,options);
 );
 Circledata(nm,cenrad,options):=(
-  regional(name,Out,Ctr,Ptcir,ra,Num,Rg,opstr,opcindy,
+  regional(name,Out,Ctr,Ptcir,ra,Num,Rg,opstr,opcindy,color,
       tmp,tmp1,tmp1,Th,Ltype,Noflg,eqL,pA,pB,pC,d1,d2,Eps);  
   name="cr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-  eqL=tmp_5;
   Num=50;
   Rg=[0,2*pi];
   forall(eqL,
@@ -4073,7 +4119,9 @@ Circledata(nm,cenrad,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4115,11 +4163,12 @@ Framedata(nm,list,options):=(
 //help:Framedata("1",[C,A]);
 //help:Framedata("1",[C,dx,dy]);
   regional(name,Out,tmp,tmp1,pB,x1,x2,y1,y2,dx,dy,
-      opcindy,Ltype,Noflg,cent,dx,dy);
+      opcindy,Ltype,Noflg,cent,dx,dy,color);
   name="fr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   if(length(list)==2,  // 15.05.12
     pA=Lcrd(list_1); pB=Lcrd(list_2);
@@ -4140,7 +4189,9 @@ Framedata(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4150,11 +4201,12 @@ Framedata(nm,list,options):=(
 );
 Framedata(nm,cent,dx,dy):=Framedata(nm,cent,dx,dy,[]);
 Framedata(nm,cent,dx,dy,options):=(
-  regional(name,Out,tmp,tmp1,x1,y1,x2,y2,Ltype,opcindy,Noflg);
+  regional(name,Out,tmp,tmp1,x1,y1,x2,y2,Ltype,opcindy,Noflg,color);
   name="fr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   x1=cent.x-dx; x2=cent.x+dx;
   y1=cent.y-dy; y2=cent.y+dy;
@@ -4168,7 +4220,9 @@ Framedata(nm,cent,dx,dy,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4191,11 +4245,12 @@ Ovaldata(nm,Pdata,options):=(
 //help:Ovaldata("1",[A,B]);
 //help:Ovaldata(optios=[size]);
   regional(name,Graph,Ctr,Dx,Dy,Rc,Out,Point,Graph,
-      opstr,opcindy,tmp,tmp1,tmp2,tmp3,Ltype,Noflg);  
+      opstr,opcindy,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color);  
   name="ov"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1);
   Rc=0.2;
@@ -4234,7 +4289,9 @@ Ovaldata(nm,Pdata,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4248,7 +4305,7 @@ Ovaldata(nm,Pdata,options):=(
 );
 
 Segmark(nm,ptlist):=Segmark(nm,ptlist,[]);
-Segmark(nm,ptlist,options):=Drawsegmark(nm,ptlist,options);
+Segmark(nm,ptlist,options):=Drawsegmark(nm,ptlist,options,color);
 Drawsegmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
 Drawsegmark(nm,ptlist,options):=(
 //help:Segmark("1",[A,B]);
@@ -4263,6 +4320,7 @@ Drawsegmark(nm,ptlist,options):=(
   tp=1;
   tmp1=Divoptions(options);
   eqL=tmp1_5;
+  color=tmp_(length(tmp)-2);
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=substring(#,tmp,length(#));
@@ -4617,7 +4675,8 @@ Arrowhead(point,Houkou,options):=(
 //help:Arrowhead(B,B-A,[1.5,30]);
 //help:Arrowhead(A,"gr1");
   // global ArrowheadNumber
-  regional(name,Ltype,Noflg,reL,opstr,opcindy,ptstr,hostr,tmp,tmp1,list);
+  regional(name,Ltype,Noflg,reL,opstr,opcindy,color,
+         ptstr,hostr,tmp,tmp1,list);
   name="arh"+text(ArrowheadNumber);
   ArrowheadNumber=ArrowheadNumber+1;
   ptstr=textformat(point,5);
@@ -4639,6 +4698,7 @@ Arrowhead(point,Houkou,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   reL=tmp_6;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   list=Arrowheaddata(point,Houkou,options);
@@ -4651,7 +4711,9 @@ Arrowhead(point,Houkou,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(1)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
 //	  if(Noflg==1,Ltype=0);
       Ltype=0;
@@ -4699,7 +4761,7 @@ Arrowdata(Arg1,Arg2,options):=(
 //help:Arrowdata([A,B],[2,10]);
 //help:Arrowdata("1",[p1,p2]);
   regional(Retflg,nm,ptlist,name,opstr,opcindy,realL,strL,size,
-      flg,Ltype,Noflg,lineflg,tmp,tmp1,tmp2,pA,pB,segpos);
+      flg,Ltype,Noflg,lineflg,tmp,tmp1,tmp2,pA,pB,segpos,color);
   Retflg=0;
   Noflg=0;
   Ltype=0;
@@ -4719,6 +4781,7 @@ Arrowdata(Arg1,Arg2,options):=(
     Noflg=tmp_2;
     realL=tmp_6;
     strL=tmp_7;
+    color=tmp_(length(tmp)-2);
     opstr=tmp_(length(tmp)-1);
     opcindy=tmp_(length(tmp));
     size=1;  // 15.06.11
@@ -4749,7 +4812,9 @@ Arrowdata(Arg1,Arg2,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4824,8 +4889,8 @@ Anglemark(nm,plist,options):=(
 //help([A,B,C],["E=\theta",2]);
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
 //help:Anglemark("1",[A,B,2*pi]);
-//help:Anglemark(options=["E/L=(sep,)letter",size]);
-  regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,
+//help:Anglemark(options=[size,"E/L=(sep,)letter"]);
+  regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,color,
        Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg);
   name="ag"+nm;
   Bpos="md"+name;
@@ -4833,16 +4898,18 @@ Anglemark(nm,plist,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  opstr=tmp_(length(tmp)-1);
+//  opstr=tmp_(length(tmp)-1);//180530
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   realL=tmp_6;
   Bname="";
-  Brat=1.5;
+  Brat=1.2; //180530
   Num=20;
+  opstr="";
   if(length(realL)>0,
     ra=realL_1*ra;
-    opstr=opstr+","+text(realL_1);
+    opstr=","+text(realL_1);//180530
   );
   forall(eqL,
     if(substring(#,0,1)=="L",Bname="Letter(");
@@ -4894,7 +4961,9 @@ Anglemark(nm,plist,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4924,11 +4993,12 @@ Paramark(nm,plist,options):=(
 //help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
   regional(name,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,
-         Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy);
+         Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color);
   name="pm"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
@@ -4976,7 +5046,9 @@ Paramark(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5020,11 +5092,12 @@ Bowdata(nm,plist,options):=(
 //help:Bowdata([A,B],["Exprrot=t0n2r,a"]);
   regional(name,Out,pB,pA,pC,ra,tmp,tmp1,tmp2,Ltype,eqL,realL,
     Bname,Bpos,Th,Cut,Num,Hgt,opstr,opcindy,Ydata,pC,
-    Th1,Th2,Noflg,Bops,Bmov,Tmov,Nmov,rev);
+    Th1,Th2,Noflg,Bops,Bmov,Tmov,Nmov,rev,color);
   name="bw"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
@@ -5152,7 +5225,9 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5260,12 +5335,13 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
 //help:Deqplot("1","y''=-y","x",0, [1,0]);
 //help:Deqplot("3","[x,y]'=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",0,[1,0.5]);
   regional(deq,rng,Ltype,Noflg,eqL,opcindy,Num,name,nn,pdL,phase,
-                  sel,tmp,tmp1,tmp2);
+                  sel,tmp,tmp1,tmp2,color);
   name="de"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Num=50;
   forall(eqL,
@@ -5353,7 +5429,9 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5368,7 +5446,7 @@ Enclosing(nm,plist,options):=EnclosingS(nm,plist,options);
 EnclosingS(nm,plist):=EnclosingS(nm,plist,[]);
 EnclosingS(nm,plist,options):=(
 //help:Enclosing("1",["sc2","crAB","sc2","Invert(sc1)"],[pt,"dr"]);
-  regional(name,AnsL,Start,Eps,EEps,S,Flg,Fdata,Gdata,KL,pt,qt,
+  regional(name,AnsL,Start,Eps,EEps,S,Flg,Fdata,Gdata,KL,pt,qt,color
       t1,t2,t3,ii,nn,tmp,tmp1,tmp2,Ltype,Noflg,realL,eqL,opstr,opcindy);
   name="en"+nm;
   tmp=Divoptions(options);
@@ -5376,6 +5454,7 @@ EnclosingS(nm,plist,options):=(
   Noflg=tmp_2;
   eqL=tmp_5;
   realL=tmp_6;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Eps=10^(-5); // 16.12.05
@@ -5503,25 +5582,12 @@ EnclosingS(nm,plist,options):=(
     );
     tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
     GLIST=append(GLIST,tmp);//16.11.07until
-	//    GLIST=append(GLIST,"Tmp=[]"); // 16.11.05from
-//    nn=floor(length(AnsL)/20);
-//    forall(1..nn,ii,
-//      tmp=AnsL_(((ii-1)*20+1)..(ii*20));
-//      tmp=apply(tmp,LLcrd(#));
-//      tmp="Tmp=[Tmp,"+textformat(tmp,5)+"]";
-//      GLIST=append(GLIST,tmp);
-//    );
-//    if(length(AnsL)>nn*20,
-//      tmp=AnsL_((nn*20+1)..(length(AnsL)));
-//      tmp=apply(tmp,LLcrd(#));
-//      tmp="Tmp=[Tmp,"+textformat(tmp,5)+"]";
-//      GLIST=append(GLIST,tmp);
-//    );
-//    GLIST=append(GLIST,name+"=Listplot(Tmp)"); // 16.11.05until
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5539,7 +5605,7 @@ Enclosing2(nm,plistorg,options):=(
 //help:Enclosing2(options=[Eps1(0.01),Eps2(0.1)]);
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
-      tmp,tmp1,tmp2);
+      tmp,tmp1,tmp2,color);
   name="en"+nm;
   plist=plistorg;
   tmp=Divoptions(options);
@@ -5547,6 +5613,7 @@ Enclosing2(nm,plistorg,options):=(
   Noflg=tmp_2;
   eqL=tmp_5;
   realL=tmp_6;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Eps=10^(-5); // 16.12.05
@@ -5669,7 +5736,9 @@ Enclosing2(nm,plistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5765,7 +5834,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
 //help:Hatchdatacindy("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
 //help:Hatchdatacindy(options=[angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,startP,angle,
-     interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2);
+     interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2,color);
   name="ha"+nm;
   bdylist=[]; 
   bdynameL=[];
@@ -5812,6 +5881,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   reL=tmp_6;
@@ -5878,7 +5948,9 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5902,13 +5974,14 @@ Shade(plist,options):=(
 //help:Shade(["gr2","sg1"],[[0,0,0,0.5] /pict2e]);
 //help:Shade(["gr2","sg1"],[[1,0,0] /pict2e]);
 //help:Shade([pointlist]);
-  regional(tmp,tmp1,tmp2,opstr,opcindy,Str,G2,flg);
+  regional(tmp,tmp1,tmp2,opstr,opcindy,Str,G2,flg,color);
   if(isstring(plist_1), // 16.01.24
     println("output Shade of "+plist);
   ,
     println("output Shade of lists");
   );
   tmp=Divoptions(options);
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   flg=0;

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20171124) loaded");
+println("ketcindymv(20180602) loaded");
 
 //help:start();
 

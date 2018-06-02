@@ -1,3 +1,19 @@
+// 20180602
+//   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
+//   ExeccmdC changed ( optionsh (default="do"), varL )
+//   Crv2onsfparadata,Crv3onsfparadata debugged
+// 20180601
+//   SfbdparadataC,... changed  ( fbdy => sfbd)
+//   Ctopsurf changed  (data[DsizeL][3],sfbd[DsizeL][3] added )
+//   Ctosurf changed (CutFunList)
+//   SfbdparadataC changed ( "w" or "a" set according to  CommandListC)
+//   Wireparadata,Sfcutdata changed  (cmdflg)
+//   ExeccmdC changed  ( EraseList );
+// 20180531
+//   SfbdparadataC changed  ( outputend added, readoutdata3 changed)
+// 20180530
+//   Ctopsurf changed  ( stdlib.h, string.h)
+//   CrvsfparadataC,Crvonsfparadata,... changed (readoutdata3 used for fbdy)
 // 20180523
 //   Cheadsurf,Ctopsurf debugged  (case => break added )
 //   Cheadsurf debugged ( Dirname "\" => "/")

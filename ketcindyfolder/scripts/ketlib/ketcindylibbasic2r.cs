@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180529) loaded");
+println("ketcindybasic2(20180602) loaded");
 
 //help:start();
 
@@ -105,12 +105,13 @@ Rotatedata(nm,plist,Theta):=Rotatedata(nm,plist,Theta,[]);
 Rotatedata(nm,plist,angle,options):=(
 //help:Rotatedata("1","crAB",pi/3,[[1,5],"dr,2"]);
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdLL,PdL,
-    opcindy,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name);
+    opcindy,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
   name="rt"+nm;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Pt=Lcrd(tmp1_1));
@@ -159,7 +160,9 @@ Rotatedata(nm,plist,angle,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -172,11 +175,12 @@ Translatedata(nm,plist,mov):=Translatedata(nm,plist,mov,[]);
 Translatedata(nm,plist,mov,options):=(
 //help:Translatedata("1",["gr1"],[1,2]);
   regional(tmp,tmp1,tmp2,pdata,Cx,Cy,PdL,Nj,Njj,Kj,
-           opcindy,X2,Y2,Ltype,Noflg,name);
+           opcindy,X2,Y2,Ltype,Noflg,name,color);
   name="tr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
@@ -219,7 +223,9 @@ Translatedata(nm,plist,mov,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -246,12 +252,13 @@ Scaledata(nm,plist,Arg1,Arg2):=(
 );
 Scaledata(nm,plist,rx,ry,options):=(
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdL,
-      opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name);
+      opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name,color);
   name="sc"+nm;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,
@@ -298,7 +305,9 @@ Scaledata(nm,plist,rx,ry,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -311,12 +320,13 @@ Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
 Reflectdata(nm,plist,symL,options):=(
 //help:Reflectdata("1","crAB",[C]);
   regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,
-      opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name);
+      opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
   name="re"+nm;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
@@ -374,7 +384,9 @@ Reflectdata(nm,plist,symL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -765,11 +777,12 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
 //help:Bezier("1",[A,D],[B,C]);
 //help:Bezier(options=["Num=10"]);
   regional(name,Ltype,Noflg,opstr,opcindy,Num,
-    ptlist,ctrlist,tmp,tmp1,tmp2,ii,st,out,list);
+    ptlist,ctrlist,tmp,tmp1,tmp2,ii,st,out,list,color);
   name="bz"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Num=10;
@@ -822,7 +835,9 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2760,10 +2775,11 @@ Extractdata(Arg1,Arg2):=(
 Extractdata(number,name,options):=(
 //help:ExtractData("ha1");
 //help:ExtractData(1,"ha1");
-  regional(dlist,tmp,tmp1,tmp2,tmp3,File,Ltype,Noflg,opstr,opcindy);
+  regional(dlist,tmp,tmp1,tmp2,tmp3,File,Ltype,Noflg,opstr,opcindy,color);
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   tmp1=[];
@@ -2791,7 +2807,9 @@ Extractdata(number,name,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
     ,
       if(Noflg==1,Ltype=0);
     );

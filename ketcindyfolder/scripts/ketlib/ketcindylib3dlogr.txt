@@ -1,3 +1,13 @@
+// 20180602
+//   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
+//   Projara,... changed (color supported )
+//   Changestyle3d changed  ( for case where name not found)
+// 20180601
+//   Start3d changed (CutFunList, EraseList added)
+// 20180531
+//   Start3d changed (CommandListC added)
+//   ExeccmdC added
+//   SfbdparadataC,CrvsfparadataC,...  changed  ( for "c" option)
 // 20180522
 //   Sfbdparadata debugged  ( "Proj" )
 // 20180517

@@ -1,3 +1,6 @@
+// 20180602
+//   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
+//   Rotatedata,... changed (color supported )
 //20180529
 //    Presentation debugged (for repeat=1)
 //20180526

@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180523)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180602)" 
 
 print(ThisVersion)
 
+# 20180602
+#  Setcolor changed  (rgb supported)
 # 20180523
 #  Mkskeletondata debugged
 # 20180517
@@ -6678,8 +6680,12 @@ Setcolor<- function(...){
   }
   Iro<- Ratiocmyk(Color)
   if(length(Iro)==0) return(c())
-  Str<- "\\color[cmyk]{" #17.09.22
-  for(J in 1:4){
+  if(length(Iro)==4){ #180602from
+    Str<- "\\color[cmyk]{"
+  }else{
+    Str<- "\\color[rgb]{"
+  } #180602to
+  for(J in 1:length(Iro)){
     Str<- paste(Str,as.character(Kosa*Iro[J]),sep="")
     if(J<4){
       Str<- paste(Str,",",sep="")

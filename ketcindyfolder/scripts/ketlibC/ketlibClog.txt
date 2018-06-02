@@ -1,2 +1,12 @@
+180601
+  wireparadata changed (for cmdflg=1)
+  sfcutparadata changed ( for cmdflg=1)
+180531
+  outputend added
+  output3,output3h changed
+  readoutdata3 changed  ( varname added )
+  intersectcrvsf changed (ws added)
+180530
+  readoutdata3 added ( hidden data not included )
 180523
-    crvsfparadata debugged (npar removed)
+  crvsfparadata debugged (npar removed)

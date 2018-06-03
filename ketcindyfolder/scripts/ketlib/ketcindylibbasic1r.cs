@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180602)");
+println("KeTCindy V.3.2.1(20180603)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180602) loaded");
+println("ketcindylibbasic1(20180603) loaded");
 
 //help:start();
 
@@ -629,7 +629,7 @@ Changestyle(nameL,style):=(
         if(isstring(Ltype),
           if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
           Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
         ,
           if(Noflg==1,Ltype=0);
         );
@@ -974,7 +974,7 @@ Divoptions(options):=(
   eqL=[];
   realL=[];
   strL=[];
-  color=[0,0,0]; //180602
+  color=KCOLOR; //180603
   opstr="";
   opcindy="";
   forall(options,
@@ -1004,7 +1004,10 @@ Divoptions(options):=(
             if(tmp2=="blue",tmp1=[0,0,1];color=tmp1);
             if(tmp2=="black",tmp1=[0,0,0];color=tmp1);
             if(tmp2=="white",tmp1=[1,1,1];color=tmp1);
-          );
+            if(tmp2=="cyan",tmp1=[0,1,1];color=tmp1);
+            if(tmp2=="magenta",tmp1=[1,0,1];color=tmp1);
+            if(tmp2=="yellow",tmp1=[1,1,0];color=tmp1);
+         );
           tmp="color->"+text(tmp1);
           opcindy=opcindy+","+tmp;
         ,
@@ -1067,7 +1070,7 @@ Divoptions(options):=(
     );
   );
   if(indexof(opcindy,"color->")==0,// 16.10.07from
-    opcindy=opcindy+",color->[0,0,0]";
+    opcindy=opcindy+",color->"+text(KCOLOR);
   );
   [Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy];
 );
@@ -2520,46 +2523,33 @@ Definecolor(name,data):=(
   Texcom(tmp);
 );
 
-Setcolor(Par):=(
+Setcolor(parorg):=(  //180603renew
 //help:Setcolor([1,0,0,1]);
 //help:Setcolor([1,1,0]);
-  if(islist(Par),
-    if(length(Par)==3,
-      Setcolorrgb(Par);  // 2015.04.28
-//      KCOLOR=Par;  
-    );
-    if(length(Par)==4,
-      Setcolor(Par,[]);
-    );
-  ,
-    Setcolor(Par,[]);
+  regional(par,cstr,tmp,tmp1);
+  par=parorg;
+  if(isstring(par),
+    if(par=="black",par=[0,0,0]);
+    if(par=="white",par=[1,1,1]);
+    if(par=="red",par=[1,0,0]);
+    if(par=="green",par=[0,1,0]);
+    if(par=="blue",par=[0,0,1]);
+    if(par=="cyan",par=[0,1,1]);
+    if(par=="magenta",par=[1,0,1]);
+    if(par=="yellow",par=[1,1,0]);
   );
-);
-
-Setcolor(colorname,options):=(
-//help:Setcolor("greenyellow",0.3);
-  regional(tmp);
-  if(isstring(colorname),
-    tmp="Setcolor("+Dq+colorname+Dq;
-    if(length(options)>0,
-      tmp=tmp+","+text(options_1);
-    );
-    Com2nd(tmp+")");
+  cstr=text(par);
+  cstr=substring(cstr,1,length(cstr)-1);
+  if(length(par)==3,
+    cstr="Texcom('\\color[rgb]{"+cstr+"}')"; 
+    KCOLOR=par;  
   );
-  if(islist(colorname),
-    tmp=text(colorname);
-    tmp=substring(tmp,1,length(tmp)-1);
-    Texcom("\color[cmyk]{"+tmp+"}"); //17.09.22
+  if(length(par)==4,
+    cstr="Texcom('\\color[cmyk]{"+cstr+"}')"; 
+    tmp=ColorCmyk2Rgb(par);
+    KCOLOR=tmp;
   );
-);
-
-Setcolorrgb(colorlist):=(
-// help:Setcolorrgb([0.5,0.3,0.4]);
-  regional(tmp);
-  tmp=text(colorlist);
-  tmp=substring(tmp,1,length(tmp)-1);
-  tmp="Texcom("+Dq+"\\color[rgb]{"+tmp+"}"+Dq+")"; //17.10.07
-  Com2nd(tmp);
+  Com2nd(cstr);
 );
 
 ColorRgb2Cmyk(clr):=(
@@ -2851,30 +2841,6 @@ Colorcode(src,dest,sL):=(
   dL;
 );
 
-Addcolor(cmdorg,list):=(
-//help:Addcolor("Plotdata('1','x^2','x',[])",[1,1,0]);
-  regional(rgb,cmyk,cmd,tmp,tmp1,tmp2,tmp3,tmp4);
-  cmd=replace(cmdorg,"'",Dq);
-  if(length(list)==3,
-    rgb=list;
-    cmyk=Colorcode("rgb","cmyk",list);
-  ,
-    cmyk=list;
-    rgb=Colorcode("cmyk","rgb",list);
-  );
-  tmp1="color->"+text(rgb);
-  tmp2="Setcolor("+text(cmyk)+");";
-  tmp3=substring(cmd,0,length(cmd)-2);
-  tmp=substring(tmp3,length(tmp3)-1,length(tmp3));
-  if(tmp!="[",
-    tmp3=tmp3+",";
-  );
-  tmp3=tmp3+Dq+tmp1+Dq+"])";
-  parse(tmp2);
-  parse(tmp3);
-  Setcolor("black");
-);
-
 Colorinfile(filename,clrf,clrt):=(
   regional(tmp,tmp1,tmp2,head,cstrL,chstrL,head,body);
   if(length(clrf_1)==3,
@@ -3099,7 +3065,7 @@ AddGraph(nm,pltdata,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3192,7 +3158,7 @@ Joincrvs(nm,plotstrL,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3279,7 +3245,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3304,17 +3270,18 @@ Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
   regional(list,name,nameL,ptlist,opstr,opcindy,
-      eqL,size,thick,tmp,tmp1,tmp2,tmp3,Ltype,Noflg);
+      eqL,size,thick,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color);
   name="pt"+nm;
   nameL=name+"L";
   println("generate pointdata "+name);
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1);
+  color=tmp_(length(tmp)-2);
   size="";
-  eqL=tmp_5;
   if(length(eqL)>0,
     forall(eqL,
       tmp=substring(#,0,1);
@@ -3371,7 +3338,9 @@ Pointdata(nm,listorg,options):=(
       if(length(size)>0,tmp1=parse(size),tmp1=1);
       tmp1=max(tmp1,1)/8; 
       Setpen(tmp1); // 16.04.09 until
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Com2nd("Drwpt(list("+name+")"+opstr+")");
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       Setpen(thick); // 16.04.09
       if(length(size)>0,
         Com2nd("Setpt("+textformat(TenSize/TenSizeInit,1)+")");
@@ -3423,7 +3392,7 @@ Listplot(nm,list,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3490,7 +3459,7 @@ Lineplot(nm,list,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3660,8 +3629,8 @@ Plotdata(name1,func,variable,options):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
-      ,
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+     ,
         if(Noflg==1,Ltype=0);
       );
       GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -3672,7 +3641,7 @@ Plotdata(name1,func,variable,options):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3808,7 +3777,7 @@ Paramplot(name1,funstr,variable,options):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3820,7 +3789,7 @@ Paramplot(name1,funstr,variable,options):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4014,7 +3983,7 @@ Implicitplot(name1,func,xrng,yrng,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4121,7 +4090,7 @@ Circledata(nm,cenrad,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4191,7 +4160,7 @@ Framedata(nm,list,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4222,7 +4191,7 @@ Framedata(nm,cent,dx,dy,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4291,7 +4260,7 @@ Ovaldata(nm,Pdata,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4713,7 +4682,7 @@ Arrowhead(point,Houkou,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(1)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
 //	  if(Noflg==1,Ltype=0);
       Ltype=0;
@@ -4814,7 +4783,7 @@ Arrowdata(Arg1,Arg2,options):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4963,7 +4932,7 @@ Anglemark(nm,plist,options):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -5048,7 +5017,7 @@ Paramark(nm,plist,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5227,7 +5196,7 @@ Bowdata(nm,plist,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5431,7 +5400,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5587,7 +5556,7 @@ EnclosingS(nm,plist,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5738,7 +5707,7 @@ Enclosing2(nm,plistorg,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5950,7 +5919,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5969,12 +5938,12 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
 
 Shade(plist):=Shade(plist,[]);
 Shade(plist,options):=(
-//help:Shade(["gr2","sg1"],[0.5]);
-//help:Shade(["gr2","sg1"],["red" /pict2e]);
-//help:Shade(["gr2","sg1"],[[0,0,0,0.5] /pict2e]);
-//help:Shade(["gr2","sg1"],[[1,0,0] /pict2e]);
+//help:Shade(["gr"],[0.5]);
+//help:Shade(["gr"],["Color=red"]);
+//help:Shade(["gr2","sg1"],["Color=[0,0,0,0.5]"]);
+//help:Shade(["gr2","sg1"],["Color=[1,0,0]"]);
 //help:Shade([pointlist]);
-  regional(tmp,tmp1,tmp2,opstr,opcindy,Str,G2,flg,color);
+  regional(tmp,tmp1,tmp2,opstr,opcindy,reL,Str,G2,flg,color);
   if(isstring(plist_1), // 16.01.24
     println("output Shade of "+plist);
   ,
@@ -5983,7 +5952,14 @@ Shade(plist,options):=(
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
-  opcindy=tmp_(length(tmp));
+  reL=tmp_6; //180603from
+  if(length(reL)>0,
+    color=reL_1*color;
+  );//180603to
+  if(length(color)==4, //180602from
+    tmp=colorCmyk2rgb(color);
+  );
+  opcindy=","+"color->"+text(tmp);//180602to
   flg=0;
   forall(plist,
     if(flg==0,
@@ -6013,7 +5989,9 @@ Shade(plist,options):=(
     ); // until 16.01.24
   );
   Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
   Com2nd(Str);
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
 );
 
 //help:end();

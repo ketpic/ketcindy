@@ -1,6 +1,9 @@
+// 20180603
+//   Projpara,... changed  (KCOLOR)
 // 20180602
 //   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
 //   Projara,... changed (color supported )
+//   Rotatedata3d,Translatedatad3 changed ( Level of RSform to 1)
 //   Changestyle3d changed  ( for case where name not found)
 // 20180601
 //   Start3d changed (CutFunList, EraseList added)

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180602) loaded");
+println("ketcindybasic2(20180603) loaded");
 
 //help:start();
 
@@ -103,7 +103,8 @@ Reflectpoint(point,symL):=(
 
 Rotatedata(nm,plist,Theta):=Rotatedata(nm,plist,Theta,[]);
 Rotatedata(nm,plist,angle,options):=(
-//help:Rotatedata("1","crAB",pi/3,[[1,5],"dr,2"]);
+//help:Rotatedata("1",["crAB","pt1"],pi/3,[[1,5],"dr,2"]);
+//help:Rotatedata("1",[[A.xy],[B.xy]],pi/3,[[1,5],"dr,2"]);
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdLL,PdL,
     opcindy,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
   name="rt"+nm;
@@ -153,7 +154,7 @@ Rotatedata(nm,plist,angle,options):=(
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
-    tmp1=RSform(tmp1);// 17.12.23(2lines)
+    tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Rotatedata("+tmp1+","
 	  +textformat(angle,5)+","+RSform(textformat(Pt,5))+")"; //17.12.23
     GLIST=append(GLIST,tmp);
@@ -162,7 +163,7 @@ Rotatedata(nm,plist,angle,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -173,9 +174,9 @@ Rotatedata(nm,plist,angle,options):=(
 
 Translatedata(nm,plist,mov):=Translatedata(nm,plist,mov,[]);
 Translatedata(nm,plist,mov,options):=(
-//help:Translatedata("1",["gr1"],[1,2]);
+//help:Translatedata("1",["gr1","pt1"],[1,2]);
   regional(tmp,tmp1,tmp2,pdata,Cx,Cy,PdL,Nj,Njj,Kj,
-           opcindy,X2,Y2,Ltype,Noflg,name,color);
+           opcindy,X2,Y2,Ltype,Noflg,name,color,leveL);
   name="tr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -216,8 +217,8 @@ Translatedata(nm,plist,mov,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
-    tmp1=text(plist); 
-    tmp1=RSform(tmp1);// 17.12.23
+    tmp1=text(plist);
+    tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Translatedata("+tmp1+","+RSform(textformat(mov,5))+")";
     GLIST=append(GLIST,tmp);
   );
@@ -225,7 +226,7 @@ Translatedata(nm,plist,mov,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -236,14 +237,19 @@ Translatedata(nm,plist,mov,options):=(
 
 Scaledata(nm,plist,ratioV):=(
   regional(tmp);
-  tmp=Lcrd(ratioV);
+  tmp=ratioV; //180603from
+  if(!islist(tmp),tmp=[tmp,tmp]);
+  tmp=Lcrd(tmp);//180603to
   Scaledata(nm,plist,tmp_1,tmp_2,[]);
 );
 Scaledata(nm,plist,Arg1,Arg2):=(
-//help:Scaledata("1","crAB",3,2,[[0,0]]);
+//help:Scaledata("1",["crAB","pt1"],3,2,[[0,0]]);
+//help:Scaledata("1",["crAB","pt1"],2,[[0,0]]);
   regional(tmp,options);
   if(islist(Arg2),
-    tmp=Lcrd(Arg1);
+    tmp=Arg1;//180603(2lines)
+    if(!islist(tmp),tmp=[tmp,tmp]);
+    tmp=Lcrd(tmp);
 	options=Arg2;
     Scaledata(nm,plist,tmp_1,tmp_2,options);
   ,
@@ -298,7 +304,7 @@ Scaledata(nm,plist,rx,ry,options):=(
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
-    tmp1=RSform(tmp1); // 17.12.23
+    tmp1=RSform(tmp1,1); // 180602
     tmp=name+"=Scaledata("+tmp1+","
 	  +textformat(rx,5)+","+textformat(ry,5)+","+RSform(textformat(Pt,5))+")";
     GLIST=append(GLIST,tmp);
@@ -307,7 +313,7 @@ Scaledata(nm,plist,rx,ry,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -318,7 +324,7 @@ Scaledata(nm,plist,rx,ry,options):=(
 
 Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
 Reflectdata(nm,plist,symL,options):=(
-//help:Reflectdata("1","crAB",[C]);
+//help:Reflectdata("1",["crAB"],[C]);
   regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,
       opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
   name="re"+nm;
@@ -378,7 +384,7 @@ Reflectdata(nm,plist,symL,options):=(
 	tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
-    tmp1=RSform(tmp1);// 17.12.23
+    tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Reflectdata("+tmp1+","+RSform(textformat(symL,5))+")";//17.12.23
     GLIST=append(GLIST,tmp);
   );
@@ -386,7 +392,7 @@ Reflectdata(nm,plist,symL,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -566,13 +572,13 @@ Letter(list):=Letter(list,[]);
 Letter(list,options):=(
 //help:Letter([C,"c","Graph of f(x)"]);
   regional(Nj,Pos,Dir,Str,Off,Dmv,Xmv,Ymv,Noflg,opcindy,
-      opL,aln,sz,clr,bld,ita,tmp,tmp1,tmp2);
+      opL,aln,sz,clr,bld,ita,tmp,tmp1,tmp2,color);
   tmp=Divoptions(options);
   Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
   opL=select(options,indexof(#,"->")>0); //16.10.09from
   tmp=select(opL,indexof(#,"color"));
   size=12;
-  clr=[0,0,0];
   bld=false;
   ita=false;
   aln="left";
@@ -608,7 +614,9 @@ Letter(list,options):=(
     Str=replace(Str,"`","'");//180303
     tmp=Dq+","+Dq+Str+Dq+")";
     if(Noflg==0,
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     );
     if(Noflg<2,
       Xmv=0;//16.10.13
@@ -637,18 +645,25 @@ Letter(list,options):=(
       );
       Str=list_(Nj+2);  //17.10.17
       drawtext(Pcrd(Pos),Str,offset->[Off+Xmv,Off+Ymv],
-         size->sz,color->clr,align->aln,bold->bld,italics->ita);//16.10.09
+         size->sz,color->color,align->aln,bold->bld,italics->ita);//16.10.09
     );
     Nj=Nj+3;
   );
 );
 
-Letterrot(pt,dir,str):=Letterrot(pt,dir,0,0,str);
-Letterrot(pt,dir,movstr,str):=(
+Letterrot(pt,dir,str):=Letterrot(pt,dir,0,0,str,[]);
+Letterrot(pt,dir,Arg1,Arg2):=(
+  if(islist(Arg2),
+    Letterrot(pt,dir,"t0n0",Arg1,Arg2);
+  ,
+    Letterrot(pt,dir,Arg1,Arg2,[]);
+  );
+);
+Letterrot(pt,dir,movstr,str,options):=(
 //help:Letterrot(C,B-A,"AB"):
 //help:Letterrot(C,B-A,0,5,"AB"):
 //help:Letterrot(C,B-A,"t0n5","AB"):
-  regional(tmov,nmov,tmp,tmp1,tmp2);
+  regional(tmov,nmov,tmp,tmp1,tmp2,color);
   tmp1=indexof(movstr,"t");
   tmp2=indexof(movstr,"n");
   if(tmp1>0,
@@ -662,21 +677,32 @@ Letterrot(pt,dir,movstr,str):=(
   ,
     nmov=0;
   );
-  Letterrot(pt,dir,tmov,nmov,str);
+  Letterrot(pt,dir,tmov,nmov,str,options);
 );
-Letterrot(pt,dir,tmov,nmov,str):=(
-  regional(tmp);
-  Letter([pt,"c",str],["notex"]);
+Letterrot(pt,dir,tmov,nmov,str,options):=(
+  regional(tmp,color);
+  tmp=Divoptions(options);
+  color=tmp_(length(tmp)-2);
+  Letter([pt,"c",str],append(options,"notex"));
   tmp=replace(str,"\","\\"); //17.10.18
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
   Com2nd("Letterrot("+pt+","+dir+","+tmov+","+nmov+",'"+tmp+"')");
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
 );
 
-Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str);
-Exprrot(pt,dir,movstr,str):=(
+Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str,[]);
+Exprrot(pt,dir,Arg1,Arg2):=(
+  if(islist(Arg2),
+    Exprrot(pt,dir,"t0n0",Arg1,Arg2);
+  ,
+    Exprrot(pt,dir,Arg1,Arg2,[]);
+  );
+);
+Exprrot(pt,dir,movstr,str,options):=(
 //help:Exprrot(C,B-A,"d"):
 //help:Exprrot(C,B-A,0,5,"d"):
 //help:Exprrot(C,B-A,"t0n5","d"):
-  regional(tmov,nmov,tmp,tmp1,tmp2);
+  regional(tmov,nmov,tmp,tmp1,tmp2,color);
   tmp1=indexof(movstr,"t");
   tmp2=indexof(movstr,"n");
   if(tmp1>0,
@@ -690,13 +716,17 @@ Exprrot(pt,dir,movstr,str):=(
   ,
     nmov=0;
   );
-  Exprrot(pt,dir,tmov,nmov,str);
+  Exprrot(pt,dir,tmov,nmov,str,options);
 );
-Exprrot(pt,dir,tmov,nmov,str):=(
-  regional(tmp);
-  Expr([pt,"c",str],["notex"]);
+Exprrot(pt,dir,tmov,nmov,str,options):=(
+  regional(tmp,color);
+  tmp=Divoptions(options);
+  color=tmp_(length(tmp)-2);
+  Expr([pt,"c",str],append(options,"notex"));
   tmp=replace(str,"\","\\"); //17.10.18
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
   Com2nd("Exprrot("+pt+","+dir+","+tmov+","+nmov+",'"+tmp+"')");
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
 );
 
 Putslider(ptstr,p1,p2):=Slider(ptstr,p1,p2);
@@ -837,7 +867,7 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2809,7 +2839,7 @@ Extractdata(number,name,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3953,8 +3983,9 @@ Settitle(cmdL,options):=(
   color="blue";
   size="\Large";
   font="\bf";
-  tmp=Divoptions(options);
-  eqL=tmp_5;
+//  tmp=Divoptions(options);
+//  eqL=tmp_5;
+  eqL=options; //180602
   forall(eqL,
     tmp1=Toupper(substring(#,0,1));
     tmp=indexof(#,"=");

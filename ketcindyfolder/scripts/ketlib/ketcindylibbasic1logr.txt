@@ -1,7 +1,17 @@
+//20180603
+//   Shade changed  ( option density supported )
+//   Addcolor removed
+//   Setcolor(color,option),Setcolorrgb removed
+//   Setcolor renewed
+//   Divoptions degugged  (KCOLOR)
+//   Listplot,... changed  (KCOLOR)
+//   Pointdata changed  (color)
 //20180602
 //   Divoptions changed  ( "Color=" supported )
 //   Changestyle,.... changed  ("Color=" supported)
 //   Changetyle changed (case in which name not found)
+//   Shade debugged  ( color )
+//   Rotatedata,... degugged  ( for list of plotdata )
 //20180530
 //   Anglemark changed  (opstr,Brat=1.2)
 //   Pointdata degugged  (for single point)

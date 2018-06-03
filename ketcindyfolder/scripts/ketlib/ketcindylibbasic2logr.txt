@@ -1,6 +1,12 @@
+// 20180603
+//   Rotatedata,... changed (KCOLOR)
+//   Letter,Letterrot,Exprrot changed (color)
+//   Scaledata changed ( case where x,y is the same ratio)
 // 20180602
 //   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
 //   Rotatedata,... changed (color supported )
+//   Rotataedata,... debugged  ( level RSform =>1 )
+//   Settitle debugged  ( color option batted )
 //20180529
 //    Presentation debugged (for repeat=1)
 //20180526

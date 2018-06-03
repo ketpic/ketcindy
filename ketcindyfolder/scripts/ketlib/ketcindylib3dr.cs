@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180602) loaded");
+println("ketcindylib3d(20180603) loaded");
 
 //help:start();
 
@@ -479,7 +479,7 @@ Projpara(ptdata,optionsorg):=(
       if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -650,7 +650,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
     if(isstring(Ltype),
         if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -811,7 +811,7 @@ Spacecurve(nm,funstr,variable,optionorg):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -941,7 +941,7 @@ Joincrvs3d(nm,plotstrL,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1033,7 +1033,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1190,7 +1190,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1337,7 +1337,7 @@ Rotate3data(nm,P3data,w1,w2,options):=(
     tmp=name2+"="+textformat(tmp1,5);
     parse(tmp);
     tmp=textformat(P3data,5); // 17.12.23
-    tmp=RSform(tmp); // 17.12.23
+    tmp=RSform(tmp,1); //180602
 //    tmp=replace(tmp,"[","list(");
 //    tmp=replace(tmp,"]",")");
     tmp=name3+"=Rotate3data("+tmp+","
@@ -1350,7 +1350,7 @@ Rotate3data(nm,P3data,w1,w2,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1428,7 +1428,7 @@ Translate3data(nm,P3data,w1,options):=(
     tmp=name2+"="+textformat(tmp1,5);
     parse(tmp);
     tmp=textformat(P3data,5); // 17.12.23
-    tmp=RSform(tmp); // 17.12.23
+    tmp=RSform(tmp,1); // 180602
 //    tmp=text(P3data);
 //    tmp=replace(tmp,"[","list(");
 //    tmp=replace(tmp,"]",")");
@@ -1441,7 +1441,7 @@ Translate3data(nm,P3data,w1,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2113,7 +2113,7 @@ Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -2660,7 +2660,7 @@ Phparadata(nm,nmvf,vfL,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3056,7 +3056,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3326,7 +3326,7 @@ Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
   if(length(reL)>0,
     reL=textformat(reL,4);
     reL=substring(reL,1,length(reL)-1);
-    reL=Rsform(reL);
+    reL=RSform(reL);
     tmp=append(tmp,reL);
   );
   tmp1=[Dqq(fname),Dqq(name3),name3,Dqq(name3h),name3h];//180509
@@ -3374,7 +3374,7 @@ Addpoints(ptlist):=(
   if(length(ptlist)==0,
     ADDPOINT="list()";
   ,
-    ADDPOINT=Rsform(textformat(ptlist,6),2);
+    ADDPOINT=RSform(textformat(ptlist,6),2);
   );
   ADDPOINT;
 );
@@ -4058,7 +4058,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4273,7 +4273,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );

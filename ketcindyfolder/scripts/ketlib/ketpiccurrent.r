@@ -16,10 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180602)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180603)" 
 
 print(ThisVersion)
 
+# 20180603
+#  Setcolor debugged (length(Iro))
+#  Scaledata,Reflectdata,Rotatedata,Translatedata changed ( for point list)
 # 20180602
 #  Setcolor changed  (rgb supported)
 # 20180523
@@ -6185,17 +6188,14 @@ Reflectdata<- function(...)
       PtA<- Pts[1:2]; PtB<- Pts[3:4]
     }
   }  
+  ML=Flattenlist(ML) #180603
   OutL<- list()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){   # 10.12.07
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,]
       X1<- Tmp[1]
       Y1<- Tmp[2]
       if(X1==Inf){
@@ -6445,18 +6445,15 @@ Rotatedata<- function(..., deg=FALSE)
   else{ 
     Pt<- varargin[[3]]
   }
+  ML=Flattenlist(ML) #180603
   Cx<- Pt[1]; Cy<- Pt[2]
   OutL<- c()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,]
       X1<- Tmp[1]         
       Y1<- Tmp[2]    
       if(X1==Inf){
@@ -6499,17 +6496,14 @@ Scaledata<- function(...)
   else{
     Pt<- varargin[[4]]
   }
+  ML=Flattenlist(ML) #180603
   OutL<- list()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){   # 10.12.07
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,]
       X1<- Tmp[1]         
       Y1<- Tmp[2]    
       if(X1==Inf){
@@ -6687,7 +6681,7 @@ Setcolor<- function(...){
   } #180602to
   for(J in 1:length(Iro)){
     Str<- paste(Str,as.character(Kosa*Iro[J]),sep="")
-    if(J<4){
+    if(J<length(Iro)){ #180603
       Str<- paste(Str,",",sep="")
     }
   }
@@ -7669,17 +7663,14 @@ Translatedata<- function(...)
       B<- 0
     }
   }
+  ML=Flattenlist(ML) #180603
   OutL<- list()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){   # 10.12.07
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,] #180603
       X1<- Tmp[1]         
       Y1<- Tmp[2]    
       if(X1==Inf){

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180606 loaded");
+println("ketcindylibout(20180607 loaded");
 
 //help:start();
 
@@ -5932,12 +5932,12 @@ SfbdparadataC(nm,fdorg,optionorg,optionsh):=(
   options=remove(options,reL);
   options=select(options,length(#)>0);
   cmdL=[
-	"  char fname"+funnm+"[]="+Dqq(fname)+";",
+	"  char fname"+nm+"[]="+Dqq(fname)+";",
     "  rangeUV("+funnm+");",
     "  boundary("+funnm+");",
     "  sfbdparadata("+funnm+",sfbd);",
-    "  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fname"+funnm+");",
-    "  output3h("+Dqq("w")+","+Dqq("sfbd3d"+funnm)+","+Dqq("sfbdh3d"+funnm)+",dirfname,sfbd);",
+    "  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fname"+nm+");",
+    "  output3h("+Dqq("w")+","+Dqq("sfbd3d"+nm)+","+Dqq("sfbdh3d"+nm)+",dirfname,sfbd);",
     "  outputend(dirfname);"
   ];
   if(cmdflg==1, //180531from
@@ -6073,7 +6073,7 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
   if(cmdflg==1,//180531from
     println("  ExeccmdC will generate "+ name3+","+name3h);
 	cmdL_5="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
-    tmp=replace(cmdL_7,"fname"+nm,"fnameall"); cmdL_7=tmp;
+    cmdL_7="  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fnameall);"; //180607
     tmp=replace(cmdL_(length(cmdL)-1),Dqq("w"),Dqq("a")); cmdL_(length(cmdL)-1)=tmp;
     cmdL=remove(cmdL,[cmdL_(length(cmdL))]);
     CommandListC=concat(CommandListC,cmdL); //180531to
@@ -6204,7 +6204,7 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=(
   ];
   if(cmdflg==1,//180531from
     println("  ExeccmdC will generate "+ name3+","+name3h);
-    tmp=replace(cmdL_7,"fname"+nm,"fnameall"); cmdL_7=tmp;
+    cmdL_7="  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fnameall);"; //180607
     tmp=replace(cmdL_(length(cmdL)-1),Dqq("w"),Dqq("a")); cmdL_(length(cmdL)-1)=tmp;
 	cmdL_5="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
     cmdL=remove(cmdL,[cmdL_1,cmdL_(length(cmdL))]);

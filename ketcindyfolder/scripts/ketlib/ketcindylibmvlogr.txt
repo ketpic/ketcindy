@@ -1,3 +1,7 @@
+// 20180607
+//  Parafolder debugged ( FnameR,.. => Setfiles)
+// 20180606
+//  Setpara,Parafolder renewed
 // 20180602
 //   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
 //2017.12.09

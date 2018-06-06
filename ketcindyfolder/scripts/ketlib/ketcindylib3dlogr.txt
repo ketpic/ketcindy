@@ -1,3 +1,5 @@
+// 20180607
+//   Getangle debugged  (output)
 // 20180606
 //   Start3d changed (ADDPACK )
 // 20180603

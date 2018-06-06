@@ -1,3 +1,6 @@
+// 20180607
+//   CrvsfparadataC,WireparadataC debugged ( "sprintf..." of CommandListC);
+//   SfbdparadataC changed  (name: funnm =>nm )
 // 20180606
 //   StartsufC added
 //   SfbdparadataC changed  (FuncListC)

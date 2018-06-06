@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180606) loaded");
+println("ketcindylib3d(20180607) loaded");
 
 //help:start();
 
@@ -284,6 +284,7 @@ Setangle(theta,phi):=( //16.12.24
 Getangle():=( //170517
   tmp=[THETA*180/pi, PHI*180/pi];
   println(textformat(tmp,6));
+  tmp; //180607
 );
 
 isAngle():=Isangle(); //180517

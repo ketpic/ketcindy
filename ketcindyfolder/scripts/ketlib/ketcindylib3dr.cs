@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180603) loaded");
+println("ketcindylib3d(20180606) loaded");
 
 //help:start();
 
@@ -90,6 +90,7 @@ Start3d(ptexception):=(
   CommandListC=[]; //180531
   CutFunList=[];//180601
   EraseList=[];//180601
+  ADDPACK=[]; //180606
   GCLIST=[];
   GLIST=[];
   FUNLIST=[];

@@ -1,3 +1,9 @@
+// 20180606
+//   StartsufC added
+//   SfbdparadataC changed  (FuncListC)
+//   Setpara, Parafolder renewed
+// 20180605
+//   ExeccmdC changed  ("Path=" option supported )
 // 20180602
 //   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
 //   ExeccmdC changed ( optionsh (default="do"), varL )

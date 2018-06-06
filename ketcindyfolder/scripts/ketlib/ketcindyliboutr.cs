@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180602 loaded");
+println("ketcindylibout(20180606 loaded");
 
 //help:start();
 
@@ -4820,9 +4820,15 @@ ConvertFdtoC(Fd,name):=(
   FdC=concat(FdC,[tmp1_6]); 
 );
 
+StartsurfC():=StartsurfC([50,50],[1500,500,200],[0.01,0.1]);//180606
+StartsurfC(Nplist,Dsizelist,Epslist):=(
+//help:StartsurfaceC([50],[1500,500],[0.01,0.1]);
+  SetconstantC(Nplist,Dsizelist,Epslist);
+  CommandListC=[];
+);
 SetconstantC(Nplist,Dsizelist,Epslist):=(//180501
 //help:SetconstanC([50,50],[1500,500,200],[0.01,0.1]);
-  reigional(divL,sizeL,epsL);
+  regional(divL,sizeL,epsL);
   divL=Nplist; sizeL=Dsizelist; epsL=Epslist;
   if(length(divL)==0,divL=[50]);
   if(length(divL)==1,divL=append(divL,divL_1));
@@ -5689,7 +5695,7 @@ CalcbyC(name,path,cmd,optionorg):=(
   body=cmd_3;
   options=optionorg;
   tmp=divoptions(options);
-//  eqL=tmp_5;
+  eqL=tmp_5;
   strL=tmp_7;
   waiting=40;
   wfile=Fhead+name+"end.txt"; //180517
@@ -5698,6 +5704,14 @@ CalcbyC(name,path,cmd,optionorg):=(
   println(hfile);
   mfile=Fhead+name+".c";
   wflg=0;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="W",
+      waiting=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+  );
   forall(strL,
     tmp=Toupper(substring(#,0,1));
     if(tmp=="M",
@@ -5781,7 +5795,7 @@ ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
 ExeccmdC(nm,options):=ExeccmdC(nm,options,["do"]);
 ExeccmdC(nm,optionorg,optionhorg):=( 
 //help:ExeccmdC("1",["m/r","Wait=30"],["do"]);
-  regional(options,optionsh,name2,name3,waiting,
+  regional(options,optionsh,name2,name3,waiting,dirbkup,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,varL);
   fname=Fhead+nm+".txt";
   options=optionorg;
@@ -5828,7 +5842,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     CalcbyC(nm,[Cheadsurf(),Ctopsurf(nm),CommandListC],tmp1);
   );
   if(ErrFlag==1,
-    err("commandlist is empty or execcmd is not completed");
+    err("CommandListC is empty or execcmd is not completed");
   ,
     varL=ReadOutData(fname);
     GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
@@ -5858,6 +5872,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     Changestyle3d(EraseList,["nodisp"]);//180601
   );
   varL=select(varL,length(parse(#))>0);
+  if(length(addpath)>0,Changework(dirbkup,["Sub=n"])); //180605
   varL;
 );
 
@@ -5872,8 +5887,17 @@ SfbdparadataC(nm,fdorg,optionorg,optionsh):=(
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,cmdflg);
   if(ChNumber==0,ChNumber=Ch);
   fd=ConvertFdtoC(fdorg);
-  FuncListC=append(FuncListC,fd);
-  funnm=text(length(FuncListC));
+  tmp1=0; //180606from
+  forall(1..(length(FuncListC)),
+    if(FuncListC_#==fd,
+      funnm=#;
+      tmp1=1;
+    );
+  );
+  if(tmp1==0,
+    FuncListC=append(FuncListC,fd);
+    funnm=text(length(FuncListC));
+  ); //180606to
   name2="sfbd2d"+nm;
   name3="sfbd3d"+nm;
   name2h="sfbdh2d"+nm;

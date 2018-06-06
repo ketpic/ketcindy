@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180603) loaded");
+println("ketcindybasic2(20180605) loaded");
 
 //help:start();
 
@@ -3304,7 +3304,7 @@ Addpackage(packorg):=(
       packL_#="{"+tmp+"}";
     );
   );
-  ADDPACK=concat(ADDPACK,packL); //17.06.25until
+  ADDPACK=concat(ADDPACK,packL); //17.06.25to
 );
 
 Viewtex():=(
@@ -4924,8 +4924,12 @@ Mkslides():=(
     Dirwork=replace(Dirwork,"/",pathsep());
     parent=replace(Dirwork+Batparent,"/",pathsep());// 16.05.29
   );
-  Dirwork=replace(Dirwork,pathsep()+"fig","");
+  tmp=replace(Dirwork,pathsep()+"fig","");//180604(2lines)
+  Changework(tmp);
   Setdirectory(Dirwork);
+  if(!iswindows(), //180604from
+    println(setexec(Dirwork,Shellparent));
+  ); //180604to
   if(length(Texmain)>0,  // 15.08.14 from
     Texparent=Texmain;
   );
@@ -4937,7 +4941,7 @@ Mkslides():=(
     drawtext(mouse().xy,Texparent+".txt not exist in "+Dirwork,
       size->24,color->[1,0,0]);
   ,  // 17.04.12until
-    Presentation(Texparent);  // 15.08.14 until
+    Presentation(Texparent);  // 15.08.14to
     if(iswindows(),
       tmp2=Batparent;
       parent=replace(Dirwork+Batparent,sep+"fig","");// 16.05.29
@@ -4990,6 +4994,9 @@ Mkslidesummary(inputfile,outputfile,options):=(
   dirworkorg=Dirwork;//17.04.10from
   dirtop=replace(Dirwork,pathsep()+"fig","");
   Changework(dirtop);//17.04.10uptp
+  if(ismacosx(), //180604from
+    println(setexec(Dirwork,Shellparent));
+  ); //180604to
   fin=inputfile;
   if(indexof(fin,".")==0,fin=fin+".tex");
   fout=outputfile;

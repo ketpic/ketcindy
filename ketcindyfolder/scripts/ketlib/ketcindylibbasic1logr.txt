@@ -1,3 +1,7 @@
+//20180606
+//   Changework debugged ( case where "Sub=n"  )
+//20180605
+//   Changework changed  ( "Sub=n" option supported )
 //20180603
 //   Shade changed  ( option density supported )
 //   Addcolor removed

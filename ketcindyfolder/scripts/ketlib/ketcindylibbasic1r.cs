@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180603)");
+println("KeTCindy V.3.2.1(20180606)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180603) loaded");
+println("ketcindylibbasic1(20180606) loaded");
 
 //help:start();
 
@@ -571,9 +571,24 @@ Pardiagram(str,options):=(
   out;
 );
 
-Changework(dirorg):=( //16.10.21
+Changework(dirorg):=Changework(dirorg,["Sub=y"]);
+Changework(dirorg,options):=( //16.10.21
 //help:Changework(directory);
-  regional(dir,subdir,tmp);
+//help:Changework(Dircdy+"fig");
+//help:Changework(options=["Sub=y"]);
+  regional(dir,subdir,tmp,,eqL,makesub);
+  tmp=Divoptions(options);
+  eqL=tmp_5;  //180605from
+  makesub=1;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    if(Toupper(tmp_1)=="SUB",
+      tmp=Toupper(tmp_2);
+      if(substring(tmp,0,1)=="N",
+        makesub=0;
+      );
+    );
+  ); //180605to
   dir=replace(dirorg,"/",pathsep());//17.11.20from
   dir=replace(dir,"\",pathsep());
   dir=replace(dir,pathsep()+pathsep(),pathsep());//17.11.24
@@ -589,11 +604,14 @@ Changework(dirorg):=( //16.10.21
     dir=substring(dir,0,tmp-1);
   ); //17.11.24until
   if(dir=="" % !isexists(dir,""),
-    println("Directory "+dir+" not exist, so set to "+Dirwork);
+    println("Directory "+dir+" not exist, so set to "+Dircdy);//180604(2lines)
+    Dirwork=Dircdy; 
     ErrFlag=-1;
   ,
-    if(length(subdir)>0, //17.11.24from
-      println(makedir(dir,subdir));
+    if(length(subdir)>0,  //180605
+      if(makesub==1,//180606from
+        println(makedir(dir,subdir));
+      );//180606
       Dirwork=dir+pathsep()+subdir;
     ,
       Dirwork=dir;

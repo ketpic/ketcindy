@@ -1,3 +1,6 @@
+// 20180604
+//   Mkslides,Mkslidesummary debugged  ( to make kc.sh executable )
+//   Changework changed  (set to Dircdy if dir not found )
 // 20180603
 //   Rotatedata,... changed (KCOLOR)
 //   Letter,Letterrot,Exprrot changed (color)

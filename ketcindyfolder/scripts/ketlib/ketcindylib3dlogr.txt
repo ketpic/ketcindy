@@ -1,3 +1,7 @@
+// 20180608
+//   Xyzaxparaname changed  ( former names deleted )
+//   Projpara changed (default: Msg=no )
+//   Start3d changed  ( Setfiles(Namecdy) added )
 // 20180607
 //   Getangle debugged  (output)
 // 20180606

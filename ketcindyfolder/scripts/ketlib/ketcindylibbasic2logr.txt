@@ -1,3 +1,5 @@
+// 20180608
+//   Setslide changed ( old style of setting title resupported )
 // 20180604
 //   Mkslides,Mkslidesummary debugged  ( to make kc.sh executable )
 //   Changework changed  (set to Dircdy if dir not found )

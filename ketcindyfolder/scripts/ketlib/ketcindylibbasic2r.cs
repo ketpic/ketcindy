@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180605) loaded");
+println("ketcindybasic2(20180608) loaded");
 
 //help:start();
 
@@ -2623,6 +2623,7 @@ WritetoRS(Arg):=(
 );
 WritetoRS(filename,shchoice):=(
   regional(Plist,Pos,GrL,str,tmp,tmp1,tmp2,cmd);
+  //help:WritetoRS(2);
   println("Write to R "+filename);
   Plist=[];
   Pnamelist=[];
@@ -2637,7 +2638,7 @@ WritetoRS(filename,shchoice):=(
   SCEOUTPUT = openfile(filename);
   tmp=Datetime();
   println(SCEOUTPUT,"# date time="+tmp_1+" "+tmp_2);
-  if(isstring(CindyPathName), // 16.12.25from
+  if(isstring(CindyName), // 16.12.25from
     if(length(CindyPathName)>0,
       println(SCEOUTPUT,
            "# path file="+CindyPathName+" "+CindyFileName+".cdy");
@@ -3972,13 +3973,21 @@ Setslidehyper(driverorg,options):=(
   );
 ); //17.12.16to
 
-Settitle(cmdL):=Settitle(cmdL,[]); // 180330changed
-Settitle(cmdL,options):=(
+Settitle(cmdL):=Settitle("",cmdL,[]); // 180608from
+Settitle(Arg1,Arg2):=(
+  if(isstring(Arg1),
+    Settitle(Arg1,Arg2,[]);
+  ,
+    Settitle("",Arg1,Arg2);
+  );
+); // 180608to
+Settitle(titleold,cmdL,options):=(
 //help:Settitle(cmdL);
 //help:Settitle(name,cmdL);
 //help:Settitle(options=["Title=slide0","Layery=0","Color=blue"]);
   regional(tmp,tmp1,tmp2,eqL,layery,color,size,font);
   TitleName="slide0"; //180330
+  if(length(titleold)>0,TitleName=titleold);//180608
   layery="0";
   color="blue";
   size="\Large";

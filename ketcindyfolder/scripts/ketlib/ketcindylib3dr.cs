@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180607) loaded");
+println("ketcindylib3d(20180608) loaded");
 
 //help:start();
 
@@ -85,6 +85,7 @@ Start3d(ptexception):=(
 //help:Start3d(execptionptlist);
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+  Setfiles(Namecdy); //180608
   ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
   FuncListC=[];
   CommandListC=[]; //180531
@@ -437,6 +438,7 @@ ProjCurve(crv):=(
 Projpara(ptdata):=Projpara(ptdata,[]);
 Projpara(ptdata,optionsorg):=(
 //help:Projpara("sf3d1");
+//help:Projpara(options=["Msg=no"]);
   regional(options,name2,name3,Ltype,Noflg,eqL,opcindy,
      dtL,ptL,tmp,tmp1,Out,color,msgflg);
   options=optionsorg;
@@ -446,11 +448,12 @@ Projpara(ptdata,optionsorg):=(
   eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
-  msgflg=1; //180602from
+  msgflg=0; //180602from
   forall(eqL,
     tmp=Strsplit(#,"=");
     if(Toupper(tmp_1)=="MSG",
-      if(Toupper(tmp_2)=="N", msgflg=0);
+      tmp=substring(tmp_2,0,1);
+      if(Toupper(tmp)=="Y", msgflg=1);
       options=remove(options,[#]);
     );
   );//180602to
@@ -1063,6 +1066,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
 Xyzaxparaname(Xrange,Yrange,Zrange):=
    Xyzaxparaname(Xrange,Yrange,Zrange,[]);
 Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
+//help:Xyzaxparaname("x=[-5,5]","y=[-5,5]","z=[-5,5]");
  regional(tmp,tmp1,tmp2,Eps,Dr,Noflg,Xname,Yname,Zname,
      px,qx,py,qy,pz,qz,ph,qh,rr,ch);
   Eps=10.0^(-6);
@@ -1071,18 +1075,21 @@ Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
   forall(options,
     if(isreal(#),Dr=Dr*#);
   );
-  tmp=indexof(Xrange,"=");
-  Xname=substring(Xrange,0,tmp-1);
-  tmp=parse(substring(Xrange,tmp,length(Xrange)));
+  tmp1=Strsplit(Xrange,"=");
+  Xname=tmp1_1;
+  tmp=parse(tmp1_2);
   px=[tmp_1,0,0]; qx=[tmp_2,0,0];
-  tmp=indexof(Yrange,"=");
-  Yname=substring(Yrange,0,tmp-1);
-  tmp=parse(substring(Yrange,tmp,length(Yrange)));
+  tmp1=Strsplit(Yrange,"=");
+  Yname=tmp1_1;
+  tmp=parse(tmp1_2);
   py=[0,tmp_1,0]; qy=[0,tmp_2,0];
-  tmp=indexof(Zrange,"=");
-  Zname=substring(Zrange,0,tmp-1);
-  tmp=parse(substring(Zrange,tmp,length(Zrange)));
+  tmp1=Strsplit(Zrange,"=");
+  Zname=tmp1_1;
+  tmp=parse(tmp1_2);
   pz=[0,0,tmp_1]; qz=[0,0,tmp_2];
+  COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Xname+"$"))==0);//180608(3lines)
+  COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Yname+"$"))==0);
+  COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Zname+"$"))==0);
   ph=Parapt(px); qh=Parapt(qx); rr=|ph-qh|;
   if(rr>Eps,
     ch=qh+Dr/rr*(qh-ph);

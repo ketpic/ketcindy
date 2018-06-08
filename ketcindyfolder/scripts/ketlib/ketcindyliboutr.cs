@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180607 loaded");
+println("ketcindylibout(20180608 loaded");
 
 //help:start();
 
@@ -753,7 +753,7 @@ CalcbyR(name,path,cmd,optionorg):=(
   cat="Y";
   wfile="";
   prestr="PVOFG"; //180508
-  waiting=5;
+  waiting=30; //180608
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -4821,14 +4821,13 @@ ConvertFdtoC(Fd,name):=(
 );
 
 StartsurfC():=StartsurfC([50,50],[1500,500,200],[0.01,0.1]);//180606
-StartsurfC(Nplist,Dsizelist,Epslist):=(
-//help:StartsurfaceC([50],[1500,500],[0.01,0.1]);
-  SetconstantC(Nplist,Dsizelist,Epslist);
-  CommandListC=[];
-);
-SetconstantC(Nplist,Dsizelist,Epslist):=(//180501
+StartsurfC(Nplist,Dsizelist,Epslist):=(//180501
+//help:SetconstanC();
 //help:SetconstanC([50,50],[1500,500,200],[0.01,0.1]);
+//help:StartsurfaceC([50],[1500,500],[0.01,0.1]);
   regional(divL,sizeL,epsL);
+  CommandListC=[];//180608(2lines)
+  FuncListC=[];
   divL=Nplist; sizeL=Dsizelist; epsL=Epslist;
   if(length(divL)==0,divL=[50]);
   if(length(divL)==1,divL=append(divL,divL_1));
@@ -5833,6 +5832,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(wflg==-1,tmp1=append(options,"r"));
   tmp1=append(tmp1,"Wait="+text(waiting));
   CommandListC=prepend("  char fnameall[]="+Dqq(fname)+";",CommandListC);
+  CommandListC=prepend("  printf("+Dqq("%s\n")+","+Dqq(Fhead)+");",CommandListC); //180608
   tmp=select(CommandListC,indexof(#,"outputend")>0);
   if(length(tmp)==0,
     CommandListC=append(CommandListC,"  outputend(dirfname);");

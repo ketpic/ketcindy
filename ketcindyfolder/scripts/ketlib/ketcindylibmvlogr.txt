@@ -1,3 +1,5 @@
+// 20180608
+//  Parafolder changed (to "all.r", to delete file)
 // 20180607
 //  Parafolder debugged ( FnameR,.. => Setfiles)
 // 20180606

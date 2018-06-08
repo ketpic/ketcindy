@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180607) loaded");
+println("ketcindymv(20180608) loaded");
 
 //help:start();
 
@@ -53,7 +53,7 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   if((!contains(Paraop,"r"))&(!contains(ParaOp,"m")),
     ParaOp=append(ParaOp,"m");//180604
   );
-  ParaOpAnim=optionsanim; 
+  ParaOpAnim=optionsanim;
   GLISTback=GLIST;
   GCLISTback=GCLIST;
   GOUTLISTback=GOUTLIST;
@@ -76,7 +76,7 @@ Parafolder(path,fstr,sL,optionorg):=(
 //help:Paraslide(para=folder:layery:pos:input,scale); 
 //help:Paraslide(para=folder:layery:pos:include:[width=100]); 
   regional(nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,
-        mkr,mktex,options,sfL,dirbkup,fbkup,ctr);
+        mkr,mktex,options,sfL,dirbkup,fbkup,pfile,ctr,flg);
   dirbkup=Dirwork;
   fbkup=Fhead;
   Changework(dirbkup+pathsep()+path);
@@ -117,32 +117,37 @@ Parafolder(path,fstr,sL,optionorg):=(
       );
     );
     if(mkr=="Y",
+      Changework(dirbkup+pathsep()+path);
       tmp1=fileslist(Dirwork);
       tmp1=tokenize(tmp1,",");
-      if(length(tmp1)>1,
-        tmp1=dirbkup+pathsep()+path;
-        tmp1=replace(tmp1,"\","/");
-        cmdL=[
-          "setwd",[Dq+tmp1+Dq],
-          "fL=as.matrix(list.files())",[],
-          "apply",["fL",2,"file.remove"]
-        ];
-        CalcbyR("rvf",cmdL,["Cat=n","m"]);
-        tmp=dirbkup+pathsep()+path;
-        repeat(1..30,
-          if(length(fileslist(tmp))>0,wait(10));
-         );
-      );
-      Changework(dirbkup+pathsep()+path);
+      tmp1=apply(tmp1,Dqq(#));//180608from
+      tmp1=RSform(text(tmp1));
+      Changework(dirbkup);
+      tmp2=replace(dirbkup,"\","/");
+      tmp=replace(dirbkup+pathsep()+path,"\","/");
+      cmdL=[
+        "setwd",[Dqq(tmp)],
+        "fL="+tmp1,[],
+        "fL=matrix(fL)",[],
+        "apply",["fL",2,"file.remove"],
+        "setwd",[Dqq(tmp2)]
+      ];
+      CalcbyR("",cmdL,["Cat=n","m"]);
+      wait(10);
     );
+    Changework(dirbkup+pathsep()+path);
+    SCEOUTPUT = openfile("all.r");
+    println(SCEOUTPUT,"");
+    closefile(SCEOUTPUT);//180608to
     if(outflg==1, //180606from
       ctr=1;
       forall(sL,
         tmp="000000"+text(ctr);
-        tmp="p"+substring(tmp,length(tmp)-3,length(tmp));
-        Setfiles(tmp);
+        pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
+        Setfiles(pfile);
         Changework(dirbkup+pathsep()+path);
         Movieframe(#);
+        Changework(dirbkup+pathsep()+path);//180608
         ctr=ctr+1;
       );
       Setfiles(fbkup);
@@ -161,28 +166,27 @@ Parafolder(path,fstr,sL,optionorg):=(
       COM0thlist=COM0thlistback;
       COM1stlist=COM1stlistback;
       COM2ndlist=COM2ndlistback;
-      tmp1=Sprintf(nn/1000,3);
-      tmp=indexof(tmp1,".");
-      tmp1=substring(tmp1,tmp,length(tmp1));
-      Setfiles("p"+tmp1);
+      tmp="000000"+text(ctr);
+      pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
+      Setfiles(pfile);
       sfL=append(sfL,FnameR);
       Changework(dirbkup+pathsep()+path);
       if(outflg==0,
         Movieframe(sL_nn);
       ,
-//        Changework(dirbkup+pathsep()+path);
         Changework(dirbkup+pathsep()+path);//180606
         Movieframe(sL_nn);
         Changework(dirbkup+pathsep()+path);//180606
         ctr=ctr+1;
       );
+      Setfiles(pfile); //180608
       if(!isexists(dirbkup+pathsep()+path,FnameR) % mkr=="Y",
         if(ErrFlag!=-1,
           WritetoRS(2); 
         );
-        Setfiles(fkbkup);
       );
     ); 
+    Setfiles(fkbkup);
     Changework(dirbkup+pathsep()+path);
     GLIST=select(GLIST,indexof(#,"Projpara")==0);
     tmp1=replace(dirbkup+pathsep()+path,"\","/");

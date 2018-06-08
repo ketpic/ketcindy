@@ -1,8 +1,13 @@
+// 20180608
+//   StartsurfC changed  ( FuncListC  reset)
+//   ExeccmdC changed  ( Fhead printed)
+//   ExeccmdC, Crvsfparadata,... changed (Projpara with "Msg=n" )
+//   CalcbyR changed (Wait=30)
 // 20180607
 //   CrvsfparadataC,WireparadataC debugged ( "sprintf..." of CommandListC);
 //   SfbdparadataC changed  (name: funnm =>nm )
 // 20180606
-//   StartsufC added
+//   StartsurfC added
 //   SfbdparadataC changed  (FuncListC)
 //   Setpara, Parafolder renewed
 // 20180605

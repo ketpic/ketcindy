@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180606)");
+println("KeTCindy V.3.2.1(20180608)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180606) loaded");
+println("ketcindylibbasic1(20180608) loaded");
 
 //help:start();
 
@@ -90,6 +90,7 @@ Ketinit(sy,rangex,rangey):=(
     Slidename=Fhead; //17.10.24
   );//17.11.12
   Dircdy=replace(Dircdy,"%E3%80%80","　");//180405
+  Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
     tmp1=append(tmp1,length(Dircdy));
@@ -186,7 +187,7 @@ Changesetting(dirL):=( //180329
 Cindyname():=Getcdyname();
 Cdyname():=Getcdyname();
 Getcdyname():=( //17.12.27
-//help:Cdyname();
+//help:Cindyname();
   regional(out);
   out=text(curkernel());
   out=replace(out,".cdy","");

@@ -1325,15 +1325,34 @@ void crvsfparadata(short ch, double fkL[][3], double fbdkL[][3], int sepflg, dou
 }
 
 void crv3onsfparadata(short ch,double fk[][3], double fbdyd3[][3], double out[][3]){
-  double fbdy[DsizeL][2], fh[DsizeL][2], tmpmd2[DsizeL][2], par[DsizeM];
-  out[0][0]=0;
+  // 180609 debugged(renewed)
+  double fbdy[DsizeL][2],fh[DsizeL][2],fks[DsizeL][3],fhs[DsizeL][2],par[DsizeM];
+  double tmpmd3[DsizeL][3],outh[DsizeL][3];
+  int i,j,din[DsizeS][2];
   projpara(fbdyd3,fbdy);
   projpara(fk,fh);
-  partitionseg(fh,fbdy,0, par);
-  nohiddenpara2(ch,par,fk, 1,out);
-  push3(Inf,3,0,out);
-  appendd3(0,1,length3(Hiddendata),Hiddendata,out);
-  push3(Inf,3,0,out); //17.06.16
+  out[0][0]=0;
+  outh[0][0]=0;
+  dataindexd2(2,fh,din);
+  for(i=1;i<=din[0][0];i++){
+    fhs[0][0]=0; fks[0][0]=0;
+    appendd2(0,din[i][0],din[i][1],fh,fhs);
+    appendd3(0,din[i][0],din[i][1],fk,fks);
+    tmpmd3[0][0]=0;
+    if(length2(fhs)>1){
+      partitionseg(fhs,fbdy,0, par);
+      nohiddenpara2(ch,par,fks,1,tmpmd3);
+      appendd3(2,1,length3(tmpmd3),tmpmd3,out);
+      appendd3(2,1,length3(Hiddendata),Hiddendata,outh);
+    }else{
+      appendd3(2,1,1,fks,out);
+    }
+  }
+  connectseg3(out, Eps1,tmpmd3);
+  out[0][0]=0;
+  appendd3(0,1,length3(tmpmd3),tmpmd3,out);
+  connectseg3(outh, Eps1,tmpmd3);
+  appendd3(3,1,length3(tmpmd3),tmpmd3,out);
 }
 
 void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], double out[][3]){

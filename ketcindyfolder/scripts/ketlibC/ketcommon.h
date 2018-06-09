@@ -247,6 +247,37 @@ int prependd2(int from,int upto, double gdata[][2],double mat[][2]){
   return nall+np;
 }
 
+int prependd3(int from,int upto, double gdata[][3],double mat[][3]){
+  int j,np, nall=length3(mat);
+  if(from<=upto){
+    np=upto-from+1;
+    for(j=nall; j>=1; j--){
+      mat[np+j][0]=mat[j][0];
+      mat[np+j][1]=mat[j][1];
+      mat[np+j][2]=mat[j][2];
+    }
+    for(j=1; j<=np; j++){
+      mat[j][0]=gdata[from+j-1][0];
+      mat[j][1]=gdata[from+j-1][1];
+      mat[j][2]=gdata[from+j-1][2];
+    }
+  }else{
+    np=from-upto+1;
+    for(j=nall; j>=1; j--){
+      mat[np+j][0]=mat[j][0];
+      mat[np+j][1]=mat[j][1];
+      mat[np+j][2]=mat[j][2];
+    }
+    for(j=1; j<=np; j++){
+      mat[nall+j][0]=gdata[from-j+1][0];
+      mat[nall+j][1]=gdata[from-j+1][1];
+      mat[nall+j][2]=gdata[from-j+1][2];
+    }
+  }
+  mat[0][0]=nall+np;
+  return nall+np;
+}
+
 int appendd1(double num,double numvec[]){
   int n;
   n=floor(numvec[0]+0.5);
@@ -969,6 +1000,62 @@ int connectseg(double pdata[][2], double eps, double out[][2]){
   }
   if(nq>0){
     nout=appendd2(2,1,nq,qd,out);
+  }
+  return nout;
+}
+
+int connectseg3(double pdata[][3], double eps, double out[][3]){
+  int din[DsizeM][2],i,j,nd,nq,flg, st, en, ntmp;
+  int nall=length3(pdata), nout=0;
+  double qd[DsizeM][3], ah[3], ao[3], p[3], q[3], tmp[3];
+  out[0][0]=0;
+  nd=dataindexd3(0,pdata,din);
+  qd[0][0]=0;
+  nq=appendd3(0,din[1][0],din[1][1],pdata,qd);
+  removei2(1,din);
+  while(nd>0){
+    pull3(1,qd,ah);
+    pull3(nq,qd,ao);
+	flg=0;
+    for(j=1; j<=nd; j++){
+	  st=din[j][0];
+      en=din[j][1];
+      pull3(st,pdata,p);
+      pull3(en,pdata,q);
+      if(dist(3,p,ao)<eps){
+        nq=appendd3(0,st+1,en,pdata,qd);
+        nd=removei2(j,din);
+        flg=1;
+        break;
+      }
+      if(dist(3,q,ao)<eps){
+        nq=appendd3(0,en-1,st,pdata,qd);
+        nd=removei2(j,din);
+        flg=1;
+        break;
+      }
+      if(dist(3,p,ah)<eps){
+        nq=prependd3(en,st+1,pdata,qd);
+        nd=removei2(j,din);
+        flg=1;
+        break;
+      }
+      if(dist(3,q,ah)<eps){
+        nq=prependd3(st,en-1,pdata,qd);
+        nd=removei2(j,din);
+        flg=1;
+        break;
+      }
+    }
+    if(flg==0){
+	  nout=appendd3(2,1,nq,qd,out);
+	  qd[0][0]=0;
+      nq=appendd3(0,din[1][0],din[1][1],pdata,qd);
+      nd=removei2(1,din);
+	}
+  }
+  if(nq>0){
+    nout=appendd3(2,1,nq,qd,out);
   }
   return nout;
 }

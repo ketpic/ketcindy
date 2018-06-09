@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180608 loaded");
+println("ketcindylibout(20180609 loaded");
 
 //help:start();
 
@@ -4821,10 +4821,24 @@ ConvertFdtoC(Fd,name):=(
 );
 
 StartsurfC():=StartsurfC([50,50],[1500,500,200],[0.01,0.1]);//180606
+StartsurfC(Arg):=( //180609
+  regional(tmp);
+  tmp=max(Arg);
+  if(tmp>=500,
+    StartsurfC([50,50],Arg,[0.01,0.1]);
+  ,
+    if(tmp>1,
+      StartsurfC(Arg,[1500,500,200],[0.01,0.1]);
+    ,
+      StartsurfC([50,50],[1500,500,200],Arg);
+    );
+  );
+);
 StartsurfC(Nplist,Dsizelist,Epslist):=(//180501
-//help:SetconstanC();
-//help:SetconstanC([50,50],[1500,500,200],[0.01,0.1]);
-//help:StartsurfaceC([50],[1500,500],[0.01,0.1]);
+//help:StartsurfC();
+//help::StartsurfC([0.01,0.1]);
+//help:StartsurfC([50,50],[1500,500,200],[0.01,0.1]);
+//help:StartsurfC([50],[1500,500],[0.01,0.1]);
   regional(divL,sizeL,epsL);
   CommandListC=[];//180608(2lines)
   FuncListC=[];

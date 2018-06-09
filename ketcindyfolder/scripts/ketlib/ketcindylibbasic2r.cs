@@ -4417,11 +4417,11 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"\def\setthin#1{\def\thin{#1}}");//17.08.23
   println(SCEOUTPUT,"\setthin{"+text(ThinDense)+"}");//17.08.23
   println(SCEOUTPUT,"\newcommand{\slidepage}[1][s]{%");//180524from
-  println(SCEOUTPUT,"\setcounter{ketpicctra}{19}%");
+  println(SCEOUTPUT,"\setcounter{ketpicctra}{18}%");
   println(SCEOUTPUT,"\if#1m \setcounter{ketpicctra}{1}\fi");
   println(SCEOUTPUT,"\hypersetup{linkcolor=black}%");
   println(SCEOUTPUT,"\begin{layer}{118}{0}");
-  println(SCEOUTPUT,"\putnotee{122}{-\theketpicctra.65}{\small\thepage/\pageref{pageend}}");
+  println(SCEOUTPUT,"\putnotee{122}{-\theketpicctra.05}{\small\thepage/\pageref{pageend}}");
   println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor=blue}}");//189524to
   forall(ADDPACK,// 16.06.09from
     println(SCEOUTPUT,"\usepackage"+#); 

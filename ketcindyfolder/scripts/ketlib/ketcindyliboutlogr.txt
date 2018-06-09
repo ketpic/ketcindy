@@ -1,3 +1,5 @@
+// 20180609
+//   StartsurfC changed  ( multi type of setting constant)
 // 20180608
 //   StartsurfC changed  ( FuncListC  reset)
 //   ExeccmdC changed  ( Fhead printed)

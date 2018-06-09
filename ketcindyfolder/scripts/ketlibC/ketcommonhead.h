@@ -29,6 +29,7 @@ int appendd2(int level, int from,int upto, double gdata[][2],double mat[][2]);
 int appendd3(int level, int from,int upto, double gdata[][3],double mat[][3]);
 int appendd6(int level, int from,int upto, double gdata[][6],double mat[][6]);
 int prependd2(int from,int upto, double gdata[][2],double mat[][2]);
+int prependd3(int from,int upto, double gdata[][3],double mat[][3]);
 int appendd1(double num,double numvec[]);
 int prependd1(double num, double numvec[]);
 int appendi1(int num,int numvec[]);
@@ -77,6 +78,7 @@ void pointoncurve(double t, double gdata[][2], double eps, double pt[]);
 int partcrv(double a,double b,double pkL[][2], double pL[][2]);
 int partcrv3(double a,double b,double pkL[][3], double pL[][3]);
 int connectseg(double pdata[][2], double eps, double out[][2]);
+int connectseg3(double pdata[][3], double eps, double out[][3]);
 void koutenseg(double a[2], double b[2], double c[2], double d[2],
           double eps, double eps2, double out[4]);
 double paramoncurve(double p[2], int n, double ptL[][2]);

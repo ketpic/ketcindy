@@ -1,3 +1,6 @@
+180609
+  crv3onsfparadata debugged ( case where curve has multi parts)
+  connectseg3 added
 180601
   wireparadata changed (for cmdflg=1)
   sfcutparadata changed ( for cmdflg=1)

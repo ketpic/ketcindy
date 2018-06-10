@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180608) loaded");
+println("ketcindymv(20180610) loaded");
 
 //help:start();
 
@@ -116,30 +116,36 @@ Parafolder(path,fstr,sL,optionorg):=(
         mkr="Y"; mktex="Y";
       );
     );
-    if(mkr=="Y",
+//    if(mkr=="Y",
+    if(1==0, //180610
       Changework(dirbkup+pathsep()+path);
       tmp1=fileslist(Dirwork);
       tmp1=tokenize(tmp1,",");
-      tmp1=apply(tmp1,Dqq(#));//180608from
-      tmp1=RSform(text(tmp1));
-      Changework(dirbkup);
-      tmp2=replace(dirbkup,"\","/");
-      tmp=replace(dirbkup+pathsep()+path,"\","/");
-      cmdL=[
-        "setwd",[Dqq(tmp)],
-        "fL="+tmp1,[],
-        "fL=matrix(fL)",[],
-        "apply",["fL",2,"file.remove"],
-        "setwd",[Dqq(tmp2)]
-      ];
-      CalcbyR("",cmdL,["Cat=n","m"]);
-      wait(10);
+      tmp1=remove(tmp1,["kc.sh","kc.bat"]);
+      if(length(tmp1)>1,
+        tmp1=apply(tmp1,Dqq(#));//180608from
+        tmp1=RSform(text(tmp1));
+        Changework(dirbkup);
+        tmp2=replace(dirbkup,"\","/");
+        tmp=replace(dirbkup+pathsep()+path,"\","/");
+        cmdL=[
+          "setwd",[Dqq(tmp)],
+          "fL="+tmp1,[],
+          "apply",["fL",2,"file.remove"]
+        ];
+        CalcbyR("rvf",cmdL,["Cat=n","m"]);
+        tmp=dirbkup+pathsep()+path;
+        repeat(1..30,
+          if(length(fileslist(tmp))>0,wait(10));
+         );
+      );
     );
     Changework(dirbkup+pathsep()+path);
     SCEOUTPUT = openfile("all.r");
     println(SCEOUTPUT,"");
     closefile(SCEOUTPUT);//180608to
     if(outflg==1, //180606from
+      CommonMake=1;//180609
       ctr=1;
       forall(sL,
         tmp="000000"+text(ctr);
@@ -150,6 +156,7 @@ Parafolder(path,fstr,sL,optionorg):=(
         Changework(dirbkup+pathsep()+path);//180608
         ctr=ctr+1;
       );
+      CommonMake=-1;//180609
       Setfiles(fbkup);
     ); //180606to
     Changework(dirbkup);
@@ -166,7 +173,7 @@ Parafolder(path,fstr,sL,optionorg):=(
       COM0thlist=COM0thlistback;
       COM1stlist=COM1stlistback;
       COM2ndlist=COM2ndlistback;
-      tmp="000000"+text(ctr);
+      tmp="000000"+text(nn);
       pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
       Setfiles(pfile);
       sfL=append(sfL,FnameR);
@@ -174,18 +181,20 @@ Parafolder(path,fstr,sL,optionorg):=(
       if(outflg==0,
         Movieframe(sL_nn);
       ,
+//        Changework(dirbkup+pathsep()+path);
         Changework(dirbkup+pathsep()+path);//180606
         Movieframe(sL_nn);
         Changework(dirbkup+pathsep()+path);//180606
         ctr=ctr+1;
       );
+      CommonMake=0;//180609
       Setfiles(pfile); //180608
       if(!isexists(dirbkup+pathsep()+path,FnameR) % mkr=="Y",
         if(ErrFlag!=-1,
           WritetoRS(2); 
         );
       );
-    ); 
+    );
     Setfiles(fkbkup);
     Changework(dirbkup+pathsep()+path);
     GLIST=select(GLIST,indexof(#,"Projpara")==0);
@@ -209,6 +218,7 @@ Parafolder(path,fstr,sL,optionorg):=(
       "source('all.r')",[]
     ];
     if(ErrFlag!=-1,
+      waiting=min([waiting,8])*length(ParaSL); //180610
       if(!isexists(dirbkup+pathsep()+path,Fnametex) % mktex=="Y",
         CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waiting)]);
       ,
@@ -227,7 +237,7 @@ Animatefile():=Animatefile(Dirwork,ParaPath);
 Animatefile(path,folder):=(
 //help:Animatefile();
 //help:Animatefile(Dirwork,ParaPath);
-  regional(FRate, Scale, OpA, pa,fname,eqL,tmp,tmp1,tmp2);
+  regional(FRate, Scale, OpA, pa,fname,eqL,tmp,tmp1,tmp2,texfiles);
   tmp=divoptions(ParaOpAnim); //17.11.24
   eqL=tmp_5;
   FRate="10";
@@ -265,11 +275,19 @@ Animatefile(path,folder):=(
   tmp1=fileslist(tmp);
   tmp1=tokenize(tmp1,",");
   tmp1=select(tmp1,indexof(#,".tex")>0);
+  texfiles=[];//180609from
+  forall(tmp1,
+    tmp=indexof(#,".");
+    tmp=parse(substring(#,1,tmp-1));
+    if(tmp<=length(ParaSL),
+      texfiles=append(texfiles,#);
+    );
+  );//180609to  
   SCEOUTPUT= openfile(fname);
   println(SCEOUTPUT,"\def\parapath{"+pa+"}%"); //17.06.22
   println(SCEOUTPUT,"\def\figsize{"+Scale+"}%"); //17.12.07
   println(SCEOUTPUT,"\begin{animateinline}"+OpA+"{"+FRate+"}%");
-  forall(1..(length(tmp1)),
+  forall(1..(length(texfiles)), //180609
     if(Scale==1, // 17.08.30from
       tmp="\input{\parapath/";
       tmp=tmp+folder+"/"+tmp1_#+"}%"; 
@@ -532,7 +550,15 @@ Mkflipanime(path,folder):=(
   println(SCEOUTPUT,"");
   tmp=fileslist(Dirwork+pathsep()+folder);
   tmp=tokenize(tmp,",");
-  texfiles=select(tmp,indexof(#,".tex")>0);
+  tmp1=select(tmp,indexof(#,".tex")>0); //180609from
+  texfiles=[];
+  forall(tmp1,
+    tmp=indexof(#,".");
+    tmp=parse(substring(#,1,tmp-1));
+    if(tmp<=length(ParaSL),
+      texfiles=append(texfiles,#);
+    );
+  );//180609to
   forall(texfiles,
     println(SCEOUTPUT,"\vspace*{25mm}");
     println(SCEOUTPUT,"");

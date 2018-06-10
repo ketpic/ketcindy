@@ -1,3 +1,5 @@
+//20180609
+//   Ketinit changed  (CommonMake added )
 //20180608
 //   Ketinit changed  (Namecdy defined )
 //20180606

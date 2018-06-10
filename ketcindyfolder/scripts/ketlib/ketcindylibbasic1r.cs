@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.1(20180609)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180608) loaded");
+println("ketcindylibbasic1(20180609) loaded");
 
 //help:start();
 
@@ -76,6 +76,7 @@ Ketinit(sy,rangex,rangey):=(
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
   Dq=unicode("0022");
+  CommonMake=0;//180610
   WaitUnit=10;
   CONTINUED=0;
   OutComList=[];

@@ -5842,6 +5842,14 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   options=remove(options,reL);
   options=select(options,length(#)>0);
+  if(CommonMake==1,//180609from
+    tmp1=append(options,"m");
+    wflg=0;
+  );
+  if(CommonMake==-1,
+    tmp1=append(options,"r");
+    wflg=0;
+   );//180609to
   if(wflg==1,tmp1=append(options,"m"));
   if(wflg==-1,tmp1=append(options,"r"));
   tmp1=append(tmp1,"Wait="+text(waiting));

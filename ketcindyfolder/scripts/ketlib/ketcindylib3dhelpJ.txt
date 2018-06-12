@@ -36,7 +36,6 @@
 //help:Concatobj*(いくつかのobjデータを結合);
 //help:Crvsfparadata*(曲線の曲面による陰線処理);
 //help:Intersectcrvsf*(曲線と曲面の交点を求める);
-//help:Intersectcrvsf*(曲線と曲面の交点を求める);
 //help:Sfbdparaparadata*(空間曲面の陰線処理);
 //help:Wireparadata*(曲面のワイヤフレームを陰線処理);
 //help:Dist3d*(空間の２点の距離);

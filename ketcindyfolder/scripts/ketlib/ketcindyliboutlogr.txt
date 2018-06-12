@@ -1,3 +1,6 @@
+// 20180612
+//   Hatchdata renamed to HatchdataR
+//   kcC changed  ( "gcc -lm" )
 // 20180611
 //   StartsurfC changed ( "reset" of GLIST )
 // 20180610

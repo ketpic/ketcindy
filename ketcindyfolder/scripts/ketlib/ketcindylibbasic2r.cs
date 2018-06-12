@@ -1776,7 +1776,6 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 Tabledata(nm,n,m,xsize,ysize,rmvL):=
     Tabledata(nm,n,m,xsize,ysize,rmvL,[]);
 Tabledata(nm,n,m,xsize,ysize,rmvL,options):=(
-//help:Tabledata("",xLst,yLst,rmvL,[2,"Rng=y"]);
   regional(Tb,name,tmp,xLst,yLst);
   name="tb"+nm;
   xLst=apply(1..n,xsize/n);

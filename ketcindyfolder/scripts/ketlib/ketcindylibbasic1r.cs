@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180611)");
+println("KeTCindy V.3.2.1(20180612)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180609) loaded");
+println("ketcindylibbasic1(20180612) loaded");
 
 //help:start();
 
@@ -72,6 +72,7 @@ Ketinit(sy,rangex,rangey):=(
   COM0thlist=[];
   COM1stlist=[];
   COM2ndlist=[];
+  COM2ndlistb=[]; //180612
   ADDAXES="1";
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
@@ -2287,11 +2288,19 @@ Com1st(String):=(
 //    COM1stlist=append(COM1stlist,str);
 );
 
-Com2nd(String):=(
-// help:Com2nd("");
-    regional(str);
-    str=replace(String,LFmark,"");
+Com2nd(String):=Com2nd(String,["a"]);//180612
+Com2nd(String,option):=(
+// help:Com2nd(str,["before"]);
+  regional(str,tmp);
+  str=replace(String,LFmark,"");
+  tmp=substring(option_1,0,1);//180612from
+  if(Toupper(tmp)=="b",
+    COM2ndlistb=append(COM2ndlistb,str);
+    tmp=remove(COM2ndlist,COM2ndlistb);
+	COM2ndlist=concat(COM2ndlistb,COM2ndlist);
+  ,
     COM2ndlist=append(COM2ndlist,str);
+  );//180612to
 );
 
 Com2ndpre(String):=(
@@ -4572,7 +4581,7 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
 
 Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
-//help:Arrowheaddata(A,B);
+// help:Arrowheaddata(A,B);
   regional(list,Ookisa,Hiraki,Futosa,Houkou,Str,Flg,tmp,Ev,Nv,pA,pB,
        pP,rF,gG,Flg,Nj,Eps,tmp1,scx,scy);
   Eps=10^(-3);
@@ -5820,9 +5829,10 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
 );
 
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);
+Hatchdata(nm,iostr,bdylist,options):=Hatchdatacindy(nm,iostr,bdylist,options);
 Hatchdatacindy(nm,iostr,bdylistorg,options):=(
-//help:Hatchdatacindy("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
-//help:Hatchdatacindy(options=[angle,width]);
+//help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
+//help:Hatchdata(options=[angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,startP,angle,
      interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2,color);
   name="ha"+nm;
@@ -5958,13 +5968,14 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
 
 
 Shade(plist):=Shade(plist,[]);
-Shade(plist,options):=(
+Shade(plistorg,options):=(
 //help:Shade(["gr"],[0.5]);
 //help:Shade(["gr"],["Color=red"]);
 //help:Shade(["gr2","sg1"],["Color=[0,0,0,0.5]"]);
 //help:Shade(["gr2","sg1"],["Color=[1,0,0]"]);
-//help:Shade([pointlist]);
-  regional(tmp,tmp1,tmp2,opstr,opcindy,reL,Str,G2,flg,color);
+// help:Shade([pointlist]);
+  regional(plist,tmp,tmp1,tmp2,opstr,opcindy,reL,Str,G2,flg,color);
+  plist=plistorg;
   if(isstring(plist_1), // 16.01.24
     println("output Shade of "+plist);
   ,
@@ -5984,13 +5995,15 @@ Shade(plist,options):=(
   flg=0;
   forall(plist,
     if(flg==0,
-      if(isstring(#),tmp=parse(#),tmp=#); // from 16.01.24
-      if(!islist(tmp),flg=1);  until
+      if(isstring(#),tmp=parse(#),tmp=#);
+      if(!islist(tmp),
+         flg=1;
+      ); 
     );
   );
   if(flg==1,
 //    err("some data not defined yet");
-  ,
+  ,   
     G2=Joincrvs("1",plist,["nodata"]);
     G2=apply(G2,Pcrd(#));
     tmp1="fillpoly("+textformat(G2,5)+opcindy+");";

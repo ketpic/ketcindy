@@ -1,3 +1,5 @@
+//20180612
+//   Com2nd chanede  ("before" options added )
 //20180609
 //   Ketinit changed  (CommonMake added )
 //20180608

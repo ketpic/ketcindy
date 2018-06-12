@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180611 loaded");
+println("ketcindylibout(20180612 loaded");
 
 //help:start();
 
@@ -1296,10 +1296,10 @@ Writecsv(nmL,dataorg,file,optionorg):=(
   closefile(SCEOUTPUT);
 );
 
-Hatchdata(nm,iostr,pltlist):=Hatchdata(nm,iostr,pltlist,[]);
-Hatchdata(nm,iostr,pltlist,optionorg):=( //17.09.18
-//help:Hatchdata("1","ii",[["gr1"],["gr2","n"]]);
-//help:Hatchdata(options=["Wait=5"]);
+HatchdataR(nm,iostr,pltlist):=HatchdataR(nm,iostr,pltlist,[]);
+HatchdataR(nm,iostr,pltlist,optionorg):=( //17.09.18
+//help:HatchdataR("1","ii",[["gr1"],["gr2","n"]]);
+//help:HatchdataR(options=["Wait=5"]);
   regional(options,name,eqL,reL,strL,
      plt,fname,options,tmp,tmp1,tmp2,tmp3,flg,wflg,waiting);
   name="ha"+nm;
@@ -2068,8 +2068,8 @@ MkprecommandS(prec):=(
 
 PlotdataS(name1,func,var):=PlotdataS(name1,func,var,[]);
 PlotdataS(nm,fun,variable,optionorg):=(
-//help:PlotdataS("1","besselj(1,x)","x");
-//help:PlotdataS(options=["m/r","Num=50","Wait=5","Mx=no"]);
+// help:PlotdataS("1","besselj(1,x)","x");
+// help:PlotdataS(options=["m/r","Num=50","Wait=5","Mx=no"]);
   regional(options,name,varstr,Num,waiting,mxcheck,outreg,
          eqL,strL,fname,tmp,tmp1,tmp2,tmp3,cmdL,flg,wflg);
   name="grsc"+nm;
@@ -5392,7 +5392,7 @@ kcC(cname):=(
     SCEOUTPUT = openfile("kc.sh");
     println(SCEOUTPUT,"#!/bin/sh");
     println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
-    tmp=PathC+" "+cname+".c -o main.out";
+    tmp=PathC+" -lm "+cname+".c -o main.out"; //180612
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"./main.out");
     println(SCEOUTPUT,"echo //// >"+rfile);

@@ -28,6 +28,7 @@ if(ismacosx(),
 if(islinux(),
   PathS="scilab";
   Pathpdf="evince";
+  PathC="gcc";
   PathR="R";
   PathA="asir";
   PathM="maxima";

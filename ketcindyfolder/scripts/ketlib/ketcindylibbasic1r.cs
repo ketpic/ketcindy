@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180609)");
+println("KeTCindy V.3.2.1(20180611)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20180609) loaded");
 
@@ -2996,6 +2996,7 @@ Chunderscore(str):=(
   tmp1;
 );
 
+AddGraph(nm,pltdata):=AddGraph(nm,pltdata,[]);
 AddGraph(nm,pltdata,options):=(
 //help:AddGraph("1","imp1"); // 16.04.04
 //help:Addgraph("1",["[pt1]","gr1"],["nodisp"]);

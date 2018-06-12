@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180608) loaded");
+println("ketcindybasic2(20180610) loaded");
 
 //help:start();
 
@@ -2662,6 +2662,7 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,"Hpath=Hpath[length(Hpath)]");
     println(SCEOUTPUT,"Rest="+Dqq(tmp2));
     println(SCEOUTPUT,"Path=paste(Drv,Hpath,Rest,sep='')");
+    println(SCEOUTPUT,"Path=gsub('\\','/',Path,fixed=TRUE)"); //180610
     println(SCEOUTPUT,"setwd(Path)"); 
   ,
     println(SCEOUTPUT,"setwd('"+tmp1+"')"); 

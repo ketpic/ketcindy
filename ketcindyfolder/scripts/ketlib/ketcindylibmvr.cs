@@ -64,142 +64,155 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   COM0thlistback=COM0thlist;
   COM1stlistback=COM1stlist;
   COM2ndlistback=COM2ndlist;
+  Dirworkbkup=Dirwork; //0611from
+  Dirworksubbkup=Dirwork+pathsep()+ParaPath;
+  Changework(Dirworksubbkup);
+  Changework(Dirworkbkup);
+  Fheadbkup=Fhead; //0611to
 );
 
-Parafolder():=Parafolder(ParaPath,ParaFstr,ParaSL,ParaOp);
-Parafolder(path,fstr,sL):=Parafolder(path,fstr,sL,[]);
-Parafolder(path,fstr,sL,optionorg):=(
+Parafolder():=Parafolder(ParaFstr,ParaSL,ParaOp);
+Parafolder(fstr,sL):=Parafolder(fstr,sL,[]);
+Parafolder(fstr,sL,optionorg):=(
 //help:Parafolder(foldername,1..4);
 //help:Parafolder(foldername,"s=[0,1]");
 //help:Parafolder("mf(s)",foldername,"s=[0,1]");
-//help:Parafolder(options=["m/r","Div=25","Wait=20","Outdata=n"]); 
+//help:Parafolder(options=["m/r","Div=25","Wait=20"]);
+//help:Parafolder(optionsadd=[""Outfile=n",Pause=10(ms)"]); 
 //help:Paraslide(para=folder:layery:pos:input,scale); 
 //help:Paraslide(para=folder:layery:pos:include:[width=100]); 
-  regional(nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,
+  regional(nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,pause,
         mkr,mktex,options,sfL,dirbkup,fbkup,pfile,ctr,flg);
-  dirbkup=Dirwork;
-  fbkup=Fhead;
-  Changework(dirbkup+pathsep()+path);
-  if(!isstring(ParaPath),
-    println("Setpara should be defined");
-  ,
-    tmp=indexof(fstr,"(");
-    tmp1=substring(fstr,tmp,length(fstr));
-    tmp=indexof(tmp1,")");
-    tmp1=substring(tmp1,0,tmp-1);
-    parse("Movieframe("+tmp1+"):="+fstr);
-    options=optionorg;
-    tmp=Divoptions(options);
-    eqL=tmp_5;
-    strL=tmp_7;
-    if(length(strL)==0,options=append(options,"m"));
-    mkr="A";
-    mktex="A";
-    waiting=20;
-    outflg=0;
-    forall(eqL,
-      tmp=Strsplit(#,"=");
-      tmp1=Toupper(substring(tmp_1,0,1));
-      if(tmp1=="W",
-        waiting=parse(tmp_2);
-        options=remove(options,[#]);
-      );
-      if((tmp1=="O")%(tmp1=="R"), //180606from
-        tmp=Toupper(substring(tmp_2,0,1));
-        if(tmp=="Y", outflg=1);
-        options=remove(options,[#]);
-      ); //180606to
+  Changework(Dirworkbkup);
+  Setfiles(Fheadbkup);
+  tmp=indexof(fstr,"(");
+  tmp1=substring(fstr,tmp,length(fstr));
+  tmp=indexof(tmp1,")");
+  tmp1=substring(tmp1,0,tmp-1);
+  parse("Movieframe("+tmp1+"):="+fstr);
+  options=optionorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  strL=tmp_7;
+  if(length(strL)==0,options=append(options,"m"));
+  mkr="A";
+  mktex="A";
+  waiting=20;
+  outflg=0;
+  pause=10;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="W",
+      waiting=parse(tmp_2);
+      options=remove(options,[#]);
     );
-    forall(strL,
-      tmp1=Toupper(substring(#,0,1));
-      if(tmp1=="M",
-        mkr="Y"; mktex="Y";
-      );
+    if((tmp1=="O")%(tmp1=="R"), //180606from
+      tmp=Toupper(substring(tmp_2,0,1));
+      if(tmp=="Y", outflg=1);
+      options=remove(options,[#]);
     );
-//    if(mkr=="Y",
-    if(1==0, //180610
-      Changework(dirbkup+pathsep()+path);
-      tmp1=fileslist(Dirwork);
-      tmp1=tokenize(tmp1,",");
-      tmp1=remove(tmp1,["kc.sh","kc.bat"]);
-      if(length(tmp1)>1,
-        tmp1=apply(tmp1,Dqq(#));//180608from
-        tmp1=RSform(text(tmp1));
-        Changework(dirbkup);
-        tmp2=replace(dirbkup,"\","/");
-        tmp=replace(dirbkup+pathsep()+path,"\","/");
-        cmdL=[
-          "setwd",[Dqq(tmp)],
-          "fL="+tmp1,[],
-          "apply",["fL",2,"file.remove"]
-        ];
-        CalcbyR("rvf",cmdL,["Cat=n","m"]);
-        tmp=dirbkup+pathsep()+path;
-        repeat(1..30,
-          if(length(fileslist(tmp))>0,wait(10));
-         );
-      );
+    if(tmp1=="P", //180610from
+      pause=parse(tmp_2);
+      options=remove(options,[#]);
+    ); // //180610to
+  );
+  forall(strL,
+    tmp1=Toupper(substring(#,0,1));
+    if(tmp1=="M",
+      mkr="Y"; mktex="Y";
     );
-    Changework(dirbkup+pathsep()+path);
-    SCEOUTPUT = openfile("all.r");
-    println(SCEOUTPUT,"");
-    closefile(SCEOUTPUT);//180608to
-    if(outflg==1, //180606from
-      CommonMake=1;//180609
-      ctr=1;
-      forall(sL,
-        tmp="000000"+text(ctr);
-        pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
-        Setfiles(pfile);
-        Changework(dirbkup+pathsep()+path);
-        Movieframe(#);
-        Changework(dirbkup+pathsep()+path);//180608
-        ctr=ctr+1;
-      );
-      CommonMake=-1;//180609
-      Setfiles(fbkup);
-    ); //180606to
-    Changework(dirbkup);
-    sfL=[];
+  );
+//  if(mkr=="Y",
+  if(1==0, //180610
+    Changework(Dirworksubbkup);
+    tmp1=fileslist(Dirwork);
+    tmp1=tokenize(tmp1,",");
+    tmp1=remove(tmp1,["kc.sh","kc.bat"]);
+    if(length(tmp1)>1,
+      tmp1=apply(tmp1,Dqq(#));//180608from
+      tmp1=RSform(text(tmp1));
+      Changework(Dirworkbkup);
+      tmp2=replace(Dirworkbkup,"\","/");
+      tmp=replace(Dirworksubbkup,"\","/");
+      cmdL=[
+        "setwd",[Dqq(tmp)],
+        "fL="+tmp1,[],
+        "apply",["fL",2,"file.remove"]
+      ];
+      CalcbyR("rvf",cmdL,["Cat=n","m"]);
+      tmp=Dirworkbkup;
+      repeat(1..30,
+        if(length(fileslist(tmp))>0,wait(10));
+       );
+    );
+  );
+  Changework(Dirworksubbkup);
+  SCEOUTPUT = openfile("all.r");
+  println(SCEOUTPUT,"");
+  closefile(SCEOUTPUT);//180608to
+  if(outflg==1, //180606from
+    CommonMake=1;//180609
     ctr=1;
-    forall(1..(length(sL)),nn,
-      GLIST=GLISTback;
-      GCLIST=GCLISTback;
-      GOUTLIST=GOUTLISTback;
-      POUTLIST=POUTLISTback;
-      VLIST=VLISTback;
-      FUNLIST=FUNLISTback;
-      LETTERlist=LETTERlistback;
-      COM0thlist=COM0thlistback;
-      COM1stlist=COM1stlistback;
-      COM2ndlist=COM2ndlistback;
-      tmp="000000"+text(nn);
+    forall(sL,
+      tmp="000000"+text(ctr);
       pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
       Setfiles(pfile);
-      sfL=append(sfL,FnameR);
-      Changework(dirbkup+pathsep()+path);
-      if(outflg==0,
-        Movieframe(sL_nn);
-      ,
-//        Changework(dirbkup+pathsep()+path);
-        Changework(dirbkup+pathsep()+path);//180606
-        Movieframe(sL_nn);
-        Changework(dirbkup+pathsep()+path);//180606
-        ctr=ctr+1;
-      );
-      CommonMake=0;//180609
-      Setfiles(pfile); //180608
-      if(!isexists(dirbkup+pathsep()+path,FnameR) % mkr=="Y",
-        if(ErrFlag!=-1,
-          WritetoRS(2); 
-        );
+      Changework(Dirworksubbkup);
+      Movieframe(#);
+      Changework(Dirworksubbkup);//180608
+      ctr=ctr+1;
+    );
+    CommonMake=-1;//180609
+    Setfiles(fbkup);
+  ); //180606to
+  wait(pause); //180610
+//  Changework(Dirworkbkup);
+  sfL=[];
+  ctr=1;
+  forall(1..(length(sL)),nn,
+    Changework(Dirworkbkup);//180611(2lines)
+    Setfiles(Fheadbkup);
+    GLIST=GLISTback;
+    GCLIST=GCLISTback;
+    GOUTLIST=GOUTLISTback;
+    POUTLIST=POUTLISTback;
+    VLIST=VLISTback;
+    FUNLIST=FUNLISTback;
+    LETTERlist=LETTERlistback;
+    COM0thlist=COM0thlistback;
+    COM1stlist=COM1stlistback;
+    COM2ndlist=COM2ndlistback;
+    tmp="000000"+text(nn);
+    pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
+    Setfiles(pfile);
+    Changework(Dirworksubbkup);
+    sfL=append(sfL,FnameR);
+    if(outflg==1,
+      Changework(Dirworksubbkup);//180606
+      Setfiles(pfile); //180610(2lines)
+      wait(pause);
+      Movieframe(sL_nn);
+      Changework(Dirworksubbkup);//180606
+      ctr=ctr+1;
+    ,
+      Movieframe(sL_nn);
+    );
+    CommonMake=0;//180609
+    Setfiles(pfile); //180608
+    if(!isexists(Dirworksubbkup,FnameR) % mkr=="Y",
+      if(ErrFlag!=-1,
+        WritetoRS(2); 
       );
     );
-    Setfiles(fkbkup);
-    Changework(dirbkup+pathsep()+path);
-    GLIST=select(GLIST,indexof(#,"Projpara")==0);
-    tmp1=replace(dirbkup+pathsep()+path,"\","/");
-    cmdL=[
+  );
+  wait(pause); //180610
+  Setfiles(fkbkup);
+  Changework(Dirworksubbkup);
+  GLIST=select(GLIST,indexof(#,"Projpara")==0);
+  tmp1=replace(Dirworksubbkup,"\\","/"); //180611
+  tmp1=replace(tmp1,"\","/");
+  cmdL=[
       "setwd("+Dqq(tmp1)+")",[],
       "size="+text(length(sL)),[],
       "for(n in Looprange(1,size)){",[],
@@ -216,21 +229,20 @@ Parafolder(path,fstr,sL,optionorg):=(
       "  }",[],
       "}",[],
       "source('all.r')",[]
-    ];
-    if(ErrFlag!=-1,
-      waiting=min([waiting,8])*length(ParaSL); //180610
-      if(!isexists(dirbkup+pathsep()+path,Fnametex) % mktex=="Y",
-        CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waiting)]);
-      ,
-        println("Parafolder "+path+" finished");
-      );
-      if(length(after)>0,
-        parse(after);
-      );
+  ];
+  if(ErrFlag!=-1,
+    waiting=min([waiting,8])*length(ParaSL); //180610
+    if(!isexists(Dirworksubbkup,Fnametex) % mktex=="Y",
+      CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waiting)]);
+    ,
+      println("Parafolder finished");
+    );
+    if(length(after)>0,
+      parse(after);
     );
   );
-  Changework(dirbkup);
-  Setfiles(fkbkup);
+  Changework(Dirworkbkup);
+  Setfiles(Fheadbkup);
 );
 
 Animatefile():=Animatefile(Dirwork,ParaPath);

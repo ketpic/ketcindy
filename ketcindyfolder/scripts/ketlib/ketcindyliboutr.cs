@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180609 loaded");
+println("ketcindylibout(20180611 loaded");
 
 //help:start();
 
@@ -4820,35 +4820,43 @@ ConvertFdtoC(Fd,name):=(
   FdC=concat(FdC,[tmp1_6]); 
 );
 
-StartsurfC():=StartsurfC([50,50],[1500,500,200],[0.01,0.1]);//180606
-StartsurfC(Arg):=( //180609
+StartsurfC():=StartsurfC("",[50,50],[1500,500,200],[0.01,0.1]);//180611renewed
+StartsurfC(Arg):=(
   regional(tmp);
-  tmp=max(Arg);
-  if(tmp>=500,
-    StartsurfC([50,50],Arg,[0.01,0.1]);
+  if(isstring(Arg),
+    StartsurfC(Toupper(Arg),[50,50],[1500,500,200],[0.01,0.1]);
   ,
-    if(tmp>1,
-      StartsurfC(Arg,[1500,500,200],[0.01,0.1]);
+    tmp=max(Arg);
+    if(tmp>=500,
+      StartsurfC("",[50,50],Arg,[0.01,0.1]);
     ,
-      StartsurfC([50,50],[1500,500,200],Arg);
+      if(tmp>1,
+        StartsurfC("",Arg,[1500,500,200],[0.01,0.1]);
+      ,
+        StartsurfC("",[50,50],[1500,500,200],Arg);
+      );
     );
   );
 );
-StartsurfC(Nplist,Dsizelist,Epslist):=(//180501
+StartsurfC(restr,Nplist,Dsizelist,Epslist):=(//180501
 //help:StartsurfC();
+//help:StartsurfC("reset");
 //help::StartsurfC([0.01,0.1]);
 //help:StartsurfC([50,50],[1500,500,200],[0.01,0.1]);
 //help:StartsurfC([50],[1500,500],[0.01,0.1]);
   regional(divL,sizeL,epsL);
   CommandListC=[];//180608(2lines)
   FuncListC=[];
+  if(substring(restr,0,1)=="R", //180611(3lines)
+    GLIST=[];
+  );
   divL=Nplist; sizeL=Dsizelist; epsL=Epslist;
   if(length(divL)==0,divL=[50]);
   if(length(divL)==1,divL=append(divL,divL_1));
-  if(length(sizeL)==0,sizeL=[5000]);
-  if(length(sizeL)==1,sizeL=append(sizeL,1500));
-  if(length(sizeL)==2,sizeL=append(sizeL,500));
-  if(length(sizeL)==3,sizeL=append(sizeL,200));
+  if(length(sizeL)==0,sizeL=[1500]); //180610from
+  if(length(sizeL)==1,sizeL=append(sizeL,500));
+  if(length(sizeL)==2,sizeL=append(sizeL,200));
+  sizeL=prepend(5000,sizeL); //180610to
   if(length(epsL)==0,epsL=[0.01]);
   if(length(epsL)==1,epsL=append(epsL,0.1));
   epsL=prepend(0.00001,epsL);

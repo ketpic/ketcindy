@@ -1,5 +1,8 @@
+// 20180611
+//  Parafolder changed (path removed, Dirworkbkup&Dirworksubbkup used)
 // 20180610
 //  Parafolder debugged (files not removed, waiting time for R)
+//  Parafolder changed  ( pause option adde )
 // 20180609
 //  Parafolder changed (CommonMake)
 //  Mkflipanime,Animationfile  changed  ( length(ParaSL) )

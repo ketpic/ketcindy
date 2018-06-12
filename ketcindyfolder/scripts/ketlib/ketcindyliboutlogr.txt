@@ -1,3 +1,7 @@
+// 20180611
+//   StartsurfC changed ( "reset" of GLIST )
+// 20180610
+//   StartsurfC debugged ( sizeL )
 // 20180609
 //   StartsurfC changed  ( multi type of setting constant)
 //   ExeccmdC changed (CommonMake)

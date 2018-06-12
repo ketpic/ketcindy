@@ -49,8 +49,8 @@ rmdir ketcindy/ketcindyfolder/work
 # now the ketcindyfolder dir should be empty
 rmdir ketcindy/ketcindyfolder
 
-# use our TeX Live dirhead
-mv ketcindy/tl-integration/dirhead.txt scripts/ketcindy/
+# use our TeX Live ketcindy.ini
+mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/
 
 # the rest should be files that can be removed:
 rm ketcindy/tl-integration/update-permissions.sh

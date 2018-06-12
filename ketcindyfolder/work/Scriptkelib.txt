@@ -1,4 +1,4 @@
 use("KetCindyPlugin");
 Dircdy=loaddirectory;
 setdirectory(plugindirectory);
-import("dirhead.txt");
+import("ketcindy.ini");

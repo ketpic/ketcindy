@@ -41,7 +41,8 @@ rmdir ketcindy/ketcindyfolder/doc
 mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template2advanced.cdy scripts/ketcindy/
-for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt ; do
+for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt \
+         template1basic template2advanced Makefile ; do
   mv ketcindy/ketcindyfolder/work/$i doc/support/ketcindy/
 done
 rmdir ketcindy/ketcindyfolder/work

@@ -79,12 +79,12 @@ if not "%STR_INPUT%" == "d" (
   homehead=%STR_INPUT%
 )
 echo %homehead%
-echo PathThead="%pathT%%bin%\"; > dirhead.txt
-echo Homehead="%homehead%"; >> dirhead.txt
-echo Dirhead="%pathT%%scripts%"; >> dirhead.txt
-echo setdirectory(Dirhead); >> dirhead.txt
-echo import("setketcindy.txt"); >> dirhead.txt
-echo import("ketoutset.txt"); >> dirhead.txt
+echo PathThead="%pathT%%bin%\"; > ketcindy.ini
+echo Homehead="%homehead%"; >> ketcindy.ini
+echo Dirhead="%pathT%%scripts%"; >> ketcindy.ini
+echo setdirectory(Dirhead); >> ketcindy.ini
+echo import("setketcindy.txt"); >> ketcindy.ini
+echo import("ketoutset.txt"); >> ketcindy.ini
 set /P STR_INPUT="Input version of R d(efault)=3.4.2 :"
 if "%STR_INPUT:~0,1%" == "d" (
   set verR=3.4.2
@@ -94,10 +94,10 @@ if "%STR_INPUT:~0,1%" == "d" (
 echo %verR%
 set prg=C:\Program Files
 if exist "%prg%\R\R-%verR%\bin\" (
-  echo PathR="%prg%\R\R-%verR%\bin"; >> dirhead.txt
+  echo PathR="%prg%\R\R-%verR%\bin"; >> ketcindy.ini
 ) else (
   if exist "%prg% (x86)\R\R-%verR%\bin\" (
-    echo "%prg% (x86)\R\R-%verR%\bin"; >> dirhead.txt
+    echo "%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
   ) else (
     echo "R-%verR% not found"
   )
@@ -111,7 +111,7 @@ if "%STR_INPUT:~0,1%" == "d" (
 echo %verM%
 set prg=C:\maxima-%verM%\bin\maxima.bat
 if exist "%prg%" (
-  echo PathM="%prg%"; >> dirhead.txt
+  echo PathM="%prg%"; >> ketcindy.ini
 ) else (
   echo "Maxima-%verM% not found"
   )
@@ -120,6 +120,6 @@ set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe
 if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
-echo Pathpdf="%prgSm%"; >> dirhead.txt
+echo Pathpdf="%prgSm%"; >> ketcindy.ini
 echo "Plugins of Cindy has been set"
 pause

@@ -76,17 +76,17 @@ homehead=/Users
 #if [ ${ans} != "d" ]; then
 #  homehead=$ans
 #fi
-echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/dirhead.txt
-echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/dirhead.txt
-echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/dirhead.txt
-echo "setdirectory(Dirhead);"  >> ${cindyplug}/dirhead.txt
-echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/dirhead.txt
-echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/dirhead.txt
+echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/ketcindy.ini
+echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/ketcindy.ini
+echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/ketcindy.ini
+echo "setdirectory(Dirhead);"  >> ${cindyplug}/ketcindy.ini
+echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/ketcindy.ini
+echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/ketcindy.ini
 read -p 'Choose pdfviewer from preview(p),skim(s): ' ans
 if [ ${ans} = "s" ]; then
-  echo  "Pathpdf=\"skim\";" >> ${cindyplug}/dirhead.txt
+  echo  "Pathpdf=\"skim\";" >> ${cindyplug}/ketcindy.ini
 else
-  echo  "Pathpdf=\"preview\";" >> ${cindyplug}/dirhead.txt
+  echo  "Pathpdf=\"preview\";" >> ${cindyplug}/ketcindy.ini
 fi
 echo "KetCindyPlugin and others copied to Cinderella"
 sleep 1

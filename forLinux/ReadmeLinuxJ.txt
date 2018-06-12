@@ -27,7 +27,7 @@ KETCindyの通常インストール（Linux）　　　修正日：2017.11.25
 　　　　　　Pathpdf　PDFビューアのパス
 　　　　　　PathR　Rのパス
 　　　　　　PathM　Maximaのパス
-　　　・tex-dist/scripts/ketcindyにあるdirhead.txtを開いて修正する．
+　　　・tex-dist/scripts/ketcindyにあるketcindy.iniを開いて修正する．
 　　　　　　PathThead="texbinのパス";
 　　　　　　Dirhead="TeX/scripts/ketcindyのパス";
 　　　　　　Dirfile="作業ディレクトリのパス";
@@ -37,7 +37,7 @@ KETCindyの通常インストール（Linux）　　　修正日：2017.11.25
 　（１）適当な場所に作業ディレクトリを作り，ketcindyfolder/workの中身をコピーする．
 　（２）Cinderella2を立ち上げ「スクリプト > プラグインを開く」を選ぶ．
 　　　　・tex-dist/scripts/ketcindyの次の２つのファイルをPluginsにコピーする．
-　　　　　　dirhead.txt, ketjava/KetCindyPlugin.java
+　　　　　　ketcindy.ini, ketjava/KetCindyPlugin.java
 　　　　・Pluginsを閉じ，Cinderellaをいったん終了する．
 
 ４）KeTCindyのテストラン
@@ -51,7 +51,7 @@ KETCindyの通常インストール（Linux）　　　修正日：2017.11.25
 　　　　　　　　　スクリプト >「 プラグインを開く」
 　　　　　　・次を確認する
 　　　　　　　　i) KetCindyPlugin.jarが入っているか．
-　　　　　　　　ii) dirhead.txtに書かれているパスが合っているか．
+　　　　　　　　ii) ketcindy.iniに書かれているパスが合っているか．
 　（２）スクリーンの上部にあるFigureボタンを押してPDFが表示されれば成功である．
 　　　　　 ・表示されないとき
 　　　　　　　　ユーザホームのketcindyhead.txtを確認する．

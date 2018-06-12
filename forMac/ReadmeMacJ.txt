@@ -71,8 +71,8 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 　　　　・ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
 　　　　・ユーザホームのヘッド　ユーザー名の前のパス
 　　　　　　注）通常の/Users の場合は単に d でもよい．
-　　　　・CinderellaのPluginsにKetcindyPlugin.jarとdirhead.txtがコピーされる．
-　　　　・dirhead.txtの内容
+　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
+　　　　・ketcindy.iniの内容
 　　　　　　　PathThead　TeXのrootパス
 　　　　　　　Homehead　ユーザホームのヘッド
 　　　　　　　Dirhead　ketcindyのlibのパス
@@ -108,7 +108,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 　　　　　　　　　スクリプト >「 プラグインを開く」
 　　　　　　・次を確認する
 　　　　　　　　i) KetCindyPlugin.jarが入っているか．
-　　　　　　　　ii) dirhead.txtに書かれているパスが合っているか．
+　　　　　　　　ii) ketcindy.iniに書かれているパスが合っているか．
 
 　（２）スクリーンの上部にあるFigureボタンを押してPDFが表示されれば成功である．
 　　　　　 ・表示されないとき

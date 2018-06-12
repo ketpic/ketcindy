@@ -38,7 +38,7 @@ Install of KeTCindy(Win)       Modified : Mar. 27th  2018
                * Head of userhome : choose usually "d".
                * Version of R : choose "d" in the case of 3.4.2.
                * Version of Maxima : choose "d" in the case of 5.37.3.
-               *  KetcindyPluign.jar and dirhead will be copied into Cinderella/Plugins.
+               *  KetcindyPluign.jar and ketcindy.ini will be copied into Cinderella/Plugins.
       (2) Double-click copywork.bat.
                * Name of work directory : choose 1 in the case of ketcindy.
                * Path of work directory
@@ -53,7 +53,7 @@ Install of KeTCindy(Win)       Modified : Mar. 27th  2018
                     a) From top menu of Cinderella,
                              Scripting > Reveal Plugin Folder
                     b) Confirm KetCindyPlugin.jar is in the folder.
-                    c)  Open the file dirhead.txt in the folder and check the path of ketcindy. 
+                    c)  Open the file ketcindy.ini in the folder and check the path of ketcindy. 
 	  (2) Press "Figure" button at the top left. then the PDF is displayed. 
                 if not, open ketcindyhead.txt in userhome and check the contents
                      PathT="path of TeX";

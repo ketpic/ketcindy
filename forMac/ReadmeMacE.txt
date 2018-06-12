@@ -44,8 +44,8 @@ Install of KeTCindy(Mac)       Modified : Mar. 27th  2018
                * Contents of scripts will be copied into TeX.
                * ketcindystyle files will be copied and be executed mktexlsr.
                * Head of userhome : choose usually "d".
-               * KetcindyPluign.jar and dirhead.txt will be copied into Cinderella/Plugins.
-               * Contents of dirhead.txt
+               * KetcindyPluign.jar and ketcindy.ini will be copied into Cinderella/Plugins.
+               * Contents of ketcindy.ini
                      PathThead   root path of TeX
                      Homehead   head of user home
                      Dirhead   path of libraries of KeTCindy
@@ -69,7 +69,7 @@ Install of KeTCindy(Mac)       Modified : Mar. 27th  2018
                     a) From top menu of Cinderella,
                              Scripting > Reveal Plugin Folder
                     b) Confirm KetCindyPlugin.jar is in the folder.
-                    c) Open dirhead.txt and check the contents.
+                    c) Open ketcindy.ini and check the contents.
 	  (2) Press "Figure" button at the top left. then the final PDF output is displayed. 
                 if not, open ketcindyhead.txt in userhome and check the contents.
                      Dirfile="path of work directory";

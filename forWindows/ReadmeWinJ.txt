@@ -53,7 +53,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.04.04
 　　　　・scripts,style,docの内容がTeXの中にコピーされる
 　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
 　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
-　　　　・CinderellaのPluginsにKetcindyPlugin.jarとdirhead.txtがコピーされる．
+　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
 　（３）copywork.batをクリックする．
 　　　　・作業ディレクトリ名　ketcindyの場合は単に d でもよい．
 　　　　・作業ディレクトリのパス　ユーザホーム，C:\，デスクトップから選択
@@ -71,7 +71,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.04.04
 　　　　　　・KetCindyPlugin.jarが入っているか．
 　　　　　　　　ない場合
 　　　　　　　　　ketcindy>ketjavaにある同名ファイルをPluginsにコピーする．
-　　　　　　・dirhead.txtに書かれているketcindyのパスが合っているか．
+　　　　　　・ketcindy.iniに書かれているketcindyのパスが合っているか．
 
 　（２）スクリーンの上部にあるFigureボタンを押してPDFが表示されれば成功
 　　　　　表示されないとき

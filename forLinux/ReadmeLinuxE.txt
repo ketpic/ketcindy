@@ -22,13 +22,13 @@ Install of KeTCindy(Linux)       Modified : Nov. 25th  2017
 
 2) Install Cinderella, Sumatra, R and Maxima.
       (1) Modify tex-dist/scripts/ketcindy/ketoutset.txt.
-      (2) Modify tex-dist/scripts/ketcindy/dirhead.txt.
+      (2) Modify tex-dist/scripts/ketcindy/ketcindy.ini.
 			  
 3) Setting of KeTCdindy
       (1) Make your work directory and copy contents of ketcindyfolder/work.
       (2) Boot up Cinderella2 and select "Scripting/reveal plugins".
                * Copy
-			         tex-dist/scripts/ketcindy/dirhead.txt
+			         tex-dist/scripts/ketcindy/ketcindy.ini
                      tex-dist/scripts/ketcindy/ketjava/KetcindyPlugin.jar.
                * Close Plugins and Cinderella2.
       (3) Double-click copywork.sh.
@@ -40,7 +40,7 @@ Install of KeTCindy(Linux)       Modified : Nov. 25th  2017
                     a) From top menu of Cinderella,
                              Scripting > Reveal Plugin Folder
                     b) Confirm KetCindyPlugin.jar is in the folder.
-                    c) Open dirhead.txt and check the contents.
+                    c) Open ketcindy.ini and check the contents.
 	  (2) Press "Figure" button at the top left. then the final PDF output is displayed. 
                 if not, open ketcindyhead.txt in userhome and check the contents.
                      Dirfile="path of work directory";

@@ -1,21 +1,21 @@
 #!/bin/sh
-#      20180403
+#      20180607
 ketsrc=/Volumes/ketcindyfolder
 if [ ! -e $ketsrc ]; then
   ketsrc=~/Desktop/ketcindyfolder
 fi
 echo ${ketsrc} will be used
-echo 1. "/Applications/KeTTeX/texlive (default)"
-echo 2. "/Applications/KeTTeX.app/texlive"
+echo 1. "/Applications/kettex/texlive (default)"
+echo 2. "/Applications/kettex.app/texlive"
 echo 3. "/Library/TeX (TeXLive)"
 echo 4. other
 read -p 'Choose path of TeX from the above (number) : ' ans
 if [ ${ans} = "1" ]; then 
-  texpath=/Applications/KeTTeX/texlive
+  texpath=/Applications/kettex/texlive
   texbinpath=${texpath}/bin/x86_64-darwin
 fi
 if [ ${ans} = "2" ]; then 
-  texpath=/Applications/KeTTeX.app/texlive
+  texpath=/Applications/kettex.app/texlive
   texbinpath=${texpath}/bin/x86_64-darwin
 fi
 if [ ${ans} = "3" ]; then

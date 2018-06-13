@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180612)");
+println("KeTCindy V.3.2.1(20180613)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180612) loaded");
+println("ketcindylibbasic1(20180613) loaded");
 
 //help:start();
 
@@ -2294,10 +2294,8 @@ Com2nd(String,option):=(
   regional(str,tmp);
   str=replace(String,LFmark,"");
   tmp=substring(option_1,0,1);//180612from
-  if(Toupper(tmp)=="b",
+  if(Toupper(tmp)=="B",
     COM2ndlistb=append(COM2ndlistb,str);
-    tmp=remove(COM2ndlist,COM2ndlistb);
-	COM2ndlist=concat(COM2ndlistb,COM2ndlist);
   ,
     COM2ndlist=append(COM2ndlist,str);
   );//180612to
@@ -5964,17 +5962,23 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   tmp2;
 );
 
-/////////// end of new Hatchdata(cindy) ///////////
 
-
-Shade(plist):=Shade(plist,[]);
-Shade(plistorg,options):=(
+Shade(plist):=Shade("",plist,[]); //180613from
+Shade(Arg1,Arg2):=(
+  if(isstring(Arg1),
+    Shade(Arg1,Arg2,[]);
+  ,
+    Shade("",Arg1,Arg2);
+  );
+);
+Shade(nm,plistorg,options):=( //180613to
 //help:Shade(["gr"],[0.5]);
 //help:Shade(["gr"],["Color=red"]);
 //help:Shade(["gr2","sg1"],["Color=[0,0,0,0.5]"]);
 //help:Shade(["gr2","sg1"],["Color=[1,0,0]"]);
-// help:Shade([pointlist]);
-  regional(plist,tmp,tmp1,tmp2,opstr,opcindy,reL,Str,G2,flg,color);
+// help:Shade([[A,B,C,A]]);
+  regional(name,plist,jj,tmp,tmp1,tmp2,opstr,opcindy,reL,Str,G2,flg,color,ctr);
+  name="shade"+nm;
   plist=plistorg;
   if(isstring(plist_1), // 16.01.24
     println("output Shade of "+plist);
@@ -5984,6 +5988,7 @@ Shade(plistorg,options):=(
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
+  opcindy=tmp_(length(tmp));
   reL=tmp_6; //180603from
   if(length(reL)>0,
     color=reL_1*color;
@@ -5991,19 +5996,32 @@ Shade(plistorg,options):=(
   if(length(color)==4, //180602from
     tmp=colorCmyk2rgb(color);
   );
-  opcindy=","+"color->"+text(tmp);//180602to
-  flg=0;
-  forall(plist,
+  flg=0; ctr=1;
+  forall(1..(length(plist)),jj, //180613from
     if(flg==0,
-      if(isstring(#),tmp=parse(#),tmp=#);
+      tmp1=plist_jj;
+      if(isstring(tmp1),tmp=parse(tmp1),tmp=tmp1);
       if(!islist(tmp),
          flg=1;
+      ,
+        if(!isstring(tmp1),
+          tmp2=[];
+          forall(tmp1,if(ispoint(#),tmp=#.xy,tmp=#);
+            tmp2=append(tmp2,tmp);
+          );
+          tmp1=Dqq("-"+name+text(ctr));
+          tmp2=textformat(tmp2,6)+",["+Dqq("nodisp")+"]";
+          tmp=name+text(ctr)+"=Listplot("+tmp1+","+tmp2+")";
+          parse(tmp);
+          plist_jj=name+text(ctr);
+          ctr=ctr+1;
+        );
       ); 
     );
-  );
+  );//180613to
   if(flg==1,
-//    err("some data not defined yet");
-  ,   
+    println("    some data not defined properly");
+  ,
     G2=Joincrvs("1",plist,["nodata"]);
     G2=apply(G2,Pcrd(#));
     tmp1="fillpoly("+textformat(G2,5)+opcindy+");";
@@ -6023,10 +6041,15 @@ Shade(plistorg,options):=(
     ); // until 16.01.24
   );
   Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
-  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-  Com2nd(Str);
-  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor([0,0,0])"));
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")",["before"]));
+  Com2nd(Str,["before"]);
+  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")",["before"]));
 );
+
+/////////// end of new Hatchdata(cindy) ///////////
+
+
+
 
 //help:end();
 

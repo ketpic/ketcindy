@@ -1,5 +1,9 @@
+//20180613
+//   Shade changed  ( name, pointlist supported, Com2nd("before"))
+//   Shade debugged  (color,opcindy)
+//   WritetoRS  changed (for COM2ndlistb)
 //20180612
-//   Com2nd chanede  ("before" options added )
+//   Com2nd changed  ("before" options added )
 //20180609
 //   Ketinit changed  (CommonMake added )
 //20180608

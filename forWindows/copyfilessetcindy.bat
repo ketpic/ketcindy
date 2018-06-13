@@ -1,7 +1,8 @@
-REM 20180401
+REM 20180608
 echo off
 set xcp="\Windows\System32\xcopy"
-set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
+rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
+set ketsrc=%~dp0
 set prgcin=C:\Program Files (x86)
 if not exist "%prgcin%\Cinderella" (
   set prgcin=C:\Program Files
@@ -74,10 +75,10 @@ cd "%pathT%%scripts%"
 copy /Y "ketjava\KetCindyPlugin.jar" "%cindyplug%\"
 cd "%cindyplug%"
 set homehead=C:\Users
-set /P STR_INPUT="Input head of user home d(efault)=C:\Users :"
-if not "%STR_INPUT%" == "d" (
-  homehead=%STR_INPUT%
-)
+rem set /P STR_INPUT="Input head of user home d(efault)=C:\Users :"
+rem if not "%STR_INPUT%" == "d" (
+rem   set homehead=%STR_INPUT%
+rem )
 echo %homehead%
 echo PathThead="%pathT%%bin%\"; > ketcindy.ini
 echo Homehead="%homehead%"; >> ketcindy.ini

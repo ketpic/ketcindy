@@ -2754,6 +2754,13 @@ WritetoRS(filename,shchoice):=(
   tmp=tmp+",'Cdy="+Cindyname()+".cdy"; //180404
   tmp=replace(tmp,"\","\\");
   println(SCEOUTPUT,tmp+"')");
+  forall(COM2ndlistb, //180613from
+    if(indexof(#,"Texcom")==0, 
+      println(SCEOUTPUT,RSform(#));
+    ,
+      println(SCEOUTPUT,#);
+    );
+  );//180613to
   forall(COM2ndlist,
     if(indexof(#,"Texcom")==0, //17.09.22
       println(SCEOUTPUT,RSform(#));

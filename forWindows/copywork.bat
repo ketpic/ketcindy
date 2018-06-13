@@ -1,7 +1,8 @@
 REM 20180405
 echo off
 set xcp="\Windows\System32\xcopy"
-set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
+rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
+set ketsrc=%~dp0
 set change=\changesetting.txt
 set /P STR_INPUT="Path to that folder userhome(u) drive C(c) :"
 if "%STR_INPUT%" == "u" (
@@ -43,7 +44,7 @@ echo  // Re-setting PathT,Pathpdf,PathAd > "%dist%%change%"
 echo PathT=PathThead+"%tex%"; >> "%dist%%change%"
 set /P STR_INPUT="Do you copy ketcindy manual? (y,n):"
 if "%STR_INPUT%" == "y" (
-  cd "%ketsrc%\doc\ketmanual"
-  copy /Y "KeTCindyReferenceJ.pdf" "%dist%\"
+rem  cd "%ketsrc%\doc\ketmanual"
+  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
 )
 pause

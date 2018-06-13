@@ -85,7 +85,9 @@ int output3h(const char *wa,const char *var, const char *varh, const char *fname
   }
   out1[0][0]=0;
   fprintf(fp,"%s//\n",varh); //17.06.16from
-  appendd3(0, din1[2][0],din1[2][1],out,out1);
+  if(din1[0][0]>1){ //180613from
+    appendd3(0, din1[2][0],din1[2][1],out,out1);
+  }//180613to
   dataindexd3(2, out1,din2);
   for(i=1; i<=length2i(din2); i++){
     fprintf(fp,"start//\n");
@@ -1438,7 +1440,7 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
     }else{
       sprintf(varnow,"%s%s%d",var,"v",j);
       sprintf(varhnow,"%s%s%d",varh,"v",j);
-      output3h("a",varnow, varhnow,fname,out);
+	  output3h("a",varnow, varhnow,fname,out);
     }
   }
   if(allflg==0){

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180610) loaded");
+println("ketcindymv(20180614) loaded");
 
 //help:start();
 
@@ -29,7 +29,7 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
 //help:Setpara(options2anim2=["OpA=[loop,controls,buttonsize=3mm]"]);
 //help:Setpara(options2anim3=["OpA=+step"]);
 //help:Setpara(options2anim4=["Mag=1600","Title=folder"]);
-  regional(path,tmp,tmp1,eqL,ndiv);
+  regional(path,tmp,tmp1,tmp2,tmp3,eqL,ndiv,gtmp,ctmp,nn,flg);
   if(length(pathorg)==0, path=Slidename,path=pathorg);//17.04.10
   ParaPath=path;
   ParaFstr=fstr;
@@ -69,6 +69,33 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   Changework(Dirworksubbkup);
   Changework(Dirworkbkup);
   Fheadbkup=Fhead; //0611to
+  gtmp=GLISTback;
+  tmp1=select(1..(length(gtmp)),indexof(gtmp_#,"ReadOutData")>0); //180614from
+  tmp2=[];tmp3=[];
+  forall(tmp1,nn,
+	tmp2=append(tmp2,nn);
+    flg=0;
+    tmp=min([nn+40,length(gtmp)]);
+    forall((nn+1)..tmp,
+      if(flg==0,
+        if(indexof(gtmp_#,"Projpara")>0,
+          tmp2=append(tmp2,#);
+          tmp=indexof(gtmp_#,"=");
+          tmp=substring(gtmp_#,0,tmp-1);
+          tmp3=append(tmp3,tmp);
+        ,
+          flg=1;
+        );
+      );
+    );
+  );
+  tmp1=remove(1..(length(gtmp)),tmp2);
+  GLISTback=apply(tmp1,GLIST_#); //180614to
+  forall(tmp3,tmp2,
+    tmp=select(ctmp,indexof(#,tmp2)>0);
+    ctmp=remove(ctmp,tmp);
+  );
+  COM2ndlistback=ctmp;
 );
 
 Parafolder():=Parafolder(ParaFstr,ParaSL,ParaOp);
@@ -82,7 +109,7 @@ Parafolder(fstr,sL,optionorg):=(
 //help:Paraslide(para=folder:layery:pos:input,scale); 
 //help:Paraslide(para=folder:layery:pos:include:[width=100]); 
   regional(nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,pause,
-        mkr,mktex,options,sfL,dirbkup,fbkup,pfile,ctr,flg);
+        mkr,mktex,options,sfL,dirbkup,fbkup,pfile,ctr,flg,varL);
   Changework(Dirworkbkup);
   Setfiles(Fheadbkup);
   tmp=indexof(fstr,"(");
@@ -121,30 +148,6 @@ Parafolder(fstr,sL,optionorg):=(
     tmp1=Toupper(substring(#,0,1));
     if(tmp1=="M",
       mkr="Y"; mktex="Y";
-    );
-  );
-//  if(mkr=="Y",
-  if(1==0, //180610
-    Changework(Dirworksubbkup);
-    tmp1=fileslist(Dirwork);
-    tmp1=tokenize(tmp1,",");
-    tmp1=remove(tmp1,["kc.sh","kc.bat"]);
-    if(length(tmp1)>1,
-      tmp1=apply(tmp1,Dqq(#));//180608from
-      tmp1=RSform(text(tmp1));
-      Changework(Dirworkbkup);
-      tmp2=replace(Dirworkbkup,"\","/");
-      tmp=replace(Dirworksubbkup,"\","/");
-      cmdL=[
-        "setwd",[Dqq(tmp)],
-        "fL="+tmp1,[],
-        "apply",["fL",2,"file.remove"]
-      ];
-      CalcbyR("rvf",cmdL,["Cat=n","m"]);
-      tmp=Dirworkbkup;
-      repeat(1..30,
-        if(length(fileslist(tmp))>0,wait(10));
-       );
     );
   );
   Changework(Dirworksubbkup);
@@ -215,13 +218,24 @@ Parafolder(fstr,sL,optionorg):=(
   cmdL=[
       "setwd("+Dqq(tmp1)+")",[],
       "size="+text(length(sL)),[],
+      "cat('',file='all.r',sep='',append=FALSE)",[],  //180614
       "for(n in Looprange(1,size)){",[],
       "  tmp=as.character(n)",[],
       "  tmp=paste('0000',tmp,sep='')",[],
       "  tmp=substring(tmp,nchar(tmp)-2,nchar(tmp))",[],
       "  fname=paste('p',tmp,'.r',sep='')",[],
       "  lines=readLines(fname)",[],
-      "  lines=lines[1:(length(lines)-1)]",[],
+      "  if(n>1){",[], //180614from
+      "    for(j in 1:length(lines)){",[],
+      "      tmp=grep('source',lines[j],fixed=TRUE)",[],
+      "      if(length(tmp)>0){",[],
+      "        lines[j]=paste('#',lines[j],sep='')",[],
+      "        lines[j+2]=paste('#',lines[j+2],sep='')",[],
+      "        break",[],
+      "      }",[],
+      "    }",[],
+      "  }",[],
+      "  lines=lines[1:(length(lines)-1)]",[], //180614to
       "  tmp=paste('print(',as.character(n),')',sep='')",[],
       "  lines=c(tmp,lines)",[],
       "  for(j in Looprange(1,length(lines))){",[],

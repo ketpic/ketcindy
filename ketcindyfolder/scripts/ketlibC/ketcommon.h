@@ -953,6 +953,7 @@ int connectseg(double pdata[][2], double eps, double out[][2]){
   int nall=length2(pdata), nout=0;
   double qd[DsizeM][2], ah[2], ao[2], p[2], q[2], tmp[2];
   out[0][0]=0;
+  if(length2(pdata)==0){return 0;} //180613
   nd=dataindexd2(0,pdata,din);
   qd[0][0]=0;
   nq=appendd2(0,din[1][0],din[1][1],pdata,qd);
@@ -1009,6 +1010,7 @@ int connectseg3(double pdata[][3], double eps, double out[][3]){
   int nall=length3(pdata), nout=0;
   double qd[DsizeM][3], ah[3], ao[3], p[3], q[3], tmp[3];
   out[0][0]=0;
+  if(length3(pdata)==0){return 0;} //180613
   nd=dataindexd3(0,pdata,din);
   qd[0][0]=0;
   nq=appendd3(0,din[1][0],din[1][1],pdata,qd);

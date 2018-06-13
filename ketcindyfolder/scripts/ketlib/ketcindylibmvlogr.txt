@@ -1,3 +1,6 @@
+// 20180614
+//  Setpara changed (ReadOutData&Projpara removed fromGLISTbkup)
+//  Setpara changed (the above also removed from COM2ndlist)
 // 20180611
 //  Parafolder changed (path removed, Dirworkbkup&Dirworksubbkup used)
 // 20180610

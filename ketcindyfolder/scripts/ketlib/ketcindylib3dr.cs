@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180608) loaded");
+println("ketcindylib3d(20180614) loaded");
 
 //help:start();
 
@@ -210,6 +210,7 @@ Start3d(ptexception):=(
    Ptseg3data(ptexception);  //16.08.23
 );
 
+Setangle(angL):=Setangle(ang_1,ang_2);//180614
 Setangle(theta,phi):=( //16.12.24
 //help:Setangle(60,30);
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
@@ -282,11 +283,24 @@ Setangle(theta,phi):=( //16.12.24
   Ptseg3data(ptexception); 
 );
 
-Getangle():=( //170517
+Getangle():=getangle(["Disp=y"]); //180613from
+Getangle(option):=(
+  regional(tmp,tmp1,dispflg,eqL);
+  tmp=divoptions(option);
+  dispflg="N";
+  eqL=tmp_7;
+  forall(eqL,
+    if(Toupper(#_1)=="DISP",
+      dispflg=Toupper(#_1);
+      dispflg=substring(dispflg,0,1);
+    );
+  );
   tmp=[THETA*180/pi, PHI*180/pi];
-  println(textformat(tmp,6));
+  if(dispflg=="Y",
+    println(textformat(tmp,6));
+  );
   tmp; //180607
-);
+); //180613to
 
 isAngle():=Isangle(); //180517
 Isangle():=isselected(TH)%isselected(FI); //180517

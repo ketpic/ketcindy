@@ -22,6 +22,10 @@ mv ketcindy/ketcindyfolder/style/* tex/latex/ketcindy/
 rmdir ketcindy/ketcindyfolder/style
 
 # scripts
+# thinks that we should not have in the scripts folder in texlive
+mv ketcindy/ketcindyfolder/scripts/ketcindyjs doc/support/ketcindy/
+# this is already in the root folder, so no need to have it two times
+rm ketcindy/ketcindyfolder/scripts/LICENSE.txt
 mv ketcindy/ketcindyfolder/scripts/* scripts/ketcindy/
 rmdir ketcindy/ketcindyfolder/scripts
 
@@ -41,10 +45,13 @@ rmdir ketcindy/ketcindyfolder/doc
 mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template2advanced.cdy scripts/ketcindy/
-for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt \
-         template1basic template2advanced Makefile ; do
+for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt ; do
+#         template1basic template2advanced Makefile \
   mv ketcindy/ketcindyfolder/work/$i doc/support/ketcindy/
 done
+#for i in template1basic template2advanced Makefile ; do
+#  mv ketcindy/ketcindyfolder/work/$i doc/support/ketcindy/
+#done
 rmdir ketcindy/ketcindyfolder/work
 
 # now the ketcindyfolder dir should be empty

@@ -91,6 +91,7 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   );
   tmp1=remove(1..(length(gtmp)),tmp2);
   GLISTback=apply(tmp1,GLIST_#); //180614to
+  ctmp=COM2ndlistback; //180614
   forall(tmp3,tmp2,
     tmp=select(ctmp,indexof(#,tmp2)>0);
     ctmp=remove(ctmp,tmp);

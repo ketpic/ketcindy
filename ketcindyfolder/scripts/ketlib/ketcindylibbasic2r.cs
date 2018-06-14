@@ -556,6 +556,7 @@ Expr(Pt,Dr,St):=Expr([Pt,Dr,St]);
 Expr(list):=Expr(list,[]);
 Expr(listorg,options):=( //16.10.09
 //help:Expr([A,"e","f(x)=x^2"]);
+//help:Expr([A,"e","f(x)=x^2"],["size->24"]);
   regional(list,str,tmp,tmp1,tmp2);
   list=listorg;
   forall(1..round(length(list)/3),
@@ -570,7 +571,8 @@ Expr(listorg,options):=( //16.10.09
 Letter(Pt,Dr,St):=Letter([Pt,Dr,St]);
 Letter(list):=Letter(list,[]);
 Letter(list,options):=(
-//help:Letter([C,"c","Graph of f(x)"]);
+//help:Letter([C,"c","Graph of $f(x)$"]);
+//help:Letter([C,"c","xy"],["size->30"]);
   regional(Nj,Pos,Dir,Str,Off,Dmv,Xmv,Ymv,Noflg,opcindy,
       opL,aln,sz,clr,bld,ita,tmp,tmp1,tmp2,color);
   tmp=Divoptions(options);

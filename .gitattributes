@@ -1,6 +1,9 @@
 * text=auto
 *.cs text=auto
 *.r text=auto
+*.txt text=auto
+*.tex text=auto
+*.bat text=auto
 *.cdy -text
 *.pdf -text
 *.png -text

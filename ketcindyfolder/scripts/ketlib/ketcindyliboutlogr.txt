@@ -1,3 +1,6 @@
+// 20180615
+//   CalcbyC debugged  ( flg block changed)
+//   kcC changed  ( 1000 =>10000)
 // 20180612
 //   Hatchdata renamed to HatchdataR
 //   kcC changed  ( "gcc -lm" )

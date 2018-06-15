@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180603)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180615)" 
 
 print(ThisVersion)
 
+# 20180615
+#  Assign changed (Replace function added)
 # 20180603
 #  Setcolor debugged (length(Iro))
 #  Scaledata,Reflectdata,Rotatedata,Translatedata changed ( for point list)
@@ -1154,8 +1156,29 @@ Arrowline<- function(...)
 
 #########################################
 
-Assign<- function(...)
-{
+Assign<- function(...){
+  Replace=function (vname,rep,str){#180615from
+    opv=c("+","-","*","/","(",")","=","<",">",""," ")
+    out=""
+    start=1
+    Tmp=gregexpr(vname,str,fixed=TRUE)
+    Vp=Op(1,Tmp)
+    if(min(Vp)>0){
+      for(j in Vp){
+        if(j==1){bf=""}else{bf=substring(str,j-1,j-1)}
+        if(j==nchar(str)){af=""}else{af=substring(str,j+1,j+1)}
+        tmp1=length(intersect(bf,opv))
+        tmp2=length(intersect(af,opv))
+        tmp=substring(str,start,j)
+        if((tmp1>0)&&(tmp2>0)){
+          tmp=gsub(vname,rep,tmp,fixed=TRUE)
+        }
+        out=paste(out,tmp,sep='')
+        start=j+1
+      }
+    }
+    out=paste(out,substring(str,start,nchar(str)),sep='')
+  }#180615to
   varargin<- list(...)
   Nargs<- length(varargin)
   if(Nargs==0){
@@ -1251,7 +1274,7 @@ Assign<- function(...)
           else{
             Tmp1<- Val[K]
           }
-          Fnstr<- gsub(Tmp,Tmp1,Fnstr,fixed=TRUE)
+          Fnstr<- Replace(Tmp,Tmp1,Fnstr)#180615
         }
       }
       else{
@@ -1264,7 +1287,7 @@ Assign<- function(...)
             else{
               Tmp1<- Val[J,K]
             }
-            Fnstr<- gsub(Tmp,Tmp1,Fnstr,fixed=TRUE)
+            Fnstr<- Replace(Tmp,Tmp1,Fnstr)#180615
           }
         }
       }
@@ -1298,7 +1321,7 @@ Assign<- function(...)
     if(mode(Val)=="list"){
       Tmp1<- Makeliststr(Val)
     }
-    Fnstr<- gsub(Vname,Tmp1,Fnstr,fixed=TRUE)  # 10.11.20
+	Fnstr<- Replace(Vname,Tmp1,Fnstr) #180615
   }
   return(Fnstr)
 }

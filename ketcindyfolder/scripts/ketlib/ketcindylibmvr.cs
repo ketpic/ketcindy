@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180614) loaded");
+println("ketcindymv(20180615) loaded");
 
 //help:start();
 
@@ -72,7 +72,9 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   gtmp=GLISTback;
   tmp1=select(1..(length(gtmp)),indexof(gtmp_#,"ReadOutData")>0); //180614from
   tmp2=[];tmp3=[];
-  forall(tmp1,nn,
+  if(length(tmp1)>0, //180615
+    nn=tmp1_(length(tmp1));
+//  forall(tmp1,nn,
 	tmp2=append(tmp2,nn);
     flg=0;
     tmp=min([nn+40,length(gtmp)]);

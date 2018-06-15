@@ -5383,7 +5383,7 @@ kcC(cname):=(
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
     println(SCEOUTPUT,"%path%\main.exe");
-    println(SCEOUTPUT,"echo //// > %path%\"+rfile);
+    println(SCEOUTPUT,"echo ////> %path%\"+rfile);
     println(SCEOUTPUT,"exit");
     closefile(SCEOUTPUT);
     tmp=cname+".txt";
@@ -5395,7 +5395,7 @@ kcC(cname):=(
     tmp=PathC+" -lm "+cname+".c -o main.out"; //180612
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"./main.out");
-    println(SCEOUTPUT,"echo //// >"+rfile);
+    println(SCEOUTPUT,"echo ////>"+rfile);
     println(SCEOUTPUT,"exit 0");
     closefile(SCEOUTPUT);
     tmp=cname+".txt";
@@ -5405,7 +5405,7 @@ kcC(cname):=(
   println(SCEOUTPUT,"");
   closefile(SCEOUTPUT);
   flg=0;
-  repeat(floor(10*1000/WaitUnit),
+  repeat(floor(10*10000/WaitUnit), //180615
     if(flg==0,
       tmp1=load(wfile);
 	  if(substring(tmp1,0,4)=="////",
@@ -5415,9 +5415,9 @@ kcC(cname):=(
     );
   );
   if(flg==0,
-    println("Ckc not completed");
+    println("kcC not completed");
   ,
-    println("Ckc succeeded");
+    println("kcC succeeded");
   );
 );
 
@@ -5798,18 +5798,18 @@ CalcbyC(name,path,cmd,optionorg):=(
         );
       );
     );
-    if(flg<=0,
-      ErrFlag=1;
-      if(flg==-1,
-        println(wfile+" does not exist");
-      ,
-        if(flg==0,
-          tmp="("+text(waiting)+" s )";
-          println(wfile+" not generated "+tmp);
-        );
+  );
+  if(flg<=0, //180615from
+    ErrFlag=1;
+    if(flg==-1,
+      println(wfile+" does not exist");
+    ,
+      if(flg==0,
+        tmp="("+text(waiting)+" s )";
+        println(wfile+" not generated "+tmp);
       );
     );
-  );
+  );//180615to
 );
 
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531

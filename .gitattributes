@@ -1,0 +1,8 @@
+* text=auto
+*.cs text=auto
+*.r text=auto
+*.cdy -text
+*.pdf -text
+*.png -text
+*.jpg -text
+*.jar -text

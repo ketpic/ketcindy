@@ -34,7 +34,7 @@ chmod 0755 scripts/ketcindy/ketcindy.sh
 
 # doc
 mv ketcindy/ketcindyfolder/doc/* doc/support/ketcindy/
-for i in LICENSE tl-integration/README.TeXLive ; do
+for i in LICENSE README tl-integration/README.TeXLive ; do
   if [ -r ketcindy/$i ] ; then
     mv ketcindy/$i doc/support/ketcindy
   fi
@@ -64,6 +64,7 @@ mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/
 rm ketcindy/tl-integration/update-permissions.sh
 rm ketcindy/tl-integration/export-to-texmf.sh
 rm ketcindy/.gitignore
+rm ketcindy/.gitattributes
 # now the scripts dir should be empty
 rmdir ketcindy/tl-integration
 

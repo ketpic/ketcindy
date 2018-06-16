@@ -27,10 +27,8 @@ mv ketcindy/ketcindyfolder/scripts/ketcindyjs doc/support/ketcindy/
 # this is already in the root folder, so no need to have it two times
 rm ketcindy/ketcindyfolder/scripts/LICENSE.txt
 mv ketcindy/ketcindyfolder/scripts/* scripts/ketcindy/
-rmdir ketcindy/ketcindyfolder/scripts
-
-mv ketcindy/tl-integration/ketcindy.sh scripts/ketcindy/
 chmod 0755 scripts/ketcindy/ketcindy.sh
+rmdir ketcindy/ketcindyfolder/scripts
 
 # doc
 mv ketcindy/ketcindyfolder/doc/* doc/support/ketcindy/

@@ -2,12 +2,14 @@
 #
 # KETCindy starter script
 #
-# (C) 2017 Norbert Preining
+# (C) 2017-2018 Norbert Preining
 # Licensed under the same license terms as ketpic itself, that is GPLv3+
 #
 
 BinaryName=Cinderella2
-TemplateFile=template.cdy
+TemplateFile=template1basic.cdy
+systype=`uname`
+workdir="$HOME/ketcindy"
 
 if [ "$1" = "-c" ]
 then
@@ -19,8 +21,21 @@ fi
 
 if [ -z "$cinderella" ]
 then
-  echo "Cannot find $BinaryName!" >&2
-  exit 1
+  case $systype in
+    Darwin)
+      if [ -r /Applications/Cinderella2.app/Contents/MacOS/Cinderella2 ]
+      then
+        cinderella=/Applications/Cinderella2.app/Contents/MacOS/Cinderella2
+      else
+        echo "Cannot find $BinaryName!" >&2
+        exit 1
+      fi
+      ;;
+    *)
+      echo "Cannot find $BinaryName!" >&2
+      exit 1
+      ;;
+  esac
 fi
 
 if [ ! -x "$cinderella" ] ; then
@@ -30,18 +45,21 @@ fi
 # find real path
 realcind=`realpath "$cinderella"`
 cinddir=`dirname "$realcind"`
-case `uname` in
-    Darwin)
-        plugindir="$cinddir/../PlugIns";;
-    *)
-        plugindir="$cinddir/Plugins";;
+case $systype in
+  Darwin)
+    plugindir="$cinddir/../PlugIns";;
+  *)
+    plugindir="$cinddir/Plugins";;
 esac
+
 plugin="$plugindir/KetCindyPlugin.jar"
+dirheadplugin="$plugindir/dirhead.txt"
 
 # find Jar
 KetCdyJar=`kpsewhich -format=texmfscripts KetCindyPlugin.jar`
 # search for template.cdy
 TempCdy=`kpsewhich -format=texmfscripts $TemplateFile`
+DirHead=`kpsewhich -format=texmfscripts dirhead.txt`
 
 if [ -z "$TempCdy" -o -z "$KetCdyJar" ]
 then
@@ -50,10 +68,11 @@ then
 fi
 
 
-if [ ! -r "$plugin" ] ; then
+if [ ! -r "$plugin" -o ! -r "$dirheadplugin" ] ; then
   echo "Cinderella is *NOT* set up for KETCindy!"
   echo "You need to copy"
   echo "   $KetCdyJar"
+  echo "   $DirHead"
   echo "into"
   echo "   $plugindir"
   echo ""
@@ -61,11 +80,11 @@ if [ ! -r "$plugin" ] ; then
 fi
 
 # check whether the .jar md5sum is fine, but don't make this an error
-case `uname` in
-    Darwin)
-        __md5sum=md5;;
-    *)
-        __md5sum=md5sum;;
+case $systype in
+  Darwin)
+    __md5sum=md5;;
+  *)
+    __md5sum=md5sum;;
 esac
 myjarmd=`cat "$KetCdyJar" | $__md5sum`
 sysjarmd=`cat "$plugin" | $__md5sum`
@@ -79,7 +98,8 @@ then
 fi
 
 
-mkdir -p ~/ketcindy
+mkdir -p "$workdir"
+cp "$TempCdy" "$workdir"
 
-exec "$cinderella" "$TempCdy"
+exec "$cinderella" "$workdir/$TemplateFile"
 

@@ -1,3 +1,5 @@
+// 20180617
+//   CalcbyC debugged  ( println removed)
 // 20180615
 //   CalcbyC debugged  ( flg block changed)
 //   kcC changed  ( 1000 =>10000)

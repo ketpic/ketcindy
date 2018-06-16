@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180610) loaded");
+println("ketcindybasic2(20180616) loaded");
 
 //help:start();
 

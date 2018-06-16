@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180615) loaded");
+println("ketcindymv(20180617) loaded");
 
 //help:start();
 
@@ -66,15 +66,12 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   COM2ndlistback=COM2ndlist;
   Dirworkbkup=Dirwork; //0611from
   Dirworksubbkup=Dirwork+pathsep()+ParaPath;
-  Changework(Dirworksubbkup);
-  Changework(Dirworkbkup);
   Fheadbkup=Fhead; //0611to
   gtmp=GLISTback;
   tmp1=select(1..(length(gtmp)),indexof(gtmp_#,"ReadOutData")>0); //180614from
   tmp2=[];tmp3=[];
   if(length(tmp1)>0, //180615
     nn=tmp1_(length(tmp1));
-//  forall(tmp1,nn,
 	tmp2=append(tmp2,nn);
     flg=0;
     tmp=min([nn+40,length(gtmp)]);
@@ -112,9 +109,7 @@ Parafolder(fstr,sL,optionorg):=(
 //help:Paraslide(para=folder:layery:pos:input,scale); 
 //help:Paraslide(para=folder:layery:pos:include:[width=100]); 
   regional(nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,pause,
-        mkr,mktex,options,sfL,dirbkup,fbkup,pfile,ctr,flg,varL);
-  Changework(Dirworkbkup);
-  Setfiles(Fheadbkup);
+        mkr,mktex,options,sfL,dirbkup,pfile,ctr,flg,varL,waitingR,timeC,timeR);
   tmp=indexof(fstr,"(");
   tmp1=substring(fstr,tmp,length(fstr));
   tmp=indexof(tmp1,")");
@@ -127,7 +122,7 @@ Parafolder(fstr,sL,optionorg):=(
   if(length(strL)==0,options=append(options,"m"));
   mkr="A";
   mktex="A";
-  waiting=20;
+  waiting=30;
   outflg=0;
   pause=10;
   forall(eqL,
@@ -153,10 +148,12 @@ Parafolder(fstr,sL,optionorg):=(
       mkr="Y"; mktex="Y";
     );
   );
+  waitingR=min([length(sL)*waiting,120]);//180617
   Changework(Dirworksubbkup);
   SCEOUTPUT = openfile("all.r");
   println(SCEOUTPUT,"");
   closefile(SCEOUTPUT);//180608to
+  resetclock();//180617
   if(outflg==1, //180606from
     CommonMake=1;//180609
     ctr=1;
@@ -164,21 +161,17 @@ Parafolder(fstr,sL,optionorg):=(
       tmp="000000"+text(ctr);
       pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
       Setfiles(pfile);
-      Changework(Dirworksubbkup);
       Movieframe(#);
-      Changework(Dirworksubbkup);//180608
       ctr=ctr+1;
     );
     CommonMake=-1;//180609
-    Setfiles(fbkup);
+    Setfiles(Fheadbkup);//180617
+    timeC=seconds();//180617
   ); //180606to
   wait(pause); //180610
-//  Changework(Dirworkbkup);
   sfL=[];
   ctr=1;
   forall(1..(length(sL)),nn,
-    Changework(Dirworkbkup);//180611(2lines)
-    Setfiles(Fheadbkup);
     GLIST=GLISTback;
     GCLIST=GCLISTback;
     GOUTLIST=GOUTLISTback;
@@ -191,18 +184,17 @@ Parafolder(fstr,sL,optionorg):=(
     COM2ndlist=COM2ndlistback;
     tmp="000000"+text(nn);
     pfile="p"+substring(tmp,length(tmp)-3,length(tmp));
-    Setfiles(pfile);
     Changework(Dirworksubbkup);
+    Setfiles(pfile);
     sfL=append(sfL,FnameR);
     if(outflg==1,
-      Changework(Dirworksubbkup);//180606
-      Setfiles(pfile); //180610(2lines)
       wait(pause);
       Movieframe(sL_nn);
       Changework(Dirworksubbkup);//180606
       ctr=ctr+1;
     ,
       Movieframe(sL_nn);
+      timeC=seconds();//180617
     );
     CommonMake=0;//180609
     Setfiles(pfile); //180608
@@ -213,8 +205,7 @@ Parafolder(fstr,sL,optionorg):=(
     );
   );
   wait(pause); //180610
-  Setfiles(fkbkup);
-  Changework(Dirworksubbkup);
+  Setfiles(Fheadbkup);
   GLIST=select(GLIST,indexof(#,"Projpara")==0);
   tmp1=replace(Dirworksubbkup,"\\","/"); //180611
   tmp1=replace(tmp1,"\","/");
@@ -250,7 +241,7 @@ Parafolder(fstr,sL,optionorg):=(
   if(ErrFlag!=-1,
     waiting=min([waiting,8])*length(ParaSL); //180610
     if(!isexists(Dirworksubbkup,Fnametex) % mktex=="Y",
-      CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waiting)]);
+      CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waitingR)]);
     ,
       println("Parafolder finished");
     );
@@ -258,6 +249,12 @@ Parafolder(fstr,sL,optionorg):=(
       parse(after);
     );
   );
+  if(ErrFlag!=-1,//180617from
+    timeR=seconds()-timeC;
+    println("C and R finished");
+    println("    C : "+Sprintf(timeC,2)+" sec");
+    println("    R : "+Sprintf(timeR,2)+" sec");
+  ); //180617to
   Changework(Dirworkbkup);
   Setfiles(Fheadbkup);
 );

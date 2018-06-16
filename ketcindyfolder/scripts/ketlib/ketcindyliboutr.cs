@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180612 loaded");
+println("ketcindylibout(20180617 loaded");
 
 //help:start();
 
@@ -5721,8 +5721,6 @@ CalcbyC(name,path,cmd,optionorg):=(
   waiting=40;
   wfile=Fhead+name+"end.txt"; //180517
   hfile=Fhead+name+"header.h";
-  println(Dirwork);
-  println(hfile);
   mfile=Fhead+name+".c";
   wflg=0;
   forall(eqL,

@@ -794,34 +794,10 @@ int nohiddenpara2(short ch,double par[], double fk[][3], int uveq, double figkL[
   }
   figL[0][0]=0;figkL[0][0]=0;
   for(i=1; i<=seL[0]; i++){
-    pointoncurve(paL[seL[i]], fh, Eps, tmp1d2);
-    pointoncurve(paL[seL[i]+1], fh, Eps, tmp2d2);
-    if(i==1){
-      copyd(0,1,tmp1d2,pd2);
-      sp=paL[seL[i]];
-      copyd(0,1,tmp2d2,qd2);
-      sq=paL[seL[i]+1];
-    }
-    else{
-      if(memberi(seL[i]-1,seL)==1){
-        copyd(0,1,tmp2d2,qd2);
-        sq=paL[seL[i]+1];
-      }
-      else{
-        partcrv(sp,sq,fh,tmpmd2);
-        appendd2(2,1,length2(tmpmd2),tmpmd2,figL);
-        tp=invparapt(sp,fh,fk, tmpd3);
-        tq=invparapt(sq,fh,fk,tmpd3);
-        partcrv3(tp,tq,fk,tmpmd3);
-        appendd3(2,1,length3(tmpmd3),tmpmd3,figkL);
-         copyd(0,1,tmp1d2,pd2);
-        sp=paL[seL[i]];
-        copyd(0,1,tmp2d2,qd2);
-        sq=paL[seL[i]+1];
-      }
-    }
-  }
-  if(seL[0]>0){
+    sp=paL[seL[i]]; //180616from
+    sq=paL[seL[i]+1];
+    pointoncurve(sp, fh, Eps, pd2);
+    pointoncurve(sq, fh, Eps, qd2);
     if(dist(2,pd2,qd2)>Eps1){
       nearestptpt(pd2,fh,tmpd4);
       dtmp1=tmpd4[2];
@@ -833,11 +809,7 @@ int nohiddenpara2(short ch,double par[], double fk[][3], int uveq, double figkL[
       tq=invparapt(sq,fh,fk,tmpd3);
       partcrv3(tp,tq,fk,tmpmd3);
       appendd3(2,1,length3(tmpmd3), tmpmd3, figkL);
-    }
-    else{
-      appendd2(2,1,nfh, fh, figL);
-      appendd3(2,1,nfk,fk,figkL);
-    }
+    }//180616to
   }
   tmpi1[0]=0;
   for(i=1; i<=length1(paL)-1; i++){
@@ -1338,7 +1310,7 @@ void crv3onsfparadata(short ch,double fk[][3], double fbdyd3[][3], double out[][
   dataindexd2(2,fh,din);
   for(i=1;i<=din[0][0];i++){
     fhs[0][0]=0; fks[0][0]=0;
-    appendd2(0,din[i][0],din[i][1],fh,fhs);
+	appendd2(0,din[i][0],din[i][1],fh,fhs);
     appendd3(0,din[i][0],din[i][1],fk,fks);
     tmpmd3[0][0]=0;
     if(length2(fhs)>1){
@@ -1368,9 +1340,9 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
   double du=(Urng[1]-Urng[0])/Mdv;
   double dv=(Vrng[1]-Vrng[0])/Ndv;
   int i,j,din[DsizeS][2];
-  short allflg=0;
-  if(strlen(fnameh)==0){
-    allflg=1;
+  short allflg=1;
+  if(strlen(fnameh)>0){
+    allflg=0;
   }
   char var[20]="wire3d";
   char varh[20]="wireh3d";

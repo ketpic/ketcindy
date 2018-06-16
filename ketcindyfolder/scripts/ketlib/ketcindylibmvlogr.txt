@@ -1,3 +1,5 @@
+// 20180615
+//  Setpara changed (GLISTbkup)
 // 20180614
 //  Setpara changed (ReadOutData&Projpara removed fromGLISTbkup)
 //  Setpara changed (the above also removed from COM2ndlist)

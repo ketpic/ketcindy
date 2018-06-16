@@ -1,3 +1,6 @@
+180616
+  nohiddenparadata2 debugged  (rewritten a part )
+  output3h debugged  (case where din1[0][0]==1)
 180613
   connectseg,connectseg3 changed ( for null data )
   output3h debugged  (case where din1[0][0]==1)

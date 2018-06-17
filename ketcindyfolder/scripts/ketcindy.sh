@@ -53,13 +53,13 @@ case $systype in
 esac
 
 plugin="$plugindir/KetCindyPlugin.jar"
-dirheadplugin="$plugindir/dirhead.txt"
+dirheadplugin="$plugindir/ketcindy.ini"
 
 # find Jar
 KetCdyJar=`kpsewhich -format=texmfscripts KetCindyPlugin.jar`
 # search for template.cdy
 TempCdy=`kpsewhich -format=texmfscripts $TemplateFile`
-DirHead=`kpsewhich -format=texmfscripts dirhead.txt`
+DirHead=`kpsewhich -format=texmfscripts ketcindy.ini`
 
 if [ -z "$TempCdy" -o -z "$KetCdyJar" ]
 then

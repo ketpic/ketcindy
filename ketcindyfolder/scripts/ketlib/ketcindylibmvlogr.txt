@@ -2,6 +2,7 @@
 //  Setfiles changed (Changework removed)
 //  Parafolder debugged/changed  ( fbkup, some of Changework removed)
 //  Parafolder changed  (time added )
+//  Animatefiles,Mkflipfiles debugged  ( sorting of tex files )
 // 20180615
 //  Setpara changed (GLISTbkup)
 // 20180614

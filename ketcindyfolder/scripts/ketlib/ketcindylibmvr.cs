@@ -301,6 +301,7 @@ Animatefile(path,folder):=(
   tmp1=fileslist(tmp);
   tmp1=tokenize(tmp1,",");
   tmp1=select(tmp1,indexof(#,".tex")>0);
+  tmp1=sort(tmp1); //180617
   texfiles=[];//180609from
   forall(tmp1,
     tmp=indexof(#,".");
@@ -577,6 +578,7 @@ Mkflipanime(path,folder):=(
   tmp=fileslist(Dirwork+pathsep()+folder);
   tmp=tokenize(tmp,",");
   tmp1=select(tmp,indexof(#,".tex")>0); //180609from
+  tmp1=sort(tmp1);//180617
   texfiles=[];
   forall(tmp1,
     tmp=indexof(#,".");

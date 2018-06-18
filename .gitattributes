@@ -9,3 +9,6 @@
 *.png -text
 *.jpg -text
 *.jar -text
+
+.gitignore export-ignore
+.gitattributes export-ignore

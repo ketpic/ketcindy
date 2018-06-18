@@ -1,8 +1,10 @@
 KETCindy for TeX Live
 =====================
-The files originally distributed by Prof. Takato have been adapted
-by Norbert Preining to work within the framework of TeX Live.
-At the moment only dirhead.txt was added to the main script location,
-and a wrapper script ketcindy(.sh).
+Layout of the distribution of KETCindy in TeX Live has been adjusted
+to follow TDS standards. In addition, a starter script is provided that
+checks for correct and up2date installation of the Cinderella plugin 
+and the necessary ketcindy.ini file installation.
 
-2018-04-09 Norbert Preining
+No further changes to the original sources have been done.
+
+2018-06-18 Norbert Preining

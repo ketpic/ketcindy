@@ -1,5 +1,7 @@
 Ketinit();
-Texparent="";
+Setfiles("");
+Setparent("");
+Changework("");
 
 Putpoint("A",[-4,0],A.xy);
 Putpoint("B",[4,0],B.xy);

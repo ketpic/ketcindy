@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180617)");
+println("KeTCindy V.3.2.1(20180618)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180613) loaded");
+println("ketcindylibbasic1(20180618) loaded");
 
 //help:start();
 
@@ -234,18 +234,32 @@ Setwindow(xrange,yrange):=(
 //  Ketinit();
 );
 
+Setfiles():=Setfiles(""); //180618
 Setfiles(file):=( // 17.01.16
 //help:Setfiles(file);
+  if(length(file)>0, //180618
     Fhead=file;
     Fnametex=Fhead+".tex";
     FnameR=Fhead+".r"; //17.10.14
     FnamebodyR=Fhead+"body.sce";
     Fnameout=Fhead+".txt";
+  ,
+    println("Fhead="+Dqq(Fhead)); //180618
+  );
 );
 
+Setparent():=Setparent("");
 Setparent(file):=( // 17.11.27
 //help:Setparent(file);
+  if(length(file)>0, //180618
     Texparent=file;
+  ,
+    if(isstring(Texparent), //180618from
+      println("Texparent="+Dqq(Texparent));
+    ,
+      println("Texparent not defined");
+    );
+  ); //180618to
 );
 
 Dqq(str):=DqDq(str); //18.02.11
@@ -574,11 +588,12 @@ Pardiagram(str,options):=(
   out;
 );
 
+Changework():=Changework(""); //180618
 Changework(dirorg):=Changework(dirorg,["Sub=y"]);
 Changework(dirorg,options):=( //16.10.21
 //help:Changework(directory);
 //help:Changework(Dircdy+"fig");
-//help:Changework(options=["Sub=y"]);
+//help:Changework(options=["Sub=n"(not to make folder fig]);
   regional(dir,subdir,tmp,,eqL,makesub);
   tmp=Divoptions(options);
   eqL=tmp_5;  //180605from
@@ -607,9 +622,14 @@ Changework(dirorg,options):=( //16.10.21
     dir=substring(dir,0,tmp-1);
   ); //17.11.24until
   if(dir=="" % !isexists(dir,""),
-    println("Directory "+dir+" not exist, so set to "+Dircdy);//180604(2lines)
-    Dirwork=Dircdy; 
-    ErrFlag=-1;
+    if(dir=="", //180618from
+      println("Dirwork="+Dqq(Dirwork));
+    ,
+      println("Directory "+dir+" not exist, so "+Dqq(Dirwork)+" not changed"); 
+    ); //180618to
+//    println("Directory "+dir+" not exist, so set to "+Dircdy);//180604(2lines)
+//    Dirwork=Dircdy; 
+//    ErrFlag=-1;
   ,
     if(length(subdir)>0,  //180605
       if(makesub==1,//180606from

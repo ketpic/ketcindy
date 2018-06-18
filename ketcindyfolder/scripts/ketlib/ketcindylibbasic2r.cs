@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180616) loaded");
+println("ketcindybasic2(20180619) loaded");
 
 //help:start();
 
@@ -2604,6 +2604,7 @@ Windispg(pltdata):=(
 );
 
 WritetoSci():=WritetoRS(); //17.12.19
+WritetoSci(Arg):=WritetoRS(Arg);//180619
 WritetoRS():=WritetoRS(FnameR);// 17.09.17from
 WritetoRS(Arg):=(
   regional(string,filename,shch,tmp1,tmp2);

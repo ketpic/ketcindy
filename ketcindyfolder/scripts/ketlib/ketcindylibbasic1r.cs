@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180618)");
+println("KeTCindy V.3.2.1(20180619)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180618) loaded");
+println("ketcindylibbasic1(20180619) loaded");
 
 //help:start();
 
@@ -5846,8 +5846,9 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
   out;
 );
 
-Hatchdatacindy(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);
+Hatchdata(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);//180619
 Hatchdata(nm,iostr,bdylist,options):=Hatchdatacindy(nm,iostr,bdylist,options);
+Hatchdatacindy(nm,iostr,bdylist):=Hatchdata(nm,iostr,bdylist,[]);
 Hatchdatacindy(nm,iostr,bdylistorg,options):=(
 //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
 //help:Hatchdata(options=[angle,width]);
@@ -5889,8 +5890,8 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
           bname="join"+text(kk)+name;
         );
 	  ,
-        Enclosing2(text(#)+name,tmp,["nodisp"]);
-        bname="en"+text(#)+name;
+        Enclosing2(text(kk)+name,tmp,["nodisp"]);//180619(2lines);
+        bname="en"+text(kk)+name;
       );
     );
     bdylist=append(bdylist,parse(bname));

@@ -4,18 +4,23 @@
 
 set -e
 
-if [ -d texmf ] ; then
-  echo "directory texmf already present, not exporting to it!" >&2
+if [ -d texmf-dist ] ; then
+  echo "directory texmf-dist already present, not exporting to it!" >&2
   exit 1
 fi
 
-mkdir texmf
-git archive --format=tar --prefix=ketcindy/ HEAD | (cd texmf && tar xf -)
-mkdir -p texmf/doc/support/ketcindy/
-mkdir -p texmf/scripts/ketcindy/
-mkdir -p texmf/tex/latex/ketcindy/
+if [ -d .git ] ; then
+  mkdir texmf-dist
+  git archive --format=tar --prefix=ketcindy/ HEAD | (cd texmf-dist && tar xf -)
+  cd texmf-dist
+else
+  mkdir ketcindy
+  mv * ketcindy/ || true
+fi
 
-cd texmf
+mkdir -p doc/support/ketcindy/
+mkdir -p scripts/ketcindy/
+mkdir -p tex/latex/ketcindy/
 
 # tex hierarchy
 mv ketcindy/ketcindyfolder/style/* tex/latex/ketcindy/
@@ -59,10 +64,10 @@ rmdir ketcindy/ketcindyfolder
 mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/
 
 # the rest should be files that can be removed:
-rm ketcindy/tl-integration/update-permissions.sh
-rm ketcindy/tl-integration/export-to-texmf.sh
-rm ketcindy/.gitignore
-rm ketcindy/.gitattributes
+rm ketcindy/tl-integration/*
+# remove if these files are available
+rm -f ketcindy/.gitignore
+rm -f ketcindy/.gitattributes
 # now the scripts dir should be empty
 rmdir ketcindy/tl-integration
 
@@ -71,4 +76,6 @@ rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows
 
 # now all should be gone
 rmdir ketcindy
+
+echo "export done"
 

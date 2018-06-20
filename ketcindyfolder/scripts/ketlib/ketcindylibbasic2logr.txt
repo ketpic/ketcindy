@@ -1,5 +1,6 @@
 // 20180619
 //   Writetosci(Arg) added (=WritetoRS(Arg))
+//   CRspline changed  (Ctrpt not displayed )
 // 20180616
 //   presentation debugged (slide title )
 // 20180610

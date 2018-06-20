@@ -1246,7 +1246,7 @@ CRspline(nm,ptL,options):=(
     );
     tmp=select(options,indexof(text(#),"->")>0);
     tmp=append(tmp,"notex");  //15.03.05
-	Pointdata(name+text(#),[tmp1,tmp2],tmp);
+//	Pointdata(name+text(#),[tmp1,tmp2],tmp); //180619
     ctrlist=append(ctrlist,[tmp1,tmp2]);
   );
   Bezier(nm,ptlist,ctrlist,options);

@@ -5773,7 +5773,7 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
   regional(Eps,iolist,sg,bdy,out,nb,tenL,ns,ne,ioL,
          ii,jj,kk,nvec,nbdy,sgn1,sgn2,flg,rmL,p0,p1,p2,pL,
          Scalebkup,tmp,tmp1,tmp2);
-  Eps=10^(-6);
+  Eps=10^(-5);
   nvec=[-vec_2,vec_1];
   nvec=nvec/|nvec|;
   if(!islist(iolistorg),iolist=[iolistorg],iolist=iolistorg);
@@ -5810,6 +5810,15 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
       );
     );
     tenL=sort(tenL,[#_2]);
+    if(length(tenL)>0, //180619from
+      tmp1=tenL; tenL=[tmp1_1];
+      forall(tmp1,
+        tmp=tenL_(length(tenL));
+        if(Norm(tmp_1-#_1)>Eps,
+          tenL=append(tenL,#);
+        );
+      );
+    ); //180619to
     ioL=apply(1..nb,0);
     ns=1;
     ne=length(tenL);
@@ -5824,7 +5833,7 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
       tmp=[sg_2,-1,2,ioL];
       tenL=append(tenL,tmp);
     );
-    forall(ns..ne,ii,
+    forall(ns..(ne-1),ii, //180619  ne=>ne-1
       tmp=tenL_ii;
       tmp1=tmp_4;
       tmp2=tmp_5;

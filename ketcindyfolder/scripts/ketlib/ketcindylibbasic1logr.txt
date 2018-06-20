@@ -1,5 +1,5 @@
 //20180619
-//   Hatchdata debugged
+//   Hatchdata debugged  ( ns..ne=>ns..ne-1, near point removed )
 //20180618
 //   Setfiles,Setparent,Changework changed (for null string)
 //20180613

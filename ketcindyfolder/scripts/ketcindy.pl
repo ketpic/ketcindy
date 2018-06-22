@@ -9,18 +9,21 @@
 use strict;
 $^W = 1;
 
+use Digest::MD5;
+use File::Copy;
+
 my $BinaryName = "Cinderella2";
 my $TemplateFile = "template1basic.cdy";
 my $systype = `uname`;
 my $devnull = "/dev/null";
-if ($^O =~ /^MSWin/i) {
-  $systype = "windows";
+if (win32()) {
+  $systype = "Windows";
   $devnull = "nul";
 } else {
   $systype = `uname`;
   chomp($systype);
 }
-my $HOME = ($systype eq "windows") ? $ENV{'USERPROFILE'} : $ENV{'HOME'};
+my $HOME = ($systype eq "Windows") ? $ENV{'USERPROFILE'} : $ENV{'HOME'};
 my $workdir ="$HOME/ketcindy";
 
 my $cinderella;
@@ -29,21 +32,22 @@ if ($#ARGV >= 0) {
     $cinderella = ($ARGV[1] ? $ARGV[1] : "");
   }
 } else {
-  # TODO which is not available on Windows!
-  chomp($cinderella = `which $BinaryName 2>$devnull`);
+  $cinderella = which($BinaryName);
 }
 
 if (-z "$cinderella") {
   if ($systype eq 'Darwin') {
     if (-r '/Applications/Cinderella2.app/Contents/MacOS/Cinderella2') {
       $cinderella = '/Applications/Cinderella2.app/Contents/MacOS/Cinderella2';
-    } else {
-      die "Cannot find $BinaryName!";
     }
-  } else {
-    # TODO need to check special location on Windows!
-    die "Cannot find $BinaryName!";
+  } elsif ($systype eq 'Windows') {
+    if (-r 'c:/Program Files (x86)/Cinderella/Cinderella2.exe') {
+      $cinderella = 'c:/Program Files (x86)/Cinderella/Cinderella2.exe';
+    }
   }
+}
+if (-z "$cinderella") {
+  die "Cannot find $BinaryName!";
 }
 
 if ( ! -x "$cinderella" ) {
@@ -51,17 +55,11 @@ if ( ! -x "$cinderella" ) {
 }
 
 # find real path
-# TODO convert to perl internal code as this does not work on Windows!!!
-chomp( my $realcind = `realpath "$cinderella"`);
-chomp( my $cinddir  = `dirname "$realcind"`);
+my $realcind = win32() ? $cinderella : `realpath "$cinderella"`;
+chomp($realcind);
+my ($cinddir, $bn) = dirname_and_basename($realcind);
 
-my $plugindir;
-# TODO check for Windows location
-if ($systype eq 'Darwin') {
-  $plugindir = "$cinddir/../PlugIns";
-} else {
-  $plugindir = "$cinddir/Plugins";
-}
+my $plugindir = ($systype eq 'Darwin') ? "$cinddir/../PlugIns" : "$cinddir/Plugins";
 
 my $plugin = "$plugindir/KetCindyPlugin.jar";
 my $dirheadplugin = "$plugindir/ketcindy.ini";
@@ -78,39 +76,118 @@ if (-z "$TempCdy" || -z "$KetCdyJar") {
 
 
 if ( ! -r "$plugin" || ! -r "$dirheadplugin" ) {
-  print "Cinderella is *NOT* set up for KETCindy!"
-  print "You need to copy"
-  print "   $KetCdyJar"
-  print "   $DirHead"
-  print "into"
-  print "   $plugindir"
-  print ""
+  print "Cinderella is *NOT* set up for KETCindy!";
+  print "You need to copy";
+  print "   $KetCdyJar";
+  print "   $DirHead";
+  print "into";
+  print "   $plugindir";
+  print "";
   exit(1);
 }
 
-# check whether the .jar md5sum is fine, but don't make this an error
-my $__md5sum;
-if ($systype eq 'Darwin') {
-  $__md5sum = "md5";
-} else {
-  $__md5sum = "md5sum";
+my $myjarmd = md5digest($KetCdyJar);
+my $sysjarmd = md5digest($plugin);
+
+if ( $myjarmd ne $sysjarmd ) {
+  print "The installed version of the plugin in";
+  print "  $plugin";
+  print "differs from the version shipped in";
+  print "  $KetCdyJar";
+  print "You might need to update the former one with the later one!";
 }
 
-chomp(my $myjarmd = `cat "$KetCdyJar" | $__md5sum`);
-chomp(my $sysjarmd = `cat "$plugin" | $__md5sum`);
-
-if ( ! "$myjarmd" eq "$sysjarmd" ) {
-  print "The installed version of the plugin in"
-  print "  $plugin"
-  print "differs from the version shipped in"
-  print "  $KetCdyJar"
-  print "You might need to update the former one with the later one!"
-}
-
-
-# TODO convert to perl internal!
-`mkdir -p "$workdir"`;
-`cp "$TempCdy" "$workdir"`;
+mkdir($workdir);
+copy($TempCdy, $workdir) or die "Copy failed: $!";
 
 exec ($cinderella, "$workdir/$TemplateFile");
+
+
+sub md5digest {
+  my $file = shift;
+  open(FILE, $file) || die "open($file) failed: $!";
+  binmode(FILE);
+  my $out = Digest::MD5->new->addfile(*FILE)->hexdigest;
+  close(FILE);
+  return $out;
+}
+
+# taken from TeXLive::TLUtils.pm
+sub win32 {
+  if ($^O =~ /^MSWin/i) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+sub which {
+  my ($prog) = @_;
+  my @PATH;
+  my $PATH = getenv('PATH');
+
+  if (&win32) {
+    my @PATHEXT = split (';', getenv('PATHEXT'));
+    push (@PATHEXT, '');  # in case argument contains an extension
+    @PATH = split (';', $PATH);
+    for my $dir (@PATH) {
+      for my $ext (@PATHEXT) {
+        if (-f "$dir/$prog$ext") {
+          return "$dir/$prog$ext";
+        }
+      }
+    }
+
+  } else { # not windows
+    @PATH = split (':', $PATH);
+    for my $dir (@PATH) {
+      if (-x "$dir/$prog") {
+        return "$dir/$prog";
+      }
+    }
+  }
+  return "";
+}
+sub dirname_and_basename {
+  my $path=shift;
+  my ($share, $base) = ("", "");
+  if (win32()) {
+    $path=~s!\\!/!g;
+  }
+  # do not try to make sense of paths ending with /..
+  return (undef, undef) if $path =~ m!/\.\.$!;
+  if ($path=~m!/!) {   # dirname("foo/bar/baz") -> "foo/bar"
+    # eliminate `/.' path components
+    while ($path =~ s!/\./!/!) {};
+    # UNC path? => first split in $share = //xxx/yy and $path = /zzzz
+    if (win32() and $path =~ m!^(//[^/]+/[^/]+)(.*)$!) {
+      ($share, $path) = ($1, $2);
+      if ($path =~ m!^/?$!) {
+        $path = $share;
+        $base = "";
+      } elsif ($path =~ m!(/.*)/(.*)!) {
+        $path = $share.$1;
+        $base = $2;
+      } else {
+        $base = $path;
+        $path = $share;
+      }
+      return ($path, $base);
+    }
+    # not a UNC path
+    $path=~m!(.*)/(.*)!; # works because of greedy matching
+    return ((($1 eq '') ? '/' : $1), $2);
+  } else {             # dirname("ignore") -> "."
+    return (".", $path);
+  }
+}
+sub getenv {
+  my $envvar=shift;
+  my $var=$ENV{"$envvar"};
+  return 0 unless (defined $var);
+  if (&win32) {
+    $var=~s!\\!/!g;  # change \ -> / (required by Perl)
+  }
+  return "$var";
+}
+
 

@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180615)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180621)" 
 
 print(ThisVersion)
 
+# 20180621
+#  Kyoukai debugged  (1st point converted to matrix, length=>Length)
 # 20180615
 #  Assign changed (Replace function added)
 # 20180603
@@ -3944,19 +3946,19 @@ Kyoukai<- function(...)
   Eps<- 10.0^(-4)   #17.09.24
   PLall<- list()
   Sflg<- 0
-  N<- length(DataL)
+  N<- Length(DataL)  #180621
   for (I in Looprange(1,N)){
     Data<- Op(I, DataL)
-    Tmp<- Op(length(Data),Data)
-    if(mode(Tmp)=="numeric" && Nrow(Tmp)==1 && length(Tmp)>1){
-      Rg<-Tmp ; Nd<-length(Data)-1
+    Tmp<- Op(Length(Data),Data)
+    if(mode(Tmp)=="numeric" && Nrow(Tmp)==1 && Length(Tmp)>1){ #180621
+      Rg<-Tmp ; Nd<- Length(Data)-1 #180621
     }
     else{
       if(mode(Tmp)=="character"){
-        Rg<- Tmp ; Nd<-length(Data)-1
+        Rg<- Tmp ; Nd<- Length(Data)-1 #180621
       }
       else{ 
-        Rg<- "c" ; Nd<-length(Data)
+        Rg<- "c" ; Nd<- Length(Data) #180621
       }
     }
     for (J in Looprange(1,Nd)){
@@ -3977,7 +3979,7 @@ Kyoukai<- function(...)
           P<- Ptstart(Tmp)
           Q<- Ptend(Tmp)
           if(Norm(P2-P)>Eps && Norm(P2-Q)>Eps){
-            Tmp< Length(PL)
+            Tmp< Length(PL) #180621
             PL<-PL[Tmp:1,]
             Pfirst<- Ptstart(PL)
             Plast<- Ptend(PL)
@@ -3986,11 +3988,11 @@ Kyoukai<- function(...)
       }
       else{
         if(Norm(P1-Plast)<Eps){ 
-          Stp<-1; Ks<-2; Ke=Length(Points)
+          Stp<-1; Ks<-2; Ke=Length(Points) #180621
         }
         else{
           if(Norm(P2-Plast)<Eps) {
-            Stp<- -1; Ks<-Length(Points)-1; Ke=1
+            Stp<- -1; Ks<-Length(Points)-1; Ke=1 #180621
           }
           else{
             Tmp<-Appendrow(PL,c(Inf,Inf))
@@ -3998,7 +4000,7 @@ Kyoukai<- function(...)
             Sflg<- 1
             Pfirst<- P1
             Plast<- P2
-            Stp<- 1; Ks<- Length(Points)-1; Ke<- 1
+            Stp<- 1; Ks<- Length(Points)-1; Ke<- 1 #180621
           }
         }
         for (K in seq(Ks,Ke, by=Stp)){
@@ -4009,7 +4011,7 @@ Kyoukai<- function(...)
       }
     }  
     if(Norm(Pfirst-Plast)>Eps){
-      Np<- Length(PL)
+      Np<- Length(PL) #180621
       if(Rg=="c"){
         Tmp<- Appendrow(PL,Pfirst)
         PL<- Tmp
@@ -4046,7 +4048,7 @@ Kyoukai<- function(...)
         Tmp<- Appendrow(Tmp,Q)
         PL<- Appendrow(Tmp,Pfirst)
       }
-      else if(mode(Rg)=="numeric" && Nrow(Rg)==1 && length(Rg)>1){
+      else if(mode(Rg)=="numeric" && Nrow(Rg)==1 && Length(Rg)>1){ #180621
         Tmp<- Kukeiwake(PL)
         Tmp1<- Op(1,Tmp)
         Tmp2<- Naigai(Rg,list(Tmp1)) 
@@ -4058,7 +4060,7 @@ Kyoukai<- function(...)
         }
       }
     }
-    Tmp<- Ptstart(PL)
+    Tmp<- matrix(Ptstart(PL),nrow=1) #180621
 	for (J in Looprange(2,Length(PL))){
       P<- Op(J,PL)
       Q<- Op(Length(Tmp),Tmp)
@@ -4070,7 +4072,7 @@ Kyoukai<- function(...)
     PL<-Tmp
     PLall<-c(PLall,list(PL))
   }
-  if(length(PLall)==1 && Sflg==0){
+  if(Length(PLall)==1 && Sflg==0){
     Tmp<- Op(1,PLall)
 #    Tmp<- Op(1,Tmp)
     if(Norm(Ptstart(Tmp)-Ptend(Tmp))>Eps0){
@@ -7017,10 +7019,10 @@ Shade<- function(...)
   }
   Tmp<- varargin[[1]]
   Data<- Kyoukai(Tmp)
-  for (I in Looprange(1, length(Data))){
+  for (I in Looprange(1, Length(Data))){ #180621
     PL<- Op(I,Data)
     Mojisu<- 0
-    for (J in  1:Nrow(PL)){
+    for (J in  Looprange(1,Length(PL))){
       P<- Doscaling(Op(J,PL))
       X<- as.character(round(MilliIn*P[1]))
       Y<- as.character(-round(MilliIn*P[2]))

@@ -14,8 +14,8 @@ use File::Copy;
 
 my $BinaryName = "Cinderella2";
 my $TemplateFile = "template1basic.cdy";
-my $systype = `uname`;
 my $devnull = "/dev/null";
+my $systype;
 if (win32()) {
   $systype = "Windows";
   $devnull = "nul";
@@ -35,18 +35,19 @@ if ($#ARGV >= 0) {
   $cinderella = which($BinaryName);
 }
 
-if (-z "$cinderella") {
+if (! "$cinderella") {
   if ($systype eq 'Darwin') {
     if (-r '/Applications/Cinderella2.app/Contents/MacOS/Cinderella2') {
       $cinderella = '/Applications/Cinderella2.app/Contents/MacOS/Cinderella2';
     }
   } elsif ($systype eq 'Windows') {
-    if (-r 'c:/Program Files (x86)/Cinderella/Cinderella2.exe') {
+    if (-f 'c:/Program Files (x86)/Cinderella/Cinderella2.exe') {
       $cinderella = 'c:/Program Files (x86)/Cinderella/Cinderella2.exe';
     }
   }
 }
-if (-z "$cinderella") {
+
+if (! "$cinderella") {
   die "Cannot find $BinaryName!";
 }
 
@@ -76,13 +77,13 @@ if (-z "$TempCdy" || -z "$KetCdyJar") {
 
 
 if ( ! -r "$plugin" || ! -r "$dirheadplugin" ) {
-  print "Cinderella is *NOT* set up for KETCindy!";
-  print "You need to copy";
-  print "   $KetCdyJar";
-  print "   $DirHead";
-  print "into";
-  print "   $plugindir";
-  print "";
+  print "Cinderella is *NOT* set up for KETCindy!\n";
+  print "You need to copy\n";
+  print "   $KetCdyJar\n";
+  print "   $DirHead\n";
+  print "into\n";
+  print "   $plugindir\n";
+  print "\n";
   exit(1);
 }
 
@@ -90,17 +91,25 @@ my $myjarmd = md5digest($KetCdyJar);
 my $sysjarmd = md5digest($plugin);
 
 if ( $myjarmd ne $sysjarmd ) {
-  print "The installed version of the plugin in";
-  print "  $plugin";
-  print "differs from the version shipped in";
-  print "  $KetCdyJar";
-  print "You might need to update the former one with the later one!";
+  print "The installed version of the plugin in\n";
+  print "  $plugin\n";
+  print "differs from the version shipped in\n";
+  print "  $KetCdyJar\n";
+  print "You might need to update the former one with the later one!\n";
 }
 
+# print "DEBUG workdir =$workdir=\n";
+# print "DEBUG TemplateFile =$TemplateFile=\n";
 mkdir($workdir);
 copy($TempCdy, $workdir) or die "Copy failed: $!";
 
-exec ($cinderella, "$workdir/$TemplateFile");
+# print "Exec $cinderella $workdir/$TemplateFile\n";
+if (win32()) {
+  # no idea why a normal call with exec did not find the template file
+  my $out = `"$cinderella" "$workdir/$TemplateFile"`;
+} else {
+  exec($cinderella, "$workdir/$TemplateFile");
+}
 
 
 sub md5digest {

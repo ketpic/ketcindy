@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180619)");
+println("KeTCindy V.3.2.1(20180624)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180619) loaded");
+println("ketcindylibbasic1(20180624) loaded");
 
 //help:start();
 
@@ -4284,13 +4284,17 @@ Ovaldata(nm,Pdata,options):=(
     Dy=Pdata_3;
   );
   Point=Ctr+[Dx-Rc,Dy-Rc];
-  tmp1=Circledata("1",[Point,Point+[Rc,0]],
-     ["Rng=[0,pi/2]","Num=10","nodata"]);
   tmp2=Listplot("1",[Ctr+[Dx-Rc,Dy],Ctr+[0,Dy]],
      ["nodata"]);
   tmp3=Listplot("2",[Ctr+[Dx,0],Ctr+[Dx,Dy-Rc]],
      ["nodata"]);
-  Graph=Joincrvs("1",[tmp3,tmp1,tmp2],["nodata"]);
+  if(Rc>0, //180624from
+    tmp1=Circledata("1",[Point,Point+[Rc,0]],
+       ["Rng=[0,pi/2]","Num=10","nodata"]);
+    Graph=Joincrvs("1",[tmp3,tmp1,tmp2],["nodata"]);
+  ,
+    Graph=Joincrvs("1",[tmp3,tmp2],["nodata"]);
+  ); //180624to
   tmp1=Reflectdata("1",[Graph],[Ctr,Ctr+[0,1]],["nodata"]);
   Graph=Joincrvs("1",[Graph,tmp1],["nodata"]);
   tmp2=Reflectdata("2",[Graph],[Ctr,Ctr+[1,0]],

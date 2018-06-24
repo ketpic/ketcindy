@@ -16,12 +16,12 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_3(17.10.28)" 
+ThisVersion<- "2ev5_2_3(17.10.28)"
 
 # 2017.10.28
 #    Drwpt debugged  ( Flattenlist )
 # 2017.10.07
-#  
+#   Dottedline,Drwline,Drwpt,Makehasen,Beginpicture,Setpen,Shade
 
 #############################################
 

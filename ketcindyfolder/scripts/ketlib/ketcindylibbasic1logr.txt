@@ -1,3 +1,5 @@
+//20180624
+//   Ovaldata debugged  ( case where Rc= 0)
 //20180619
 //   Hatchdata debugged  ( ns..ne=>ns..ne-1, near point removed )
 //20180618

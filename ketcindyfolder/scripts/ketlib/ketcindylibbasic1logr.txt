@@ -1,3 +1,6 @@
+//20180705
+//   Arrowhead debugged  ( color )
+//   Paramark debugged  (Bname )
 //20180704
 //   Drawsegmark debugged  ( color option)
 //20180624

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180704)");
+println("KeTCindy V.3.2.1(20180705)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180704) loaded");
+println("ketcindylibbasic1(20180705) loaded");
 
 //help:start();
 
@@ -4342,7 +4342,6 @@ Drawsegmark(nm,ptlist,options):=(
   tmp1=Divoptions(options);
   eqL=tmp1_5;
   color=tmp1_(length(tmp1)-2);//180704
-  println(color);
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=substring(#,tmp,length(#));
@@ -4750,7 +4749,9 @@ Arrowhead(point,Houkou,options):=(
       tmp=PenThick/PenThickInit;
       opstr=opstr+","+text(tmp);
     );  // 16.04.09 until
+    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));//180705
 	Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");   
+    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));//180705
   );
 );
 
@@ -5010,7 +5011,7 @@ Paramark(Arg1,Arg2):=( // 17.03.27 from
     nm=substring(tmp,1,length(tmp)-1);
     Paramark(nm,plist,options);
   );
-);// until
+);// to
 Paramark(nm,plist,options):=(
 //help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
@@ -5037,7 +5038,7 @@ Paramark(nm,plist,options):=(
     if(substring(#,0,1)=="L",Bname="Letter(");
     if(substring(#,0,1)=="E",Bname="Expr(");
     Bpos="md"+name;
-    Bname=Bname+Dq+Bpos+Dq+","+Dq+"c"+Dq+","+Dq;
+    Bname=Bname+Bpos+","+Dq+"c"+Dq+","+Dq; //180705
     tmp=substring(#,indexof(#,"="),length(#));
     tmp1=indexof(tmp,",");
     Bname=Bname+substring(tmp,tmp1,length(tmp))+Dq+")";

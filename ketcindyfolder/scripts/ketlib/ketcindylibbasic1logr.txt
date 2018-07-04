@@ -1,3 +1,5 @@
+//20180704
+//   Drawsegmark debugged  ( color option)
 //20180624
 //   Ovaldata debugged  ( case where Rc= 0)
 //20180619

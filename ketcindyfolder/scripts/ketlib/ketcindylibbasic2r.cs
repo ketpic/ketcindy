@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180619) loaded");
+println("ketcindybasic2(20180701) loaded");
 
 //help:start();
 
@@ -4188,7 +4188,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             if(NonThinFlg==0,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
 			    if(MiniFlg==0, //180526from
-                  println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
+                  println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}%");//180701
                   println(SCEOUTPUT,str);
                   println(SCEOUTPUT,"}%");
                 ,
@@ -4207,7 +4207,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             );
             if(NonThinFlg==1,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
-                println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}");//17.08.23
+                println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}%");//180701
                 println(SCEOUTPUT,str);
               ,
                 println(SCEOUTPUT,str);
@@ -4238,7 +4238,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             if(NonThinFlg==0,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//180526from
 			    if(MiniFlg==0, 
-                  tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
+                  tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}%";//180701
                   tmp1=[tmp1,str,"}%"];
                 ,
                   tmp1=[str];
@@ -4256,7 +4256,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             );
             if(NonThinFlg==1,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
-                tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}";//17.08.23
+                tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}%";//180701
                 tmp1=[tmp1,str];
               ,
                 tmp1=[str];
@@ -4572,10 +4572,12 @@ Presentation(texfile,txtfile):=(
                 paradt_4=substring(paradt_4,0,tmp0-1);
               );//17.01.29until
               parafiles=select(parafiles,indexof(#,".tex")>0);
+              parafiles=sort(parafiles); //180627
               if(indexof(paradt_4,"\input")==0,paradt_4="\"+paradt_4);//16.12.17
             );
             if(indexof(paradt_4,"include")>0,
               parafiles=select(parafiles,indexof(#,".pdf")>0);
+              parafiles=sort(parafiles); //180627
             );
             npara=length(parafiles);
           ,

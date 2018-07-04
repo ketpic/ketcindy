@@ -1,3 +1,5 @@
+180703
+  nohiddenparadata2 debugged  (for closed curve)
 180616
   nohiddenparadata2 debugged  (rewritten a part )
   output3h debugged  (case where din1[0][0]==1)

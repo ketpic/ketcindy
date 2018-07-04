@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180624)");
+println("KeTCindy V.3.2.1(20180704)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180624) loaded");
+println("ketcindylibbasic1(20180704) loaded");
 
 //help:start();
 
@@ -4325,13 +4325,13 @@ Ovaldata(nm,Pdata,options):=(
   Graph;
 );
 
-Segmark(nm,ptlist):=Segmark(nm,ptlist,[]);
-Segmark(nm,ptlist,options):=Drawsegmark(nm,ptlist,options,color);
+Segmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
+Segmark(nm,ptlist,options):=Drawsegmark(nm,ptlist,options);//180704
 Drawsegmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
 Drawsegmark(nm,ptlist,options):=(
 //help:Segmark("1",[A,B]);
 //help:Segmark(options=["Type=1","Width=1","Size=1"]);
-  regional(name,pA,pB,wid,mid,size,tp,dir,nor,eqL,
+  regional(name,pA,pB,wid,mid,size,tp,dir,nor,eqL,color, //180704
       tmp,tmp1,tmp2);
   name="mrk"+nm;
   pA=ptlist_1;
@@ -4341,7 +4341,8 @@ Drawsegmark(nm,ptlist,options):=(
   tp=1;
   tmp1=Divoptions(options);
   eqL=tmp1_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp1_(length(tmp1)-2);//180704
+  println(color);
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=substring(#,tmp,length(#));
@@ -4364,26 +4365,26 @@ Drawsegmark(nm,ptlist,options):=(
   if(tp==1,
     tmp1=mid+size*nor;
     tmp2=mid-size*nor;
-    Listplot(name,[tmp1,tmp2]);
+    Listplot(name,[tmp1,tmp2],["Color="+text(color)]);//180704
   );
   if(tp==2,
     tmp1=mid+wid*dir+size*nor;
     tmp2=mid+wid*dir-size*nor;
-    Listplot(name+"r",[tmp1,tmp2]);
+    Listplot(name+"r",[tmp1,tmp2],["Color="+text(color)]);//180704
     tmp1=mid-wid*dir+size*nor;
     tmp2=mid-wid*dir-size*nor;
-    Listplot(name+"l",[tmp1,tmp2]);
+    Listplot(name+"l",[tmp1,tmp2],["Color="+text(color)]);//180704
   );
   if(tp==3,
     tmp1=mid;
     tmp2=mid+size*dir;
-    Circledata(name,[tmp1,tmp2]);
+    Circledata(name,[tmp1,tmp2],["Color="+text(color)]);//180704
   );
   if(tp==4,
     tmp=mid+size*2/sqrt(3)*nor;
     tmp1=mid+size*dir-size/sqrt(3)*nor;
     tmp2=mid-size*dir-size/sqrt(3)*nor;
-    Listplot(name,[tmp,tmp1,tmp2,tmp]);
+    Listplot(name,[tmp,tmp1,tmp2,tmp],["Color="+text(color)]);//180704
   );
 );
 

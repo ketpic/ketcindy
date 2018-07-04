@@ -1,3 +1,7 @@
+// 20180701
+//    Repeatsameslide changed ( % added to thin )
+// 20180627
+//   Presentation debugged  ( sort(parafiles))
 // 20180619
 //   Writetosci(Arg) added (=WritetoRS(Arg))
 //   CRspline changed  (Ctrpt not displayed )

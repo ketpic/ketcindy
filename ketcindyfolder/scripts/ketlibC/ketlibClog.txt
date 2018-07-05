@@ -1,3 +1,5 @@
+180705
+  nohiddenparadata2 debugged  (|sp-sq}>1)
 180703
   nohiddenparadata2 debugged  (for closed curve)
 180616

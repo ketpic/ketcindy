@@ -810,12 +810,12 @@ int nohiddenpara2(short ch,double par[], double fk[][3], int uveq, double figkL[
       partcrv3(tp,tq,fk,tmpmd3);
       appendd3(2,1,length3(tmpmd3), tmpmd3, figkL);
     }//180616to
-    else{//180703from
-      if(fabs(sp-sq)>Eps){
+    else{//180705from
+      if(fabs(sp-sq)>1){
         appendd2(2,1,length2(fh),fh,figL);
         appendd3(2,1,length3(fk),fk,figkL);
       }
-    }//180703to
+    }//180705to
   }
   tmpi1[0]=0;
   for(i=1; i<=length1(paL)-1; i++){

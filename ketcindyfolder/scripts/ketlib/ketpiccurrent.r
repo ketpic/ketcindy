@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180621)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180706)" 
 
 print(ThisVersion)
 
+# 20180706
+#  Enclosing2 debugged  (crv => c)
 # 20180621
 #  Kyoukai debugged  (1st point converted to matrix, length=>Length)
 # 20180615
@@ -12795,7 +12797,7 @@ Enclosing2<- function(...){
       if(length(KL)==1){
         tmp=Op(1,KL)
         tst=Op(2,tmp)
-        Start=crv(tst,Fdata)
+        Start=c(tst,Fdata) #180706
       }
       if(length(KL)>1){
         KL=Quicksort(KL,2)

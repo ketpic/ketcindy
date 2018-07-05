@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180705)");
+println("KeTCindy V.3.2.1(20180706)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180705) loaded");
+println("ketcindylibbasic1(20180706) loaded");
 
 //help:start();
 
@@ -5622,10 +5622,12 @@ EnclosingS(nm,plist,options):=(
 
 /////////// new enclosing ///////////
 
+Enclosing(nm,plist):=Enclosing2(nm,plist,[]);//180706(2lines)
+Enclosing(nm,plistorg,options):=Enclosing2(nm,plistorg,options);
 Enclosing2(nm,plist):=Enclosing2(nm,plist,[]);
 Enclosing2(nm,plistorg,options):=(
-//help:Enclosing2("1",["sc2","crAB","sc2","Invert(sc1)"]);
-//help:Enclosing2(options=[Eps1(0.01),Eps2(0.1)]);
+//help:Enclosing2("1",["sg2","gr1","Invert(sg2)"]);
+//help:Enclosing2(options=[startpoint,Eps1(0.01),Eps2(0.1)]);
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
       tmp,tmp1,tmp2,color);

@@ -694,6 +694,18 @@ Op(n,object):=( //  16.05.25
   out;
 );
 
+Isptselected():=Isptselected(allpoints()); //180706
+Isptselected(ptlist):=(
+ regional(flg);
+ flg=0;
+ forall(ptlist,
+  if(flg==0,
+    if(isselected(#),flg=1);
+  );
+ );
+ if(flg==0,false,true);
+);
+
 Finddef(G):=(
   regional(def,tmp,tmp1,tmp2,tmp3);
   if(isstring(G),tmp=parse(G),tmp=G);

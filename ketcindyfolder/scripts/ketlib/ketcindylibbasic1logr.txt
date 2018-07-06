@@ -1,5 +1,6 @@
 //20180706
 //   Enclosing changed (Enclosing2 => Enclosing)
+//   Isptselected added
 //20180705
 //   Arrowhead debugged  ( color )
 //   Paramark debugged  (Bname )

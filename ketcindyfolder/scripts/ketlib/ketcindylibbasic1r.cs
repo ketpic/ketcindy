@@ -5480,7 +5480,7 @@ Enclosing(nm,plist):=EnclosingS(nm,plist);
 Enclosing(nm,plist,options):=EnclosingS(nm,plist,options);
 EnclosingS(nm,plist):=EnclosingS(nm,plist,[]);
 EnclosingS(nm,plist,options):=(
-//help:Enclosing("1",["sc2","crAB","sc2","Invert(sc1)"],[pt,"dr"]);
+// help:Enclosing("1",["sc2","crAB","sc2","Invert(sc1)"],[pt,"dr"]);
   regional(name,AnsL,Start,Eps,EEps,S,Flg,Fdata,Gdata,KL,pt,qt,color
       t1,t2,t3,ii,nn,tmp,tmp1,tmp2,Ltype,Noflg,realL,eqL,opstr,opcindy);
   name="en"+nm;
@@ -5530,10 +5530,10 @@ EnclosingS(nm,plist,options):=(
     ,
       pt=KL_1_1;
       t1=KL_1_2;
-      tmp=|pt-Start|;
+      tmp=Norm(pt-Start);
       forall(2..(length(KL)),ii, // 15.04.20
         tmp1=KL_ii_1;
-        tmp2=|tmp1-Start|; // 15.04.20
+        tmp2=Norm(tmp1-Start); // 15.04.20
         if(tmp2<tmp,
           pt=tmp1;
           t1=KL_ii_2;
@@ -5660,7 +5660,7 @@ Enclosing2(nm,plistorg,options):=(
   flg=0;
   forall(realL,
     if(isList(#) % ispoint(#),
-//      Start=Lcrd(#); // 18.02.02
+      Start=Lcrd(#); // 18.02.02
     ,
       if(flg==0,Eps1=#);
       if(flg==1,Eps2=#);
@@ -5731,8 +5731,10 @@ Enclosing2(nm,plistorg,options):=(
         parse(tmp);
         plist_nxtno=Gdata;
         t2=Length(tmp1);
-        ss=1; //18.02.02until
+        ss=1; //18.02.02to
       ,
+        KL=sort(KL,[#_2]);//180706
+        KL=select(KL,#_2>t1); //180706
         t2=KL_1_2;
         ss=KL_1_3;
         if(abs(t2-t1)<Eps,
@@ -5752,12 +5754,12 @@ Enclosing2(nm,plistorg,options):=(
         ,
           AnsL=concat(AnsL,tmp_(2..(length(tmp))));
         );
-        t1=ss;
       );
+      t1=ss;//180706
     );
   );
   if(flg==0,
-    AnsL=apply(AnsL,Pcrd(#)); 
+    AnsL=apply(AnsL,Pcrd(#));
   );
   if(Noflg<3,
     println("generate Enclosing "+name);
@@ -5768,7 +5770,9 @@ Enclosing2(nm,plistorg,options):=(
     forall(plistorg, //18.02.02
       tmp1=tmp1+#+",";
     );
-    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+"))";//18.02.02
+    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from
+    if(length(Start)>0,tmp=tmp+","+Textformat(Start,6));
+    tmp=tmp+")";//18.0706to
     GLIST=append(GLIST,tmp);//16.11.07until
   );
   if(Noflg<2,
@@ -5934,7 +5938,8 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   opcindy=tmp_(length(tmp));
   reL=tmp_6;
   angle=45;
-  interval=0.125*1000/2.54/MilliIn;
+//  interval=0.125*1000/2.54/MilliIn;
+  interval=0.25*1000/2.54/MilliIn; //180706
   startP=[(XMIN+XMAX)/2, (YMIN+YMAX)/2];
   tmp1=1;
   forall(reL,

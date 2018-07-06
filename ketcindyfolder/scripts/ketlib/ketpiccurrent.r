@@ -22,6 +22,7 @@ print(ThisVersion)
 
 # 20180706
 #  Enclosing2 debugged  (crv => c)
+#  Hatchdata changed ( Interval > *2 )
 # 20180621
 #  Kyoukai debugged  (1st point converted to matrix, length=>Length)
 # 20180615
@@ -3020,7 +3021,8 @@ Hatchdata<- function(...)
   ShaL<- list()
   Nargs<- length(varargin)
   Kakudo<- 45
-  Kankaku<- 0.125*1000/2.54/MilliIn
+#  Kankaku<- 0.125*1000/2.54/MilliIn
+  Kankaku<- 0.25*1000/2.54/MilliIn #180706
   Tmp<- Doscaling(c(XMIN,YMIN))
   Xmn<- Tmp[1]; Ymn<- Tmp[2]
   Tmp<- Doscaling(c(XMAX,YMAX))
@@ -12761,7 +12763,7 @@ Enclosing2<- function(...){
   for(ii in Looprange(2,Nargs)){
     tmp=varargin[[ii]]
     if(length(tmp)>1){
-#      Start=tmp
+      Start=tmp
     }else{
      if(flg==0){Eps1=tmp}
      if(flg==1){Eps2=tmp}
@@ -12792,35 +12794,27 @@ Enclosing2<- function(...){
       plist=c(plist,list(tmp))
       Start=tmp2
       tst=1
-#      flg=1
     }else{
       if(length(KL)==1){
         tmp=Op(1,KL)
         tst=Op(2,tmp)
-        Start=c(tst,Fdata) #180706
+        Start=Op(1,tmp) #180706
       }
       if(length(KL)>1){
-        KL=Quicksort(KL,2)
+        KL=Quicksort(KL,2) #180706from
         if(length(Start)==0){
           tmp=Op(1,KL)
           tst=Op(2,tmp)
-          Start=Pointoncurve(tst,Fdata)
+          Start=Op(1,tmp)
         }else{
           tmp=c()
           for(ii in Looprange(1,length(KL))){
-            tmp=c(tmp,Norm(Op(1,KL[[ii]]-Start)))
+            tmp=c(tmp,Norm(Op(1,KL[[ii]])-Start))
           }
-          tmp=min(tmp)
-          tmp1=list()
-          for(ii in Looprange(1,length(KL))){
-            tmp2=Op(1,KL[[ii]])
-            if(Norm(tmp2-Start)==tmp){
-              tmp1=c(tmp1,list(tmp2))
-            }
-          }
-          tmp=Op(1,tmp1)
+          tmp=order(tmp)
+          tmp=Op(tmp[1],KL)
           tst=Op(2,tmp)
-          Start=Pointoncurve(tst,Fdata)
+          Start=Op(1,tmp)#180706to
         }
       }
     }
@@ -12841,11 +12835,14 @@ Enclosing2<- function(...){
         Gdata=Appendrow(tmp,Gdata)
         plist[[nxtno]]=Gdata
         t2=Length(Fdata)
-        ss=1 #18.02.02until
+        ss=1 #18.02.02to
       }else{
-        tmp=Op(1,KL)
-        t2=Op(2,tmp)
-        ss=Op(3,tmp)
+        KL=Quicksort(KL,2); #180706from
+        for(j in Looprange(1,length(KL))){
+          if(Op(2,KL[[j]])>t1){break}
+        }
+        t2=Op(2,KL[[j]])
+        ss=Op(3,KL[[j]])# 180706to
         if(abs(t2-t1)<Eps0){
           if(length(KL)>1){
             tmp=Op(2,KL)
@@ -12865,8 +12862,8 @@ Enclosing2<- function(...){
           tmp=tmp[2:Length(tmp),]
           AnsL=Appendrow(AnsL,tmp)
         }
-        t1=ss
       }
+      t1=ss
     }
   }
   return(AnsL)

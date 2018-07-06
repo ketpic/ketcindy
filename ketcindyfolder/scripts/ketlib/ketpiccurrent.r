@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180706)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180707)" 
 
 print(ThisVersion)
 
+# 20180707
+#  Enclosing2 debugged  (epspara)
 # 20180706
 #  Enclosing2 debugged  (crv => c)
 #  Hatchdata changed ( Interval > *2 )
@@ -12756,6 +12758,7 @@ Enclosing2<- function(...){
   Nargs=length(varargin)
   plist=varargin[[1]]
   Eps0=10^(-5)
+  epspara=1; #180707
   Eps1=0.01
   Eps2=0.1
   Start=c()
@@ -12765,8 +12768,9 @@ Enclosing2<- function(...){
     if(length(tmp)>1){
       Start=tmp
     }else{
-     if(flg==0){Eps1=tmp}
-     if(flg==1){Eps2=tmp}
+     if(flg==0){epspara=tmp}
+     if(flg==1){Eps1=tmp}
+     if(flg==2){Eps2=tmp}
      flg=flg+1
     }
   }
@@ -12839,7 +12843,7 @@ Enclosing2<- function(...){
       }else{
         KL=Quicksort(KL,2); #180706from
         for(j in Looprange(1,length(KL))){
-          if(Op(2,KL[[j]])>t1){break}
+          if(Op(2,KL[[j]])>t1+epspara/50*length(Fdata)){break} #180707
         }
         t2=Op(2,KL[[j]])
         ss=Op(3,KL[[j]])# 180706to
@@ -12849,8 +12853,6 @@ Enclosing2<- function(...){
             t2=Op(2,tmp)
             ss=Op(3,tmp)
           }else{
-#            println(text(nn)+" and "+text(nn+1)+" not intersect");
-#            flg=1
           }
         }
       }

@@ -1,3 +1,5 @@
+//20180707
+//   Enclosing changed (epspara=1)
 //20180706
 //   Enclosing changed (Enclosing2 => Enclosing)
 //   Isptselected added

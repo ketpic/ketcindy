@@ -5736,7 +5736,8 @@ Enclosing2(nm,plistorg,options):=(
         ss=1; //18.02.02to
       ,
         KL=sort(KL,[#_2]);//180706
-        KL=select(KL,#_2>t1+epspara/50*length(Fdata)); //180707
+        tmp=parse(Fdata);
+        KL=select(KL,#_2>t1+epspara/50*length(tmp)); //180707
         t2=KL_1_2;
         ss=KL_1_3;
         if(abs(t2-t1)<Eps,//180707

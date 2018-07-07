@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180707)");
+println("KeTCindy V.3.2.1(20180708)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180707) loaded");
+println("ketcindylibbasic1(20180708) loaded");
 
 //help:start();
 
@@ -2057,23 +2057,22 @@ Derivative(fun,var,value,options):=(
   );
 );
 
-Integrate(pltdata,range):=Integrate(pltdata,range,[]);
-Intergrate(Arg1,Arg2,Arg3):=(
-  regional(pltdata,range,options,fnstr,vartr);
-  if(islist(Arg2),
-    pltdata=Arg1;
-    range=Arg2;
-    options=Arg3;
-    Integrate(pltdata,range,options);
+Integrate(Arg1,Arg2):=( //180708from
+  if(isstring(Arg2),
+    Integratefn(Arg1,Arg2,[]);
   ,
-    fnstr=Arg1;
-    vastr=Arg2;
-    range=Arg3;
-    Integrate(fnstr,vastr,range,[]);    
+    Integratedt(Arg1,Arg2,[]);
   );
 );
+Intergrate(Arg1,Arg2,options):=(
+  if(isstring(Arg2),
+    Integratefn(Arg1,Arg2,options);
+  ,
+    Integratedt(Arg1,Arg2,options);
+  );
+);//180708to
 
-Integrate(pltdata,range,options):=(
+Integratedt(pltdata,range,options):=(
 //help:Integrate("gr1",[1,3]);
 //help:Integrate(options=["Rule=o"]);
   regional(tmp,tmp1,eqL,Rule,pdata,Sm,ptP,ptQ,list,va1,va2);
@@ -2107,27 +2106,39 @@ Integrate(pltdata,range,options):=(
   );
 );
 
-Integrate(fnstr,vastr,range,options):=(
-//help:Integrate("sin(x)","x",[0,pi],["Num=100","Rule=s"]);
-  regional(tmp,tmp1,Sm,Lx,Rx,va1,va2,Num,Waysx,ex,dx,xn,yn,x0,x1,x2,y0,y1,y2);
+Integratefn(fnstr,rngstr,options):=( //180708from
+//help:Integrate("sin(x)","x=[0,pi]",["Num=100","Rule=o"]);
+  regional(Sm,Lx,Rx,va1,va2,Num,Way,sx,ex,dx,xn,yn,
+     x0,x1,x2,y0,y1,y2,tmp,tmp1,tmp2,eqL,var,range,plt);
   Num=100;
-  Way="t";
-  forall(options,
-    if(indexof(#,"=")>0,
-      if(indexof(#,"N=")>0,
-        Num=parse(substring(#,indexof(#,"="),length(#)));
-      );
-      if(indexof(#,"Num=")>0,
-        Num=parse(substring(#,indexof(#,"="),length(#)));
-      );
-      if(Toupper(substring(#,0,1))=="R",
-        tmp=indexof(#,"=");
-        Way=substring(#,tmp,tmp+1);
-      );
-	);
+  Way="o";
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(tmp1=="N",
+      Num=parse(tmp2);
+    );
+    if(tmp1=="R",
+      tmp2=substring(tmp2,0,1);
+    );
   );
-  Sm=0;
+  tmp=Strsplit(rngstr,"=");
+  var=tmp_1;
+  range=parse(tmp_2);
+  if(Way=="o",
+    sx=range_1;
+    ex=range_2;
+    dx=(ex-sx)/Num;
+    xn=apply(0..Num,sx+#*dx);
+    yn=apply(xn,parse(Assign(fnstr,[var,textformat(#,5)])));
+    plt=apply(1..(Num+1),[xn_#,yn_#]);
+    Sm=IntegrateO(plt,range);
+  );//180708to
   if(Way=="t",
+    Sm=0;
     forall(1..Num,
       Lx=range_1+(range_2-range_1)*(#-1)/Num;
       Rx=range_1+(range_2-range_1)*#/Num;
@@ -2135,7 +2146,9 @@ Integrate(fnstr,vastr,range,options):=(
       va2=parse(replace(fnstr,vastr,textformat(Rx,5)));
       Sm=Sm+(va1+va2)*(Rx-Lx)/2;
     );
-  ,
+  );
+  if(Way=="s",
+    Sm=0;
     sx=range_1;
     ex=range_2;
     dx=(ex-sx)/Num;

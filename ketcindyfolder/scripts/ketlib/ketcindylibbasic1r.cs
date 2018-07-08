@@ -2064,7 +2064,7 @@ Integrate(Arg1,Arg2):=( //180708from
     Integratedt(Arg1,Arg2,[]);
   );
 );
-Intergrate(Arg1,Arg2,options):=(
+Integrate(Arg1,Arg2,options):=(
   if(isstring(Arg2),
     Integratefn(Arg1,Arg2,options);
   ,

@@ -4587,7 +4587,9 @@ Polygonplot(nm,ptlist,number,options):=(
     tmp=angle+#*2*pi/number;
     tmp1=pA+rr*[cos(tmp),sin(tmp)];
     if(#>0 & #<number,
-     Putpoint((ptlist_2).name+text(#),tmp1);//16.10.07
+      if(ispoint(ptlist_2),  //180708(3lines)
+        Putpoint((ptlist_2).name+text(#),tmp1);//16.10.07
+      );
      //Pointdata(nm,ptL);
     );
     tmp2=tmp1;

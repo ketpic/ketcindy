@@ -4566,9 +4566,24 @@ Hyperbolaplot(nm,ptlist,rng,optionsorg):=(
 );
 
 Polygonplot(nm,ptlist,number):=Polygonplot(nm,ptlist,number,[]);
-Polygonplot(nm,ptlist,number,options):=(
+Polygonplot(nm,ptlist,number,optionorg):=(
 //help:Polygonplot("1",[A,B],12);
-  regional(rr,pA,pB,ptL,angle,tmp,tmp1,tmp2);
+//help:Polygonplot("1",[A,B],12,["Geo=n"]);
+  regional(options,eqL,geo,rr,pA,pB,ptL,angle,tmp,tmp1,tmp2);
+println([4573,ptlist]);
+  geo="N"; //180708from
+  options=optionorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(tmp1=="G",
+      geo=Toupper(substring(tmp2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //180708to
   pA=Lcrd(ptlist_1);
   pB=Lcrd(ptlist_2);
   rr=|pB-pA|;
@@ -4587,7 +4602,7 @@ Polygonplot(nm,ptlist,number,options):=(
     tmp=angle+#*2*pi/number;
     tmp1=pA+rr*[cos(tmp),sin(tmp)];
     if(#>0 & #<number,
-      if(ispoint(ptlist_2),  //180708(3lines)
+      if((ispoint(ptlist_2))&(geo=="Y"),  //180708(3lines)
         Putpoint((ptlist_2).name+text(#),tmp1);//16.10.07
       );
      //Pointdata(nm,ptL);

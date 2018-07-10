@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180701) loaded");
+println("ketcindybasic2(20180710) loaded");
 
 //help:start();
 
@@ -464,17 +464,44 @@ Setax(arglist):=(
 
 Htickmark(arglist):=(
 //help:Htickmark([1,"1",2,"sw","2"]);
-  regional(tmp);
-  tmp="";
-  tmp=MakeRarg(arglist);
-  Com2nd("Htickmark("+tmp+")");
+  regional(nn,tmp,tmp1,tmp2);
+  tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
+  forall(tmp1,nn,
+    Listplot("ht"+text(nn),[[arglist_nn,MARKLEN],[arglist_nn,-MARKLEN]],["Msg=n"]);
+    if(nn+2<=length(arglist),
+      tmp=arglist_(nn+2);
+      if(!isstring(tmp),
+        Expr([[arglist_nn,0],"s1",arglist_(nn+1)]);
+      ,
+        Expr([[arglist_nn,0],arglist_(nn+1),arglist_(nn+2)]);
+      );
+    ,
+      Expr([[arglist_nn,0],"s1",arglist_(nn+1)]);
+    );
+  );//180710to
+//  tmp="";
+//  tmp=MakeRarg(arglist);
+//  Com2nd("Htickmark("+tmp+")");
 );
 
 Vtickmark(arglist):=(
 //help:Vtickmark([1,"1",2,"sw","2"]);
-  regional(tmp);
-  tmp=MakeRarg(arglist);
-  Com2nd("Vtickmark("+tmp+")");
+  regional(nn,tmp,tmp1,tmp2);
+  tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
+  forall(tmp1,nn,
+    Listplot("vt"+text(nn),[[MARKLEN,arglist_nn],[-MARKLEN,arglist_nn]],["Msg=n"]);
+    if(nn+2<=length(arglist),
+      tmp=arglist_(nn+2);
+      if(!isstring(tmp),
+        Expr([[0,arglist_nn],"w1",arglist_(nn+1)]);
+      ,
+        Expr([[0,arglist_nn],arglist_(nn+1),arglist_(nn+2)]);
+      );
+    ,
+      Expr([[0,arglist_nn],"w1",arglist_(nn+1)]);
+    );
+  );//180710to//  tmp=MakeRarg(arglist);
+//  Com2nd("Vtickmark("+tmp+")");
 );
 
 Vtick(py):=Vtick(py,MARKLEN,[]);
@@ -1525,7 +1552,8 @@ PutonSeg(name,p1org,p2org,options):=(
 
 PutonCurve(pn,crv):=PutonCurve(pn,crv,[]);
 PutonCurve(pn,crv,options):=(
-//help:PutonCurve("A","gr1");
+//help:Putoncurve("A","gr1");
+//help:Putoncurve("A","gr1",[0,XMAX]);
   regional(Pmt,pstr,optionL,leftlim,rightlim,tmp,tmp1,Flg,Msg);
   if(!islist(options),optionL=[options],optionL=options);
   leftlim=XMIN;

@@ -1,3 +1,7 @@
+// 20180710
+//    Htickmark,Vtickmark changed  (Expr used )
+// 20180708
+//    Putoncurve changed ( Help )
 // 20180701
 //    Repeatsameslide changed ( % added to thin )
 // 20180627

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180617) loaded");
+println("ketcindymv(20180711) loaded");
 
 //help:start();
 
@@ -28,7 +28,8 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
 //help:Setpara(options2anim1=["Frate=10","Scale=1"]);
 //help:Setpara(options2anim2=["OpA=[loop,controls,buttonsize=3mm]"]);
 //help:Setpara(options2anim3=["OpA=+step"]);
-//help:Setpara(options2anim4=["Mag=1600","Title=folder"]);
+//help :Setpara(options2anim4=["Mag=1600","Title=folder"]);
+//help:Setpara(options2anim4=["Title=folder"]);
   regional(path,tmp,tmp1,tmp2,tmp3,eqL,ndiv,gtmp,ctmp,nn,flg);
   if(length(pathorg)==0, path=Slidename,path=pathorg);//17.04.10
   ParaPath=path;

@@ -1,5 +1,7 @@
+// 20180711
+//  Setpara changed  ("Mag" removed )
 // 20180617
-//  Setfiles changed (Changework removed)
+//  Setpara changed (Changework removed)
 //  Parafolder debugged/changed  ( fbkup, some of Changework removed)
 //  Parafolder changed  (time added )
 //  Animatefiles,Mkflipfiles debugged  ( sorting of tex files )

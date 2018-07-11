@@ -24,7 +24,7 @@ Setpara(pathorg,fstr,sL,options):=
 Setpara(pathorg,fstr,sL,options,optionsanim):=(
 //help:Setpara("folder name","funstr","range",options,optionsanim);
 //help:Setpara(folder,funstr,range,options);
-//help:Setpara(options=["m/r","Div=25"]);
+//help:Setpara(options=["Div=25"]);
 //help:Setpara(options2anim1=["Frate=10","Scale=1"]);
 //help:Setpara(options2anim2=["OpA=[loop,controls,buttonsize=3mm]"]);
 //help:Setpara(options2anim3=["OpA=+step"]);

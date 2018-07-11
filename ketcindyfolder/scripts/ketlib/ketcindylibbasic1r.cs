@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180708)");
+println("KeTCindy V.3.2.1(20180711)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180708) loaded");
+println("ketcindylibbasic1(20180711) loaded");
 
 //help:start();
 
@@ -3411,9 +3411,11 @@ Pointdata(nm,listorg,options):=(
       if(length(size)>0,tmp1=parse(size),tmp1=1);
       tmp1=max(tmp1,1)/8; 
       Setpen(tmp1); // 16.04.09 until
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Texcom("{");Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180711
       Com2nd("Drwpt(list("+name+")"+opstr+")");
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")");Texcom("}"));
+      Texcom("}");//180711
       Setpen(thick); // 16.04.09
       if(length(size)>0,
         Com2nd("Setpt("+textformat(TenSize/TenSizeInit,1)+")");
@@ -3463,9 +3465,11 @@ Listplot(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180711
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180711
     ,
       if(Noflg==1,Ltype=0);
     );

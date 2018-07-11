@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180707)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180711)" 
 
 print(ThisVersion)
 
+# 20180711
+#  Enclosing2 debugged  (length => Length)
 # 20180707
 #  Enclosing2 debugged  (epspara)
 # 20180706
@@ -12843,10 +12845,25 @@ Enclosing2<- function(...){
       }else{
         KL=Quicksort(KL,2); #180706from
         for(j in Looprange(1,length(KL))){
-          if(Op(2,KL[[j]])>t1+epspara/50*length(Fdata)){break} #180707
+          if(Op(2,KL[[j]])>t1+epspara/50*Length(Fdata)){break} #180711
         }
         t2=Op(2,KL[[j]])
         ss=Op(3,KL[[j]])# 180706to
+#        tmp=c()  #180711from
+#        for(j in Looprange(1,length(KL))){
+#          tmp=c(tmp,Op(2,KL[[j]]))
+#        }
+#        tmp1=order(tmp)
+#        tmp2=KL
+#        KL=list()
+#        for(j in tmp1){
+#          tmp=tmp2[[j]]
+#          if(Op(2,tmp)>t1+epspara/50*Length(Fdata)){
+#            KL=c(KL,list(tmp))
+#          }
+#        }
+#        t2=Op(2,KL[[1]])
+#          ss=Op(3,KL[[1]])  #180711from
         if(abs(t2-t1)<Eps0){
           if(length(KL)>1){
             tmp=Op(2,KL)

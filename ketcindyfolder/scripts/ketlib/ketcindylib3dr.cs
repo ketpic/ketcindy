@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180614) loaded");
+println("ketcindylib3d(20180712) loaded");
 
 //help:start();
 
@@ -3297,13 +3297,13 @@ Sf3data(nm,funstr,var1org,var2org,optionorg):=(
   [sfdtuL,sfdtvL];
 );
 
-Sfbdparadata(nm,fd):=
-   Sfbdparadata(nm,fd,[],["nodisp"]);
-Sfbdparadata(nm,fd,options):=
-   Sfbdparadata(nm,fd,options,["nodisp"]);
-Sfbdparadata(nm,fdorg,optionorg,optionsh):=(
-//help:Sfbdparadata("1",Fd);
-//help:Sfbdparadata(options2=["Wait=60",division(c(50,50)),Eps1(0.01), Eps2(0.05)]);
+SfbdparadataR(nm,fd):=
+   SfbdparadataR(nm,fd,[],["nodisp"]);
+SfbdparadataR(nm,fd,options):=
+   SfbdparadataR(nm,fd,options,["nodisp"]);
+SfbdparadataR(nm,fdorg,optionorg,optionsh):=(
+//help:SfbdparadataR("1",Fd);
+//help:SfbdparadataR(options2=["Wait=60",division(c(50,50)),Eps1(0.01), Eps2(0.05)]);
   regional(fd,options,name3,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg);
   tmp=ConvertFdtoC(fdorg);//180430(2lines)
@@ -3402,13 +3402,13 @@ Addpoints(ptlist):=(
   ADDPOINT;
 );
 
-Crvsfparadata(nm,crv,sf,fd):=
-  Crvsfparadata(nm,crv,sf,fd,[],["nodisp"]);
-Crvsfparadata(nm,crv,sf,fd,options):=
-   Crvsfparadata(nm,crv,sf,fd,options,["nodisp"]);
-Crvsfparadata(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
-//help:Crvsfparadata("1","ax3d","sfbd3d1",fd);
-//help:Crvsfparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+CrvsfparadataR(nm,crv,sf,fd):=
+  CrvsfparadataR(nm,crv,sf,fd,[],["nodisp"]);
+CrvsfparadataR(nm,crv,sf,fd,options):=
+   CrvsfparadataR(nm,crv,sf,fd,options,["nodisp"]);
+CrvsfparadataR(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
+//help:CrvsfparadataR("1","ax3d","sfbd3d1",fd);
+//help:CrvsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   tmp=replace(crvstr,"3d","2d");
@@ -3506,13 +3506,13 @@ Crvsfparadata(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
   );
 );
 
-Crv3onsfparadata(nm,crv3d,sf,fd):=
-  Crvs3onfparadata(nm,crv3d,sf,fd,[],["nodisp"]);
-Crv3onsfparadata(nm,crv3d,sf,fd,options):=
-   Crv3onsfparadata(nm,crv3d,sf,fd,options,["nodisp"]);
-Crv3onsfparadata(nm,crv3dstr,sfstr,fdorg,optionorg,optionsh):=(
-//help:Crv3onsfparadata("1","sc1","sfbd3d1",fd);
-//help:Crv3onsfparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+Crv3onsfparadataR(nm,crv3d,sf,fd):=
+  Crvs3onfparadataR(nm,crv3d,sf,fd,[],["nodisp"]);
+Crv3onsfparadataR(nm,crv3d,sf,fd,options):=
+   Crv3onsfparadataR(nm,crv3d,sf,fd,options,["nodisp"]);
+Crv3onsfparadataR(nm,crv3dstr,sfstr,fdorg,optionorg,optionsh):=(
+//help:Crv3onsfparadataR("1","sc1","sfbd3d1",fd);
+//help:Crv3onsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   tmp1=replace(crv3dstr,"3d","2d");
@@ -3608,13 +3608,13 @@ Crv3onsfparadata(nm,crv3dstr,sfstr,fdorg,optionorg,optionsh):=(
   );
 );
 
-Crv2onsfparadata(nm,crv2d,sf,fd):=
-  Crvs2onfparadata(nm,crv2d,sf,fd,[],["nodisp"]);
-Crv2onsfparadata(nm,crv2d,sf,fd,options):=
-   Crv2onsfparadata(nm,crv2d,sf,fd,options,["nodisp"]);
-Crv2onsfparadata(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
-//help:Crv2onsfparadata("1","pa1","sfbd3d1",fd);
-//help:Crv2onsfparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+Crv2onsfparadataR(nm,crv2d,sf,fd):=
+  Crvs2onfparadataR(nm,crv2d,sf,fd,[],["nodisp"]);
+Crv2onsfparadataR(nm,crv2d,sf,fd,options):=
+   Crv2onsfparadataR(nm,crv2d,sf,fd,options,["nodisp"]);
+Crv2onsfparadataR(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
+//help:Crv2onsfparadataR("1","pa1","sfbd3d1",fd);
+//help:Crv2onsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   Changestyle(crv2dstr,["nodisp"]);
@@ -3711,13 +3711,13 @@ Crv2onsfparadata(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
   );
 );
 
-Wireparadata(nm,sf,wr1,wr2,fd):=
-  Wireparadata(nm,sf,fd,wr1,wr2,[],["nodisp"]);
-Wireparadata(nm,sf,fd,wr1,wr2,options):=
-   Wireparadata(nm,sf,fd,wr1,wr2,options,["nodisp"]);
-Wireparadata(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
-//help:Wireparadata("1","sfbd3d1",fd,5,5);
-//help:Wireparadata(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]); 
+WireparadataR(nm,sf,wr1,wr2,fd):=
+  WireparadataR(nm,sf,fd,wr1,wr2,[],["nodisp"]);
+WireparadataR(nm,sf,fd,wr1,wr2,options):=
+   WireparadataR(nm,sf,fd,wr1,wr2,options,["nodisp"]);
+WireparadataR(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
+//help:WireparadataR("1","sfbd3d1",fd,5,5);
+//help:WireparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]); 
   regional(fd,options,name3,name3h,outreg,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,flg,wflg);
   name3="wire3d"+nm;
@@ -3814,18 +3814,18 @@ Wireparadata(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
   );
 );
 
-Intersectcrvsf(nm,crv,fd):=Intersectcrvsf(nm,crv,fd,"",[]);
-Intersectcrvsf(nm,crv,fd,Arg):=(
+IntersectcrvsfR(nm,crv,fd):=Intersectcrvsf(nm,crv,fd,"",[]);
+IntersectcrvsfR(nm,crv,fd,Arg):=(
   if(isstring(Arg),
-    Intersectcrvsf(nm,crv,fd,Arg,[]);
+    IntersectcrvsfR(nm,crv,fd,Arg,[]);
   ,
-    Intersectcrvsf(nm,crv,fd,"",Arg);
+    IntersectcrvsfR(nm,crv,fd,"",Arg);
   );
 );
-Intersectcrvsf(nm,crvstr,fdorg,bdyeq,optionorg):=(
-//help:Intersectcrvsf("1",curve,fd);
-//help:Intersectcrvsf("1",curve,fd,curveequation);
-//help:Intersectcrvsf(options=[Np([50,50]),Eps(0.01)]);
+IntersectcrvsfR(nm,crvstr,fdorg,bdyeq,optionorg):=(
+//help:IntersectcrvsfR("1",curve,fd);
+//help:IntersectcrvsfR("1",curve,fd,curveequation);
+//help:IntersectcrvsfR(options=[Np([50,50]),Eps(0.01)]);
   regional(name,crv,fd,options,reL,fname,crvfname,argR,
      waiting,tmp,tmp1,tmp2,flg,wflg,pts);  name="crvsf"+nm;
   name="crvsf"+nm;
@@ -3904,13 +3904,13 @@ Intersectcrvsf(nm,crvstr,fdorg,bdyeq,optionorg):=(
   parse(name);
 );
 
-Sfcutparadata(nm,eqstr,sf,fd):=
-  Sfcutparadata(nm,eqstr,sf,fd,[]);
-Sfcutparadata(nm,eqstr,sf,fd,options):=
-  Sfcutparadata(nm,eqstr,sf,fd,options,["nodisp"]);
-Sfcutparadata(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
-//help:Sfcutparadata("1","x+y+z=1","sfbd3d1",fd);
-//help:Sfcutparadata(options2=[Division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+SfcutparadataR(nm,eqstr,sf,fd):=
+  SfcutparadataR(nm,eqstr,sf,fd,[]);
+SfcutparadataR(nm,eqstr,sf,fd,options):=
+  SfcutparadataR(nm,eqstr,sf,fd,options,["nodisp"]);
+SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
+//help:SfcutparadataR("1","x+y+z=1","sfbd3d1",fd);
+//help:SfcutparadataR(options2=[Division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,eqstr,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   tmp=Strsplit(eqstrorg,"=");
@@ -4008,7 +4008,6 @@ Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
 Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
 Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
     Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
-
 
 ////////////// new skeleton  2018.01.04 not completed and slow////////////////
 

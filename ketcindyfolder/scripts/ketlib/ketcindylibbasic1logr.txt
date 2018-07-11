@@ -1,5 +1,6 @@
 //20180711
 //   Listplot,Pointdata changed (color localized )
+//   Ptselected ( =Isptselected )
 //20180708
 //   Integrate changed (Integratefn (o))
 //   Polygonplot changed ( putpoint only in case ispoint(B), Geo)

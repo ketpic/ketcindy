@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180711)");
+println("KeTCindy V.3.2.1(20180712)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180711) loaded");
+println("ketcindylibbasic1(20180712) loaded");
 
 //help:start();
 
@@ -694,8 +694,12 @@ Op(n,object):=( //  16.05.25
   out;
 );
 
+Ptselected():=Isptselected(allpoints());//180711(2lines) 
+Ptselected(ptlist):=Isptselected(ptlist);
 Isptselected():=Isptselected(allpoints()); //180706
 Isptselected(ptlist):=(
+//help:Ptselected();
+//help:Isptselected();
  regional(flg);
  flg=0;
  forall(ptlist,

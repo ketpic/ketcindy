@@ -1,3 +1,5 @@
+// 20180712
+//   SfbdparadataC,... renamed to Sfbdparadata,...
 // 20180617
 //   CalcbyC debugged  ( println removed)
 // 20180615

@@ -1,3 +1,5 @@
+// 20180712
+//   Sfbdparadata,... renamed to SfbdparadataR,...
 // 20180614
 //   Setangle changed (for angle list)
 // 20180613

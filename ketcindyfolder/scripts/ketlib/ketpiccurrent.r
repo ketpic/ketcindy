@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180711)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180713)" 
 
 print(ThisVersion)
 
+# 20180713
+#  Enclosing2 debugged  (for Lineplot: distance of pts added)
 # 20180711
 #  Enclosing2 debugged  (length => Length)
 # 20180707
@@ -12827,6 +12829,7 @@ Enclosing2<- function(...){
   }
   if(flg==0){
     t1=tst
+    p1=Pointoncurve(t1,Fdata)#180713
     for(nn in Looprange(1,length(plist))){
       Fdata=Op(nn,plist)
       if(nn==length(plist)){
@@ -12845,9 +12848,13 @@ Enclosing2<- function(...){
       }else{
         KL=Quicksort(KL,2); #180706from
         for(j in Looprange(1,length(KL))){
-          if(Op(2,KL[[j]])>t1+epspara/50*Length(Fdata)){break} #180711
+          tmp1=t1+epspara/50*Length(Fdata)#180713(2lines)
+          if((Op(2,KL[[j]])>tmp1)||(Norm(Op(1,KL[[j]])-p1)>Eps1)){
+            break
+          } #180711
         }
         t2=Op(2,KL[[j]])
+        p2=Pointoncurve(t2,Fdata)#180713
         ss=Op(3,KL[[j]])# 180706to
 #        tmp=c()  #180711from
 #        for(j in Looprange(1,length(KL))){
@@ -12883,6 +12890,7 @@ Enclosing2<- function(...){
         }
       }
       t1=ss
+      p1=Pointoncurve(t1,Gdata)#180713
     }
   }
   return(AnsL)

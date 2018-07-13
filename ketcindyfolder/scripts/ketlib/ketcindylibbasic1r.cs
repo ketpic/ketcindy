@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180712)");
+println("KeTCindy V.3.2.1(20180713)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180712) loaded");
+println("ketcindylibbasic1(20180713) loaded");
 
 //help:start();
 
@@ -5680,7 +5680,7 @@ Enclosing2(nm,plistorg,options):=(
 //help:Enclosing(options=[startpoint,epspara(1)]);
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
-      tmp,tmp1,tmp2,color,epspara);
+      tmp,tmp1,tmp2,color,epspara,p1,p2);
   name="en"+nm;
   plist=plistorg;
   tmp=Divoptions(options);
@@ -5732,7 +5732,8 @@ Enclosing2(nm,plistorg,options):=(
       tmp=Listplot(name,[tmp1,tmp2],["nodisp"]);
       plist=append(plist,"sg"+name);
       Start=tmp2;
-      tst=1; //18.02.02until
+      tst=1; //18.02.02to
+      p1=Start;
     ,
       if(length(KL)==1,
         tst=KL_1_2;
@@ -5755,6 +5756,7 @@ Enclosing2(nm,plistorg,options):=(
   );
   if(flg==0,
     t1=tst;
+    p1=Pointoncurve(t1,Fdata); //180713
     println("Start point of enclosing is "+text(Start));
     forall(1..(length(plist)),nn,
       Fdata=plist_nn;
@@ -5771,11 +5773,14 @@ Enclosing2(nm,plistorg,options):=(
         parse(tmp);
         plist_nxtno=Gdata;
         t2=Length(tmp1);
+        p2=Pointoncurve(t2,Fdata); //180713
         ss=1; //18.02.02to
       ,
         KL=sort(KL,[#_2]);//180706
         tmp=parse(Fdata);
-        KL=select(KL,#_2>t1+epspara/50*length(tmp)); //180707
+        tmp1=t1+epspara/50*length(tmp);
+//        KL=select(KL,#_2>t1+epspara/50*length(tmp)); //180707
+        KL=select(KL,(#_2>tmp1)%(|#_1-p1|>Eps1)); //180713
         t2=KL_1_2;
         ss=KL_1_3;
         if(abs(t2-t1)<Eps,//180707
@@ -5797,6 +5802,7 @@ Enclosing2(nm,plistorg,options):=(
         );
       );
       t1=ss;//180706
+      p1=Pointoncurve(t1,Gdata); //180713
     );
   );
   if(flg==0,

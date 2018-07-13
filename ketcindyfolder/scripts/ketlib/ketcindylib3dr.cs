@@ -302,7 +302,8 @@ Getangle(option):=(
   tmp; //180607
 ); //180613to
 
-isAngle():=Isangle(); //180517
+Angleselected():=IsAngle(); //180713
+//isAngle():=Isangle(); //180517
 Isangle():=isselected(TH)%isselected(FI); //180517
 
 Changestyle3d(nameL,style):=(

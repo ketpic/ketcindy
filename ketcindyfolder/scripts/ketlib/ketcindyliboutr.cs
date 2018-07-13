@@ -5916,7 +5916,6 @@ SfbdparadataC(nm,fd,options):=
     SfbdparadataC(nm,fd,options,["nodisp"]);
 SfbdparadataC(nm,fdorg,optionorg,optionsh):=(
 //help:Sfbdparadata("1",Fd);
-//help:Sfbdparadata(options2=["c(default)/r/m"]);
   regional(funnm,fd,options,name2,name3,name2h,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,cmdflg);
   if(ChNumber==0,ChNumber=Ch);
@@ -6031,8 +6030,6 @@ CrvsfparadataC(nm,fk,sfbd,fd,options):=
     CrvsfparadataC(nm,fk,sfbd,fd,options,["nodisp"]);
 CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
 //help:Crvsfparadata("1","ax3d","sfbd3d1",Fd);
-//help:Crvsfparadata(options2=["c(default)/r/m"]);
-//help:Crvsfparadata(optionsh=["nodisp"]);
   regional(funnm,sfbd,fd,options,name2,name3,name2h,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdlfg);
   eps=10^(-5);

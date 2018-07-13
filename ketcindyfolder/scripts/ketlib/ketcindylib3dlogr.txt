@@ -1,3 +1,5 @@
+// 20180714
+//   Nohiddenbyfaces debugged  ( case where seglist is a string of a list of strings )
 // 20180712
 //   Sfbdparadata,... renamed to SfbdparadataR,...
 // 20180614

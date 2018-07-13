@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180712) loaded");
+println("ketcindylib3d(20180714) loaded");
 
 //help:start();
 
@@ -2910,8 +2910,14 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
   namen="frn"+nm;
   nameh="frh"+nm;
   if(isstring(segstr),
-//    segL=parse(segstr);
-    segL=[segstr];  // 16.08.19
+    tmp=parse(segstr);//180714from
+    if(islist(tmp),
+      if(isstring(tmp_1),
+        segL=tmp;
+      ,
+        segL=[segstr];
+      );
+    );//180714to
   ,
     segL=segstr;
   );

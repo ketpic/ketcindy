@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180713)");
+println("KeTCindy V.3.2.1(20180716)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180713) loaded");
+println("ketcindylibbasic1(20180716) loaded");
 
 //help:start();
 
@@ -243,6 +243,7 @@ Setfiles(file):=( // 17.01.16
     FnameR=Fhead+".r"; //17.10.14
     FnamebodyR=Fhead+"body.sce";
     Fnameout=Fhead+".txt";
+    OCNAME=Fhead; //180714 for obj
   ,
     println("Fhead="+Dqq(Fhead)); //180618
   );
@@ -5780,7 +5781,7 @@ Enclosing2(nm,plistorg,options):=(
         tmp=parse(Fdata);
         tmp1=t1+epspara/50*length(tmp);
 //        KL=select(KL,#_2>t1+epspara/50*length(tmp)); //180707
-        KL=select(KL,(#_2>tmp1)%(|#_1-p1|>Eps1)); //180713
+        KL=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //180713,16
         t2=KL_1_2;
         ss=KL_1_3;
         if(abs(t2-t1)<Eps,//180707

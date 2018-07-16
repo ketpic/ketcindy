@@ -1,3 +1,7 @@
+//20180716
+//   Enclosing debugged ( selection of KL)
+//20180714
+//   Setfiles changed ( OCNAME added )
 //20180713
 //   Enclosing debugged (for Lineplot : distance of pts added )
 //20180711

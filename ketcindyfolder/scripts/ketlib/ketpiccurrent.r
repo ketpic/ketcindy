@@ -16,10 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180713)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180717)" 
 
 print(ThisVersion)
 
+# 20180717
+#  Hatchdata debugged  (width option)
+#  Enclosing debugged  ( for closed curve )
 # 20180713
 #  Enclosing2 debugged  (for Lineplot: distance of pts added)
 # 20180711
@@ -3046,7 +3049,7 @@ Hatchdata<- function(...)
     Kakudo<- varargin[[N+1]]
     if(N==Nargs-2)
     {
-      Kankaku<- 0.125*varargin[[Nargs]]
+      Kankaku<- Kankaku*varargin[[Nargs]] #180716
     }
   }
   NaitenL<- varargin[[1]]
@@ -12816,8 +12819,20 @@ Enclosing2<- function(...){
           Start=Op(1,tmp)
         }else{
           tmp=c()
+          tmp1=list()
           for(ii in Looprange(1,length(KL))){
-            tmp=c(tmp,Norm(Op(1,KL[[ii]])-Start))
+            tmp2=Op(1,KL[[ii]])
+            flgsame=0
+            for(jj in Looprange(1,length(tmp1))){
+              if(Norm(tmp2-Op(jj,tmp1))<Eps1){
+                flgsame=1
+                break
+              }
+            }
+            if(flgsame==0){
+              tmp=c(tmp,Norm(Op(1,KL[[ii]])-Start))
+              tmp1=c(tmp1,list(tmp2))
+            }
           }
           tmp=order(tmp)
           tmp=Op(tmp[1],KL)
@@ -12846,31 +12861,34 @@ Enclosing2<- function(...){
         t2=Length(Fdata)
         ss=1 #18.02.02to
       }else{
-        KL=Quicksort(KL,2); #180706from
-        for(j in Looprange(1,length(KL))){
-          tmp1=t1+epspara/50*Length(Fdata)#180713(2lines)
-          if((Op(2,KL[[j]])>tmp1)||(Norm(Op(1,KL[[j]])-p1)>Eps1)){
-            break
-          } #180711
-        }
-        t2=Op(2,KL[[j]])
-        p2=Pointoncurve(t2,Fdata)#180713
-        ss=Op(3,KL[[j]])# 180706to
-#        tmp=c()  #180711from
+#        KL=Quicksort(KL,2); #180706from
 #        for(j in Looprange(1,length(KL))){
-#          tmp=c(tmp,Op(2,KL[[j]]))
+#          tmp1=t1+epspara/50*Length(Fdata)#180713(2lines)
+#          tmp2=Op(2,KL[[j]])
+#          if((tmp2>tmp1)||((tmp2>t1)&&(Norm(Op(3,KL[[j]])-p1)>Eps1))){
+#            break
+#          } #180711,16
 #        }
-#        tmp1=order(tmp)
-#        tmp2=KL
-#        KL=list()
-#        for(j in tmp1){
-#          tmp=tmp2[[j]]
-#          if(Op(2,tmp)>t1+epspara/50*Length(Fdata)){
-#            KL=c(KL,list(tmp))
-#          }
-#        }
-#        t2=Op(2,KL[[1]])
-#          ss=Op(3,KL[[1]])  #180711from
+#        t2=Op(2,KL[[j]])
+#        p2=Pointoncurve(t2,Fdata)#180713
+#        ss=Op(3,KL[[j]])# 180706to
+		tmp=c()  #180711from
+        for(j in Looprange(1,length(KL))){
+          tmp=c(tmp,Op(2,KL[[j]]))
+        }
+        tmp1=order(tmp)
+        tmp2=KL
+        KL=list()
+        for(j in tmp1){
+          tmp=tmp2[[j]]
+          tmp3=t1+epspara/50*Length(Fdata)
+          tmp4=Op(2,tmp)
+          if((tmp4>tmp3)||((tmp4>t1)&&(Norm(Op(1,tmp)-p1)>Eps1))){
+            KL=c(KL,list(tmp))
+          }
+        }
+        t2=Op(2,KL[[1]])
+        ss=Op(3,KL[[1]])  #180711from
         if(abs(t2-t1)<Eps0){
           if(length(KL)>1){
             tmp=Op(2,KL)

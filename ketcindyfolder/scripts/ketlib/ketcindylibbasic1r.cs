@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180716)");
+println("KeTCindy V.3.2.1(20180717)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180716) loaded");
+println("ketcindylibbasic1(20180717) loaded");
 
 //help:start();
 
@@ -5748,7 +5748,7 @@ Enclosing2(nm,plistorg,options):=(
         ,
           tmp=apply(KL,|#_1-Start|);
           tmp=min(tmp);
-          tmp1=select(KL,|#_1-Start|==tmp);
+          tmp1=select(KL,|#_1-Start|<tmp+Eps1);//180718
           tst=tmp1_1_2;
           Start=Pointoncurve(tst,Fdata);
         );
@@ -5884,12 +5884,18 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
     tenL=sort(tenL,[#_2]);
     if(length(tenL)>0, //180619from
       tmp1=tenL; tenL=[tmp1_1];
-      forall(tmp1,
-        tmp=tenL_(length(tenL));
-        if(Norm(tmp_1-#_1)>Eps,
-          tenL=append(tenL,#);
+      forall(2..(length(tmp1)),ii, //180717from
+        tmp=tmp1_ii;
+        flg=0;
+        forall(tenL,
+          if((Norm(tmp_1-#_1)<Eps1)&(tmp_4==#_4),
+            flg=1;
+          );
         );
-      );
+        if(flg==0,
+          tenL=append(tenL,tmp);
+        );
+      );//180717to
     ); //180619to
     ioL=apply(1..nb,0);
     ns=1;
@@ -5934,7 +5940,8 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
 //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
 //help:Hatchdata(options=[angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,startP,angle,
-     interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2,color);
+     interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2,color,
+     tmp3,namep,x1,y1,x2,y2,p1,p2); //180717
   name="ha"+nm;
   bdylist=[]; 
   bdynameL=[];
@@ -5945,29 +5952,48 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
     ,
       tmp=tmp1_(length(tmp1));
       if(contains(["n","s","e","w"],tmp),
-        tmp2=parse(tmp1_1);
+        namep=tmp1_1;//180717from
+        tmp2=parse(namep);
+        if(substring(namep,0,2)=="ln", //180717from
+          if(contains(["n","s"],tmp),
+             x1=tmp2_1_1; y1=tmp2_1_2; x2=tmp2_2_1; y2=tmp2_2_2;
+             p1=[NE.x,(y2-y1)/(x2-x1)*(NE.x-x1)+y1];
+             p2=[SW.x,(y2-y1)/(x2-x1)*(SW.x-x1)+y1];
+             Listplot(name+text(kk),[p1,p2],["nodisp"]);
+             namep="sg"+name+text(kk);
+             tmp2=parse(namep);
+          );
+          if(contains(["e","w"],tmp),
+             x1=tmp2_1_1; y1=tmp2_1_2; x2=tmp2_2_1; y2=tmp2_2_2;
+             p1=[(x2-x1)/(y2-y1)*(NE.y-y1)+x1,NE.y];
+             p2=[(x2-x1)/(y2-y1)*(SW.y-y1)+x1,SW.y];
+             Listplot(name+text(kk),[p1,p2],["nodisp"]);
+             namep="sg"+name+text(kk);
+             tmp2=parse(namep);
+          );
+        );//180717to
         if(tmp=="s",
-          Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,YMIN],
-                 [tmp2_(length(tmp2))_1,YMIN],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
-          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,2*YMIN-YMAX], //180717(2lines)
+                 [tmp2_(length(tmp2))_1,2*YMIN-YMAX],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
+          Joincrvs(text(kk)+name,[namep,"sg"+name],["nodisp"]);//180717
           bname="join"+text(kk)+name;
         );
         if(tmp=="n",
-           Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,YMAX],
-                      [tmp2_(length(tmp2))_1,YMAX],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
-          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,2*YMAX-YMIN], //180717(2lines)
+              [tmp2_(length(tmp2))_1,2*YMAX-YMIN],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
+          Joincrvs(text(kk)+name,[namep,"sg"+name],["nodisp"]);
           bname="join"+text(kk)+name;
         );
         if(tmp=="e",
           Listplot(name,apply([tmp2_1,[XMAX,tmp2_1_2],
                       [XMAX,tmp2_(length(tmp2))_2],tmp2_(length(tmp2))],LLcrd(#)),["nodisp"]);
-          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          Joincrvs(text(kk)+name,[namep,"sg"+name],["nodisp"]);//180717
           bname="join"+text(kk)+name;
         );
         if(tmp=="w",
           Listplot(name,apply( [tmp2_1,[XMIN,tmp2_1_2],
                       [XMIN,tmp2_(length(tmp2))_2],tmp2_(length(tmp2))],LLcrd(#)),["nodisp"]);
-          Joincrvs(text(kk)+name,[tmp1_1,"sg"+name],["nodisp"]);
+          Joincrvs(text(kk)+name,[namep,"sg"+name],["nodisp"]);//180717
           bname="join"+text(kk)+name;
         );
 	  ,
@@ -6064,7 +6090,6 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   );
   tmp2;
 );
-
 
 Shade(plist):=Shade("",plist,[]); //180613from
 Shade(Arg1,Arg2):=(

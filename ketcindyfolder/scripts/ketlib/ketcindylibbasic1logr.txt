@@ -1,3 +1,7 @@
+//20180717
+//   Enclosing debugged ( min => min+Eps0)
+//   Makehatch debugged (case where same point )
+//   Hatchdata debugged  ( "s",... )
 //20180716
 //   Enclosing debugged ( selection of KL)
 //20180714

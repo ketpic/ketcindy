@@ -12822,7 +12822,7 @@ Enclosing2<- function(...){
           tmp1=list()
           for(ii in Looprange(1,length(KL))){
             tmp2=Op(1,KL[[ii]])
-            flgsame=0
+            flgsame=0 #180717from
             for(jj in Looprange(1,length(tmp1))){
               if(Norm(tmp2-Op(jj,tmp1))<Eps1){
                 flgsame=1
@@ -12832,7 +12832,7 @@ Enclosing2<- function(...){
             if(flgsame==0){
               tmp=c(tmp,Norm(Op(1,KL[[ii]])-Start))
               tmp1=c(tmp1,list(tmp2))
-            }
+            } #180717to
           }
           tmp=order(tmp)
           tmp=Op(tmp[1],KL)

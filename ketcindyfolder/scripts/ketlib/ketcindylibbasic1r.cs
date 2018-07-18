@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180717)");
+println("KeTCindy V.3.2.1(20180718)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180717) loaded");
+println("ketcindylibbasic1(20180718) loaded");
 
 //help:start();
 
@@ -2060,6 +2060,32 @@ Derivative(fun,var,value,options):=(
     y2=parse(tmp);
     (y2-y1)/(x2-x1);
   );
+);
+
+Deriv(pdorg,x):=( //180718
+//help:Deriv(plotdata,x);
+//help:Deriv(result=[deriv,point]);
+ regional(Eps,pd,pt,p1,p2,tmp,tmp1);
+ Eps=10^(-4);
+ pd=pdorg;
+ if(isstring(pd),pd=parse(pd));
+ tmp1=Lineplot("",[[x,0],[x,1]],["nodata"]);
+ tmp=Intersectcurves(pd,tmp1);
+ pt=tmp_1;
+ tmp1=Lineplot("",[[x-Eps,0],[x-Eps,1]],["nodata"]);
+ tmp=Intersectcurves(pd,tmp1);
+ p1=tmp_1;
+ tmp1=Lineplot("",[[x+Eps,0],[x+Eps,1]],["nodata"]);
+ tmp=Intersectcurves(pd,tmp1);
+ p2=tmp_1;
+ [(p2_2-p1_2)/(p2_1-p1_1),pt];
+);
+
+Tangentplot(nm,plotdata,x):=Tangentplot(nm,plotdata,x,[]); //180718
+Tangentplot(nm,plotdata,x,options):=(
+  regional(tmp);
+  tmp=Deriv(plotdata,x);
+  Lineplot(nm+"tn",[tmp_2,tmp_2+[1,tmp_1]],options);
 );
 
 Integrate(Arg1,Arg2):=( //180708from

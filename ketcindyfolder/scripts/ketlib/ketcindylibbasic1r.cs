@@ -2028,9 +2028,45 @@ Nearestpt(point,PL2):=(
   Ans;
 );
 
+Derivative(pdorg,vstr):=( //180718from
+  regional(Eps,pd,name,v,pt,p1,p2,tmp,tmp1);
+  Eps=10^(-4);
+  tmp=Strsplit(vstr,"=");
+  name=Toupper(substring(tmp_1,0,1));
+  v=parse(tmp_2);
+  pd=pdorg;
+  if(isstring(pd),pd=parse(pd));
+  if(name=="X",
+    tmp1=Lineplot("",[[v,0],[v,1]],["nodata"]);
+  ,
+    tmp1=Lineplot("",[[0,v],[1,v]],["nodata"]);
+  );
+  tmp=Intersectcurves(pd,tmp1);
+  pt=tmp_1;
+  if(name=="X",
+    tmp1=Lineplot("",[[v-Eps,0],[v-Eps,1]],["nodata"]);
+  ,
+    tmp1=Lineplot("",[[0,v-Eps],[1,v-Eps]],["nodata"]);
+  );
+  tmp=Intersectcurves(pd,tmp1);
+  if(length(tmp)>0,p1=tmp_1,p1=pt);
+  if(name=="X",
+    tmp1=Lineplot("",[[v+Eps,0],[v+Eps,1]],["nodata"]);
+  ,
+    tmp1=Lineplot("",[[0,v+Eps],[1,v+Eps]],["nodata"]);
+  );
+  tmp=Intersectcurves(pd,tmp1);
+  if(length(tmp)>0,p2=tmp_1,p2=pt);
+  if(name=="X",
+    (p2_2-p1_2)/(p2_1-p1_1);
+  ,
+    (p2_1-p1_1)/(p2_2-p1_2);
+  );
+);//180718to
 Derivative(fun,var,value):=Derivative(fun,var,value,[]);
 Derivative(fun,var,value,options):=(
 //help:Derivative("x^3","x",2);
+//help:Derivative(plotdata,"x=2");
   regional(eqL,method,eps,str,x1,x2,y1,y2,tmp,tmp1,tmp2);
   method="N";
   tmp=Divoptions(options);
@@ -2062,30 +2098,29 @@ Derivative(fun,var,value,options):=(
   );
 );
 
-Deriv(pdorg,x):=( //180718
-//help:Deriv(plotdata,x);
-//help:Deriv(result=[deriv,point]);
- regional(Eps,pd,pt,p1,p2,tmp,tmp1);
- Eps=10^(-4);
- pd=pdorg;
- if(isstring(pd),pd=parse(pd));
- tmp1=Lineplot("",[[x,0],[x,1]],["nodata"]);
- tmp=Intersectcurves(pd,tmp1);
- pt=tmp_1;
- tmp1=Lineplot("",[[x-Eps,0],[x-Eps,1]],["nodata"]);
- tmp=Intersectcurves(pd,tmp1);
- p1=tmp_1;
- tmp1=Lineplot("",[[x+Eps,0],[x+Eps,1]],["nodata"]);
- tmp=Intersectcurves(pd,tmp1);
- p2=tmp_1;
- [(p2_2-p1_2)/(p2_1-p1_1),pt];
-);
-
-Tangentplot(nm,plotdata,x):=Tangentplot(nm,plotdata,x,[]); //180718
-Tangentplot(nm,plotdata,x,options):=(
-  regional(tmp);
-  tmp=Deriv(plotdata,x);
-  Lineplot(nm+"tn",[tmp_2,tmp_2+[1,tmp_1]],options);
+Tangentplot(nm,pdorg,vstr):=Tangentplot(nm,pdorg,vstr,[]); //180718
+Tangentplot(nm,pdorg,vstr,options):=(
+//help::Tangentplot("1",pd,"x=2");
+  regional(pd,vname,v,pt,tmp);
+  tmp=Strsplit(vstr,"=");
+  vname=Toupper(substring(tmp_1,0,1));
+  v=parse(tmp_2);
+  pd=pdorg;
+  if(isstring(pd),pd=parse(pd));
+  if(vname=="X",
+    tmp1=Lineplot("",[[v,0],[v,1]],["nodata"]);
+  ,
+    tmp1=Lineplot("",[[0,v],[1,v]],["nodata"]);
+  );
+  tmp=Intersectcurves(pd,tmp1);
+  pt=tmp_1;
+  tmp=Derivative(pdorg,vstr);
+  println([2117,pt,tmp]);
+  if(vname=="X",
+    Lineplot("tn"+nm,[pt,pt+[1,tmp]],options);
+  ,
+    Lineplot("tn"+nm,[pt,pt+[tmp,1]],options);
+  );
 );
 
 Integrate(Arg1,Arg2):=( //180708from

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180718)");
+println("KeTCindy V.3.2.1(20180719)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180718) loaded");
+println("ketcindylibbasic1(20180719) loaded");
 
 //help:start();
 
@@ -455,6 +455,7 @@ Indexall(str,key):=(
 );
 
 Strsplit(str,key):=( //180505
+//help:Strsplit(string,"=");
   regional(start,out,tmp1,tmp2);
   tmp1=Indexall(str,key);
   out=[]; start=0;
@@ -3495,8 +3496,8 @@ Listplot(nm,list,options):=(
 //help:Listplot([A,B]);
 // help:Listplot(["A","B"]);
 //help:Listplot("1",[[2,1],[3,3]]);
-//help:Listplot(options2=["Msg=yes"]);
-  regional(name,tmp,tmp1,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color);
+//help:Listplot(options2=["Msg=y","Cutend=n"]);//180719
+  regional(name,cutend,tmp,tmp1,tmp2,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color);
   if(substring(nm,0,1)=="-",  // 16.01.27 from
     name=substring(nm,1,length(nm));
   ,
@@ -3509,15 +3510,23 @@ Listplot(nm,list,options):=(
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Msg=1;  // 15.09.17
+  cutend=[0,0];//180719
   forall(eqL,
-    tmp=substring(#,0,1);
-    if(Toupper(tmp)=="M",
-      tmp=indexof(#,"=");
-      tmp1=substring(#,tmp,tmp+1); // 16.06.28
-      if(Toupper(tmp1)=="N", // 16.06.28
+    tmp=Strsplit(#,"=");
+	tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(tmp1=="M",
+      tmp=Toupper(substring(tmp2,0,1));
+      if(tmp=="N", // 16.06.28
         Msg=0;
       );
     );
+    if(tmp1=="C",//180719from
+      tmp2=replace(tmp2,"[","");
+      tmp2=replace(tmp2,"]","");
+      cutend=tokenize(tmp2,",");
+      if(length(cutend)==1,cutend=[cutend_1,cutend_1]);     
+    );//180719to
   );
   if(Noflg<3,
     if(Msg==1,
@@ -3525,9 +3534,15 @@ Listplot(nm,list,options):=(
     );
     if(isstring(list_1),tmp=apply(list,parse(#)),tmp=list); // 15.03.24
     ptlist=apply(tmp,Pcrd(#));
+    if(|cutend|>0,//180719from
+      tmp=ptlist_(length(ptlist))-ptlist_1;
+      tmp=tmp/|tmp|;
+      ptlist_1=ptlist_1+tmp*cutend_1;
+      ptlist_(length(ptlist))=ptlist_(length(ptlist))-tmp*cutend_2;
+    );//180719to
     tmp=name+"="+textformat(ptlist,5);
     parse(tmp);
-    GLIST=append(GLIST,name+"=Listplot("+textformat(list,5)+")"); // 15.12.23
+    GLIST=append(GLIST,name+"=Listplot("+textformat(ptlist,5)+")"); // 180719
   );
   if(Noflg<2,
     if(isstring(Ltype),
@@ -4886,17 +4901,23 @@ Arrowdata(Arg1,Arg2):=(
     ,
       ptlist=Arg1;
       options=Arg2;
-      nm=text(ArrowlineNumber);
-      ArrowlineNumber=ArrowlineNumber+1;
+//      nm=text(ArrowlineNumber);
+      nm="";
+      forall(ptlist, //180719from
+        nm=nm+#.name;
+      );// 180719to
+//      ArrowlineNumber=ArrowlineNumber+1;
       Arrowdata(nm,ptlist,options);
     );
   );
 );
-Arrowdata(Arg1,Arg2,options):=(
+Arrowdata(Arg1,Arg2,optionsorg):=(
 //help:Arrowdata([A,B],[2,10]);
 //help:Arrowdata("1",[p1,p2]);
-  regional(Retflg,nm,ptlist,name,opstr,opcindy,realL,strL,size,
-      flg,Ltype,Noflg,lineflg,tmp,tmp1,tmp2,pA,pB,segpos,color);
+//help:Arrowdata(Options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0"]);
+  regional(options,Retflg,nm,ptlist,name,opstr,opcindy,eqL,realL,strL,size,
+      flg,Ltype,Noflg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,color);
+  options=optionsorg;
   Retflg=0;
   Noflg=0;
   Ltype=0;
@@ -4914,26 +4935,54 @@ Arrowdata(Arg1,Arg2,options):=(
     tmp=Divoptions(options);
     Ltype=tmp_1;
     Noflg=tmp_2;
+    eqL=tmp_5;
     realL=tmp_6;
     strL=tmp_7;
     color=tmp_(length(tmp)-2);
     opstr=tmp_(length(tmp)-1);
     opcindy=tmp_(length(tmp));
     size=1;  // 15.06.11
+    angle=18;
+    segpos=1;
     if(length(realL)>0,
       size=realL_1;
+      if(length(reaL)>1, //180719from
+        angle=reaL_2;
+        if(length(reaL)>2,
+          segpos=reaL_3;
+        );
+      );//180719to
+    );
+    cutend=[0,0];//180719
+    forall(eqL,
+      tmp=Strsplit(#,"=");
+	  tmp1=Toupper(substring(tmp_1,0,1));
+      tmp2=tmp_2;
+      if(tmp1=="C",//180719from
+        tmp2=replace(tmp2,"[","");
+        tmp2=replace(tmp2,"]","");
+        cutend=tokenize(tmp2,",");
+        if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
+        options=remove(options,[#]);
+      );//180719to
     );
     tmp2=select(strL,indexof(#,"l")>0); // 16.04.09
     if(length(tmp2)>0,lineflg=1,lineflg=0); // 16.04.09
-    segpos=1;
-    tmp1=tmp_5;
-    if(length(tmp1)>2,
-      segpos=tmp1_3;
-    );
+//    segpos=1; //180719removed
+//    tmp1=tmp_5;
+//    if(length(tmp1)>2,
+//      segpos=tmp1_3;
+//    );
     if(Noflg<3,
-//      println("generate Arrowdata "+name);
-      tmp1=apply(ptlist,Pcrd(#));
-      tmp=name+"="+textformat(tmp1,5);
+      println("generate Arrowdata "+name);
+      ptlist=apply(ptlist,Pcrd(#));
+      if(|cutend|>0,//180719from
+        tmp=ptlist_2-ptlist_1;
+        tmp=tmp/|tmp|;
+        ptlist_1=ptlist_1+tmp*cutend_1;
+        ptlist_2=ptlist_2-tmp*cutend_2;
+      );//180719to
+      tmp=name+"="+textformat(ptlist,5);
       parse(tmp);
       tmp1=Pcrd(ptlist_1);//16.10.20
       tmp2=Pcrd(ptlist_2);//16.10.20

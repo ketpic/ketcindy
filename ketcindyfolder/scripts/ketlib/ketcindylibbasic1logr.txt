@@ -1,5 +1,6 @@
 //20180719
 //  Listplot,Arrowdata changed  ("Cutend"option added)
+//  Derivative, Tangentplot changed  ( Oshima's formula used )
 //20180718
 //  Derivative chnaged (for plotdata)
 //  Tangentplot added 

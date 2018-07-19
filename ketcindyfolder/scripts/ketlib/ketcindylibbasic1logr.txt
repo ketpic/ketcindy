@@ -1,3 +1,5 @@
+//20180720
+//  Derivative, Tangentplot changed  ( ch option added, coping with case of no interesects)
 //20180719
 //  Listplot,Arrowdata changed  ("Cutend"option added)
 //  Derivative, Tangentplot changed  ( Oshima's formula used )

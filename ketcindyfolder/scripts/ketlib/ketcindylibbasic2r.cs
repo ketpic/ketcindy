@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180710) loaded");
+println("ketcindybasic2(20180721) loaded");
 
 //help:start();
 
@@ -2652,7 +2652,7 @@ WritetoRS(Arg):=(
   );
 );
 WritetoRS(filename,shchoice):=(
-  regional(Plist,Pos,GrL,str,tmp,tmp1,tmp2,cmd);
+  regional(Plist,Pos,GrL,str,tmp,tmp1,tmp2,cmd,ns,spos,epos);
   //help:WritetoRS(2);
   println("Write to R "+filename);
   Plist=[];
@@ -2792,12 +2792,27 @@ WritetoRS(filename,shchoice):=(
       println(SCEOUTPUT,#);
     );
   );//180613to
-  forall(COM2ndlist,
-    if(indexof(#,"Texcom")==0, //17.09.22
-      println(SCEOUTPUT,RSform(#));
+  forall(COM2ndlist,cmd,
+    tmp=substring(cmd,0,4);
+    if(contains(["Lett","Expr"],tmp), //180721from
+      tmp1=Indexall(cmd,Dq);
+      tmp2=length(tmp1)/4;
+      str=""; ns=0;
+      forall(tmp2,
+        spos=tmp1_(4*#-1); epos=tmp1_(4*#);
+        str=str+RSform(substring(cmd,ns,spos-1));
+        str=str+substring(cmd,spos-1,epos);
+        ns=epos;
+      );
+      str=str+substring(cmd,ns,length(cmd));
+      println(SCEOUTPUT,str);
     ,
-      println(SCEOUTPUT,#);
-    );
+      if(indexof(cmd,"Texcom")==0, 
+        println(SCEOUTPUT,RSform(cmd));
+      ,
+        println(SCEOUTPUT,cmd);
+      );
+    ); //180721to
   );
   if(length(GrL)>0,
     println(SCEOUTPUT,"  Drwline(GrL)");

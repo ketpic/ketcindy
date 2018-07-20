@@ -1,3 +1,5 @@
+// 20180721
+//    WritetoRS changed (case where "Letter" and "Expr" in Com2ndlist)
 // 20180710
 //    Htickmark,Vtickmark changed  (Expr used )
 // 20180708

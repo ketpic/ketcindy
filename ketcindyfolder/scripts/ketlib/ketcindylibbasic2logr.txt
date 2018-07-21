@@ -1,3 +1,5 @@
+// 20180722
+//   color localized
 // 20180721
 //    WritetoRS changed (case where "Letter" and "Expr" in Com2ndlist)
 // 20180710

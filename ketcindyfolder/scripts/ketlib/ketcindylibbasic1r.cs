@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180721)");
+println("KeTCindy V.3.2.1(20180722)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180719) loaded");
+println("ketcindylibbasic1(20180722) loaded");
 
 //help:start();
 
@@ -670,9 +670,11 @@ Changestyle(nameL,style):=(
         (indexof(#,"("+name)==0)%(indexof(#,"Shade")>0)); // 15.05.23,16.12.13
       if(Noflg<2,
         if(isstring(Ltype),
-          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
           Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+          Texcom("}");//180722
+//          if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
         ,
           if(Noflg==1,Ltype=0);
         );
@@ -3249,9 +3251,11 @@ AddGraph(nm,pltdata,options):=(
   );  // 16.04.04 until
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3342,9 +3346,11 @@ Joincrvs(nm,plotstrL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3429,9 +3435,11 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//	  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3661,9 +3669,11 @@ Lineplot(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3831,9 +3841,11 @@ Plotdata(name1,func,variable,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
      ,
         if(Noflg==1,Ltype=0);
       );
@@ -3843,9 +3855,11 @@ Plotdata(name1,func,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3979,9 +3993,11 @@ Paramplot(name1,funstr,variable,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -3991,9 +4007,11 @@ Paramplot(name1,funstr,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4185,9 +4203,11 @@ Implicitplot(name1,func,xrng,yrng,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4292,9 +4312,11 @@ Circledata(nm,cenrad,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4362,9 +4384,11 @@ Framedata(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4393,9 +4417,11 @@ Framedata(nm,cent,dx,dy,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4466,9 +4492,11 @@ Ovaldata(nm,Pdata,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4905,9 +4933,11 @@ Arrowhead(point,Houkou,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(1)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
 //	  if(Noflg==1,Ltype=0);
       Ltype=0;
@@ -4922,9 +4952,11 @@ Arrowhead(point,Houkou,options):=(
       tmp=PenThick/PenThickInit;
       opstr=opstr+","+text(tmp);
     );  // 16.04.09 until
-    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));//180705
+    Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));//180705
 	Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");   
-    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));//180705
+    Texcom("}");//180722
+//    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));//180705
   );
 );
 
@@ -5042,9 +5074,11 @@ Arrowdata(Arg1,Arg2,optionsorg):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -5191,9 +5225,11 @@ Anglemark(nm,plist,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -5276,9 +5312,11 @@ Paramark(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5455,9 +5493,11 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5659,9 +5699,11 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5815,9 +5857,11 @@ EnclosingS(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5981,9 +6025,11 @@ Enclosing2(nm,plistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6231,9 +6277,11 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6325,9 +6373,11 @@ Shade(nm,plistorg,options):=( //180613to
     ); // until 16.01.24
   );
   Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
-  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")",["before"]));
+  Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")",["before"]));
   Com2nd(Str,["before"]);
-  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")",["before"]));
+  Texcom("}");//180722
+//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")",["before"]));
 );
 
 /////////// end of new Hatchdata(cindy) ///////////

@@ -1,3 +1,5 @@
+// 20180722
+//   color localized
 //20180720
 //  Derivative, Tangentplot changed  ( ch option added, coping with case of no interesects)
 //20180719

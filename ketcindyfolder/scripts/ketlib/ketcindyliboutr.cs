@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180712 loaded");
+println("ketcindylibout(20180722 loaded");
 
 //help:start();
 
@@ -1609,34 +1609,34 @@ Boxplot(nm,dataorg,ypos,dy,optionorg):=(
     pstr="[";
     tmp1=[bp_1,ypos-dy/2];
     tmp2=[bp_1,ypos+dy/2];
-    Listplot(name+text(1),[tmp1,tmp2],["Msg=no"]);
+    Listplot(name+text(1),[tmp1,tmp2],concat(options,["Msg=no"]));
     pstr=pstr+Dq+"sg"+name+text(1)+Dq+",";
     tmp1=[bp_2,ypos-dy];
     tmp2=[bp_2,ypos+dy];
     tmp3=[bp_4,ypos+dy];
     tmp4=[bp_4,ypos-dy];
-    Listplot(name+text(2),[tmp1,tmp2,tmp3,tmp4,tmp1],["Msg=no"]);
+    Listplot(name+text(2),[tmp1,tmp2,tmp3,tmp4,tmp1],append(options,"Msg=no"));
     pstr=pstr+Dq+"sg"+name+text(2)+Dq+",";
     tmp1=[bp_5,ypos-dy/2];
     tmp2=[bp_5,ypos+dy/2];
-    Listplot(name+text(3),[tmp1,tmp2],["Msg=no"]);
+    Listplot(name+text(3),[tmp1,tmp2],append(options,"Msg=no"));
     pstr=pstr+Dq+"sg"+name+text(3)+Dq+",";
     tmp1=[bp_3,ypos-dy];
     tmp2=[bp_3,ypos+dy];
-    Listplot(name+text(4),[tmp1,tmp2],["dr,2","Msg=no"]);
+    Listplot(name+text(4),[tmp1,tmp2],concat(options,["dr,2","Msg=no"]));
     pstr=pstr+Dq+"sg"+name+text(4)+Dq+",";
     tmp1=[bp_1,ypos];
     tmp2=[bp_2,ypos];
-    Listplot(name+text(5),[tmp1,tmp2],["da","Msg=no"]);
+    Listplot(name+text(5),[tmp1,tmp2],concat(options,["da","Msg=no"]));
     pstr=pstr+Dq+"sg"+name+text(5)+Dq+",";
     tmp1=[bp_4,ypos];
     tmp2=[bp_5,ypos];
-    Listplot(name+text(6),[tmp1,tmp2],["da","Msg=no"]);
+    Listplot(name+text(6),[tmp1,tmp2],concat(options,["da","Msg=no"]));
     pstr=pstr+Dq+"sg"+name+text(6)+Dq+",";
     out=bp_(6..length(bp));
     if(length(out)>0,
       out=apply(out,[#,ypos]);
-      Pointdata(name+text(1),out,[0,"Size=4"]);
+      Pointdata(name+text(1),out,concat(options,[0,"Size=4"]));
     );
     pstr=substring(pstr,0,length(pstr)-1)+"]";
     println("generate totally "+name);
@@ -1890,8 +1890,15 @@ Scatterplot(nm,file,optionorg):=(
   [mx,my,sx,sy,sxy,rr,bb,aa];
 );
 
-Rulerscale(pt,hscale,vscale):=Rulerscale(pt,hscale,vscale,0.1);
-Rulerscale(pt,hscale,vscale,tick):=(
+Rulerscale(pt,hscale,vscale):=Rulerscale(pt,hscale,vscale,0.1,[]);//180722from
+Rulerscale(Arg1,Arg2,Arg3,Arg4):=(
+  if(!islist(Arg4),
+    Rulerscale(Arg1,Arg2,Arg3,Arg4,[]);
+  ,
+    Rulerscale(Arg1,Arg2,Arg3,0.2,Arg4);
+  );
+);//180722to
+Rulerscale(pt,hscale,vscale,tick,options):=(//180722
 //help:Rulerscale(A,["r",0,5,1],["s2",0,2,4]);
 //help:Rulerscale(A,["r",0,5,1],["f",10,"a",20,"w2","b"]);
 //help:Rulerscale(A,["r",0,5,1],["r",0,10,1],0.2);
@@ -1939,10 +1946,10 @@ Rulerscale(pt,hscale,vscale,tick):=(
     );
     pos=apply(pos,[#,pA_2]);
     forall(1..length(pos),
-      Expr([pos_#,dir_#,mrk_#]);
+      Expr([pos_#,dir_#,mrk_#],options);
       tmp1=pos_#;
       tmp2=pos_#-[0,tick/SCALEY];
-      Listplot("rsh"+text(#),[tmp1,tmp2],["Msg=no"]);
+      Listplot("rsh"+text(#),[tmp1,tmp2],concat(options,["Msg=no"]));
     );
   );
   if(length(vscale)>0,
@@ -1987,10 +1994,10 @@ Rulerscale(pt,hscale,vscale,tick):=(
     );
     pos=apply(pos,[pA_1,#]);
     forall(1..length(pos),
-      Expr([pos_#,dir_#,mrk_#]);
+      Expr([pos_#,dir_#,mrk_#],options);
       tmp1=pos_#;
       tmp2=pos_#-[tick/SCALEX,0];
-      Listplot("rsv"+text(#),[tmp1,tmp2],["Msg=no"]);
+      Listplot("rsv"+text(#),[tmp1,tmp2],concat(options,["Msg=no"]));
     );
   );
 );

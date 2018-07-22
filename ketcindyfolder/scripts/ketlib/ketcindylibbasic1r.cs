@@ -6370,14 +6370,12 @@ Shade(nm,plistorg,options):=( //180613to
       );
     ,
        tmp1=tmp1+"Listplot("+textformat(#,5)+"),";
-    ); // until 16.01.24
+    ); //16.01.24to
   );
   Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
-  Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")",["before"]));
+  Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722
   Com2nd(Str,["before"]);
-  Texcom("}");//180722
-//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")",["before"]));
+  Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722
 );
 
 /////////// end of new Hatchdata(cindy) ///////////

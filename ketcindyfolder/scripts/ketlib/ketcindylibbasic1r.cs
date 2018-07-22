@@ -2364,7 +2364,8 @@ IntegrateO(pltdata,rangeorg):=(
   Sm;
 );
 
-Findarea(pdstr):=(
+
+FindareaP(pdstr):=( //180722
 //help:Findarea("sgABCA");
   regional(pd,p1,p2,s,tmp);
   if(isstring(pdstr),pd=parse(pdstr),pd=pdstr);
@@ -2379,8 +2380,7 @@ Findarea(pdstr):=(
   s;
 );
 
-Findarea(pdstr):=(  // 15.11.27
-//help:Findarea("cr1");
+FindareaO(pdstr):=(  // 15.11.27,180722
   regional(pd,p0,p1,p2,p3,s,tmp);
   if(isstring(pdstr),pd=parse(pdstr),pd=pdstr);
   s=0;
@@ -2395,6 +2395,30 @@ Findarea(pdstr):=(  // 15.11.27
   if(s<0,s=-s);
   s;
 );
+
+Findarea(pdstr):=Findarea(pdstr,[]);//180722from
+Findarea(pdstr,options):=(
+//help:Findarea("cr1");
+//help:Findarea("cr1",["Way=polygon"]);
+  regional(tmp,tmp1,tmp2,eqL,way,out);
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  way="O";
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(tmp1=="W",
+      way=Toupper(substring(tmp2,0,1));
+    );
+  );
+  if(way=="O",
+    out=FindareaO(pdstr);
+  ,
+    out=FindareaP(pdstr);
+  );
+  out;
+);//180722to
 
 Findlength(pdstr):=(
 //help:Findlength("gr1");

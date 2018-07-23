@@ -1,3 +1,6 @@
+// 20180723
+//   Nearestptcrv changed ( for geometric point )
+//   Paramoncurve(pP,Gdata) changed (for geometric point)
 // 20180722
 //   color localized
 //   Findarea changed (FindareaP,FindareaO)

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180722)");
+println("KeTCindy V.3.2.1(20180723)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180722) loaded");
+println("ketcindylibbasic1(20180723) loaded");
 
 //help:start();
 
@@ -1201,8 +1201,11 @@ Invert(nm,Fig,options):=(
   Listplot(name,tmp,options);
 );// until 16.01.27
 
-Paramoncrv(pP,Gdata):=(
-  regional(Tmp,PtL);
+Paramoncrv(pP,Gdata):=Paramoncurve(pP,Gdata);//180723
+Paramoncurve(point,Gdata):=(
+//help:Paramoncurve(A,"gr1");//180723(3lines)
+  regional(Tmp,PtL,pP);
+  if(ispoint(point),pP=point.xy,pP=point);
 //  Eps=10^(-8);
   if(isstring(Gdata),PtL=parse(Gdata),PtL=Gdata);
   Tmp=Nearestpt(pP,PtL);
@@ -1971,8 +1974,9 @@ NearestptcrvPhy(point,PL):=(
 
 Nearestptcrv(point,plist):=(
 //help:Nearestptcrv(A,"gr1");
-  regional(tmp);
-  tmp=Nearestpt(point,plist);
+  regional(tmp,pt);//180723(3lines)
+  if(ispoint(point),pt=point.xy,pt=point);
+  tmp=Nearestpt(pt,plist);
   tmp_1;
 );
 

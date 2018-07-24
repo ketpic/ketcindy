@@ -1,3 +1,5 @@
+// 20180724
+//   Periodfun debugged and changed (rep=[n,n])
 // 20180722
 //   color localized
 // 20180721

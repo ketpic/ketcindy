@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180722) loaded");
+println("ketcindybasic2(20180724) loaded");
 
 //help:start();
 
@@ -1639,12 +1639,15 @@ Setscaling(sc):=(
 );
 
 Periodfun(defL,rep):=Periodfun(defL,rep,[]);
-Periodfun(defL,rep,optionorg):=(  // 16.11.24
-//help:Periodfun(["0",[-1,0],"1",1,[0,1],1],2(num of repetition),options);
+Periodfun(defL,reporg,optionorg):=(  // 16.11.24
+//help:Periodfun(["0",[-1,0],1(Num=),"1",[0,1],1(Num)],2(repeat count),options);
+//help:Periodfun(repeat count=n or [repeatL,repeatR]);
 //help:Periodfun(options=["Con=y"]);
 //help:Periodfun(defL=[function string, range, devision number,...]);
-  regional(nn,fun,range,num,options,nr,maxfun,
+  regional(nn,fun,range,num,options,nr,maxfun,rep,np,
     tmp,tmp1,tmp2,eqL,connect,minx,maxx,pdata,Eps,prept);
+  rep=reporg;
+  if(length(rep)==1,rep=[rep,rep]);//180724
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
@@ -1682,15 +1685,22 @@ Periodfun(defL,rep,optionorg):=(  // 16.11.24
       "<=x and x<"+tmp2+") then "+fun+" ";
   );
   per=maxx-minx;
-  forall(1..rep,nr,
-    tmp1=[];
-    forall(pdata,
-      Translatedata("p"+#+text(nr),#,[per*nr,0],options);
-      Translatedata("m"+#+text(nr),#,[-per*nr,0],options);
-      tmp1=concat(tmp1,["trp"+#+text(nr),"trm"+#+text(nr)]);
+  tmp1=[];
+  forall(1..(rep_1),nr, //180724from
+    forall(reverse(1..(length(pdata))),np,
+      Translatedata("m"+np+text(nr),pdata_np,[-per*nr,0],options);
+      tmp1=concat(["trm"+np+text(nr)],tmp1);
     );
   );
-  pdata=concat(pdata,tmp1);
+  tmp2=[];
+  forall(1..(rep_2),nr,
+    forall(1..(length(pdata)),np,
+      Translatedata("p"+np+text(nr),pdata_np,[per*nr,0],options);
+	  tmp2=concat(tmp2,["trp"+np+text(nr)]);
+    );
+  );//180724to
+  pdata=concat(tmp1,pdata);
+  pdata=concat(pdata,tmp2);
   if(connect=="Y",
     Eps=10^(-5);
     pdata=sort(pdata,[parse(#)_1_1]);
@@ -1700,7 +1710,7 @@ Periodfun(defL,rep,optionorg):=(  // 16.11.24
       tmp1=tmp_1;
       tmp2=tmp_(length(tmp));
       if(|prept-tmp1|>Eps,
-        Listplot("con"+text(#),[prept,tmp1],append(options,"da"));
+        Listplot("con"+text(#),[prept,tmp1],concat(options,["da","Msg=n"]));
       );
       prept=tmp_(length(tmp));
     );

@@ -1642,22 +1642,29 @@ Periodfun(defL,rep):=Periodfun(defL,rep,[]);
 Periodfun(defL,reporg,optionorg):=(  // 16.11.24
 //help:Periodfun(["0",[-1,0],1(Num=),"1",[0,1],1(Num)],2(repeat count),options);
 //help:Periodfun(repeat count=n or [repeatL,repeatR]);
-//help:Periodfun(options=["Con=y"]);
+//help:Periodfun(options=["Con(nect)=da,Color=red"]);//180725
 //help:Periodfun(defL=[function string, range, devision number,...]);
   regional(nn,fun,range,num,options,nr,maxfun,rep,np,
     tmp,tmp1,tmp2,eqL,connect,minx,maxx,pdata,Eps,prept);
   rep=reporg;
   if(length(rep)==1,rep=[rep,rep]);//180724
   options=optionorg;
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  connect="Y";
+//  tmp=Divoptions(options);
+  eqL=options;
+  connect=["da"];//180725
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp2=substring(#,tmp,tmp+1);
-    tmp=substring(#,0,3);
-    if(Toupper(tmp)=="CON",
-      connect=Toupper(tmp2);
+    tmp=indexof(#,"=");//180725from
+    tmp=[substring(#,0,tmp-1),substring(#,tmp,length(#))];
+    if(Toupper(substring(tmp_1,0,3))=="CON",
+	println([1658,tmp_2]);
+      tmp1=Toupper(Op(1,tmp_2));
+      if(tmp1=="N",
+        connect=[];
+      ,
+        if(tmp1!="Y",
+          connect=tokenize(tmp_2,",");
+        );
+      );//180725to
       options=remove(options,[#]);
     );
   );
@@ -1701,7 +1708,8 @@ Periodfun(defL,reporg,optionorg):=(  // 16.11.24
   );//180724to
   pdata=concat(tmp1,pdata);
   pdata=concat(pdata,tmp2);
-  if(connect=="Y",
+  if(length(connect)>0, //180725
+    connect=append(connect,"Msg=n"); //180725
     Eps=10^(-5);
     pdata=sort(pdata,[parse(#)_1_1]);
     prept=parse(pdata_1)_1;
@@ -1710,7 +1718,7 @@ Periodfun(defL,reporg,optionorg):=(  // 16.11.24
       tmp1=tmp_1;
       tmp2=tmp_(length(tmp));
       if(|prept-tmp1|>Eps,
-        Listplot("con"+text(#),[prept,tmp1],concat(options,["da","Msg=n"]));
+        Listplot("con"+text(#),[prept,tmp1],concat([],connect));//180725
       );
       prept=tmp_(length(tmp));
     );

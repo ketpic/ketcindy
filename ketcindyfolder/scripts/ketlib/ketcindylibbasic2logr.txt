@@ -1,3 +1,5 @@
+// 20180725
+//   Periodfun changed ( "connect" option)
 // 20180724
 //   Periodfun debugged and changed (rep=[n,n])
 // 20180722

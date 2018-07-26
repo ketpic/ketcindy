@@ -13,7 +13,7 @@ public class KetCindyPlugin extends CindyScriptPlugin {
 
     @CindyScript("ketjavaversion")
     public String ketjavaversion() {
-        return "Ketjava 20180408";
+        return "Ketjava 20180727";
     }
 
 	public String getName() {
@@ -143,7 +143,8 @@ public class KetCindyPlugin extends CindyScriptPlugin {
           }
           // 16.07.21upto
         }
-        if(str.indexOf("MV ")>-1 || str.indexOf("MOVE ")>-1){
+//        if(str.indexOf("MV ")>-1 || str.indexOf("MOVE ")>-1){
+        if(str.indexOf("MV ")>-1){ /*180727*/
           flg=3;
         }
         if(str.indexOf("RD ")>-1 || str.indexOf("RMDIR ")>-1){

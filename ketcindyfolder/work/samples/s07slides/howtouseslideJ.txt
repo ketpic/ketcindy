@@ -1,4 +1,4 @@
-ketslideによるプレゼンテーション　　2018.07.27
+ketslideによるプレゼンテーション　　2018.07.29
 
 ０．作成の流れ
 
@@ -113,8 +113,13 @@ ketslideによるプレゼンテーション　　2018.07.27
 
 　　（１）mf(s)にパラメータ値sのときの図を記述する．
 　　（２）パラパラの設定
-　　　　Setpara(foldername,funcitonstr,range,options); 
+　　　　Setpara(foldername,funcitonstr,range,options,optionsanime); 
+　　　　　options,optionsanimeのデフォルト値
 　　　　　　　options=["m/r", "Div=25"];
+　　　　　　　optionsanime=["Frate=10","Scale=1","OpA=[loop,controls,buttonsize=3mm]"]];
+　　　　注）optionsanmieはanimation用のオプション
+　　　　　　　OpAに追加するときは，"+"を用いる
+　　　　　　　　"OpA=+step" => "OpA=[loop,controls,buttonsize=3mm,step]"
 　　　　注）rangeの記述
 　　　　　i) "s=[0,1]"   区間をDivで分割
 　　　　　ii) [0.2, 0.6]　リストの各値をsに代入

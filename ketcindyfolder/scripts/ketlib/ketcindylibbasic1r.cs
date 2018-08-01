@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180723)");
+println("KeTCindy V.3.2.1(20180801)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180723) loaded");
+println("ketcindylibbasic1(20180801) loaded");
 
 //help:start();
 
@@ -4380,47 +4380,65 @@ Framedata(Arg1,Arg2):=(
     Framedata(name,list,options);
   );
 );
-Framedata(nm,list,options):=(
+Framedata(nm,list,optionsorg):=(
 //help:Framedata();
 //help:Framedata([C,A]);
 //help:Framedata("1",[C,A]);
+//help:Framedata("1",[A,B],["corner"]);
 //help:Framedata("1",[C,dx,dy]);
-  regional(name,Out,tmp,tmp1,pB,x1,x2,y1,y2,dx,dy,
-      opcindy,Ltype,Noflg,cent,dx,dy,color);
+  regional(name,options,Out,tmp,tmp1,pB,x1,x2,y1,y2,dx,dy,
+      opcindy,Ltype,Noflg,strL,type,cent,dx,dy,color);
   name="fr"+nm;
+  options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
-  opcindy=tmp_(length(tmp));
-  if(length(list)==2,  // 15.05.12
-    pA=Lcrd(list_1); pB=Lcrd(list_2);
-    dx=abs(pB_1-pA_1); dy=abs(pB_2-pA_2);
-  ,
-    pA=Lcrd(list_1);
-    dx=list_2; dy=list_3;
-  );
-  x1=pA_1-dx; x2=pA_1+dx;
-  y1=pA_2-dy; y2=pA_2+dy;
-  Out=[[x1,y1],[x2,y1],[x2,y2],[x1,y2],[x1,y1]];
-  if(Noflg<3,
-    println("generate Framedata "+name);
-    tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+textformat(tmp1,5);
-    parse(tmp);
-    GLIST=append(GLIST,name+"=Framedata("+pA+","+dx+","+dy+")");
-  );
-  if(Noflg<2,
-    if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
-      if(Noflg==1,Ltype=0);
+  strL=tmp_7; //180801from
+  type="center";
+  forall(strL,
+    if(Toupper(#)=="CORNER",
+      type="corner";
+      options=remove(options,[#]);
     );
-    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+    if(Toupper(#)=="CENTER",
+      type="center";
+      options=remove(options,[#]);
+    );
+  );
+  if(type=="corner",
+    Out=Framedata2(nm,list,options);
+  ,  //180801to
+    color=tmp_(length(tmp)-2);
+    opcindy=tmp_(length(tmp));
+    if(length(list)==2,  // 15.05.12
+      pA=Lcrd(list_1); pB=Lcrd(list_2);
+      dx=abs(pB_1-pA_1); dy=abs(pB_2-pA_2);
+    ,
+      pA=Lcrd(list_1);
+      dx=list_2; dy=list_3;
+    );
+    x1=pA_1-dx; x2=pA_1+dx;
+    y1=pA_2-dy; y2=pA_2+dy;
+    Out=[[x1,y1],[x2,y1],[x2,y2],[x1,y2],[x1,y1]];
+    if(Noflg<3,
+      println("generate Framedata "+name);
+      tmp1=apply(Out,Pcrd(#));
+      tmp=name+"="+textformat(tmp1,5);
+      parse(tmp);
+      GLIST=append(GLIST,name+"=Framedata("+pA+","+dx+","+dy+")");
+    );
+    if(Noflg<2,
+      if(isstring(Ltype),
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        Texcom("}");//180722
+//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      ,
+        if(Noflg==1,Ltype=0);
+      );
+      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+    );
   );
   Out;
 );

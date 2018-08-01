@@ -1,3 +1,5 @@
+// 20180801
+//   Framedata changed ( Option "corner"("center") added to call Framedata2)
 // 20180723
 //   Nearestptcrv changed ( for geometric point )
 //   Paramoncurve(pP,Gdata) changed (for geometric point)

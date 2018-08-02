@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180724) loaded");
+println("ketcindybasic2(20180802) loaded");
 
 //help:start();
 
@@ -2485,28 +2485,44 @@ Defvar(name,value):=(
   VLIST=prepend([name,value],VLIST);
 );
 
-IftoR(strorg):=(
-  regional(str,pre,post,sub,ppL,ifstr,out,tmp,tmp1,tmp2);
-  str=strorg;
-  ifstr=indexof(str,"if(");
-  if(ifstr==0,
-    out=replace(str,",","}else{");
-  ,
-    pre=substring(str,0,ifstr-1)+"if(";
-    ppL=Bracket(str,"()");
-    tmp1=ifstr+2;
-    tmp=select(ppL,#_1==tmp1);
-    tmp=select(ppL,#_2==-tmp_1_2);
-    tmp2=tmp_1_1;
-    sub=substring(str,tmp1,tmp2-1);
-    post="}"+substring(str,tmp2,length(str));
-    tmp=indexof(sub,",");
-    tmp1=substring(sub,0,tmp-1);
-    tmp2=substring(sub,tmp,length(sub));
-    sub=tmp1+"){"+tmp2;
-    tmp=IftoR(sub);
-    out=pre+tmp+"}";
+IftoR(strorg):=( //180802
+  regional(str,ifL,ppL,cpL,kk,sL,out,
+    tmp,tmp1,tmp2,tmp3,tmp4);
+  str=replace(strorg,LFmark,"");
+  ifL=Indexall(str,"if(");
+  ppL=Bracket(str,"()");
+  cpL=Indexall(str,",");
+  tmp1=Bracket(str,"[]");
+  forall(1..(length(tmp1)/2),kk,
+    cpL=select(cpL,#<tmp1_(2*kk-1)_1%#_1>tmp1_(2*kk)_1);
   );
+  forall(1..length(ifL),kk,
+    tmp=select(ppL,#_1>ifL_kk);
+    tmp1=tmp_1;
+    tmp2=select(tmp,#_2==-tmp1_2);
+    tmp2=tmp2_1;
+    tmp3=select(cpL,#>tmp1_1 & #<tmp2_1);
+    ifL_kk=[tmp1_1,tmp2_1,tmp1_2,tmp3];
+  );
+  forall(1..length(cpL),kk,
+    tmp=select(1..length(ifL),contains(ifL_#_4,cpL_kk));
+    tmp1=tmp_(length(tmp));
+    cpL_kk=[cpL_kk,tmp1];
+  );
+  sL=apply(1..length(str),substring(str,#-1,#));
+  forall(1..length(ifL),kk,
+    tmp1=ifL_kk_1;
+    tmp2=ifL_kk_2;
+    tmp=select(cpL,#_2==kk);
+    tmp3=apply(tmp,#_1);
+    sL_tmp1="(";
+    sL_tmp2="}";
+    sL_(tmp3_1)="){";
+    if(length(tmp3)>1,
+      sL_(tmp3_2)="}else{";
+    );
+  );
+  out=sum(sL);
   out;
 );
 

@@ -767,7 +767,7 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
   tmp=replace(str,"\","\\"); //17.10.18
   Texcom("{");Com2nd("Setcolor("+color+")");//180722
 //  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-  Com2nd("Exprrot("+pt+","+dir+","+tmov+","+nmov+",'"+tmp+"')");
+  Com2nd("Exprrot("+pt+","+dir+","+tmov+","+nmov+","+Dqq(tmp)+")");//180802
   Texcom("}");//180722
 //  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
 );

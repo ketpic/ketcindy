@@ -1,5 +1,6 @@
 // 20180802
 //   iftoR debugged  ( for nested case )
+//   Exprrot debugged  ( ' => "")
 // 20180725
 //   Periodfun changed ( "connect" option)
 // 20180724

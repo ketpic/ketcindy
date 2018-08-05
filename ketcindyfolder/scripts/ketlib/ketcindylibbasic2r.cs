@@ -699,9 +699,10 @@ Letterrot(pt,dir,Arg1,Arg2):=(
   );
 );
 Letterrot(pt,dir,movstr,str,options):=(
-// help:Letterrot(C,B-A,"AB"):
-// help:Letterrot(C,B-A,0,5,"AB"):
-//help:Letterrot(C,B-A,"t0n5","AB"):
+// help:Letterrot(C,B-A,"AB");
+// help:Letterrot(C,B-A,0,5,"AB");
+//help:Letterrot(C,B-A,AB",["Size=20"]);
+//help:Letterrot(C,B-A,"t0n5","AB");
   regional(tmov,nmov,tmp,tmp1,tmp2,color);
   tmp1=indexof(movstr,"t");
   tmp2=indexof(movstr,"n");
@@ -738,9 +739,10 @@ Exprrot(pt,dir,Arg1,Arg2):=(
   );
 );
 Exprrot(pt,dir,movstr,str,options):=(
-//help:Exprrot(C,B-A,"d"):
-//help:Exprrot(C,B-A,0,5,"d"):
-//help:Exprrot(C,B-A,"t0n5","d"):
+// help:Exprrot(C,B-A,"d");
+// help:Exprrot(C,B-A,0,5,"d");
+//help:Exprrot(C,B-A,"d",["Color=red"]);
+//help:Exprrot(C,B-A,"t0n5","d");
   regional(tmov,nmov,tmp,tmp1,tmp2,color);
   tmp1=indexof(movstr,"t");
   tmp2=indexof(movstr,"n");

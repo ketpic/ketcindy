@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180802) loaded");
+println("ketcindybasic2(20180805) loaded");
 
 //help:start();
 
@@ -699,8 +699,8 @@ Letterrot(pt,dir,Arg1,Arg2):=(
   );
 );
 Letterrot(pt,dir,movstr,str,options):=(
-//help:Letterrot(C,B-A,"AB"):
-//help:Letterrot(C,B-A,0,5,"AB"):
+// help:Letterrot(C,B-A,"AB"):
+// help:Letterrot(C,B-A,0,5,"AB"):
 //help:Letterrot(C,B-A,"t0n5","AB"):
   regional(tmov,nmov,tmp,tmp1,tmp2,color);
   tmp1=indexof(movstr,"t");
@@ -725,10 +725,8 @@ Letterrot(pt,dir,tmov,nmov,str,options):=(
   Letter([pt,"c",str],append(options,"notex"));
   tmp=replace(str,"\","\\"); //17.10.18
   Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-  Com2nd("Letterrot("+pt+","+dir+","+tmov+","+nmov+",'"+tmp+"')");
+  Com2nd("Letterrot("+pt+","+dir+","+tmov+","+nmov+","+Dqq(tmp)+")");//180805
   Texcom("}");//180722
-//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
 );
 
 Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str,[]);
@@ -2908,7 +2906,7 @@ Extractdata(Arg1,Arg2):=(
 );
 Extractdata(number,name,options):=(
 //help:ExtractData("ha1");
-//help:ExtractData(1,"ha1");
+// help:ExtractData(1,"ha1");
   regional(dlist,tmp,tmp1,tmp2,tmp3,File,Ltype,Noflg,opstr,opcindy,color);
   tmp=Divoptions(options);
   Ltype=tmp_1;

@@ -1,3 +1,5 @@
+// 20180805
+//   Letterrot debugged (' => "")
 // 20180802
 //   iftoR debugged  ( for nested case )
 //   Exprrot debugged  ( ' => "")

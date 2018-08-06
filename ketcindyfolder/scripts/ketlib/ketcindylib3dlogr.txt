@@ -1,3 +1,8 @@
+// 20180806
+//   Rotatepoint3d, Translatepoint3d, Reflectpoint3d renamed from old
+//   Scalepoint3d added
+// 20180729
+//   Rotatedata3d, Reflectdata3d changed ( only these names are valid)
 // 20180722
 //   color localized
 // 20180714

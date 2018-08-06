@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180722) loaded");
+println("ketcindylib3d(20180806) loaded");
 
 //help:start();
 
@@ -1240,14 +1240,12 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   Out;
 );
 
-Rotatept3d(point,w1,w2):=Rotate3pt(point,w1,w2);
-Rotatept3d(point,w1,w2,center):=Rotate3pt(point,w1,w2,center);
-//help:Rotatept3d(pt3d,[0,0,1],pi/2);
-//help:Rotatept3d(pt3d,[0,0,1],pi/2,[1,1,1]);
-Rotate3pt(point,w1,w2):=Rotate3pt(point,w1,w2,[0,0,0]);
-Rotate3pt(point,w1,w2,center):=(
-//help:Rotate3pt(pt3d,[0,0,1],pi/2);
-//help:Rotate3pt(pt3d,[0,0,1],pi/2,[1,1,1]);
+
+Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
+Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
+Rotatepoint3d(point,w1,w2,center):=(
+//help:Rotatepointt3d(pt3d,[0,0,1],pi/2);
+//help:Rotatepoint3d(pt3d,[0,0,1],pi/2,[1,1,1]);
   regional(Eps,ct,st,v3,v1,v2,Ans,ns,PtL,num,
     pt,tmp,tmp1,tmp2,Retflg,x,y,z,xx,yy,zz,flg);
   Eps=10^(-4);
@@ -1330,12 +1328,9 @@ Rotate3pt(point,w1,w2,center):=(
   Ans;
 );
 
-Rotatedata3d(nm,P3data,w1,w2):=Rotate3data(nm,P3data,w1,w2);
-Rotatedata3d(nm,P3data,w1,w2,options):=
-    Rotate3data(nm,P3data,w1,w2,options);
+Rotatedata3d(nm,P3data,w1,w2):=Rotatedata3d(nm,P3data,w1,w2,[]);
+Rotatedata3d(nm,P3data,w1,w2,options):=(
 //help:Rotatedata3d("1",["sl3d1","sc3d2"],[0,0,1],pi/3);
-Rotate3data(nm,P3data,w1,w2):=Rotate3data(nm,P3data,w1,w2,[]);
-Rotate3data(nm,P3data,w1,w2,options):=(
   regional(name3,name2,center,pdata,Pd3,Pd,Out,tmp,tmp1,
        Ltype,Noflg,opcindy,opstr,color);
   name3="rot3d"+nm;
@@ -1358,7 +1353,7 @@ Rotate3data(nm,P3data,w1,w2,options):=(
     if(MeasureDepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
-      tmp=Rotate3pt(#,w1,w2,center);
+      tmp=Rotatepoint3d(#,w1,w2,center); //180729
       Ans=append(Ans,tmp);
     );
     Out=append(Out,Ans);
@@ -1366,7 +1361,7 @@ Rotate3data(nm,P3data,w1,w2,options):=(
   Out=Flattenlist(Out);
   if(length(Out)==1,Out=Out_1);
   if(Noflg<3,
-    println("generate Rotate3data "+name3);
+    println("generate Rotatedata3d "+name3);
     tmp=name3+"="+textformat(Out,5);
     parse(tmp);
     tmp1=Projpara(name3,["nodata"]);
@@ -1400,9 +1395,9 @@ Rotate3data(nm,P3data,w1,w2,options):=(
   Out;
 );
 
-Translatept3d(point,w1):=Translate3pt(point,w1);
-//help:Translatept3d(pt3d,[1,2,3]);
-Translate3pt(point,w1):=(
+Translate3pt(point,w1):=Translatepoint3d(point,w1);
+Translatepoint3d(point,w1):=(
+//help:Translatepoint3d(pt3d,[1,2,3]);
   regional(Eps,Ans,PtL,pt,num,xx,yy,zz,flg);
   Eps=10^(-4);
   if(MeasureDepth(point)>0,
@@ -1429,12 +1424,9 @@ Translate3pt(point,w1):=(
   Ans;
 );
 
-Translatedata3d(nm,P3data,w1):=Translate3data(nm,P3data,w1);
-Translatedata3d(nm,P3data,w1,options):=
-    Translate3data(nm,P3data,w1,options);
+Translatedata3d(nm,P3data,w1):=Translatedata3d(nm,P3data,w1,[]);
+Translatedata3d(nm,P3data,w1,options):=(
 //help:Translatedata3d("1",["sl3d1"],[1,2,3]);
-Translate3data(nm,P3data,w1):=Translate3data(nm,P3data,w1,[]);
-Translate3data(nm,P3data,w1,options):=(
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
       Ltype,Noflg,opcindy,color);
   name3="tra3d"+nm;
@@ -1451,7 +1443,7 @@ Translate3data(nm,P3data,w1,options):=(
     if(MeasureDepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
-      tmp=Translate3pt(#,w1);
+      tmp=Translatepoint3d(#,w1);
       Ans=append(Ans,tmp);
     );
     Out=append(Out,Ans);
@@ -1459,7 +1451,7 @@ Translate3data(nm,P3data,w1,options):=(
   Out=Flattenlist(Out);
   if(length(Out)==1,Out=Out_1);
   if(Noflg<3,
-    println("generate Translate3data "+name3);
+    println("generate Translatedata3d "+name3);
     tmp=name3+"="+textformat(Out,5);
     parse(tmp);
     tmp1=Projpara(name3,["nodata"]);
@@ -1493,11 +1485,9 @@ Translate3data(nm,P3data,w1,options):=(
   Out;
 );
 
-Reflectpoint3d(point,vecL):=Reflect3point(point,vecL);
-Reflectpt3d(point,vecL):=Reflect3pt(point,vecL);
+Reflect3pt(point,vecL):=Reflectpoint3d(point,vecL);
+Reflectpoint3d(point,vecL):=(
 //help:Reflectpoint3d(pt3d,[v1,v2,v3]);
-Reflect3point(point,vecL):=Reflect3pt(point,vecL);
-Reflect3pt(point,vecL):=(
   regional(ans,v1,v2,v3,tmp,tmp1);
   if(length(vecL)==1,
     v1=vecL_1;
@@ -1519,6 +1509,80 @@ Reflect3pt(point,vecL):=(
     ans=2*tmp1-point;
   );
   ans;
+);
+
+Reflectdata3d(nm,P3data,vecL):=Reflectdata3d(nm,P3data,vecL,[]);
+Reflectdata3d(nm,P3data,vecL,options):=(
+//help:Reflectdata3d("1",["sl3d1"],[v1,v2,v3]);
+  regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
+      Ltype,Noflg,opcindy,color);
+  name3="ref3d"+nm;
+  name2="ref2d"+nm;
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  color=tmp_(length(tmp)-2);
+  opcindy=tmp_(length(tmp));
+  if(islist(P3data) & isstring(P3data_1),Pd3=P3data,Pd3=[P3data]);
+  Out=[];
+  forall(Pd3,Pd,
+    if(isstring(Pd),Pd=parse(Pd));
+    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+    Ans=[];
+    forall(Pd,
+      tmp=Reflectpoint3d(#,w1);
+      Ans=append(Ans,tmp);
+    );
+    Out=append(Out,Ans);
+  );
+  Out=Flattenlist(Out);
+  if(length(Out)==1,Out=Out_1);
+  if(Noflg<3,
+    println("generate Reflectdata3d "+name3);
+    tmp=name3+"="+textformat(Out,5);
+    parse(tmp);
+    tmp1=Projpara(name3,["nodata"]);
+    tmp=name2+"="+textformat(tmp1,5);
+    parse(tmp);
+    tmp=textformat(P3data,5); // 17.12.23
+    tmp=RSform(tmp,1); // 180602
+//    tmp=text(P3data);
+//    tmp=replace(tmp,"[","list(");
+//    tmp=replace(tmp,"]",")");
+    tmp=name3+"=Reflect3data("+tmp+","+textformat(w1,5)+")";
+    GLIST=append(GLIST,tmp);
+    tmp=name2+"=Projpara("+name3+")";
+    GLIST=append(GLIST,tmp);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Texcom("}");//180722
+//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+    GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
+    if(SUBSCR==1, //  15.02.11
+      Subgraph(name3,opcindy);
+    );
+  );
+  Out;
+);
+
+// 180806
+Scale3pt(point,ratio,center):=Scalepoint3d(point,ratio,center);
+Scalepoint3d(point,ratio,center):=(
+//help:Scalepoint3d(A,[3,2,4],[0,0,0]);
+  regional(X1,Y1,Z1,X2,Y2,Z2,Cx,Cy,Cz);
+  X1=point_1; Y1=point_2;  Z1=point_3;
+  Cx=center_1; Cy=center_2; Cz=center_3;
+  X2=Cx+ratio_1*(X1-Cx);
+  Y2=Cy+ratio_2*(Y1-Cy);
+  Z2=Cz+ratio_3*(Z1-Cz);
+  [X2,Y2,Z2];
 );
 
 Xyzcoord(X,Y,z):=(

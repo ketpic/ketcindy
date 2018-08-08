@@ -16,10 +16,14 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180717)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180808)" 
 
 print(ThisVersion)
 
+# 20180808
+#  Scalept3pt changed  (ratio)
+# 20180807
+#  Reflect3pt,Reflect3data,Scale3pt,Scale3data added
 # 20180717
 #  Hatchdata debugged  (width option)
 #  Enclosing debugged  ( for closed curve )
@@ -9767,6 +9771,142 @@ Projpers<- function(...){
 }
 
 #########################################
+# 180807
+
+Reflect3data<- function(...){
+  varargin<-list(...)
+  Nargs<- length(varargin)
+  Pd3<- varargin[[1]]
+  VL<- varargin[[2]]
+  if(Mixtype(Pd3)==1){
+    Pd3<- list(Pd3)
+  } else if(Mixtype(Pd3)==3){
+    Tmp<- list()
+    for (I in Looprange(1,Length(Pd3))){
+      Tmp<- c(Tmp,Op(I,Pd3))
+    }
+    Pd3<- Tmp
+  }
+  Out<- list() 
+  for (I in Looprange(1,Length(Pd3))){
+     PD<- Op(I,Pd3)
+     Ans<- c() 
+     for (J in Looprange(1,Nrow(PD))){
+      if(is.matrix(PD)){
+        P<- PD[J,]
+      }
+      else{
+        P<- PD
+      } 
+      Tmp<- Reflect3pt(P,VL)
+      Ans<- rbind(Ans,Tmp)
+    }
+#    rownames(Ans)<- 1:Nrow(Ans)
+    Out<- c(Out,list(Ans))
+   }
+   if(Length(Out)==1){
+     Out<- Op(1,Out)
+  }
+  return(Out)
+}
+
+#######################################
+
+Reflect3pt<- function(...){
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  P<- varargin[[1]]
+  VL<- varargin[[2]]
+  if(Length(VL)==1){
+    Ans=2*Op(1,VL)-P
+  }
+  if(Length(VL)==2){
+    V1=Op(1,VL)
+    V2=Op(2,VL)
+    V3=(V2-V1)/Norm(V2-V1)
+    Tmp=V1+Dotprod(P-V1,V3)*V3
+    Ans=2*Tmp-P
+  }
+  if(Length(VL)==3){
+    V1=Op(1,VL)
+    V2=Op(2,VL)
+    V3=Op(3,VL)
+    Tmp=Crossprod(V2-V1,V3-V1)
+    Tmp1=P-Dotprod(Tmp, P-V1)/Norm(Tmp)^2*Tmp
+    Ans=2*Tmp1-P
+  }
+  return(Ans)
+}
+
+#########################################
+# 180807
+
+Scale3data<- function(...){
+  varargin<-list(...)
+  Nargs<- length(varargin)
+  Pd3<- varargin[[1]]
+  R<- varargin[[2]]
+  C<- varargin[[3]]
+  C<- c(0,0,0)
+  if(Nargs>=3){
+    C<- varargin[[3]]
+  }
+  if(Mixtype(Pd3)==1){
+    Pd3<- list(Pd3)
+  } else if(Mixtype(Pd3)==3){
+    Tmp<- list()
+    for (I in Looprange(1,Length(Pd3))){
+      Tmp<- c(Tmp,Op(I,Pd3))
+    }
+    Pd3<- Tmp
+  }
+  Out<- list() 
+  for (I in Looprange(1,Length(Pd3))){
+    PD<- Op(I,Pd3)
+    Ans<- c() 
+    for (J in Looprange(1,Nrow(PD))){
+      if(is.matrix(PD)){
+        P<- PD[J,]
+      }
+      else{
+        P<- PD
+      } 
+      Tmp<- Scale3pt(P,R,C)
+      Ans<- rbind(Ans,Tmp)
+    }
+    rownames(Ans)<- 1:Nrow(Ans)
+    Out<- c(Out,list(Ans))
+  }
+  if(Length(Out)==1){
+    Out<- Op(1,Out)
+  }
+  return(Out)
+}
+
+#######################################
+
+Scale3pt<- function(...){
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  P<- varargin[[1]]
+  R<- varargin[[2]]
+  if(length(R)==1){ #180808from
+    R=c(R,R,R)
+  } #180808to
+  C<- c(0,0,0)
+  if(Nargs>=3){
+    C<- varargin[[3]]
+  }
+  X1=P[1]; Y1=P[2];  Z1=P[3]
+  Cx=C[1]; Cy=C[2]; Cz=C[3]
+  X2=Cx+R[1]*(X1-Cx)
+  Y2=Cy+R[2]*(Y1-Cy)
+  Z2=Cz+R[3]*(Z1-Cz)
+  Ans=c(X2,Y2,Z2)
+  return(Ans)
+}
+
+#########################################
 # 11.08.27
 # 14.03.23   Debugged "center"
 
@@ -9800,7 +9940,7 @@ Rotate3data<- function(...){
       }
       else{
         P<- PD
-      } 
+      }
        Tmp<- Rotate3pt(P,W1,W2,C) # 14.03.23
        Ans<- rbind(Ans,Tmp)
      } # 11.08.27
@@ -9899,6 +10039,45 @@ Rotate3pt<- function(...){
     Ans<- Op(1,Ans)
   }
  return(Ans)
+}
+
+#################################
+
+Translate3data<- function(...){
+  varargin<- list(...)
+  Nargs<- length(varargin)
+  Pd3<- varargin[[1]]
+  Mv<- varargin[[2]]
+  if(mode(Mv)=="numerice" && length(Mv)==1){
+    Mv<- c(varargin[[2]],varargin[[3]],varargin[[4]])
+  }
+  if(Mixtype(Pd3)==1){
+    Pd3<- list(Pd3)
+  }
+  else if(Mixtype(Pd3)==3){
+    Tmp<-list()
+    for(I in Looprange(1,Mixlength(Pd3))){
+      Tmp<- c(Tmp, Op(I,Pd3))
+    }
+    Pd3<- Tmp
+  }
+  Out<- list()
+  for(I in Looprange(1,Mixlength(Pd3))){
+    PD<- Op(I,Pd3)
+    PD<- rbind(c(),PD)
+    Ans<- c()
+    for(J in Looprange(1,Nrow(PD))){
+      P<- PD[J,]
+      Tmp<- P+Mv
+      Ans<- rbind(Ans,Tmp)
+    }
+    rownames(Ans)<- 1:Nrow(Ans)
+    Out<- c(Out,list(Ans))
+  }
+  if(Mixlength(Out)==1){
+    Out<- Op(1,Out)
+  }
+  return(Out)
 }
 
 ######################################
@@ -10297,45 +10476,6 @@ Spaceline<- function(...){
   }
   Z<- matrix(Z,ncol=3,byrow=TRUE)                
   return(Z)
-}
-
-#################################
-
-Translate3data<- function(...){
-  varargin<- list(...)
-  Nargs<- length(varargin)
-  Pd3<- varargin[[1]]
-  Mv<- varargin[[2]]
-  if(mode(Mv)=="numerice" && length(Mv)==1){
-    Mv<- c(varargin[[2]],varargin[[3]],varargin[[4]])
-  }
-  if(Mixtype(Pd3)==1){
-    Pd3<- list(Pd3)
-  }
-  else if(Mixtype(Pd3)==3){
-    Tmp<-list()
-    for(I in Looprange(1,Mixlength(Pd3))){
-      Tmp<- c(Tmp, Op(I,Pd3))
-    }
-    Pd3<- Tmp
-  }
-  Out<- list()
-  for(I in Looprange(1,Mixlength(Pd3))){
-    PD<- Op(I,Pd3)
-    PD<- rbind(c(),PD)
-    Ans<- c()
-    for(J in Looprange(1,Nrow(PD))){
-      P<- PD[J,]
-      Tmp<- P+Mv
-      Ans<- rbind(Ans,Tmp)
-    }
-    rownames(Ans)<- 1:Nrow(Ans)
-    Out<- c(Out,list(Ans))
-  }
-  if(Mixlength(Out)==1){
-    Out<- Op(1,Out)
-  }
-  return(Out)
 }
 
 ###############################################

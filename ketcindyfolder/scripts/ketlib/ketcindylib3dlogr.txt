@@ -1,3 +1,7 @@
+// 20180808
+//   Rotatedata3d, Translatedata3d, debugged
+//   Reflectdata3d, Scaledata3d added
+//   Scalepoint3d changed  ( ratio )
 // 20180806
 //   Rotatepoint3d, Translatepoint3d, Reflectpoint3d renamed from old
 //   Scalepoint3d added

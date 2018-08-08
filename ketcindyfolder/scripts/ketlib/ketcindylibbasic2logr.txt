@@ -1,3 +1,5 @@
+// 20180809
+//  Mkcircles,Mksegment changed
 // 20180805
 //   Letterrot debugged (' => "")
 //   Letterrot, Exprrot changed (help )

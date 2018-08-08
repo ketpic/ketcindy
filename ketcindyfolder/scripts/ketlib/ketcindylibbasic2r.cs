@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180805) loaded");
+println("ketcindybasic2(20180809) loaded");
 
 //help:start();
 
@@ -409,10 +409,12 @@ Reflectdata(nm,plist,symL,options):=(
   PdL;
 );
 
+// 180800 revised
 Mksegments():=Mksegments([]);
 Mksegments(options):=(
 //help:Mksegments();
-  regional(segstr,p,q,r,tmp1,tmp2,tmp3);
+  regional(ctr,segstr,p,q,r,tmp1,tmp2,tmp3);
+  ctr=1;//180809
   forall(allsegments(),seg,
     str=text(inspect(seg,"definition"));
     tmp1=indexof(str,"(");
@@ -420,30 +422,30 @@ Mksegments(options):=(
     tmp3=indexof(str,")");
     p=substring(str,tmp1,tmp2-1);
     q=substring(str,tmp2,tmp3-1);
-    Listplot([parse(p),parse(q)]);
+    Listplot("all"+text(ctr),[parse(p),parse(q)]);//180800
+    ctr=ctr+1;
   );
 );
 
+// 180809 revised
 Mkcircles():=Mkcircles([]);
 Mkcircles(options):=(
 //help:Mkcircles():
-  regional(seg,cir,str,p,q,r,tmp1,tmp2,tmp3,tmp4);
+  regional(str,ctr,tmp,tmp1,tmp2);
+  ctr=1;
   forall(allcircles(),cir,
     str=text(inspect(cir,"definition"));
     tmp1=indexof(str,"(");
-    tmp2=indexof(str,";");
-    tmp3=indexof(str,")");
-    tmp4=indexof(str,";",tmp2+1);
-    if(tmp4==0,
-      p=substring(str,tmp1,tmp2-1);
-      q=substring(str,tmp2,tmp3-1);
-      Circledata([parse(p),parse(q)]);
+    tmp2=indexof(str,")");
+    str=substring(str,tmp1,tmp2-1);
+    tmp=Strsplit(str,";");
+    tmp1=parse(tmp_1); tmp2=parse(tmp_2);
+    if(ispoint(tmp2),
+      Circledata("all"+text(ctr),[tmp1,tmp2],options);
     ,
-      p=substring(str,tmp1,tmp2-1);
-      q=substring(str,tmp2,tmp4-1);
-      r=substring(str,tmp4,tmp3-1);
-      Circledata([parse(p),parse(q),parse(r)]);
+      Circledata("all"+text(ctr),[tmp1,tmp1+[tmp2,0]],options);
     );
+    ctr=ctr+1;
   );
 );
 

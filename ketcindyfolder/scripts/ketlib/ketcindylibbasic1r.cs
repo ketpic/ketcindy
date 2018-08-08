@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180801)");
+println("KeTCindy V.3.2.1(20180800)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20180801) loaded");
 
@@ -3870,10 +3870,8 @@ Plotdata(name1,func,variable,options):=(
     if(Noflg<2,
       if(isstring(Ltype),
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
         Texcom("}");//180722
-//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
      ,
         if(Noflg==1,Ltype=0);
       );
@@ -3884,10 +3882,8 @@ Plotdata(name1,func,variable,options):=(
     if(Noflg<2,
       if(isstring(Ltype),
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
         Texcom("}");//180722
-//        if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
       ,
         if(Noflg==1,Ltype=0);
       );

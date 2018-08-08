@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180806) loaded");
+println("ketcindylib3d(20180808) loaded");
 
 //help:start();
 
@@ -1331,6 +1331,7 @@ Rotatepoint3d(point,w1,w2,center):=(
 Rotatedata3d(nm,P3data,w1,w2):=Rotatedata3d(nm,P3data,w1,w2,[]);
 Rotatedata3d(nm,P3data,w1,w2,options):=(
 //help:Rotatedata3d("1",["sl3d1","sc3d2"],[0,0,1],pi/3);
+//help:Rotatedata3d(options=[center,...]);
   regional(name3,name2,center,pdata,Pd3,Pd,Out,tmp,tmp1,
        Ltype,Noflg,opcindy,opstr,color);
   name3="rot3d"+nm;
@@ -1350,7 +1351,7 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
   Out=[];
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
-    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+//    if(MeasureDepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
       tmp=Rotatepoint3d(#,w1,w2,center); //180729
@@ -1367,12 +1368,14 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
     tmp1=Projpara(name3,["nodata"]);
     tmp=name2+"="+textformat(tmp1,5);
     parse(tmp);
-    tmp=textformat(P3data,5); // 17.12.23
+    tmp=Textformat(P3data,5); // 17.12.23
     tmp=RSform(tmp,1); //180602
+    tmp=replace(tmp,Dq,"");//180808
 //    tmp=replace(tmp,"[","list(");
 //    tmp=replace(tmp,"]",")");
-    tmp=name3+"=Rotate3data("+tmp+","
-	       +textformat(w1,5)+","+textformat(w2,5)+opstr+")";
+    tmp=name3+"=Rotate3data("+tmp+",";
+    tmp=tmp+Textformat(w1,6)+","+Textformat(w2,6);
+    tmp=tmp+","+Textformat(center,6)+")";//180808
     GLIST=append(GLIST,tmp);
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
@@ -1380,10 +1383,8 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
   if(Noflg<2,
     if(isstring(Ltype),
       Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
       Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1459,6 +1460,7 @@ Translatedata3d(nm,P3data,w1,options):=(
     parse(tmp);
     tmp=textformat(P3data,5); // 17.12.23
     tmp=RSform(tmp,1); // 180602
+    tmp=replace(tmp,Dq,""); //180808
 //    tmp=text(P3data);
 //    tmp=replace(tmp,"[","list(");
 //    tmp=replace(tmp,"]",")");
@@ -1527,10 +1529,10 @@ Reflectdata3d(nm,P3data,vecL,options):=(
   Out=[];
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
-    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+//    if(MeasureDepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
-      tmp=Reflectpoint3d(#,w1);
+      tmp=Reflectpoint3d(#,vecL);
       Ans=append(Ans,tmp);
     );
     Out=append(Out,Ans);
@@ -1542,14 +1544,16 @@ Reflectdata3d(nm,P3data,vecL,options):=(
     tmp=name3+"="+textformat(Out,5);
     parse(tmp);
     tmp1=Projpara(name3,["nodata"]);
-    tmp=name2+"="+textformat(tmp1,5);
+    tmp=name2+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp=textformat(P3data,5); // 17.12.23
+    tmp=Textformat(P3data,5); // 17.12.23
     tmp=RSform(tmp,1); // 180602
+    tmp=replace(tmp,Dq,""); //180807
 //    tmp=text(P3data);
 //    tmp=replace(tmp,"[","list(");
 //    tmp=replace(tmp,"]",")");
-    tmp=name3+"=Reflect3data("+tmp+","+textformat(w1,5)+")";
+    tmp=name3+"=Reflect3data("+tmp;
+    tmp=tmp+","+RSform(Textformat(vecL,5),2)+")";
     GLIST=append(GLIST,tmp);
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
@@ -1557,10 +1561,8 @@ Reflectdata3d(nm,P3data,vecL,options):=(
   if(Noflg<2,
     if(isstring(Ltype),
       Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
       Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1576,13 +1578,86 @@ Reflectdata3d(nm,P3data,vecL,options):=(
 Scale3pt(point,ratio,center):=Scalepoint3d(point,ratio,center);
 Scalepoint3d(point,ratio,center):=(
 //help:Scalepoint3d(A,[3,2,4],[0,0,0]);
-  regional(X1,Y1,Z1,X2,Y2,Z2,Cx,Cy,Cz);
+  regional(ra1,ra2,ra3,X1,Y1,Z1,X2,Y2,Z2,Cx,Cy,Cz);
   X1=point_1; Y1=point_2;  Z1=point_3;
+  if(length(ratio)==1, //1808from
+    ra1=ratio; ra2=ratio; ra3=ratio;
+  ,
+    ra1=ratio_1; ra2=ratio_2; ra3=ratio_3;
+  );//1808to
   Cx=center_1; Cy=center_2; Cz=center_3;
-  X2=Cx+ratio_1*(X1-Cx);
-  Y2=Cy+ratio_2*(Y1-Cy);
-  Z2=Cz+ratio_3*(Z1-Cz);
+  X2=Cx+ra1*(X1-Cx);
+  Y2=Cy+ra2*(Y1-Cy);
+  Z2=Cz+ra3*(Z1-Cz);
   [X2,Y2,Z2];
+);
+
+// 180808
+Scaledata3d(nm,P3data,ratio):=Scaledata3d(nm,P3data,ratio,[]);
+Scaledata3d(nm,P3data,ratio,options):=(
+//help:Reflectdata3d("1",["sl3d1"],[v1,v2,v3]);
+  regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
+      reL,Ltype,Noflg,opcindy,color,center);
+  name3="ref3d"+nm;
+  name2="ref2d"+nm;
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  reL=tmp_6;
+  color=tmp_(length(tmp)-2);
+  opcindy=tmp_(length(tmp));
+  center=[0,0,0];
+  if(length(reL)>0,
+    center=reL_1;
+  );
+  if(islist(P3data) & isstring(P3data_1),Pd3=P3data,Pd3=[P3data]);
+  Out=[];
+  forall(Pd3,Pd,
+    if(isstring(Pd),Pd=parse(Pd));
+//    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+    Ans=[];
+    forall(Pd,
+      tmp=Scalepoint3d(#,ratio,center);
+      Ans=append(Ans,tmp);
+    );
+    Out=append(Out,Ans);
+  );
+  Out=Flattenlist(Out);
+  if(length(Out)==1,Out=Out_1);
+  if(Noflg<3,
+    println("generate Scaledata3d "+name3);
+    tmp=name3+"="+textformat(Out,5);
+    parse(tmp);
+    tmp1=Projpara(name3,["nodata"]);
+    tmp=name2+"="+Textformat(tmp1,5);
+    parse(tmp);
+    tmp=Textformat(P3data,5); // 17.12.23
+    tmp=RSform(tmp,1); // 180602
+    tmp=replace(tmp,Dq,""); //180807
+//    tmp=text(P3data);
+//    tmp=replace(tmp,"[","list(");
+//    tmp=replace(tmp,"]",")");
+    tmp=name3+"=Scale3data("+tmp;
+    tmp=tmp+","+Textformat(ratio,5);
+    tmp=tmp+","+Textformat(center,5)+")";
+    GLIST=append(GLIST,tmp);
+    tmp=name2+"=Projpara("+name3+")";
+    GLIST=append(GLIST,tmp);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Texcom("}");//180722
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+    GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
+    if(SUBSCR==1, //  15.02.11
+      Subgraph(name3,opcindy);
+    );
+  );
+  Out;
 );
 
 Xyzcoord(X,Y,z):=(
@@ -4165,9 +4240,9 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+      Texcom("{");Com2nd("Setcolor("+color+")");//180722
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
+      Texcom("}");//180722
     ,
       if(Noflg==1,Ltype=0);
     );

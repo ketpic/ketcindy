@@ -1,3 +1,5 @@
+// 20180809
+//   Rotatepoint3d changed  ( default center [0,0,0] added )
 // 20180808
 //   Rotatedata3d, Translatedata3d, debugged
 //   Reflectdata3d, Scaledata3d added

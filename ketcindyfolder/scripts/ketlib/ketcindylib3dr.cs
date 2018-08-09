@@ -1240,12 +1240,12 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   Out;
 );
 
-
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
+Rotatepoint3d(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);//180809
 Rotatepoint3d(point,w1,w2,center):=(
-//help:Rotatepointt3d(pt3d,[0,0,1],pi/2);
-//help:Rotatepoint3d(A3d,[0,0,1],pi/2,[1,1,1]);
+//help:Rotatepoint3d(pt3d,[0,0,1],pi/2);
+//help:Rotatepoint3d(pt3d,[0,0,1],pi/2,[1,1,1]);
   regional(Eps,ct,st,v3,v1,v2,Ans,ns,PtL,num,
     pt,tmp,tmp1,tmp2,Retflg,x,y,z,xx,yy,zz,flg);
   Eps=10^(-4);
@@ -1516,6 +1516,8 @@ Reflectpoint3d(point,vecL):=(
 Reflectdata3d(nm,P3data,vecL):=Reflectdata3d(nm,P3data,vecL,[]);
 Reflectdata3d(nm,P3data,vecL,options):=(
 //help:Reflectdata3d("1",["sl3d1"],[v1,v2,v3]);
+//help:Reflectdata3d("1",["sl3d1"],[v1,v2]);
+//help:Reflectdata3d("1",["sl3d1"],[v1]);
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
       Ltype,Noflg,opcindy,color);
   name3="ref3d"+nm;
@@ -1576,8 +1578,10 @@ Reflectdata3d(nm,P3data,vecL,options):=(
 
 // 180806
 Scale3pt(point,ratio,center):=Scalepoint3d(point,ratio,center);
+Scalepoint3d(point,ratio):=Scalepoint3d(point,ratio,[0,0,0]);//180809
 Scalepoint3d(point,ratio,center):=(
-//help:Scalepoint3d(A,[3,2,4],[0,0,0]);
+//help:Scalepoint3d(A,[3,2,4]);
+//help:Scalepoint3d(A,[3,2,4],[1,2,3]);
   regional(ra1,ra2,ra3,X1,Y1,Z1,X2,Y2,Z2,Cx,Cy,Cz);
   X1=point_1; Y1=point_2;  Z1=point_3;
   if(length(ratio)==1, //1808from

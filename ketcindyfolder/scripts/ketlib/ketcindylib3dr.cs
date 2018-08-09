@@ -1245,7 +1245,7 @@ Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
 Rotatepoint3d(point,w1,w2,center):=(
 //help:Rotatepointt3d(pt3d,[0,0,1],pi/2);
-//help:Rotatepoint3d(pt3d,[0,0,1],pi/2,[1,1,1]);
+//help:Rotatepoint3d(A3d,[0,0,1],pi/2,[1,1,1]);
   regional(Eps,ct,st,v3,v1,v2,Ans,ns,PtL,num,
     pt,tmp,tmp1,tmp2,Retflg,x,y,z,xx,yy,zz,flg);
   Eps=10^(-4);

@@ -443,6 +443,7 @@ Mkcircles(options):=(
     if(ispoint(tmp2),
       Circledata("all"+text(ctr),[tmp1,tmp2],options);
     ,
+      tmp=cir.radius;
       Circledata("all"+text(ctr),[tmp1,tmp1+[tmp2,0]],options);
     );
     ctr=ctr+1;

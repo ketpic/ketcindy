@@ -1,3 +1,5 @@
+// 20180811
+//   IntersectsgpL debugged (Reflect3point->Reflectreflectpoint3d)
 // 20180809
 //   Rotatepoint3d changed  ( default center [0,0,0] added )
 // 20180808

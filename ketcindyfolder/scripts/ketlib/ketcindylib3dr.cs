@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180808) loaded");
+println("ketcindylib3d(20180811) loaded");
 
 //help:start();
 
@@ -1599,7 +1599,7 @@ Scalepoint3d(point,ratio,center):=(
 // 180808
 Scaledata3d(nm,P3data,ratio):=Scaledata3d(nm,P3data,ratio,[]);
 Scaledata3d(nm,P3data,ratio,options):=(
-//help:Reflectdata3d("1",["sl3d1"],[v1,v2,v3]);
+//help:Scaledata3d("1",["sl3d1"],[v1,v2,v3]);
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
       reL,Ltype,Noflg,opcindy,color,center);
   name3="ref3d"+nm;
@@ -2175,8 +2175,8 @@ IntersectsgpL(name,sgstr,pLstr,option):=(
   );
   nvec=Crossprod(pB-pA,pC-pA);
   if(abs(Dotprod(nvec,pQ-pP))>Eps,
-    pH=(Reflect3point(pP,[pA,pB,pC])+pP)/2; 
-    pK=(Reflect3point(pQ,[pA,pB,pC])+pQ)/2;
+    pH=(Reflectpoint3d(pP,[pA,pB,pC])+pP)/2; //180811(2lines)
+    pK=(Reflectpoint3d(pQ,[pA,pB,pC])+pQ)/2;
     tmp1=pP-pH;
     tmp2=tmp1+pK-pQ;
     tmp=select(tmp2,abs(#)==max(apply(tmp2,abs(#))));

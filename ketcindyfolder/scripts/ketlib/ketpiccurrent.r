@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180808)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180812)" 
 
 print(ThisVersion)
 
+# 20180812
+#  Assign debugged ( case nchar(vname)>1)
 # 20180808
 #  Scalept3pt changed  (ratio)
 # 20180807
@@ -1176,7 +1178,7 @@ Arrowline<- function(...)
 
 Assign<- function(...){
   Replace=function (vname,rep,str){#180615from
-    opv=c("+","-","*","/","(",")","=","<",">",""," ")
+    opv=c("+","-","*","/","(",")","=","<",">",""," ",",") #180812
     out=""
     start=1
     Tmp=gregexpr(vname,str,fixed=TRUE)
@@ -1184,15 +1186,16 @@ Assign<- function(...){
     if(min(Vp)>0){
       for(j in Vp){
         if(j==1){bf=""}else{bf=substring(str,j-1,j-1)}
-        if(j==nchar(str)){af=""}else{af=substring(str,j+1,j+1)}
+        Tmp=j+nchar(vname)-1 #180812(2lines)
+        if(Tmp==nchar(str)){af=""}else{af=substring(str,Tmp+1,Tmp+1)}
         tmp1=length(intersect(bf,opv))
         tmp2=length(intersect(af,opv))
-        tmp=substring(str,start,j)
+		tmp=substring(str,start,j+nchar(vname)-1) #180812
         if((tmp1>0)&&(tmp2>0)){
           tmp=gsub(vname,rep,tmp,fixed=TRUE)
         }
         out=paste(out,tmp,sep='')
-        start=j+1
+        start=j+nchar(vname) #180812
       }
     }
     out=paste(out,substring(str,start,nchar(str)),sep='')
@@ -1279,13 +1282,21 @@ Assign<- function(...){
       }
     }
   }
+
+FlagL<<- 0
+
   for (I in seq(1,length(L),by=2)){
     Vname<- L[[I]]
     Val<- L[[I+1]]
     if(mode(Val)=="numeric"){
-      if(Nrow(Val)==1){ 
+      if(Nrow(Val)==1){
         for (K in Looprange(1,length(Val))){
-          Tmp<- paste(Vname,"[", as.character(K),"]",sep="")
+          if(length(Val)==1){
+           Tmp<- Vname
+          }
+          else{
+            Tmp<- paste(Vname,"[", as.character(K),"]",sep="")
+          }
           if(mode(Val[K])=="numeric"){
             Tmp1<- paste("(",as.character(Val[K]),")",sep="")
           }
@@ -12290,7 +12301,7 @@ Objcurve<- function(...){
   if(Nargs>=3){
     Np=Args[[3]]
   }
-  Assign("Sz",Sz)
+  Assignadd("Sz",Sz)
   if(Pstr=="xy"){
     Vz=c(0,0,1)
     Fs=Assign("c(Sz*cos(t),Sz*sin(t),0)")

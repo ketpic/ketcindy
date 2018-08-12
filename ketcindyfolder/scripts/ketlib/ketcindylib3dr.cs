@@ -2078,7 +2078,8 @@ Perpplane(name,ptstr,nvec):=
     Perpplane(name,ptstr,nvec,"draw");
 Perpplane(name,ptstr,nstr,option):=(
 //help:Perpplane("A-B","P",[1,3,2]);
-//help:Perpplane("A-B","P",[0,0,1,0]);
+//help:Perpplane("A-B","P",[1,3,2]);
+//help:Perpplane(option=["Put/Draw"]);
   regional(Eps,nvec,sgstr,pP,v1,v2,v3,
     th,ph,pA,pB,tmp,tmp1,tmp2);
   Eps=10^(-4);

@@ -4059,6 +4059,15 @@ Setslidehyper(driverorg,options):=(
   tmp1=replace(tmp1,"uc=","urlcolor=");
   ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
   Addpackage(tmp1+"{hyperref}");
+  tmp=indexof(tmp1,"linkcolor=");//180813from
+  tmp1=substring(tmp1,tmp-1,length(tmp1));
+  tmp=indexof(tmp1,"=");
+  tmp1=substring(tmp1,tmp,length(tmp1));
+  tmp=indexof(tmp1,",");
+  if(length(tmp)>0,
+    tmp1=substring(tmp1,0,tmp-1);
+  );//180813to
+  LinkColor=tmp1; 
   LinkPosH=125;
   LinkPosV=73;//180524
   LinkSize=1;
@@ -4533,7 +4542,7 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"\hypersetup{linkcolor=black}%");
   println(SCEOUTPUT,"\begin{layer}{118}{0}");
   println(SCEOUTPUT,"\putnotee{122}{-\theketpicctra.05}{\small\thepage/\pageref{pageend}}");
-  println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor=blue}}");//189524to
+  println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor="+LinkColor+"}}");//189524to
   forall(ADDPACK,// 16.06.09from
     println(SCEOUTPUT,"\usepackage"+#); 
   );// 16.06.09to

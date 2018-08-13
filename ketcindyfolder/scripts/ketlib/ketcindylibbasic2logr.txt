@@ -1,3 +1,5 @@
+// 20180813
+//  Setslidehyper debugged  ( cl,... )
 // 20180809
 //  Mkcircles,Mksegment changed
 // 20180805

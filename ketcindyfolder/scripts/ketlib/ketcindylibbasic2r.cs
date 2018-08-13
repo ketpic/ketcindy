@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180809) loaded");
+println("ketcindybasic2(20180813) loaded");
 
 //help:start();
 
@@ -4037,6 +4037,9 @@ Setslidehyper(driverorg,options):=(
   eqL=tmp_5;
   reL=tmp_6;
   stL=tmp_7;
+  tmp1=select(eqL,length(Indexall(#,"="))>1); //180813from
+  eqL=remove(eqL,tmp1);
+  stL=concat(stL,tmp1); //180813to
   if(length(stL)>0,
     str=stL_1;
   ,

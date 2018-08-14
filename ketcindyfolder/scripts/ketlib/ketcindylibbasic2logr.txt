@@ -1,3 +1,5 @@
+// 20180815
+//  Maketitle changed (to make a new text file )
 // 20180813
 //  Setslidehyper debugged  ( cl,... )
 // 20180809

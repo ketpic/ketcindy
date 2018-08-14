@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180813) loaded");
+println("ketcindybasic2(20180815) loaded");
 
 //help:start();
 
@@ -4176,7 +4176,7 @@ Maketitle():=(
 );
 Maketitle(name):=(
 //help:Maketitle();
-  regional(texfile,texmain,tmp,tmp1,sep);
+  regional(texfile,texmain,tmp,tmp1,sep,txtfile);
   texfile=name;
   texmain=name+"main";
   SCEOUTPUT=openfile(texfile+".tex");
@@ -4236,6 +4236,31 @@ Maketitle(name):=(
     Makeshell(texmain,"tv");
   );
   kc();
+  txtfile=Cindyname()+".txt"; //180815from
+  if(!isexists(Dircdy,txtfile),
+    setdirectory(Dircdy);
+    SCEOUTPUT=openfile(txtfile);
+    println(SCEOUTPUT,"title::"+name+"//");
+    println(SCEOUTPUT,"");
+    println(SCEOUTPUT,"%%%%%%%%%%%%%%%%//");
+    println(SCEOUTPUT,"main::(title)//");
+    println(SCEOUTPUT,"\slidepage[m]//");
+    println(SCEOUTPUT,"");
+    println(SCEOUTPUT,"%%%%%%%%%%%%%%%%//");
+    println(SCEOUTPUT,"new::(title)//");
+    println(SCEOUTPUT,"%repeat=1,para//");
+    println(SCEOUTPUT,"\slidepage//");
+    println(SCEOUTPUT,"");
+    println(SCEOUTPUT,"layer::{120}{0}//");
+    println(SCEOUTPUT,"%putnote::s{65}{5}:://");
+    println(SCEOUTPUT,"end//");
+    println(SCEOUTPUT,"");
+    println(SCEOUTPUT,"itemize//");
+    println(SCEOUTPUT,"item//");
+    println(SCEOUTPUT,"end//");
+    closefile(SCEOUTPUT);
+    setdirectory(Dirwork);  //180815to
+  );
 );
 
 Repeatsameslide(repeatflg,sestr,addedL):=(

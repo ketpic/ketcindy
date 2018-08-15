@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180811) loaded");
+println("ketcindylib3d(20180815) loaded");
 
 //help:start();
 
@@ -2140,9 +2140,8 @@ IntersectsgpL(name,sgstr,pLstr):=
    IntersectsgpL(name,sgstr,pLstr,"draw");
 IntersectsgpL(name,sgstr,pLstr,option):=(
 //help:IntersectsgpL("R","P-Q","A-B-C");
-//help:IntersectsgpL("R","P-Q","A-B-C","put");
-//// help:IntersectsgpL("","P-Q","A-B-C","none");
-//help:IntersectsgpL("",[p1,p2],[p3,p4,p5],"draw");
+//help:IntersectsgpL("",[p1,p2],[p3,p4,p5],["draw"]);
+//help:IntersectsgpL(option=["put/draw/none"]);
   regional(opstr,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,flg,
     nvec,tmp,tmp1,tmp2,tmp3,tmp4);
   if(islist(option),opstr=option_1,opstr=option);
@@ -2867,24 +2866,34 @@ Phparadata(nm,nmvf,vfL,options):=(
   );
 );
 
-Nohiddenseg(seg,rng,triang):=(
+Nohiddenseg(seg,rng,triang,Eps):=(
 // help:Nohiddenseg("1",seg1,[0,1],["v1","v2","v3"]);
-  regional(Eps,pA3,pB3,pC3,pA,pB,pC,sg1,sg2,ss1,ss2,parL,flgL,flg1,flg2,
-     veB,veC,sgnoh,sghid,added,tristr,tmp,tmp1,tmp2,tmp3,tmp4,tmp5);
-  Eps=10^(-4);
+  regional(pA3,pB3,pC3,pA,pB,pC,sg1,sg2,ss1,ss2,parL,flgL,flg1,flg2,
+     veB,veC,sgnoh,sghid,added,tmp,tmp1,tmp2,tmp3,tmp4,tmp5);
+//  Eps=10^(-2);//180815
   sgnoh=[0,1];
-  pA3=if(isstring(triang_1),parse(triang_1+"3d"),triang_1); //16.06.19
+  pA3=triang_1; //180815from
+  if(isstring(pA3),
+    if(indexof(pA3,"3d")==0,pA3=pA3+"3d");
+    pA3=parse(pA3);
+  );
+  pB3=triang_2;
+  if(isstring(pB3),
+    if(indexof(pB3,"3d")==0,pB3=pB3+"3d");
+    pB3=parse(pB3);
+  );
+  pC3=triang_3;
+  if(isstring(pC3),
+    if(indexof(pC3,"3d")==0,pC3=pC3+"3d");
+    pC3=parse(pC3);
+  ); //180815to
   pA=Parapt(pA3);
-  pB3=if(isstring(triang_2),parse(triang_2+"3d"),triang_2); //16.06.19
   pB=Parapt(pB3);
-  pC3=if(isstring(triang_3),parse(triang_3+"3d"),triang_3); //16.06.19
   pC=Parapt(pC3);
   sg1=seg_1+rng_1*(seg_2-seg_1);
   sg2=seg_1+rng_2*(seg_2-seg_1);
   ss1=Parapt(sg1);
   ss2=Parapt(sg2);
-  tristr=replace(text(triang),",","-");
-  tristr=substring(tristr,1,length(tristr)-1);
   if(|ss2-ss1|>Eps & abs(Crossprod(pB-pA,pC-pA))>Eps,
     tmp=IntersectcrvsPp([ss1,ss2],[pA,pB,pC,pA]);
     parL=apply(tmp,#_2-1);
@@ -2897,7 +2906,7 @@ Nohiddenseg(seg,rng,triang):=(
     );
     tmp1=Crossprod(pB3-pA3,pC3-pA3);
     if(abs(Dotprod(tmp1,sg2-sg1))>Eps,
-      tmp=IntersectsgpL("",[sg1,sg2],tristr,["nodisp"]);
+      tmp=IntersectsgpL("",[sg1,sg2],[pA3,pB3,pC3],["nodisp"]);//180815
       if(tmp_2>-Eps & tmp_2<1+Eps,
         if(tmp_3>-Eps & tmp_4>-Eps & tmp_3+tmp_4<1+Eps,
           tmp1=select(parL,abs(tmp_2-#)<Eps);
@@ -2913,7 +2922,7 @@ Nohiddenseg(seg,rng,triang):=(
       tmp=Projcoordpara(tmp1);
       tmp_3=tmp_3+1;
       tmp2=Cancoordpara(tmp);
-      tmp=IntersectsgpL("",[tmp1,tmp2],tristr,["nodisp"]);
+      tmp=IntersectsgpL("",[tmp1,tmp2],[pA3,pB3,pC3],["nodisp"]);//180815
       tmp1=Projcoordpara(tmp1);
       tmp2=Projcoordpara(tmp_1);
       flg1=0;
@@ -2990,9 +2999,9 @@ Nohiddenseg(seg,rng,triang):=(
   sgnoh;
 );
 
-Nohiddensegs(seg,range,faceno,vtxL):=(
-  regional(Eps,rng,face,vtx,out,ra,rb,tmp,tmp1,tmp2);
-  Eps=10^(-4);
+Nohiddensegs(seg,range,faceno,vtxL,Eps):=(
+  regional(rng,face,vtx,out,ra,rb,tmp,tmp1,tmp2);
+//  Eps=10^(-2);
   face=apply(faceno,vtxL_#); // 16.02.10
   rng=range;
   out=rng;
@@ -3001,7 +3010,7 @@ Nohiddensegs(seg,range,faceno,vtxL):=(
     forall(1..(length(rng)/2),
       tmp=[rng_(2*#-1),rng_(2*#)];
       out=remove(out,tmp);
-      tmp2=Nohiddenseg(seg,tmp,tmp1);
+      tmp2=Nohiddenseg(seg,tmp,tmp1,Eps);
       if(length(tmp2)>0,
         out=remove(out,tmp);
         out=concat(out,tmp2);
@@ -3059,14 +3068,38 @@ Nohiddenbyfaces(nm,Arg1,Arg2,Arg3):=(
   );
   Nohiddenbyfaces(nm,segstr,facestr,options,optionsh); // 16.02.21
 );
-Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
+Nohiddenbyfaces(nm,segstr,Arg1,Arg2,Arg3):=( //180815from
+  regional(facestr,faceL,vtxL,options,optionsh);
+  if(isstring(Arg1),
+    facestr=Arg1;
+    options=Arg2;
+    optionsh=Arg3;
+    if(substring(facestr,0,3)=="phf",
+      faceL=parse(facestr);
+      tmp=replace(facestr,"phf","phv"); 
+      tmp=parse(tmp);
+      vtxL=apply(tmp,replace(#,"3d",""));
+      
+    ,
+      faceL=parse(facestr);
+    );
+  ,
+    faceL=Arg1;
+    vtxL=Arg2;
+    options=Arg3;
+    optionsh=[];
+  );
+  Nohiddenbyfaces(nm,segstr,faceL,vtxL,options,optionsh);
+);
+Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
 //help:Nohiddenbyfaces("1","phf3d1");
 //help:Nohiddenbyfaces("1","ax3d","phf3d1");
-//help:Nohiddenbyfaces(options1=["dr"]);
+//help:Nohiddenbyfaces("1","ax3d",phf3d1,phv3d1);
+//help:Nohiddenbyfaces(options1=["dr","Eps=10^(-2)"]);
 //help:Nohiddenbyfaces(options2=["do"]);
-  regional(Eps,namen,nameh,options,segL,faceL,vtxL,rng,seg,face,
-     flg,ctr,tmp,tmp1,tmp2,Ltype,Noflg,eqL,opstr,opcindy,frnL,frhL);
-  Eps=10^(-4);
+  regional(Eps,namen,nameh,options,segL,rng,seg,face,
+     ctr,tmp,tmp1,tmp2,Ltype,Noflg,eqL,color,opstr,opcindy,frnL,frhL);
+  Eps=10^(-2);
   namen="frn"+nm;
   nameh="frh"+nm;
   if(isstring(segstr),
@@ -3098,58 +3131,35 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
     );
   );
   segL=Flattenlist(segL);
-  flg=0;
-  if(isstring(facestr),
-    if(substring(facestr,0,3)=="phf", // 16.08.19from
-      faceL=parse(facestr);
-      tmp=replace(facestr,"phf","phv"); // 16.02.10 from
-      tmp=parse(tmp);
-      vtxL=apply(tmp,replace(#,"3d","")); // 16.02.10 until
-      flg=1;
-    ,
-      faceL=parse(facestr);
-    );
-  );
-  if(flg==0,
-    if(length(faceL)==2, // 16.08.19until
-      vtxL=facestr_1;
-      faceL=facestr_2;
-    ,
-      vtxL=facestr;
-      faceL=[1..length(vtxL)];
-    );
-  ); 
-//  Hidden="";
   options=optionorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-//  forall(eqL,
-//    tmp=indexof(#,"=");
-//    tmp1=Toupper(substring(#,0,1));
-//    tmp2=substring(#,tmp,length(#));
-//    if(tmp1=="H",
-//      Hidden=tmp2;
-//    );
-//  );
-
+  forall(eqL, //180815from
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(tmp_1);
+    if(substring(tmp1,0,3)=="EPS",
+      Eps=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+  );//180815to
   ctr=1;
   frnL=[];
   frhL=[];
   forall(segL,seg,
     rng=[0,1];
     forall(faceL,face,
-      rng=Nohiddensegs(seg,rng,face,vtxL);
+	  rng=Nohiddensegs(seg,rng,face,vtxL,Eps);
     );
     forall(1..length(rng)/2,
       tmp=rng_(2*#-1);
       tmp1=seg_1+tmp*(seg_2-seg_1);
       tmp=rng_(2*#);
       tmp2=seg_1+tmp*(seg_2-seg_1);
-//      tmp=remove(options,eqL);
       tmp=append(options,"Msg=nodisp");  // 15.06.22
       Spaceline("-"+namen+"n"+text(ctr),[tmp1,tmp2],tmp);
       frnL=append(frnL,namen+"n"+text(ctr)+"3d");
@@ -3174,7 +3184,9 @@ Nohiddenbyfaces(nm,segstr,facestr,optionorg,optionsh):=(
       tmp1=seg_1+tmp*(seg_2-seg_1);
       tmp=rng_(2*#);
       tmp2=seg_1+tmp*(seg_2-seg_1);
-      if(length(optionsh)>0,tmp=optionsh,tmp=["do"]);
+      tmp=select(optionsh,indexof(#,"=")>0); //180815from
+	  tmp=remove(optionsh,tmp);
+      if(length(tmp)==0,tmp=append(optionsh,"do")); //180815to
       tmp=append(tmp,"Msg=nodisp");  // 15.06.22
       Spaceline("-"+nameh+"n"+text(ctr),[tmp1,tmp2],tmp);
       frhL=append(frhL,nameh+"n"+text(ctr)+"3d");

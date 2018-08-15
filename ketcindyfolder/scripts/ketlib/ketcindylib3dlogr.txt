@@ -1,3 +1,5 @@
+// 20180815
+//   Nohiddenseg,segs, byfaces debugged  (Eps=10^(-2) added as option)
 // 20180811
 //   IntersectsgpL debugged (Reflect3point->Reflectreflectpoint3d)
 // 20180809

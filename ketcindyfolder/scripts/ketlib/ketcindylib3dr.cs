@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180815) loaded");
+println("ketcindylib3d(20180816) loaded");
 
 //help:start();
 
@@ -3130,7 +3130,13 @@ Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
       segL=apply(segL,parse(#));
     );
   );
-  segL=Flattenlist(segL);
+  tmp1=Flattenlist(segL); //180816from
+  segL=[];
+  forall(tmp1,tmp2,
+    forall(1..(length(tmp2)-1),
+      segL=append(segL,[tmp2_#,tmp2_(#+1)]);
+    );
+  ); //180816from
   options=optionorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;

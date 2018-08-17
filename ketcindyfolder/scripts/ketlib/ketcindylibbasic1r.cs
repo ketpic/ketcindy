@@ -3734,7 +3734,7 @@ Plotdata(name1,func,variable,options):=(
 //help:Plotdata("2","x^2","x=[-1,1]");
 //help:Plotdata("3","Fout(x)","x",["out"]);
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
-         PdL,QdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,
+         PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,
          Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
   name="gr"+name1;
   tmp=Divoptions(options);
@@ -3753,19 +3753,25 @@ Plotdata(name1,func,variable,options):=(
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=substring(#,tmp,length(#));
-    opstr=opstr+",'"+#+"'";
     if(substring(#,0,1)=="N",
       Num=parse(tmp1);
+      opstr=opstr+","+Dqq(#);
     );
     if(substring(#,0,1)=="E",
-      if(substring(tmp1,0,1)=="[",
+      if(substring(tmp1,0,1)=="[", //180817from
         Ec=parse(tmp1);
+        tmp1=replace(tmp1,"[","c(");
+        tmp1=replace(tmp1,",",".0,");
+        tmp1=replace(tmp1,"]",".0)");
+        opstr=opstr+","+Dqq("Exc="+tmp1); //180817to
       ,
         Exfun=tmp1;
+        opstr=opstr+","+Dqq(#);
       );
     );
     if(substring(#,0,1)=="D",
       Dc=parse(tmp1);
+      opstr=opstr+","+Dqq(#);
     );
   );
   if(Inflg==0 & Outflg==0,
@@ -3793,10 +3799,26 @@ Plotdata(name1,func,variable,options):=(
       if(length(Exfun)>0,
         tmp=parse(Exfun);
         if(abs(tmp)<Eps,
-          if(length(Pdt)>0,
+          if(length(PdL)>0, //180817from
             PdL=concat(PdL,["inf"]);
           );
-        );
+        ,
+          tmp=[xx,parse(Fun)];
+          if(length(PdL)>0,
+            tmp1=PdL_(length(PdL));
+            if(Norm(tmp,tmp1)<Dc,
+              PdL=append(PdL,tmp);
+            ,
+              if(tmp1=="inf",
+                PdL=append(PdL,tmp);
+              ,
+                PdL=concat(PdL,[["inf"],tmp]);
+              );
+			);
+          ,
+            PdL=[tmp];
+          );
+        ); //180817to
       ,
         Pa=[];
         if(xx-Ec_Ke<-Eps,
@@ -3919,19 +3941,25 @@ Paramplot(name1,funstr,variable,options):=(
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=substring(#,tmp,length(#));
-    opstr=opstr+",'"+#+"'";
     if(substring(#,0,1)=="N",
       Num=parse(tmp1);
+      opstr=opstr+","+Dqq(#);
     );
     if(substring(#,0,1)=="E",
-      if(substring(tmp1,0,1)=="[",
+      if(substring(tmp1,0,1)=="[", //180817from
         Ec=parse(tmp1);
+        tmp1=replace(tmp1,"[","c(");
+        tmp1=replace(tmp1,",",".0,");
+        tmp1=replace(tmp1,"]",".0)");
+        opstr=opstr+","+Dqq("Exc="+tmp1); //180817to
       ,
         Exfun=tmp1;
+        opstr=opstr+","+Dqq(#);
       );
     );
     if(substring(#,0,1)=="D",
       Dc=parse(tmp1);
+      opstr=opstr+","+Dqq(#);
     );
   );
   if(Inflg==0 & Outflg==0,

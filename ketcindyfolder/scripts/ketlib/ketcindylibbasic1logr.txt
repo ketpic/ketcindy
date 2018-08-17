@@ -1,5 +1,6 @@
 // 20180817
 //   Ketinit changed (GPACK added)
+//   Plotdata debugged ( Exc )
 // 20180801
 //   Framedata changed ( Option "corner"("center") added to call Framedata2)
 // 20180723

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180816)");
+println("KeTCindy V.3.2.1(20180817)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180801) loaded");
+println("ketcindylibbasic1(20180817) loaded");
 
 //help:start();
 
@@ -84,6 +84,7 @@ Ketinit(sy,rangex,rangey):=(
   OutFileLIst=[];   // 15.10.22
   FigPdfList=[];  // 16.04.08
   ADDPACK=[]; // 16.05.16
+  GPACK="tpic"; //180817
   ErrFlag=0;
   setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12

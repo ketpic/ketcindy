@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180815) loaded");
+println("ketcindybasic2(20180817) loaded");
 
 //help:start();
 
@@ -2752,8 +2752,8 @@ WritetoRS(filename,shchoice):=(
   );//180409to
   tmp=replace(Libname,"\","/"); //17.09.24from
   println(SCEOUTPUT,"source('"+tmp+".r')");//temporary
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
-       //  17.10.07added
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0)
+         %(GPACK=="pict2e"), //  180817
     tmp=replace(tmp+"_rep2e","\","/");
     println(SCEOUTPUT,"source('"+tmp+".r')");
   ); 
@@ -3416,6 +3416,14 @@ Addpackage(packorg):=(
   ADDPACK=concat(ADDPACK,packL); //17.06.25to
 );
 
+Usegraphics(gpack):=( //180817
+//help:Usegrapchics("pict2e");
+  if(!contains(ADDPACK,gpack),
+    Addpackage([gpack]);
+  );
+  GPACK=gpack;
+);
+
 Viewtex():=(
   regional(texfile,tmp,tmp1,sep);
   texfile=Fhead+"main";
@@ -3430,13 +3438,15 @@ Viewtex():=(
     );//17.08.13until
   ); // 16.06.09until
   println(SCEOUTPUT,tmp);
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0) ,
-          //16.11.23,12.16
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0)
+      %(GPACK=="pict2e"), //16.11.23,12.16,180817
     if(indexof(PathT,"pdflatex")>0,
       println(SCEOUTPUT,"\usepackage[pdftex]{pict2e}");//16.11.24
     ,
       println(SCEOUTPUT,"\usepackage{pict2e}");//16.12.16
-      println(SCEOUTPUT,"\usepackage{luatexja}");//16.12.18
+      if(indexof(PathT,"lualatex")>0, //180817
+        println(SCEOUTPUT,"\usepackage{luatexja}");
+      );
     );
     tmp=replace(Dirhead,"\","/"); //17.10.30from
     tmp=replace(tmp,"scripts","tex/latex");

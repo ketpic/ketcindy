@@ -1,3 +1,5 @@
+// 20180817
+//  WritetoRS, Viewtex changed (GPACK added )
 // 20180815
 //  Maketitle changed (to make a new text file )
 // 20180813

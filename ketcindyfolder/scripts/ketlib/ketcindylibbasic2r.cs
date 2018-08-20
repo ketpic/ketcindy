@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180817) loaded");
+println("ketcindybasic2(20180820) loaded");
 
 //help:start();
 
@@ -541,9 +541,20 @@ Htick(px,lenorg,options):=(
   Listplot(tmp,[tmp1,tmp2],options);
 );
 
-Drwxy():=(
+Drwxy():=Drwxy([]); //180820from
+Drwxy(options):=(
 //help:Drwxy();
-  Com2nd("Drwxy()");
+//help:Drwxy(options=["Origin=","Xrng=","Yrng="]);
+  regional(tmp);
+  tmp="";
+  forall(options,
+    if(length(tmp)>0,
+      tmp=tmp+","+Dqq(#);
+    ,
+      tmp=Dqq(#);
+    );
+  );
+  Com2nd("Drwxy("+tmp+")"); //180820to
   Addax(0);  // 16.01.21
 );
 

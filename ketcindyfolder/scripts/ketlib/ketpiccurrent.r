@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180812)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180820)" 
 
 print(ThisVersion)
 
+# 20180820
+#  Drwxy changed  ( optional arguments added )
 # 20180812
 #  Assign debugged ( case nchar(vname)>1)
 # 20180808
@@ -2420,6 +2422,45 @@ Drwxy<-function(...)
   Letter(c(XMAX,GENTEN[2]),XPOS,XNAME)
   Letter(c(GENTEN[1],YMAX),YPOS,YNAME)
   Letter(GENTEN,OPOS,ONAME);
+}
+
+Drwxy<-function(...){ #180820
+  varargin<-list(...)
+  Nargs <- length(varargin)
+  Origin=GENTEN
+  Xrng=c(XMIN,XMAX)
+  Yrng=c(YMIN,YMAX)
+  for(J in Looprange(1,Nargs)){
+    Tmp=strsplit(varargin[[J]],"=")
+    Tmp=Tmp[[1]]
+    Tmp1=toupper(substring(Tmp[1],1,1))
+    Tmp2=eval(parse(text=Tmp[2]))
+    if(Tmp1=="O"){
+      Origin=Tmp2
+    }
+    if(Tmp1=="X"){
+      Xrng=Tmp2
+    }
+    if(Tmp1=="Y"){
+      Yrng=Tmp2
+    }
+  }
+  Xrng=Xrng+Origin[1]
+  Yrng=Yrng+Origin[2]
+  Tmp<-grep("arrow", ZIKU)
+  if(length(Tmp)>0)
+  { 
+    Arrowline(c(Xrng[1],Origin[2]),c(Xrng[2],Origin[2]),ARROWSIZE)
+    Arrowline(c(Origin[1],Yrng[1]),c(Origin[1],Yrng[2]),ARROWSIZE)
+  }
+  else
+  {
+    Drwline(Listplot(c(Xrng[1],Origin[2]),c(Xrng[2],Origin[2])))
+    Drwline(Listplot(c(Origin[1],Yrng[1]),c(Origin[1],Yrng[2])))
+  }
+  Letter(c(Xrng[2],Origin[2]),XPOS,XNAME)
+  Letter(c(Origin[1],Yrng[2]),YPOS,YNAME)
+  Letter(Origin,OPOS,ONAME)
 }
 
 ##########################################

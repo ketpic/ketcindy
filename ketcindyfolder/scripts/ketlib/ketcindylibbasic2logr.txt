@@ -1,4 +1,4 @@
-// 20180820
+// 20180820,21
 //  Drwxy chaged  ( options added )
 // 20180817
 //  WritetoRS, Viewtex changed (GPACK added )

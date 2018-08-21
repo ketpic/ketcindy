@@ -16,12 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180820)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180821)" 
 
 print(ThisVersion)
 
-# 20180820
+# 20180820,21
 #  Drwxy changed  ( optional arguments added )
+#  Setax changed  (ARROWSIZE removed )
 # 20180812
 #  Assign debugged ( case nchar(vname)>1)
 # 20180808
@@ -450,8 +451,8 @@ print(ThisVersion)
 XMIN<- -5
 XMAX<- 5
 YMIN<- -5 ; YMAX<- 5
-ZIKU<- "line"
-ARROWSIZE<- 1
+ZIKU<- "l"
+#ARROWSIZE<- 1
 XNAME<- "$x$"
 XPOS<- "e"
 YNAME<- "$y$"
@@ -497,8 +498,8 @@ Ketinit<- function(){
 XMIN<<- -5
 XMAX<<- 5
 YMIN<<- -5 ; YMAX<<- 5
-ZIKU<<- "line"
-ARROWSIZE<<- 1
+ZIKU<<- "l"
+#ARROWSIZE<<- 1
 XNAME<<- "$x$"
 XPOS<<- "e"
 YNAME<<- "$y$"
@@ -2404,54 +2405,52 @@ Drwpt<-function(...)
 
 ######################################################
 
-Drwxy<-function(...)
-{
-  varargin<-list(...)
-  Nargs <- length(varargin)
-  Tmp<-grep("arrow", ZIKU)
-  if(length(Tmp)>0)
-  { 
-    Arrowline(c(XMIN,GENTEN[2]),c(XMAX,GENTEN[2]),ARROWSIZE)
-    Arrowline(c(GENTEN[1],YMIN),c(GENTEN[1],YMAX),ARROWSIZE)
-  }
-  else
-  {
-    Drwline(Listplot(c(XMIN,GENTEN[2]),c(XMAX,GENTEN[2])))
-    Drwline(Listplot(c(GENTEN[1],YMIN),c(GENTEN[1],YMAX)))
-  }
-  Letter(c(XMAX,GENTEN[2]),XPOS,XNAME)
-  Letter(c(GENTEN[1],YMAX),YPOS,YNAME)
-  Letter(GENTEN,OPOS,ONAME);
-}
-
 Drwxy<-function(...){ #180820
   varargin<-list(...)
   Nargs <- length(varargin)
   Origin=GENTEN
   Xrng=c(XMIN,XMAX)
   Yrng=c(YMIN,YMAX)
+  Ziku=ZIKU #180821from
+  Xname=XNAME
+  Xpos=XPOS
+  Yname=YNAME
+  Ypois=YPOS
+  Oname=ONAME
+  Opos=OPOS #180821to
   for(J in Looprange(1,Nargs)){
     Tmp=strsplit(varargin[[J]],"=")
     Tmp=Tmp[[1]]
     Tmp1=toupper(substring(Tmp[1],1,1))
-    Tmp2=eval(parse(text=Tmp[2]))
+    Tmp2=Tmp[2]
     if(Tmp1=="O"){
-      Origin=Tmp2
+      Origin=eval(parse(text=Tmp2))
     }
     if(Tmp1=="X"){
-      Xrng=Tmp2
+      Xrng=eval(parse(text=Tmp2))
     }
     if(Tmp1=="Y"){
-      Yrng=Tmp2
+      Yrng=eval(parse(text=Tmp2))
+    }
+    if(Tmp1=="A"){ #180821from
+      if(substring(Tmp2,1,1)=="c"){
+        Tmp2=substring(Tmp2,3,nchar(Tmp2)-1)
+      }
+      Tmp2=gsub(",","','",Tmp2,fixed=TRUE)
+      Tmp2=paste("'",Tmp2,"'",sep="")
+      Tmp=paste("Setax(",Tmp2,")",sep="")
+      eval(parse(text=Tmp)) #180821to
     }
   }
   Xrng=Xrng+Origin[1]
   Yrng=Yrng+Origin[2]
-  Tmp<-grep("arrow", ZIKU)
-  if(length(Tmp)>0)
-  { 
-    Arrowline(c(Xrng[1],Origin[2]),c(Xrng[2],Origin[2]),ARROWSIZE)
-    Arrowline(c(Origin[1],Yrng[1]),c(Origin[1],Yrng[2]),ARROWSIZE)
+  Tmp<- substring(ZIKU,1,1) #180821
+  if(Tmp=="a")
+  {
+    Tmp=substring(ZIKU,2,nchar(ZIKU))
+    if(nchar(Tmp)==0){Tmp=1}else{Tmp=eval(parse(text=Tmp))}
+    Arrowline(c(Xrng[1],Origin[2]),c(Xrng[2],Origin[2]),Tmp)
+    Arrowline(c(Origin[1],Yrng[1]),c(Origin[1],Yrng[2]),Tmp)
   }
   else
   {
@@ -2461,6 +2460,7 @@ Drwxy<-function(...){ #180820
   Letter(c(Xrng[2],Origin[2]),XPOS,XNAME)
   Letter(c(Origin[1],Yrng[2]),YPOS,YNAME)
   Letter(Origin,OPOS,ONAME)
+  Setax(Ziku,Xname,Xpos,Yname,Ypois,Oname,Opos) #180821
 }
 
 ##########################################
@@ -6658,21 +6658,14 @@ Setax<- function(...)
 {
   varargin<- list(...)
   Nargs<- length(varargin)
-  if(Nargs==0){
-    if(ZIKU=="line"){
-      Tmp<- ","
-    }
-    else{
-      Tmp<- paste("(Arrowsize=", as.character(ARROWSIZE),"),",sep="")
-    }
-    Str<- paste(ZIKU,Tmp,XNAME,",",XPOS,",",sep="")
+  if(Nargs==0){ #180821(next 2 lines)
+    Str<- paste(ZIKU,",",XNAME,",",XPOS,",",sep="")
     Str<- paste(Str,YNAME,",",YPOS,",",ONAME,",",OPOS,sep="")
     return(Str)
   }
   ArgL<- c()
-  Is<- 1
   Tmp<- varargin[[1]]
-  if(mode(Tmp)=="numeric" && length(Tmp)==1){
+  if(is.numeric(Tmp)){ #180821
     Is<- varargin[[1]]
     ArgL<- c()
     for (I in Looprange(1,Is-1)){
@@ -6682,50 +6675,18 @@ Setax<- function(...)
       ArgL<- c(ArgL,varargin[[I]])
     }
   }
-  else{
-    if(Nargs==1){ 
-      ArgL<- c(varargin[[1]])
-    }
-    else{
-      Tmp<- varargin[[2]]
-      if(mode(Tmp)=="numeric" && length(Tmp)==1){
-        ARROWSIZE<<-Tmp
-        ArgL<- c(varargin[[1]])
-        for (I in Looprange(3,Nargs)){
-          ArgL<- c(ArgL,varargin[[I]])
-        }
-      }
-      else{
-        ArgL<- c()
-        for (I in 1:Nargs){
-          ArgL<- c(ArgL,varargin[[I]])
-        }
-      }
+  else{ #180821from
+    for (I in Looprange(1,Nargs)){
+       ArgL<- c(ArgL,varargin[[I]])
     }
   }
   for (I in Looprange(length(ArgL)+1,7)){
     ArgL<- c(ArgL,"")
-  }
-  Zk<- ArgL[1]
-  if(nchar(Zk)>0){ 
-    ZL<-substr(Zk,2,nchar(Zk))
-    Zk<-substr(Zk,1,1)
-    if(nchar(ZL)>0){
-      ARROWSIZE<<- as.numeric(ZL)
-    }
-  }
+  } #180821to
   Xn<- ArgL[2]; Xp<- ArgL[3]
   Yn<- ArgL[4]; Yp<- ArgL[5]
-  Genn<- ArgL[6]; Genp<- ArgL[7]
-  if(nchar(Zk)>0){ 
-    C<- Zk
-    if(C=="a"){ 
-      ZIKU<<- "arrow"
-    }
-    else{
-      ZIKU<<- "line" 
-    }
-  }
+  On<- ArgL[6]; Op<- ArgL[7]
+  ZIKU<<- ArgL[1] #180821
   if(nchar(Xn)>0){
     XNAME<<- paste("$",Xn,"$",sep="")
   }
@@ -6738,11 +6699,11 @@ Setax<- function(...)
   if(nchar(Yp)>0){
     YPOS<<-Yp
   }
-  if(nchar(Genn)>0){
-    ONAME<<- Genn
+  if(nchar(On)>0){
+    ONAME<<- On
   }
-  if(nchar(Genp)>0){
-    OPOS<<- Genp
+  if(nchar(Op)>0){
+    OPOS<<- Op
   }
   Out<- "";
 }

@@ -1,0 +1,487 @@
+\documentclass[papersize,a4paper,12pt]{article}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath}
+% \usepackage{amsmath,newtxmath}
+%\usepackage[dvipdfmx]{graphicx,color}
+\usepackage{graphicx,color}
+\usepackage{wrapfig}
+%\usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage[bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\setmargin{20}{20}{15}{25}
+\usepackage{setspace}
+\usepackage{comment}
+\usepackage{bm,enumerate}
+
+%\newcommand{\cmd}[1]{
+%\begin{center}{\bf\large #1}\end{center}
+%\hypertarget{#1}{}
+%}
+
+\newenvironment{cmd}[2]{
+\hypertarget{#2}{}
+\begin{center}{\bf\large #1}\end{center}
+\begin{description}
+}{
+\end{description}
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Command List}\end{flushright}
+}
+
+% item command for this documentation
+\newcommand{\itemket}[1]{
+\item[\Ltab{27mm}{#1}]
+}
+
+
+\begin{document}
+\title{Guide to \ketcindy}
+\author{\ketcindy\ Project Team}
+\maketitle
+
+\begin{center}  - ver.3.2 -\end{center}
+
+\hypertarget{index}{}
+\tableofcontents
+
+\newpage
+
+\section{About \ketcindy}
+
+\subsection{Overview}
+
+\ketcindy\ is a library of Cindyscript 
+which is a programming language of Cinderella. 
+It converts the data computed 
+for generating dynamic graphics on Cinderella 
+into \TeX\ graphical codes. 
+Synchronized use of 
+interactive graphics capabilities of Cinderella 
+and well-structured programming capabilities of Cindyscript 
+enables ordinary \TeX\ users to efficiently embed 
+high-quality graphics into \TeX\ documents. 
+Moreover, the collaborative use of \ketcindy\ 
+and other software such as R, Maxima and C 
+has been enabled.
+
+\begin{center}
+\input{Fig/concept}
+\end{center}
+
+Firstly, dynamic figure is generated on Cinderella. 
+Secondly, \ketcindy\ generates 
+a source file of R and makes R execute it 
+for the generation of \TeX\ graphical codes. 
+Thirdly, those codes are formatted into 
+\TeX\ file which is input in the targetting \TeX\ document 
+via the command \verb|\input|. 
+Finally, usual compilation procedure of \TeX\ results in 
+the generation of final PDF output 
+including the corresponding figure. 
+A batch file \verb|kc.bat| for Windows 
+or a shell file \verb|kc.sh| for Mac or Linux 
+is generated via \ketcindy\ 
+in order to batch-process all the steps 
+from the second to the last. 
+Also by using these files, 
+collaboration of Cinderella and other software 
+as shown in the schematic diagram above 
+is processed. 
+
+Summarizingly, specific steps to generate a \TeX\ figure 
+are listed as follows.
+
+\begin{enumerate}[(1)]
+\item 
+Generate the needed geometric elements 
+on the Euclidean view of Cinderella 
+using its drawing tools. 
+These elements can be moved interactively. 
+
+\hspace{30mm}\includegraphics[bb=0.00 0.00 408.02 347.02,width=6cm]{Fig/incenter01.pdf}
+
+\item 
+Input the \ketcindy\ codes into Cindyscript editor 
+to specify the graphical elements to be displayed 
+in \TeX\ final output. 
+Also \ketcindy\ codes are used 
+to generate supplementary graphical elements 
+and handle them. 
+
+\hspace{10mm}\includegraphics[bb=0.00 0.00 811.04 257.01,width=12cm]{Fig/incenter02E.pdf}
+
+In this stage, the programming capabilities 
+inherently implemented to Cindyscript can be used simultaneously. 
+Execute the whole program by clicking the "Run" button. 
+For more details, see section 3. 
+
+\item 
+Click the button named \verb|Figures| in Euclidean view 
+to automatically generate the following files 
+in the folder named "fig". 
+Here, "incenter" is the name specified 
+via the command \verb|Setfiles("incenter")| 
+in step (2). 
+
+\begin{tabbing}
+12\=1234567897890123456\=\kill
+
+ \> \verb|kc|.sh or \verb|kc.bat| \> shell script file(Mac) or batch file(Windows) \\
+ \> \verb|incenter.r| \> \\
+ \> \verb|incenter.tex| \> \TeX\ file composed of graphical codes\\
+ \> \verb|incentermain.aux| \> \\
+ \> \verb|incentermain.log| \> \\
+ \> \verb|incentermain.pdf| \> PDF file to display the resulting graphical image\\
+ \> \verb|incentermain.tex| \> \TeX\ file temporarily used to generate 
+the file \verb|incentermain.pdf|
+\end{tabbing}
+
+Subsequently, the file \verb|incentermain.pdf| 
+is automatically displayed as shown below. 
+
+\hspace{30mm}\includegraphics[bb=0.00 0.00 348.02 284.51,width=6cm]{Fig/incenter03.pdf}
+
+We can manipulate this final output 
+by modifying the inputs in steps (1) and (2) 
+before processing the step (3) again. 
+
+\vspace{\baselineskip}
+\item  
+Using \ketpic\ package of \TeX , 
+\verb|incenter.tex| can be read 
+into the targetting \TeX\ document 
+via the command 
+\begin{center}
+\verb|\input{incenter}|
+\end{center} 
+Then the same figure is embedded in the targetting PDF output. 
+
+\end{enumerate}
+
+
+\newpage
+
+\subsection{The drawing procedure of \ketcindy}
+
+\subsubsection{Geometric figure}
+
+\subsubsection{Graph of function}
+
+\subsubsection{Spatial figure}
+
+\subsubsection{Table}
+
+\subsubsection{Collaboration with other software}
+
+
+\newpage
+
+\subsection{Plotting data}
+Here we call the data computed 
+to generate the graphs of functions and geometric elements 
+"Plotting data" which is abbreviated as PD. 
+The PD to draw segment is the list of coordinates 
+of its two endpoints. 
+For example, 
+when the coordinates of the points A and B 
+are (1, 1) and (3, 2) respectively, 
+PD of the segment AB named \verb|Listplot ([A,B])| 
+is stored in the form \verb|[[1,1],[3,2]]|. 
+Also the PD to draw a curve is the collection of 
+those for drawing small segments 
+which connect contiguous dividing points of the curve. 
+PD are automatically given names via \ketcindy\ 
+following the rules below.
+
+\begin{itemize}
+\item 
+The beginning part of the PD's name 
+depends on the kind of the corresponding graphical element. 
+For instance, 
+\verb|sg| is associated to segments and 
+\verb|cr| is associated to circles. 
+
+\item 
+When some extra name is specified 
+as the first argument in the definition of PD, 
+it is added to the beginning part given above. 
+For instance, the PD defined below 
+is given the name \verb|sg1|. 
+\begin{center}
+\verb|Listplot("1",[[0,0],[1,2]]);| 
+\end{center}
+
+\item 
+When the extra name is not needed, 
+the names of the points are added 
+to the beginning part given above. 
+For instance, the PD defined below  
+is given the name \verb|sgABC|. 
+\begin{center}
+\verb|Listplot([A,B,C]);|
+\end{center}
+
+\end{itemize}
+
+\noindent 
+Once PD are generated, 
+their names are displayed on the console view of Cinderella. 
+For instance, when the PD named \verb|sgABCA| is generated, 
+the corresponding message is displayed as shown below. 
+
+\begin{center}
+\includegraphics[bb=0.00 0.00 298.02 115.01,width=6cm]{Fig/pdtoconsole.pdf}
+\end{center}
+Also the content of PD is displayed 
+via the function \verb|println()| of Cindyscript. 
+For instance, inputting the command 
+\verb|println(sgABCA)| makes the following list displayed. 
+\begin{center}
+\verb| [[1,3],[-1,0],[3,0],[1,3]] |
+\end{center}
+This list is composed of the coordinates of the points A, B, and C. 
+
+These names of PD are used 
+when the corresponding PD need to be transformed. 
+For instance, 
+PD to draw the parallel transport of the segment AB 
+is generated via the \ketcindy\ command 
+\begin{center}
+\verb|Translatedata("1","sgAB",[2,3]);|
+\end{center}
+
+PD can be generated also 
+by using the programming capability of Cindyscript 
+which can be subsequently used in \ketcindy .  
+For more details, 
+see the example of \verb|Listplot()| 
+in the command reference. 
+Inclusion of too much elements into a single PD 
+may cause some error. 
+To prevent such error, 
+PD should be divided into several PD 
+each of which is composed of 200 elements or so. 
+
+
+\newpage
+
+\section{Cindyscript}
+
+\subsection{Cindyscript editor}
+
+Choose "Cindyscript" in the "Scripting" menu 
+or push keybuttons Ctrl+9 (Windows) / Command+9 (Mac), 
+then Cindyscript editor opens as shown below. 
+
+\begin{layer}{150}{0}
+\putnotese{7}{15}{\includegraphics[bb=0.00 0.00 703.04 425.02,width=14cm]{Fig/slotE.pdf}}
+\arrowlineseg[16]{30}{20}{10}{90}
+\putnotese{25}{5}{Slots}
+\arrowlineseg[16]{50}{20}{10}{100}
+\putnotese{42}{5}{Page name}
+\arrowlineseg[16]{90}{20}{10}{110}
+\putnotese{80}{5}{Font size}
+%\arrowlineseg[16]{107}{20}{15}{140}
+%\putnotese{80}{5}{描画面を前面に}
+\arrowlineseg[16]{135}{20}{10}{110}
+\putnotese{125}{5}{Run}
+\arrowlineseg[16]{142}{20}{10}{100}
+\putnotese{135}{5}{Help}
+\putnotese{100}{35}{Text field}
+\putnotese{100}{80}{Console}
+\end{layer}
+
+\vspace{105mm}
+
+Commands can be input into preferred "slot". 
+Specific timing for execution of commands 
+is assigned to each slot. 
+The slot for current work can be chosen 
+only by clicking the corresponding tab in the menu. 
+Users can add extra pages to each slot. 
+For instance, 
+when some initialization other than 
+those included in \verb|KETlib| is needed, 
+clicking the folder icon of "Initialization" makes a new page open 
+in which extra commands can be input. 
+The name of each page can be given 
+by directly inputting it into the "Page name" column. 
+The font size of the scripts can be tuned 
+by changing the number in the "Font size" column. 
+Frequently used slots are listed below. 
+
+\begin{itemize}
+
+\item 
+Draw
+
+The commnds in this slot are executed 
+when some change, like movement of point, 
+occurs in the Euclidean view. 
+In \verb|templatebasic1.cdy|, 
+the protoype page named \verb|figure| 
+including the \ketcindy\ commnads 
+like \verb|Ketinit();| and \verb|Windispg();| 
+which are unconditionally necessary 
+has been prepared.  
+The \ketcindy\ commands for drawing 
+should be input into this slot. 
+
+\item 
+Initialization 
+
+The definitions of functions 
+and the initial values of variables 
+are input here. 
+The commands in this slot are exected 
+only once just after the "Run" button is clicked. 
+Thus, the initial data in this slot is changed 
+when some modifications are made in other slots. 
+In \verb|templatebasic1.cdy|, 
+the protoype page named \verb|KETlib| 
+including the default setting of \ketcindy\ 
+has been prepared. 
+
+\item 
+Key Typed
+
+The commnds in this slot are executed 
+when some key is pushed. 
+
+\end{itemize}
+
+Clicking "Run" button or pushing the keybuttons Shift+Enter 
+makes the whole program be executed. 
+The results derived from executing the function \verb|print()| 
+and error messages are displayed on the console view 
+which is put at the bottom part of Cindyscript editor. 
+Each error and its location 
+is displayed together with the message 
+"WARNING" or "syntax error". 
+The outputs displayed on the console 
+can be copied to other usual text editors. 
+
+Click the "Help" button, 
+then reference manual of Cinderella opens 
+as shown below. \\
+
+\includegraphics[bb=0.00 0.00 712.04 577.03,width=14cm]{Fig/CindyhelpE.pdf}
+
+
+
+
+\subsection{Input}
+
+
+\subsection{Variables and constants}
+
+
+\subsection{Frequently used commands}
+
+
+
+
+
+% -------------- Making slide --------------
+
+\newpage
+
+\section{Making Slides}
+
+\subsection{Overall Flow}
+
+\ketcindy\ has functions to make slides for presentation. 
+For this, follow steps below:
+\begin{enumerate}[1)]
+\item Copy and rename \verb|template2slide.cdy| in ketcindy folder to a work folder and double-click the file (here, we call sample.cdy). Then the followings will appear.
+\begin{center}
+\includegraphics[bb=0.00 0.00 743.00 632.00,height=60mm]{fig/slidescreen.pdf}\hspace{5mm}
+\includegraphics[bb=0.00 0.00 802.00 633.00,height=60mm]{fig/slidescript.pdf}
+\end{center}
+\item Edit \verb|"Settitle"|, for example,\\
+\verb|  Settitle([|\\
+\verb|     "s{60}{20}{How To Use}",|\\
+\verb|     "s{60}{50}{a \ketcindy\ member}",|\\
+\verb|     "s{60}{60}{\ketcindy\ project}",|\\
+\verb|     "s{60}{70}{Aug. 20th}"|\\
+\verb|    ],["Color=[1,1,0,0]"]);|
+\item Press button \verb|"Title"|, then the title page will be displayed. At the same time,  text file \verb|"sample.txt"| will be created if it does not exist. This \verb|sample.txt| is a template file for making slides.
+\item Press button \verb|"Slide"|, then \ketcindy\ will make \verb|sample.tex| from \verb|sample.txt|, 
+typeset it, and display \verb|sample.pdf| which contains slides for presentation.
+\end{enumerate}
+ 
+\subsection{Editing Text File}
+
+\begin{enumerate}[1)]
+\item Put \verb|//| at the last of each line.\\
+\hspace*{10mm}Rm) Use \verb+||||+ for \verb|//|.
+\item Commands are\\
+\verb|    title::titleslidename(::wallpaper)//|\\
+\verb|        Rem) Put only once at the first line.|\\
+\verb|    main::(main title)//|\\
+\verb|    new::(page title)//|\\
+\verb|    enumerate//|\\
+\verb|           =\begin{enumerate}|\\
+\verb|        Rem) Add the option such as [(1)] using :: .|\\
+\verb|    itemize//|\\
+\verb|           =\begin{itemize}|\\
+\verb|    layer::{xsize}{ysize}//|\\
+\verb|           =\begin{layer}{xsize}{ysize}|\\
+\verb|         Rem) "layer" is an environment defined in ketlayer.sty.|\\
+\verb|    item::sentence//|\\
+\verb|           =\item sentence|\\
+\verb|    putnote::dir{xpos}{ypos}::filename(,scale)//|\\
+\verb|           =putnotedir{xpos}{ypos}{\input{fig/filename}}||\\
+\verb|         Rem) "putnote" is a command defined in ketlayer.sty|\\
+\verb|    end//|\\
+\verb|           =\end{itemize,enumerate,layer}|\\
+\verb|    ...//|\\
+\verb|          To insert a blank line.|\\
+\verb|    Rem) Any other TeX command is available.|\\
+\end{enumerate}
+
+\subsection{Display of Page step by step}
+
+\begin{enumerate}[1)]
+\item Put just after new,\\
+\verb|    %repeat=number of steps//|
+\item Put at the head of each line as\\
+\verb|    %[2,-]::sentence|\\
+\verb|          display at all steps from 2|\\
+\verb|    %[-,2]::sentence|\\
+\verb|           display at all steps until 2|\\
+\verb|    %[1..3,5]::sentence|\\
+\verb|           display at steps of 1,2,3 and 5|
+\item  Use \verb|%thin| to display with thin letters.\\
+\verb|    %thin::[2,-]::sentence|
+\item The dencity can be changed with Setslidebody or \verb|\setthin|.
+\end{enumerate}
+
+\subsection{Making Flip Animation}
+
+\begin{enumerate}[1)]
+\item Define function \verb|Mf(s)|, the state at s.
+\item Put command \verb|Setpara| in the script editor as\\ 
+\verb|    Setpara(subfolder,funcitonstr(mf(s)),range,options);|\\
+\verb|        options=["m/r", "Div=25"];|
+\item Describe in the text file as\\
+\verb|    %repeat=, para=subfolder:{0}:s{60}{10}:input(:scale)//|
+\item Press buttons \verb|ParaF| and \verb|Flip|, then \verb|subfolder| will be generated.
+\item Press button \verb|Slide|.
+\end{enumerate}
+
+\subsection{Making Animation}
+
+\begin{enumerate}[1)]
+\item Add the following in the script editor\\ 
+\verb|    Addpackage(["[dvipdfmx]{animate}"]);|
+\item Add in the second option of Setpara,\\
+\verb|    "Frate=num of frame in the second,"Scale=scale,"OpA=option of animation" |
+\item Press buttons \verb|ParaF| and \verb|Anime|, then \verb|subfolder| will be generated.
+\item Use \verb|\input|, not layer, to display.
+\end{enumerate}
+
+\subsection{Changing Style}
+
+The default styles such as size and color of letters can be changed.
+See \verb|KeTCindyReferenceE|.
+
+\end{document}

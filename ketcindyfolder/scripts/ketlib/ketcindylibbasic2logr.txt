@@ -1,3 +1,5 @@
+// 20180820,22
+//  CRspline chaged  (rewritten )
 // 20180820,21
 //  Drwxy chaged  ( options added )
 // 20180817

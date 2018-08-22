@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180821) loaded");
+println("ketcindybasic2(20180822) loaded");
 
 //help:start();
 
@@ -1251,7 +1251,9 @@ Ospline(nm,ptlist,options):=(
   );
   Bezier("o"+nm,list,ctrL,options);
 );
-  
+
+///////// old CRspline ///////////////
+if(1==0,
 CRspline(nm,ptL):=CRspline(nm,ptL,[]);
 CRspline(nm,ptL,options):=(
   // Catmull-Rom spline
@@ -1307,6 +1309,56 @@ CRspline(nm,ptL,options):=(
     ctrlist=append(ctrlist,[tmp1,tmp2]);
   );
   Bezier(nm,ptlist,ctrlist,options);
+);
+); //skip
+
+////////// new CRspline 180822 ///////////
+CRspline(nm,ptL):=CRspline(nm,ptL,[]);
+CRspline(nm,ptL,options):=(
+  // Catmull-Rom spline
+//help:CRspline("1",[A,B,C,A]);
+//help:CRspline(options=["Num=10"]);
+  regional(name,Eps,ptlist,cc,nv,pm,p0,p1,p2,p3,
+     ctrlist,cflg,qq,rr,tmp);
+  name="CR"+nm;
+  ptlist=apply(ptL,Lcrd(#));
+  Eps=10^(-5);
+  cflg=0;
+  if(dist(ptlist_1,ptlist_(length(ptlist)))<Eps,
+    cflg=1;
+  );
+  cc=1/6;
+  ctrlist=[];
+  forall(1..(length(ptlist)-1),
+    p1=ptlist_#;
+    p2=ptlist_(#+1);
+    tmp=p2-p1;
+    nv=[-tmp_2,tmp_1];
+    pm=(p1+p2)/2;
+    if(#==1,
+     p3=ptlist_(#+2);
+     if(cflg==0,
+        p0=Reflectpoint(p3,[pm,pm+nv]);
+      ,
+        p0=ptlist_(length(ptlist)-1);
+      );
+    ,
+      p0=ptlist_(#-1);
+      if(#==length(ptlist)-1,
+        if(cflg==0,
+          p3=Reflectpoint(p0,[pm,pm+nv]);
+        ,
+          p3=ptlist_2;
+        );
+      ,
+        p3=ptlist_(#+2);
+      );
+    );
+    qq=p1+cc*(p2-p0);
+    rr=p2+cc*(p1-p3);
+    ctrlist=append(ctrlist,[qq,rr]);
+  );
+  Bezier(name,ptlist,ctrlist,options);
 );
 
 Beziersmooth(nm,ptL):=Bzspline(nm,ptL,[]);
@@ -2620,6 +2672,20 @@ Deffun(name,bodylist):=(
   FUNLIST=append(FUNLIST,str);
 );
 
+Inwindow(point):=Inwindow(point,[XMIN,XMAX],[YMIN,YMAX]);
+Inwindow(point,xrng,yrng):=(
+//help:Inwindow(point);
+//help:Inwindow(point,xrange,yrange);
+  regional(Eps,pt,x,y,xmin,xmax,ymin,ymax,tmp);
+  Eps=10.0^(-6);
+  if(ispoint(point),pt=point.xy,pt=point);
+  x=pt_1; y=pt_2;
+  xmin=xrng_1; xmax=xrng_2;
+  ymin=yrng_1; ymax=yrng_2;
+  tmp=(x>xmin-Eps)&(x<xmax+Eps)&(y>ymin-Eps)&(y<ymax+Eps);
+  if(tmp,true,false);
+);
+
 Windispg():=(
   regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,opcindy);
   gsave();
@@ -2633,8 +2699,6 @@ Windispg():=(
       if(Nj_2<0,tmp1=0,tmp1=Nj_2);
       if(tmp1<10,
         forall(Dt,Nk,
-//        tmp2=apply(Nk,if(ispoint(#),Lcrd(#),#));
-//        tmp2=apply(tmp2,Pcrd(#));
           tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
             tmp="connect("+textformat(tmp2,5)+
@@ -2650,12 +2714,6 @@ Windispg():=(
       );
     );
   );
-//  if(ADDAXES=="1", // 16.10.08from
-//    draw([XMIN,0],[XMAX,0],color->[0,0.2,0]);
-//    draw([0,YMIIN],[0,YMAX],color->[0,0.2,0]);
-//    Letter([[XMAX,0],"e","x",[0,YMAX],"n","y"]);
-//    Letter([[0,0],"sw","O"]);
-//  ); // 16.10.08until
   grestore(); 
   layer(0);
 );

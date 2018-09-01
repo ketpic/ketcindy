@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180722 loaded");
+println("ketcindylibout(20180727 loaded");
 
 //help:start();
 
@@ -1827,7 +1827,7 @@ Histplot(nm,dataorg,optionorg):=(
 Scatterplot(nm,file):=Scatterplot(nm,file,[]);
 Scatterplot(nm,file,optionorg):=(
 //help:Scatterplot("1",path+filename);
-//help:Scatterplot(options=["Reg=yes",A,B,C,"Size"=4"]);
+//help:Scatterplot(options=["Reg=yes","Size"=4"]);
   regional(tmp,tmp1,tmp2,fname,name,reg,eqL,reL,cdysize,
     options,dtx,dty,nn,mx,my,sx,sy,sxy,rr,aa,bb,size);
   name="sc"+nm;
@@ -3594,6 +3594,7 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   );
 );
 
+SetObj():=Objname(Fhead,["m","v"]); //18.0901
 SetObj(str):=Objname(str,["m","v"]); //17.01.12
 SetObj(str,options):=Objname(str,options); //17.01.12
 Objnameoptions(str,options):=Objname(str,options);// 16.11.29
@@ -6420,6 +6421,7 @@ WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh):=(
     tmp=replace(tmp,"fname","fnameall");  cmdL_8=tmp;
 	cmdL_7="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
     cmdL=append(cmdL,"  outputend(dirfname);");
+    cmdL=remove(cmdL,[cmdL_3,cmdL_4]); //180827
     CommandListC=concat(CommandListC,cmdL); //180531to
   ,
     if(wflg==1,tmp1=append(options,"m"));
@@ -6640,6 +6642,7 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionsh):=(
     tmp=replace(tmp,"fname","fnameall");  cmdL_6=tmp;
 	cmdL_5="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
     cmdL=append(cmdL,"  outputend(dirfname);");
+    cmdL=remove(cmdL,[cmdL_1,cmdL_2]); //180827
     CommandListC=concat(CommandListC,cmdL); //180531to
   ,
     if(wflg==1,tmp1=append(options,"m"));

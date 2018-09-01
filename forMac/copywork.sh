@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20180405
+#      20180401
 ketfolder=/Volumes/ketcindyfolder
 if [ ! -e $ketfolder ]; then
   ketfolder=~/Desktop/ketcindyfolder
@@ -7,9 +7,12 @@ fi
 ketsrc=${ketfolder}/work
 echo ${ketsrc} will be used
 changesetting=/changesetting.txt
-read -p 'Path of working folder : userhome(u) :' ans
+read -p 'Path of working folder : userhome(u) desktop(d) :' ans
 if [ ${ans} = "u" ]; then
   dist=~/ketcindy
+fi
+if [ ${ans} = "d" ]; then
+  dist=~/Desktop/ketcindy
 fi
 cp -r -p ${ketsrc}/  ${dist}/
 if [ $? -gt 0 ]; then
@@ -49,6 +52,7 @@ read -p 'Do you copy ketcindy manual? (y,n)' ans
 if [ ${ans} = "y" ]; then
   cd ${ketfolder}/doc/ketmanual
   cp -p  KeTCindyReferenceJ.pdf ${dist}
+  cp -p  KeTCindyReferenceE.pdf ${dist}
 fi
 sleep 1
 exit 0

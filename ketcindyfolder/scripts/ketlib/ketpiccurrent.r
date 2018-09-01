@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180821)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180901)" 
 
 print(ThisVersion)
 
+# 20180901
+# Objcurve debugged  ( Assign rewritten )
 # 20180820,21
 #  Drwxy changed  ( optional arguments added )
 #  Setax changed  (ARROWSIZE removed )
@@ -12303,18 +12305,18 @@ Objcurve<- function(...){
   if(Nargs>=3){
     Np=Args[[3]]
   }
-  Assignadd("Sz",Sz)
+#  Assignadd("Sz",Sz) #180901
   if(Pstr=="xy"){
     Vz=c(0,0,1)
-    Fs=Assign("c(Sz*cos(t),Sz*sin(t),0)")
+    Fs=Assign("c(Sz*cos(t),Sz*sin(t),0)","Sz",Sz) #180901
   }
   if(Pstr=="yz"){
     Vz=c(1,0,0)
-    Fs=Assign("c(0,Sz*cos(t),Sz*sin(t))")
+    Fs=Assign("c(0,Sz*cos(t),Sz*sin(t))",list("Sz",Sz)) #180901
   }
   if(Pstr=="zx"){
     Vz=c(0,1,0)
-    Fs=Assign("c(Sz*sin(t),0,Sz*cos(t))")
+    Fs=Assign("c(Sz*sin(t),0,Sz*cos(t))",list("Sz",Sz)) #180901
   }
   Gc0=Spacecurve(Fs,"t=c(0,2*pi)",paste("Num=",as.character(Np),sep=""))
   P=PL[[1]]; Q=PL[[2]]; R=PL[[length(PL)-1]]

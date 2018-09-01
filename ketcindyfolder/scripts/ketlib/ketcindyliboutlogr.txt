@@ -1,3 +1,5 @@
+// 20180727
+//   Wireparadata, Sfcutparadata debugged  ("char fname..." removed)
 // 20180722
 //   PlotdataR,Boxplot,Rulersclale changed  (color option)
 // 20180712

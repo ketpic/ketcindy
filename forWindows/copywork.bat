@@ -46,5 +46,7 @@ set /P STR_INPUT="Do you copy ketcindy manual? (y,n):"
 if "%STR_INPUT%" == "y" (
 rem  cd "%ketsrc%\doc\ketmanual"
   copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
+  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
+
 )
 pause

@@ -9816,7 +9816,7 @@ Reflect3data<- function(...){
       Tmp<- Reflect3pt(P,VL)
       Ans<- rbind(Ans,Tmp)
     }
-#    rownames(Ans)<- 1:Nrow(Ans)
+    rownames(Ans)<- 1:Nrow(Ans)
     Out<- c(Out,list(Ans))
    }
    if(Length(Out)==1){
@@ -12312,11 +12312,11 @@ Objcurve<- function(...){
   }
   if(Pstr=="yz"){
     Vz=c(1,0,0)
-    Fs=Assign("c(0,Sz*cos(t),Sz*sin(t))",list("Sz",Sz)) #180901
+    Fs=Assign("c(0,Sz*cos(t),Sz*sin(t))","Sz",Sz) #180901
   }
   if(Pstr=="zx"){
     Vz=c(0,1,0)
-    Fs=Assign("c(Sz*sin(t),0,Sz*cos(t))",list("Sz",Sz)) #180901
+    Fs=Assign("c(Sz*sin(t),0,Sz*cos(t))","Sz",Sz) #180901
   }
   Gc0=Spacecurve(Fs,"t=c(0,2*pi)",paste("Num=",as.character(Np),sep=""))
   P=PL[[1]]; Q=PL[[2]]; R=PL[[length(PL)-1]]
@@ -12388,7 +12388,7 @@ Objcurve<- function(...){
 }
 
 Objsymb<- function(Symb,Thick,Face,Dir){
-  for(J in Looprange(1,length(Symb))){
+  for(J in Looprange(1,Length(Symb))){
     Objcurve(Op(J,Symb),Thick,Face,Dir)
   }
 }

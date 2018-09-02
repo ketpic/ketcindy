@@ -1,3 +1,5 @@
+// 20180902
+//   Arrowhead changed ( head trimmed if Inwindow==false )
 // 20180817
 //   Ketinit changed (GPACK added)
 //   Plotdata debugged ( Exc )

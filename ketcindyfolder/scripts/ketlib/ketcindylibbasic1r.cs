@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180827)");
+println("KeTCindy V.3.2.1(20180902)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180817) loaded");
+println("ketcindylibbasic1(20180902) loaded");
 
 //help:start();
 
@@ -4995,6 +4995,7 @@ Arrowhead(point,Houkou,options):=(
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   list=Arrowheaddata(point,Houkou,options);
+  if(!Inwindow(point),Noflg=2);//180902
   if(Noflg<3,
 //    println("generate Arrowhead "+name);
     tmp1=apply(list,Pcrd(#));
@@ -5005,10 +5006,8 @@ Arrowhead(point,Houkou,options):=(
   if(Noflg<2,
     if(isstring(Ltype),
       Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(1)+Ltype,name);
       Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
 //	  if(Noflg==1,Ltype=0);
       Ltype=0;
@@ -5024,10 +5023,8 @@ Arrowhead(point,Houkou,options):=(
       opstr=opstr+","+text(tmp);
     );  // 16.04.09 until
     Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));//180705
 	Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");   
     Texcom("}");//180722
-//    if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));//180705
   );
 );
 

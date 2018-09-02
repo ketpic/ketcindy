@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180727 loaded");
+println("ketcindylibout(20180902 loaded");
 
 //help:start();
 
@@ -3544,15 +3544,15 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
       cmdlist=MkprecommandR();
       cmdlist=concat(cmdlist,["Openobj",[Dq+path+fname+Dq]]);
       cmdlist=concat(cmdlist,cmdL);
-      tmp=["Closeobj()",[],"ans="+Dq+"||||"+Dq,[]];//16.12.26
+      tmp=["Closeobj()",[],""+Dq+"||||"+Dq,[]];//16.12.26
       cmdlist=concat(cmdlist,tmp);
       tmp=append(options,"Cat=y");
       tmp1=apply(tmp,Toupper(substring(#,0,1))); // 16.04.23from
       tmp1=select(tmp1,#=="W");
       if(length(tmp1)==0,
         tmp=append(tmp,"Wait=5");
-      );// 16.04.23until
-      CalcbyR("ans",cmdlist,tmp);
+      );// 16.04.23to
+      CalcbyR("",cmdlist,tmp); //180902
       wait(WaitUnit*100); // 16.03.18
     ,
       vtx=cmdL_1;
@@ -3594,15 +3594,22 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   );
 );
 
-SetObj():=Objname(Fhead,["m","v"]); //18.0901
-SetObj(str):=Objname(str,["m","v"]); //17.01.12
-SetObj(str,options):=Objname(str,options); //17.01.12
-Objnameoptions(str,options):=Objname(str,options);// 16.11.29
-Objname(str):=Objname(str,["m","v"]); // 16.11.29
+SetObj():=Objname(Fhead,["m","v"]); //180901
+SetObj(Arg1):=(
+  if(isstring(Arg1),
+    Objname(Arg1,["m","v"]); //17.01.12
+  ,
+    Objname(Fhead,Arg1); //180902
+  );
+);
+//Objnameoptions(str,options):=Objname(str,options);// 16.11.29
+//Objname(str):=Objname(str,["m","v"]); // 16.11.29
 Objname(str,optionsorg):=(
 //help:Objname("sample");
 //help:Objname(options=["m","v"]);
+//help:Setobj(["m","v"]);
 //help:Setobj("sample");
+//help:Setobj("sample",options);
 //help:Setobj(options=["m","v"]);
   regional(options);
   if(length(str)>0,

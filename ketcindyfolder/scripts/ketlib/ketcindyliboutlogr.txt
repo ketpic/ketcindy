@@ -1,3 +1,6 @@
+// 20180902
+//   Setobj changed (null argument)
+//   Mkviewobj changed (Cat=n)
 // 20180727
 //   Wireparadata, Sfcutparadata debugged  ("char fname..." removed)
 // 20180722

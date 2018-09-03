@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180901) loaded");
+println("ketcindybasic2(20180904) loaded");
 
 //help:start();
 
@@ -161,12 +161,14 @@ Rotatedata(nm,plist,angle,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -226,12 +228,14 @@ Translatedata(nm,plist,mov,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -315,12 +319,14 @@ Scaledata(nm,plist,rx,ry,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -396,12 +402,14 @@ Reflectdata(nm,plist,symL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -665,12 +673,14 @@ Letter(list,options):=(
     Str=replace(Str,"`","'");//180303
     tmp=Dq+","+Dq+Str+Dq+")";
     if(Noflg==0,
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    );
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	);
     if(Noflg<2,
       Xmv=0;//16.10.13
       Ymv=-4;
@@ -739,9 +749,13 @@ Letterrot(pt,dir,tmov,nmov,str,options):=(
   color=tmp_(length(tmp)-2);
   Letter([pt,"c",str],append(options,"notex"));
   tmp=replace(str,"\","\\"); //17.10.18
-  Texcom("{");Com2nd("Setcolor("+color+")");//180722
+  if(color!=KCOLOR, //180904
+    Texcom("{");Com2nd("Setcolor("+color+")");//180722
+  );
   Com2nd("Letterrot("+pt+","+dir+","+tmov+","+nmov+","+Dqq(tmp)+")");//180805
-  Texcom("}");//180722
+  if(color!=KCOLOR, //180904
+    Texcom("}");//180722
+  );
 );
 
 Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str,[]);
@@ -779,11 +793,13 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
   color=tmp_(length(tmp)-2);
   Expr([pt,"c",str],append(options,"notex"));
   tmp=replace(str,"\","\\"); //17.10.18
-  Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+  if(color!=KCOLOR, //180904
+    Texcom("{");Com2nd("Setcolor("+color+")");//180722
+  );
   Com2nd("Exprrot("+pt+","+dir+","+tmov+","+nmov+","+Dqq(tmp)+")");//180802
-  Texcom("}");//180722
-//  if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
+  if(color!=KCOLOR, //180904
+    Texcom("}");//180722
+  );
 );
 
 Putslider(ptstr,p1,p2):=Slider(ptstr,p1,p2);
@@ -922,12 +938,14 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -3013,12 +3031,14 @@ Extractdata(number,name,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      Texcom("}");//180722
-//      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
+      );
+	,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -4659,7 +4679,11 @@ Presentation(texfile,txtfile):=(
   forall(tmp3,
     println(SCEOUTPUT,#);
   );
-  if(indexof(PathT,"platex")>0,tmp="\ketmarginJ",tmp="\ketmarginE"); // 16.06.09
+  if(indexof(PathT,"platex")>0, //180903from
+    tmp="\setmargin{25}{145}{15}{100}"
+  ,
+    tmp="\setmargin{20}{135}{15}{100}"
+  ); // 180903to
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"\ketslideinit");
   println(SCEOUTPUT,"");

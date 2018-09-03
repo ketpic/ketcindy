@@ -1,3 +1,5 @@
+// 20180904
+//   Color setting changed ( for KCOLOR)
 // 20180816
 //   Nohiddenbyfaces debugged  (spaceline dissolved to segments)
 // 20180815

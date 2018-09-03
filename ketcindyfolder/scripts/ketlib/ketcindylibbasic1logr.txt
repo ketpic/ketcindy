@@ -1,3 +1,5 @@
+// 20180904
+//   Color setting changed ( for KCOLOR)
 // 20180902
 //   Arrowhead changed ( head trimmed if Inwindow==false )
 // 20180817

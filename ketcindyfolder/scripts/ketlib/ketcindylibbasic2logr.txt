@@ -1,3 +1,7 @@
+// 20180904
+//   Color setting changed ( for KCOLOR)
+// 20180903
+//  Presentation changed (ketmargin => setmargin )
 // 20180901
 //  Inwindow added
 // 20180820,22

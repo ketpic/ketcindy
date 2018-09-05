@@ -1,8 +1,0 @@
-use("KetCindyPlugin");
-Dircdy=loaddirectory;
-setdirectory(plugindirectory);
-import("dirheadsci.txt");
-//PathS=replace(PathS,"6.0.0","5.5.2");
-
-//Ketinit();
-//Ketinit3d();

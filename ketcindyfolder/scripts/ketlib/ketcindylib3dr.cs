@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180804) loaded");
+println("ketcindylib3d(20180905) loaded");
 
 //help:start();
 
@@ -26,7 +26,8 @@ Ketinit3d(sf):=(
   Ketinit3d(sf,[-5,tmp-0.5,tmp-1]);
 );
 Ketinit3d(subflg,position):=(
-//help:Ketinit3d(subflg=1)
+//help:Ketinit3d();
+//help:Ketinit3d(0);
   regional(ctr,tmp,tmp1,tmp2,tmp3,tmp4,xPos,yTh,yPh);
 //  println("KETCindy3d V.2.3.5(2016.02.03)");
   BezierNumber3=1;   //15.02.28
@@ -2645,10 +2646,10 @@ VertexandEdge(nm,vfnL,options):=VertexEdgeFace(nm,vfnL,options);
 VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
 //help:VertexEdgeFace("1",[vL,fnL]);
 //help:VertexEdgeFace("1",["A","B","C"]);
-//help:VertexEdgeFace(options=["Pt=fix","Edg=geo"]);
+//help:VertexEdgeFace(options=["Pt=fix","Vtx=geo","Edg=geo"]);
 VertexEdgeFace(nm,vfnLorg,optionorg):=(
   regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL,
-      vL,eL,enL,face,edge,vtx,vname,fixflg,edgflg,tmp,tmp1,tmp2);
+      vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,tmp,tmp1,tmp2);
   name3="phvef"+nm;
   namev="phv3d"+nm;
   namee="phe3d"+nm;
@@ -2666,6 +2667,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   eqL=tmp_5;
   strL=tmp_7;
   fixflg=1;
+  vtxflg=1; //180905
   edgflg=1;
   forall(eqL,
     tmp1=Toupper(substring(#,0,1));
@@ -2675,6 +2677,10 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       if(tmp2=="FREE", fixflg=0);
       options=remove(options,[#]);
     );
+    if(tmp1=="V", //180905from
+      if(substring(tmp2,0,1)=="N", vtxflg=0);
+      options=remove(options,[#]);
+    ); //180905to
     if(tmp1=="E",
       if(substring(tmp2,0,1)=="N", edgflg=0);
       options=remove(options,[#]);
@@ -2698,9 +2704,19 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
 //      parse(tmp);
     ,
       vname="v"+text(#);
-      if(fixflg==1,
-        Putpoint3d(["v"+text(#),vtx],"fix"); 
-      );
+      if(vtxflg==1, //180905
+        if(fixflg==1,
+          Putpoint3d([vname,vtx],"fix"); 
+        );
+      , //180905from
+        tmp=vname+"3d="+format(vtx,6);
+        parse(tmp);
+        Defvar(vname+"3d",parse(vname+"3d"));
+        tmp=vname+"2d=Parapt("+vname+"3d)";
+        parse(tmp);
+        Defvar(vname+"2d",parse(vname+"2d"));
+        drawtext(parse(vname+"2d"),vname);
+      ); //180905to
     );
     vL=append(vL,vname); // 16.02.10 until
   );

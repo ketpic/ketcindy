@@ -1,3 +1,5 @@
+// 20180905
+//   VertexEdgeFace changed (option "vtx=geo/nogeo" added)
 // 20180904
 //   Color setting changed ( for KCOLOR)
 // 20180816

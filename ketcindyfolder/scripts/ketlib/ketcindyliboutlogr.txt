@@ -1,3 +1,5 @@
+// 20180906
+//   Setobj debugged (objname removed)
 // 20180902
 //   Setobj changed (null argument)
 //   Mkviewobj changed (Cat=n)

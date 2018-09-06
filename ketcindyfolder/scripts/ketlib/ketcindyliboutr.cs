@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180902 loaded");
+println("ketcindylibout(20180906 loaded");
 
 //help:start();
 
@@ -3594,19 +3594,17 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   );
 );
 
-SetObj():=Objname(Fhead,["m","v"]); //180901
-SetObj(Arg1):=(
+//Objname(str):=Objname(str,["m","v"]); //180906from
+//Objname(str,options):=Setobj(str,options);
+Setobj():=Setobj(Fhead,["m","v"]); //180901
+Setobj(Arg1):=(
   if(isstring(Arg1),
-    Objname(Arg1,["m","v"]); //17.01.12
+    Setobj(Arg1,["m","v"]); //17.01.12
   ,
-    Objname(Fhead,Arg1); //180902
+    Setobj(Fhead,Arg1); //180902
   );
 );
-//Objnameoptions(str,options):=Objname(str,options);// 16.11.29
-//Objname(str):=Objname(str,["m","v"]); // 16.11.29
-Objname(str,optionsorg):=(
-//help:Objname("sample");
-//help:Objname(options=["m","v"]);
+Setobj(str,optionsorg):=( //180906to
 //help:Setobj(["m","v"]);
 //help:Setobj("sample");
 //help:Setobj("sample",options);
@@ -3621,7 +3619,7 @@ Objname(str,optionsorg):=(
   ,
     OCOPTION=["m","v"];
   ); //17.12.23until
-  println([OCNAME,OCOPTION]);
+  println("generate OBJCMD. name="+OCNAME+", option="+OCOPTION);
 );
 
 Mkobjcmd(nm,fd):=Mkobjcmd(nm,fd,[40,40,"+"]);
@@ -4219,7 +4217,7 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
     tmp2=append(tmp2,tmp);
   );
   parse("oc"+symborg+"="+tmp2);
-  println("cmd seq oc"+symborg+" generated"); // 16.06.10until
+//  println("cmd seq oc"+symborg+" generated"); // 16.06.10until
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );

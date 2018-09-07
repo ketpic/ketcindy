@@ -710,6 +710,7 @@ Options are: arrowhead size, arrowhead angle,position,shape,position.\\
 \end{layer}
 
 \vspace{7mm}
+
 %\hspace{6mm}
 \begin{layer}{150}{0}
 \putnotese{17}{32}{(a)}
@@ -723,6 +724,8 @@ Options are: arrowhead size, arrowhead angle,position,shape,position.\\
 \end{layer}
 
 \vspace{70mm}
+
+\vspace{50mm}
 
 \hspace{7mm}
 \begin{layer}{150}{0}
@@ -1003,6 +1006,8 @@ Taking D,B,E on a straight line, it connects smoothly.\\
 \verb|Bezier("S",[A,B,C],[[D],[E,F]]);|\\
 
 \vspace{25mm}
+
+\vspace{50mm}
 
 \begin{layer}{150}{0}
 \putnotese{20}{27}{bzname}
@@ -3157,7 +3162,7 @@ Draw the point A near the origin.
 \verb|strL=Strsplit(str,"a");    |// Result is ["","bc","de","f"].
 \end{cmd}
 
-\newpage
+%\newpage
 
 
 %----------Texcom----------------------------------
@@ -3440,7 +3445,8 @@ Examples can be found in the command Boxplot().
 \end{center}
 \end{cmd}
 
-\newpage
+%\newpage
+
 %========= Maxima =======
 \subsection{Maxima}
 %------------CalcbyM--------------------------------
@@ -3496,7 +3502,7 @@ Example3:
 \verb| plotting data("2",tmp,"x",["Num=2"]); |\\
 \verb| Letter([A,"se","A"]);|
 
-\newpage
+%\newpage
 Example4: Parametric
 
 \begin{layer}{150}{0}
@@ -4961,9 +4967,6 @@ No option or " "(space) means\\
 option2="nodisp" or line type of hidden line. Default is "nodisp", in this case we denote that option1 is empty letter list:\verb|[""]|.
 \itemket{Examples}  \mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{95}{5}{ \input{Fig/wirepara1}}
-\end{layer}
 
 \verb|fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"]; |\\
 \verb|if(Isangle(), |\\
@@ -4975,26 +4978,30 @@ option2="nodisp" or line type of hidden line. Default is "nodisp", in this case 
 \verb|  ExeccmdC("1"); |  //draw the wires\\
 \verb|); |
 
-\begin{layer}{150}{0}
-\putnotese{95}{10}{ \input{Fig/wirepara2}}
-\end{layer}
+\begin{center}
+\input{Fig/wirepara1}
+\end{center}
+
+
 
 \verb|fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];|\\
 \verb|Sfbdparadata("1",fd);|\\
 \verb|Wireparadata("1","sfbd3d1",fd,5,7,[""]);|
 
-\vspace{30mm}
+\begin{center}
+\input{Fig/wirepara2}
+\end{center}
 
-\begin{layer}{150}{0}
-\putnotese{95}{10}{ \input{Fig/wirepara3}}
-\end{layer}
 
 \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]", |\\
 \verb| "v=[0,2*pi]","s"]; |\\
 \verb|Sfbdparadata("1",fd); |\\
 \verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
 
-\vspace{30mm}
+\begin{center}
+\input{Fig/wirepara3}
+\end{center}
+
 
 \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]",|\\
 \verb|         "v=[0,2*pi]","s"];|\\
@@ -5018,7 +5025,7 @@ option2="nodisp" or line type of hidden line. Default is "nodisp", in this case 
 
 (right figure)
 
-\begin{center} \input{Fig/wirepara4}   \input{Fig/wirepara5} \end{center}
+\begin{center} \input{Fig/wirepara4}\hspace{10mm}\input{Fig/wirepara5} \end{center}
 
 \end{cmd}
 %-------------Xyzax3data-------------------------------

@@ -1,14 +1,14 @@
 #!/bin/sh
-#      20180607
+#      20180907
 ketsrc=/Volumes/ketcindyfolder
 if [ ! -e $ketsrc ]; then
   ketsrc=~/Desktop/ketcindyfolder
 fi
 echo ${ketsrc} will be used
-echo 1. "/Applications/kettex/texlive (default)"
+echo 1. "/Applications/kettex/texlive"
 echo 2. "/Applications/kettex.app/texlive"
 echo 3. "/Library/TeX (TeXLive)"
-echo 4. other
+echo If other, install KeTCindy manually according to ReadMe.
 read -p 'Choose path of TeX from the above (number) : ' ans
 if [ ${ans} = "1" ]; then 
   texpath=/Applications/kettex/texlive
@@ -21,14 +21,6 @@ fi
 if [ ${ans} = "3" ]; then
   texpath=/Library/TeX/Root
   texbinpath=/Library/TeX/texbin
-fi
-if [ ${ans} = "4" ]; then
-  read -p 'Path of TeX (ex)/Applications/UpTeX.app/teTex/share : ' ans
-  texpath=${ans}
-  read -p 'Path of texbin (ex)/Applications/UpTeX.app/teTex/bin : ' ans
-  texbinpath=${ans}
-  echo texpath=${texpath}
-  echo texbinpath=${texbinpath}
 fi
 echo texpath=${texpath}
 echo texbinpath=${texbinpath}
@@ -82,12 +74,6 @@ echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/ketcindy.ini
 echo "setdirectory(Dirhead);"  >> ${cindyplug}/ketcindy.ini
 echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/ketcindy.ini
 echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/ketcindy.ini
-read -p 'Choose pdfviewer from preview(p),skim(s): ' ans
-if [ ${ans} = "s" ]; then
-  echo  "Pathpdf=\"skim\";" >> ${cindyplug}/ketcindy.ini
-else
-  echo  "Pathpdf=\"preview\";" >> ${cindyplug}/ketcindy.ini
-fi
 echo "KetCindyPlugin and others copied to Cinderella"
 sleep 1
 exit 0

@@ -1,4 +1,4 @@
-REM 20180608
+REM 20180907
 echo off
 set xcp="\Windows\System32\xcopy"
 rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
@@ -18,7 +18,7 @@ if %ERRORLEVEL% == 0 (
 )
 echo 1. C:\kettex\texlive (default)
 echo 2. Other texlive
-echo 3. w32tex
+echo If other, install manually
 set /P ans="Choose path of TeX (number): "
 if "%ans%" == "1" (
   set kind=\texlive
@@ -27,10 +27,6 @@ if "%ans%" == "1" (
 if "%ans%" == "2" (
   set kind=\texlive
   set /P pathT="Full path (ex)C:\texlive\2017: "
-)
-if "%ans%" == "3" (
-  set kind=\w32tex
-  set /P pathT="Full path (ex)C:\w32tex: "
 )
 echo Path of TeX is %pathT%
 if "%kind%" == "\texlive" (
@@ -75,10 +71,10 @@ cd "%pathT%%scripts%"
 copy /Y "ketjava\KetCindyPlugin.jar" "%cindyplug%\"
 cd "%cindyplug%"
 set homehead=C:\Users
-rem set /P STR_INPUT="Input head of user home d(efault)=C:\Users :"
-rem if not "%STR_INPUT%" == "d" (
-rem   set homehead=%STR_INPUT%
-rem )
+set /P STR_INPUT="Input head of user home d(efault)=C:\Users :"
+if not "%STR_INPUT%" == "d" (
+  set homehead=%STR_INPUT%
+)
 echo %homehead%
 echo PathThead="%pathT%%bin%\"; > ketcindy.ini
 echo Homehead="%homehead%"; >> ketcindy.ini
@@ -86,41 +82,5 @@ echo Dirhead="%pathT%%scripts%"; >> ketcindy.ini
 echo setdirectory(Dirhead); >> ketcindy.ini
 echo import("setketcindy.txt"); >> ketcindy.ini
 echo import("ketoutset.txt"); >> ketcindy.ini
-set /P STR_INPUT="Input version of R d(efault)=3.4.2 :"
-if "%STR_INPUT:~0,1%" == "d" (
-  set verR=3.4.2
-) else (
-  set verR=%STR_INPUT%
-)
-echo %verR%
-set prg=C:\Program Files
-if exist "%prg%\R\R-%verR%\bin\" (
-  echo PathR="%prg%\R\R-%verR%\bin"; >> ketcindy.ini
-) else (
-  if exist "%prg% (x86)\R\R-%verR%\bin\" (
-    echo "%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
-  ) else (
-    echo "R-%verR% not found"
-  )
-)
-set /P STR_INPUT="Input version of Maxima d(efault)=5.37.3 :"
-if "%STR_INPUT:~0,1%" == "d" (
-  set verM=5.37.3
-) else (
-  set verM=%STR_INPUT%
-)
-echo %verM%
-set prg=C:\maxima-%verM%\bin\maxima.bat
-if exist "%prg%" (
-  echo PathM="%prg%"; >> ketcindy.ini
-) else (
-  echo "Maxima-%verM% not found"
-  )
-)
-set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe
-if not exist "%prgSm%" (
-  set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
-)
-echo Pathpdf="%prgSm%"; >> ketcindy.ini
 echo "Plugins of Cindy has been set"
 pause

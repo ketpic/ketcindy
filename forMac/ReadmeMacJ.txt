@@ -1,12 +1,12 @@
-KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
+KETCindyの通常インストール（Mac）　　　修正日：2018.09.07
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
 　　　・従来の作業ディレクトリ(ketcindy)は名前を変えておく．
 　　　　　　更新後必要なファイルを移動（コピー）する．
-　　　・これまでのcdyファイルを使うときは，立ち上げた後
+　　　・2017以前のcdyファイルを使うときは，立ち上げた後
 　　　　　　CindyScript/ketlib
-　　　　の中身を作業ディレクトリ(work)にあるScriptInitializationで置き換えてギヤを押す．
+　　　　の中身を作業ディレクトリ(work)にあるScriptketlib.txtで置き換えてギヤを押す．
  
 ０）準備
 
@@ -44,10 +44,11 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 　　　注１）多少の時間がかかる．
 　　　注２）終わったら仮想ディスクkettexnormalをゴミ箱に入れる．
 
-　（２）既にインストールしている他のTeXを用いる場合
+　（２）既にインストールしているTeXLiveを用いる場合
 　　　・３)(１)を実行すれば，必要なファイルがコピーされる．
-　　　・TeXLive以外では，TeXのパスとtexbinのパスを入力する．
 　　　・「ketpic stylesをコピーする」を選ぶ．
+　（３）既にインストールしている他のTeXを用いる場合
+　　　・３)(３)にしたがって，手動で必要なファイルをコピーする．
 
 ２） Cinderella, R, Maximaのインストール
 
@@ -66,36 +67,38 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 
 　（ 1）copyfilessetcindy.shをダブルクリック（管理者権限必要）
 　　　　・TeXのパス
-　　　　　　　kettexの場合は１，kettex.appの場合は２を選択する．
+　　　　　　　kettexは１，kettex.appは２，通常のTeXLiveは３を選択する．
 　　　　・scriptsの内容が選択したTeXの中にコピーされる
 　　　　・ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
 　　　　・ユーザホームのヘッド　ユーザー名の前のパス
-　　　　　　注）通常の/Users の場合は単に d でもよい．
-　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
-　　　　・ketcindy.iniの内容
-　　　　　　　PathThead　TeXのrootパス
-　　　　　　　Homehead　ユーザホームのヘッド
-　　　　　　　Dirhead　ketcindyのlibのパス
-　　　　　　　setdirectory(Dirhead);
-　　　　　　　import("setketcindy.txt");
-　　　　　　　import("ketoutset.txt");
-　　　　　　　Pathpdf="skim" または "preview";
+　　　　　　注）通常の/Users の場合は単に d でよい．
+　　　　・CinderellaのPluginsに，KetcindyPlugin.jarがコピーされketcindy.iniが作成される．
+
 　（２）copywork.shをダブルクリック（管理者権限不要）
-　　　　・作業ディレクトリ名
-　　　　　　　通常のketcindyの場合は単に d でもよい．
-　　　　・作業ディレクトリのパス
-　　　　　　　ユーザホーム(u)，デスクトップ(d) ，他(o) から選択
+　　　　・作業ディレクトリketcindyがユーザホームに作成される．
 　　　　・タイプセットの方法（TeXの種類）
 　　　　　　　通常は，platex (p)またはuplatex(u)を選ぶ．
 　　　　・ターミナルの実行方法
 　　　　　　　sh (過程を表示しない），open（過程を表示する）
 　　　　　　注）テストランで，openが正常に動かないときはshを選択する．
-　　　　・指定した作業ディレクトリにworkフォルダの中身がコピーされる．
-　　　　・また、ユーザホームに以下の内容のketcindyhead.txtが作られる．
-　　　　　　　Dirfile　作業ディレクトリのフルパス
-　　　　　　　PathT　使用するTeXのフルパス
-　　　　　　　Mackc　"sh"か"open"
+　　　　・ketcindyフォルダにworkフォルダの中身がコピーされる．
+　　　　・また、changesetting.txtがketcindyに作成される．
 　　　　　　注）TeXを切り替えるときなどはこのファイルを修正する．
+
+　（３）手動でインストールする場合
+　　　　・/ketcindyを作成して，ketcindyfolder/scriptの
+　　　　　　ketcindyjs, ketlib, ketlibC
+　　　　　をその中にコピーする．
+　　　　・ketcindyfolder/styleをTeXの中の適当な場所にコピーする．
+　　　　　　styleをketcindyに名称変更する．
+　　　　　　mktexlsrを実行する．
+　　　　・ketcindy.iniをテキストエディタで修正する．
+　　　　　　　PathThead=(TeXのbin のパス);
+　　　　　　　Homehead="/Users";
+　　　　　　　Dirhead="/ketcindy";
+　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
+　　　　　　　ketcindy.iniとketcindyfolder/ketjavaの中身をコピーする．
+　　　　　（Cinderellaを終了）
 
 ４）KeTCindyのテストラン
 
@@ -158,12 +161,6 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 　　注）ターミナルで次を実行すれば，gccだけがインストールされる．
 　　　　　sudo xcode-select --install
 
-７）カスタマイズ
-
-　（１）管理者以外の場合
-　　　　・各ソフトウェアのインストールは管理者が行う．
-　　　　・ketcindywork.dmgをダウンロードして，３)(3)，４)と同様に行う．
-
 ８）トラブルシューティング
 
 ・一般的な手順
@@ -176,11 +173,4 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.03.14
 　（２）cfepを使うときは，XQuartzを更新して以下からダウンロードする．
                 http://www.math.kobe-u.ac.jp/Asir/asir-ja.html
             さらに，asirをコピーする．
-・High SierraでScilab5.5.2を動かすとき
-　（１）scilab-5.5.2.app/Contents/MacOS/lib/thirdparty/libz.1.dylib を
-　　　　libz.1.dylib.bak にリネーム
-　（２）scilab-5.52.app/Contents/MacOS/lib/thirdparty/libBLAS.dylib を
-　　　　libBLAS.dylib.bak にリネーム
-
-　　注）6.0.0でも同様
 

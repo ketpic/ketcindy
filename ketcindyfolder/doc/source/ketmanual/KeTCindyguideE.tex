@@ -1,6 +1,6 @@
 \documentclass[papersize,a4paper,12pt]{article}
 \usepackage{ketpic,ketlayer}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
 % \usepackage{amsmath,newtxmath}
 %\usepackage[dvipdfmx]{graphicx,color}
 \usepackage{graphicx,color}
@@ -11,6 +11,7 @@
 \usepackage{setspace}
 \usepackage{comment}
 \usepackage{bm,enumerate}
+\usepackage{pict2e}
 
 %\newcommand{\cmd}[1]{
 %\begin{center}{\bf\large #1}\end{center}
@@ -159,17 +160,94 @@ Then the same figure is embedded in the targetting PDF output.
 
 \newpage
 
-\subsection{The drawing procedure of \ketcindy}
+\subsection{Geometric Figures}
 
-\subsubsection{Geometric figure}
+Producing geometric figures in the plane is easy. Moreover, we can add hatchings  in some areas, which is better than shading 
+for monochrome printing.
+The following are the main parts of the script.
 
-\subsubsection{Graph of function}
+\begin{verbatim}
+    Listplot([A,B,C,A]);
+    Circledata([D,E]);
+    Bowdata([B,A],[1,0.5,"Expr=c","da"]); 
+    Bowdata([C,B],[1,0.5,"Expr=a","da"]);
+    Bowdata([A,C],[1,0.5,"Expr=b","da"]); 
+    Hatchdata("2",["oi"],[["crDE"],["sgABCA"]],["dr,0.7",""]); 
+    Pointdata("I",D,["size=4"]);
+    Letter([A,"sw","A",B,"ne","B",C,"se","C",D,"se","I"]);
+\end{verbatim}
 
-\subsubsection{Spatial figure}
+\begin{center}
+\includegraphics[bb=0.00 0.00 416.00 347.00,height=42mm]{Fig/hatch.pdf}
+\hspace{2mm}
+\input{Fig/s106bowhatch.tex}
+\end{center}
 
-\subsubsection{Table}
 
-\subsubsection{Collaboration with other software}
+\subsection{Graphs of Functions}
+\ketcindy\ can produce graphs of functions with
+\begin{verbatim}
+    Plotdata("1","x^2","x");
+\end{verbatim}
+or parametrically with
+\begin{verbatim}
+    Paramplot("1","[2*cos(t),sin(t)]", "t=[0,2*pi]");
+\end{verbatim}
+\noindent Here we give an example of the solution curve of a differential equation. The script is:
+%\verb|        // data are assigned to the variable de1.|\\
+%\verb|        // [0,XMAX] is the range of t.|\\
+\begin{verbatim}
+    Deqplot("1","y``=-L.x*y`-G.x*y","t=[0,XMAX]",0,[C.y,0]);
+    // the equation is y''=-ay'-by (a=L.x, b=G.x).
+    // C.y,0 are initial values of y and y' at t=0.
+    Expr(M,"e","\displaystyle\frac{d^2 x}{dt^2}+"
+           +"+L.x+"\frac{dx}{dt}+"+G.x+"x=0");
+\end{verbatim}
+
+Note that points C, G, L  on segments AB, EF, HK are movable, and 
+are used to decide the coefficients and the initial value as you can see in the above scripts.
+\vspace{3mm}
+
+\begin{center}
+\includegraphics[bb=0.00 0.00 385.00 398.00,height=60mm]{Fig/diffeq1.pdf}
+\hspace{5mm}
+\input{Fig/s210diffeq1.tex}
+
+\end{center}
+
+%\putnotes{35}{53}{\input{fig/s305incanddec.tex}}
+%\putnotes{35}{110}{Figure \thefigno\ \ Table}\addtocounter{figno}{1}%
+%\putnotes{97}{65}{\input{fig/kumamonthin.tex}}
+%\putnotes{97}{59}{%
+%\includegraphics[bb=0.00 0.00 183.63 142.07]{fig/figkumamon.pdf}}
+%\putnotene{100}{72}{\input{fig/kumamoto.tex}}
+%\putnotes{97}{110}{Figure \thefigno\ \ B\'ezier Curve}\addtocounter{figno}{1}%
+
+\subsection{Drawing Tables}
+Writing the code for tables to be inserted into the \TeX\ documents is sometimes troublesome.
+However, it is not a hard job for \ketcindy\ (see the output in Figure.
+
+\begin{verbatim}
+      xLst=apply(1..7,15);
+      yLst=[10,10,10,10,80];
+      rmvL=apply(1..6,"c"+text(#)+"r4r5");
+      rmvL=concat(rmvL,["r2c1c2","r3c1c2"]);
+      Tabledata("",xLst,yLst,rmvL);
+      Tlistplot(["c1r1","c2r4"]);
+      Tlistplot(["c2r1","c1r4"]);
+      Putrowexpr(1,"c",
+          ["x","0","\cdots","e","\cdots","e\sqrt{e}","\cdots"]);
+      Putrowexpr(2,"c",["y`","","+","0","-","-","-"]);
+      Putrowexpr(3,"c",["y``","","-","-","-","0","+"]);
+      Putrowexpr(4,"c",["y","","","10/e","","15/e\sqrt{e}",""]);
+      Putcell("c0r4","c7r5","c","\input{fig/graph}");
+\end{verbatim}
+
+\vspace{2mm}
+
+\begin{center}
+\input{Fig/s305incanddec.tex}
+\end{center}
 
 
 \newpage
@@ -366,19 +444,372 @@ as shown below. \\
 \includegraphics[bb=0.00 0.00 712.04 577.03,width=14cm]{Fig/CindyhelpE.pdf}
 
 
-
-
 \subsection{Input}
+
+The attribute of each input into Cindyscript 
+is specified via the color of the corresponding letters 
+as listed below. 
+
+\begin{itemize}
+\item 
+The functions which are inherently implemented to Cinderella 
+are displayed via blue color. 
+\item 
+The functions which are defined by user, 
+including those of \ketcindy , 
+are displayed via purple color. 
+\item 
+The functions which are not yet defined 
+are displayed via red color. 
+\item 
+Strings are displayed via green color. 
+\end{itemize}
+As in the console view, 
+copying and pasting to the other usual editing software 
+via pushing the keybuttons Ctrl+C and Ctrl+V 
+is accessible. 
+Cutting and pasting via Ctrl+X and Ctrl+V 
+is also possible. 
+Also as in the other editing software, 
+preferred strings can be specified 
+via dragging mouse 
+or pushing the keybutton Shift and moving the sursor. 
+Serching for words via pushing Ctrl+F 
+has not been enabled. 
+
+The fundamental rule of describing scripts on Cindyscript editor 
+are listed below. 
+\begin{itemize}
+\item 
+Upper- and lowercase letters are distinguished. 
+Using lowercase letters is preferable. 
+\item 
+As in \TeX , 
+several blanks are regarded as a single blank. 
+\item 
+A semicolon should be located at the end of each row. 
+Starting a new paragraph 
+does not result in the ending of commnds. 
+\end{itemize}
+Particularly, in case of \ketcindy , 
+the input of commands are controlled 
+by the following rules. 
+\begin{itemize}
+\item 
+The names of global variables 
+begin with uppercase letters. 
+\item 
+The names of local variables 
+begin with lowercase letters. 
+Local variables are declared at the beginning part 
+of the definitions of functions 
+along with the Cinderella command \verb|regional()|. 
+\item 
+The names of functions 
+begin with uppercase letters. 
+\end{itemize}
 
 
 \subsection{Variables and constants}
 
+The declaration of the attribute of each variable 
+is not needed in Cindyscript 
+since it is automatically decided 
+according to the input. 
+Moreover, 
+the different kind of value 
+can be input without any declaration.  \\
+
+\noindent 
+{\bf Example}
+
+\verb|          a=10;|
+
+\verb|          b=2;|
+
+\verb|          c=a+sqrt(b);|
+
+\verb|          a="the square root of"|
+
+\verb|          println("The sum of"+a+b+''and 10 is''+c);|\\
+
+In this example, 
+the attribute of variable \verb|a| was firstly integer, 
+and then changed to string at the fourth row. 
+
+The strings should be input with double quotation marks. 
+The mathematical operations 
+which involve several kind of variables 
+must be taken much care. 
+Exceptionally, 
+connecting string and number with \verb|+| 
+results in the generation of one single string. 
+
+The variable \verb|pi| is reserved in Cindyscript 
+as the ratio of the circumference of a circle to its diameter. 
+Also the variable \verb|i| is reserved 
+as the imaginary unit. 
+When \verb|i| is used as variable once, 
+it is changed to the imaginary unit via the command 
+\begin{center}
+\verb|i=complex(0,1);|
+\end{center}
+
+There are also some reserved variables in \ketcindy . 
+Among them, the following ones can be changed by users. 
+\begin{tabbing}
+12\=3456789012345\=678989012345678901234567890123\=\kill
+\>\verb|Fhead|  \>the beginning part of the file name 
+which can be set by  \verb|Setfiles()|\\
+\>\verb|Texparent|  \>the name of parent file 
+which can be set by \verb|Setparent()|\\
+\>\verb|Dirhead|  \>the beginning part of the path\\
+\>\verb|Dirlib|  \>the path to the library ketlib\\
+\>\verb|Dirbin|  \>the path to ketbin\\
+\>\verb|Dirwork|  \>the path to the working directory 
+which can be set by \verb|Changework()|\\
+\>\verb|Shellfile|  \>the name of shell file
+\end{tabbing}
+Contrarily, the reserved variables listed below are the global variables 
+usend in the library of \ketcindy , whence cannot be changed 
+by users. 
+
+\vspace{\baselineskip}
+\noindent 
+ADDAXES, ArrowlineNumber, ArrowheadNumber, BezierNumber, COM0thlist, COM1stlist, COM2ndlist, Dq, FUNLIST, Fnamesc ，Fnamescibody，Fnameout，Fnametex, GDATALIST, GLIST, GCLIST, GOUTLIST, KCOLOR, KETPICCOUNT,KETPICLAYER, LETTERlist, LFmark, MilliIn, PenThick,PenThickInit,  POUTLIST, SCALEX, SCALEY, SCIRELIST, SCIWRLIST, TenSize, TenSizeInit, ULEN, XMAX, XMIN, YaSize, YaThick,   YMAX, YMIN, VLIST
 
 \subsection{Frequently used commands}
 
+% -------------- Calling other softwares --------------
+
+\newpage
+
+\section{Collaboration with other softwares}
+
+\subsection{Overview}
+
+\ketcindy\ has functionalies to call other softwares such as Maxima, Risa/Asir, R and C.
+Here, we introduce how to call Maxima.\vspace{1mm}
+
+The steps are as follows.\vspace{-2mm}
+
+\begin{enumerate}
+\item Generate the shell file to call a CAS.\vspace{-2mm}
+\item Execute the file.\vspace{-2mm}
+\item Return the result as text.\vspace{-2mm}
+\item Use the result in \ketcindy .\vspace{-2mm}
+\item Produce the PDF file.\vspace{-2mm}
+\end{enumerate}
+
+And the flowchart is  as follows:
+\begin{center}
+{\scalebox{0.9}{\input{Fig/calling.tex}}}
+
+\end{center}
+
+When interfacing with Maxima, commands \texttt{Mxfun}, \texttt{CalcbyM} and \texttt{Mxtex} are all we need to complete the task. \texttt{Mxfun} and \texttt{CalcbyM} are for calling single command and multi commands of Maxima respectively. \texttt{Mxtex} is used for code conversion to \LaTeX. The output of Maxima  is returned to \ketcindy\ as a string or a list of strings for further processing. 
+
+The options of these commands are:\\
+\hspace*{10mm}\Ltab{25mm}{{\tt "m/r"}}To decide whether the result file will be  made again or not. \\
+\hspace*{10mm}\Ltab{25mm}{}If these options are not given, \ketcindy\ decides automatically.\\
+\hspace*{10mm}\Ltab{25mm}{{\tt "Disp=y/n"}}To decide whether the result will be displayed in the console or not. \\
+\hspace*{10mm}\Ltab{25mm}{}It is only availabe for \texttt{Mxfun} and \texttt{Mxtex}.
+The default is "y".
 
 
+\subsection{Commands related to Maxima}
 
+\subsubsection*{Mxfun}
+
+The arguments are name of variable in \ketcindy, name of a function of Maxima, and a list of arguments of the function.\\
+\hspace*{10mm}\verb|Mxfun("1","diff",["sin(x)","x"]);|  // The return is "cos(x)", assgined to mx1.\\
+The above is equivallent to\\
+\hspace*{10mm}\verb|Mxfun("1","diff(sin(x),x)",[]);|
+
+
+\subsubsection*{Mxtex}
+
+The arguments are name of variable in \ketcindy, an expression in Maxima format.\\
+\hspace*{10mm}\verb|Mxtex("1",mx1);|  // The return is \verb|"\cos x"|, assgined to tx1.\\
+\hspace*{10mm}\verb|Expr([0,1],"e",tx1]);|
+
+\begin{center}
+\input{Fig/maxima1.tex}
+\end{center}
+
+\subsubsection*{CalcbyM}
+
+The arguments are name of variable in \ketcindy, a list of commands and the arguments of Maxima.\\
+\hspace*{10mm}\verb|fn="sin(x)^4";|\\
+\hspace*{10mm}\verb|cmdL=[|\\
+\hspace*{10mm}\verb|  "df:diff",[fn,"x"],|\\
+\hspace*{10mm}\verb|  "df:ratsimp",["df"],|\\
+\hspace*{10mm}\verb|  "F:integrate",[fn,"x"],|\\
+\hspace*{10mm}\verb|  "F","ratsimp",["F"],|\\
+\hspace*{10mm}\verb|  "df::F",[]|\\
+\hspace*{10mm}\verb|];|\\
+\hspace*{10mm}\verb|CalcbyM("ans",cmdL);|\vspace{2mm}\\
+The returned value is a list of df and F as strings, though these are not displayed in the console. They can be used, for example,\vspace{2mm}\\
+\hspace*{10mm}\verb|Plotdata("1",fn,"x",["Num=200","do"]);|\\
+\hspace*{10mm}\verb|Plotdata("2",ans_1,"x",["Num=200","dr"]);|\\
+\hspace*{10mm}\verb|Plotdata("3",ans_2,"x",["Num=200","da"]);|\\
+\hspace*{10mm}\verb|Mxtex("1",fn);|\\
+\hspace*{10mm}\verb|Mxtex("1",ans_1);|\\
+\hspace*{10mm}\verb|Mxtex("2",ans_2);|\\
+\hspace*{10mm}\verb|Expr([A,"e",tx1,B,"e",tx2,C,"w",tx3]);|
+
+\vspace{2mm}
+
+\begin{center}
+\input{Fig/s10diffint.tex}
+\end{center}
+
+\noindent
+{\bf Remark} See KeTCindyreferenceE.pdf for more information.
+
+\subsection{Commands related to R}
+
+\verb|Rfun| and \verb|CalcbyR| are simillar to \verb|Mxfun| and \verb|CalcbyM|.\\
+ See \verb|KeTCindyreferenceE.pdf| or \verb|samples/s08R| for more information.
+
+% -------------- 3d figures --------------
+
+\newpage
+
+\section{Three Dimentional figures of \ketcindy}
+
+\subsection{Summary and Geometric Elements}
+
+In KeTCindy's 3D-mode, there are two rectangular areas surrounded by a white frame on the Euclidean view.
+
+The main area on the left side of the screen is simillar to that of two dimentional figures. Figures in this area will be drawn to the \TeX\ document. The view direction can be moved with sliders under the main area.  \verb|TH| and \verb|FI| mean angles $\theta$ and $\varphi$ respectively, which are polar cocordinates of the view direction.
+
+Figures from the view direction $(0,\ \varphi)$ are displayed in the sub area on the right side.
+
+ \hspace{40mm} mainarea \hspace{40mm} subarea
+\begin{center}
+\includegraphics[bb=0.00 0.00 863.04 378.52,width=12cm]{Fig/3dscreen.pdf}
+\end{center}
+
+With internal command \verb|Ptseg3data| which is called in \verb|Start3d|, 
+a point put to the main area with the drawing tool of Cinderella is regarded as a 3D point by \ketcindy, and a correspoinding point is put in the sub area. 
+Though the initial coordinate of $z$ is 0, we can change it moving the point in the sub area.
+
+For example, if we put point \verb|A| on the main area, point \verb|Az| will be put in the sub area and the 3D coordinates calculated from \verb|A| and \verb|Az|  are assigned to varible \verb|A3d|.\vspace{-1mm}
+
+\begin{description}
+\item[\bf Remark]Note that point \verb|Az| will not be deleted automatically even if point \verb|A| is deleted. We should delete it manually.
+\end{description}
+
+Geometric segment in the main area generates the corresponding geometric segment in the sub area as well.
+
+\subsection{Lines and Curves}
+
+\ketcindy\ commands \verb|Spaceline| and \verb|Spacecurve| are used do draw lines and curves in the space. Additionally, \verb|Xyzax3data| is used to draw axis.
+
+\begin{description}
+\item[Examples]\mbox{}\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|\\
+\verb|Spacecurve("1","3*[cos(t),sin(t),0.1*t]","t=[0,4*pi]",["Num=200"]);|\\
+\verb|pt1=[3,0,0]; pt2=[3,0,3*0.1*4*pi];|\\
+\verb|Spaceline("1",[pt1,pt2]);|\\
+\verb|Skeletonparadata("1");| 
+
+\item[Remark]The last command skeleton elimination is for skeleton elimination.
+Compare two figures below. The right one is with skeleton elimination.
+
+\end{description}
+
+\begin{center}
+\input{Fig/spacelinecurve1.tex}\hspace{10mm}\input{Fig/spacelinecurve2.tex}
+\end{center}
+
+\subsection{Two Dimensional Figures}
+
+Data of two dimensional figures such as polyhedra or planes are given in obj format.
+
+\begin{description}
+\item[Examples]\mbox{}\\
+\verb|Start3d();|\\
+\verb|vertex=[[2,2,-2],[2,-2,-2],[-2,-2,-2],[-2,2,-2]];|\\
+\verb|Reflect3d1(``1'',vertex,[[0,0,0],[1,0,0],[0,1,0]];|\\
+\verb|vertex=concat(vertex,ref3d1);|\\
+\verb|edge=[[1,2,6,5],[1,5,8,4],[1,4,3,2],[2,3,7,6],[3,4,8,7],[5,6,7,8]];|\\
+\verb|cube=[vertex,edge];|\\
+\verb|plane=[[[-3,1,-3],[3,-1,-3],[-4,5,3],[2,3,3]],[[1,2,4,3]]];|\\
+\verb|tmp=Concatobj([cubic,plane]);|\\
+\verb|VertexEdgeFace("1",tmp,["Vtx=nogeo","Edg=nogeo"]);|\\
+\verb|Nohiddenbyfaces("1","phf3d1");| // for the figure on the left
+
+\item[Remark]\mbox{}\\
+Command \verb|Concatobj| combines data in obj format.\\
+Command \verb|VertexEdgeFace| assigns vertices to {\tt phv}, edges to {\tt phe} and faces to {\tt phf}.\\
+Command \verb|Nohiddenbyfaces| is for hiddenline elimination.\\
+Use \verb|Skeletonparadata("1")| if the figure on the right is desirable.
+\end{description}
+
+\vspace{-10mm}
+
+\begin{center}
+\input{Fig/polygonplane1.tex}\hspace{10mm}\input{Fig/polygonplane2.tex}
+\end{center}
+
+\noindent
+{\bf Remark} See \verb|KeTCindyreferenceE.pdf| or \verb|samples/s05spacefigure| for more information.
+
+\subsection{Surfaces}
+
+Two variable function is defined as a list of one of the followings.
+
+\begin{enumerate}[\hspace*{5mm}\bf 1.]
+\item \verb|["z=f(x,y)","x=[a,b]","y=[c,d]"]|
+\item \verb|["z=f(x,y)","x=x(u,v)","y(u,v)","u=[a,b]","v=[c,d]"]|
+\item \verb|["p","x=x(u,v)","y=y(u,v)","z=z(u,v)","u=[a,b]","v=[c,d]"]|
+\end{enumerate}
+
+Optionally, you can add what boundaries should be drawn.
+The default is "wesn". Here, for example, "w" means the boundary defined by $[a,t]\ (c\leqq t\leqq d)$.
+
+\ketcindy\ calls C to speed up the calculation of hidden lines elimination.
+
+\begin{description}
+\item[Example]\mbox{}\\
+\verb|Start3d();|\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|\\
+\verb|fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]","senw"];|\\
+\verb|Startsurf();|\\
+\verb|Sfbdparadata("1",fd);|\\
+\verb|Crvsfparadata("1","ax3d","sfbd3d1",fd);|\\
+\verb|ExeccmdC("1");|
+\verb|Windispg();|
+
+\begin{center}
+\input{Fig/saddle1E.tex}\hspace{10mm}\input{Fig/saddle2E.tex}
+\end{center}
+
+\item[Remark]Wires can be added if necessary with command \verb|Wireparadata| as seen in the upper right side figure.
+The line-style also can be changed.
+
+See \verb|KeTCindyreferenceE.pdf| or \verb|samples/s09surfaceC| for more information.
+\end{description}
+
+\subsection{Generating Files in Obj Format}
+
+\ketcindy\ can generate files of 3D figures in obj format. Moreover, \ketcindy\ also can call Meshlab which is a 3D viewer.
+
+\begin{description}
+\item[Examples]\mbox{}\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|\\
+\verb|fd=["p","x=4*sin(V)*cos(U)","y=4*sin(V)*sin(U)","z=4*cos(V)",|\\
+\verb|     "U=[pi/2,4*pi/2]","V=[0,pi]","we"];|\\
+\verb|Mkobjcmd("1",fd,[40,40,"-"]);|\\
+\verb|Mkobjcrvcmd("2","ax3d",[0.05,"xy"]);|\\
+\verb|Mkobjsymbcmd("x",0.2,0,[0,1,0],[5.2,0,0]);|\\
+\verb|Mkobjsymbcmd("y",0.2,0,[1,0,0],[0,5.2,0]);|\\
+\verb|Mkobjsymbcmd("z",0.2,0,[0,1,0],[0,0,5.2]);|\\
+\verb|SetObj();|
+\item[Remark]See \verb|KeTCindyreferenceE.pdf| or \verb|samples/s13meshlab| for more information.
+\end{description}
 
 % -------------- Making slide --------------
 
@@ -482,6 +913,6 @@ typeset it, and display \verb|sample.pdf| which contains slides for presentation
 \subsection{Changing Style}
 
 The default styles such as size and color of letters can be changed.
-See \verb|KeTCindyReferenceE|.
+See \verb|KeTCindyReferenceE,pdf| or \verb|samples/s07slides|.
 
 \end{document}

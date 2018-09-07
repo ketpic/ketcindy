@@ -1,0 +1,552 @@
+\documentclass[papersize,a4paper,12pt]{article}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath}
+% \usepackage{amsmath,newtxmath}
+%\usepackage[dvipdfmx]{graphicx,color}
+\usepackage{graphicx,color}
+\usepackage{wrapfig}
+%\usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage[bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\setmargin{20}{20}{15}{25}
+\usepackage{setspace}
+\usepackage{comment}
+\usepackage{bm,enumerate}
+
+\newcommand{\bs}{$\backslash$}
+
+\newcommand{\br}[1]{\{#1\}}
+
+\newenvironment{cmd}[2]{
+\hypertarget{#2}{}
+\begin{center}{\bf\large #1}\end{center}
+\begin{description}
+}{
+\end{description}
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Command List}\end{flushright}
+}
+
+% item command for this documentation
+\newcommand{\itemket}[1]{
+\item[\Ltab{27mm}{#1}]
+}
+
+
+\begin{document}
+\title{Macros of ketpic.sty and ketlayer.sty}
+\author{\ketcindy\ Project Team}
+\maketitle
+
+\begin{center}  - ver.1.1 -\end{center}
+
+%\hypertarget{index}{}
+%\tableofcontents
+
+%\newpage
+
+\section{Outlines}
+
+\begin{itemize}
+\item ketpic.sty, ketpic2e.sty(it is necessary in pict2e) are used for ketpic.
+\item ketlayer.sty, ketlayer2e.sty(it is necessary in pict2e) are used for ketlayer.
+\item \bs\verb|Width|, \bs\verb|Height|,\ \bs\verb|Depth| are defined.
+\item Temporary counters \verb|ketictctra|,\ $\cdots$,\ \verb|ketpicctrj| are defined.
+\item Package \verb|graphicx|, \verb|color| are required.
+
+\end{itemize}
+
+
+%========= Envilonment =====================
+\section{Envilonment}
+
+%------------layer--------------------------------
+\begin{cmd}{layer}{layer}
+\itemket{Usage}\verb|\begin{layer}[Ho]{W}{H}|\ $\cdots$\ \verb|\end{layer}|
+\itemket{Description}This enviroment draws grids and adds a note or a figure.
+
+\item[Details]\mbox{}\\
+\Ltab{10mm}{W}Width of grids. The unit is \verb|mm|.
+
+\Ltab{10mm}{H}Height of grids. The unit is \verb|mm|.\\
+\hspace*{20mm}If \verb|H=0|, grids don't appear.\\
+\hspace*{20mm}If \verb|H<0|, grids appear on the upside.
+
+
+\itemket{Example} \mbox{}\\
+\verb|\begin{layer}{120}{30}|\\
+\verb|\putnotec{20}{10}{abc}|\\
+\verb|\putnotes{60}{0}{\input{Fig/FigE.tex}}|\\
+\verb|\end{layer}|
+
+\vspace{5mm}
+
+\begin{layer}{120}{30}
+\putnotec{20}{10}{abc}
+\putnotes{60}{0}{\input{Fig/FigE.tex}}\end{layer}
+%% "FigE.tex" is copy of "addax2.tex"
+
+\vspace{35mm}
+
+\item[Remark]Set \verb|H=0| if placement of all components is proper.
+
+\end{cmd}
+
+
+%========= Macros =====================
+\section{Macros}
+%=-=-=-=-= Macros of ketpic =-=-=-=-=
+\subsection{Macros of ketpic}
+Macros of ketpic are used just like regular commands of \TeX.
+
+%------------ ketpic ------------
+\begin{cmd}{\bs ketpic}{ketpic}
+\itemket{Usage}\verb|\ketpic|
+\itemket{Description}This macro displays the logo of {\ketpic}.
+\itemket{Examples} \verb|\ketpic|
+\end{cmd}
+
+%------------ ketcindy ------------
+\begin{cmd}{\bs ketcindy}{ketcindy}
+\itemket{Usage}\verb|\ketcindy|
+\itemket{Description}This macro displays the logo of {\ketcindy}.
+\itemket{Examples} \verb|\ketcindy|
+\end{cmd}
+
+%------------ tab ------------
+\begin{cmd}{\bs Ltab, \bs Rtab, \bs Ctab}{tab}
+\itemket{Usage}\verb|\Ltab{W}{S}|, \verb|\Rtab{W}{S}|, \verb|\Ctab{W}{S}|
+\itemket{Description}This is tab macro.
+\itemket{}\verb|\Ltab{W}{S}| secures the width of W and writes S by left justifying it.
+\itemket{}\verb|\Rtab{W}{S}| secures the width of W and writes S by right justifying it.
+\itemket{}\verb|\Ctab{W}{S}| secures the width of W and writes S at the center.
+\end{cmd}
+
+%------------ ketcalc ------------
+\begin{cmd}{\bs ketcalcwidth, \bs ketcalcheight, \bs ketcalcdepth}{ketcalc}
+\itemket{Usage}\verb|\ketcalcwidth[0]{C}|, \verb|\ketcalcheight[0]{C}|, \verb|\ketcalcdepth[0]{C}|
+\itemket{Description}These functions return the size of C using current unit to the counter \verb|ketpicctr1|.
+If option is 1, it displays the value.
+\itemket{}\verb|\ketcalcwidth[0]{C}| returns the width of C.
+\itemket{}\verb|\ketcalcheight[0]{C}| returns the height of C.
+\itemket{}\verb|\ketcalcdepth[0]{C}| returns the depth of C.
+\itemket{Examples} \verb|\ketcalcwidth[0]{abc}, \theketpicctra, \ketcalcwidth[1]{abc}| \par
+It displays ``\ketcalcwidth[0]{abc}, \theketpicctra, \ketcalcwidth[1]{abc}''.
+\end{cmd}
+
+%------------ ketcalcwh ------------
+\begin{cmd}{\bs ketcalcwh}{ketcalcwh}
+\itemket{Usage}\verb|\ketcalcwh{C}|
+\itemket{Description}This function displays the width and height of C using \verb|mm| in the form \{width\}\{height\}.
+\itemket{Examples} \verb|\ketcalcwh{abc}|\par
+It displays ``\ketcalcwh{abc}''.
+\end{cmd}
+
+%------------ dangerbendmark ------------
+\begin{cmd}{\bs dangerbendmark}{dangerbendmark}
+\itemket{Usage}\verb|\dangerbendmark[size]|
+\itemket{Description}This function displays the symbol ``Dangerous turning point'' of Bulbaki.
+\itemket{Examples} \verb|\dangerbendmark[1.2]| --->\ \ \dangerbendmark[1.2]
+\end{cmd}
+
+%------------ cautionmark ------------
+\begin{cmd}{\bs cautionmark}{cautionmark}
+\itemket{Usage}\verb|\cautionmark[size]|
+\itemket{Description}This function displays the caution mark.
+\itemket{Examples} \verb|\caoutionmark[1.2]| --->\ \ \cautionmark[1.2]
+\end{cmd}
+
+%------------ circlemark ------------
+\begin{cmd}{\bs circlemark}{circlemark}
+\itemket{Usage}\verb|\circlemark[thickness]{size}|
+\itemket{Description}This function displays the circle.
+If size=1, the diameter of the circle is 4mm.
+\itemket{Examples} \verb|\circlemark[8]{1.2}| --->\ \ \circlemark[8]{1.2}
+\end{cmd}
+
+%------------ circleshade ------------
+\begin{cmd}{\bs circleshade}{circleshade}
+\itemket{Usage}\verb|\circleshade[thickness]{size}{density}|
+\itemket{Description}This function displays the solid circle.
+\itemket{Examples} \verb|\circleshade[8]{1.2}{0.3}| --->\ \ \circleshade[8]{1.2}{0.3}
+\end{cmd}
+
+%------------ arrow of increase or decrease ------------
+\begin{cmd}{\bs NEarrow, \bs NELarrow, ...}{arrow of i or d}
+\itemket{Usage}\verb|\NEarrow[size]|, \verb|\NELarrow[size}|, \verb|\NERarrow[size]|, 
+\itemket{Description}These functions display the arrow of increase or decrease.
+\itemket{Examples} \mbox{}
+
+\vspace{-3mm}\hspace{16mm}
+\begin{tabular}{|rl|rl|rl|rl|}
+\hline
+ \verb|\NEarrow| & \NEarrow &  \verb|\SEarrow| & \SEarrow & \verb|\NWarrow| & \NWarrow & \verb|\SWarrow| & \SWarrow \\
+\hline
+\verb|\NELarrow| & \NELarrow & \verb|\SELarrow| & \SELarrow & \verb|\NWLarrow| & \NWLarrow & \verb|\SWLarrow| & \SWLarrow \\
+\hline
+\verb|\NERarrow| & \NERarrow & \verb|\SERarrow| & \SERarrow & \verb|\NWRarrow| & \NWRarrow & \verb|\SWRarrow| & \SWRarrow \\
+\hline
+\end{tabular}
+\end{cmd}
+
+%=-=-=-=-= Macros of ketlayer =-=-=-=-=
+\subsection{Macros of ketlayer}
+Macros of ketlayer are used in layer environment.
+
+Some macros take the form of connected main part and direction (``c'', ``e'', ``w'', ``s'', ``n'').
+In the following we write them as ``main part + dir''.
+Direction can be combine like as options of {\ketcindy} commands.
+% (``ne'', ``nw'', ``se'', ``sw'')
+
+For example, if main part is ``\verb|putnote|'', ``\verb|putnote+dir|'' are \par
+``\verb|putnotec|'', ``\verb|putnotee|'', ``\verb|putnotew|'', ``\verb|putnotes|'', ``\verb|putnoten|'', ``\verb|putnotene|'', ``\verb|putnotenw|'', ``\verb|putnotese|'', ``\verb|putnotesw|''.
+
+%-------------putnote+dir-------------------------------
+\begin{cmd}{\bs putnote+dir}{putnote}
+\itemket{Usage}\verb|\putnote+dir{x}{y}{Char}|
+\itemket{Description}These functions put Char in the direction of dir of coordinates (x, y).
+\itemket{}\verb|putnotec{x}{y}{Char}| puts Char with (x,y) as the center.
+\itemket{}\verb|putnotee{x}{y}{Char}| puts Char on the right of (x,y).
+\itemket{}\verb|putnotew{x}{y}{Char}| puts Char on the left of (x,y).
+\itemket{}\verb|putnotes{x}{y}{Char}| puts Char under (x,y).
+\itemket{}\verb|putnoten{x}{y}{Char}| puts Char above (x,y).
+\itemket{Example}\mbox{}\\
+\verb|\putnotese{20}{10}{\fbox{$\dfrac{1}{2}$}}|\\
+\verb|\putnotec{40}{10}{\fbox{$\dfrac{1}{3}$}}|\\
+
+\begin{layer}{60}{30}
+\putnotese{20}{10}{\fbox{$\dfrac{1}{2}$}}
+\putnotec{40}{10}{\fbox{$\dfrac{1}{3}$}}
+\end{layer}
+\vspace{30mm}
+\end{cmd}
+
+%-------------boxframe+dir-------------------------------
+\begin{cmd}{\bs boxframe+dir}{boxframe}
+\itemket{Usage}\verb|\boxframe+dir[thickness]{x}{y}{W}{H}{Strings}|
+\itemket{Description}These functions draw a rectangle with width W and height H in the direction of dir of coordinates (x, y), and put the strings inside.
+\end{cmd}
+
+%-------------dashboxframe+dir-------------------------------
+\begin{cmd}{\bs dashboxframe+dir}{dashboxframe}
+\itemket{Usage}\verb|\dashboxframe+dir[thickness]{x}{y}{W}{H}{Strings}|
+\itemket{Description}These functions draw a dashed rectangle with width W and height H in the direction of dir of coordinates (x, y), and put the strings inside.
+\end{cmd}
+
+%-------------jaggyboxframe+dir-------------------------------
+\begin{cmd}{\bs jaggyboxframe+dir}{jaggyboxframe}
+\itemket{Usage}\verb|\jaggyboxframe+dir[thickness]{x}{y}{W}{H}{Strings}|
+\itemket{Description}These functions draw a jaggy rectangle with width W and height H in the direction of dir of coordinates (x, y), and put the strings inside.
+\end{cmd}
+
+%-------------diaboxframe+dir-------------------------------
+\begin{cmd}{\bs diaboxframe+dir}{diaboxframe}
+\itemket{Usage}\verb|\diaboxframe+dir[thickness]{x}{y}{W}{H}{Strings}|
+\itemket{Description}These functions draw a rectangle with width W, height H, connecting diamond shapes, in the direction of dir of coordinates (x, y), and put the strings inside.
+\end{cmd}
+
+%-------------eraser+dir-------------------------------
+\begin{cmd}{\bs eraser+dir}{eraser}
+\itemket{Usage}\verb|\eraser+dir[F]{x}{y}{W}{H}|
+\itemket{Description}These functions erase the interior of rectangle with width W and height H in the direction of dir of coordinates (x, y).
+If F=0, it don't draw border lines. By default, F=1.
+\end{cmd}
+
+%-------------shadebox+dir-------------------------------
+\begin{cmd}{\bs shadebox+dir}{shadebox}
+\itemket{Usage}\verb|\shadebox+dir[F]{x}{y}{W}{H}{C1}{C2}|
+\itemket{Description}These functions draw a rectangle with width W and height H in the direction of dir of coordinates (x, y), paint inside with color C1, and draw a border with color C2.
+If F=0, they don't draw border lines. By default, F=0.
+
+\end{cmd}
+
+%-------------example 1-------------------------------
+\vspace{5mm}
+
+\begin{layer}{160}{0}
+     \boxframese{000}{0}{30}{16}{boxframe}
+ \dashboxframese{035}{0}{30}{16}{dashboxframe}
+\jaggyboxframese{070}{0}{30}{16}{jaggyboxframe}
+  \diaboxframese{105}{0}{30}{16}{diaboxframe}
+  \shadeboxse[0]{140}{0}{30}{16}{yellow}{black}
+\end{layer}
+
+\vspace{15mm}
+\newpage
+
+%-------------popframe-------------------------------
+\begin{cmd}{\bs popframe}{popframe}
+\itemket{Usage}\verb|\popframe[thickness]{x}{y}{Dummy}{Cs}{Dummy}{Cp}{Cf}{Strings}|
+\itemket{Description}This function draws a rectangle on the lower right (se) of the coordinates \text{(x, y)}, put strings inside and add a shadow of the color Cs.
+\itemket{Details}Cp is background color. Cf is border color.\par
+\Ltab{18.5mm}{}{\tt Note.\ }Dummy(color name) are currently ignored.\par
+\Ltab{18.5mm}{}The size of the rectangle is determined automatically from strings.\par
+\Ltab{18.5mm}{}The line thickness is 8 by default.\par
+\Ltab{18.5mm}{}Strings must be width$\leq$ 200 mm, height$\leq$ 100 mm.
+\end{cmd}
+
+%-------------colorframe-------------------------------
+\begin{cmd}{\bs colorframe}{colorframe}
+\itemket{Usage}\verb|\colorframe[thickness]{x}{y}{Cp}{Cs}{Cf}{Strings}|
+\itemket{Description}This function draws a rectangle on the lower right (se) of the coordinates \text{(x, y)}, put strings inside.
+\itemket{Details}Cp is background color. Cf is border color.\par
+\Ltab{18.5mm}{}{\tt Note.\ }Dummy(color name) is ignored.\par
+\Ltab{18.5mm}{}The size of the rectangle is determined automatically from strings.\par
+\Ltab{18.5mm}{}The line thickness is 8 by default.\par
+\Ltab{18.5mm}{}Strings must be width$\leq$ 200 mm, height$\leq$ 100 mm.
+\end{cmd}
+
+%-------------example 2-------------------------------
+\vspace{15mm}
+\noindent{\bf Examples.}\par
+\verb|\definecolor{shade}{cmyk}{0,0,0,0.4}| $\gets$ color name ``shade'' defined.\par
+\verb|\popframe[16]{40}{5}{white}{shade}{white}{cyan}{red}{\Large\tt POP frame}| \par
+\verb|\colorframe[16]{90}{5}{yellow}{white}{blue}{\Large\tt COLOR frame}| \\
+
+\begin{layer}{160}{0}
+\definecolor{shade}{cmyk}{0,0,0,0.4}
+%  \popframe[16]{40}{5}{Ds}{shade}{Dp}{yellow}{green}{\Large\tt POP frame}
+  \popframe[16]{40}{5}{Ds}{shade}{Dp}{cyan}{red}{\Large\tt POP frame}
+\colorframe[16]{90}{5}{yellow}{green}{blue}{\Large\tt COLOR frame}
+\end{layer}
+
+\vspace{25mm}
+
+%-------------cirscoremark-------------------------------
+\begin{cmd}{\bs cirscoremark}{cirscoremark}
+\itemket{Usage}\verb|\cirscoremark[thickness]{size}|
+\itemket{Description}This function draws a handwritten double circle.
+\end{cmd}
+
+%-------------scirscoremark-------------------------------
+\begin{cmd}{\bs scirscoremark}{scirscoremark}
+\itemket{Usage}\verb|\scirscoremark[thickness]{size}|
+\itemket{Description}This function draws a handwritten single circle.
+\end{cmd}
+
+%-------------triscoremark-------------------------------
+\begin{cmd}{\bs triscoremark}{triscoremark}
+\itemket{Usage}\verb|\triscoremark[thickness]{size}|
+\itemket{Description}This function draws a handwritten triangle.
+\end{cmd}
+
+%-------------crosscoremark-------------------------------
+\begin{cmd}{\bs crosscoremark}{crosscoremark}
+\itemket{Usage}\verb|\crosscoremark[thickness]{size}|
+\itemket{Description}This function draws a handwritten cross mark.
+\end{cmd}
+
+\begin{layer}{170}{0}
+\putnotec{30}{25}{\cirscoremark{0.8}}
+\putnotec{60}{25}{\scirscoremark{0.8}}
+\putnotec{90}{25}{\triscoremark{0.8}}
+\putnotec{120}{25}{\crosscoremark{0.8}}
+\end{layer}
+
+\vspace{45mm}
+
+%-------------lineseg-------------------------------
+\begin{cmd}{\bs lineseg}{lineseg}
+\itemket{Usage}\verb|\lineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
+\itemket{Description}This function draws a line segment of length L from the coordinates (x, y) in the direction of $\theta^\circ$ degrees. 
+\itemket{Details}Unit of length L is mm.\par
+\Ltab{18.5mm}{}The line thickness is 12 by default. Unit is milli inch\par
+\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
+\itemket{Example}\verb|\lineseg[16]{135}{25}{30}{25}|
+
+\begin{layer}{160}{0}
+\lineseg[16]{60}{20}{30}{25}
+%\arrowlineseg[16]{130}{50}{10}{45}
+\end{layer}
+
+\vspace{25mm}
+\end{cmd}
+%-------------dashlineseg-------------------------------
+\begin{cmd}{\bs dashlineseg}{dashlineseg}
+\itemket{Usage}\verb|\dashlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
+\itemket{Description}This function draws a dash line segment of length L from the coordinates \text{(x, y)} in the direction of $\theta^\circ$ degrees. 
+\itemket{Details}Unit of length L is mm.\par
+\Ltab{18.5mm}{}The line thickness is 12 by default. Unit is milli inch\par
+\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
+
+\end{cmd}
+%-------------arrowlineseg-------------------------------
+\begin{cmd}{\bs arrowlineseg}{arrowlineseg}
+\itemket{Usage}\verb|\arrowlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
+\itemket{Description}This function draws a arrow line segment of length L from the coordinates \text{(x, y)} in the direction of $\theta^\circ$ degrees. 
+\itemket{Details}The arrowhead is drawn at the starting point.\par
+\Ltab{18.5mm}{}The line thickness is 12 by default. Unit is milli inch.\par
+\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
+\itemket{Example}\verb|\arrowlineseg[16]{60}{20}{10}{45}|
+
+\begin{layer}{160}{0}
+%\lineseg[16]{60}{20}{30}{25}
+\arrowlineseg[16]{60}{15}{10}{45}
+\end{layer}
+
+\vspace{20mm}
+\end{cmd}
+
+%-------------arrowhead-------------------------------
+\begin{cmd}{\bs arrowhead}{arrowhead}
+\itemket{Usage}\verb|\arrowhead[size]{x}{y}{|{$\theta$}\verb|}|
+\itemket{Description}This function draws a arrowhead on the coordinates (x, y) in the direction of $\theta^\circ$ degrees. 
+\itemket{Details}The line thickness is 12 by default. Unit is milli inch.\par
+\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
+\end{cmd}
+
+%-------------hjaggyline-------------------------------
+\begin{cmd}{\bs hjaggyline}{hjaggyline}
+\itemket{Usage}\verb|\hjaggyline[thickness]{x}{y}{W}|
+\itemket{Description}This function draws a jagged line of length W from the coordinates (x, y) to the right. 
+\end{cmd}
+
+%-------------hjaggylineb-------------------------------
+\begin{cmd}{\bs hjaggylineb}{hjaggylineb}
+\itemket{Usage}\verb|\hjaggylineb[thickness]{x}{y}{W}|
+\itemket{Description}This function draws a jagged line of length W from the coordinates (x, y) to the right. 
+\itemket{Details}This function draws a reverse jagged line against ``hjaggyline''.\par
+\end{cmd}
+
+%-------------vjaggyline-------------------------------
+\begin{cmd}{\bs vjaggyline}{vjaggyline}
+\itemket{Usage}\verb|\vjaggyline[thickness]{x}{y}{W}|
+\itemket{Description}This function draws a jagged line of length W from the coordinates (x, y) to the right. 
+\end{cmd}
+
+%-------------vjaggylineb-------------------------------
+\begin{cmd}{\bs vjaggylineb}{vjaggylineb}
+\itemket{Usage}\verb|\vjaggylineb[thickness]{x}{y}{W}|
+\itemket{Description}This function draws a jagged line of length W from the coordinates (x, y) to the right. 
+\itemket{Details}This function draws a reverse jagged line against ``vjaggyline''.\par
+\end{cmd}
+
+%-------------example 3-------------------------------
+\noindent{\bf Examples.}\par
+\Ltab{18.5mm}{}\verb|\hjaggyline{40}{10}{15}| \par
+\Ltab{18.5mm}{}\verb|\hjaggylineb{40}{20}{15}| \par
+\Ltab{18.5mm}{}\verb|\vjaggyline{70}{10}{15}| \par
+\Ltab{18.5mm}{}\verb|\vjaggylineb{90}{10}{15}| \par
+
+\begin{layer}{160}{0}
+ \hjaggyline{40}{10}{15}
+\hjaggylineb{40}{20}{15}
+ \vjaggyline{70}{10}{15}
+\vjaggylineb{90}{10}{15}
+\end{layer}
+
+\vspace{35mm}
+
+%-------------circleline-------------------------------
+\begin{cmd}{\bs circleline}{circleline}
+\itemket{Usage}\verb|\circleline{x}{y}{size}|
+\itemket{Description}This function draws a circle with (x, y) as the center.
+\end{cmd}
+
+%-------------ballonr-------------------------------
+\begin{cmd}{\bs ballonr}{ballonr}
+\itemket{Usage}\verb|\ballonr[thickness]{x}{y}{size}{Char}|
+\itemket{Description}This function draws a balloon in the upper right side from (x, y) and, puts Char inside.
+\end{cmd}
+
+%-------------ballonl-------------------------------
+\begin{cmd}{\bs ballonl}{ballonl}
+\itemket{Usage}\verb|\ballonl[thickness]{x}{y}{size}{Char}|
+\itemket{Description}This function draws a balloon in the upper left side from (x, y) and, puts Char inside.
+\end{cmd}
+
+%-------------lefthand-------------------------------
+\begin{cmd}{\bs lefthand}{lefthand}
+\itemket{Usage}\verb|\lefthand[thickness]{x}{y}|
+\itemket{Description}This function draws a fingertip on (x, y).
+\end{cmd}
+
+%-------------righthand-------------------------------
+\begin{cmd}{\bs righthand}{righthand}
+\itemket{Usage}\verb|\righthand[thickness]{x}{y}|
+\itemket{Description}This function draws a fingertip on (x, y).
+\end{cmd}
+
+%-------------leftdownhand-------------------------------
+\begin{cmd}{\bs leftdownhand}{leftdownhand}
+\itemket{Usage}\verb|\leftdownhand[thickness]{x}{y}|
+\itemket{Description}This function draws a fingertip on (x, y).
+\end{cmd}
+
+%-------------rightdownhand-------------------------------
+\begin{cmd}{\bs rightdwonhand}{rightdownhand}
+\itemket{Usage}\verb|\rightdownhand[thickness]{x}{y}|
+\itemket{Description}This function draws a fingertip on (x, y).
+\end{cmd}
+
+%-------------example 3-------------------------------
+\noindent{\bf Examples.}\par
+
+\begin{layer}{170}{0}
+      \ballonr{30}{35}{1}{Example1}
+      \ballonl{90}{30}{1}{Example2}
+     \lefthand{120}{25}
+    \righthand{140}{25}
+ \leftdownhand{120}{15}
+\rightdownhand{140}{15}
+\end{layer}
+
+\newpage
+
+%-==Command List ========================
+\hypertarget{functionlist}{}
+\section{Command List}
+%\hyperlink{index}{To index}
+
+\begin{tabbing}
+12345678901234567890\=\kill
+
+{\bf Macros of ketpic} \> \\
+\hyperlink{ketpic}{\bs ketpic} \> logo of \ketpic\\
+\hyperlink{ketcindy}{\bs ketcindy} \> logo of \ketcindy\\
+\hyperlink{tab}{\bs Ltab} \> left tab\\
+\hyperlink{tab}{\bs Rtab} \> right tab\\
+\hyperlink{tab}{\bs Ctab} \> center tab\\
+\hyperlink{ketcalc}{\bs ketcalcwidth} \> returns the width of strings\\
+\hyperlink{ketcalc}{\bs ketcalcheight} \> returns the height of strings\\
+\hyperlink{ketcalc}{\bs ketcalcdepth} \> returns the depth of strings\\
+\hyperlink{ketcalcwh}{\bs ketcalcwh} \> returns the width and height of strings\\
+\hyperlink{dangerbendmark}{\bs dangerbendmark} \> symbol ``Dangerous turning point'' of Bulbaki\\
+\hyperlink{cautionmark}{\bs cautionmark} \> caution mark\\
+\hyperlink{circlemark}{\bs circlemark} \> circle\\
+\hyperlink{circleshade}{\bs circleshade} \> solid circle\\
+\hyperlink{arrow of i or d}{\bs NEarrow, ...} \> arrow of increase or decrease\\
+
+{\bf Macros of ketlayer} \> \\
+\hyperlink{putnote}{\bs putnote+dir} \> puts Char\\
+\hyperlink{boxframe}{\bs boxframe+dir} \> draws a rectangle and puts strings\\
+\hyperlink{dashboxframe}{\bs dashboxframe+dir} \> draws a dashed rectangle and puts strings\\
+\hyperlink{jaggyboxframe}{\bs jaggyboxframe+dir} \> draws a jaggy rectangle and puts strings\\
+\hyperlink{diaboxframe}{\bs diaboxframe+dir} \> draws a diamond chaining rectangle and puts strings\\
+\hyperlink{eraser}{\bs eraser+dir} \> erases the interior of a rectangle\\
+\hyperlink{shadebox}{\bs shadebox+dir} \> draws a shaded rectangle and puts strings\\
+\hyperlink{popframe}{\bs popframe} \> draws a rectangle and shade with the specified color and puts strings\\
+\hyperlink{colorframe}{\bs colorframe} \> draws a rectangle with the specified color and puts strings\\
+\hyperlink{cirscoremark}{\bs cirscoremark} \> draws a handwritten double circle\\
+\hyperlink{scirscoremark}{\bs scirscoremark} \> draws a handwritten single circle\\
+\hyperlink{triscoremark}{\bs triscoremark} \> draws a handwritten triangle\\
+\hyperlink{crosscoremark}{\bs crosscoremark} \> draws a handwritten cross mark\\
+\hyperlink{lineseg}{\bs lineseg} \> draws a line segment specified angle\\
+\hyperlink{dashlineseg}{\bs dashlineseg} \> draws a dashed line segment specified angle\\
+\hyperlink{arrowlineseg}{\bs arrowlineseg} \> draws a arrow line segment specified angle\\
+\hyperlink{arrowhead}{\bs arrowhead} \> draws a arrowhead specified angle\\
+\hyperlink{hjaggyline}{\bs hjaggyline} \> draws a horizontal jaggy line segment\\
+\hyperlink{hjaggylineb}{\bs hjaggylineb} \> draws a horizontal jaggy line segment against \bs hjaggyline\\
+\hyperlink{vjaggyline}{\bs vjaggyline} \> draws a vertical jaggy line segment\\
+\hyperlink{vjaggylineb}{\bs vjaggylineb} \> draws a vertical jaggy line segment against \bs vjaggyline\\
+\hyperlink{circleline}{\bs circleline} \> draws a circle\\
+\hyperlink{ballonl}{\bs ballonl} \> draws a ballon and puts strings inside\\
+\hyperlink{ballonr}{\bs ballonr} \> draws a ballon and puts strings inside\\
+%\hyperlink{lefthand}{\bs lefthand} \> draws a leftward fingertip\\
+%\hyperlink{righthand}{\bs righthand} \> draws rightward fingertip\\
+\hyperlink{lefthand}{\bs lefthand} \> draws fingertip\\
+\hyperlink{righthand}{\bs righthand} \> draws fingertip\\
+\hyperlink{leftdownhand}{\bs leftdownhand} \> draws fingertip\\
+\hyperlink{rightdownhand}{\bs rightdownhand} \> draws fingertip\\
+
+\end{tabbing}
+
+\end{document}

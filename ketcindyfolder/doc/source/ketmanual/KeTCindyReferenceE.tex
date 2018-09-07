@@ -4017,25 +4017,6 @@ Meanings and defaults of options are\\
 %=== 3D =========
 \section{\ketcindy 3D}
 
-\subsection{Summary}
-
-In KeTCindy's 3D-mode, there are two rectangular areas surrounded by a white frame on the Euclidean view.
-
-The main area which is on the left side of the screen and whose NE and SW are diagonal shows the range output to the \TeX document. The viewpoint can be moved with the slider under the main area, and the axis on the main area rotates.
-
-In the subarea, the viewpoint is fixed on the xy plane.
-
- \hspace{40mm} mainarea \hspace{40mm} subarea
-\begin{center}
-\includegraphics[bb=0.00 0.00 863.04 378.52,width=12cm]{Fig/3dscreen.pdf}
-\end{center}
-
-When adding points to the main area with the drawing tool of Cinderella, we will recognize them as points in space by the internal function \verb|Ptseg3data| and draw points corresponding to the subarea.
-However, initially, the z coordinate is 0.
-
-For example, if the name of the point is "A'', the point on the sub area is displayed as "Az''. 
-For the point "A'', "(A. x, A. y)'' is the coordinates in the main area and the corresponding point in 3D-space has the coordinate of "A3d''.
-If you change the name of the point "A'' with the inspector to "D'', you will add a point with the name corresponding to the subarea, but be careful as the previous point "Az'' will not disappear.The remaining points can be erased with the delete button \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/delete.pdf} of the Cinderella.
 
 %====================================
 \subsection{Setting and Defining}
@@ -4046,19 +4027,20 @@ If you change the name of the point "A'' with the inspector to "D'', you will ad
 \itemket{Details}Euclidean view of Cinderella becomes 3D mode. Two sliders are created to indicate the viewing angle TH($\theta$), FI($\phi$). The initial values are $\mathrm{TH}=0$ and $\mathrm{FI}=0$.\\
 \textcolor{red}{Caution}
  This funcition and Ketinit() have to write on Initializaiton slot.
+\itemket{Remark}If \verb|Ketinit3d(0)| is used, the subscreen is not displayed.
 \end{cmd}
 
 %------------Start3d--------------------------------
 
 \begin{cmd}{Start3d}{start3d}
 \itemket{Usage}Start3d(option)
-\itemket{Description}Creates subarea, and recognize 3D points.
-\itemket{Details}Creates subarea, and treat geometric points as 3D points in that area. 3D points is not output in the \TeX. \\
-\textcolor{red}{Caution}
-This funcition has to write at the beginning of Draw slot.\\
-Option is the list of exclusion points. Exclusion points are independent of view point. 
-% sample cdy files are s0521totaldiffskelton.cdy and s0522conecutmaxima.cdy
-%\itemket{Examples} \mbox{}
+\itemket{Description}3d function to initialize limited variables.
+\itemket{Details}
+This funcition should be written at the beginning of Draw slot.\\
+The option is a list of geometric points which are not regarded as 3D points.
+\itemket{Example}\mbox{}\\
+\verb|Start3d([A,B,C]);|\\
+\verb|Slider("A-C-B");| // A,C,B should not be 3D points.
 \end{cmd}
 
 %--------------Startsurf------------------------------

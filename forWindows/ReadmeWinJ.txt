@@ -1,10 +1,10 @@
-KETCindyのインストール（Windows）　　　修正日：2018.04.04
+KETCindyのインストール（Windows）　　　修正日：2018.09.07
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
 　　　・従来の作業ディレクトリ(ketcindy)は名前を変えておく．
 　　　　　　更新後必要なファイルを移動（コピー）する．
-　　　・これまでのcdyファイルを使うときは，立ち上げた後
+　　　・2017以前のcdyファイルを使うときは，立ち上げた後
 　　　　　　CindyScript/ketlib
 　　　　の中身を作業ディレクトリ(work)にあるScriptketlibで置き換えてギヤを押す．
 
@@ -32,9 +32,11 @@ KETCindyのインストール（Windows）　　　修正日：2018.04.04
 　　　　　注）copykettexが動かない場合，kettexフォルダを直接Cの直下に入れる．
 　　　　　注）多少の時間がかかる．
 
-　（２）既にインストールしている他のTeXを用いる場合
+　（２）既にインストールしている他のTeXLiveを用いる場合
 　　　・３)(１)（２）を実行すれば，必要なファイルがコピーされる．
-　　　　　注）TeXのパスを入力する必要がある．
+
+　（３）既にインストールしている他のTeXLを用いる場合
+　　　・３)(３)に従って，手動で必要なファイルをコピーする．
 
 ２） Cinderella, R, Sumatra, Maximaのインストール（コピー）
 
@@ -46,20 +48,35 @@ KETCindyのインストール（Windows）　　　修正日：2018.04.04
 
 ３）KeTCindyのインストール
 
-　（１）ketcindyfolder を開く．
-　（２）copyfilessetcindy.batを右クリック,「管理者として実行」を選ぶ．
+　（１）ketcindyfolderのcopyfilessetcindy.batを右クリック,「管理者として実行」を選ぶ．
 　　　　　　（管理者としてログインしてもこれを選択する）
 　　　　・TeXのパス　kettexの場合は１を選択する．
 　　　　・scripts,style,docの内容がTeXの中にコピーされる
 　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
 　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
-　（３）copywork.batをクリックする．
+
+　（２）copywork.batをクリックする．
 　　　　・作業ディレクトリ名　ketcindyの場合は単に d でもよい．
 　　　　・作業ディレクトリのパス　ユーザホーム，C:\，デスクトップから選択
 　　　　　　注）ユーザ名に全角または半角スペースがある場合は C:\ を選ぶ．
 　　　　・workの内容が指定した作業ディレクトリにコピーされる．
 　　　　・また、ユーザホームにketcindyhead.txtが作られる．
+
+　（３）手動でインストールする場合
+　　　　・C:\ketcindylibを作成して，ketcindyfolder\scriptの
+　　　　　　ketcindyjs, ketlib, ketlibC
+　　　　　をその中にコピーする．
+　　　　・ketcindyfolder\styleをTeXの中の適当な場所にコピーする．
+　　　　　　styleをketcindyに名称変更する．
+　　　　　　mktexlsrを実行する．
+　　　　・ketcindy.iniをテキストエディタで修正する．
+　　　　　　　PathThead=(TeXのbin のパス);
+　　　　　　　Homehead="C:\Users";
+　　　　　　　Dirhead="C:\ketcindylib";
+　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
+　　　　　　　ketcindy.iniとketcindyfolder\ketjavaの中身をコピーする．
+　　　　　（Cinderellaを終了）
 
 ４）KeTCindyのテストラン
 
@@ -107,8 +124,6 @@ KETCindyのインストール（Windows）　　　修正日：2018.04.04
 　　　　　・オプションのTeX環境設定を設定する．
 　　　　　・PDFはAdobeを選択する（インストールしていなければインストールする）．
 　　　　　
-
-
 ６）その他のインストール
 
 　・他のソフトのインストーラはRelatedsoftwares.exeにある．
@@ -118,15 +133,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.04.04
 　　をダウンロードして実行
 　　　注）パッケージは，mingw32-base, mingw32-gcc-g++だけでよい．
 
-７）カスタマイズ
-
-　（１）ketcindyフォルダを移動したとき
-　　　　　ユーザホームのketcindyhead.txtを開き、Dirfileを修正する．
-　（２）管理者以外の場合
-　　　　・各ソフトウェアのインストールは管理者が行う．
-　　　　・copyworkfolder.exeを解凍して，３）(3)と同様に行う．
-
-８）トラブルシューティング
+７）トラブルシューティング
 
 ・一般的な手順
 　（１）ketworkにあるkc.batをエディタで開く

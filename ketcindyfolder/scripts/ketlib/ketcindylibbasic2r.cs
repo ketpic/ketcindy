@@ -4020,6 +4020,11 @@ Slidework(dirorg):=(
   );
 );
 
+Setslidemargin(marginlist):=( // 180908
+//help:Setslidemargin([+5,-10]);
+  SlideMargin=marginlist;
+);
+
 Setslidepage():=( // 17.03.05
   regional(tmp1,tmp2,tmp3);
   tmp1=["letterc","boxc","framec","shadowc","xpos","size"];
@@ -4682,12 +4687,20 @@ Presentation(texfile,txtfile):=(
   forall(tmp3,
     println(SCEOUTPUT,#);
   );
-  if(indexof(PathT,"platex")>0, //180903from
-    tmp="\setmargin{25}{145}{15}{100}"
+  if(indexof(PathT,"platex")>0, //180903,180908from
+    tmp="\setmargin{"+text(25+SlideMargin_1)+"}{";
+    tmp=tmp+text(145-SlideMargin_1)+"}{";
+    tmp=tmp+text(15+SlideMargin_2)+"}{";
+    tmp=tmp+text(100-SlideMargin_2)+"}";
   ,
-    tmp="\setmargin{20}{135}{15}{100}"
-  ); // 180903to
+    tmp="\setmargin{"+text(20+SlideMargin_1)+"}{";
+    tmp=tmp+text(135-SlideMargin_1)+"}{";
+    tmp=tmp+text(15+SlideMargin_2)+"}{";
+    tmp=tmp+text(100-SlideMargin_2)+"}";
+  ); // 180903,180908to
+  println(SCEOUTPUT,"");
   println(SCEOUTPUT,tmp);
+  println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\ketslideinit");
   println(SCEOUTPUT,"");
   forall(tmp, // 15.07.21

@@ -1,3 +1,5 @@
+// 20180908
+//   Ketinit changed (SlideMargin added)
 // 20180904
 //   Color setting changed ( for KCOLOR)
 // 20180902

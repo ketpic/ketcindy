@@ -1,5 +1,6 @@
 // 20180908
 //   Presentation debugged  (slidepage blank line added )
+//   Presentation changed  (SlideMargin added)
 // 20180904
 //   Color setting changed ( for KCOLOR)
 // 20180903

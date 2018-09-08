@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180904) loaded");
+println("ketcindybasic2(20180908) loaded");
 
 //help:start();
 
@@ -4664,9 +4664,12 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"\setcounter{ketpicctra}{18}%");
   println(SCEOUTPUT,"\if#1m \setcounter{ketpicctra}{1}\fi");
   println(SCEOUTPUT,"\hypersetup{linkcolor=black}%");
+  println(SCEOUTPUT,"");//180908
   println(SCEOUTPUT,"\begin{layer}{118}{0}");
   println(SCEOUTPUT,"\putnotee{122}{-\theketpicctra.05}{\small\thepage/\pageref{pageend}}");
-  println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor="+LinkColor+"}}");//189524to
+  println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor="+LinkColor+"}");
+  println(SCEOUTPUT,"");//180908
+  println(SCEOUTPUT,"}");//189524to
   forall(ADDPACK,// 16.06.09from
     println(SCEOUTPUT,"\usepackage"+#); 
   );// 16.06.09to

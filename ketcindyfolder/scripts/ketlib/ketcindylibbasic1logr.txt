@@ -1,3 +1,5 @@
+// 20180913
+//   Chengesetting, Ketinit changed (getname() used)
 // 20180908
 //   Ketinit changed (SlideMargin added)
 // 20180904

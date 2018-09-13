@@ -934,15 +934,15 @@ Joincrvs3d(nm,plotstrL,options):=(
         pS=PtL_(length(PtL));
         pQ=Qd_1;
         pR=Qd_(length(Qd));
-        rMN=min([norm(pP-pQ),norm(pP-pR),
-              norm(pS-pQ),norm(pS-pR)]);
-        if(rMN==norm(pP-pR),
+        rMN=min([Norm(pP-pQ),Norm(pP-pR),
+              Norm(pS-pQ),Norm(pS-pR)]);
+        if(rMN==Norm(pP-pR),
           Qd=reverse(Qd);
         ,
-          if(rMN==norm(pS-pQ),
+          if(rMN==Norm(pS-pQ),
             PtL=reverse(PtL);
           ,
-            if(rMN==norm(pS-pR),
+            if(rMN==Norm(pS-pR),
               PtL=reverse(PtL);
               Qd=reverse(Qd);
             );
@@ -3704,7 +3704,7 @@ CrvsfparadataR(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
     reL=Rsform(reL);
     tmp=append(tmp,reL);
   );
-  tmp1=[DqDq(fname),DqDq(name3),name3,DqDq(name3h),name3h];
+  tmp1=[Dqq(fname),Dqq(name3),name3,Dqq(name3h),name3h];
   cmdL=concat(cmdL,[
     name3+"=Crvsfparadata",tmp,
     name3h+"=CRVSFHIDDENDATA",[],
@@ -4196,7 +4196,7 @@ SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
     reL=Rsform(reL);
     tmp=append(tmp,reL);
   );
-  tmp1=[DqDq(fname),DqDq(name3),name3,DqDq(name3h),name3h];
+  tmp1=[Dqq(fname),Dqq(name3),name3,Dqq(name3h),name3h];
   tmp2=replace(rfname,".txt",".Rdata");
   cmdL=concat(cmdL,[
     "print",[Dqq("sfcut"+nm)], //18.02.22
@@ -4492,7 +4492,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
     forall(1..(length(Data)),jj,
       Gd=Data_jj;
       if((length(Gd)>1) 
-       & (norm(Ptcrv(1,Gd)-Ptcrv(2,Gd))>Eps),
+       & (Norm(Ptcrv(1,Gd)-Ptcrv(2,Gd))>Eps),
         PtD=[];
         forall(1..(length(Gd)),
           tmp=Gd_#;
@@ -4590,12 +4590,12 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
                 tmp=Plt2_(nn1+1);
                 ptb=tmp_(1..2);
                 zb=tmp_3;
-                if(norm(pta-ptb)<Eps,
+                if(Norm(pta-ptb)<Eps,
                   contflg=1;
                 );
               );
               if(contflg==0,
-                t1=norm(pta-pt)/norm(pta-ptb);
+                t1=Norm(pta-pt)/Norm(pta-ptb);
                 z1=(1-t1)*za+t1*zb;
                 tmp=Dmat_(Dind_ii_1..Dind_ii_2);
                 tmp1=tmp_nn2;
@@ -4604,12 +4604,12 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
                 tmp2=tmp_(nn2+1);
                 ptb=tmp2_(1..2);
                 zb=tmp2_3;
-                if(norm(pta-ptb)<Eps,
+                if(Norm(pta-ptb)<Eps,
                   contflg=1;
                 );
               );
               if(contflg==0,
-                t2=norm(pta-pt)/norm(pta-ptb);
+                t2=Norm(pta-pt)/Norm(pta-ptb);
                 z2=(1-t2)*za+t2*zb;
                 if(z1<z2-Eps2,
                    if(length(ClipL)==0, 
@@ -4626,7 +4626,7 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
                     tmp1=pt1_2-pt1_1;
                     tmp2=ptb-pta;
                     tmp3=Dotprod(tmp1,tmp2);
-                    tmp3=tmp3/norm(tmp1)/norm(tmp2);
+                    tmp3=tmp3/Norm(tmp1)/Norm(tmp2);
                     tmp=1-0.5*tmp3^2;
                     tmp1=concat(pt,[nn1,t1,R0/tmp]);
                     ClipL=append(ClipL,tmp1);
@@ -4654,7 +4654,7 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
           contflg=0;
           if(breakflg==0,
             ptq=PointonCurve(jj,pt1);
-            if(norm(pt-ptq)<Rr,
+            if(Norm(pt-ptq)<Rr,
               contflg=1;
             );
             if(contflg==0,
@@ -4672,7 +4672,7 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
           forall(1..10,
             hh=hh*0.5;
             ptq=PointonCurve(t1+hh,pt1);
-            if(norm(pt-ptq)<Rr,
+            if(Norm(pt-ptq)<Rr,
               t2=t2-hh;
             ,
               t1=t1+hh;
@@ -4686,7 +4686,7 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
           contflg=0;
           if(breakflg==0,
             ptq=PointonCurve(jj,pt1);
-            if(norm(pt-ptq)<Rr,
+            if(Norm(pt-ptq)<Rr,
               contflg=1;
             );
             if(contflg==0,
@@ -4704,7 +4704,7 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
           forall(1..10,
             hh=hh*0.5;
             ptq=PointonCurve(t1+hh,pt1);
-            if(norm(pt-ptq)<Rr,
+            if(Norm(pt-ptq)<Rr,
               t1=t1+hh;
             ,
               t2=t2-hh;

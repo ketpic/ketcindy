@@ -1,25 +1,17 @@
-REM 20180907
+REM 20180913
 echo off
 set xcp="\Windows\System32\xcopy"
 rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
 set ketsrc=%~dp0
-set change=\changesetting.txt
-set /P STR_INPUT="Path to that folder userhome(u) drive C(c) :"
-if "%STR_INPUT%" == "u" (
-  set dist=%HOMEPATH%\ketcindy
-)
-if "%STR_INPUT%" == "c" (
-  set dist=C:\ketcindy
-)
-if "%STR_INPUT%" == "C" (
-  set dist=C:\ketcindy
-)
+set change=\ketcindychange.txt
+set dist=%HOMEPATH%\ketcindy
 if exist "%dist%\." (
   echo Deleting "%dist%"
   rd /s "%dist%"
 )
-echo Copying work to %dist%
 %xcp% /Y /Q /S /E /R "%ketsrc%\work\*.*" "%dist%\"
+echo Workfolder is %dist%
+echo It can be moved to any place
 echo platex(p) uplatex(u) latex(l) xelatex(x) pdflatex(pd) lualatex(lu)
 set /P STR_INPUT="Choose LaTeX from the above :"
 if "%STR_INPUT%" == "p" (
@@ -58,6 +50,8 @@ if "%STR_INPUT%" == "lu" (
   copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
   copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
 )
+set dist=%HOMEPATH%
+echo  generating %dist%\%changesetting%
 echo  // Re-setting PathT,Pathpdf,PathAd > "%dist%%change%"
 echo PathT=PathThead+"%tex%"; >> "%dist%%change%"
 set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe

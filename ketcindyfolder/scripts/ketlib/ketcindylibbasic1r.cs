@@ -169,23 +169,19 @@ Ketinit(sy,rangex,rangey):=(
 ////%Changesetting start////
 Changesetting(dir):=( //180913
   regional(fname,dname,sep);
-  fname="changesetting.txt";
-  dname="ketcindy";
+  fname="ketcindychange.txt";
+  dname="";
   sep=pathsep();
+  if(!isexists(dir,fname),
+    fname="changesetting.txt";
+    dname="ketcindy";
+  );
+  if(length(dname)==0,
+    println("read "+dir+sep+fname);
+  ,
+    println("read "+dir+sep+dname+sep+fname);
+  );
   if(!islist(dir),
-    if(!isexists(dir,dname),
-      println(makedir(dir,dname));
-      setdirectory(dir+sep+dname);
-      SCEOUTPUT=openfile(fname);
-      println(SCEOUTPUT,"//PathT=PathThead+");
-      println(SCEOUTPUT,"//Pathpdf=");
-      println(SCEOUTPUT,"//PathR=");
-      println(SCEOUTPUT,"//PathM=");
-      closefile(SCEOUTPUT);
-      println("edit file "+dir+sep+dname+sep+fname);
-    ,
-      println("read from "+dir+sep+dname+sep+fname);
-    );
     setdirectory(dir+sep+dname);
     import(fname);
   );

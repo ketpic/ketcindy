@@ -51,12 +51,12 @@ Install of KeTCindy(Mac)       Modified : Sep. 7th  2018
                       ketcindy.ini will be generated .
 
 	  (2) Double-click copywork.sh.
-               * Work directory "ketcindy" will be generated in user home directory.
+               * Work directory "ketcindy" will be generated in User's home.
                * TeX(typeset) will be usually latex,xelatex or pdflatex.
                * How to execute Terminal
                      sh (not be displayed the process) , open(displyed the process)
                * Contents of work will be copied into "ketcindy".
-               * "changesetting.txt" will be also generated.
+               * "ketcindychange.txt" will be also generated in User's home.
                        You can change the setting of PathT, Mackc, etc.
 
 	  (3) Installing manually

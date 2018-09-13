@@ -1,25 +1,20 @@
 #!/bin/sh
-#      20180907
+#      20180913
 ketfolder=/Volumes/ketcindyfolder
 if [ ! -e $ketfolder ]; then
   ketfolder=~/Desktop/ketcindyfolder
 fi
 ketsrc=${ketfolder}/work
 echo ${ketsrc} will be used
-changesetting=/changesetting.txt
-# read -p 'Path of working folder : userhome(u) desktop(d) :' ans
-# if [ ${ans} = "u" ]; then
-  dist=~/ketcindy
-# fi
-# if [ ${ans} = "d" ]; then
-#   dist=~/Desktop/ketcindy
-# fi
+changesetting=/ketcindychange.txt #180913
+dist=~/ketcindy #180913
 cp -r -p ${ketsrc}/  ${dist}/
 if [ $? -gt 0 ]; then
   echo Error:$?
   sleep 5
 else
-  echo "work folder copied to "${dist}
+  echo Workfolder is ${dist}
+  echo "It can be moved to any place" ##180913
 fi
 read -p 'Choose platex(p),uplatex(u),latex(l),xelatex(x),pdflatex(pd),lualatex(lu):' tex
 if [ ${tex} = "p" ]; then
@@ -64,6 +59,8 @@ if [ ${tex} = "lu" ]; then
   cp -p  KeTCindyGuideE.pdf ${dist}
   cp -p  KeTpicStyleE.pdf ${dist}
 fi
+dist=~ #180913
+echo  generating ${dist}/${changesetting}
 echo  // Re-setting PathT,PathR,Pathpdf,PathM,PathAd >${dist}${changesetting}
 echo  "PathT=PathThead+\"${tex}\";" >>${dist}${changesetting}
 read -p 'Choose pdfviewer from preview(p),skim(s): ' ans

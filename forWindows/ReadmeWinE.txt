@@ -1,4 +1,4 @@
-Install of KeTCindy(Win)       Modified : Sep. 7th  2018
+Install of KeTCindy(Win)       Modified : Sep. 13th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -43,23 +43,29 @@ Install of KeTCindy(Win)       Modified : Sep. 7th  2018
                *  KetcindyPluign.jar and ketcindy.ini will be copied into Cinderella/Plugins.
 
 	  (2) Double-click copywork.bat.
-               * Name of work directory : choose 1 in the case of ketcindy.
-               * Path of work directory
-                      if User name contains "space", choose C:\ (c).
+               * Folder "ketcindy" is generated in User's home.
                * Contents of work are copied into ketcindy(work).
-                  And ketcindyhead.txt is generated in User's home.
+               * ketcindychange.txt is generated in User's home.
+                     This files can be revised.
 
 	  (3) Installing manually
-               * Generate C:\ketcindylib and copy
+               * Generate ketcindy folder somewhere.
+                     (KeTeX) C:\kettex\texlive\texmf-dist\scripts\ketcindy　
+               * Copy
                      ketcindyjs, ketlib, ketlibC in ketcindyfolder\script.
                   into C:\ketcindylib.
                * Copy ketcindyfolder\style into somewhere of TeX folder.
                      Rename style to ketcindy
                      Execute mktexlsr.
                * Edit ketcindy.ini using a text editor.
-                     PathThead : path of bin of TeX
-                     Homehead="C:\Users";
-                     Dirhead="C:\ketcindylib";
+                     PathThead="(path of bin of TeX)";
+                         (KeTTeX)="C:\kettex\texlive\bin\x86_64-darwin\"; 
+                     Dirhead="(path of the abobe ketcindy)";
+                         (KeTTeX)="C:\kettex\texlive\texmf-dist\scripts\ketcindy"; 
+                     Homehead="/Users";
+                     setdirectory(Dirhead);
+                     import("setketcindy.txt");
+                     import("ketoutset.txt");
                * Boot up Cinderella and select editscripting/plugin.
                     Copy ketcindy.ini and the contents of ketcindyfolder\ketjava.
 

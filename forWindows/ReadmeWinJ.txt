@@ -1,4 +1,4 @@
-KETCindyのインストール（Windows）　　　修正日：2018.09.07
+KETCindyのインストール（Windows）　　　修正日：2018.09.13
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -14,7 +14,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.07
 　（２）以下の圧縮ファイルをデスクトップにコピーして解凍しておく．
 　　　　　　Winstart.exe
 　　　　　　ketcindyfolder.exe
-　　　　　　kettexnormal.ext（kettexを用いる場合）
+　　　　　　kettexnormal.exe（kettexを用いる場合）
 　　　注１）デスクトップに３つのフォルダがあることを確認する．
 　　　注２）解凍時「WindowsによってPCが保護」が現れたら「詳細情報」を選択
 
@@ -52,28 +52,32 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.07
 　　　　　　（管理者としてログインしてもこれを選択する）
 　　　　・TeXのパス　kettexの場合は１を選択する．
 　　　　・scripts,style,docの内容がTeXの中にコピーされる
-　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
-　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
 
 　（２）copywork.batをクリックする．
-　　　　・作業ディレクトリ名　ketcindyの場合は単に d でもよい．
-　　　　・作業ディレクトリのパス　ユーザホーム，C:\，デスクトップから選択
-　　　　　　注）ユーザ名に全角または半角スペースがある場合は C:\ を選ぶ．
-　　　　・workの内容が指定した作業ディレクトリにコピーされる．
-　　　　・また、ユーザホームにketcindyhead.txtが作られる．
+　　　　・作業ディレクトリketcindyがユーザホームにできて，ファイルがコピーされる．
+　　　　　　注）このフォルダは他の場所に移してもよい．
+　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
+　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
+　　　　・ユーザホームにketcindychange.txtができる（後から修正可能）
 
 　（３）手動でインストールする場合
-　　　　・C:\ketcindylibを作成して，ketcindyfolder\scriptの
-　　　　　　ketcindyjs, ketlib, ketlibC
-　　　　　をその中にコピーする．
+　　　　・適当な場所にketcindyを作成する．
+　　　　　　　KeTTeXの場合は，C:\kettex\texlive\texmf-dist\scripts\ketcindy　　　　　　
+　　　　・ketcindyfolder\scriptのketcindyjs, ketlib, ketlibCketcindyをその中にコピーする．
 　　　　・ketcindyfolder\styleをTeXの中の適当な場所にコピーする．
+　　　　　　　KeTTeXの場合は，C:\kettex\texlive\texmf-dist\tex\latex　　　　　　
 　　　　　　styleをketcindyに名称変更する．
 　　　　　　mktexlsrを実行する．
 　　　　・ketcindy.iniをテキストエディタで修正する．
-　　　　　　　PathThead=(TeXのbin のパス);
-　　　　　　　Homehead="C:\Users";
-　　　　　　　Dirhead="C:\ketcindylib";
+　　　　　　　PathThead="(TeXのbin のパス)";
+　　　　　　　　　KeTTeXの場合は，="C:\kettex\texlive\bin\x86_64-darwin\";
+　　　　　　　Dirhead="(ketcindyのパス）";
+　　　　　　　　　KeTTeXの場合は，="C:\kettex\texlive\texmf-dist\scripts\ketcindy";　　　　　
+　　　　　　　Homehead="/Users";
+　　　　　　　setdirectory(Dirhead);
+　　　　　　　import("setketcindy.txt");
+　　　　　　　import("ketoutset.txt");
 　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
 　　　　　　　ketcindy.iniとketcindyfolder\ketjavaの中身をコピーする．
 　　　　　（Cinderellaを終了）
@@ -92,7 +96,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.07
 
 　（２）スクリーンの上部にあるFigureボタンを押してPDFが表示されれば成功
 　　　　　表示されないとき
-　　　　　　　ユーザホームのketcindyhead.txtを開いて，パスを確認する．
+　　　　　　　ユーザホーム/ketcindyのchangesetting.txtを開いて，パスを確認する．
 　　　　　　　　PathT="TeXのパス";
 　　　　　　　　Pathpdf="pdfビューアのパス";
 

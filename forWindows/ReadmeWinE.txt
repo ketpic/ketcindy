@@ -1,10 +1,10 @@
-Install of KeTCindy(Win)       Modified : Sep. 13th  2018
+Install of KeTCindy(Win)       Modified : Sep. 14th  2018
 
-  Rem) If you have installed softwares, 
-                * Execute only the following 4).
+  Rem) If you have already installed softwares, 
+                * Execute only the following 3).
                 * Rename the existing working folder if necessary before executing.
                 * For cdy files before 2017, 
-                      replace contents of  CindyScript/ketlib with that of scriptinitialization.txt
+                    replace contents of CindyScript/ketlib with those of Scriptketlib.txt.
 
 0) Preparations
       (1) Password of Administrator will be required in 1) 2) and 3)(1)(2).
@@ -43,10 +43,11 @@ Install of KeTCindy(Win)       Modified : Sep. 13th  2018
                *  KetcindyPluign.jar and ketcindy.ini will be copied into Cinderella/Plugins.
 
 	  (2) Double-click copywork.bat.
-               * Folder "ketcindy" is generated in User's home.
-               * Contents of work are copied into ketcindy(work).
-               * ketcindychange.txt is generated in User's home.
-                     This files can be revised.
+               * Folder "ketcindy" will be generated in User's home.
+                  And contents of work will be copied into ketcindy(work).
+                  This folder can be moved to any place.
+               * ketcindychange.txt will be generated in User's home.
+                  This file can be revised. for example, when R or Maxima has been updated.
 
 	  (3) Installing manually
                * Generate ketcindy folder somewhere.
@@ -68,6 +69,7 @@ Install of KeTCindy(Win)       Modified : Sep. 13th  2018
                      import("ketoutset.txt");
                * Boot up Cinderella and select editscripting/plugin.
                     Copy ketcindy.ini and the contents of ketcindyfolder\ketjava.
+               * Execute copywork.bat.
 
 5) Test run of KeTCindy
       (1) Double-click "template1basic.cdy" in "ketcindy\ketfiles".

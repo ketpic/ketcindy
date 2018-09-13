@@ -1,4 +1,4 @@
-KETCindyのインストール（Windows）　　　修正日：2018.09.13
+KETCindyのインストール（Windows）　　　修正日：2018.09.14
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -57,9 +57,10 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.13
 　（２）copywork.batをクリックする．
 　　　　・作業ディレクトリketcindyがユーザホームにできて，ファイルがコピーされる．
 　　　　　　注）このフォルダは他の場所に移してもよい．
+　　　　　　　　アカウント名に全角や半角スペースが入っていて動かない場合は，C:\に移す．
 　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
 　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
-　　　　・ユーザホームにketcindychange.txtができる（後から修正可能）
+　　　　・ユーザホームにketcindychange.txtができる（TeXの変更などが可能）
 
 　（３）手動でインストールする場合
 　　　　・適当な場所にketcindyを作成する．
@@ -80,7 +81,8 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.13
 　　　　　　　import("ketoutset.txt");
 　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
 　　　　　　　ketcindy.iniとketcindyfolder\ketjavaの中身をコピーする．
-　　　　　（Cinderellaを終了）
+　　　　　（Cinderellaを終了)
+　　　　・copywork.batを実行する．
 
 ４）KeTCindyのテストラン
 

@@ -1,10 +1,10 @@
-Install of KeTCindy(Mac)       Modified : Sep. 7th  2018
+Install of KeTCindy(Mac)       Modified : Sep. 14th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
                 * Rename the existing working folder if necessary before executing.
                 * If you want to use old cdy files made before 2017,
-                      replace contents of CindyScript/ketlib with that of scriptketlib.txt.
+                      replace contents of CindyScript/ketlib with that of Scriptketlib.txt.
   
 0) Preparations
       (1) It is useful to display "Macintosh HD" on Desktop.
@@ -72,6 +72,7 @@ Install of KeTCindy(Mac)       Modified : Sep. 7th  2018
                      Dirhead   path of libraries of KeTCindy
                * Boot up Cinderella and select editscripting/plugin.
                     Copy ketcindy.ini and the contents of ketcindyfolder/ketjava.
+               * Execute copywork.sh.
 
 4) Test run of KeTCindy
       (1) Double-click "template1basic.cdy" in "ketcindy/ketfiles".

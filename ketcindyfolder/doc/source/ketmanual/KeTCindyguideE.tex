@@ -578,7 +578,132 @@ by users.
 \noindent 
 ADDAXES, ArrowlineNumber, ArrowheadNumber, BezierNumber, COM0thlist, COM1stlist, COM2ndlist, Dq, FUNLIST, Fnamesc ，Fnamescibody，Fnameout，Fnametex, GDATALIST, GLIST, GCLIST, GOUTLIST, KCOLOR, KETPICCOUNT,KETPICLAYER, LETTERlist, LFmark, MilliIn, PenThick,PenThickInit,  POUTLIST, SCALEX, SCALEY, SCIRELIST, SCIWRLIST, TenSize, TenSizeInit, ULEN, XMAX, XMIN, YaSize, YaThick,   YMAX, YMIN, VLIST
 
+\vspace{\baselineskip}
+
+A list can be defined by putting its elements in a square bracket 
+with commas separating each other. 
+The attribute of each element does not matter. 
+The $n$-th element can be referred by using an underbar. 
+For instance, the commands 
+
+\begin{verbatim}
+    list=[1,2,3,4,5];
+    list_2="a";
+\end{verbatim}
+make the second element be substituted by the letter \verb|"a"|. 
+
+
 \subsection{Frequently used commands}
+
+\noindent
+{\bf Displaying the computed output}
+
+\noindent 
+The following commands 
+make the current value of the variable 
+on the console view. 
+
+\begin{tabbing}
+12345\=6789012345678989012345678901234567890\=123\=\kill
+\>\verb|print(the name of variable);| \> without a line break\\
+\>\verb|println(the name of variable);| \> with a line break\\  
+\end{tabbing}
+
+\noindent
+{\bf Conditional branching}
+
+\noindent
+The commnad \verb|if(A,B,C)| executes \verb|B| if \verb|A| is true 
+and \verb|C| otherwise. 
+The followings are frequently used. 
+Nested conditions can be interpreted. 
+
+\begin{tabbing}
+12345\=67890123456789890\=12345678901234567890123\=\kill
+\>\verb|if(a>b,...);|\\
+\>\verb|if(a<b,...);|\\
+\>\verb|if(a>=b,...);| \> $a\geqq b$\\
+\>\verb|if(a<=b,...);| \> $a\leqq b$\\  
+\>\verb|if(a=b,...);|\\
+\>\verb|if(a!=b,...);| \> $a\neq b$\\  
+\end{tabbing}
+
+\noindent
+{\bf Loop program}
+
+\noindent
+The commnad \verb|for(n,operation)| executes the operation 
+$n$ times. If the counter should be specified, 
+modify the command as \verb|for(n,s,operation)|. 
+where the value of $s$ is successively changed. 
+Loop program with respect to some list instead of counter 
+is also possible via the command as \verb|forall(list,operation)|. 
+For example, the commands
+
+\begin{verbatim}
+    sglist=[[A,B],[C,D],[E,F]];
+    forall(sglist,Listplot(#));
+\end{verbatim}
+have the same output as 
+\begin{verbatim}
+    Listplot([A,B]);
+    Listplot([C,D]);
+    Listplot([E,F]);
+\end{verbatim}
+
+\noindent
+{\bf User's definition of functions}
+
+\noindent
+The format of definition is \verb|function name(argument):=(operation)|. 
+For example, if we define the function \verb|sign(n)| by 
+\begin{verbatim}
+    sign(n):=(
+      if(n>0,print("positive"),print("0 or negative"));
+    );
+\end{verbatim}
+it can be used as 
+\begin{verbatim}
+    n=3;
+    println(sign(n));
+\end{verbatim}
+
+\mbox{} 
+
+\noindent
+{\bf Reference to geometric elements}
+
+\noindent
+The position of a point can be specified 
+with both its name and the list of its $x,y$-coordinates. 
+Thus, both of the following formats are allowed. 
+\begin{verbatim}
+    Listplot("1",[[1,1],[4,5]]);
+    Listplot("1",[A,B]);
+\end{verbatim}
+Also we can get the coordinate of a point explicitly 
+via the commands 
+like \verb|A.xy|, \verb|A.x|, and \verb|A.y|.
+
+\mbox{} 
+
+\noindent
+{\bf List processing}
+
+\noindent
+The list of integers between $a$ and $b$ 
+is generated via the command \verb|a..b|. 
+For instance, the synchronized use with the command \verb|apply| 
+as below gives the shape of pentagram. 
+\begin{verbatim}
+    r=2;
+    pt=apply(0..5,r*[cos(pi/2+#*4*pi/5),sin(pi/2+#*4*pi/5)]);
+    repeat(5,s,Listplot(text(s),[pt_s,pt_(s+1)]));
+\end{verbatim}
+Here the Cindyscript command \verb|text| 
+is used to convert the number into string. 
+
+
 
 % -------------- Calling other softwares --------------
 
@@ -817,35 +942,61 @@ See \verb|KeTCindyreferenceE.pdf| or \verb|samples/s09surfaceC| for more informa
 
 \section{Making Slides}
 
-\subsection{Overall Flow}
+\subsection{Outline}
 
-\ketcindy\ has functions to make slides for presentation. 
-For this, follow steps below:
-\begin{enumerate}[1)]
-\item Copy and rename \verb|template2slide.cdy| in ketcindy folder to a work folder and double-click the file (here, we call sample.cdy). Then the followings will appear.
+\ketcindy\ has functions to make slides for presentation with the help of \verb|layer| environment which is defined in \verb|ketlayer.sty|.
+See \verb|KeTpicStyleE.pdf| for details about \verb|layer|.
+
+You need both a cindy file and a text file with the same header, for example, ``makeslide.cdy'' and ``makeslide.txt''. The following chart shows the relation between them.
+
+\begin{center}
+\input{Fig/makeslideE}
+\end{center}
+
+Write commands of \ketcindy\ slide and \TeX\ in the text file as follows.
+
+\begin{verbatim}
+  title::slide0//
+  main::Introduction to Programming//
+  \slidepage[m]//
+
+  new::Programming Language //
+  %repeat=6,para// 
+  \slidepage// 
+
+  layer::{120}{0}//
+  putnote::s{65}{5}::figure1//
+  end//
+
+  itemize// 
+  item::Python// 
+  %thin[2,-]::item::Ruby// 
+  %thin[3,-]::item::Java// 
+  %thin[4,-]::item::JavaScript// 
+  %thin[5,-]::item::CindyScript// 
+  %thin[6,-]::item::C// 
+  end// 
+\end{verbatim}
+
+\begin{description}
+\item[Remark]``//'' should be added to the end of all lines. Use ``||||'' when you want to write \verb|//|.
+\end{description}
+
+Then go to \verb|makeslide.cdy|.
+First, edit the title using \verb|Settitle| and press button \verb|"Title"| on the screen, then the title page will be displayed. Revise \verb|Settitle| if necessary.
+
 \begin{center}
 \includegraphics[bb=0.00 0.00 743.00 632.00,height=60mm]{fig/slidescreen.pdf}\hspace{5mm}
 \includegraphics[bb=0.00 0.00 802.00 633.00,height=60mm]{fig/slidescript.pdf}
 \end{center}
-\item Edit \verb|"Settitle"|, for example,\\
-\verb|  Settitle([|\\
-\verb|     "s{60}{20}{How To Use}",|\\
-\verb|     "s{60}{50}{a \ketcindy\ member}",|\\
-\verb|     "s{60}{60}{\ketcindy\ project}",|\\
-\verb|     "s{60}{70}{Aug. 20th}"|\\
-\verb|    ],["Color=[1,1,0,0]"]);|
-\item Press button \verb|"Title"|, then the title page will be displayed. At the same time,  text file \verb|"sample.txt"| will be created if it does not exist. This \verb|sample.txt| is a template file for making slides.
-\item Press button \verb|"Slide"|, then \ketcindy\ will make \verb|sample.tex| from \verb|sample.txt|, 
-typeset it, and display \verb|sample.pdf| which contains slides for presentation.
-\end{enumerate}
- 
-\subsection{Editing Text File}
 
-\begin{enumerate}[1)]
-\item Put \verb|//| at the last of each line.\\
-\hspace*{10mm}Rm) Use \verb+||||+ for \verb|//|.
-\item Commands are\\
-\verb|    title::titleslidename(::wallpaper)//|\\
+Next press button \verb|"Slide"|, then \ketcindy\ will make \TeX\ file \verb|makeslide.tex|,
+typeset it and disply the pdf file. If there occurs an error, check the text file or the \TeX\ file.
+
+\subsection{Commands of \ketcindy\ slide}
+
+You can use the following commands.\\
+\verb|    title::slide0 (::wallpaper)//|\\
 \verb|        Rem) Put only once at the first line.|\\
 \verb|    main::(main title)//|\\
 \verb|    new::(page title)//|\\
@@ -865,9 +1016,22 @@ typeset it, and display \verb|sample.pdf| which contains slides for presentation
 \verb|    end//|\\
 \verb|           =\end{itemize,enumerate,layer}|\\
 \verb|    ...//|\\
-\verb|          To insert a blank line.|\\
-\verb|    Rem) Any other TeX command is available.|\\
-\end{enumerate}
+\verb|          To insert a blank line.|
+
+\noindent
+You can also use the following \TeX\ mcores added by \ketcindy.\\
+\verb|    \slidepage,\slidepage[m]//|\\
+\verb|           To display the number each page.|\\
+\verb|            \slidepage[m] is used for the \verb|main| page.|\\
+\verb|    \setthin{thickness}|\\
+\verb|          To change the thickness of thin letters temporarily.|\\
+\verb|    \inputsound, \inputmovie|\\
+\verb|          To insert mp3/mp4 files.|
+
+
+\begin{description}
+\item[Remark]Any other \TeX\ macroes are available. Put \verb|%%| instead of \verb|%| to comment out .
+\end{description}
 
 \subsection{Display of Page step by step}
 

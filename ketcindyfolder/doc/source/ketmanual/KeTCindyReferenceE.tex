@@ -2955,6 +2955,7 @@ c1,c2,c3\\
 
 % =====the others===========================
 \subsection{Others}
+
 %-------Assign-------------------------------------
 \begin{cmd}{Assign}{assign}
 \itemket{Usage}Assign(string0, string1, number)
@@ -3018,6 +3019,23 @@ RGB to HSV
 
 \end{cmd}
 
+%----------Dqq----------------------------------
+\begin{cmd}{Dqq}{dqq}
+\itemket{Usage}Dqq(string);
+\itemket{Description}This function returns a string surrounded by double quotes.
+\itemket{Exaample}\mbox{}\\
+\verb|parse("a");| // The value of variable \verb|a| is returned.\\
+\verb|parse(Dqq("a"));| // String \verb|"a"| is returned.\\
+\end{cmd}
+
+%----------Factorial----------------------------------
+\begin{cmd}{Factorial}{factorial}
+\itemket{Usage}Factorial(n);
+\itemket{Description}This function returns the factorial of \verb|n|.
+\itemket[Details]\verb|n| should be a positive integer.
+\itemket{Exaample}\verb|x=Factorial(5); // x is 120.|
+\end{cmd}
+
 %----------Figpdf----------------------------------
 \begin{cmd}{Figpdf}{Figpdf}
 \itemket{Usage}Figpdf(option)
@@ -3078,6 +3096,16 @@ We have to take the right margin at least 3mm to draw the axis name.
 \verb|Letterrot(C,B-A,0,5,"AB");|\\
 $\cdots\cdots\cdots$
 
+\end{cmd}
+
+%-------------Norm-------------------------------
+\begin{cmd}{Norm}{norm}
+\itemket{Usage}Norm(vector);
+\itemket{Description}This function returns the norm of the vector.
+\itemket{Details}\mbox{}
+The vector is 2D or 3D.\\
+ If two vectors \verb|v1|, \verb|v2| are given, the value of \verb|Norm(v2-v1)| is returned.
+\itemket{Examples}\verb|Norm([1,1,2]);| // $\sqrt{6}$ is returned.
 \end{cmd}
 
 %-------------Op-------------------------------
@@ -3197,6 +3225,15 @@ Cindyscript has a function \verb|format(value, number)|, like as Textformat.
 
 \end{cmd}
 
+%----------Toupper----------------------------------
+\begin{cmd}{Toupper}{toupper}
+\itemket{Usage}Toupper(string);
+\itemket{Description}This function returns the upper case letters of the string.
+\itemket{Examples}\verb|Toupper("aBc123'');| // "ABC123" is returned.
+
+%\verb|Windispg();|
+\end{cmd}
+
 %----------Windispg----------------------------------
 \begin{cmd}{Windispg}{windispg}
 \itemket{Usage}Windispg();
@@ -3212,39 +3249,14 @@ Cindyscript has a function \verb|format(value, number)|, like as Textformat.
 \section{Calling Other Softwares}
 \subsection{R}
 
-%-------------Boxplot-------------------------------
-\begin{cmd}{Boxplot}{boxplot}
-\itemket{Usage}Boxplot(name, data, vertical position, height of box,options);
-\itemket{Description}draw boxplots
-\itemket{Examples}\mbox{}
-
-draw a boxplot of 100 uniform random numbers less than 5.
-
-\verb|    dt1=apply(1..100,5*random());|\\
-\verb|    Boxplot("1",dt1,1,1/2);|
-
-\begin{center} \input{Fig/boxplot01}  \end{center}
-
-read an external data file in csv format and draw a boxplot of the data.
-
-\verb|    Boxplot("2","datafile.csv",3,1/2);|
-
-You can read a csv file with more than one column using \verb|Readcsv|.
-The csv flie should be stored in current working folder (defalut is fig folder).
-Using \verb|Framedata| and \verb|Rulerscale| together, you can mark with a scale.
-Before you use \verb|Framedata|, you need to take two diagonal points of the drawing area on the Euclidean view.
-
-\verb|    data=Readcsv("datafile.csv");|\\
-\verb|    dt1=apply(data,#_1);|\\
-\verb|    dt2=apply(data,#_2);|\\
-\verb|    Boxplot("1",dt1/20,1,1/2);|\\
-\verb|    Boxplot("2",dt2/20,3,1/2);|\\
-\verb|    Framedata("1",[A,B],["corner"]);|\\
-\verb|    Rulerscale(A,["r",0,6,1],["f",1,"\mbox{dt1}",3,"\mbox{dt2}"]);|
-
-\begin{center} \input{Fig/boxplot}  \end{center}
-
+%--------------Rfun------------------------------
+\begin{cmd}{Rfun}{rfun}
+\itemket{Usage}Rfun(name, ommand,list of arguments,options)
+\itemket{Description}This function executes a R command and returns the.
+\itemket{Examples}\verb|Rfun("1","rnorm",[10]);| // The result will be assigned to "R1".
+\itemket{Remark}Option "Cat=n" supresses display of the result in the console.
 \end{cmd}
+
 %--------------CalcbyR------------------------------
 \begin{cmd}{CalcbyR}{calcbyr}
 \itemket{Usage}CalcbyR(var,command,options)
@@ -3253,43 +3265,28 @@ Before you use \verb|Framedata|, you need to take two diagonal points of the dra
 \itemket{Examples}  \mbox{}
 
 Generate 10 random samples from the standard normal distribution by R and return the result (data) to Cinderella.\\
-\verb|    cmdL=[ "=rnorm",[10] ];|\\
-\verb|    CalcbyR("dt",cmdL);|
-
-calculate the sample mean and the sample standard deviation of the data.\\
-\verb|    nx=length(dt);|\\
-\verb|    mx=sum(dt)/nx;|\\
-\verb|    sx=sqrt(dt*dt/nx-mx^2);|
-
-output the data, the mean and the SD to the console.\\
-\verb|    println("Data : "+dt);|\\
-\verb|    println("Mean : "+format(mx,4));|\\
-\verb|    println("SD : "+format(sx,4));|\\
-
-\begin{center}
-\includegraphics[bb=0.00 0.00 532.53 249.51,width=12cm]{Fig/calcbyr01.pdf} 
-\end{center}
-
-generate 10 random samples from the normal distribution $N(50,5^2)$  and calculate the sample mean and the unbiased variance of the data.\\
 \verb|    cmdL=[|\\
-\verb|      "tmp1=rnorm",[10,50,5],|\\
-\verb|      "tmp2=mean",["tmp1"],|\\
-\verb|      "tmp3=var",["tmp1"],|\\
-\verb|      "=c(tmp1,tmp2,tmp3)",[]|\\
-\verb|    ];|\\
-\verb|    CalcbyR("rd",cmdL);|\\
-\verb|    dt=rd_(1..(length(rd)-2));|\\
-\verb|    mx=rd_(-2);|\\
-\verb|    vx=rd_(-1);|\\
-\verb|    println("data : "+dt);|\\
-\verb|    println("Mean : "+format(mx,4)+" variance : "+format(vx,4));|
+\verb|      "dt=rnorm",[10,50,5],|\\
+\verb|      "m=mean(dt)",[],|\\
+\verb|      "u=var(dt)",[],|\\
+\verb|      "dt::m::u",[]|\\
+\verb|     ]|\\
+\verb|    CalcbyR("ans",cmdL);|
+
+\verb|    println("Data : "+ans_1);|\\
+\verb|    println("Mean : "+format(ans_2,4));|\\
+\verb|    println("UD : "+format(ans_3,4));|\\
+
+%\begin{center}
+%\includegraphics[bb=0.00 0.00 532.53 249.51,width=12cm]{Fig/calcbyr01.pdf} 
+%\end{center}
 
 generate 200 random samples from the Poisson distribution with mean 5 and calculate the sample mean and the unbiased variance of the data.\\ 
 \verb|    cmdL=[|\\
 \verb|      "tmp1=rpois",[200,5],|\\
 \verb|      "tmp2=mean",["tmp1"],|\\
 \verb|      "tmp3=var",["tmp1"],|\\
-\verb|      "=c(tmp2,tmp3,tmp1)",[]|\\
+\verb|      "tmp2::tmp3::tmp1",[]|\\
 \verb|    ];|\\
 \verb|    CalcbyR("rd",cmdL);|\\
 \verb|    dt=rd_(3..length(rd));|\\
@@ -3324,8 +3321,43 @@ generate 2000 random samples from the Poisson distribution and calculate 200 sam
 
 \end{cmd}
 
+%-------------Boxplot-------------------------------
+\begin{cmd}{Boxplot}{boxplot}
+\itemket{Usage}Boxplot(name, data, vertical position, height of box,options);
+\itemket{Description}draw boxplots
+\itemket{Examples}\mbox{}
+
+draw a boxplot of 100 uniform random numbers less than 5.
+
+\verb|    dt1=apply(1..100,5*random());|\\
+\verb|    Boxplot("1",dt1,1,1/2);|
+
+\begin{center} \input{Fig/boxplot01}  \end{center}
+
+read an external data file in csv format and draw a boxplot of the data.
+
+\verb|    Boxplot("2","datafile.csv",3,1/2);|
+
+You can read a csv file with more than one column using \verb|Readcsv|.
+The csv flie should be stored in current working folder (defalut is fig folder).
+Using \verb|Framedata| and \verb|Rulerscale| together, you can mark with a scale.
+Before you use \verb|Framedata|, you need to take two diagonal points of the drawing area on the Euclidean view.
+
+\verb|    data=Readcsv("datafile.csv");|\\
+\verb|    dt1=apply(data,#_1);|\\
+\verb|    dt2=apply(data,#_2);|\\
+\verb|    Boxplot("1",dt1/20,1,1/2);|\\
+\verb|    Boxplot("2",dt2/20,3,1/2);|\\
+\verb|    Framedata("1",[A,B],["corner"]);|\\
+\verb|    Rulerscale(A,["r",0,6,1],["f",1,"\mbox{dt1}",3,"\mbox{dt2}"]);|
+
+\begin{center} \input{Fig/boxplot}  \end{center}
+
+\end{cmd}
+
 %-------------Histplot-------------------------------
-\newpage
+%\newpage
+
 \begin{cmd}{Histplot}{histplot}
 
 \itemket{Usage}Histplot(name,data,options)
@@ -3482,9 +3514,6 @@ Example2: solution of quadratic equation
 
 Example3:
 
-\begin{layer}{150}{0}
-\putnotese{70}{0}{ \input{Fig/maxfun01}}
-\end{layer}
 
 \verb| fx="(exp(x)+exp(-x))/2"; |\\
 \verb| cmdL=[ |\\
@@ -3505,10 +3534,6 @@ Example3:
 %\newpage
 Example4: Parametric
 
-\begin{layer}{150}{0}
-\putnotese{70}{20}{ \input{Fig/maxfun02}}
-\end{layer}
-
 \verb| fn="3*cos(t)^2*[cos(t),sin(t)]";|\\
 \verb| cmdL=[|\\
 \verb|   "f:",[fn], |\\
@@ -3522,6 +3547,21 @@ Example4: Parametric
 \verb| gn=Assign(tn2,["t",A.x]); |\\
 \verb| Paramplot("2",gn,"s=[-3,3]"); |\\
  
+\begin{minipage}{65mm}
+\begin{center}
+\input{Fig/maxfun01}\\
+Example3
+\end{center}
+\end{minipage}
+\begin{minipage}{65mm}
+\begin{center}
+\vspace*{5mm}
+
+\input{Fig/maxfun02}\vspace{10mm}\\
+Example4
+\end{center}
+\end{minipage}
+
 \end{cmd}
 %-------------Mxbatch-------------------------------
 \begin{cmd}{Mxbatch}{mxbatch}
@@ -3905,45 +3945,6 @@ A smooth-looking animation is achieved with the options: \verb|["Div=150"],["Fra
 %============== Slide ==================
 \section{\ketcindy\ Slide}
 
-\subsection{Chart of Making Slides}
-
-\hspace{10mm}\input{Fig/makeslide}
-
-\hspace{10mm}makeslide.cdy
-
-\hspace{10mm}\includegraphics[bb=0.00 0.00 995.05 436.02,width=10cm]{Fig/slide01E.pdf} 
-
-
-\subsection{Contents of Text File}
-
-
-
-
-
-
-
-
-
-
-\begin{layer}{150}{0}
-\putnotese{80}{10}{\includegraphics[bb=0.00 0.00 582.03 386.02,width=7cm]{Fig/sliderepeatE.pdf} }
-\end{layer}
-\begin{verbatim}
-  new::Programming Language //
-  %repeat=6,para// 
-  \slidepage// 
-  itemize// 
-  item::Python// 
-  %thin[2,-]::item::Ruby// 
-  %thin[3,-]::item::Java// 
-  %thin[4,-]::item::JavaScript// 
-  %thin[5,-]::item::CindyScript// 
-  %thin[6,-]::item::C// 
-  end// 
-\end{verbatim}
-
-\subsection{Commands}
-
 %------------Setslidebody--------------------------------
 \begin{cmd}{Setslidebody}{setslidebody}
 \itemket{Usage}Setslidebody(bodycolor,bodystyle,density)
@@ -3997,6 +3998,13 @@ Meanings and defaults of options are\\
 \Ltab{25mm}{size}\Ltab{50mm}{magnification of title}\verb|1.3|.
 \itemket{Remark}If some arguments are null, the defaul is used.\\
 \hspace*{10mm}\verb|Setslidepage([,"red"]);|
+\end{cmd}
+
+%------------Setslidemargin-----------------------------
+\begin{cmd}{Setslidemargin}{setslidemargin}
+\itemket{Usage}Setslidepage([leftmarginchange,topmarginchange]);
+\itemket{Description}This function changes the margin of slides from the default.
+\itemket{Example}Setslidemargin([+5,-10]);
 \end{cmd}
 
 %------------Settitle------------------------------
@@ -5231,15 +5239,19 @@ Options are the followings.\\
 \hyperlink{bbdata}{BBdata} \> return the size of an image file.\\
 \hyperlink{cindyname}{Cindyname} \> return the name of a current file.\\
 \hyperlink{colorcode}{Colorcode} \> change colorcode from colortype1 to colortype2.\\
+\hyperlink{dqq}{Dqq} \> return the string surrounded by double quotes.\\
+\hyperlink{factorial}{Factorial} \> return the factorial.\\
 \hyperlink{figpdf}{Figpdf} \> make a pdf file with the same size of figure.\\
 \hyperlink{help}{Help} \> display usages of the function.\\
 \hyperlink{indexall}{Indexall} \>return all positions of string2 in string1.\\
+\hyperlink{norml}{Norm} \> return the norm of a vector.\\
 \hyperlink{opl}{Op} \> return the n-th element of a list or a string.\\
 \hyperlink{ptselected}{Ptselected} \> tests whether the point is selected.\\
 \hyperlink{slider}{Slider} \> make a slider on a Euclidean view.\\
 \hyperlink{sprintf}{Sprintf} \> converts a real number to a string.\\
 \hyperlink{texcom}{Texcom} \> add the command in the \TeX file.\\
 \hyperlink{textformat}{Textformat} \> converts a real number to a string.\\
+\hyperlink{toupper}{Toupper} \> return the upper case letters of a string.\\
 \hyperlink{windispg}{Windispg} \> display all graphs on Euclidean view.\\
 
 {\bf R} \> \\
@@ -5247,6 +5259,7 @@ Options are the followings.\\
 \hyperlink{calcbyr}{CalcbyR} \> executes R commands and returns the execution result to Cinderella.\\
 \hyperlink{histplot}{Histplot} \> create histograms.\\
 \hyperlink{plotdatar}{PlotdataR} \>draw graph of R's statistical probability function.\\
+\hyperlink{rfun}{Rfun} \>execute a R command.\\
 
 {\bf Maxima} \> \\
 \hyperlink{calcbym}{CalcbyM} \> execute Maxima's script. \\
@@ -5275,6 +5288,7 @@ Options are the followings.\\
 \hyperlink{setslidehyper}{Setslidehyper} \> use \verb|hyperref.sty|.\\
 \hyperlink{setslidemain}{Setslidemain} \> set up the main slide.\\
 \hyperlink{setslidepage}{Setslidepage} \> set up each page of slides.\\
+\hyperlink{setslidemargin}{Setslidemargin} \> change the margin of slides.\\
 \hyperlink{settitle}{Settitle} \> make a title slide.\\
 
 {\bf \ketcindy 3D} \> \\

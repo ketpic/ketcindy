@@ -333,7 +333,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \Chuu 線の太さ(thickness)のデフォルトは8とする.\\
 \Chuu 文字列は，幅$\leqq$ 200mm, 高さ$\leqq$ 100mm とすること.\\
 
-\itemketj{説明}色 "shade'' を定義しておく．
+\itemketj{例}色 "shade'' を定義しておく．
 
 %\verb|\definecolor{shade}{cmyk}{0,0,0,0.4}| $\gets$ 色``shade'' を定義.\par
 \verb|\popframe[16]{40}{5}{white}{shade}{white}{cyan}{red}{\Large\tt POP frame}| \par
@@ -412,7 +412,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 %%
 %\end{cmd}
 %-------------arrowlineseg-------------------------------
-\begin{cmd}{\bs arrowlineseg, \bs arrowhead}{arrowlineseg}
+\begin{cmd}{\bs arrowlineseg, \bs arrowhead}{arrowhead}
 \itemketj{使用法}\verb|\arrowlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|\\
 \tab{\bs arrowhead[size]\br{x}\br{y}\br{$\theta$}}
 \itemketj{説明}{\tt \bs arrowlineseg}は，点 (x, y) から長さ L の矢印を $\theta^\circ$ 方向に描く(単位はmm).\\
@@ -455,7 +455,7 @@ b を付加すると，線の出方が逆になる.
 %\end{cmd}
 
 %-------------hjaggyline-------------------------------
-\begin{cmd}{\bs vjaggyline, \bs vjaggylineb}{hjaggyline}
+\begin{cmd}{\bs vjaggyline, \bs vjaggylineb}{vjaggyline}
 \itemketj{使用法}\verb|\vjaggyline[thickness]{x}{y}{W}|\\
 \tab{\bs vjaggylineb[thickness]\br{x}\br{y}\br{W}}
 \itemketj{説明}{\tt \bs vjaggyline}は，(x, y) から下に幅Wのギザ線を描く. 
@@ -482,11 +482,11 @@ b を付加すると，線の出方が逆になる.
 \end{cmd}
 
 %-------------ballonr-------------------------------
-\begin{cmd}{\bs ballonr, \bs ballonl}{ballonr}
+\begin{cmd}{\bs ballonr, \bs ballonl}{ballon}
 \itemketj{使用法}\verb|\ballonr[thickness]{x}{y}{size}{Char}|\\
 \tab{\bs ballonl[thickness]\br{x}\br{y}\br{size}\br{Char}}
 \itemketj{説明}{\tt \bs ballonr}は (x, y) から右上に吹き出しと Char を描く.\\
-\tab{{\tt \bs ballonl}は (x, y) から左上に吹き出しと Char を描く.}
+\tab[0mm]{}{{\tt \bs ballonl}は (x, y) から左上に吹き出しと Char を描く.}
 \end{cmd}
 
 %-------------lefthand-------------------------------
@@ -537,8 +537,8 @@ b を付加すると，線の出方が逆になる.
 
 {\bf ketlayerのマクロ} \> \\
 \hyperlink{arrowhead}{\bs arrowhead} \> 角度を指定して鏃だけ描く\\
-\hyperlink{arrowlineseg}{\bs arrowlineseg} \> 角度を指定した矢印\\
-\hyperlink{ballonl}{\bs ballonl, \bs ballonr} \> 吹き出しと文字列\\
+\hyperlink{arrowhead}{\bs arrowlineseg} \> 角度を指定した矢印\\
+\hyperlink{ballon}{\bs ballonl, \bs ballonr} \> 吹き出しと文字列\\
 \hyperlink{boxframe}{\bs boxframe+dir} \> 文字入りの矩形\\
 \hyperlink{circleline}{\bs circleline} \> レイヤー環境での円\\
 \hyperlink{cirscoremark}{\bs cirscoremark} \> 手書きの2重丸\\

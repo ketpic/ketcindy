@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2018.09.13
+KETCindyの通常インストール（Mac）　　　修正日：2018.09.14
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -99,6 +99,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.09.13
 　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
 　　　　　　　ketcindy.iniとketcindyfolder/ketjavaの中身をコピーする．
 　　　　　（Cinderellaを終了）
+　　　　・copywork.shを実行する．
 
 ４）KeTCindyのテストラン
 

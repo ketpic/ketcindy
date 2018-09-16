@@ -1,17 +1,17 @@
-Install of KeTCindy(Win)       Modified : Sep. 14th  2018
+Install of KeTCindy(Win)       Modified : Sep. 16th  2018
 
-  Rem) If you have already installed softwares, 
-                * Execute only the following 3).
+  Rem) If you have installed softwares, 
+                * Execute only the following 4).
                 * Rename the existing working folder if necessary before executing.
                 * For cdy files before 2017, 
-                    replace contents of CindyScript/ketlib with those of Scriptketlib.txt.
+                      replace contents of  CindyScript/ketlib with that of scriptinitialization.txt
 
 0) Preparations
       (1) Password of Administrator will be required in 1) 2) and 3)(1)(2).
       (2) Download/Copy the followings on Desktop and extract them.
                   Winstart.exe
                   ketcindyfolder.exe
-                  kettexnormal.exe (when you use kettex)
+                  kettex.exe (when you use kettex)
 
 1) Install of TeX
 
@@ -21,7 +21,7 @@ Install of KeTCindy(Win)       Modified : Sep. 14th  2018
                   i) texmf-dist/scripts/ketcindy   ketlib, setketcindy, ketoutset, etc.
                   ii) texmf-dist/tex/latex/ketcindy   Style files for ketcindy
                   iii) texmf-dist/doc/support/ketcindy  Manuals and source files
-              * Extract kettexnormal.exe and right-click. Select "Run as administrator".
+              * Extract kettex.exe and right-click. drag and drop kettex to C:\.
                     Rem) It will take a little while.
       (2) Using other TeXLive
                  Execute the following 3)(1).
@@ -43,11 +43,11 @@ Install of KeTCindy(Win)       Modified : Sep. 14th  2018
                *  KetcindyPluign.jar and ketcindy.ini will be copied into Cinderella/Plugins.
 
 	  (2) Double-click copywork.bat.
-               * Folder "ketcindy" will be generated in User's home.
-                  And contents of work will be copied into ketcindy(work).
-                  This folder can be moved to any place.
-               * ketcindychange.txt will be generated in User's home.
-                  This file can be revised. for example, when R or Maxima has been updated.
+               * Name of work directory : choose 1 in the case of ketcindy.
+               * Path of work directory
+                      if User name contains "space", choose C:\ (c).
+               * Contents of work are copied into ketcindy(work).
+                  And ketcindyhead.txt is generated in User's home.
 
 	  (3) Installing manually
                * Generate ketcindy folder somewhere.
@@ -69,7 +69,6 @@ Install of KeTCindy(Win)       Modified : Sep. 14th  2018
                      import("ketoutset.txt");
                * Boot up Cinderella and select editscripting/plugin.
                     Copy ketcindy.ini and the contents of ketcindyfolder\ketjava.
-               * Execute copywork.bat.
 
 5) Test run of KeTCindy
       (1) Double-click "template1basic.cdy" in "ketcindy\ketfiles".

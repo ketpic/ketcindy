@@ -1,4 +1,4 @@
-KETCindyのインストール（Windows）　　　修正日：2018.09.14
+KETCindyのインストール（Windows）　　　修正日：2018.09.16
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -14,7 +14,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.14
 　（２）以下の圧縮ファイルをデスクトップにコピーして解凍しておく．
 　　　　　　Winstart.exe
 　　　　　　ketcindyfolder.exe
-　　　　　　kettexnormal.exe（kettexを用いる場合）
+　　　　　　kettex.exe（kettexを用いる場合）
 　　　注１）デスクトップに３つのフォルダがあることを確認する．
 　　　注２）解凍時「WindowsによってPCが保護」が現れたら「詳細情報」を選択
 
@@ -27,9 +27,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.14
 　　　　　i) texmf-dist/scripts/ketcindy　ketlib, setketcindy, ketoutsetなど
 　　　　　ii) texmf-dist/tex/latex/ketcindy　ketcindy関連のstyleファイル
 　　　　　iii) texmf-dist/doc/support/ketcindy　各種マニュアルとソースファイル
-　　　・kettexnormal.exeをデスクトップで解凍し，copykettex.batを右クリック
-　　　　　「管理者として実行」を選ぶ．
-　　　　　注）copykettexが動かない場合，kettexフォルダを直接Cの直下に入れる．
+　　　・kettex.exeをデスクトップで解凍し，kettexをCの直下に入れる．
 　　　　　注）多少の時間がかかる．
 
 　（２）既にインストールしている他のTeXLiveを用いる場合
@@ -55,12 +53,13 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.14
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
 
 　（２）copywork.batをクリックする．
-　　　　・作業ディレクトリketcindyがユーザホームにできて，ファイルがコピーされる．
-　　　　　　注）このフォルダは他の場所に移してもよい．
-　　　　　　　　アカウント名に全角や半角スペースが入っていて動かない場合は，C:\に移す．
+　　　　・作業ディレクトリ名　ketcindyの場合は単に u でもよい．
+　　　　・作業ディレクトリのパス　ユーザホーム，C:\，デスクトップから選択
+　　　　　　注）ユーザ名に全角または半角スペースがある場合は C:\ を選ぶ．
 　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
 　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
-　　　　・ユーザホームにketcindychange.txtができる（TeXの変更などが可能）
+　　　　・workの内容が指定した作業ディレクトリにコピーされる．
+　　　　・また、ユーザホームにketcindyhead.txtが作られる．
 
 　（３）手動でインストールする場合
 　　　　・適当な場所にketcindyを作成する．
@@ -81,8 +80,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.14
 　　　　　　　import("ketoutset.txt");
 　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
 　　　　　　　ketcindy.iniとketcindyfolder\ketjavaの中身をコピーする．
-　　　　　（Cinderellaを終了)
-　　　　・copywork.batを実行する．
+　　　　　（Cinderellaを終了）
 
 ４）KeTCindyのテストラン
 

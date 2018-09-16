@@ -947,27 +947,23 @@ See \verb|KeTCindyreferenceE.pdf| or \verb|samples/s09surfaceC| for more informa
 \ketcindy\ has functions to make slides for presentation with the help of \verb|layer| environment which is defined in \verb|ketlayer.sty|.
 See \verb|KeTpicStyleE.pdf| for details about \verb|layer|.
 
-You need both a cindy file and a text file with the same header, for example, ``makeslide.cdy'' and ``makeslide.txt''. The following chart shows the relation between them.
+You need both a cindy file and a text file with the same header.  For simple preparation, copy \verb|template2slide.cdy| to your work folder, rename the name, for example \verb|makeslide.cdy|, double click the file and press the button \verb|title| in the screen, then \verb|makeslide.txt| will be generated.
+
+The following chart shows the relation between them.
 
 \begin{center}
 \input{Fig/makeslideE}
 \end{center}
 
-Write commands of \ketcindy\ slide and \TeX\ in the text file as follows.
+If necessary, edit \verb|Settitle| in CindyScript editor, and press the gear mark. Open the text file, and write commands of \ketcindy\ Slide and \TeX\ as follows.
 
 \begin{verbatim}
   title::slide0//
-  main::Introduction to Programming//
+  main::Introduction//
   \slidepage[m]//
-
-  new::Programming Language //
+  new::Programming Language//
   %repeat=6,para// 
   \slidepage// 
-
-  layer::{120}{0}//
-  putnote::s{65}{5}::figure1//
-  end//
-
   itemize// 
   item::Python// 
   %thin[2,-]::item::Ruby// 
@@ -982,16 +978,19 @@ Write commands of \ketcindy\ slide and \TeX\ in the text file as follows.
 \item[Remark]``//'' should be added to the end of all lines. Use ``||||'' when you want to write \verb|//|.
 \end{description}
 
-Then go to \verb|makeslide.cdy|.
-First, edit the title using \verb|Settitle| and press button \verb|"Title"| on the screen, then the title page will be displayed. Revise \verb|Settitle| if necessary.
+%\begin{center}
+%\includegraphics[bb=0.00 0.00 743.00 632.00,height=60mm]{fig/slidescreen.pdf}\hspace{5mm}
+%\includegraphics[bb=0.00 0.00 802.00 633.00,height=60mm]{fig/slidescript.pdf}
+%\end{center}
+
+Press the button \verb|Slide| in Cindy Screen, then \ketcindy\ will make \TeX\ file \verb|makeslide.tex|,
+typeset it and displays the pdf file as follows. If there occurs an error, check the text file or the \TeX\ file.
 
 \begin{center}
-\includegraphics[bb=0.00 0.00 743.00 632.00,height=60mm]{fig/slidescreen.pdf}\hspace{5mm}
-\includegraphics[bb=0.00 0.00 802.00 633.00,height=60mm]{fig/slidescript.pdf}
+\fbox{\includegraphics[bb=0.00 0.00 542.00 385.00,height=35mm]{Fig/slidepdf1.pdf}}\hspace{5mm}%
+\fbox{\includegraphics[bb=0.00 0.00 541.00 380.00,height=35mm]{Fig/slidepdf2.pdf}}\hspace{5mm}%
+\fbox{\includegraphics[bb=0.00 0.00 543.00 382.00,height=35mm]{Fig/slidepdf3.pdf}}\hspace{5mm}%
 \end{center}
-
-Next press button \verb|"Slide"|, then \ketcindy\ will make \TeX\ file \verb|makeslide.tex|,
-typeset it and disply the pdf file. If there occurs an error, check the text file or the \TeX\ file.
 
 \subsection{Commands of \ketcindy\ slide}
 
@@ -1021,7 +1020,7 @@ You can use the following commands.\\
 \noindent
 You can also use the following \TeX\ mcores added by \ketcindy.\\
 \verb|    \slidepage,\slidepage[m]//|\\
-\verb|           To display the number each page.|\\
+\verb|          To display the number each page.|\\
 \verb|            \slidepage[m] is used for the \verb|main| page.|\\
 \verb|    \setthin{thickness}|\\
 \verb|          To change the thickness of thin letters temporarily.|\\
@@ -1033,17 +1032,18 @@ You can also use the following \TeX\ mcores added by \ketcindy.\\
 \item[Remark]Any other \TeX\ macroes are available. Put \verb|%%| instead of \verb|%| to comment out .
 \end{description}
 
+
 \subsection{Display of Page step by step}
 
 \begin{enumerate}[1)]
 \item Put just after new,\\
 \verb|    %repeat=number of steps//|
 \item Put at the head of each line as\\
-\verb|    %[2,-]::sentence|\\
-\verb|          display at all steps from 2|\\
-\verb|    %[-,2]::sentence|\\
+\verb|    %[2,-]::sentences|\\
+\verb|           display at all steps from 2|\\
+\verb|    %[-,2]::sentences|\\
 \verb|           display at all steps until 2|\\
-\verb|    %[1..3,5]::sentence|\\
+\verb|    %[1..3,5]::sentences|\\
 \verb|           display at steps of 1,2,3 and 5|
 \item  Use \verb|%thin| to display with thin letters.\\
 \verb|    %thin::[2,-]::sentence|
@@ -1073,6 +1073,24 @@ You can also use the following \TeX\ mcores added by \ketcindy.\\
 \item Press buttons \verb|ParaF| and \verb|Anime|, then \verb|subfolder| will be generated.
 \item Use \verb|\input|, not layer, to display.
 \end{enumerate}
+
+\subsection{Commands to Insert a mp3/mp4 file}
+
+To insert a mp3 or mp4 file, change the first line to\\
+\verb|    title::slide0|\\
+\verb|    ::\usepackage{ketmedia}|\\
+\verb|    ::\usepackage[dvipdfmx]{media9}//|\vspace{2mm}
+
+\noindent
+Use \verb|\inputsound| or \verb|\inputsoundclick| for mp3 files.\\
+\verb|    \inputsountclik[90]{folder/}{mp3file} %starts when the button clicked|\\
+The arguments are horizontal position(default is 90) of buttons, the folder, the file name.
+\vspace{2mm}
+
+\noindent
+Use \verb|\inputmovie| for mp4 files.\\
+\verb|    \inputsountclik[90]{1}{0.4}{folder/}{mp4file} %starts when the button clicked|
+The 2nd and 3rd arguments are width and height as the coefficiients of \verb|\linewidth|
 
 \subsection{Changing Style}
 

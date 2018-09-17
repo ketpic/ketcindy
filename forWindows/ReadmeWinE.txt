@@ -43,9 +43,6 @@ Install of KeTCindy(Win)       Modified : Sep. 16th  2018
                *  KetcindyPluign.jar and ketcindy.ini will be copied into Cinderella/Plugins.
 
 	  (2) Double-click copywork.bat.
-               * Name of work directory : choose 1 in the case of ketcindy.
-               * Path of work directory
-                      if User name contains "space", choose C:\ (c).
                * Contents of work are copied into ketcindy(work).
                   And ketcindyhead.txt is generated in User's home.
 

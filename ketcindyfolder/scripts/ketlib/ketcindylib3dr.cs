@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180905) loaded");
+println("ketcindylib3d(20180916) loaded");
 
 //help:start();
 
@@ -207,8 +207,9 @@ Start3d(ptexception):=(
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
-  ThinDense=0.1; //17.07.01until
+  ThinDense=0.1; //17.07.01to
    Ptseg3data(ptexception);  //16.08.23
+   PTEXCEPTION=ptexception; //180916
 );
 
 Setangle(angL):=Setangle(ang_1,ang_2);//180614
@@ -231,7 +232,7 @@ Setangle(theta,phi):=( //16.12.24
   GLIST=append(GLIST,tmp);
   if(length(VLIST)==0, // 16.06.20
     tmp=remove(allpoints(),[NE,SW,TH,FI]);
-    tmp4=remove(tmp,ptexception);
+    tmp4=remove(tmp,PTEXCEPTION); //180916
     forall(tmp4,pt,
       tmp1=text(pt);
       tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
@@ -246,7 +247,7 @@ Setangle(theta,phi):=( //16.12.24
   ,
     if(isselected(NE) % isselected(SW), 
       tmp=remove(allpoints(),[NE,SW,TH,FI]);
-      tmp4=remove(tmp,ptexception);
+      tmp4=remove(tmp,PTEXCEPTION); //180916
       forall(tmp4,pt,
         tmp1=text(pt);
         tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
@@ -259,7 +260,7 @@ Setangle(theta,phi):=( //16.12.24
       );
     ,
       tmp=remove(allpoints(),[NE,SW,TH,FI]);
-      tmp4=remove(tmp,ptexception);
+      tmp4=remove(tmp,PTEXCEPTION); //180916
       forall(tmp4,pt,
         tmp1=text(pt);
         tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
@@ -281,7 +282,7 @@ Setangle(theta,phi):=( //16.12.24
     tmp=tmp1+"="+textformat(tmp2,5);
     parse(tmp);
   );
-  Ptseg3data(ptexception); 
+  Ptseg3data(PTEXCEPTION); //180916
 );
 
 Getangle():=getangle(["Disp=y"]); //180613from

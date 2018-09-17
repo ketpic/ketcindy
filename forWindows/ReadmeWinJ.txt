@@ -53,9 +53,6 @@ KETCindyのインストール（Windows）　　　修正日：2018.09.16
 　　　　・CinderellaのPluginsにKetcindyPlugin.jarとketcindy.iniがコピーされる．
 
 　（２）copywork.batをクリックする．
-　　　　・作業ディレクトリ名　ketcindyの場合は単に u でもよい．
-　　　　・作業ディレクトリのパス　ユーザホーム，C:\，デスクトップから選択
-　　　　　　注）ユーザ名に全角または半角スペースがある場合は C:\ を選ぶ．
 　　　　・Rのバージョン　3.4.2の場合は単に d でよい．
 　　　　・Maximaのバージョン　5.37.3の場合は単に d でよい．
 　　　　・workの内容が指定した作業ディレクトリにコピーされる．

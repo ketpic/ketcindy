@@ -1,3 +1,5 @@
+// 20180917
+//   Makebat debugged  ( case where work folder is under C )
 // 20180908
 //   Presentation debugged  (slidepage blank line added )
 //   Presentation changed  (SlideMargin added)

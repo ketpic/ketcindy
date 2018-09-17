@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180913)");
+println("KeTCindy V.3.2.1(20180917)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20180913) loaded");
 
@@ -2487,6 +2487,7 @@ FindareaP(pdstr):=( //180722
 );
 ////%FindareaP end////
 
+////%FindareaO start////
 FindareaO(pdstr):=(  // 15.11.27,180722
   regional(pd,p0,p1,p2,p3,s,tmp);
   if(isstring(pdstr),pd=parse(pdstr),pd=pdstr);
@@ -2502,7 +2503,9 @@ FindareaO(pdstr):=(  // 15.11.27,180722
   if(s<0,s=-s);
   s;
 );
+////%FindareaO end////
 
+////%Findarea start////
 Findarea(pdstr):=Findarea(pdstr,[]);//180722from
 Findarea(pdstr,options):=(
 //help:Findarea("cr1");
@@ -2526,7 +2529,9 @@ Findarea(pdstr,options):=(
   );
   out;
 );//180722to
+////%Findarea end////
 
+////%Findlength start////
 Findlength(pdstr):=(
 //help:Findlength("gr1");
   regional(pd,p1,p2,s,tmp);
@@ -2540,7 +2545,9 @@ Findlength(pdstr):=(
   );
   s;
 );
+////%Findlength end////
 
+////%Inversefun start////
 Inversefun(fnstr,rngstr,value):=(
   regional(tmp,varstr,range,x1,x2,x3,va1,va2);
   tmp=indexof(rngstr,"=");
@@ -2565,20 +2572,26 @@ Inversefun(fnstr,rngstr,value):=(
   );
   if(abs(va1)<=abs(va2),x1,x2);
 );
+////%Inversefun end////
 
+////%Com0th start////
 Com0th(String):=(
     regional(str);
     str=replace(String,LFmark,"");
     COM0thlist=append(COM0thlist,str);
 );
+////%Com0th end////
 
+////%Com1st start////
 Com1st(String):=(
     regional(str);
     str=replace(String,LFmark,"");
     GLIST=append(GLIST,str);  // 15.05.27
 //    COM1stlist=append(COM1stlist,str);
 );
+////%Com1st end////
 
+////%Com2nd start////
 Com2nd(String):=Com2nd(String,["a"]);//180612
 Com2nd(String,option):=(
 // help:Com2nd(str,["before"]);
@@ -2591,13 +2604,17 @@ Com2nd(String,option):=(
     COM2ndlist=append(COM2ndlist,str);
   );//180612to
 );
+////%Com2nd end////
 
+////%Com2ndpre start////
 Com2ndpre(String):=(
     regional(str);
     str=replace(String,LFmark,"");
     COM2ndlist=prepend(str,COM2ndlist);
 );
+////%Com2ndpre end////
 
+////%Texcom start////
 Texcom(strorg):=(  //17.09.22
 //help:Texcom("\color[cmyk]{0,0,0,0.5}");
   regional(str);
@@ -2606,6 +2623,7 @@ Texcom(strorg):=(  //17.09.22
   str="Texcom("+Dq+str+Dq+")";
   Com2nd(str);
 );
+////%Texcom end////
 
 Ketcindylogo():=(
 //help:Ketcindylogo();
@@ -2658,6 +2676,7 @@ Drawlinetype(name,type):=(
   );
 );
 
+////%Setunitlen start////
 Setunitlen():=(
   println(ULEN);
 ); 
@@ -2711,29 +2730,39 @@ Setunitlen(UI):=(
   MARKLEN=MARKLENNow*1000/2.54/MilliIn;
   MEMORI=MEMORINow*1000/2.54/MilliIn;
 );
+////%Setunitlen end////
 
+////%Setmarklen start////
 Setmarklen(ratio):=(
 //help:Setmarklen(0.2);
   MARKLEN=ratio*0.2;//16.11.01
   Com2nd("Setmarklen("+textformat(ratio,5)+")");
 );
+////%Setmarklen end////
 
+////%Setorigin start////
 Setorigin(point):=(
 //help:Setorigin([1,2]);
   Com2nd("Setorigin("+textformat(point,5)+")");
 );
+////%Setorigin end////
 
+////%Fontsize start////
 Fontsize(sizestr):=(
 //help:Fontsize("s");
   Com2nd("Fontsize('"+sizestr+"')");
 );
+////%Fontsize end////
 
+////%Setpen start////
 Setpen(width):=(
 //help:Setpen(2);
   PenThick=PenThickInit*width; // 16.04.09
   Com2nd("Setpen("+text(width)+")");
 );
+////%Setpen end////
 
+////%Lcrd start////
 Lcrd(pt):=(
   regional(tmp);
   if(ispoint(pt),
@@ -2743,7 +2772,9 @@ Lcrd(pt):=(
   );
   tmp;
 );
+////%Lcrd end////
 
+////%Pcrd start////
 Pcrd(pt):=(
   regional(tmp);
   if(ispoint(pt),
@@ -2753,7 +2784,9 @@ Pcrd(pt):=(
   );
  tmp;
 );
+////%Pcrd end////
 
+////%LLcrd start////
 LLcrd(pt):=(
   regional(tmp);
   if(ispoint(pt),
@@ -2764,7 +2797,9 @@ LLcrd(pt):=(
   tmp=[tmp_1/SCALEX,tmp_2/SCALEY];
   tmp;
 );
+////%LLcrd end////
 
+////%Doscaling start////
 Doscaling(pltdata):=(
   regional(Level,Out,gL,gr,tmp);
   if(ispoint(pltdata) % isreal(pltdata_1),
@@ -2793,7 +2828,9 @@ Doscaling(pltdata):=(
   );
   Out;
 );
+////%Doscaling end////
 
+////%Unscaling start////
 Unscaling(pltdata):=(
   regional(Level,Out,gL,gr,tmp);
    if(ispoint(pltdata) % isreal(pltdata_1),
@@ -2822,7 +2859,9 @@ Unscaling(pltdata):=(
   );
   Out;
 );
+////%Unscaling end////
 
+////%Setpt start////
 Setpt(n):=Ptsize(n);
 //help:Setpt(5);
 Ptsize(n):=(
@@ -2830,7 +2869,9 @@ Ptsize(n):=(
   TenSize=TenSizeInit*n;
   Com2nd("Setpt("+text(n)+")"); // 14.01.19
 );
+////%Setpt end////
 
+////%Definecolor start////
 Definecolor(name,data):=(
 //help:Definecolor("mycolor",[1,1,1,0]);
   regional(type,tmp);
@@ -2840,7 +2881,9 @@ Definecolor(name,data):=(
   tmp="\definecolor{"+name+"}{"+type+"}{"+tmp+"}";
   Texcom(tmp);
 );
+////%Definecolor end////
 
+////%Setcolor start////
 Setcolor(parorg):=(  //180603renew
 //help:Setcolor([1,0,0,1]);
 //help:Setcolor([1,1,0]);
@@ -2869,7 +2912,9 @@ Setcolor(parorg):=(  //180603renew
   );
   Com2nd(cstr);
 );
+////%Setcolor end////
 
+////%ColorRgb2Cmyk start////
 ColorRgb2Cmyk(clr):=(
 // help:ColorRgb([0.2,0.5,0.1]);
   regional(clrnew,tmp,black);
@@ -2879,7 +2924,9 @@ ColorRgb2Cmyk(clr):=(
   clrnew=append(tmp,black);
   clrnew;
 );
+////%ColorRgb2Cmyk end////
 
+////%ColorCmyk2Rgb start////
 ColorCmyk2Rgb(clr):=(
 // help:ColorRgb([0.2,0.5,0.1,0.2]);
   regional(clrnew,tmp,black);
@@ -2888,7 +2935,9 @@ ColorCmyk2Rgb(clr):=(
   clrnew=tmp_(1..3);
   clrnew;
 );
+////%ColorCmyk2Rgb end////
 
+////%Colorrgbhsv start////
 Colorrgbhsv(rgb):=(
   regional(varR,varG,varB,varMin,varMax,delMax,hh,ss,vv,delR,delG,delB);
   varR = rgb_1;
@@ -2922,7 +2971,9 @@ Colorrgbhsv(rgb):=(
   );
   [hh*360,ss,vv]; 
 );
- 
+////%Colorrgbhsv end////
+
+////%Colorhsvrgb start////
 Colorhsvrgb(sL):=(
   regional(tmp,tmp1,tmp2,tmp3,hi,ff,dL);
   tmp=[sL_1/60,sL_2,sL_3];
@@ -2938,7 +2989,9 @@ Colorhsvrgb(sL):=(
   if(hi==5,dL=tmp2_[4,1,2]);
   dL;
 );
+////%Colorhsvrgb end////
 
+////%Colorrgbhsl start////
 Colorrgbhsl(rgb):=(
   regional(rr,gg,bb,mn,mx,delta,deltaR,deltaG,deltaB,hh,ss,ll);
   rr = rgb_1 ;
@@ -2976,7 +3029,9 @@ Colorrgbhsl(rgb):=(
   );
   [hh*360,ss,ll];
 );
+////%Colorrgbhsl end////
 
+////%Colorhslrgb start////
 Colorhslrgb(hsl):=(
   regional(hh,ss,ll,rr,gg,bb,var1,var2);
   hh=hsl_1/360;
@@ -2999,7 +3054,9 @@ Colorhslrgb(hsl):=(
   );
   [rr,gg,bb];
 );
+////%Colorhslrgb end////
 
+////%hue2rgb start////
 hue2rgb(vv1,vv2,vh):=(
   regional(out);
   if ( vh < 0.0 ,vh =vh+1);
@@ -3019,7 +3076,9 @@ hue2rgb(vv1,vv2,vh):=(
   );
   out;
 );
+////%hue2rgb end////
 
+////%Colorrgbhwb start////
 Colorrgbhwb(sL):=(
   regional(dl1,dl2,dl3);
   dl1 = Colorrgbhsl(sL)_1;//Colorcode("rgb","hsl",sL)_1;
@@ -3027,7 +3086,9 @@ Colorrgbhwb(sL):=(
   dl3 = 1 -  max(sL);
   dL= [dl1, dl2 , dl3 ];
 );
+////%Colorrgbhwb end////
 
+////%Colorhwbrgb start////
 Colorhwbrgb(sLorg):=(
   regional(sL,tmp,tmp1,tmp2,tmp3,ratio,ff,ii,vv,nn,dL,flg);
   sL=sLorg;
@@ -3054,7 +3115,9 @@ Colorhwbrgb(sLorg):=(
   );
  dL;
 );
+////%Colorhwbrgb end////
 
+////%Colorhslhsv start////
 Colorhslhsv(sL):=(
   regional(dl1,dl2,dl3,dL);
   dl1=sL_1;
@@ -3071,7 +3134,9 @@ Colorhslhsv(sL):=(
   );
   dL;
 );
+////%Colorhslhsv end////
 
+////%Colorcode start////
 Colorcode(src,dest,sL):=(
 //help:Colorcode("rgb","cmyk",[1,0.5,0]);
   regional(tmp,tmp1,tmp2,tmp3,mn,mx,delta,black,dL,flg);
@@ -3158,7 +3223,9 @@ Colorcode(src,dest,sL):=(
 
   dL;
 );
+////%Colorcode end////
 
+////%Colorinfile start////
 Colorinfile(filename,clrf,clrt):=(
   regional(tmp,tmp1,tmp2,head,cstrL,chstrL,head,body);
   if(length(clrf_1)==3,
@@ -3203,7 +3270,9 @@ Colorinfile(filename,clrf,clrt):=(
   );
   closefile(SCEOUT);
 );
+////%Colorinfile end////
 
+////%GetLinestyle start////
 GetLinestyle(str,name):=(
   regional(noflg,tmp,tmp1,tmp2,Dop,Ltype,subflg);
   Ltype=-1;
@@ -3256,7 +3325,9 @@ GetLinestyle(str,name):=(
   );
   Ltype;
 );
+////%GetLinestyle end////
 
+////%Chunderscore start////
 Chunderscore(str):=(
   regional(flg,tmp,tmp1,tmp2,tmp3);
   if(indexof(str,"]")>0,
@@ -3293,7 +3364,9 @@ Chunderscore(str):=(
   );
   tmp1;
 );
+////%Chunderscore end////
 
+////%AddGraph start////
 AddGraph(nm,pltdata):=AddGraph(nm,pltdata,[]);
 AddGraph(nm,pltdata,options):=(
 //help:AddGraph("1","imp1"); // 16.04.04
@@ -3395,7 +3468,9 @@ AddGraph(nm,pltdata,options):=(
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
 );
+////%AddGraph end////
 
+////%Joincrvs start////
 Joincrvs(nm,plotstrL):=Joincrvs(nm,plotstrL,[]);
 Joincrvs(nm,plotstrL,options):=(
 //help:Joincrvs("1",["sgAB","sgDCB"]);
@@ -3493,7 +3568,9 @@ Joincrvs(nm,plotstrL,options):=(
   );
   PtL;
 );
+////%Joincrvs end////
 
+////%Partcrv start////
 Partcrv(nm,pA,pB,PkLstr):=Partcrv(nm,pA,pB,PkLstr,[]);
 Partcrv(nm,pA,pB,PkLstr,options):=(
 //help:Partcrv("1",A,B,"sgABC");
@@ -3584,7 +3661,9 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   );
   Ans;
 );
+////%Partcrv end////
 
+////%Opcrvs start////
 Opcrvs(num,Fig):=Opcrvs(num,Fig,["nodisp"]);
 Opcrvs(num,Fig,options):=(
   //help:Subgraph(2,"grfs");
@@ -3594,8 +3673,9 @@ Opcrvs(num,Fig,options):=(
   tmp1=parse(tmp);
   Listplot(name,tmp1,options);
 );
+////%Opcrvs end////
 
-
+////%Pointdata start////
 Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
@@ -3684,7 +3764,9 @@ Pointdata(nm,listorg,options):=(
   );
   ptlist;
 );
+////%Pointdata end////
 
+////%Listplot start////
 Listplot(nm,list,options):=(
 //help:Listplot([A,B]);
 // help:Listplot(["A","B"]);
@@ -3771,7 +3853,9 @@ Listplot(Arg1,Arg2):=(
   );
 );
 Listplot(list):=Listplot(list,[]);
+////%Listplot end////
 
+////%Lineplot start////
 Lineplot(nm,list,options):=(
 //help:Lineplot([A,B]);
 //help:Lineplot("1",[[2,1],[3,3]]);
@@ -3841,7 +3925,9 @@ Lineplot(Arg1,Arg2):=(
   );
 );
 Lineplot(list):=Lineplot(list,[]);
+////%Lineplot end////
 
+////%Plotdata start////
 Plotdata(name1,func,variable):=Plotdata(name1,func,variable,[]);
 Plotdata(name1,func,variable,options):=(
 //help:Plotdata("1","sin(x)","x",["Num=100"]);
@@ -4038,7 +4124,9 @@ Plotdata(name1,func,variable,options):=(
     );
   );
 );
+////%Plotdata end////
 
+////%Paramplot start////
 Paramplot(name1,funstr,variable):=Paramplot(name1,funstr,variable,[]);
 Paramplot(name1,funstr,variable,options):=(
 //help:Paramplot("1","[2*cos(t),sin(t)]","t=[0,2*pi]");
@@ -4200,7 +4288,9 @@ Paramplot(name1,funstr,variable,options):=(
     );
   );
 );
+////%Paramplot end////
 
+////%Connectseg start////
 Connectseg(Pdata):=(
   regional(Eps,PlotL,vL,ctr,qd,ah,ao,flg,jj,
       pp,qq,tmp,tmp1,tmp2);
@@ -4264,7 +4354,9 @@ Connectseg(Pdata):=(
   );
   PlotL;
 );
+////%Connectseg end////
 
+////%Implicitplot start////
 Implicitplot(name1,func,xrng,yrng):=Implicitplot(name1,func,xrng,yrng,[]);
 Implicitplot(name1,func,xrng,yrng,options):=(
 //help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
@@ -4396,7 +4488,9 @@ Implicitplot(name1,func,xrng,yrng,options):=(
   );
   out;
 );
+////%Implicitplot end////
 
+////%Circledata start////
 Circledata(cenrad):=Circledata(cenrad,[]);
 Circledata(para1,para2):=(
 //help:Circledata([A,B],["Rng=[0,pi/2]"]);
@@ -4507,7 +4601,9 @@ Circledata(nm,cenrad,options):=(
   );
   Out;
 );
+////%Circledata end////
 
+////%Framedata start////
 Framedata():=Framedata(["dr"]);//16.10.29from
 Framedata(list):=(
   regional(pA,pB);
@@ -4634,7 +4730,9 @@ Framedata(nm,cent,dx,dy,options):=(
   );
   Out;
 );
+////%Framedata end////
 
+////%Framedata2 start////
 Framedata2(nm,list):=Framedata2(nm,list,[]);
 Framedata2(nm,list,options):=(
 //help:Framedata2("1",[A,B]);
@@ -4643,7 +4741,9 @@ Framedata2(nm,list,options):=(
   pB=Lcrd(list_2);
   Framedata(nm,[pC,pB],options);
 );
+////%Framedata2 end////
 
+////%Ovaldata start////
 Ovaldata(nm,Pdata):=Ovaldata(nm,Pdata,[]);
 Ovaldata(nm,Pdata,options):=(
 //help:Ovaldata("1",[A,B]);
@@ -4715,7 +4815,9 @@ Ovaldata(nm,Pdata,options):=(
   );
   Graph;
 );
+////%Ovaldata end////
 
+////%Segmark start////
 Segmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
 Segmark(nm,ptlist,options):=Drawsegmark(nm,ptlist,options);//180704
 Drawsegmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
@@ -4777,7 +4879,9 @@ Drawsegmark(nm,ptlist,options):=(
     Listplot(name,[tmp,tmp1,tmp2,tmp],["Color="+text(color)]);//180704
   );
 );
+////%Segmark end////
 
+////%Parabolaplot start////
 Parabolaplot(nm,ptlist):=Parabolaplot(nm,ptlist,"[-5,5]",[]);
 Parabolaplot(nm,ptlist,Arg):=(
   regional(rng,options);
@@ -4819,7 +4923,9 @@ Parabolaplot(nm,ptlist,rng,options):=(
   Plotdata(nm+"para",tmp,tmp2,append(options,"nodisp"));
   Rotatedata(nm+"para","gr"+nm+"para",angle,append(options,pB));
 );
+////%Parabolaplot end////
 
+////%Ellipseplot start////
 Ellipseplot(nm,ptlist):=Ellipseplot(nm,ptlist,"[0,2*pi]",[]);
 Ellipseplot(nm,ptlist,Arg):=(
   regional(rng,options);
@@ -4864,7 +4970,9 @@ Ellipseplot(nm,ptlist,rng,options):=(
   Paramplot(nm+"elp",tmp,"t="+rng,append(options,"nodisp"));
   Rotatedata(nm+"elp","gp"+nm+"elp",angle,append(options,pA));
 );
+////%Ellipseplot end////
 
+////%Hyperbolaplot start////
 Hyperbolaplot(nm,ptlist):=Hyperbolaplot(nm,ptlist,"[-5/2,5/2]",[]);
 Hyperbolaplot(nm,ptlist,Arg):=(
   regional(rng,options);
@@ -4930,7 +5038,9 @@ Hyperbolaplot(nm,ptlist,rng,optionsorg):=(
     Rotatedata(nm+"asy2","ln"+nm+"asy2",angle,append(opasy,pA));//180408
   );
 );
+////%Hyperbolaplot end////
 
+////%Polygonplot start////
 Polygonplot(nm,ptlist,number):=Polygonplot(nm,ptlist,number,[]);
 Polygonplot(nm,ptlist,number,optionorg):=(
 //help:Polygonplot("1",[A,B],12);
@@ -4978,7 +5088,9 @@ println([4573,ptlist]);
   );
   Listplot(nm+"ply",ptL,options);
 );
+////%Polygonplot end////
 
+////%Putintersect start////
 Putintersect(nm,pdata1,pdata2):=(
 //help:Putintersect("Q","gr1","gr2");
   regional(pd1,pd2,tmp);
@@ -5008,7 +5120,9 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
     err("No intersect point");
   );
 );
+////%Putintersect end////
 
+////%Arrowheaddata start////
 Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
 // help:Arrowheaddata(A,B);
@@ -5098,7 +5212,9 @@ Arrowheaddata(point,direction,options):=(
     list;
   );
 );
+////%Arrowheaddata end////
 
+////%Arrowhead start////
 Arrowhead(point,Houkou):=Arrowhead(point,Houkou,[]);
 Arrowhead(point,Houkou,options):=(
 //help:Arrowhead(B,B-A,[1.5,30]);
@@ -5171,7 +5287,9 @@ Arrowhead(point,Houkou,options):=(
     );
   );
 );
+////%Arrowhead end////
 
+////%Arrowdata start////
 Arrowdata(ptlist):=Arrowdata(ptlist,[]);
 Arrowdata(Arg1,Arg2):=(
   regional(tmp,nm,ptlist,flg,pA,pB,options);
@@ -5346,7 +5464,9 @@ Arrowdata(pA,pB,options,str):=(
   parse(tmp);  // 14.11.17
   Com2nd("Arrowline("+Astr+","+Bstr+opstr+")"); // 14.10.04
 );
+////%Arrowdata end////
 
+////%Anglemark start////
 Anglemark(plist):=Anglemark(plist,[]);
 Anglemark(Arg1,Arg2):=(           // 2015.04.28 from
   regional(nm,plist,options,tmp);
@@ -5454,7 +5574,9 @@ Anglemark(nm,plist,options):=(
   );
   Out;
 );
+////%Anglemark end////
 
+////%Paramark start////
 Paramark(plist):=Paramark(plist,[]);
 Paramark(Arg1,Arg2):=( // 17.03.27 from
   regional(nm,plist,options,tmp);
@@ -5542,7 +5664,9 @@ Paramark(nm,plist,options):=(
   );
   Out;
 );
+////%Paramark end////
 
+////%MakeBowdata start////
 MakeBowdata(pA,pB,Hgt):=(
   regional(angle,pB2,pH2,pC2,pC,tmp,Th1,Th2,ra,dMA);
   angle=arctan2(pB-pA)+0;
@@ -5557,7 +5681,9 @@ MakeBowdata(pA,pB,Hgt):=(
   Th2=arctan2(pB2-pC2)+angle;
   [pC,ra,Th1,Th2];
 );
+////%MakeBowdata end////
 
+////%Bowdata start////
 Bowdata(plist):=Bowdata(plist,[]);
 Bowdata(plist,options):=(
   regional(nm,tmp);
@@ -5724,12 +5850,16 @@ Bowdata(nm,plist,options):=(
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
 );
+////%Bowdata end////
 
+////%Bowname start////
 Bowname(str):=Bowname("c",str);
 Bowname(dir,str):=(
   Expr([BOWMIDDLE,dir,str]);
 );
+////%Bowname end////
 
+////%Bownamerot start////
 Bownamerot(bwdata,str):=Bownamerot(bwdata,0,0,str,1);
 Bownamerot(bwdata,str,updown):=Bownamerot(bwdata,0,0,str,updown);
 Bownamerot(bwdata,tmov,nmov,str):=Bownamerot(bwdata,tmov,nmov,str,1);
@@ -5745,7 +5875,9 @@ Bownamerot(bwdata,tmov,nmov,str,updown):=(
   if(updown<0,tmp=-tmp);
   Exprrot(BOWMIDDLE,tmp,tmov,nmov,str);
 );
+////%Bownamerot end////
 
+////%Deqdata start////
 Deqdata(deq,rng,initt,initf,Num):=( //17.10.04
 //  Deqdata("[x1,...xn]`=[f1,...fn]","t=[0,20]",0,[...],50);
   regional(Eps,Inf,tname,Xname,func,t1,t2,dt,tt,X0,flg,
@@ -5805,7 +5937,9 @@ Deqdata(deq,rng,initt,initf,Num):=( //17.10.04
   );
   pdL;
 );
- 
+////%Deqdata end////
+
+////%Deqplot start////
 Deqplot(nm,deq,rng,initf):=Deqplot(nm,deq,rng,Lcrd(initf)_1,initf,[]);
 Deqplot(nm,deq,rng,Arg1,Arg2):=(
   regional(initt,initf,options);
@@ -5932,6 +6066,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
 );
+////%Deqplot end////
 
 ////////// old enclosing ///////////////
 
@@ -6097,6 +6232,7 @@ EnclosingS(nm,plist,options):=(
 
 /////////// new enclosing ///////////
 
+////%Enclosing start////
 Enclosing(nm,plist):=Enclosing2(nm,plist,[]);//180706(2lines)
 Enclosing(nm,plistorg,options):=Enclosing2(nm,plistorg,options);
 Enclosing2(nm,plist):=Enclosing2(nm,plist,[]);
@@ -6264,11 +6400,13 @@ Enclosing2(nm,plistorg,options):=(
   tmp=apply(AnsL,LLcrd(#));//16.10.20
   tmp;
 );
+////%Enclosing end////
 
 /////////// end of new enclosing ///////////
 
 /////////// new Hatchdata(cindy) ///////////
 
+////%Makehatch start////
 Makehatch(iolistorg,pt,vec,bdylist):=(
   regional(Eps,iolist,sg,bdy,out,nb,tenL,ns,ne,ioL,
          ii,jj,kk,nvec,nbdy,sgn1,sgn2,flg,rmL,p0,p1,p2,pL,
@@ -6360,7 +6498,9 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
   SCALEY=Scalebkup;
   out;
 );
+////%Makehatch end////
 
+////%Hatchdata start////
 Hatchdata(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);//180619
 Hatchdata(nm,iostr,bdylist,options):=Hatchdatacindy(nm,iostr,bdylist,options);
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdata(nm,iostr,bdylist,[]);
@@ -6522,7 +6662,9 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   );
   tmp2;
 );
+////%Hatchdata end////
 
+////%Shade start////
 Shade(plist):=Shade("",plist,[]); //180613from
 Shade(Arg1,Arg2):=(
   if(isstring(Arg1),
@@ -6605,6 +6747,7 @@ Shade(nm,plistorg,options):=( //180613to
   Com2nd(Str,["before"]);
   Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722
 );
+////%Shade end////
 
 /////////// end of new Hatchdata(cindy) ///////////
 

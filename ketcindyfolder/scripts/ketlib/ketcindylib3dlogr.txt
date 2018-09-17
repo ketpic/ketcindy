@@ -1,3 +1,5 @@
+// 20180916
+//   Setangle debugged, Start3d changed ( PTEXCEPTION added)
 // 20180905
 //   VertexEdgeFace changed (option "vtx=geo/nogeo" added)
 // 20180904

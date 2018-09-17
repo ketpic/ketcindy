@@ -14,17 +14,20 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180908) loaded");
+println("ketcindybasic2(20180917) loaded");
 
 //help:start();
 
+////%Dispchoice start////
 Dispchoice():=(
   if(islist(Ch),
     if(!isreal(ChNum),ChNum=1);
     drawtext(mouse().xy,"Ch="+text(Ch)+" N="+text(ChNum),size->24,color->[0,0,1]);
   );
 );
+////%Dispchoice end////
 
+////%Datetime start////
 Datetime():=(
 //help:Datetime();
   regional(names,dt,tmp);
@@ -37,7 +40,9 @@ Datetime():=(
   tmp=text(tmp_1);
   tmp=[dt_6+"/"+tmp+"/"+dt_3,dt_4];
 );
+////%Datetime end////
 
+////%Rotatepoint start////
 Rotatepoint(point,Theta,ctr):=(
 //help:Rotatepoint(A,2*pi/3,B);
   regional(X1,X2,Y1,Y2,Cx,Cy,tmp);
@@ -49,7 +54,9 @@ Rotatepoint(point,Theta,ctr):=(
   Y2=Cy+(X1-Cx)*sin(Theta)+(Y1-Cy)*cos(Theta); 
   [X2,Y2];
 );
+////%Rotatepoint end////
 
+////%Translatepoint start////
 Translatepoint(point,mov):=(
 //help:Translatepoint(A,[2,3]);
   regional(X1,X2,Y1,Y2,Cx,Cy,tmp);
@@ -61,7 +68,9 @@ Translatepoint(point,mov):=(
   Y2=Y1+Cy; 
   [X2,Y2];
 );
+////%Translatepoint end////
 
+////%Scalepoint start////
 Scalepoint(point,ratio,center):=(
 //help:Scalepoint(A,[3,2],[0,0]);
   regional(X1,X2,Y1,Y2,Cx,Cy,tmp);
@@ -73,7 +82,9 @@ Scalepoint(point,ratio,center):=(
   Y2=Cy+ratio_2*(Y1-Cy);
   [X2,Y2];
 );
+////%Scalepoint end////
 
+////%Reflectpoint start////
 Reflectpoint(point,symL):=(
 //help:Reflectpoint(A,B);
 //help:Reflectpoint(A,[[2,3]]);
@@ -100,7 +111,9 @@ Reflectpoint(point,symL):=(
   );
   [X2,Y2];
 );
+////%Reflectpoint end////
 
+////%Rotatedata start////
 Rotatedata(nm,plist,Theta):=Rotatedata(nm,plist,Theta,[]);
 Rotatedata(nm,plist,angle,options):=(
 //help:Rotatedata("1",["crAB","pt1"],pi/3,[[1,5],"dr,2"]);
@@ -175,7 +188,9 @@ Rotatedata(nm,plist,angle,options):=(
   );
   PdL;
 );
+////%Rotatedata end////
 
+////%Translatedata start////
 Translatedata(nm,plist,mov):=Translatedata(nm,plist,mov,[]);
 Translatedata(nm,plist,mov,options):=(
 //help:Translatedata("1",["gr1","pt1"],[1,2]);
@@ -242,7 +257,9 @@ Translatedata(nm,plist,mov,options):=(
   );
   PdL;
 );
+////%Translatedata end////
 
+////%Scaledata start////
 Scaledata(nm,plist,ratioV):=(
   regional(tmp);
   tmp=ratioV; //180603from
@@ -333,7 +350,9 @@ Scaledata(nm,plist,rx,ry,options):=(
   );
   PdL;
 );
+////%Scaledata end////
 
+////%Reflectdata start////
 Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
 Reflectdata(nm,plist,symL,options):=(
 //help:Reflectdata("1",["crAB"],[C]);
@@ -416,8 +435,10 @@ Reflectdata(nm,plist,symL,options):=(
   );
   PdL;
 );
+////%Reflectdata end////
 
 // 180800 revised
+////%Mksegments start////
 Mksegments():=Mksegments([]);
 Mksegments(options):=(
 //help:Mksegments();
@@ -434,8 +455,10 @@ Mksegments(options):=(
     ctr=ctr+1;
   );
 );
+////%Mksegments end////
 
 // 180809 revised
+////%Mkcircles start////
 Mkcircles():=Mkcircles([]);
 Mkcircles(options):=(
 //help:Mkcircles():
@@ -457,7 +480,9 @@ Mkcircles(options):=(
     ctr=ctr+1;
   );
 );
+////%Mkcircles end////
 
+////%MakeRarg start////
 MakeRarg(arglist):=(
   regional(str,tmpstr);
   str="";
@@ -472,7 +497,9 @@ MakeRarg(arglist):=(
   str=substring(str,0,length(str)-1);
   str;
 );
+////%MakeRarg end////
 
+////%Setax start////
 Setax(arglist):=(
 //help:Setax(["l","x","e","y","n","O","sw"]);
 //help:Setax([7,"nw"]);
@@ -480,7 +507,9 @@ Setax(arglist):=(
   tmp=MakeRarg(arglist);
   Com1st("Setax("+tmp+")");
 );
+////%Setax end////
 
+////%Htickmark start////
 Htickmark(arglist):=(
 //help:Htickmark([1,"1",2,"sw","2"]);
   regional(nn,tmp,tmp1,tmp2);
@@ -502,7 +531,9 @@ Htickmark(arglist):=(
 //  tmp=MakeRarg(arglist);
 //  Com2nd("Htickmark("+tmp+")");
 );
+////%Htickmark end////
 
+////%Vtickmark start////
 Vtickmark(arglist):=(
 //help:Vtickmark([1,"1",2,"sw","2"]);
   regional(nn,tmp,tmp1,tmp2);
@@ -522,7 +553,9 @@ Vtickmark(arglist):=(
   );//180710to//  tmp=MakeRarg(arglist);
 //  Com2nd("Vtickmark("+tmp+")");
 );
+////%Vtickmark end////
 
+////%Vtick start////
 Vtick(py):=Vtick(py,MARKLEN,[]);
 Vtick(py,len):=Vtick(py,len,[]);
 Vtick(py,len,options):=(
@@ -534,7 +567,9 @@ Vtick(py,len,options):=(
   tmp2=[0+len/2,py];
   Listplot(tmp,[tmp1,tmp2],options);
 );
+////%Vtick end////
 
+////%Htick start////
 Htick(px):=Htick(px,MARKLEN,[]);
 Htick(px,len):=Htick(px,len,[]);
 Htick(px,lenorg,options):=(
@@ -548,7 +583,9 @@ Htick(px,lenorg,options):=(
   tmp2=[px,0+len/2];
   Listplot(tmp,[tmp1,tmp2],options);
 );
+////%Htick end////
 
+////%Drwxy start////
 Drwxy():=Drwxy([]); //180820from
 Drwxy(options):=(
 //help:Drwxy();
@@ -565,7 +602,9 @@ Drwxy(options):=(
   Com2nd("Drwxy("+tmp+")"); //180820to
   Addax(0);  // 16.01.21
 );
+////%Drwxy end////
 
+////%Drwpt start////
 Drwpt(pstr):=Drawpoint(pstr);
 Drwpt(ptlist,nn):=(  // 16.03.05 from
 //help:Drwpt(A);
@@ -603,12 +642,16 @@ Drawpoint(ptlistorg,nn):=(
   );
   Setpen(thick); // 16.04.09
 );// 16.03.05 until
+////%Drwpt end////
 
+////%Addax start////
 Addax(param):=(
 //help:Addax(0);
   ADDAXES=textformat(param,5);
 );
+////%Addax end////
 
+////%Expr start////
 Expr(Pt,Dr,St):=Expr([Pt,Dr,St]);
 Expr(list):=Expr(list,[]);
 Expr(listorg,options):=( //16.10.09
@@ -624,7 +667,9 @@ Expr(listorg,options):=( //16.10.09
   );
   Letter(list,options);
 );
+////%Expr end////
 
+////%Letter start////
 Letter(Pt,Dr,St):=Letter([Pt,Dr,St]);
 Letter(list):=Letter(list,[]);
 Letter(list,options):=(
@@ -713,7 +758,9 @@ Letter(list,options):=(
     Nj=Nj+3;
   );
 );
+////%Letter end////
 
+////%Letterrot start////
 Letterrot(pt,dir,str):=Letterrot(pt,dir,0,0,str,[]);
 Letterrot(pt,dir,Arg1,Arg2):=(
   if(islist(Arg2),
@@ -757,7 +804,9 @@ Letterrot(pt,dir,tmov,nmov,str,options):=(
     Texcom("}");//180722
   );
 );
+////%Letterrot end////
 
+////%Exprrot start////
 Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str,[]);
 Exprrot(pt,dir,Arg1,Arg2):=(
   if(islist(Arg2),
@@ -801,7 +850,9 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
     Texcom("}");//180722
   );
 );
+////%Exprrot end////
 
+////%Slider start////
 Putslider(ptstr,p1,p2):=Slider(ptstr,p1,p2);
 Slider(ptstr,p1,p2):=( //17.04.11
 //help:Slider("A-C-B",[-3,0],[3,0]);
@@ -830,7 +881,9 @@ Slider(ptstr,p1,p2):=( //17.04.11
   Putonseg(pC,parse("sg"+pA+pB));
 //  create([pC],"PointOn",[parse(sname),0.5]);
 );
+////%Slider end////
 
+////%Putpoint start////
 Putpoint(name,Pt):=Putpoint(name,Pt,Pt);
 Putpoint(name,Ptinit,Pt):=(
 //help:Putpoint("A",[1,2],[1,A.y]);
@@ -843,6 +896,7 @@ Putpoint(name,Ptinit,Pt):=(
     parse(ptstr);
   );
 );
+////%Putpoint end////
 
 Bezierpt(t,ptlist,ctrlist):=(
   regional(flg3,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
@@ -3435,8 +3489,11 @@ Makebat(texmainfile,flow):=(
     path="";
   );
   if(indexof(flow,"r")>0,
-    tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < execsrc.r";//180514
-      // 17.09.14
+    if(indexof(Dirwork,"Users")>0, //180917from
+      tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < execsrc.r";//180514
+    ,
+      tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r"; 
+    );  //180917to
     println(SCEOUTPUT,tmp);
   );
   if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
@@ -4356,7 +4413,7 @@ Maketitle(name):=(
     println(SCEOUTPUT,"\slidepage//");
     println(SCEOUTPUT,"");
     println(SCEOUTPUT,"layer::{120}{0}//");
-    println(SCEOUTPUT,"%putnote::s{65}{5}:://");
+    println(SCEOUTPUT,"%%putnote::s{65}{5}:://");
     println(SCEOUTPUT,"end//");
     println(SCEOUTPUT,"");
     println(SCEOUTPUT,"itemize//");

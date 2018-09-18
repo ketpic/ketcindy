@@ -12,9 +12,11 @@ if %ERRORLEVEL% == 0 (
   echo Running as administator
   set admin="y"
 ) else (
-  echo Running as non-administator
-  echo If you are an administrator, rerun as adminstrator
+  echo Not running as administator, so will quit
+  echo Right-click and rerun as adminstrator
   set admin="n"
+  pause
+  exit
 )
 echo 1. C:\kettex\texlive (default)
 echo 2. Other texlive

@@ -3790,6 +3790,26 @@ RGBの[1,0,0]をHSVに変換したコードをコンソールに表示する。
 \end{verbatim}
 
 \vspace{\baselineskip}
+\hypertarget{dqq}{}
+\item[関数]  Dqq(文字列)
+\item[機能]  文字列の前後に\verb|"|をつける。
+\begin{verbatim}
+    str="abc";
+    str2=Dqq(str);
+    println([str,str2]); 
+\end{verbatim}
+
+\vspace{\baselineskip}
+\hypertarget{factorial}{}
+\item[関数]  Factorial(n)
+\item[機能]  正の整数$n$の階乗を計算する。
+
+\vspace{\baselineskip}
+\hypertarget{norm}{}
+\item[関数]  Norm(ベクトル), Norm(ベクトル1, ベクトル2)
+\item[機能]  ベクトル（2つのベクトルの場合は差の大きさ）の大きさを計算する。
+
+\vspace{\baselineskip}
 \hypertarget{figpdf}{}
 \item[関数]  Figpdf(option）
 \item[機能]  出力枠サイズのPDFを作る。
@@ -4071,25 +4091,26 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\hypertarget{calcbyr}{}
-\item[関数]  CalcbyR(変数名,コマンド列，option)
-\item[機能]  Rのコマンドを実行して結果を返す
+\hypertarget{rfun}{}
+\item[関数]  Rfun(変数名,コマンド列, 引数, option)
+\item[機能]  Rの1つのコマンドを実行して結果を返す
 \item[説明]  バッチファイル kc.bat / シェルファイル kc.sh を利用してRとデータをやり取りし，計算結果を取得する。
 
 \vspace{\baselineskip}
 【例】Rを用いて標準正規分布から10個の乱数を発生し，平均値と標準偏差を求めてコンソールに表示する。
 \begin{verbatim}
-    cmdL=[ "=rnorm",[10] ];
-    CalcbyR("dt",cmdL);
-    nx=length(dt);
-    mx=sum(dt)/nx;
-    sx=sqrt(dt*dt/nx-mx^2);
-    println("データ："+dt);
+    Rfun("1","rnorm",[10]);
+    nx=length(R1);
+    mx=sum(R1)/nx;
+    sx=sqrt(R1*R1/nx-mx^2);
+    println("データ："+R1);
     println("平均："+format(mx,4)+"    標準偏差："+format(sx,4));
 \end{verbatim}
-１行目の  \verb|cmdL=[ "=rnorm",[10] ]|  で，標準正規分布から10個の乱数を発生するコマンド列を定義。
 
-2行目で，Rで計算した結果がリスト dt に入る。
+\hypertarget{calcbyr}{}
+\item[関数]  CalcbyR(変数名,コマンド列，option)
+\item[機能]  Rのコマンドを実行して結果を返す
+\item[説明]  バッチファイル kc.bat / シェルファイル kc.sh を利用してRとデータをやり取りし，計算結果を取得する。
 
 \vspace{\baselineskip}
 【例】Rを用いてN(50,$5^2$)から10個の乱数を発生し，平均と不偏分散もRで計算してその結果をコンソールに表示する。
@@ -4098,7 +4119,7 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
         "tmp1=rnorm",[10,50,5],
         "tmp2=mean",["tmp1"],
         "tmp3=var",["tmp1"],
-        "=c(tmp1,tmp2,tmp3)",[]
+        "tmp1::tmp2::tmp3",[]
     ];
     CalcbyR("rd",cmdL);
     dt=rd_(1..(length(rd)-2));
@@ -5652,6 +5673,7 @@ xpos \> タイトルの水平位置。 初期設定は 62\\
 size \> タイトルの倍率。 初期設定は 2
 \end{tabbing}
 
+
 \vspace{\baselineskip}
 \hypertarget{setslidepage}{}
 \item[関数]  Setslidepage([letterc,boxc,boxd,framec,shadowc,xpos,size])
@@ -5672,7 +5694,7 @@ size \> タイトルの倍率。 初期設定は 1.3
 \hypertarget{setslidemargin}{}
 \item[関数]  Setslidemargin([leftmarginchange,topmarginchange])
 \item[機能]  スライドの左上マージンをデフォルトから変更する場合の値。
-\item[説明]  Setslidemargin([+5,-10]);などとする。
+\item[説明]  Setslidemargin([+5,-10]);（横方向に+5mm，縦方向にに-10mm変更）
 
 \vspace{\baselineskip}
 \hypertarget{settitle}{}
@@ -7321,6 +7343,9 @@ Cinderellaで使っている用語に次のものがある。
 %\hyperlink{com2ndpre}{Com2ndpre(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\
 \hyperlink{cindyname}{Cindyname()}    \>作図しているファイル名を取得する。\\
 \hyperlink{colorcode}{Colorcode(文字1，文字2,color)}  \>カラーコードの変換\\
+\hyperlink{dqq}{Dqq(文字列)}  \>文字列の前後に\verb|"|をつける。\\
+\hyperlink{facdtorial}{Factorial(n)}  \>nの階乗を計算する。\\
+\hyperlink{norm}{Norm(ベクトル)}  \>ベクトルの大きさを計算する。\\
 \hyperlink{figpdf}{Figpdf(option)} \>出力枠サイズのPDFを作る\\
 \hyperlink{help}{Help(str)}    \>コマンドヘルプを表示する\\
 \hyperlink{helpkey}{Helpkey(str)}    \>キーワードで関数を検索する\\
@@ -7337,7 +7362,8 @@ Cinderellaで使っている用語に次のものがある。
 \vspace{\baselineskip}
 【Ｒとの連携】\\
 \hyperlink{boxplot}{Boxplot(名前,データ,位置,高さ,option)} \>箱ひげ図を描く\\
-\hyperlink{calcbyr}{CalcbyR(変数名,コマンド列，option)}  \>Rのコマンドを実行して結果を返す\\
+\hyperlink{rfun}{Rfun(変数名,コマンド,引数, option)}  \>Rの1つコマンドを実行して結果を返す\\
+\hyperlink{calcbyr}{CalcbyR(変数名,コマンド列, option)}  \>Rのコマンド列を実行して結果を返す\\
 \hyperlink{histplot}{Histplot(name,data)}  \>ヒストグラムを描く\\
 \hyperlink{plotdatar}{PlotdataR(name,式,変数)}  \>Rの関数のグラフを描く\\
 \hyperlink{plotdiscr}{PlotdiscR(name,式,変数)}  \>離散型のグラフを描く\\

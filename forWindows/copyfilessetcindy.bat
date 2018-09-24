@@ -13,7 +13,7 @@ if %ERRORLEVEL% == 0 (
   set admin="y"
 ) else (
   echo Not running as administator, so will quit
-  echo Right-click and rerun as adminstrator
+  echo Right-click and rerun as administrator
   set admin="n"
   pause
   exit

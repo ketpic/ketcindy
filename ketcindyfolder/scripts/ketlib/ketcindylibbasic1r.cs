@@ -274,14 +274,14 @@ Setparent(file):=( // 17.11.27
 ////%Setparent end////
 
 ////%Dqq start////
-////%DqDq start////
 Dqq(str):=DqDq(str); //18.02.11
+////%Dqq end////
+////%DqDq start////
 DqDq(str):=(
 //help(Dqq("ab"); => Dq+"ab"+Dq)
   unicode("0022")+str+unicode("0022");
 );
 ////%DqDq end////
-////%Dqq end////
 
 ////%Tab2list start////
 Tab2list(dtstr):=Tab2list(dtstr,[]);
@@ -430,7 +430,7 @@ Norm(v1):=(  // 16.09.01
 Norm(v1,v2):=(
   Norm(v2-v1);
 );
-////%Norm start////
+////%Norm end////
 
 // 16.03.28
 ////%Removespace start////
@@ -500,8 +500,9 @@ Strsplit(str,key):=( //180505
 ////%Strsplit end////
 
 ////%Parlevel start////
-////%Bracket start////
 Parlevel(str):=Bracket(str); // 16.05.22from 
+////%Parlevel end////
+////%Bracket start////
 Bracket(str):=Bracket(str,"()");
 Bracket(str,br):=(
 //help:Bracket(string,"()");
@@ -526,7 +527,6 @@ Bracket(str,br):=(
   out;
 );
 ////%Bracket end////
-////%Parlevel end////
 
 ////%Pardiagram start////
 Pardiagram(str):=Pardiagram(str,[20]);
@@ -839,9 +839,10 @@ Dependgeo(geo):=(
 ////%Dependgeo end////
 
 ////%Workprocess start////
-////%Drawprocess start////
 Workprocess():=Workprocess(300);
 Workprocess(nn):=Drawprocess(nn);
+////%Workprocess end////
+////%Drawprocess start////
 Drawprocess():=Drawprocess(300);
 Drawprocess(nn):=(
 //help:Workprocess();
@@ -872,7 +873,6 @@ Drawprocess(nn):=(
   out;
 );
 ////%Drawprocess end////
-////%Workprocess end////
 
 ////%Sortpointlist start////
 Sortpointlist(list):=(
@@ -1290,10 +1290,11 @@ Invert(nm,Fig,options):=(
 ////%Invert end////
 
 ////%Paramoncrv start////
-////%Paramoncurve start////
 Paramoncrv(pP,Gdata):=Paramoncurve(pP,Gdata);//180723
-Paramoncurve(point,Gdata):=(
-//help:Paramoncurve(A,"gr1");//180723(3lines)
+////%Paramoncrv end////
+////%ParamonCurve start////
+ParamonCurve(point,Gdata):=(
+//help:ParamonCurve(A,"gr1");//180723(3lines)
   regional(Tmp,PtL,pP);
   if(ispoint(point),pP=point.xy,pP=point);
 //  Eps=10^(-8);
@@ -1319,12 +1320,12 @@ ParamonCurve(pP,nN,plist):=(
   );
   Out;
 );
-////%Paramoncurve end////
-////%Paramoncrv end////
+////%ParamonCurve end////
 
 ////%Pointoncrv start////
-////%PointonCurve start////
 Pointoncrv(tT,PtL):=PointonCurve(tT,PtL);
+////%Pointoncrv end////
+////%PointonCurve start////
 PointonCurve(tTorg,Gdata):=(
 //help:PointonCurve(20.5,"gr1");
   regional(tT,Out,Eps,nN,sS,Pa,Pb,PtL);
@@ -1345,7 +1346,6 @@ PointonCurve(tTorg,Gdata):=(
   Out;
 );
 ////%PointonCurve end////
-////%Pointoncrv end////
 
 ////%Koutenseg start////
 Koutenseg(pA,pB,pC,pD):=Koutenseg(pA,pB,pC,pD,[]);
@@ -2128,6 +2128,8 @@ Nearestpt(point,PL2):=(
 ////%Derivative start////
 Derivative(pdstr,ptinfo):=Derivative(pdstr,ptinfo,[]);//180719
 Derivative(Arg1,Arg2,Arg3):=(//1807120
+//help:Derivative(plotdata,"x=2");
+//help:Derivative(plotdata,"y=1");
   regional(pdstr,ptinfo,options,name,v,pt,par,p0,p1,p2,p3,
      pQ,pR,cc,m1,m2,out,tmp,tmp1,reL,ch,flg);
   if(!islist(Arg3),
@@ -2186,7 +2188,6 @@ Derivative(Arg1,Arg2,Arg3):=(//1807120
 );//180720to
 Derivative(fun,var,value,options):=(
 //help:Derivative("x^3","x",2);
-//help:Derivative(plotdata,"x=2");
   regional(eqL,method,eps,str,x1,x2,y1,y2,tmp,tmp1,tmp2);
   method="N";
   tmp=Divoptions(options);

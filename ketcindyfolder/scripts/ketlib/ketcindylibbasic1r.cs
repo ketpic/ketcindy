@@ -1100,7 +1100,8 @@ Flattenlist(pltlist):=(
 ////%Divoptions start////
 Divoptions(options):=(
 //help:Divoptions(options);
-  regional(Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy,flg,tmp,tmp1,tmp2);
+  regional(Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy,flg,
+       tmp,tmp1,tmp2);
   Ltype="dr";  // 2015.01.13
   Noflg=0;
   Inflg=0;
@@ -1126,7 +1127,7 @@ Divoptions(options):=(
         tmp1=Toupper(tmp_1);
         tmp2=tmp_2;
         if(tmp1=="COLOR",
-          if(substring(tmp2,0,1)=="[",
+          if(indexof(tmp2,"[")>0, //180928
             tmp1=parse(tmp2);
             color=tmp1;
             if(length(tmp1)==4,
@@ -4134,7 +4135,6 @@ Paramplot(nm,funstr,variable,options):=(
   regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,
         Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke,
         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
-println([4137,nm]);
   if(substring(nm,0,1)=="-",  // 180928from
     name=substring(nm,1,length(nm));
   ,

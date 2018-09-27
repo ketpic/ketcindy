@@ -1288,6 +1288,7 @@ Readbezier(file,optionorg):=(
 Ospline(nm,ptlist):=Ospline(nm,ptlist,[]);
 Ospline(nm,ptlist,options):=(
 //help:Ospline("1",ptlist,[options]);
+//help:Ospline(options=["Num=10"]);
   regional(tmp,tmp1,tmp2,list,ptL,ctrL,name,closed,flg,
       p0,p1,p2,p3,pQ,pR,cc,p01,p02,p11,p12,p21,p22,p31,p32);
   name="o"+nm;
@@ -1537,6 +1538,7 @@ Listbspline2bz(listorg):=(
 Bspline(nm,ctrL):=Bspline(nm,ctrL,[]);
 Bspline(nm,ctrL,options):=(
 //help:Bspline("",[A,B,C]);
+//help:Bspline(options=["Num=10"]);
   regional(list,tmp);
   list=Listbspline2bz(ctrL);
   tmp=BezierCurve("b"+nm,list_1,list_2,options);

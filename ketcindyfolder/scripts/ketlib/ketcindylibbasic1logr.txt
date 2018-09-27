@@ -1,6 +1,7 @@
 // 20180928
 //   Paramplot changed (case of stationary point, name -option)
 //   Polarplot added
+//   Divoptions changed (color in case of scalar*list)
 // 20180913
 //   Chengesetting, Ketinit changed (getname() used)
 // 20180908

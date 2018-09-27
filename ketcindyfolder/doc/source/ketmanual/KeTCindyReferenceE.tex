@@ -1549,6 +1549,22 @@ Draw ellipses with options.\\
 \end{center}
 \end{cmd}
 
+%----------Polarplot----------------------------------
+\begin{cmd}{Polarplot}{polarplot}
+
+\itemket{Usage}Polarplot(name, expression, variable and domain, options);
+\itemket{Description}This function draws a curve of polar equation.
+%\itemket{Details}
+\itemket{Examples} To draw a cardioid.
+
+\verb|  Polarplot("1","2*(1+cos(t))","t=[0,2*pi]",["Num=200"]);|\\
+
+\begin{center}
+\input{Fig//cardioid1}
+\end{center}
+
+\end{cmd}
+
 %------Periodfun--------------------------------------
 \begin{cmd}{Periodfun}{periodfun}
 \itemket{Usage}Periodfun(defL,repeat,options)
@@ -5171,6 +5187,7 @@ Options are the followings.\\
 \hyperlink{parabolaplot}{Parabolaplot} \> draws a parabola.\\
 \hyperlink{paramark}{Paramark} \> draw an angle mark with a parallelogram.\\
 \hyperlink{paramplot}{Paramplot} \> draw a curve of parametric representation.\\
+\hyperlink{polarplot}{Polarplot}\> draw a curve of polar equation.\\
 \hyperlink{partcrv}{Partcrv} \> make a piece of curve from the PD.\\
 \hyperlink{periodfun}{Periodfun} \> draw the graph of a periodic function.\\
 \hyperlink{plotdata}{Plotdata} \> draw the graph of function.\\

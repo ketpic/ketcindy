@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180901)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180928)" 
 
 print(ThisVersion)
 
+# 20180928
+# Paramplot changed ( case of stationary point)
 # 20180901
 # Objcurve debugged  ( Assign rewritten )
 # 20180820,21
@@ -5283,37 +5285,26 @@ Paramplot<- function(...)
       }
       Ke<-Ke+1
     }
-    if(length(Pa)>0)
-    {
-      if(Pa[1]==Inf)
-      {
+    if(length(Pa)>0){
+      if(Pa[1]==Inf){
         Tmp<-Appendrow(P,Pa)
         P<-Tmp
-      }
-      else
-      {
-        if(Nrow(P)==0)
-        {
+      }else{
+        if(Nrow(P)==0){
           Tmp<- Appendrow(P,Pa)
           P<-Tmp
-        }          
-        else
-        {
+        }else{
           Tmp<- Op(Nrow(P),P)
-          if(Tmp[1]==Inf)
-          {
+          if(Tmp[1]==Inf){
             Tmp<- Appendrow(P,Pa)
             P<- Tmp
-          }
-          else
-          {
-            if(Norm(Tmp-Pa)<D)
-            {
-              Tmp<-Appendrow(P,Pa)
-              P<-Tmp
-            }
-            else
-            {
+          }else{
+            if(Norm(Tmp-Pa)<D){
+              if(Norm(Tmp-Pa)>Eps){ #180928
+                Tmp<-Appendrow(P,Pa)
+                P<-Tmp
+              } #180928
+            }else{
               Tmp<- Appendrow(P,c(Inf,Inf),Pa)
               P<- Tmp
             }

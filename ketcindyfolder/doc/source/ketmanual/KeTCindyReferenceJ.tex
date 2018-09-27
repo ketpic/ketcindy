@@ -1954,6 +1954,19 @@ options は線種が有効
 %\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
+\hypertarget{polarplot}{}
+\item[関数]  Polarplot(name , 式 , 変数と定義域,options)
+\item[機能]  極座標表示$r=f(\theta)$の曲線を描く。
+
+\vspace{\baselineskip}
+【例】カージオイド曲線を描く。
+
+\hspace{20mm}\verb|Polarplot("1","2*(1+cos(t))","t=[0,2*pi]",["Num=200"]);|
+
+\vspace{\baselineskip}
+\begin{center}\scalebox{0.9}{\input{Fig/cardioid1}}\end{center}
+
+\vspace{\baselineskip}
 \hypertarget{periodfun}{}
 \item[関数]  Periodfun(定義式,周期,options)
 \item[機能]  周期関数のグラフを描く。戻り値はMaxima形式の式とperiodのリスト。
@@ -7293,8 +7306,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ovaldata}{Ovaldata(name, 点list,options)}    \>角を丸くした矩形を描く\\
 \hyperlink{parabolaplot}{Parabolaplot(name,list,str,options)}  \>放物線を描く\\
 \hyperlink{paramark}{Paramark(点list,options)}  \>角の印を入れる\\
-\hyperlink{paramplot}{Paramplot(name,式,変数と定義域,options)}  \>媒介変数で表された曲線を表示する\\
-\hyperlink{partcrv}{Partcrv(name,点1,点2,PD)}    \>部分曲線を描く\\
+\hyperlink{paramplot}{Paramplot(name,式,変数と定義域,options)}  \>媒介変数で表された曲線を描く\\
+\hyperlink{polarplot}{Polarplot(name,式,変数と定義域,options)}  \>極座標表示の曲線を描く\\\hyperlink{partcrv}{Partcrv(name,点1,点2,PD)}    \>部分曲線を描く\\
 \hyperlink{periodfun}{Periodfun(定義式,周期,options)}    \>周期関数のグラフを描く\\
 \hyperlink{plotdata}{Plotdata(name,式,変数と定義域,options)}    \>関数のグラフを描く\\
 \hyperlink{pointdata}{Pointdata(name,点list,options)}  \>点データを作る\\

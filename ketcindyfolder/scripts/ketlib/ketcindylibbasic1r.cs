@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180917)");
+println("KeTCindy V.3.2.1(20180928)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180913) loaded");
+println("ketcindylibbasic1(20180928) loaded");
 
 //help:start();
 
@@ -4128,13 +4128,18 @@ Plotdata(name1,func,variable,options):=(
 ////%Plotdata end////
 
 ////%Paramplot start////
-Paramplot(name1,funstr,variable):=Paramplot(name1,funstr,variable,[]);
-Paramplot(name1,funstr,variable,options):=(
+Paramplot(nm,funstr,variable):=Paramplot(nm,funstr,variable,[]);
+Paramplot(nm,funstr,variable,options):=(
 //help:Paramplot("1","[2*cos(t),sin(t)]","t=[0,2*pi]");
   regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,
         Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke,
         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
-  name="gp"+name1; 
+println([4137,nm]);
+  if(substring(nm,0,1)=="-",  // 180928from
+    name=substring(nm,1,length(nm));
+  ,
+    name="gp"+nm;
+  ); //180929to
   Eps=10^(-4);
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -4213,7 +4218,9 @@ Paramplot(name1,funstr,variable,options):=(
               Out=append(Out,pa);
             ,
               if(|tmp-pa|<Dc,
-                Out=append(Out,pa);
+                if(|tmp-pa|>Eps, //180928from
+                  Out=append(Out,pa);
+                );  //180928to
               ,
                 Out=concat(Out,[["inf"],pa]);
               );
@@ -4290,6 +4297,19 @@ Paramplot(name1,funstr,variable,options):=(
   );
 );
 ////%Paramplot end////
+
+////%Polarplot start////
+// 180928
+Polarplot(name,radstr,varrng):=Polarplot(name,radstr,varrng,[]);
+Polarplot(name,radstr,varrng,option):=(
+//help:Polarplot("1","cos(t)","t=[0,2*pi]");
+  regional(tmp,var);
+  tmp=Strsplit(varrng,"=");
+  var=tmp_1;
+  tmp="("+radstr+")*[cos("+var+"),sin("+var+")]";
+  Paramplot("-polar"+name,tmp,varrng,option);
+);
+////%Polarplot end////
 
 ////%Connectseg start////
 Connectseg(Pdata):=(

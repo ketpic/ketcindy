@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_3(17.10.28)"
+ThisVersion<- "2ev5_2_4(180929)"
 
+# 20180929
+#   Shade changed  (Kyoukai => Joincrvs)
 # 2017.10.28
 #    Drwpt debugged  ( Flattenlist )
 # 2017.10.07
@@ -546,9 +548,12 @@ Shade<- function(...)
   }
   Mojisu=0
   Tmp=varargin[[1]]
-  Data=Kyoukai(Tmp)
+#  Data=Kyoukai(Tmp)
+  Data= Joincrvs(Tmp) #180929from
+  Data=list(Data) #180929to
   for (I in Looprange(1, length(Data))){
     PL<- Op(I,Data)
+    PL=Appendrow(PL,Op(1,PL)) #180929
     Mojisu<- 0
     for (J in  1:Nrow(PL)){
       P<- Doscaling(Op(J,PL))

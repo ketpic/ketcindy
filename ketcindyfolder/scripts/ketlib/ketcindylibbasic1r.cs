@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180928)");
+println("KeTCindy V.3.2.1(20180929)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20180928) loaded");
 
@@ -6700,7 +6700,9 @@ Shade(nm,plistorg,options):=( //180613to
 //help:Shade(["gr2","sg1"],["Color=[0,0,0,0.5]"]);
 //help:Shade(["gr2","sg1"],["Color=[1,0,0]"]);
 // help:Shade([[A,B,C,A]]);
-  regional(name,plist,jj,tmp,tmp1,tmp2,opstr,opcindy,reL,Str,G2,flg,color,ctr);
+//help:Shade("1",["gr2","Invert(sg1)"],["Enc=y",startpt]]);
+  regional(name,plist,jj,tmp,tmp1,tmp2,
+     opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
   name="shade"+nm;
   plist=plistorg;
   if(isstring(plist_1), // 16.01.24
@@ -6709,17 +6711,42 @@ Shade(nm,plistorg,options):=( //180613to
     println("output Shade of lists");
   );
   tmp=Divoptions(options);
+  eqL=tmp_5; 
+  reL=tmp_6;
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-  reL=tmp_6; //180603from
-  if(length(reL)>0,
-    color=reL_1*color;
-  );//180603to
+  encflg=0; //180929from
+  forall(eqL,
+    tmp=Strsplit(eqL);
+    tmp1=Toupper(tmp_1);
+    tmp2=Toupper(tmp_2);
+    if(substring(tmp1,0,1)=="E",
+      if(substring(tmp2,0,1)=="Y",
+        encflg=1;
+      );
+    );
+  );
+  startpt=[];
+  forall(reL,
+    if(islist(#),
+      startpt=#;
+    );
+  ); //180929to
   if(length(color)==4, //180602from
     tmp=colorCmyk2rgb(color);
   );
+  tmp=select(plist,indexof(#,"Invert")>0); //180929(2lines)
+  if(length(tmp)>0,encflg=1);
   flg=0; ctr=1;
+  if(encflg==1, //180929from
+    if(length(startpt)==2,
+      Enclosing(nm,plist,[startpt,"nodisp"]);
+    ,
+      Enclosing(nm,plist,["nodisp"]);
+    );
+    plist=["en"+nm];
+  ); //180929to
   forall(1..(length(plist)),jj, //180613from
     if(flg==0,
       tmp1=plist_jj;
@@ -6763,7 +6790,7 @@ Shade(nm,plistorg,options):=( //180613to
        tmp1=tmp1+"Listplot("+textformat(#,5)+"),";
     ); //16.01.24to
   );
-  Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
+  Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929
   Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722
   Com2nd(Str,["before"]);
   Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722

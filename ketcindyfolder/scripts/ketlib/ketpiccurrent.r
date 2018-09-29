@@ -16,10 +16,14 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180928)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20180929)" 
 
 print(ThisVersion)
 
+# 20180929
+#   Paramplot Plotdata, Spacecurve , Implicitplot changed 
+#                                ( Dt,dx not divided by N)
+#   Shade changed  (Kyoukai => Joincrvs)
 # 20180928
 # Paramplot changed ( case of stationary point)
 # 20180901
@@ -5231,7 +5235,7 @@ Paramplot<- function(...)
     Rng<- c(0,2*pi)
   }
   T1<- Rng[1]; T2<- Rng[2]
-  Dt<- (T2-T1)/N #17.09.22
+  Dt<- (T2-T1) #180929
    if(Fnflg==0)
   {
     Str<-  gsub(Vname,"t",Fnstr)
@@ -5251,9 +5255,8 @@ Paramplot<- function(...)
   Tmp<- sort(E)
   E<- E[length(Tmp):1]
   Ke<- 1
-#  for (t in seq(T1, T2+Eps, by=Dt)){#18.02.05
   for(jj in 1:(N+1)){
-    t=T1+(jj-1)*Dt
+    t=T1+(jj-1)*Dt/N #180929
     Pa<- c()
     if(t-E[Ke]< Eps)
     {
@@ -5439,11 +5442,11 @@ Plotdata<- function(...)
     }
   }
   X1<- Rng[1]; X2<- Rng[2]
-  dx<- (X2-X1)/N # 17.09.22
+  dx<- (X2-X1) #180929
   if(Fnflg==0){
     Str<-  gsub(Vname,"x",Fnstr,fixed=TRUE)
   }
-  if(abs(dx)<Eps){  # Scilab 16.12.13
+  if(abs(dx/N)<Eps){  #180929
     x=X1
     P=c(X1,eval(parse(text=Str)))
     return(P)
@@ -5458,7 +5461,9 @@ Plotdata<- function(...)
   Tmp<- sort(E)
   E<- E[length(Tmp):1]
   Ke<- 1
-  for (x in seq(X1,X2,by=dx)){
+#  for (x in seq(X1,X2,by=dx)){
+  for (J in 0:N){ #180929
+    x=X1+dx*J/N #180929
     if(nchar(Exfun)>0){
       Tmp<-eval(parse(text=Exfun))
       if(abs(Tmp)<Eps){
@@ -7034,51 +7039,35 @@ Shade<- function(...)
       }
     }
     if(Iroflg==1){
-      if(Wfile=="default")
-        cat(Str,"%\n",file="",append=TRUE,sep="")
-      else
-        cat(Str,"%\n",file=Wfile,append=TRUE,sep="")
     }
   }
   Tmp<- varargin[[1]]
-  Data<- Kyoukai(Tmp)
+#  Data<- Kyoukai(Tmp)
+  Data= Joincrvs(Tmp) #180929from
+  Data=list(Data) #180929to
   for (I in Looprange(1, Length(Data))){ #180621
     PL<- Op(I,Data)
+    PL=Appendrow(PL,Op(1,PL)) #180929
     Mojisu<- 0
     for (J in  Looprange(1,Length(PL))){
       P<- Doscaling(Op(J,PL))
       X<- as.character(round(MilliIn*P[1]))
       Y<- as.character(-round(MilliIn*P[2]))
       Str<- paste("\\special{pa ",X," ",Y,"}",sep="")
-      if(Wfile=="default")
-        cat(Str,file="",append=TRUE,sep="")
-      else
-        cat(Str,file=Wfile,append=TRUE,sep="")
+      cat(Str,file=Wfile,append=TRUE,sep="")
       Mojisu<- Mojisu+nchar(Str)
       if(Mojisu>80){
-        if(Wfile=="default")
-          cat("%\n",file="",append=TRUE,sep="")
-        else
-          cat("%\n",file=Wfile,append=TRUE,sep="")
+	    cat("%\n",file=Wfile,append=TRUE,sep="")
         Mojisu<- 0
       }
     }
     Str1<- paste("\\special{sh ",as.character(Kosa),"}",sep="")
     Str2<- paste("\\special{ip}%\n",sep="")
-    if(Wfile=="default"){
-       cat(Str1,file="",append=TRUE,sep="")
-       cat(Str2,file="",append=TRUE,sep="")
-    }
-    else{
-       cat(Str1,file=Wfile,append=TRUE,sep="")
-       cat(Str2,file=Wfile,append=TRUE,sep="")
-    }
+    cat(Str1,file=Wfile,append=TRUE,sep="")
+    cat(Str2,file=Wfile,append=TRUE,sep="")
   }
   if(Iroflg==1){
-    if(Wfile=="default")
-      cat("}%\n",file="",append=TRUE,sep="")
-    else
-      cat("}%\n",file=Wfile,append=TRUE,sep="")
+    cat("}%\n",file=Wfile,append=TRUE,sep="")
   }
 }
 
@@ -10398,11 +10387,11 @@ Spacecurve<- function(...){
     Rng<- c(XMIN,XMAX)
   }
   T1<- Rng[1]; T2<- Rng[2]
-  Dt<- (T2-T1)/N #17.09.22
+  Dt<- (T2-T1) #180929
   Str<- gsub(Vname,"t",Fnstr)
   Str=gsub("[","c(",Str,fixed=TRUE) #17.12.22(2lines)
   Str=gsub("]",")",Str,fixed=TRUE)
-  if(abs(Dt)<Eps){ # 16.12.13
+  if(abs(Dt/N)<Eps){ #180929
     t=T1
     P=eval(parse(text=Str))
     return(P)
@@ -10413,7 +10402,7 @@ Spacecurve<- function(...){
   E<- sort(E,decreasing=FALSE)
   Ke<- 1
   for(jj in 1:(N+1)){
-    t=T1+(jj-1)*Dt
+    t=T1+(jj-1)*Dt/N #180929
     Pa<- c()
     if(t-E[Ke]< Eps){
 	  Pa<-  eval(parse(text=Str))
@@ -11651,17 +11640,17 @@ Implicitplot<- function(...){ #180402
   Rngy=eval(parse(text=Tmp[2]))
   Tmp=paste("Impfun<- function(",Varx,",",Vary,"){",Fn,"}",sep="")
   eval(parse(text=Tmp))
-  dx=(Rngx[2]-Rngx[1])/Mdv
-  dy=(Rngy[2]-Rngy[1])/Ndv
+  dx=(Rngx[2]-Rngx[1]) #180929
+  dy=(Rngy[2]-Rngy[1]) #180929
   out=list()  
   for(jj in 1:Ndv){
-    yval1=Rngy[1]+(jj-1)*dy
-    yval2=Rngy[1]+jj*dy
+    yval1=Rngy[1]+(jj-1)*dy/Ndv #180929
+    yval2=Rngy[1]+jj*dy/Ndv #180929
     xval1=Rngx[1]
     eval11=Impfun(xval1,yval1)
     eval12=Impfun(xval1,yval2)
     for(ii in 1:Mdv){
-      xval2=Rngx[1]+ii*dx
+      xval2=Rngx[1]+ii*dx/Mdv #180929
       eval21=Impfun(xval2,yval1)
       eval22=Impfun(xval2,yval2)
       pL=list(c(xval1,yval1));vL=c(eval11)

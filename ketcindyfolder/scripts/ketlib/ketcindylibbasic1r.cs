@@ -6716,14 +6716,18 @@ Shade(nm,plistorg,options):=( //180613to
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-  encflg=0; //180929from
+  tmp=select(plist,indexof(#,"Invert")>0); //180929from
+  if(length(tmp)>0,encflg=1,encflg=0);
   forall(eqL,
-    tmp=Strsplit(eqL);
+    tmp=Strsplit(#,"=");
     tmp1=Toupper(tmp_1);
     tmp2=Toupper(tmp_2);
     if(substring(tmp1,0,1)=="E",
       if(substring(tmp2,0,1)=="Y",
         encflg=1;
+      );
+      if(substring(tmp2,0,1)=="N",
+        encflg=0;
       );
     );
   );
@@ -6736,8 +6740,6 @@ Shade(nm,plistorg,options):=( //180613to
   if(length(color)==4, //180602from
     tmp=colorCmyk2rgb(color);
   );
-  tmp=select(plist,indexof(#,"Invert")>0); //180929(2lines)
-  if(length(tmp)>0,encflg=1);
   flg=0; ctr=1;
   if(encflg==1, //180929from
     if(length(startpt)==2,

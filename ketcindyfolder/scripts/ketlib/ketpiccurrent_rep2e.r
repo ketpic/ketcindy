@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(180929)"
+ThisVersion<- "2ev5_2_4(180930)"
 
+# 20180930
+#   Drwpt debugged ( the last newline added)
 # 20180929
 #   Shade changed  (Kyoukai => Joincrvs)
 # 2017.10.28
@@ -288,34 +290,9 @@ Drwpt<-function(...)
     Fmt=paste(Str,'\n',sep="")
   }
   cat(Str,file=Wfile,append=TRUE)
+  cat("\n",file=Wfile,append=TRUE) #180930
 }
 
-#      PL<-c()
-#      for (J in 0:N){
-#        PL<- c(PL,P+CL[J+1,])
-#      }
-#      PL<-matrix(PL,nrow=2)
-#      PL<-t(PL)
-#      Mojisu<-0
-#      for (J in 1:Nrow(PL)){
-#        Q<- PL[J,]
-#        X<- as.character(round(MilliIn*Q[1]))
-#        Y<- as.character(-round(MilliIn*Q[2]))
-#        Str<- paste("\\special{pa ",X," ",Y,"}",sep="")
-#        cat(Str,file=Wfile,append=TRUE)
-#        Mojisu<- Mojisu+nchar(Str)
-#        if (Mojisu>80){
-#          cat("#\n",file=Wfile,append=TRUE)
-#        }
-#        Mojisu=0
-#      }
-#      Str1<- paste("\\special{sh ",as.character(Kosa),"}",sep="")
-#      Str2<- "\\special{fp}%\n"
-#      cat(Str1,file=Wfile,append=TRUE)
-#      cat(Str2,file=Wfile,append=TRUE)
-#    }
-#  }
-#}
 
 ######################################
 

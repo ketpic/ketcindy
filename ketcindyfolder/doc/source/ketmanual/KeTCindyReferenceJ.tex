@@ -124,7 +124,7 @@ Parent ボタンで出力するファイル名は 初期設定がないので，
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
-
+\newpage
 %-----------------描画設定・定義--------------------------------------
 \subsubsection{描画設定・定義}
 
@@ -217,6 +217,7 @@ options は次のリストである。\\
 
 \begin{center} \input{Fig/drwxy}\end{center}
 
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{definecolor}{}
@@ -246,8 +247,6 @@ options は次のリストである。\\
   
 色の名称は\hyperlink{colorcodelist}{カラーコード一覧} の68色が指定できる。
 
-colorに色の名称を用いた場合は，option として，透明度を０〜１の数で指定できる。１が最も濃く，０は結果として色塗りをしない。
-
 
 \vspace{\baselineskip}
 【例】  Cinderellaの描画ツールとCindyScriptで線分AB,ACを60°の角をなすように描いておき，点DとEを弧の両端になるように設定して
@@ -257,22 +256,13 @@ colorに色の名称を用いた場合は，option として，透明度を０�
       Arrowhead(E,[-1,0.8],[2,1]);
 \end{verbatim}
 を実行すると，矢じりつきの弧を赤で表示することができる。
+  
+１行目は，\verb|Setcolor("red");|  でもよい。
+座標軸を描く場合は，このあと \verb|Setcolor("black")| で黒に戻しておかないと，座標軸が赤で表示されてしまうので要注意。
+
 
 \vspace{\baselineskip}
 \hspace{20mm} \includegraphics[width=3.5cm,bb=0 0 161 134]{Fig/setcolor.pdf} 
-  
-１行目は，\verb|Setcolor("red");|  でもよい。
-
-ただし，Cinderellaの描画面では着色されない。
-
-描画面でも着色したい場合は，オプション \verb|"Color=[R,G,B]"| を用いる。
-
-上の例の場合，
-\begin{verbatim}
-    Circledata([A,D],["Rng=[0,pi/3]","Color=[1,0,0]"]);
-    Arrowhead(E,[-1,0.8],[2,1,"Color=[1,0,0]"]);
-\end{verbatim}
-とすれば，描画面でも赤で表示される。
 
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -448,7 +438,9 @@ Plotdata("1","f(x)","x");
     Listplot("1",[[0,0],[2,2]]);
 \end{verbatim}
 
-%\vspace{\baselineskip}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\vspace{\baselineskip}
 \hypertarget{setunitlen}{}
 \item[関数]  Setunitlen(文字列)
 \item[機能]  単位長を設定する。 初期設定は 1cm。
@@ -542,11 +534,9 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 \vspace{\baselineskip}
 【例】
 
-(1) 座標指定で2つの点データを作る。
+(1) 座標指定で2つの点データを作る。描画面には黒で点が表示される。
 
 \hspace{10mm} \verb|Pointdata("1",[[1,2],[-2,3]]);|
-
-\hspace{5mm}この場合，幾何要素は作らずCinderellaの描画面では黒の点で表示される。
 
 (2) 作図した点A,Bについて，点データを作る。
 
@@ -556,7 +546,7 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 
 \hspace{5mm}Cinderellaの描画面上では既存の点A,Bに黒の点が重なって表示される。
 
-(3) Aの位置に大きさ4で点を作る。Ptsize(Setpt) の項を参照のこと。
+(3) Aの位置に大きさ4で点を作る。
 
 \hspace{10mm} \verb|Pointdata("1",A,["size=4"]);|
       
@@ -583,9 +573,7 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
  
  \begin{center} \input{Fig/pointdata} \end{center}
 
-注) Pointdata() は幾何点は作らない。画面上に幾何点を作るなら Putpoint() を用いる。
-
-付録の「\hyperlink{mkpttable}{点の作図についての比較表}」を参照のこと。
+注) 幾何点の有無など，付録の「\hyperlink{mkpttable}{点の作図についての比較表}」を参照のこと。
 
 %\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -724,6 +712,8 @@ optionsは，$x$座標の範囲をリストで与える。
 
     \verb|PutonSeg("P",A,B);|
 
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \vspace{\baselineskip}
 \hypertarget{reflectpoint}{}
 \item[関数]  Reflectpoint(点，対称点または対称軸)
@@ -731,11 +721,11 @@ optionsは，$x$座標の範囲をリストで与える。
 \item[説明]  点を指定された点または軸に関して対称移動した点の座標を返す。対称軸は[ 点1, 点2 ]で指定
 
 \vspace{\baselineskip}
+【例】点A〜Fを作図しておき，C〜FをAの鏡映の位置に配置する。
+
 \begin{layer}{150}{0}
 \putnotese{70}{10}{  \input{Fig/reflectpoint}}
 \end{layer}
-
-【例】点A〜Fを作図しておき，C〜FをAの鏡映の位置に配置する。
 
 \hspace{5mm} ＣはBに関してAと対称な点
 
@@ -813,7 +803,7 @@ optionsは，$x$座標の範囲をリストで与える。
     Letter([F,"e2","F("+F.x+","+F.y+")"]);
 \end{verbatim}
 \vspace{\baselineskip}
-          \begin{center} \input{Fig/scalepoint} \end{center}
+\begin{center} \input{Fig/scalepoint} \end{center}
 
 点A,B,Cをドラッグすると，インタラクティブにD,E,F の位置が変わる。
 
@@ -1087,7 +1077,7 @@ optionの働きの例
 \end{verbatim}
   Cinderellaの作図ツールで２点ABをとっておく。
 
-円A,Bの半径が同じ（たとえば0.5）であれば，\verb|Listplot([A,B],["Cutend=0.5"]);| でよい。
+円A,Bの半径が同じであれば，\verb|Listplot([A,B],["Cutend=0.5"]);| でよい。
 
 \vspace{\baselineskip}
 プロットデータは点の座標のリストである。したがって，プロットデータを自作してListplot()で表示することができる。
@@ -1118,7 +1108,8 @@ optionの働きの例
 \vspace{\baselineskip}
  リストの長さには制限がある。たとえば，タートルグラフィクスを用いたシェルピンスキーのギャスケットでは200くらいずつのリストに分割する。
  
- \hspace{20mm} \input{Fig/listplot2}
+ \hspace{20mm}\scalebox{0.9}{ \input{Fig/listplot2}}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{mksegments}{}
@@ -1149,11 +1140,11 @@ optionの働きの例
 
 その2：2点のリスト。点が座標でなく名称のときはnameは省略できる。
 
-点の座標は点の名前でもよい。点を座標で与える場合はnameは省略できない。リストを省略した場合は，描画範囲と同一の矩形を描く。
+点の座標は点の名前でもよい。点を座標で与える場合はnameは省略できない。
 
-その２のタイプでは，option として，"center" または "corner" がある。
+リストを省略した場合は，描画範囲と同一の矩形を描く。
 
-"center" のときは，中心と対角点（ 初期設定），"corner" のときは2点を対角点として解釈する。 
+その2のタイプでは，option として，"center" または "corner" がある。"center" のときは，中心と対角点（ 初期設定），"corner" のときは2点を対角点として解釈する。 
 
 以下にいくつか例を示す
 \begin{tabbing}
@@ -1229,13 +1220,13 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 
 オプションは
 
-"Num=n"  : 節点間の分割数（分点数 $-1$）を指定できる。（ 初期設定は10）
+"Num=n"  : 節点間の分割数（分点数 $-1$）を指定できる。 ベジェ曲線とスプライト曲線の関数は節点間が短い場合が多いので初期設定は10になっている。Plotdata()などと違い，大きい数（200など）を指定すると，全体の分割数が増大して描画時間がかかるようになってしまうので注意。
 
 \vspace{\baselineskip}
 【例】
 
 \begin{layer}{150}{0}
-\putnotese{60}{-15}{ \input{Fig/checkbe1}}
+\putnotese{60}{-10}{\scalebox{0.9}{ \input{Fig/checkbe1}}}
 \end{layer}
 
 2次ベジェ曲線
@@ -1245,52 +1236,53 @@ Bezier("1",[A,B],[C]);
 \vspace{20mm}
 
 \begin{layer}{150}{0}
-\putnotese{60}{-10}{ \input{Fig/checkbe2}}
+\putnotese{60}{-10}{\scalebox{0.9}{\input{Fig/checkbe2}}}
 \end{layer}
 
 3次ベジェ曲線
 
-Bezier("c",[A,B],[C,D]);
+Bezier("2",[A,B],[C,D]);
 
 \vspace{20mm}
 
 \begin{layer}{150}{0}
-\putnotese{60}{-10}{ \input{Fig/checkbe3}}
+\putnotese{60}{-10}{\scalebox{0.9}{ \input{Fig/checkbe3}}}
 \end{layer}
 
-ベジェ曲線をつなげる
+%ベジェ曲線をつなげる
+
+%Bezier("3",[A,B,C],[[D],[E,F]]);
+
+%\vspace{20mm}
+
+%\begin{layer}{150}{0}
+%\putnotese{60}{5}{ \input{Fig/checkbe4}}
+%\end{layer}
+
+%D,B,E を１直線上にとると，滑らかにつながる
+節点を増やす。2次と3次。
 
 Bezier("3",[A,B,C],[[D],[E,F]]);
 
 \vspace{20mm}
 
-\begin{layer}{150}{0}
-\putnotese{60}{5}{ \input{Fig/checkbe4}}
-\end{layer}
-
-D,B,E を１直線上にとると，滑らかにつながる
-
-Bezier("S",[A,B,C],[[D],[E,F]]);
-
-\vspace{20mm}
-
 全て同じ次数の場合，次のようにしてもよい．
 
-Bezier("name", [A,B,C,D], [E,F,G,H,K,L] );   
+Bezier("4", [A,B,C,D], [E,F,G,H,K,L] );   
 
 \begin{layer}{150}{0}
 \putnotese{20}{2}{\input{Fig/checkbe7}}
 \end{layer}
 
-\vspace{30mm}
+\vspace{35mm}
 
 オプションの例
 
-Bezier("1a",[A,B,C],[[D],[E,F]],["Num=3"]);
+Bezier("5",[A,B,C],[[D],[E,F]],["Num=3"]);
 
 \hspace{20mm}\input{Fig/checkbe5}
 
-Bezier("d5e",[A,B,C],[[D],[E,F]],["Num=200","da"]);
+Bezier("6",[A,B,C],[[D],[E,F]],["Num=40","da"]);
 
 \hspace{20mm}\input{Fig/checkbe6}
 
@@ -1625,6 +1617,10 @@ optionsは以下のものをリストで与える。省略した場合は実線�
     \begin{center} \input{Fig/ellipseplot1}\end{center}
 
   また，接線，法線を描かず，この楕円上に点D,E,・・をとり（個数は任意）次のスクリプトを書けば，何本かの光線が一方の焦点を出て他方の焦点に集まる様子を描くことができる。
+  
+\begin{layer}{150}{0}
+    \putnotese{70}{0}{\scalebox{0.9}{ \input{Fig/ellipseplot2}}}
+\end{layer}
 \begin{verbatim}
     Ellipseplot("1",[A,B,C]);
     Listplot([A,C,B]);
@@ -1633,8 +1629,7 @@ optionsは以下のものをリストで与える。省略した場合は実線�
     Expr([A,"s2","F_1",B,"s2","F_2"]);
 \end{verbatim}
 
-%\vspace{\baselineskip}
-    \begin{center}\scalebox{0.9}{ \input{Fig/ellipseplot2}}\end{center}
+\vspace{10mm}
 
 \hypertarget{hyperbolaplot}{}
 \item[関数]  Hyperbolaplot(name,点リスト ,定義域, options)
@@ -1658,7 +1653,7 @@ optionとして，"Asy=線種"  を与えると，漸近線を指定した線種
 
 \vspace{\baselineskip}
 \hspace{20mm} \scalebox{0.9}{\input{Fig/hyper1}}
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{parabolaplot}{}
@@ -1717,11 +1712,11 @@ Cinderellaの作図ツールに，焦点と準線で放物線を描くものが�
   Tangentplot("1","gr1para","x="+D.x);
   Tangentplot("2","gr1para","x="+E.x);
   Hatchdata("1",["iii"],[["gr1para","s"],["lntn1","n"],["lntn2","n"]]);
- \end{verbatim}
- 
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\end{verbatim}
 
-\vspace{\baselineskip}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%\vspace{\baselineskip}
 \hypertarget{ovaldata}{}
 \item[関数]  Ovaldata(name, 点リスト,options)
 \item[機能]  角を丸くした矩形を描く
@@ -2076,7 +2071,9 @@ options は線種が有効
  
  矢線は \verb|  Arrowdata(Q,P); | で表示している。矢線の始点がQ
 \vspace{\baselineskip}
-          \begin{center} \input{Fig/intlog}\end{center}
+\begin{center} \input{Fig/intlog}\end{center}
+
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{exprrot}{}
@@ -2146,17 +2143,20 @@ options は線種が有効
 
 とすることもできる。この場合は，微小な移動はされない。
 
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
+\newpage
 \end{description}
 % ====== マーキング ==============
 \subsubsection{マーキング}
 \begin{description}
 
 \hypertarget{anglemark}{}
-\item[関数]  Anglemark(点リスト , options)
-\item[機能]  点リスト[A,B,C]で示された角に弧の形状の角の印をつける。
-\item[説明]  optionsは次の通り。
+\item[関数]  Anglemark(name,点リスト , options)
+\item[機能]  点リストで示された角に弧の形状の角の印をつける。
+\item[説明]  Listplot() などと同様，点リストが点名の場合はnameは省略できる。
+
+optionsは次の通り。
 
 数値      角の印の大きさ。 初期設定は１
 
@@ -2182,9 +2182,11 @@ options は線種が有効
 
 \vspace{\baselineskip}
 \hypertarget{paramark}{}
-\item[関数]  Paramark(点リスト , options)
-\item[機能]  点リスト[A,B,C]で示された角に平行四辺形の形状の角の印をつける。
-\item[説明]  optionsは次の通り。
+\item[関数]  Paramark(name,点リスト , options)
+\item[機能]  点リストで示された角に平行四辺形の形状の角の印をつける。
+\item[説明]  Listplot() などと同様，点リストが点名の場合はnameは省略できる。
+
+optionsは次の通り。
 
 数値  角の印の大きさ。 初期設定は1
 
@@ -2194,11 +2196,12 @@ options は線種が有効
 
 "Expr=位置 , 文字"  : 位置を指定して文字を入れる。位置は頂点からの距離。
 
+\vspace{\baselineskip}
 \begin{layer}{150}{0}
-\putnotese{80}{0}{ \input{Fig/paramark}}
+\putnotese{85}{0}{ \input{Fig/paramark}}
 \end{layer}
 
-\vspace{\baselineskip}
+
 【例】三角形の内角に印をいれ，文字を書き込む。
 
 \begin{verbatim}
@@ -2206,15 +2209,16 @@ options は線種が有効
    Paramark([A,B,C]);
    Paramark([C,A,B],[3,"Expr=\alpha"]);
    Paramark([B,C,A],["dr,2","Expr=2,\theta"]);
+   
 \end{verbatim}
 
-※角の印には弧の形状のものもある。Anglemark() を参照のこと。\\
+※角の印には弧の形状のものもある。\hyperlink{anglemark}{Anglemark()} を参照のこと。\\
 
 \vspace{\baselineskip}
 \hypertarget{bowdata}{}
-\item[関数]  Bowdata(点リスト , options)
+\item[関数]  Bowdata(name,点リスト , options)
 \item[機能]  弓形を描く
-\item[説明]  点リストで与えられた2点を結ぶ弓形を描く。
+\item[説明]  点リストで与えられた2点を結ぶ弓形を描く。Listplot() などと同様，点リストが点名の場合はnameは省略できる。
 
 2点を反時計回りに回る方向に弓形を描く。
 
@@ -2297,7 +2301,7 @@ optionsは
 \vspace{\baselineskip}
 \hypertarget{htickmark}{}
 \item[関数]  Htickmark([横座標 , 方向 , 文字])
-\item[機能]  横軸に目盛を書く。
+\item[機能]  横軸に目盛と文字を書く。
 \item[説明]  引数は位置（横座標），方向，文字。複数点の情報を[ ]内にまとめて記入できる。方向を省略すると "s1"になる。微調整は描画面には反映されないので，PDFにして確認する。
 目盛の長さは \hyperlink{setmarklen}{Setmarklen()} で設定できる。
 
@@ -2325,7 +2329,7 @@ optionsは
 
 \hypertarget{vtickmark}{}
 \item[関数]  Vtickmark([横座標 , 方向 , 文字])
-\item[機能]  縦軸に目盛を書く。
+\item[機能]  縦軸に目盛と文字を書く。
 \item[説明]  Htickmarkと同様。縦軸に目盛を書く。方向を省略すると "w1"になる。
 
 \vspace{\baselineskip}
@@ -2359,18 +2363,6 @@ optionsは
 \subsection{プロットデータの操作}
 \begin{description}
 
-\hypertarget{changestyle}{}
-\item[関数]  Changestyle(PDリスト, options)
-\item[機能]  描画オプションを変更する
-\item[説明]  複数の図形の描画オプションを一括して変更する。
-
-\vspace{\baselineskip}
-【例】線分AB，円ABの線を破線にして\TeX に書き出さないようにする。
-
-\hspace{10mm} \verb|Changestyle(["sgAB","crAB"],["da","notex"]);|
-    
-
-\vspace{\baselineskip}
 \hypertarget{addgraph}{}
 \item[関数]  AddGraph(name ,プロットデータのリスト,option)
 \item[機能]  複数のプロットデータをまとめる
@@ -2398,9 +2390,18 @@ optionsは
 
 ここで，AddGraph()の引数に与えるプロットデータのリストで，点のプロットデータ pt1 を"[pt1]" としていることに注意。円のプロットデータが，点の座標のリストであるのに対し，点のプロットデータは一つの座標だけなので，このようにしてリスト化して渡す。
 
-\vspace{\baselineskip}
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
+\hypertarget{changestyle}{}
+\item[関数]  Changestyle(PDリスト, options)
+\item[機能]  描画オプションを変更する
+\item[説明]  複数の図形の描画オプションを一括して変更する。
+
+\vspace{\baselineskip}
+【例】線分AB，円ABの線を破線にして\TeX に書き出さないようにする。
+
+\hspace{10mm} \verb|Changestyle(["sgAB","crAB"],["da","notex"]);|
+    
 
 \vspace{\baselineskip}
 \hypertarget{invert}{}
@@ -2461,36 +2462,30 @@ optionsは線種      "dr, n"  , "da,m,n" , "do,m,n"
       Partcrv("1", P, Q, "crAB");
       Partcrv("2", Q, P, "crAB");
 \end{verbatim}
-\vspace{5mm}
-
-\begin{minipage}{45mm}
-\begin{center}
-\begin{center} \input{Fig/partcrv3} \end{center}
-part1 の図
-\end{center}
-\end{minipage}
-\hspace{10mm}
-\begin{minipage}{45mm}
-\begin{center}
-\begin{center} \input{Fig/partcrv4} \end{center}
-part2 の図
-\end{center}
-\end{minipage}
 \vspace{\baselineskip}
+\hspace{10mm} \input{Fig/partcrv3} \hspace{10mm} \input{Fig/partcrv4} 
+ 
+\hspace{25mm}part1 の図\hspace{45mm}part2 の図
+
 \vspace{\baselineskip}
 【例】放物線$y=x^2$が円で切り取られる部分を実線で描く。
+
+\begin{layer}{150}{0}
+\putnotese{85}{0}{\input{Fig/partcrv}}
+\end{layer}
 \begin{verbatim}
     Circledata("1",[[0,2],[0,0]],["da"]);
     Plotdata("1","x^2","x",["do"]);
     tmp=Intersectcrvs("cr1","gr1");
     Partcrv("2",tmp_2,tmp_1,"gr1",["dr,2"]);
+    
 \end{verbatim}
+
 \vspace{\baselineskip}
-                  \begin{center} \input{Fig/partcrv} \end{center}
 
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \hypertarget{enclosing}{}
 \item[関数]  Enclosing(name , PDリスト , [開始位置, 交点計算の許容限界1, 2])
 \item[機能]  複数の曲線から閉曲線を作る。
@@ -2517,7 +2512,7 @@ part2 の図
 
     時計回りで    \verb|Enclosing("1",["gr1","Invert(ln2)","Invert(ln1)"]);|
 
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{hatchdata}{}
@@ -2527,13 +2522,13 @@ part2 の図
   同じ名前のハッチデータがすでにある場合，"m"をつけるとハッチデータを強制的に更新することができる。
   
 \vspace{\baselineskip}
-【例】円の内部。(下図左)
+【例】円の内部。(次図左)
 \begin{verbatim}
     Circledata([A,B],["dr"]);
     Hatchdata("1",["i"],[["crAB"]],["dr,0.7"]);
 \end{verbatim}
 
-【例】3つの閉曲線の内側・外側のパターンが同一である領域（下図右）
+【例】3つの閉曲線の内側・外側のパターンが同一である領域（次図右）
 \begin{verbatim}
     Circledata([A,B],["dr"]);
     Paramplot("1","[4*cos(t),2*sin(t)]","t=[0,2*pi]");
@@ -2583,12 +2578,25 @@ part2 の図
      Enclosing("1",["gr2","Invert(gr1)"],[A,"nodisp"]);
      Hatchdata("1",["i"],[["en1"]]);
     );
+
 \end{verbatim}
-点Aをドラッグして曲線上を動かすと，\verb|if(!Isptselected(A),・・・| の効果により，その間は領域の斜線は引かれない。点A以外の画面上の適当な位置をクリックして，点Aが選択状態でなくなると斜線が引かれる。
+\begin{layer}{150}{0}
+\putnotese{80}{0}{\input{Fig/hatch5}}
+\end{layer}
 
-\begin{center}  \input{Fig/hatch5} \end{center}
+点Aをドラッグして曲線上を動かすと，
 
-引かれる斜線の向きや間隔を変えることもできる。間隔は実数で指定できる。
+\verb|if(!Isptselected(A),・・・| の効果により，
+
+その間は領域の斜線は引かれない。
+
+点A以外の画面上の適当な位置をクリックして，
+
+点Aが選択状態でなくなると斜線が引かれる。
+
+引かれる斜線の向きや間隔を変えることもできる。
+
+間隔は実数で指定できる。
 
 \vspace{\baselineskip}
 【例】円の内部または円と直線で区切られた図形
@@ -2622,7 +2630,9 @@ part2 の図
    Hatchdata("2",["iii"],[["crAB"],["ln1","s"],["ln2","s"]],[90,0.5]);
 \end{verbatim}
 
-\hspace{20mm}  \input{Fig/HatchZuKita9.tex} 
+\hspace{40mm}  \input{Fig/HatchZuKita9.tex} 
+
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{dotfilldata}{}
@@ -2659,65 +2669,64 @@ Partcrv() と Enclosing() で閉曲線を作って点を敷き詰める。
 
 \vspace{\baselineskip}
 \hypertarget{shade}{}
-\item[関数]  Shade(プロットデータのリスト , options)
+\item[関数]  Shade(("名前"), プロットデータのリスト , options)
 \item[機能]  閉曲線で囲まれた領域を塗りつぶす。
 \item[説明]  第１引数には，閉曲線を与える曲線分のプロットデータ名を並べる。
 
-  optionsは，Cinderellaの画面上での描画色，濃さをリストで与える。
+デフォルトでは，Joincrvsを使って閉曲線を作っている。ただし，プロットデータのリストに
+"Invert()"が入っていれば，Enclosingを使う。
+
+optionの Color は，Cinderellaの画面上での描画色をリストで与える。濃さを指定したい場合は色名やRGBではなくCMYKにする。
+
+optionsには，他に，「Enclosingを使うか（''Enc=y/n'')」，Enclosingのときの開始点，描画色　がある。
   
-  閉曲線を作るには，Enclosing() や Joincrvs() を使う方法がある。
+複数のShadeを使うときは，名前をつける。
 
 \vspace{\baselineskip}
-【例】$y=2\sin x$のグラフと直線$y=1$ とで囲まれた部分に0.5の濃さで色を塗る。
+【例】$y=2\sin x$のグラフと直線$y=1$ とで囲まれた部分に黒0.2の濃さで色を塗る。
 \begin{verbatim}
     Setax([7,"nw"]);
     Plotdata("1","2*sin(x)","x",["Num=100"]);
     Lineplot("1",[[0,1],[1,1]]);
     Enclosing("1",["ln1","Invert(gr1)"],[[2,1],"nodisp"]);
-    Shade(["en1"],[0.5]);
+    Shade(["en1"],["Color=[0,0,0,0.2]"]);
 \end{verbatim}
 \begin{center} \input{Fig/shade} \end{center}
 
-正弦曲線，直線とは別に，閉曲線を作るための曲線 gr2 と線分 sg1 を描いている。
-
-正弦曲線と直線の交点は簡単に計算できるので，次のように Partcrv() で部分曲線を求めてもよい。
+正弦曲線と直線の交点は簡単に計算できるので，次のように Partcrv() で部分曲線を求め，Enclosingで閉曲線を求めずにShadeを使ってもよい。
 \begin{verbatim}
     Plotdata("1","2*sin(x)","x",["Num=100"]);
     Lineplot("1",[[0,1],[1,1]]);
     Partcrv("1",[5*pi/6,1],[13*pi/6,1],"gr1");
-    Shade(["part1","ln1"],[0.5]);
+    Shade(["ln1","Invert(part1)"],[[2.5,1],"Color=0.2*[1,0,0,1]"]);
 \end{verbatim}
 
-画面上は黒で塗られるだけなので，画面，TeXとも薄い灰色にしたい場合は，optionをYMCKの色指定で \verb|["Color=[0.2,0.2,0.2,0.2"]| のようにすればよい。
 
 \vspace{\baselineskip}
 【例】2つの放物線で囲まれた部分を赤で塗る。
 \begin{verbatim}
-    Plotdata("01","x^2-1","x",["Num=100"]);
-    Plotdata("02","x^2/2","x",["Num=100"]);
-    Plotdata("1","x^2-1","x=[-sqrt(2),sqrt(2)]",["Num=100"]);
-    Plotdata("2","x^2/2","x=[-sqrt(2),sqrt(2)]",["Num=100"]);
-    Shade(["gr2","gr1"],["Color=[1,0,0]","alpha->0.4"]);
+    Plotdata("1","x^2-1","x=[-3,3]");
+    Plotdata("2","x^2/2","x=[-3,3]");
+    Shade(["gr2","Invert(gr1)"],[[-1.5,1],"Color=[1,0,0]","alpha->0.4"]);
 \end{verbatim}
 
-ここで，option の \verb|alpha->0.4| は画面上の色濃度指定。
+ここで，\verb|alpha->0.4| は画面上の色濃度指定。
 
 \vspace{\baselineskip}
 \begin{center}  \input{Fig/shade01} \end{center}
   
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【例】同心円をリング状に塗る。
 
-  下図右のように，同心円をリング状に塗るが，円2つだけでは閉曲線はできない。そこで，左図のように，円の描き始めを線分で結んで閉曲線を作る。これらの線は非表示にしたいので，\verb|"nodisp"|オプションをつけておく。なお，点Aを適当な位置に作図しておく。
+  下図右のように，同心円をリング状に塗るが，円2つだけでは閉曲線はできない。そこで，左図のように，円の描き始めを線分で結んで閉曲線を作る。このとき，向きを考えて，Joincrvsで結ぶように，''Enc=n''をつける。線分は非表示にしたいので，\verb|"nodisp"|オプションをつけておく。なお，点Aを適当な位置に作図しておく。
+
 \begin{verbatim}
     r1=2;
     r2=1.5;
     Circledata("1",[A,A+[r1,0]]);
     Circledata("2",[A,A+[r2,0]]);
     Listplot("1",[A+[r1,0],A+[r2,0]],["nodisp"]);
-    Listplot("2",[A+[r2,0],A+[r1,0]],["nodisp"]);
-    Joincrvs("1",["cr1","sg1","Invert(cr2)","sg2"],["nodisp"]);
-    Shade(["join1"],["Color=green"]);
+    Shade(["cr1","sg1","Invert(cr2)","Invert(sg1)"],["Enc=n","Color=green"]);
 \end{verbatim}
 \begin{center}  \input{Fig/greenring} \end{center}
 
@@ -2725,6 +2734,7 @@ Partcrv() と Enclosing() で閉曲線を作って点を敷き詰める。
 
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
+\vspace{\baselineskip}
 \hypertarget{reflectdata}{}
 \item[関数]  Reflectdata(name , プロットデータ , 対称点または対称軸,options)
 \item[機能]  プロットデータの鏡映を作成
@@ -2733,8 +2743,6 @@ Partcrv() と Enclosing() で閉曲線を作って点を敷き詰める。
   対称点は座標または，点の識別名。ただし，対称点を座標で示すときは要素がひとつのリストにする。
   
   対称軸はリスト[ 点1, 点2 ]  で指定。
-  
-  optionsは線種
 
 \vspace{\baselineskip}
 【例】中心A , 半径ABの円を描き，そのプロットデータを用いて鏡映を描く。
@@ -2765,26 +2773,20 @@ Partcrv() と Enclosing() で閉曲線を作って点を敷き詰める。
   中心とoptionsはまとめてリストで与える。
 
 \begin{spacing}{1.5}
-【例】中心A , 半径ABの円を描き，
+【例】中心A , 半径ABの円を描き，次のように回転して線種を変えて描く。
 
- 点Cを中心に$\dfrac{\pi}{2} $だけ回転した円
- 
- 点(1,5)を中心に$\dfrac{\pi}{3}$ だけ回転し，線を太くした円
- 
- 点Dを中心に $-\dfrac{\pi}{3} $だけ回転し，破線にした円
- 
-をそれぞれ描く。
+ 点Cを中心に$\dfrac{\pi}{2} $，点(1,5)を中心に$\dfrac{\pi}{3}$ ， 点Dを中心に $-\dfrac{\pi}{3} $
 \end{spacing}
- 作成されるプロットデータの名称を rt1 ,rt2 ,rt3 とする。
-
 \begin{verbatim}
-      Circledata([A,B]);
-      Rotatedata("1","crAB",pi/2,[C]);
-      Rotatedata("2","crAB",pi/3,[[1,5],"dr,2"]);
-      Rotatedata("3","crAB",-pi/3,[D,"da"]);
+   Circledata([A,B]);
+   Rotatedata("1","crAB",pi/2,[C]);
+   Rotatedata("2","crAB",pi/3,[[1,5],"dr,2"]);
+   Rotatedata("3","crAB",-pi/3,[D,"da"]);
 \end{verbatim}
 \vspace{\baselineskip}
-  \begin{center} \input{Fig/rotatedata} \end{center}
+\begin{center}\scalebox{0.9}{ \input{Fig/rotatedata} }\end{center}
+ 
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{scaledata}{}
@@ -2900,6 +2902,7 @@ Intersectcrvs() との違いは，パラメータがあるかどうかである�
     p2=[[[-1,1],17.68,1],[[2,4],42.66,1]]
 \end{verbatim}
 と表示される。
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{nearestpt}{}
@@ -2959,6 +2962,8 @@ Intersectcrvs() との違いは，パラメータがあるかどうかである�
 \end{verbatim}
 
 注）第１引数は座標なので，\verb|A| ではなく \verb|A.xy| としなければならない。
+
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{numptcrv}{}
@@ -3038,11 +3043,9 @@ Intersectcrvs() との違いは，パラメータがあるかどうかである�
 によって，点Aを中点に置くことができる。
 
 \vspace{\baselineskip}
- \begin{center} \input{Fig/pointoncrv} \end{center}
+ \begin{center} \scalebox{0.9}{\input{Fig/pointoncrv}} \end{center}
 
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \hypertarget{ptcrv}{}
 \item[関数]  Ptcrv(n,プロットデータ)
 \item[機能]  曲線プロットデータのn 番目の節点を返す
@@ -3085,10 +3088,10 @@ Intersectcrvs() との違いは，パラメータがあるかどうかである�
   Listplot("1",[Ptstart(gr2),Ptend(gr2)]);
   Letter([A,"w2","A",B,"e2","B"]);
 \end{verbatim}
-%\vspace{\baselineskip}
+\vspace{\baselineskip}
 \begin{center} \input{Fig/ptstart} \end{center}
 
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{readoutdata}{}
 \item[関数]  ReadOutData(ファイル名）
@@ -3149,6 +3152,7 @@ start//
 [[0.87631,-0.48175],[0.92978,-0.36812],・・,[1,0]]//
 end////
 \end{verbatim}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{extractdata}{}
@@ -3160,8 +3164,8 @@ end////
     Extractdata("gr1",["da"]);
 \end{verbatim}
 
-
-\newpage
+\end{description}
+%\newpage
 % ======== 計算 =======================
 \subsection{計算}
 
@@ -3248,8 +3252,11 @@ end////
 【例】\verb|x=Inversefun("sin(x)","x=[0,pi/2]",0.5);|
 
 実行すると $x=0.5236$ となる。
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
+
+\newpage
 %==========値の取得と入出力=========================
 \subsection{値の取得と入出力}
 
@@ -3335,7 +3342,7 @@ optionは，幅または高さの指定。
 
 コンソールに 12.558097 が表示される。
 
-
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
 \newpage
@@ -3487,6 +3494,8 @@ optionとして，ラベルのスキップ値（スキップするところは�
 
   ※r0,c0,・・は画面に表示される番号
 
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \vspace{\baselineskip}
 \hypertarget{putcol}{}
 \item[関数]  PutcoL (列番号, 文字位置，文字列リスト)
@@ -3536,29 +3545,30 @@ optionとして，ラベルのスキップ値（スキップするところは�
 \vspace{\baselineskip}
   【例】2次関数のグラフと2次方程式の判別式の関係
   
-セルの中にグラフを描く例。実際には，セルの位置にグラフを描いているだけ。
+セルの中にグラフを描く例。実際には，セルの位置にグラフを描く。
 
-点A〜Gは作図しておく。
-    
+x軸を描くための点A〜Fは作図ツールでとっておく。
+
+スクリプトを実行して表ができたら，制御点をドラッグしてサイズを調整し，点A〜Ｆもドラッグして軸と放物線の共有状況を示すようにする。
+
+\vspace{\baselineskip}
 \begin{verbatim}
-    Tabledata("",3,3,120,90,[],["dr,2"]);
+    Tabledata("",3,3,120,60,[],["dr,2"]);
     ChangeTablestyle(["r1c0c3"],["dr"]);
     ChangeTablestyle(["r2c0c3"],["da"]);
-    Plotdata("1","(x-2)^2+1.5","x=[0.5,3.5]");
-    Plotdata("2","(x-6)^2+2","x=[4.5,7.5]");
-    Plotdata("3","(x-10)^2+2.5","x=[8.5,11.5]");
+    Plotdata("1","(x-2)^2+0.5","x=[0.5,3.5]");
+    Plotdata("2","(x-6)^2+1","x=[4.5,7.5]");
+    Plotdata("3","(x-10)^2+1.5","x=[8.5,11.5]");
     Listplot([A,B]);
     Listplot([C,D]);
     Listplot([E,F]);
     Putrowexpr(1,"c",["D>0","D=0","D<0"]);
     Putrow(2,"c",["2点で交わる","接する","共有点なし"]);
-    Letter(G,"c","判別式と$x$軸の交点");
 \end{verbatim}
 
 \vspace{\baselineskip}
- \begin{center} \input{Fig/tablesample1} \end{center}
+ \begin{center}\scalebox{0.9}{ \input{Fig/tablesample1}} \end{center}
 
-    ※作表後，縦の幅は制御点をドラッグして調整している。
 
 \vspace{\baselineskip}
 【例】増減表とグラフ
@@ -3609,7 +3619,7 @@ nelarrow,nerarrow,selarrow,serarrow,NELarrow,NERarrow,SELarrow,SERrarrow があ�
 
 なお，これらの矢印はCindyTeXにはないので，Cinderellaの描画面には表示されない。
 
-\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
   
 \vspace{\baselineskip}
 \hypertarget{tgrid}{}
@@ -3631,77 +3641,16 @@ nelarrow,nerarrow,selarrow,serarrow,NELarrow,NERarrow,SELarrow,SERrarrow があ�
 
 \end{description}
 
-\newpage
+%===================================================
+\subsection{その他}
 
-
-\vspace{\baselineskip}
-\hypertarget{sprintf}{}
-\item[関数]  Sprintf(実数,長さ)
-\item[機能]  小数点以下の長さを固定した文字列に変換
-\item[説明]  実数を，小数点n位までの数とした文字列に変換する
-
-\vspace{\baselineskip}
-【例】円周率
-
- Sprintf(pi,2) は 3.14 を返す
-
- Sprintf(pi,7) は 3.1415927 を返す
-    
-注）pi は Cindyscriptの予約変数で，円周率を表す。\vspace{\baselineskip}
+\begin{description}
 
 %\vspace{\baselineskip}
 %\hypertarget{makeshell}{}
 %\item[関数]  Makeshell(ファイル名) / Makebat(ファイル名)
 %\item[機能]  Macの場合はシェルファイル，Windowsの場合はバッチファイルを書き出す。
 %\item[説明]  書き出されるファイルについては，figいったんフォルダを空にしてから確かめられたい。
-
-
-\vspace{\baselineskip}
-\hypertarget{textformat}{}
-\item[関数]  Textformat(数，桁数)
-\item[機能]  小数点以下の桁数を指定して数を文字列化する。
-\item[説明]  第１引数は数のリストでもよい。数のリストの場合は，戻り値は，対応する数値を指定係数にした後，リストを文字列化する。Cindyscriptの組み込み関数にも，format()という同様の関数があるが，format() は文字列のリストを返す。
-
-\vspace{\baselineskip}
-【例】円周率を小数点以下5位までで文字列化する。
-
-\hspace{10mm} \verb|Textformat(pi,5);|
-\hspace{10mm} \verb|format(pi,5);|
-    
-戻り値は，いずれも \verb|"3.14159"|
-
-\vspace{\baselineskip}
-【例】第１引数がリストのときの，format() との戻り値の違い。
-
-\hspace{10mm} \verb|  dt=[1/6,0.5];|\\
-\hspace{10mm} \verb|  Textformat(dt,4); | // 戻り値は "[ 0.1667 , 0.5 ]" \\
-\hspace{10mm} \verb|  format(dt,4);     | // 戻り値は [ "0.1667" , "0.5" ] \\
-
-    
- \vspace{\baselineskip}
-\hypertarget{viewtex}{}
-\item[関数]  Viewtex()
-\item[機能]  \TeX のソースファイルを書き出す。引数なし。
-\item[説明]  グローバル変数Fheadで定義したファイル名に "main" を付加した\TeX のソースファイルとバッチファイル（Macの場合はシェルファイル）を作成する。
- 
-\vspace{\baselineskip}
-\hypertarget{workprocess}{}
-\item[関数]  Workprocess(）
-\item[機能]  作図の経過を取得する
-\item[説明]  作図ツールを用いた作図の経過を取得する。
-
-  \verb|println(Workproccess());|
-  
-  とすると，コンソールに作図手順が表示される。
-
-\end{description}
-
-\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\newpage
-
-%===================================================
-\subsection{その他}
-\begin{description}
 
 \hypertarget{assign}{}
 \item[関数]  Assign(文字列，文字，文字）
@@ -3727,15 +3676,15 @@ nelarrow,nerarrow,selarrow,serarrow,NELarrow,NERarrow,SELarrow,SERrarrow があ�
         Plotdata(text(t),Assign("b*x-b^2","b",cb),"x");
      );
 \end{verbatim}
- \vspace{\baselineskip}
-          \begin{center} \input{Fig/assign} \end{center}
+%\vspace{\baselineskip}
+\begin{center} \input{Fig/assign} \end{center}
 \vspace{\baselineskip}
   【例】文字で表された $x$ と $y$ の係数をまとめて数値で置き換える。
 \begin{verbatim} 
      Assign("a*x^2+b*x",["a",1,"b",2]);
 \end{verbatim}
 
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 
@@ -3862,6 +3811,57 @@ optionは，マージン（余白）と平行移動量。指定しない場合�
                                       
 なお，座標軸を表示する場合，右側は最低3mmの余白を設定しないと軸の文字が入らない。
 
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\vspace{\baselineskip}
+\hypertarget{help}{}
+\item[関数]  Help(文字列）
+\item[機能]  関数の使用例を取得する
+\item[説明]  文字列で始まる関数の使用例をコンソールに表示する。
+
+\hspace{10mm} \verb|println(Help("L"));|
+    
+  のようにすると，コンソールに，次のように「L」で始まる関数の使用例が表示される。
+\begin{verbatim}
+    Letter([C,"c","Graph of $f(x)$"]); 
+    Letter([C,"c","xy"],["size->30"]); 
+         文字を書き込む 
+    Letterrot(C,B-A,"AB"); 
+    Letterrot(C,B-A,"t0n5","AB"); 
+    Letterrot(C,B-A,0,5,"AB"); 
+         傾いた文字を書き込む 
+         　　・・・・
+\end{verbatim}
+
+\vspace{\baselineskip}
+\hypertarget{helpkey}{}
+\item[関数]  Helpkey(文字列）
+\item[機能]  関数の使用例をキーワードで検索する
+\item[説明]  文字列に与えたキーワードで関数の使用例を検索し，コンソールに表示する。
+
+\vspace{\baselineskip}
+【例】\verb|Helpkey("直線");|  とすると，コンソールに次のように表示される。
+\begin{verbatim}
+      IntersectsgpL("",[p1,p2],[p3,p4,p5],"draw"); 
+      IntersectsgpL("R","P-Q","A-B-C"); 
+      IntersectsgpL("R","P-Q","A-B-C","put");
+           空間の直線と平面の交点
+      Lineplot("1",[[2,1],[3,3]]);
+         　　・・・・
+\end{verbatim}
+
+\vspace{\baselineskip}
+\hypertarget{indexall}{}
+\item[関数]  Indexall(str1,str2);
+\item[機能]  文字列 str1 から str2 を検索しその位置をすべて返す
+\item[説明]  Cindyscriptの indexof() の拡張版。indexof() が最初に見つかった位置を返すのに対し，Indexall()は存在する位置をすべてリストにして返す。
+
+\vspace{\baselineskip}
+【例】str="abcabcabc" から "b"を検索する。
+
+\verb|indexof(str,"b")| では，2 が返る。
+
+\verb|Indexall(str,"b")| では，[2,5,8]が返る。
 
 \vspace{\baselineskip}
 \hypertarget{isptselected}{}
@@ -3918,6 +3918,42 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
+\hypertarget{sprintf}{}
+\item[関数]  Sprintf(実数,長さ)
+\item[機能]  小数点以下の長さを固定した文字列に変換
+\item[説明]  実数を，小数点n位までの数とした文字列に変換する
+
+\vspace{\baselineskip}
+【例】円周率
+
+ Sprintf(pi,2) は 3.14 を返す
+
+ Sprintf(pi,7) は 3.1415927 を返す
+    
+注）pi は Cindyscriptの予約変数で，円周率を表す。\vspace{\baselineskip}
+
+\vspace{\baselineskip}
+\hypertarget{textformat}{}
+\item[関数]  Textformat(数，桁数)
+\item[機能]  小数点以下の桁数を指定して数を文字列化する。
+\item[説明]  第１引数は数のリストでもよい。数のリストの場合は，戻り値は，対応する数値を指定係数にした後，リストを文字列化する。Cindyscriptの組み込み関数にも，format()という同様の関数があるが，format() は文字列のリストを返す。
+
+\vspace{\baselineskip}
+【例】円周率を小数点以下5位までで文字列化する。
+
+\hspace{10mm} \verb|Textformat(pi,5);|
+\hspace{10mm} \verb|format(pi,5);|
+    
+戻り値は，いずれも \verb|"3.14159"|
+
+\vspace{\baselineskip}
+【例】第１引数がリストのときの，format() との戻り値の違い。
+
+\hspace{10mm} \verb|  dt=[1/6,0.5];|\\
+\hspace{10mm} \verb|  Textformat(dt,4); | // 戻り値は "[ 0.1667 , 0.5 ]" \\
+\hspace{10mm} \verb|  format(dt,4);     | // 戻り値は [ "0.1667" , "0.5" ] \\
+
+\vspace{\baselineskip}
 \hypertarget{texcom}{}
 \item[関数]  Texcom(\TeX コード）
 \item[機能]  \TeX のコードを書き出す
@@ -3960,54 +3996,20 @@ ReadOutData("filename.txt") でデータを読み込むと，そのデータに�
 %\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
-\hypertarget{help}{}
-\item[関数]  Help(文字列）
-\item[機能]  関数の使用例を取得する
-\item[説明]  文字列で始まる関数の使用例をコンソールに表示する。
-
-\hspace{10mm} \verb|println(Help("L"));|
-    
-  のようにすると，コンソールに，次のように「L」で始まる関数の使用例が表示される。
-\begin{verbatim}
-    Letter([C,"c","Graph of $f(x)$"]); 
-    Letter([C,"c","xy"],["size->30"]); 
-         文字を書き込む 
-    Letterrot(C,B-A,"AB"); 
-    Letterrot(C,B-A,"t0n5","AB"); 
-    Letterrot(C,B-A,0,5,"AB"); 
-         傾いた文字を書き込む 
-         　　・・・・
-\end{verbatim}
-
-\vspace{\baselineskip}
-\hypertarget{helpkey}{}
-\item[関数]  Helpkey(文字列）
-\item[機能]  関数の使用例をキーワードで検索する
-\item[説明]  文字列に与えたキーワードで関数の使用例を検索し，コンソールに表示する。
-
-\vspace{\baselineskip}
-【例】\verb|Helpkey("直線");|  とすると，コンソールに次のように表示される。
-\begin{verbatim}
-      IntersectsgpL("",[p1,p2],[p3,p4,p5],"draw"); 
-      IntersectsgpL("R","P-Q","A-B-C"); 
-      IntersectsgpL("R","P-Q","A-B-C","put");
-           空間の直線と平面の交点
-      Lineplot("1",[[2,1],[3,3]]);
-         　　・・・・
-\end{verbatim}
-
-\vspace{\baselineskip}
-\hypertarget{indexall}{}
-\item[関数]  Indexall(str1,str2);
-\item[機能]  文字列 str1 から str2 を検索しその位置をすべて返す
-\item[説明]  Cindyscriptの indexof() の拡張版。indexof() が最初に見つかった位置を返すのに対し，Indexall()は存在する位置をすべてリストにして返す。
-
-\vspace{\baselineskip}
-【例】str="abcabcabc" から "b"を検索する。
-
- \verb|indexof(str,"b")| では，2 が返る。
+\hypertarget{viewtex}{}
+\item[関数]  Viewtex()
+\item[機能]  \TeX のソースファイルを書き出す。引数なし。
+\item[説明]  グローバル変数Fheadで定義したファイル名に "main" を付加した\TeX のソースファイルとバッチファイル（Macの場合はシェルファイル）を作成する。
  
- \verb|Indexall(str,"b")| では，[2,5,8]が返る。
+\vspace{\baselineskip}
+\hypertarget{workprocess}{}
+\item[関数]  Workprocess(）
+\item[機能]  作図の経過を取得する
+\item[説明]  作図ツールを用いた作図の経過を取得する。
+
+\verb|println(Workproccess());|
+  
+  とすると，コンソールに作図手順が表示される。
 
 \vspace{\baselineskip}
 \hypertarget{op}{}
@@ -4040,6 +4042,7 @@ Cindyscriptの アンダーバーの演算子 (list\_n , str\_n) と同様。
 %第11節 他の数式処理ソフトとの連携  =============================
 \section{他の数式処理ソフトなどとの連携}
 \subsection{Rとの連携}
+
 Rは主に統計解析のためのソフトウェアで，  binorm（二項分布），pois（ポアソン），unif（一様分布），chisq（カイ2乗），f（F分布），t（t分布）など，多くの確率分布をサポートしている。
 
   \ketcindy では，kc.bat/shによってコマンドをRに渡し，結果をテキストファイルで受け取る。このとき，Rとのやりとりで，次のようなファイルが作業ディレクトリに作成される。
@@ -4061,7 +4064,9 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
   "r" のとき，すでにあるデータファイルを読み込む。
   
 \vspace{\baselineskip}
+
 \begin{description}
+
 \hypertarget{boxplot}{}
 \item[関数]  Boxplot(名前,データ,垂直位置,高さ,option)
 \item[機能]  箱ひげ図を描く
@@ -4074,7 +4079,7 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
     dt1=apply(1..100,5*random());
     Boxplot("1",dt1,1,1/2);
 \end{verbatim}
-
+\vspace{\baselineskip}
 \hspace{20mm} \input{Fig/boxplot01}
 
 \vspace{\baselineskip}
@@ -4099,7 +4104,7 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
     Framedata("1",[A,B],["corner"]);
     Rulerscale(A,["r",0,6,1],["f",1,"\mbox{dt1}",3,"\mbox{dt2}"]);
 \end{verbatim}
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
  \begin{center} \input{Fig/boxplot} \end{center}
 
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
@@ -4296,14 +4301,14 @@ Aはグラフ上を動かすことができて，Bはそれに伴って動く。
     PlotdataR("1","dnorm(x,10*0.4,sqrt(10*0.4*0.6))","x=[0,10]",["do"]);
 \end{verbatim}
 \vspace{\baselineskip}
-    \begin{center} \input{Fig/binvsnormal} \end{center}
+\begin{center} \scalebox{0.9}{\input{Fig/binvsnormal}} \end{center}
 
 【例】ポアソン分布および幾何分布のグラフ。
 \begin{verbatim}
 PlotdiscR("2","dpois(k,4)","k=[0,10]");
 PlotdiscR("3","dgeom(k,0.3)","k=[0,10]");
 \end{verbatim}
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \hypertarget{readcsv}{}
@@ -4350,7 +4355,8 @@ Cは相関係数と回帰直線の式を表示する点としてCinderellaの作
  で表示枠に目盛を打っている。"r" は等幅，"f"は Tickmark  と同じ指定。
  
 \vspace{\baselineskip}
-          \begin{center} \input{Fig/scatter} \end{center}
+ \begin{center} \input{Fig/scatter} \end{center}
+
 \end{description}
 \newpage
 
@@ -4665,7 +4671,7 @@ Mxtex() を用いて，Mxfun()の結果の mx1をTeX書式にして表示する�
 \end{verbatim}
 が表示される。
 
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{mxtex}{}
 \item[関数]  Mxtex(name,式)
@@ -4705,7 +4711,7 @@ Cinderellaの描画面では次のように表示される。
 \vspace{\baselineskip}
 出力したTeX挿入図では次のようになる。
 
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \input{Fig/mxtex02} 
 
 なお，文字列を置換するのに，\verb|Assign(form,["frac","dfrac"])| ではなく，
@@ -4716,7 +4722,7 @@ Cindyscriptの文字列の関数 replace を用いて，
       
 としてもよい。
 
-\vspace{10mm}
+%\vspace{10mm}
 
 \vspace{\baselineskip}
 【例】2次関数のグラフを表示し，$x$軸との交点の$x$座標を表示する。
@@ -5228,8 +5234,9 @@ opA  \> animate.sty のためのオプション。 \\
 
 ひな形にある Flip ボタンに割り当てられており，通常はあらためて設定せずそのまま使えばよい。
 
-
 \end{description}
+
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \subsection{制作例}
 

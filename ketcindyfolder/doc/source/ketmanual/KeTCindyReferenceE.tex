@@ -2198,25 +2198,24 @@ the surrounded region is filled with dots.
 
 %-----------Shade---------------------------------
 \begin{cmd}{Shade}{shade}
-\itemket{Usage}Shade(list of PD, options);
-\itemket{Description}Generic functio to fill a domain surrounded by a closed curve.
-\itemket{Details}The options are color and density.
-\itemket{Examples}\mbox{}
-
+\itemket{Usage}Shade(("name"),list of PD, options);
+\itemket{Description}This function fills a domain surrounded by a closed curve.
+\itemket{Details}\mbox{}\\
+If "Invert" is used in some PD, \verb|Enclosing| is used, if not, \verb|Joincrvs| is used as default. 
+The options are use of enclosing("Enc=y/n") and color.
+\itemket{Examples}\mbox{}\\
 \verb|Setax([7,"nw"]);|\\
 \verb|Plotdata("1","2*sin(x)","x",["Num=100"]);|\\
 \verb|Lineplot("1",[[0,1],[1,1]]);|\\
-\verb|Enclosing("1",["ln1","Invert(gr1)"],[[2,1],"nodisp"]);|\\
-\verb|Shade(["en1"],["Color=[0,0,1]",0.5]);|
+\verb|Shade(["ln1","Invert(gr1)"],[[2.5,1],"Color=0.2*[0,0,0,1]"]);|
 
 \begin{center}
-\input{Fig/shadeE}
+\input{Fig/shade}
 \end{center}
 
-\verb|Plotdata("1","x^2-1","x");|\\
-\verb|Plotdata("2","x^2/2","x");|\\
-\verb|Enclosing("1",["gr1","Invert(gr2)"],[[-1,1],"nodisp"]);|\\
-\verb|Shade(["en1"],["Color=red"]);|
+\verb|Plotdata("1","x^2-1","x=[-3,3]");|\\
+\verb|Plotdata("2","x^2/2","x=[-3,3]");|\\
+\verb|Shade("1",["gr2","Invert(gr1)"],[[-1.5,1],"Color=[1,0,0]","alpha->0.4"]);|
 
 \begin{center}
 \input{Fig/shade01E}
@@ -2227,9 +2226,7 @@ the surrounded region is filled with dots.
 \verb|Circledata("1",[A,A+[r1,0]]);|\\
 \verb|Circledata("2",[A,A+[r2,0]]);|\\
 \verb|Listplot("1",[A+[r1,0],A+[r2,0]],["nodisp"]);|\\
-\verb|Listplot("2",[A+[r2,0],A+[r1,0]],["nodisp"]);|\\
-\verb|Joincrvs("1",["cr1","sg1","Invert(cr2)","sg2"],["nodisp"]);|\\
-\verb|Shade(["join1"],["Color=green"]);|
+\verb|Shade(["cr1","sg1","Invert(cr2)","Invert(sg1)"],["Enc=n","Color=green"]);|
 
 \begin{center}
 \input{Fig/greenring}

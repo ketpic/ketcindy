@@ -35,11 +35,14 @@
 \hypertarget{ketinit}{}
 \item[関数]  Ketinit(options)
 \item[機能]  \ketcindy を初期化する。平面図形ではDrawスロットに，空間図形ではInitialization スロットの冒頭に記述する必要がある。
-\item[説明]  opution 縦方向の倍率と描画領域を設定する。通常は不要で，\verb|Ketinit()| だけでよい。\\
+\item[説明]  option 作業サブフォルダ，縦方向の倍率と描画領域を設定する。\\
+\phantom{option }通常は不要で，\verb|Ketinit()| だけでよい。\\
 
 【例】
 
-\verb|Ketinit()|   ：倍率１，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$（ 初期設定）
+\verb|Ketinit()|   ：サブフォルダ\verb|"fig"|，倍率１，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$
+
+\verb|Ketinit("")| ： サブフォルダはcindyファイルと同じ
 
 \verb|Ketinit(2)| ： 倍率2，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$
 
@@ -2519,7 +2522,9 @@ optionsは線種      "dr, n"  , "da,m,n" , "do,m,n"
 \item[関数]  Hatchdata(name , 方向リスト , プロットデータ , options)
 \item[機能]  閉曲線の内部に斜線を引く。
 \item[説明]  引数は，曲線名，内部外部のパターンを与える''i''，''o''の文字列，閉曲線を与える曲線と領域の内部を定める方向のリストとオプション。\\
-  同じ名前のハッチデータがすでにある場合，"m"をつけるとハッチデータを強制的に更新することができる。
+オプション（カッコ内はデフォルト値）\\
+　角度(45)，間隔(1)，\verb|"Max=(20)"| 斜線の最大本数，\\
+　\verb|"Out=y/m/r/n (n)"| Rを呼び出して外部ファイルを作るか
   
 \vspace{\baselineskip}
 【例】円の内部。(次図左)
@@ -7385,7 +7390,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{cindyname}{Cindyname()}    \>作図しているファイル名を取得する。\\
 \hyperlink{colorcode}{Colorcode(文字1，文字2,color)}  \>カラーコードの変換\\
 \hyperlink{dqq}{Dqq(文字列)}  \>文字列の前後に\verb|"|をつける。\\
-\hyperlink{facdtorial}{Factorial(n)}  \>nの階乗を計算する。\\
+\hyperlink{factorial}{Factorial(n)}  \>nの階乗を計算する。\\
 \hyperlink{norm}{Norm(ベクトル)}  \>ベクトルの大きさを計算する。\\
 \hyperlink{figpdf}{Figpdf(option)} \>出力枠サイズのPDFを作る\\
 \hyperlink{help}{Help(str)}    \>コマンドヘルプを表示する\\
@@ -7413,7 +7418,7 @@ Cinderellaで使っている用語に次のものがある。
 \vspace{\baselineskip}
 【Maximaとの連携】\\
 \hyperlink{calcbyM}{CalcbyM(name,list,option)}  \>Maximaのスクリプトを実行する\\
-\hyperlink{example}{Example("Mxfun",文字)}  \>Mxfunの使用例を表示\\
+%\hyperlink{example}{Example("Mxfun",文字)}  \>Mxfunの使用例を表示\\
 \hyperlink{mxbatch}{Mxbatch(list)}  \>Maximaの外部スクリプト用コマンドを作る\\
 \hyperlink{mxfun}{Mxfun(name,式,list,option)}  \>Maximaの関数を実行する\\
 \hyperlink{mxtex}{Mxtex(num,式)}  \>式をTeX書式にする\\

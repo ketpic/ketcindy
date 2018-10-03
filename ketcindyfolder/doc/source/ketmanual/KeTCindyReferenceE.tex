@@ -59,9 +59,11 @@
 \itemket{Description}Generic function to initialize \ketcindy.
 \itemket{Examples}\mbox{}
 
-\verb|Ketinit();|
+\verb|Ketinit();|\ \ The work sub folder is set to \verb|"fig"| in the folder of the cindy file.\\
+\verb|Ketinit("");|\ \ The work folder is set to the folder of the cindy file.
 
-This function have to write first line on Draw slot page in case of plane figure and Initialization slot page in case of space figure (KeTCindy's 3D-mode).
+\itemket{Details}\mbox{}\\
+This function should be written at the first line on Draw slot page.  In case of space figure (KeTCindy's 3D-mode), write it in the initialization slot page \verb|ketlib|.
 \end{cmd}
 
 %-----------Setfiles---------------------------------
@@ -2081,8 +2083,12 @@ near point from start position : Set in case where the first curve and the last 
 \begin{cmd}{Hatchdata}{hatchdata}
 \itemket{Usage}Hatchdata(name, a list of "i" or "o" , a list of a list of PD , options)
 \itemket{Description}Generic function to draw hatch lines in the close curve.
-\itemket{Details}Added options are angle(degree) and interval(ratio) of hatches.
+\itemket{Details}Options are:\\
+\hspace*{5mm}angle(degree,45), interval(ratio,1) of hatches, \\
+\hspace*{5mm}\verb|"Max=(20"| maximum of the number of hatches.\\
+\hspace*{5mm}\verb|"Out=y/m/r/n (n)"| whether it uses R and make the data file or not.
 \itemket{Examples}\mbox{}
+
 
 \verb|Circledata([A,B],["dr"]);|\\
 \verb|Hatchdata("1",["i"],[["crAB"]],["dr,0.7"]);|

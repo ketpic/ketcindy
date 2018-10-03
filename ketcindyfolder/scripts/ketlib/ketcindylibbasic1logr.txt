@@ -1,3 +1,8 @@
+// 20181003
+//   Hatchdata changed  (option "Out=","Max=" added. "Out=" is for HatchdataR )
+//   Hatchdata debugged (case of multiple points)
+// 20181001
+//   Ketinit changed  ( Ketinit(work) for workdirectory )
 // 20180929
 //   Shade changed ("En=y" option added)
 // 20180928

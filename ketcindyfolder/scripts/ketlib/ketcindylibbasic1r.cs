@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20180929)");
+println("KeTCindy V.3.2.1(20181003)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20180928) loaded");
+println("ketcindylibbasic1(20181003) loaded");
 
 //help:start();
 
@@ -38,11 +38,18 @@ println("ketcindylibbasic1(20180928) loaded");
 Ch=[0]; ChNum=1;
 
 ////%Ketinit start////
-Ketinit():=Ketinit(1);
-//help:Ketinit();
-Ketinit(sy):=Ketinit(sy,[-5,5],[-5,5]);
-Ketinit(sy,rangex,rangey):=(
-  regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
+Ketinit():=Ketinit("fig",1,[-5,5],[-5,5]); //181001
+Ketinit(Arg):=(//181001from
+  if(isstring(Arg),
+     Ketinit(Arg,1,[-5,5],[-5,5]);
+  ,
+    Ketinit("fig",Arg,[-5,5],[-5,5]);
+  );
+);
+Ketinit(work,sy,rangex,rangey):=(//181001to
+ //help:Ketinit();
+ //help:Ketinit("");
+ regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
   PenThickInit=8;
   ULEN="1cm";
   MEMORI=0.05;//18.01.15from
@@ -113,7 +120,7 @@ Ketinit(sy,rangex,rangey):=(
     );
   );
   Changesetting(Homehead+pathsep()+getname()); //180913
-  Changework(Dircdy+pathsep()+"fig"); //180329to
+  Changework(Dircdy+pathsep()+work); //180329to,181001
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
   FnamebodyR=Fhead+"body.r";
@@ -6459,7 +6466,17 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
         tmp=Intersectseg(sg,[p1,p2],Eps);
         if(abs(tmp_1)<Eps, //18.02.01
           p0=tmp_2; t=tmp_3; s=tmp_4;
-          pL=append(pL,[p0,t,s,ii]);
+          flg=0; //181003from
+          forall(pL,
+            if(flg==0,
+              if(Norm(#_1-p0)<Eps,
+                flg=1;
+              );
+            );
+          );
+          if(flg==0,
+            pL=append(pL,[p0,t,s,ii]);
+          ); //181003to
         );
       );
       if(length(pL)>0,
@@ -6523,14 +6540,41 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
 
 ////%Hatchdata start////
 Hatchdata(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);//180619
-Hatchdata(nm,iostr,bdylist,options):=Hatchdatacindy(nm,iostr,bdylist,options);
+Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
+  regional(options,tmp,tmp1,tmp2,eqL,strL,outflg);
+  options=optionsorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  strL=tmp_7;
+  outflg=0;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(tmp_1);
+    if(substring(tmp1,0,1)=="O",
+      tmp2=tmp_2;
+      if(tmp2!="n",
+        outflg=1;
+        option=remove(options,[#]);
+        if((tmp2=="m")%(tmp2=="r"),
+          options=append(options,tmp2);;
+        );
+      );
+    );
+  );
+  if(outflg==0,
+    options=remove(options,strL);
+    Hatchdatacindy(nm,iostr,bdylist,options);
+  ,
+    HatchdataR(nm,iostr,bdylist,options); 
+  );
+); //181003to
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdata(nm,iostr,bdylist,[]);
 Hatchdatacindy(nm,iostr,bdylistorg,options):=(
-//help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
-//help:Hatchdata(options=[angle,width]);
-  regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,startP,angle,
-     interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,tmp,tmp1,tmp2,color,
-     tmp3,namep,x1,y1,x2,y2,p1,p2); //180717
+ //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
+//help:Hatchdata(options=["Out=n(//m/r)","Maxnum=20",angle,width]);
+  regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,
+    eqL,maxnum,startP,angle,interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,
+    color,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2); //180717
   name="ha"+nm;
   bdylist=[]; 
   bdynameL=[];
@@ -6563,13 +6607,15 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
         );//180717to
         if(tmp=="s",
           Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,2*YMIN-YMAX], //180717(2lines)
-                 [tmp2_(length(tmp2))_1,2*YMIN-YMAX],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
+                 [tmp2_(length(tmp2))_1,2*YMIN-YMAX],LLcrd(tmp2_(length(tmp2)))],
+                 ["nodisp"]);
           Joincrvs(text(kk)+name,[namep,"sg"+name],["nodisp"]);//180717
           bname="join"+text(kk)+name;
         );
         if(tmp=="n",
           Listplot(name,[LLcrd(tmp2_1),[tmp2_1_1,2*YMAX-YMIN], //180717(2lines)
-              [tmp2_(length(tmp2))_1,2*YMAX-YMIN],LLcrd(tmp2_(length(tmp2)))],["nodisp"]);
+              [tmp2_(length(tmp2))_1,2*YMAX-YMIN],LLcrd(tmp2_(length(tmp2)))],
+              ["nodisp"]);
           Joincrvs(text(kk)+name,[namep,"sg"+name],["nodisp"]);
           bname="join"+text(kk)+name;
         );
@@ -6596,14 +6642,23 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
+  reL=tmp_6;
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-  reL=tmp_6;
   angle=45;
 //  interval=0.125*1000/2.54/MilliIn;
   interval=0.25*1000/2.54/MilliIn; //180706
   startP=[(XMIN+XMAX)/2, (YMIN+YMAX)/2];
+  maxnum=20; //181003from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(tmp_1);
+    if(substring(tmp1,0,1)=="M",
+      maxnum=parse(tmp_2);
+    );
+  );//181003to
   tmp1=1;
   forall(reL,
     if(islist(#),
@@ -6622,7 +6677,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   nvec=[-sin(angle),cos(angle)];
   AnsL=[]; 
   flg=0;
-  forall(0..100,kk,
+ forall(0..(floor(maxnum/2)), kk, //181003
     pt=startP+kk*interval*nvec;
     if(flg==0,
       sha=Makehatch(iostr,pt,vec,bdylist);
@@ -6634,7 +6689,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
     );
   );
   flg=0;
-  forall(1..100,kk,
+  forall(1..(floor(maxnum/2)),kk, //181003
     pt=startP-kk*interval*nvec;
     if(flg==0,
       sha=Makehatch(iostr,pt,vec,bdylist);

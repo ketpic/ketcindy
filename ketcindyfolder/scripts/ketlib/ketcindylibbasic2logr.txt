@@ -1,3 +1,5 @@
+// 20181001
+//   Bezier changed (BezierCtrL added as global )
 // 20180917
 //   Makebat debugged  ( case where work folder is under C )
 // 20180908

@@ -1296,6 +1296,7 @@ Writecsv(nmL,dataorg,file,optionorg):=(
   closefile(SCEOUTPUT);
 );
 
+////%HatchdataR start////
 HatchdataR(nm,iostr,pltlist):=HatchdataR(nm,iostr,pltlist,[]);
 HatchdataR(nm,iostr,pltlist,optionorg):=( //17.09.18
 //help:HatchdataR("1","ii",[["gr1"],["gr2","n"]]);
@@ -1380,6 +1381,7 @@ HatchdataR(nm,iostr,pltlist,optionorg):=( //17.09.18
     );
   );
 );
+////%HatchdataR end////
 
 PlotdataR(name1,func,var):=PlotdataR(name1,PathR,func,var);
 PlotdataR(name1,Arg1,Arg2,Arg3):=(

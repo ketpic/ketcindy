@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20180917) loaded");
+println("ketcindybasic2(20181001) loaded");
 
 //help:start();
 
@@ -1009,6 +1009,7 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
+  BezierCtrL=ctrlist; //181001
   list;
 );
 ////%BezierCurve end////

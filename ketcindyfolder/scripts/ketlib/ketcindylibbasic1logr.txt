@@ -1,5 +1,6 @@
 // 20181013
-//   FindareaO, Findarea changed ( case of a curve with line segment.
+//   FindareaO, Findarea changed ( case of a curve with line segment)
+//   Pointdata changed ( Size option )
 // 20181005
 //   Hatchdata changed  (option "Max=[1st,2nd]", second=total+restof1st)
 // 20181003

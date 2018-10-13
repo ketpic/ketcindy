@@ -1829,13 +1829,13 @@ Histplot(nm,dataorg,optionorg):=(
 ////%Scatterplot start////
 Scatterplot(nm,file):=Scatterplot(nm,file,[],[]);
 Scatterplot(nm,file,options):=Scatterplot(nm,file,options,[]);
-Scatterplot(nm,file,optionorg,optionsseg):=(
+Scatterplot(nm,file,optionorg,optionsreg):=(
 //help:Scatterplot("1",path+filename);
 //help:Scatterplot("1",ptlist);
 //help:Scatterplot(options=["Reg=n","Size=3","Color="]);
-//help:Scatterplot(options=["Reg=y"],["da","Color="]);
+//help:Scatterplot(options=[A,"Reg=y"],["da","Color="]);
   regional(tmp,tmp1,tmp2,fname,name,reg,eqL,strL,cdysize,
-    options,dtx,dty,nn,mx,my,sx,sy,sxy,rr,aa,bb,size);
+    options,dtx,dty,nn,mx,my,sx,sy,sxy,rr,aa,bb,size,pos);
   name="sc"+nm;
   options=optionorg;
   tmp=divoptions(options);
@@ -1883,19 +1883,25 @@ Scatterplot(nm,file,optionorg,optionsseg):=(
   rr=sxy/sx/sy;
   aa=sxy/sx^2;
   bb=my-aa*mx;
+  tmp1=optionsreg;
+  tmp=divoptions(tmp1);
+  reL=tmp_6; //181013(2lines)
+  tmp1=remove(tmp1,reL);
+  tmp1=append(tmp1,"Num=1");
+  pos=[];
+  if(length(reL)>0,
+    pos=reL_1;
+  );
   tmp=Assign("a*x+b",["a",aa,"b",bb]);
   if(reg!="n",
-    Plotdata(name,tmp,"x",append(optionsseg,"Num=1"));
+    Plotdata(name,tmp,"x",tmp1);
   );
-  if(length(reL)>=2,
-    Framedata2(name,[reL_1,reL_2]);
-    if(length(reL)>2,
-      tmp="r="+textformat(rr,3)+",\ y=";
-      tmp=tmp+textformat(aa,3)+"x";
-      if(bb>0,tmp=tmp+"+",tmp=tmp+"-");
-      tmp=tmp+textformat(abs(bb),3);
-      Expr([reL_3,"e",tmp]);
-    );
+  if(length(pos)>0, //181013from
+    tmp="r="+textformat(rr,3)+",\ y=";
+    tmp=tmp+textformat(aa,3)+"x";
+    if(bb>0,tmp=tmp+"+",tmp=tmp+"-");
+    tmp=tmp+textformat(abs(bb),3);
+    Expr([pos,"e",tmp]); //181013to
   );
   [mx,my,sx,sy,sxy,rr,bb,aa];
 );

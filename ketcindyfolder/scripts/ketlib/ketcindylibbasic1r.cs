@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(2018113)");
+println("KeTCindy V.3.2.1(20181013)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181013) loaded");
 
@@ -3716,9 +3716,10 @@ Pointdata(nm,listorg,options):=(
   if(length(eqL)>0,
     forall(eqL,
       tmp=substring(#,0,1);
-      if(tmp=="s" % tmp=="S",
+      if(Toupper(tmp)=="S",
         tmp=indexof(#,"=");
         size=substring(#,tmp,length(#));
+        opcindy=opcindy+",size->"+text(size); //181013
       );
     );
   );

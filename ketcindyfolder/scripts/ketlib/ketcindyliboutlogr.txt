@@ -1,6 +1,7 @@
 // 20181013
 //   Scatterplot debugged and changed  ( Readcsv, for case of data list, option "m/r")
 //   Scatterplot changed  (optionspt, optionsseg)
+//   Scatterplot changed  (position addede to optionsseg)
 // 20180906
 //   Setobj debugged (objname removed)
 // 20180902

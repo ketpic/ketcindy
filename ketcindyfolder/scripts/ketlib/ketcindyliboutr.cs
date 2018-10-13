@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20180906 loaded");
+println("ketcindylibout(20181013 loaded");
 
 //help:start();
 
@@ -1826,43 +1826,51 @@ Histplot(nm,dataorg,optionorg):=(
   );
 );
 
-Scatterplot(nm,file):=Scatterplot(nm,file,[]);
-Scatterplot(nm,file,optionorg):=(
+////%Scatterplot start////
+Scatterplot(nm,file):=Scatterplot(nm,file,[],[]);
+Scatterplot(nm,file,options):=Scatterplot(nm,file,options,[]);
+Scatterplot(nm,file,optionorg,optionsseg):=(
 //help:Scatterplot("1",path+filename);
-//help:Scatterplot(options=["Reg=yes","Size"=4"]);
-  regional(tmp,tmp1,tmp2,fname,name,reg,eqL,reL,cdysize,
+//help:Scatterplot("1",ptlist);
+//help:Scatterplot(options=["Reg=n","Size=3","Color="]);
+//help:Scatterplot(options=["Reg=y"],["da","Color="]);
+  regional(tmp,tmp1,tmp2,fname,name,reg,eqL,strL,cdysize,
     options,dtx,dty,nn,mx,my,sx,sy,sxy,rr,aa,bb,size);
   name="sc"+nm;
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
-  reL=tmp_6;
-  options=remove(options,reL);
-  cdysize=select(options,indexof(#,"size->")>0);
-  options=remove(options,cdysize);
-  size=4;
-  reg="yes";
+  options=remove(options,tmp_6);
+  strL=tmp_7; //181013(2lines)
+  options=remove(options,strL);
+  size=3;
+  reg="y";
   forall(eqL,
     tmp=indexof(#,"=");
     tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
     if(tmp1=="R",
-      reg=tmp2;
+      reg=substring(tmp2,0,1);
       options=remove(options,[#]);
     );
     if(tmp1=="S",
       size=parse(tmp2);
       options=remove(options,[#]);
+      options=append(options,"Size="+text(size));//181013
     );
   );
-  if(indexof(file,".")==0,
-     fname=file+".csv";
+  if(isstring(file), //181013
+    if(indexof(file,".")==0,
+       fname=file+".csv";
+    ,
+      fname=file;
+    );
+    tmp=Readcsv(fname,strL);//181013from
   ,
-    fname=file;
+    tmp=file;
   );
-  Readcsv(nm,fname);
-  tmp=concat(options,cdysize);
-  Pointdata(name,parse("rc"+nm),append(tmp,"Size="+text(size)));
+  parse("rc"+nm+"="+tmp); //181013to
+  Pointdata(name,parse("rc"+nm),options);
   tmp=parse("rc"+nm);
   dtx=apply(tmp,#_1);
   dty=apply(tmp,#_2);
@@ -1876,8 +1884,8 @@ Scatterplot(nm,file,optionorg):=(
   aa=sxy/sx^2;
   bb=my-aa*mx;
   tmp=Assign("a*x+b",["a",aa,"b",bb]);
-  if(reg!="no",
-    Plotdata(name,tmp,"x",append(options,"Num=2"));
+  if(reg!="n",
+    Plotdata(name,tmp,"x",append(optionsseg,"Num=1"));
   );
   if(length(reL)>=2,
     Framedata2(name,[reL_1,reL_2]);
@@ -1891,7 +1899,9 @@ Scatterplot(nm,file,optionorg):=(
   );
   [mx,my,sx,sy,sxy,rr,bb,aa];
 );
+////%Scatterplot end////
 
+////%Rulerscale start////
 Rulerscale(pt,hscale,vscale):=Rulerscale(pt,hscale,vscale,0.1,[]);//180722from
 Rulerscale(Arg1,Arg2,Arg3,Arg4):=(
   if(!islist(Arg4),
@@ -2003,6 +2013,7 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
     );
   );
 );
+////%Rulerscale end////
 
 MkprecommandS():=MkprecommandS(6);
 MkprecommandS(prec):=(

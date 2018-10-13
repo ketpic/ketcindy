@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20181003)");
+println("KeTCindy V.3.2.1(2018113)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181003) loaded");
+println("ketcindylibbasic1(20181005) loaded");
 
 //help:start();
 
@@ -2497,16 +2497,23 @@ FindareaP(pdstr):=( //180722
 ////%FindareaP end////
 
 ////%FindareaO start////
-FindareaO(pdstr):=(  // 15.11.27,180722
-  regional(pd,p0,p1,p2,p3,s,tmp);
+FindareaO(pdstr,line):=(  // 18.10,13
+  regional(pd,p0,p1,p2,p3,s,tmp,Lflg);
   if(isstring(pdstr),pd=parse(pdstr),pd=pdstr);
+  Lflg=0;
   s=0;
   forall(1..(length(pd)-1),
     p1=pd_#;
     p2=pd_(#+1);
-    if(#==1,p0=pd_(length(pd)-1),p0=pd_(#-1));
-    if(#==length(pd)-1,p3=pd_2,p3=pd_(#+2));
-    tmp=IntegrateO(p0,p1,p2,p3);
+    if(Dist(p1,p2)<line,
+      if(#==1,p0=pd_(length(pd)-1),p0=pd_(#-1));
+      if(Dist(p0,p1)>line,p0=2*p1-p2);
+      if(#==length(pd)-1,p3=pd_2,p3=pd_(#+2));
+      if(Dist(p2,p3)>line,p3=2*p2-p1);
+      tmp=IntegrateO(p0,p1,p2,p3);
+    ,
+      tmp=(p1_2+p2_2)*(p2_1-p1_1)/2;
+    );
     s=s+tmp;
   );
   if(s<0,s=-s);
@@ -2518,11 +2525,12 @@ FindareaO(pdstr):=(  // 15.11.27,180722
 Findarea(pdstr):=Findarea(pdstr,[]);//180722from
 Findarea(pdstr,options):=(
 //help:Findarea("cr1");
-//help:Findarea("cr1",["Way=polygon"]);
-  regional(tmp,tmp1,tmp2,eqL,way,out);
+//help:Findarea("cr1",["Line=0.5"]);
+  regional(tmp,tmp1,tmp2,eqL,way,line,out);
   tmp=Divoptions(options);
   eqL=tmp_5;
   way="O";
+  line=0.5;
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -2530,9 +2538,12 @@ Findarea(pdstr,options):=(
     if(tmp1=="W",
       way=Toupper(substring(tmp2,0,1));
     );
+    if(tmp1=="L",//181013from
+      line=parse(tmp2);
+    );//181013to
   );
   if(way=="O",
-    out=FindareaO(pdstr);
+    out=FindareaO(pdstr,line);//181013
   ,
     out=FindareaP(pdstr);
   );
@@ -6573,7 +6584,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
  //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
 //help:Hatchdata(options=["Out=n(//m/r)","Maxnum=20",angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,
-    eqL,maxnum,startP,angle,interval,vec,nvec,flg,pt,kk,delta,sha,AnsL,
+    eqL,maxnum,startP,angle,interval,vec,nvec,ctr,pt,kk,delta,sha,AnsL,
     color,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2); //180717
   name="ha"+nm;
   bdylist=[]; 
@@ -6651,12 +6662,15 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
 //  interval=0.125*1000/2.54/MilliIn;
   interval=0.25*1000/2.54/MilliIn; //180706
   startP=[(XMIN+XMAX)/2, (YMIN+YMAX)/2];
-  maxnum=20; //181003from
+  maxnum=[30,0]; //181005 [first,second]
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(tmp_1);
     if(substring(tmp1,0,1)=="M",
       maxnum=parse(tmp_2);
+      if(!islist(maxnum),
+        maxnum=[maxnum,0];
+      );
     );
   );//181003to
   tmp1=1;
@@ -6676,28 +6690,21 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   vec=[cos(angle),sin(angle)];
   nvec=[-sin(angle),cos(angle)];
   AnsL=[]; 
-  flg=0;
- forall(0..(floor(maxnum/2)), kk, //181003
+  ctr=0;//181005(2lines)
+  forall(0..(maxnum_1), kk,
     pt=startP+kk*interval*nvec;
-    if(flg==0,
-      sha=Makehatch(iostr,pt,vec,bdylist);
-      if((sha==-1)%(length(sha)==0),
-//        flg=1;
-      ,
-        AnsL=concat(AnsL,sha);
-      );
+    sha=Makehatch(iostr,pt,vec,bdylist);
+    if((sha!=-1)&(length(sha)>0),
+      AnsL=concat(AnsL,sha);
+      ctr=ctr+1; //181005
     );
   );
-  flg=0;
-  forall(1..(floor(maxnum/2)),kk, //181003
+  maxnum_2=maxnum_2+(maxnum_1-ctr); //181005
+  forall(1..(maxnum_2),kk, //181005
     pt=startP-kk*interval*nvec;
-    if(flg==0,
-      sha=Makehatch(iostr,pt,vec,bdylist);
-      if((sha==-1)%(length(sha)==0),
-//        flg=1;
-      ,
-        AnsL=concat(AnsL,sha);
-      );
+    sha=Makehatch(iostr,pt,vec,bdylist);
+    if((sha!=-1)&(length(sha)>0),
+      AnsL=concat(AnsL,sha);
     );
   );
   if(Noflg<3,

@@ -14,10 +14,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20180916) loaded");
+println("ketcindylib3d(20181015) loaded");
 
 //help:start();
 
+////%Ketinit3d start////
 Ketinit3d():=Ketinit3d(1);
 Ketinit3d(sf):=(
   regional(tmp);
@@ -79,7 +80,9 @@ Ketinit3d(subflg,position):=(
   TSIZEZ=10;
   ErrFlg=0;
 );
+////%Ketinit3d end////
 
+////%Start3d start////
 Start3d():=Start3d([]); 
 Start3d(ptexception):=(
 //help:Start3d();
@@ -168,10 +171,6 @@ Start3d(ptexception):=(
           pt3=tmp_1_2;
           tmp=tmp1+".xy=Parapt("+pt3+")_[1,2];";
           parse(tmp);
-//          if(SUBSCR==1,
-//            tmp=tmp1+"z"+".x=NE.x-SW.x+"+tmp1+".x";
-//            parse(tmp);
-//          );
         );
       );
     ,
@@ -188,7 +187,15 @@ Start3d(ptexception):=(
             tmp=Xyzcoord(pt.x,pt.y,tmp);
             Defvar(tmp1+"3d",tmp);
           );
-        );
+        ,
+          if(isselected(pt),
+            tmp1=substring(tmp1,0,length(tmp1)-1);
+	        tmp=parse(tmp1);
+            Defvar(tmp1+"2d",tmp.xy); 
+            pt3=Xyzcoord(tmp.x,tmp.y,pt.y);//181013from
+            Defvar(tmp1+"3d",pt3);
+          );
+        ); //181013to
       );
     );
   );
@@ -211,7 +218,9 @@ Start3d(ptexception):=(
    Ptseg3data(ptexception);  //16.08.23
    PTEXCEPTION=ptexception; //180916
 );
+////%Start3d end////
 
+////%Setangle start////
 Setangle(angL):=Setangle(ang_1,ang_2);//180614
 Setangle(theta,phi):=( //16.12.24
 //help:Setangle(60,30);
@@ -284,7 +293,9 @@ Setangle(theta,phi):=( //16.12.24
   );
   Ptseg3data(PTEXCEPTION); //180916
 );
+////%Setangle end////
 
+////%Getangle start////
 Getangle():=getangle(["Disp=y"]); //180613from
 Getangle(option):=(
   regional(tmp,tmp1,dispflg,eqL);
@@ -303,11 +314,15 @@ Getangle(option):=(
   );
   tmp; //180607
 ); //180613to
+////%Getangle end////
 
+////%Angleselected start////
 Angleselected():=IsAngle(); //180713
 //isAngle():=Isangle(); //180517
 Isangle():=isselected(TH)%isselected(FI); //180517
+////%Angleselected end////
 
+////%Changestyle3d start////
 Changestyle3d(nameL,style):=(
 //help:Changestyle3d(["geoseg3d","ax3d"],["notex"]);
   regional(nmL,name,tmp,tmp1,tmp2);
@@ -328,7 +343,9 @@ Changestyle3d(nameL,style):=(
     );
   );
 );
+////%Changestyle3d end////
 
+////%Dist3d start////
 Dist3d(pt1):=Dist3d(pt1,[0,0,0]);
 Dist3d(pt1,pt2):=(
 //help:Dist3d(A3d,B3d);
@@ -349,6 +366,7 @@ Dist3d(pt1,pt2):=(
   );
   sqrt((p2-p1)*(p2-p1));
 );
+////%Dist3d end////
 
 Findangle(vec):=(
 //help:Findangle([2,1,4]);
@@ -1724,6 +1742,7 @@ Mkpointlist(options):=( //16.11.12
   regional(Eps,pos,ptL,plist,ilist,plistrest,
     inforest,free,pt,pt3,ptz,par,vlistpre,
      tmp,tmp1,tmp2,tmp3,tmp4,p1,p2,flg);
+  vlistpre=VLIST; //181015
   Eps=10^(-4);
   tmp=Finddef(NE);
   free=tmp_1;
@@ -1888,6 +1907,7 @@ Mkseg3d(options):=(
   segL;
 );
 
+////%Ptseg3data start////
 Ptseg3data():=Ptseg3data([]);
 //help:Ptseg3data();
 //help:Ptseg3data([A,B]);
@@ -1920,6 +1940,7 @@ Ptseg3data(options):=(
   SEG3dlist=Mkseg3d(options);
   SEG3dlist;
 );
+////%Ptseg3data end////
 
 Putonseg3d(name,ptL):=Putonseg3d(name,ptL_1,ptL_2,[]);
 Putonseg3d(name,Arg1,Arg2):=(

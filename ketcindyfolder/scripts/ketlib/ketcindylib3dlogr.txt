@@ -1,3 +1,6 @@
+// 20181015
+//   Mkpointlist debugged (vlistpre )
+//   Start3d slightly changed
 // 20180916
 //   Setangle debugged, Start3d changed ( PTEXCEPTION added)
 // 20180905

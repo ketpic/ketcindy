@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20180929)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181015)" 
 
 print(ThisVersion)
 
+# 20181015
+#   Listplot debugged  ( Unscaling implemented )
 # 20180929
 #   Paramplot Plotdata, Spacecurve , Implicitplot changed 
 #                                ( Dt,dx not divided by N)
@@ -4328,34 +4330,27 @@ V<- Mag/Norm(B-A)*(B-A)      ## 10.12.04 from here
 
 ################################
 
-Listplot<-function(...)
-{
+Listplot<-function(...){
   varargin<-list(...);
   Z<-c();
-  for (I in 1:length(varargin))
-  {
+  for (I in 1:length(varargin)){
     Data<-varargin[[I]];
-    if(mode(Data)=="numeric")
-    {
-      if(class(Data)=="numeric")
-      {
-        Tmp<-matrix(Data,nrow=2);
-        Tmp<-t(Tmp);
-        Z<-Appendrow(Z,Tmp)
+    if(mode(Data)=="numeric"){
+      if(class(Data)=="numeric"){
+        Tmp<- matrix(Data,nrow=2);
+        Tmp<- t(Tmp);
+        Z<-Appendrow(Z,Unscaling(Tmp)) #181015
+      }else{
+        Z<-Appendrow(Z,Unscaling(Data)) #181015
       }
-      else
-        Z<-Appendrow(Z,Data)
-    }
-    else
-    {
-      for (J in 1:length(Data))
-      {
+    }else{
+      for (J in 1:length(Data)){
         Tmp<-Data[[J]];
-        Z<-Appendrow(Z,Tmp)
+        Z<-Appendrow(Z,Unscaling(Tmp)) #181015
       }
     }
-  }
- return(Z)
+  }  
+  return(Z)
 }
 
 ##############################

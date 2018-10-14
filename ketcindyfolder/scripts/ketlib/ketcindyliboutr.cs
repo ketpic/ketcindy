@@ -1383,6 +1383,7 @@ HatchdataR(nm,iostr,pltlist,optionorg):=( //17.09.18
 );
 ////%HatchdataR end////
 
+////%PlotdataR start////
 PlotdataR(name1,func,var):=PlotdataR(name1,PathR,func,var);
 PlotdataR(name1,Arg1,Arg2,Arg3):=(
   if(islist(Arg3),
@@ -1456,6 +1457,7 @@ PlotdataR(name1,path,func,variable,optionorg):=(
     tmp2;
   );
 );
+////%PlotdataR end////
 
 PlotdiscR(nm,fun,varrng):=PlotdiscR(nm,fun,varrng,[]);
 PlotdiscR(nm,fun,varrng,options):=(

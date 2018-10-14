@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181013 loaded");
+println("ketcindylibout(20181014 loaded");
 
 //help:start();
 
@@ -1830,10 +1830,12 @@ Histplot(nm,dataorg,optionorg):=(
 Scatterplot(nm,file):=Scatterplot(nm,file,[],[]);
 Scatterplot(nm,file,options):=Scatterplot(nm,file,options,[]);
 Scatterplot(nm,file,optionorg,optionsreg):=(
-//help:Scatterplot("1",path+filename);
-//help:Scatterplot("1",ptlist);
+//help:Scatterplot("1",(path+)filename);
+//help:Scatterplot("2",ptlist,["Size=2"],["da","Color=blue"]);
+//help:Scatterplot("3",ptlist,["Reg=n"]);
 //help:Scatterplot(options=["Reg=n","Size=3","Color="]);
-//help:Scatterplot(options=[A,"Reg=y"],["da","Color="]);
+//help:Scatterplot(options1=["Reg=y(n)",pointstyle]);
+//help:Scatterplot(options2=[position([]), linestyle]);
   regional(tmp,tmp1,tmp2,fname,name,reg,eqL,strL,cdysize,
     options,dtx,dty,nn,mx,my,sx,sy,sxy,rr,aa,bb,size,pos);
   name="sc"+nm;
@@ -1920,7 +1922,7 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
 //help:Rulerscale(A,["r",0,5,1],["s2",0,2,4]);
 //help:Rulerscale(A,["r",0,5,1],["f",10,"a",20,"w2","b"]);
 //help:Rulerscale(A,["r",0,5,1],["r",0,10,1],0.2);
-  regional(pA,pos,mrk,dir,tmp,tmp1,tmp2,tmp3);
+  regional(pA,pos,mrk,dir,mag,tmp,tmp1,tmp2,tmp3);
   pA=Lcrd(pt);
   if(length(hscale)>0,
     pos=[]; mrk=[]; dir=[];
@@ -1931,9 +1933,10 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
         tmp1=hscale_2;
         tmp2=hscale_3;
         tmp3=hscale_4;
+        if(length(hscale)>4,mag=hscale_5,mag=1); //181014
         tmp=floor((tmp2-tmp1)/tmp3);
-        pos=apply(0..tmp,tmp1+#*tmp3);
-        mrk=apply(pos,text(#));
+        pos=apply(0..tmp,tmp1+#*tmp3);//181014
+        mrk=apply(pos,text(#*mag));
         dir=apply(1..length(pos),"s2");
       ,
         forall(2..(length(hscale)-2),
@@ -1979,9 +1982,10 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
         tmp1=vscale_2;
         tmp2=vscale_3;
         tmp3=vscale_4;
+        if(length(vscale)>4,mag=vscale_5,mag=1); //181014
         tmp=floor((tmp2-tmp1)/tmp3);
         pos=apply(0..tmp,tmp1+#*tmp3);
-        mrk=apply(pos,text(#));
+        mrk=apply(pos,text(#*mag)); //181014
         dir=apply(1..length(pos),"w2");
       ,
         forall(2..(length(vscale)-2),

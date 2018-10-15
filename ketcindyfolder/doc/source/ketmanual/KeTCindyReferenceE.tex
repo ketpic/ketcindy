@@ -1900,22 +1900,28 @@ Extra options :\\
 \end{cmd}
 
 %--------------Rulerscale------------------------------
-\begin{cmd}{Rulerscale}{ruler-scale}
+\begin{cmd}{Rulerscale}{rulerscale}
 \itemket{Usage}Rulerscale(starting point, horizontal marks, vertical marks);
 \itemket{Description}Generic functio to put ruler marks.
 \itemket{Details}
 
 The marks are give as a list.\\
-\verb|["r",a,b,c]|  to put marks from \verb|a| to \verb|b| with intervals \verb|c|.
+\verb|["r",a,b,c,d]|  to put marks from \verb|a| to \verb|b| with intervals \verb|c|, scales \verb|d|.\\
 \verb|["f",n1,"str",n2,"str",・・] | to put marks as the same format as Htickmark.
-\itemket{Examples}\mbox{}
+\itemket{Examples1}\mbox{}
+
+\verb|Listplot("1",[[2,1],[9,1]]);|\\
+\verb|Rulerscale([2,1],["r",2,9,1,10],[]);|
+
+\begin{center}\input{Fig/ruler1}\end{center}
+
+\itemket{Examples2}\mbox{}
 
 \verb|Framedata("1",[A,B],["corner"]);|\\
 \verb|Rulerscale(A,["r",0,5,1],["f",1,"d1",3,"d2"]);|
 
-\begin{center}
-\input{Fig/ruler}
-\end{center}
+\begin{center}\input{Fig/ruler}\end{center}
+
 \end{cmd}
 
 %========== Using plotting data =============== 
@@ -2085,8 +2091,8 @@ near point from start position : Set in case where the first curve and the last 
 \itemket{Description}Generic function to draw hatch lines in the close curve.
 \itemket{Details}Options are:\\
 \hspace*{5mm}angle(degree,45), interval(ratio,1) of hatches, \\
-\hspace*{5mm}\verb|"Max=(20"| maximum of the number of hatches.\\
-\hspace*{5mm}\verb|"Out=y/m/r/n (n)"| whether it uses R and make the data file or not.
+\hspace*{5mm}\verb|"Max=(default:20)"| maximum of the number of hatches.\\
+\hspace*{5mm}\verb|"Out=y/n(default:n)"| whether it uses R and make the data file or not.
 \itemket{Examples}\mbox{}
 
 
@@ -3481,15 +3487,28 @@ Examples can be found in the command Boxplot().
 %------------Scatterplot--------------------------------
 \begin{cmd}{Scatterplot}{scatterplot}
 
-\itemket{Usage}Scatterplot(name,filename,option)
+\itemket{Usage}Scatterplot(name,filename/datalist,options1,options2)
 \itemket{Description}This command draw scatter plot reading a csv file.
-\itemket{Details}Options are:\\
-\verb|"Reg=yes(no:default)"| to decide whether to draw the regression line or not.\\
-\verb|"Size=number(1:defaut)"| to decide the size of points.\\
+\itemket{Details} Datafile is next style csv format. 
+\begin{verbatim}
+   2.3, 4.5 (LF)
+   3.2, 7 (LF)
+   2.0, 6.8 (LF)
+\end{verbatim}
+If 2nd argment is datalist, next format.
+\begin{verbatim}
+ data=[[2.3,4.5],[3.2,7],[2.0,6.8], ・・・ ];
+\end{verbatim}
+
+Options1 are switch of draw the regression line or no , style of point.\\
+\verb|"Reg=yes(no:default)"| to decide whether to draw the regression line.\\
+Options2 are position of drawing the regression line and style of line.\\
+Position is coordinate or name of point.
 \itemket{Examples}\mbox{}
 
-\verb| Scatterplot("1","data.csv",["Reg=yes","Size=5"]);|\\
-\verb| Rulerscale(A,["r",0,10,1],["r",1,10,1]);|
+\verb|  Scatterplot("1","data.csv",["Size=4","Color=blue"],[A,"Color=green"]);|\\
+\verb|  Listplot("1",[[0,7],[0,0],[7,0]]);|\\
+\verb|  Rulerscale([0,0],["r",0,7,1],["r",1,7,1]);|
 
 \begin{center}
 \input{Fig/scatter}

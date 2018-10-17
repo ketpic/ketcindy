@@ -1,3 +1,5 @@
+// 20181017
+//   Pointdata3d added  (simillar to Pointdata)
 // 20181015
 //   Mkpointlist debugged (vlistpre )
 //   Start3d slightly changed

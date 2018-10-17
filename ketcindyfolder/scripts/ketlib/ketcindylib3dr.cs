@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181015) loaded");
+println("ketcindylib3d(20181017) loaded");
 
 //help:start();
 
@@ -2159,6 +2159,7 @@ Perpplane(name,ptstr,nstr,option):=(
   [pA,pB];
 );
 
+////%Drawpoint3d start////
 Drawpoint3d(pt3):=(
 //help:Drawpoint3d(pt3d);
   regional(ptL,tmp,tmp1,tmp2);
@@ -2171,6 +2172,20 @@ Drawpoint3d(pt3):=(
     );
   );
 );
+////%Drawpoint3d end////
+
+////%Pointdata3d start////
+Pointdata3d(nm,pt3):=Pointdata3d(nm,pt3,[]);//181017from
+Pointdata3d(nm,pt3,options):=( //181017from
+//help:Pointdata3d("1",pt3dlist,options);
+  regional(pt3L,pt2L,tmp);
+  if(MeasureDepth(pt3)==0,pt3L=[pt3],pt3L=pt3);
+  pt2L=apply(pt3L,Parapt(#));
+  Pointdata("2d"+nm,pt2L,options);
+  tmp="pt3d"+nm+"="+format(pt3L,6);
+  parse(tmp);
+); //181017to
+////%Pointdata3d end////
 
 Putaxes3d(size):=(
 //help:Putaxes3d(5);

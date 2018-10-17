@@ -16,10 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181015)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181017)" 
 
 print(ThisVersion)
 
+# 20181017
+#   Drwxy debugged  (Doscaling)
+#   Arrowhead debugged (Unscaling removed)
 # 20181015
 #   Listplot debugged  ( Unscaling implemented )
 # 20180929
@@ -1037,16 +1040,19 @@ Arrowhead<-function(...)
   B<-P+Ookisa*cos(Theta)*Ev-Ookisa*sin(Theta)*Nv
   if(length(grep("l",Str,fixed=TRUE))>0){
     Tmp<-Listplot(list(A,P,B))
-    Tmp1<- Unscaling(Tmp)  
+#    Tmp1<- Unscaling(Tmp)  
+    Tmp1=Tmp #181017
     Drwline(Tmp1,Futosa)
   }
   else{
     C<- P+(1-Cut)*((A+B)/2-P) # 12.01.07
     Tmp<- Listplot(list(A,P,B,C,A))   # 12.01.07
-    Tmp1<- Unscaling(Tmp)
+#    Tmp1<- Unscaling(Tmp)
+    Tmp1=Tmp #181017
     Shade(Tmp1)
     Tmp=Listplot(c(A,P,B,C,A,P))  # 15.6.20
-    Tmp1=Unscaling(Tmp)
+#    Tmp1=Unscaling(Tmp)
+    Tmp1=Tmp #181017
     Drwline(Tmp1,0.1)  # 15.06.11, 15.06.14
   }
 }
@@ -1184,7 +1190,10 @@ Arrowline<- function(...)
   R<- P+Yapos*(Q-P)
   Tmp=Q-Unscaling(0.2*Ookisa/2*(Q-P)/Norm(Q-P)) # 15.10.24
   Drwline(Listplot(c(P,Tmp)),Futosa)
+  Tmp=SCALEY
+  Setscaling(1)
   Arrowhead(R,Q-P,Ookisa,Hiraki,Futosa,Cutstr,Str)
+  Setscaling(Tmp)
 }
 
 #########################################
@@ -2419,8 +2428,13 @@ Drwxy<-function(...){ #180820
   varargin<-list(...)
   Nargs <- length(varargin)
   Origin=GENTEN
+  Origins=Doscaling(Origin) #181016
   Xrng=c(XMIN,XMAX)
   Yrng=c(YMIN,YMAX)
+  Tmp1=Doscaling(c(XMIN,YMIN)) #181017from
+  Tmp2=Doscaling(c(XMAX,YMAX))
+  Xrngs=c(Tmp1[1],Tmp2[1])
+  Yrngs=c(Tmp1[2],Tmp2[2]) #181017from
   Ziku=ZIKU #180821from
   Xname=XNAME
   Xpos=XPOS
@@ -2454,18 +2468,20 @@ Drwxy<-function(...){ #180820
   }
   Xrng=Xrng+Origin[1]
   Yrng=Yrng+Origin[2]
+  Xrngs=Xrngs+Origins[1] #181016(2lines)
+  Yrngs=Yrngs+Origins[2]
   Tmp<- substring(ZIKU,1,1) #180821
   if(Tmp=="a")
   {
     Tmp=substring(ZIKU,2,nchar(ZIKU))
     if(nchar(Tmp)==0){Tmp=1}else{Tmp=eval(parse(text=Tmp))}
-    Arrowline(c(Xrng[1],Origin[2]),c(Xrng[2],Origin[2]),Tmp)
-    Arrowline(c(Origin[1],Yrng[1]),c(Origin[1],Yrng[2]),Tmp)
+    Arrowline(c(Xrngs[1],Origins[2]),c(Xrngs[2],Origins[2]),Tmp)#181016(2lines)
+    Arrowline(c(Origins[1],Yrngs[1]),c(Origins[1],Yrngs[2]),Tmp)
   }
   else
   {
-    Drwline(Listplot(c(Xrng[1],Origin[2]),c(Xrng[2],Origin[2])))
-    Drwline(Listplot(c(Origin[1],Yrng[1]),c(Origin[1],Yrng[2])))
+    Drwline(Listplot(c(Xrngs[1],Origins[2]),c(Xrngs[2],Origins[2])))#181016(2lines)
+    Drwline(Listplot(c(Origins[1],Yrngs[1]),c(Origins[1],Yrngs[2])))
   }
   Letter(c(Xrng[2],Origin[2]),XPOS,XNAME)
   Letter(c(Origin[1],Yrng[2]),YPOS,YNAME)

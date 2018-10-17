@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20181014)");
+println("KeTCindy V.3.2.1(20181016)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181013) loaded");
+println("ketcindylibbasic1(20181016) loaded");
 
 //help:start();
 
@@ -241,8 +241,8 @@ Setwindow(xrange,yrange):=(
   XMAX=xrange_2;
   YMIN=yrange_1;
   YMAX=yrange_2;
-  Putpoint("SW",Pcrd([XMIN,YMIN]));//17.05.30
-  Putpoint("NE",Pcrd([XMAX,YMAX]));//17.05.30
+  Putpoint("SW",[XMIN,YMIN]);//181016
+  Putpoint("NE",[XMAX,YMAX]);//181016
 //  Ketinit();
 );
 ////%Setwindow end////

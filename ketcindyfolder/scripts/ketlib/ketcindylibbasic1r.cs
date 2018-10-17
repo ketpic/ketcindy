@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20181016)");
+println("KeTCindy V.3.2.1(20181017)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181016) loaded");
+println("ketcindylibbasic1(20181017) loaded");
 
 //help:start();
 
@@ -120,6 +120,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
     );
   );
   Changesetting(Homehead+pathsep()+getname()); //180913
+  Changesetting(Dircdy); //181017
   Changework(Dircdy+pathsep()+work); //180329to,181001
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
@@ -174,25 +175,22 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
 ////%Ketinit end////
 
 ////%Changesetting start////
-Changesetting(dir):=( //180913
-  regional(fname,dname,sep);
+Changesetting(dir):=( //181017
+  regional(fname);
   fname="ketcindychange.txt";
-  dname="";
-  sep=pathsep();
   if(!isexists(dir,fname),
-    fname="changesetting.txt";
-    dname="ketcindy";
+    if(dir==Dircdy,
+      fname="ketcindy.conf"; 
+    ,
+      fname=".ketcindy.conf"; 
+    );
   );
-  if(length(dname)==0,
-    println("read "+dir+sep+fname);
-  ,
-    println("read "+dir+sep+dname+sep+fname);
-  );
-  if(!islist(dir),
-    setdirectory(dir+sep+dname);
+  if(isexists(dir,fname),
+    println("read "+fname+" in "+dir);
+    setdirectory(dir);
     import(fname);
   );
-); //180913to
+); //181017to
 ////%Changesetting end////
 
 ////%Cindyname start////

@@ -23,6 +23,7 @@ print(ThisVersion)
 # 20181017
 #   Drwxy debugged  (Doscaling)
 #   Arrowhead debugged (Unscaling removed)
+#   Paramplot debugged  (Assign(fun,var,"t"))
 # 20181015
 #   Listplot debugged  ( Unscaling implemented )
 # 20180929
@@ -5214,9 +5215,11 @@ Paramplot<- function(...)
   Nargs<- length(varargin)
   Fnflg<- 0
   Fnstr<- varargin[[1]]; Is=2
-  Fnstr=Assign(Fnstr) #180510(for KeTCindy)
   Rgstr<- varargin[[Is]]; Is<- Is+1
-  Rgstr=Assign(Rgstr) #180510(for KeTCindy)
+  Tmp=strsplit(Rgstr,"=") #181017from
+  Var=Tmp[[1]][1]
+  Fnstr=Assign(Fnstr,Var,"t")
+  Rgstr=Assign(Rgstr,Var,"t")  #181017from
   Range<- c(0,2*pi)
   N<- 50      # Numpoints
   E<-c()       # Exclusions

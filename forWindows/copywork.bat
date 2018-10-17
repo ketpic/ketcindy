@@ -1,9 +1,9 @@
-REM 20180913
+REM 20181017
 echo off
 set xcp="\Windows\System32\xcopy"
 rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
 set ketsrc=%~dp0
-set change=\ketcindychange.txt
+set change=\.ketcindy.conf
 set dist=%HOMEPATH%\ketcindy
 if exist "%dist%\." (
   echo Deleting "%dist%"

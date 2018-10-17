@@ -6,7 +6,7 @@ if [ ! -e $ketfolder ]; then
 fi
 ketsrc=${ketfolder}/work
 echo ${ketsrc} will be used
-changesetting=/ketcindychange.txt #180913
+changesetting=/.ketcindy.conf #181017
 dist=~/ketcindy #180913
 cp -r -p ${ketsrc}/  ${dist}/
 if [ $? -gt 0 ]; then

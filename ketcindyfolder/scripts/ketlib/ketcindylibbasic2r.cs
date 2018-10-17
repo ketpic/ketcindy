@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181001) loaded");
+println("ketcindybasic2(20181017) loaded");
 
 //help:start();
 
@@ -515,7 +515,8 @@ Htickmark(arglist):=(
   regional(nn,tmp,tmp1,tmp2);
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
-    Listplot("ht"+text(nn),[[arglist_nn,MARKLEN],[arglist_nn,-MARKLEN]],["Msg=n"]);
+    Listplot("ht"+text(nn),
+	    [Unscaling([arglist_nn,MARKLEN]),Unscaling([arglist_nn,-MARKLEN])],["Msg=n"]);//181017
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
@@ -539,7 +540,8 @@ Vtickmark(arglist):=(
   regional(nn,tmp,tmp1,tmp2);
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
-    Listplot("vt"+text(nn),[[MARKLEN,arglist_nn],[-MARKLEN,arglist_nn]],["Msg=n"]);
+    Listplot("vt"+text(nn),
+	     [Unscaling([MARKLEN,arglist_nn]),Unscaling([-MARKLEN,arglist_nn])],["Msg=n"]); //181017
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),

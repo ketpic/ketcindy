@@ -1971,7 +1971,7 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
     forall(1..length(pos),
       Expr([pos_#,dir_#,mrk_#],options);
       tmp1=pos_#;
-      tmp2=pos_#-[0,tick/SCALEY];
+      tmp2=pos_#-Unscaling([0,tick]); //181017
       Listplot("rsh"+text(#),[tmp1,tmp2],concat(options,["Msg=no"]));
     );
   );
@@ -2020,7 +2020,7 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
     forall(1..length(pos),
       Expr([pos_#,dir_#,mrk_#],options);
       tmp1=pos_#;
-      tmp2=pos_#-[tick/SCALEX,0];
+      tmp2=pos_#-Unscaling([tick,0]); //181017
       Listplot("rsv"+text(#),[tmp1,tmp2],concat(options,["Msg=no"]));
     );
   );

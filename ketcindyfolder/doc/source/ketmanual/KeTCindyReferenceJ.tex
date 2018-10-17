@@ -358,10 +358,10 @@ Plotdata("1","f(x)","x");
 
 あらかじめ，Cinderellaの作図ツールで点A,B,C,Dを作図しておく。
 \begin{verbatim}
-    Pointdata("1",A,["size=1"]);
-    Pointdata("2",B,["size=2"]);
-    Pointdata("3",C,["size=3"]);
-    Pointdata("4",D,["size=4"]);
+    Pointdata("1",A,["Size=1"]);
+    Pointdata("2",B,["Size=2"]);
+    Pointdata("3",C,["Size=3"]);
+    Pointdata("4",D,["Size=4"]);
 \end{verbatim}
 \hspace{10mm}\input{Fig/pointsize}
 
@@ -532,12 +532,12 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 \hypertarget{pointdata}{}
 \item[関数]  Pointdata(name , 点リスト , options)
 \item[機能]  点のデータを作成する。
-\item[説明]  与えられた座標の点データを作成する。
+\item[説明]  与えられた座標の点データを作成する。オプションは"Size=","Color="。
 
 \vspace{\baselineskip}
 【例】
 
-(1) 座標指定で2つの点データを作る。描画面には黒で点が表示される。
+(1) 座標指定で2つの点データを作る。
 
 \hspace{10mm} \verb|Pointdata("1",[[1,2],[-2,3]]);|
 
@@ -2344,13 +2344,24 @@ optionsは
 \hypertarget{rulerscale}{}
 \item[関数]  Rulerscale(始点 ，横軸目盛 , 縦軸目盛)
 \item[機能]  目盛を打つ
-\item[説明]  始点の位置を縦横の起点として目盛りを打つ。
-  目盛はリストで与える。
-  ["r",a,b,c]  の形式では，aからbまでc間隔で目盛を打つ。
+\item[説明]  始点の位置を縦横の起点として目盛りを打つ。目盛はリストで与える。
+  ["r",a,b,c,d]  の形式では，aからbまでc間隔で，倍率dの目盛を打つ。
   ["f",n1,"str",n2,"str",・・] の形式では，nと"str"がセットで，nの位置に"str"を書く。ただし，位置はCinderellaの描画面の原点を0とする。
+  
+  Listplot() とともに用いると，座標軸とは異なる線分に目盛を打つことができる。
+  
   Framedata() とともに用いると矩形に目盛を打つことができる。
   
 \vspace{\baselineskip}
+【例】x軸上の (2,1) から (9,1) まで線分を引き，1目盛を10として目盛を打つ。
+\begin{verbatim}
+  Listplot("1",[[2,1],[9,1]]);
+  Rulerscale([2,1],["r",2,9,1,10],[]);
+\end{verbatim}  
+      \begin{center} \input{Fig/ruler1} \end{center}
+\vspace{\baselineskip}
+\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 【例】Aを原点に置いた矩形枠を描き，横に0,1,2,3,4,5，縦に d1，d2 の目盛を打つ。
 \begin{verbatim}
     Framedata("1",[A,B],["corner"]);
@@ -4073,9 +4084,9 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 \begin{description}
 
 \hypertarget{boxplot}{}
-\item[関数]  Boxplot(名前,データ,垂直位置,高さ,option)
+\item[関数]  Boxplot(名前,データ,垂直位置,箱の高さ,option)
 \item[機能]  箱ひげ図を描く
-\item[説明]  データは，直接的に変数で渡す場合とファイルから読み込む場合がある。
+\item[説明]  データは，リストで渡す場合とファイル名を渡してファイルから読み込む場合がある。データファイルは csv 形式とする。
 
 \vspace{\baselineskip}
 【例】乱数で作成した5未満の実数のデータを箱ひげ図にする。
@@ -4088,15 +4099,15 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 \hspace{20mm} \input{Fig/boxplot01}
 
 \vspace{\baselineskip}
-【例】外部ファイルとして用意したデータを読み込んで箱ひげ図にする。データファイルはcsv形式とする。
+【例】外部ファイルとして用意したデータを読み込んで箱ひげ図にする。
 \begin{verbatim}
     Boxplot("2","datafile.csv",3,1/2);
-    Boxplot("1",dt1,1,1/2);
 \end{verbatim}
+
 \vspace{\baselineskip}
 複数列から成るcsvファイルを読み込むには，Readcsvを使う。csvファイルは，作業フォルダ（ 初期設定は fig ）に入れておく。戻り値は読み込んだファイル。
   
-データの値を画面に入るように調節するには，次の例のようにリストの計算を利用すればよい。
+データの値を画面に入るように調節するには，dt1/20 のようにしてリサイズする。
  
 また，Framedata()，Rulerscale() を併用することで目盛を入れることができる。Framedata() のために，表示領域の対角点A,BをCinderellaの作図ツールで作図しておく。
 
@@ -4112,21 +4123,23 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 %\vspace{\baselineskip}
  \begin{center} \input{Fig/boxplot} \end{center}
 
+注）一度実行した後，データを書き直すと，図が更新されないので，"m" オプションをつけて
+    Boxplot("1",dt1/20,1,1/2,["m"]); とすると，図が更新される。データを書き出すときは，もう一度 "m" オプションをはずして実行してから Figure ボタンを押す。これは，データの作成タイミングの関係。
+
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \hypertarget{rfun}{}
-\item[関数]  Rfun(変数名,コマンド列, 引数, option)
+\item[関数]  Rfun(name,コマンド, 引数, option)
 \item[機能]  Rの1つのコマンドを実行して結果を返す
-\item[説明]  バッチファイル kc.bat / シェルファイル kc.sh を利用してRとデータをやり取りし，計算結果を取得する。
+\item[説明]  バッチファイル kc.bat / シェルファイル kc.sh を利用してRとデータをやり取りし，計算結果を取得する。結果は，変数 R+name に入り，コンソールにも表示される。
 
 \vspace{\baselineskip}
-【例】Rを用いて標準正規分布から10個の乱数を発生し，平均値と標準偏差を求めてコンソールに表示する。
+【例】Rを用いて標準正規分布から10個の乱数を発生し，戻り値から平均値と標準偏差を求めてコンソールに表示する。
 \begin{verbatim}
     Rfun("1","rnorm",[10]);
     nx=length(R1);
     mx=sum(R1)/nx;
     sx=sqrt(R1*R1/nx-mx^2);
-    println("データ："+R1);
     println("平均："+format(mx,4)+"    標準偏差："+format(sx,4));
 \end{verbatim}
 
@@ -4134,6 +4147,10 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 \item[関数]  CalcbyR(変数名,コマンド列，option)
 \item[機能]  Rのコマンドを実行して結果を返す
 \item[説明]  バッチファイル kc.bat / シェルファイル kc.sh を利用してRとデータをやり取りし，計算結果を取得する。
+
+    コマンド列は，"戻り値=コマンド"，[引数] の2つをセットとして並べる。
+    
+    最後の行の結果が戻り値として第１引数の変数名に代入される。"戻り値1::戻り値2・・",[]  の形（戻り値1，戻り値2・・は各コマンドの戻り値）でコマンドを書くと，戻り値1,・・のリストとなる。戻り値が一つの場合は実数。"=値",[] の形の場合，「値」がそのまま戻り値となる。
 
 \vspace{\baselineskip}
 【例】Rを用いてN(50,$5^2$)から10個の乱数を発生し，平均と不偏分散もRで計算してその結果をコンソールに表示する。
@@ -4145,16 +4162,16 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
         "tmp1::tmp2::tmp3",[]
     ];
     CalcbyR("rd",cmdL);
-    dt=rd_(1..(length(rd)-2));
-    mx=rd_(-2);
-    vx=rd_(-1);
+    dt=rd_1;
+    mx=rd_2;
+    vx=rd_3;
     println("データ："+dt);
     println("平均："+format(mx,4)+"    不偏分散："+format(vx,4));
 \end{verbatim}
   CalcbyR()によって，データと平均，不偏分散からなるリストが作成されるので，mxに平均，vxに不偏分散を代入している。\verb|rd_(-1)| は，リスト rd の末尾の要素。
   
 \vspace{\baselineskip}
-【例】Ｒでポアソン分布から200個の乱数をとり，標本平均の分布の様子＝分散が小さくなって，正規分布に近づいている様子＝をヒストグラムで見る。
+【例】Ｒでポアソン分布から200個の乱数をとり，標本平均の分布の様子＝分散が小さくなって，正規分布に近づいている様子＝をヒストグラムで見る。分散はＲで求めた不偏分散に (n-1)/n をかけて再計算してコンソールに表示する。
 \begin{verbatim}
     cmdL=[
       "tmp1=rpois",[200,5],
@@ -4164,9 +4181,9 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
     ];
     CalcbyR("rd",cmdL);
     dt=rd_(3..length(rd));
-    nn=length(dt);
+    n=length(dt);
     mx=rd_1;
-    vx=rd_2*(nn-1)/nn;
+    vx=rd_2*(n-1)/n;
     sx=sqrt(vx);
     println(dt);
     println(["m="+format(mx,4),"v="+format(vx,4)]);
@@ -4198,9 +4215,9 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 \item[機能]  Rを利用してヒストグラムを描く
 \item[説明]  dataはリストにして作成するか，外部ファイルからReadcsv()で読み込む。
 
-階級範囲（ブレークポイント）は，通常スタージェスの公式によるが，オプションで，
+階級境界値（ブレークポイント）は，自動的に設定される（スタージェスの公式による）が，オプションで，
 
-      "breaks=[0,10,20,30,40,50,60,70,80,90,100]"
+\verb|"breaks=[0,10,20,30,40,50,60,70,80,90,100]"|
       
 などと指定することもできる。
 
@@ -4225,12 +4242,12 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 
 2行目と3行目は，データに合わせて縦方向を5倍にし，TeXの単位長を0.6mmにしている。
 
-Den,Rel オプションをyes にしたときは，Setscaling(100)くら  いにするのがよい。
+Den,Rel オプションをyes にしたときは，Setscaling(100)くらいにするのがよい。
 
 csvファイルが複数のデータからなる場合は，
 
-    \verb|dt1=apply(rc1,#_1);|
-として，リストの第１要素を取得する。第2要素のヒストグラムであれば  \verb|#_2| とする。
+    \verb|dt1=data_1;|
+として，リストの第１要素を取得する。第2要素のヒストグラムであれば  \verb|data_2| とする。
 
 \vspace{\baselineskip}
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
@@ -4325,39 +4342,80 @@ PlotdiscR("3","dgeom(k,0.3)","k=[0,10]");
 
 option は，"Flat=" で，"Flat=y" の場合は，読み込んだデータをリスト化したときに平滑化（１次元のリスト）にする。 初期設定は "Flat=n"
 
-利用例は Boxplot() などの例を参照のこと。
+【例】次のようなCSVファイル sample.csvを読み込むとする。
+
+\begin{verbatim}
+  12,14,15,18,13
+  9,13,17,21
+\end{verbatim}
+
+つまり，２行分のデータである。
+
+\begin{verbatim}
+  data=Readcsv("sample.csv");
+\end{verbatim}
+
+とすると，
+\begin{verbatim}
+  data=[[12,14,15,18,13],[9,13,17,21]]
+\end{verbatim}
+
+となる。
+
+したがって，１行目のデータだけ取り出したい場合は
+
+\begin{verbatim}
+  dt1=data_1;
+\end{verbatim}
+
+とする。
 
 \vspace{\baselineskip}
 \hypertarget{scatterplot}{}
-\item[関数]  Scatterplot(name,filename,option)
+\item[関数]  Scatterplot(name,filename/datalist,option1,option2)
 \item[機能]  2次元データを読み込み，散布図を描く
 \item[説明]  外部ファイル filename（csv形式）を読み，散布図を描く。
 
-オプションは  "Reg=no" : 回帰直線を描くかどうか（yes/no) 初期値は yes
+外部ファイルの２次元データとは，次の形のcsvファイル。（行末はLFまたはCR）
+\begin{verbatim}
+   2.3, 4.5 (LF)
+   3.2, 7 (LF)
+   2.0, 6.8 (LF)
+\end{verbatim}
 
-                A, B  表示枠の対角点（左下と右上の点）（Cinderellaで作図）
+
+datalistの場合は，次の形。
+
+\begin{verbatim}
+ data=[[2.3,4.5],[3.2,7],[2.0,6.8], ・・・ ];
+\end{verbatim}
+
+
+第１オプションは，回帰直線を描くかどうかと点のスタイル。
+
+"Reg=no" : 回帰直線を描くかどうか（yes/no) 初期値は yes
                 
-                C    相関係数と回帰直線の式を表示する点
-                
-              "Size=n"  ：点の大きさ。Cinderellaの描画面には反映されない。
-              
-                      描画面の点も大きくする場合は，"size-$>$n"オプションを追加する。
+第２オプションは，相関係数と回帰直線の式を表示する位置と，回帰直線のスタイル。
+
+位置は，幾何点の名称でもよい。              
                       
 \vspace{\baselineskip}
 【例】data.csv を読んで散布図を描き，回帰直線を引く。
 \begin{verbatim}
-    Scatterplot("1","data.csv",["Reg=yes",A,B,C,"Size=5"]);
-    Rulerscale(A,["r",0,10,1],["r",1,10,1]);
+    Scatterplot("1","data.csv");
 \end{verbatim}
-  optionの点A,BはCinderellaの作図ツールでとった表示領域の対角点。（ Aが左下。なお，対角点の名称はA,Bには限らない。）
-  
-回帰直線を描く場合("Reg=yes")は，回帰直線が枠からはみ出すので，AをSW，BをNEに一致させるとよい。
 
-Cは相関係数と回帰直線の式を表示する点としてCinderellaの作図ツールで取る。これも，名称はＣには限らない。
+だけで描ける。オプションをつけた例は次。
 
-      \verb|Rulerscale(A,["r",0,10,1],["r",1,10,1]);|
+点Aを相関係数と回帰直線の式を表示する点としてCinderellaの作図ツールで取る。
 
- で表示枠に目盛を打っている。"r" は等幅，"f"は Tickmark  と同じ指定。
+点を青で大きさ2とし，回帰直線を緑で表示する。
+
+\begin{verbatim}
+  Scatterplot("1","data.csv",["Size=4","Color=blue"],[A,"Color=green"]);
+  Listplot("1",[[0,7],[0,0],[7,0]]);
+  Rulerscale([0,0],["r",0,7,1],["r",1,7,1]);
+\end{verbatim}
  
 \vspace{\baselineskip}
  \begin{center} \input{Fig/scatter} \end{center}
@@ -6017,7 +6075,7 @@ optionsがないときは，以下の 初期設定を用いる。
 \hypertarget{drawpoint3d}{}
 \item[関数]  Drawpoint3d(座標)
 \item[機能]  空間点を描く
-\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} と用いる。TeXに点を出力するには，\hyperlink{pointdata}{Pointdata()} または \hyperlink{drwpt}{Drawpoint()} を用いる。
+\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} と用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
 
 引数は，座標のリストにすることもできる。\\
 \vspace{\baselineskip}
@@ -6477,6 +6535,20 @@ Partcrv3d("1",3.3,8.5,"sc3d1");
 \end{verbatim}
   のようにする。
   
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{Pointdata3d}{}
+\item[関数]  Pointdata3d(名前,点リスト,options)
+\item[機能]  点の3Dデータと2Dデータを作成し，画面と\TeX に出力する。
+\item[説明]  optionsは\hyperlink{pointdata}{Pointdata()}と同様。
+\vspace{\baselineskip}
+
+【例】
+\begin{verbatim}
+  Pointdata3d("1",[[1,1,1],[0,1,0]],["Size=2","Color=red"]);
+\end{verbatim}
+\vspace{\baselineskip}
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -7287,7 +7359,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{bowdata}{Bowdata(点list,options)}  \>弓形を描く\\
 \hyperlink{bspline}{Bspline(name，list，options )}   \>2次 Bスプライン曲線を描く\\
 \hyperlink{changestyle}{Changestyle(PD list, options)} \>描画オプションを変更する\\
-\hyperlink{circledata}{Circledata(name,点list,options)}  \>円または多角形を描く\\
+\hyperlink{circledata}{Circledata(name,点list,options)}  \>円または正多角形を描く\\
 \hyperlink{crspline}{CRspline(name，list，options )} \>単独のCatmull-Rom スプライン曲線を描く\\
 \hyperlink{deqplot}{Deqplot(name,式,変数名,初期値,options])}  \>微分方程式の解曲線を描く\\
 \hyperlink{dotfilldata}{Dotfilldata(name , 方向, PD , options)}    \>領域に点を敷き詰める\\
@@ -7478,7 +7550,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{perpplane}{Perpplane(点名, 点, ベクトル,option)}  \>点を通り垂直な平面上の基準点\\
 \hyperlink{perppt}{Perppt(点名,点,点list,option)}  \>平面に下ろした垂線の足\\
 \hyperlink{phparadata}{Phparadata(name,name2,options)}  \>多面体を陰線処理して描く\\
-\hyperlink{projcoordpara}{Projcoordpara()}  \>投影座標を求める\\
+\hyperlink{pointdata}{Pointdata(名前,点list,options)} \>空間点のデータを作成する\\
 \hyperlink{putaxes3d}{Putaxes3d([x,y,z])}  \>軸上に幾何点をとる\\
 \hyperlink{putonCurve3d}{PutonCurve3d(点名,PD)}  \>空間曲線上に点をとる\\
 \hyperlink{putonseg3d}{Putonseg3d(点名,点1,点2)}  \>線分上に点をとる\\

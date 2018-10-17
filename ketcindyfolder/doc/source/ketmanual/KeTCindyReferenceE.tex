@@ -321,10 +321,10 @@ $f(x)=\left\{\begin{array}{l}1  (x\geq 0)\\ -1   (x<0)\\ \end{array}\right.$
 Size can be change as a option of ``Pointdata''.
 \itemket{Examples}\mbox{}
 
-\verb|Pointdata("1",A,["size=1"]);|\\
-\verb|Pointdata("2",B,["size=2"]);|\\
-\verb|Pointdata("3",C,["size=3"]);|\\
-\verb|Pointdata("4",D,["size=4"]);|
+\verb|Pointdata("1",A,["Size=1"]);|\\
+\verb|Pointdata("2",B,["Size=2"]);|\\
+\verb|Pointdata("3",C,["Size=3"]);|\\
+\verb|Pointdata("4",D,["Size=4"]);|
 
 \hspace{20mm}\input{Fig/pointsize}
 
@@ -475,6 +475,7 @@ In addition, there are options specific to each function.
 \begin{cmd}{Pointdata}{pointdata}
 \itemket{Usage}Pointdata(name, point list, options)
 \itemket{Description}Generic function to make a point data.
+\itemket{Detailse}Options are "Size=", "Color=", "notex/nodisp".
 \itemket{Examples}\mbox{}
 
 \verb|Pointdata("1",[[1,2],[-2,3]]); |  // make 2 points (1,2),(-2,3)\\
@@ -4613,6 +4614,16 @@ The last two lines we can write the following.\\
 \verb|Phparadata("1","s06",["dr,2","Hidden=do"]);|  //right figure
  \begin{center} \input{Fig/phparadata02}   \input{Fig/phparadata03} \end{center}
 \end{cmd}
+
+%--------------Phparadata------------------------------
+\begin{cmd}{Pointdata3d}{pointdata3d}
+
+\itemket{Usage}Pointdata3d(name, point list, options)
+\itemket{Description}Generic function to generate data of the point list.
+\itemket{Details}Options are "Size=","Color=".
+\itemket{Examples}  \verb|Pointdata3d("1",[[0,1,0],[1,1,2]],["Size=2","Color=red"]);|
+\end{cmd}
+
 %---------------Projcoordpara-----------------------------
 \begin{cmd}{Projcoordpara}{projcoordpara}
 
@@ -5353,6 +5364,7 @@ Options are the followings.\\
 \>orthogonal to the vector.\\
 \hyperlink{perppt}{Perppt} \> get the foot of a perpendicular for the plane from the point.\\
 \hyperlink{phparadata}{Phparadata} \> draw the polyhedron by performing hidden line processing.\\
+\hyperlink{pointdata3d}{Pointdata3d} \> generate data of point list.\\
 \hyperlink{projcoordpara}{Projcoordpara} \> get the projection coordinate.\\
 \hyperlink{putaxes3d}{Putaxes3d} \> make the geometric points on the coordinate axis. \\
 \hyperlink{putonCurve3d}{PutonCurve3d} \> make the geometric point on the 3D-curve.\\

@@ -1,3 +1,5 @@
+// 20181017
+//   Htickmark,Vtickmark debugged (for scaling )
 // 20181001
 //   Bezier changed (BezierCtrL added as global )
 // 20180917

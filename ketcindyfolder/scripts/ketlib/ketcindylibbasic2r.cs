@@ -1754,16 +1754,6 @@ CrossPoint(name,Crv1,Crv2,range):=(
 );
 ////%CrossPoint end////
 
-////%Setscaling start////
-Setscaling(sc):=(
-//help:Setscaling(3);
-  SCALEX=1;
-  SCALEY=sc;
-  Com0th("Setscaling("+sc+")");
-  Setwindow("Msg=no");
-);
-////%Setscaling end////
-
 ////%Periodfun start////
 Periodfun(defL,rep):=Periodfun(defL,rep,[]);
 Periodfun(defL,reporg,optionorg):=(  // 16.11.24

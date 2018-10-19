@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181017)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181019)" 
 
 print(ThisVersion)
 
+# 20181019
+#   Arrowhead changed(debugged)  ( for basic1.cs )
 # 20181017
 #   Drwxy debugged  (Doscaling)
 #   Arrowhead debugged (Unscaling removed)
@@ -953,11 +955,12 @@ Arrowdata<- function(...)
 
 ######################################
 
+#  2018.10.19   for new basic1.cs
 #  2013.11.13   No Intersect debugged
 
-Arrowhead<-function(...)
-{       ## Scaling is implemented
-        ## 12.01.08  Kirikomi 
+Arrowhead<-function(...){
+      ## Scaling is implemented
+　	   ## 12.01.08  Kirikomi 
   Eps=10^(-3)
   varargin<-list(...)
   Nargs<-length(varargin)
@@ -996,64 +999,56 @@ Arrowhead<-function(...)
   }
   Ookisa<-1000/2.54/MilliIn*Ookisa
   Theta<-Hiraki*pi/180
+  P<- Doscaling(P)
+  Houkou<- Doscaling(Houkou)
   if(Nrow(Houkou)>1){
-    P<- Doscaling(P)
-    Houkou<- Doscaling(Houkou)
-    Tmp<-Nearestpt(P,Houkou) 
-    A<-Tmp[[1]]
+    Tmp<-Nearestpt(P,Houkou) #181019 (2lines)
+    P<- Tmp[[1]]
     I<-floor(Tmp[[2]])
     if(I==1){# 180511
       if(Norm(Ptend(Houkou)-Ptstart(Houkou))<Eps){
         I=Numptcrv(Houkou)
       }
     }
-    G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
+    G<-Circledata(c(P,Ookisa*cos(Theta)),"Num=10") #181019(2lines)
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
     for (J in JL){
-      B<-Ptcrv(J,Houkou)
-      Tmp<-IntersectcurvesPp(Listplot(list(A,B)),G) #180510
-      if(length(Tmp)>0){
-         Flg<- 1
-         break
+      Tmp1=matrix(c(P,Op(J,Houkou)),ncol=2,byrow=TRUE) #181019
+      Tmp<-IntersectcurvesPp(Tmp1,G,0.0001,0.001) 
+      if(Length(Tmp)>0){
+        Houkou<-P-Op(1,Tmp[[1]])
+        Flg<- 1
+        break
       }
-      A<-B
     }
     if(Flg==0){ # 13.11.13
 	   print("Arrowhead may be too large (no intersect)")
        return(P)
     }
-    Houkou<-P-Op(1,Tmp[[1]])
-    Houkou<- Unscaling(Houkou)
-    P<- Unscaling(P)
   }
-  P<- Doscaling(P)
-  Houkou<- Doscaling(Houkou)  
   Ev<--1/Norm(Houkou)*Houkou
   Nv<-c(-Ev[2],Ev[1])
   if(length(grep("c",Str))>0){
-    P<-P-0.5*Ookisa*cos(Theta)*Ev
+    P<- P-0.5*Ookisa*cos(Theta)*Ev
   }
   if(length(grep("b",Str))>0){
-    P<-P-Ookisa*cos(Theta)*Ev
+    P<- P-Ookisa*cos(Theta)*Ev
   }
-  A<-P+Ookisa*cos(Theta)*Ev+Ookisa*sin(Theta)*Nv
-  B<-P+Ookisa*cos(Theta)*Ev-Ookisa*sin(Theta)*Nv
+  A<- P+Ookisa*cos(Theta)*Ev+Ookisa*sin(Theta)*Nv
+  B<- P+Ookisa*cos(Theta)*Ev-Ookisa*sin(Theta)*Nv
   if(length(grep("l",Str,fixed=TRUE))>0){
-    Tmp<-Listplot(list(A,P,B))
-#    Tmp1<- Unscaling(Tmp)  
-    Tmp1=Tmp #181017
+    Tmp<- matrix(c(A,P,B),ncol=2,byrow=TRUE)#181019(2lines)
+    Tmp1<- Unscaling(Tmp)  
     Drwline(Tmp1,Futosa)
   }
   else{
     C<- P+(1-Cut)*((A+B)/2-P) # 12.01.07
-    Tmp<- Listplot(list(A,P,B,C,A))   # 12.01.07
-#    Tmp1<- Unscaling(Tmp)
-    Tmp1=Tmp #181017
+    Tmp<-  matrix(c(A,P,B,C,A),ncol=2,byrow=TRUE) #181019(2lines)
+    Tmp1<- Unscaling(Tmp)
     Shade(Tmp1)
-    Tmp=Listplot(c(A,P,B,C,A,P))  # 15.6.20
-#    Tmp1=Unscaling(Tmp)
-    Tmp1=Tmp #181017
+    Tmp= matrix(c(A,P,B,C,A,P),ncol=2,byrow=TRUE)#181019(2lines)
+    Tmp1=Unscaling(Tmp)
     Drwline(Tmp1,0.1)  # 15.06.11, 15.06.14
   }
 }

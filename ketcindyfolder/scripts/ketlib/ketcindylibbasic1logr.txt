@@ -1,3 +1,6 @@
+// 20181018
+//   Arrowheaddata,Arrowhead, Arrowdata changed (let pcrd be default )
+//   Setscaling moved from basic2
 // 20181017
 //   Ketinit,Changesetting changed (.ketcindy.conf and ketcindy.conf)
 // 20181016

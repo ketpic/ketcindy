@@ -9,14 +9,14 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+// f
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20181017)");
+println("KeTCindy V.3.2.1(20181018)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181017) loaded");
+println("ketcindylibbasic1(20181018) loaded");
 
 //help:start();
 
@@ -66,7 +66,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   TenSizeInit=0.02;
   TenSize=TenSizeInit;
   YaSize=1; YaAngle=18; YaPosition=1;
-  YaThick=1; YaStyle='tf';
+  YaThick=1; YaStyle="tf";
   KETPICCOUNT=1;
   KCOLOR=[0,0,0];
   GLIST=[];
@@ -2780,6 +2780,16 @@ Setpen(width):=(
 );
 ////%Setpen end////
 
+////%Setscaling start////
+Setscaling(sc):=(
+//help:Setscaling(3);
+  SCALEX=1;
+  SCALEY=sc;
+  Com0th("Setscaling("+sc+")");
+  Setwindow("Msg=no");
+);
+////%Setscaling end////
+
 ////%Lcrd start////
 Lcrd(pt):=(
   regional(tmp);
@@ -5164,19 +5174,29 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
 Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
 // help:Arrowheaddata(A,B);
-  regional(list,Ookisa,Hiraki,Futosa,Houkou,Str,Flg,tmp,Ev,Nv,pA,pB,
-       pP,rF,gG,Flg,Nj,Eps,tmp1,scx,scy);
+// help:Arrowheaddata(options=[1,18,"Coord=phy"]);
+  regional(list,Ookisa,Hiraki,Futosa,Houkou,Str,Flg,Ev,Nv,pA,pB,
+       reL,eqL,coord,pP,rF,gG,Flg,Nj,Eps,scx,scy,tmp,tmp1,tmp2);
   Eps=10^(-3);
-  pP=point;
+  coord="P";
   Ookisa=0.2*YaSize;
   Hiraki=YaAngle;
   Futosa=0;
   Str=YaStyle;
   tmp=Divoptions(options);
-  tmp1=tmp_6;
-  if(length(tmp1)>0,Ookisa=Ookisa*tmp1_1);
-  if(length(tmp1)>1,
-    tmp=tmp1_2;
+  eqL=tmp_5; //181018from
+  reL=tmp_6;
+  forall(eqL,
+     tmp=Strsplit(#,"=");
+     tmp1=substring(tmp_1,0,1);
+     tmp2=substring(tmp_2,0,1);
+     if(Toupper(tmp1)=="C",
+       coord=Touppera(tmp2);
+     );
+  ); //181018to
+  if(length(reL)>0,Ookisa=Ookisa*reL_1);
+  if(length(reL)>1,
+    tmp=reL_2;
     if(tmp<5, 
       Hiraki=Hiraki*tmp;
     ,
@@ -5185,15 +5205,20 @@ Arrowheaddata(point,direction,options):=(
   );
   Flg=0;
   Hiraki=Hiraki*pi/180;
+  if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
   if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
+  if(coord=="P",//181018from
+    if(ispoint(point),pP=point.xy,pP=point);
+  ,
+    pP=Pcrd(point);
+    if(!islist(Houkou_1),
+      Houkou=Pcrd(Houkou);
+    ,
+      Houkou=apply(Houkou,Pcrd(#)); 
+    );
+  );//181018to
   if(islist(Houkou_1),
-//    pP=Lcrd(pP);
-//    pP=Doscaling(pP);
-//    Houkou=Dosscaling(Houkou);
-    pP=Pcrd(pP);
-	scy=SCALEY;
-    SCALEY=1;
     tmp=Nearestpt(pP,Houkou);
     pA=tmp_1;
     rF=floor(tmp_2);
@@ -5207,34 +5232,22 @@ Arrowheaddata(point,direction,options):=(
     forall(1..rF,Nj,
       if(Flg==0,
         pB=Ptcrv(rF+1-Nj,Houkou);
+        tmp1=apply([pA,pB],LLcrd(#));
+        tmp2=apply(gG,LLcrd(#));
         tmp=IntersectcrvsPp([pA,pB],gG);
         if(length(tmp)>0,
-          Houkou=pP-tmp_1_1;
+          Houkou=pP-Pcrd(tmp_1_1);
           Flg=1;
         );
-        pA=pB;
       );
     );
-	SCALEY=scy;
     if(Flg==0,
       println("Arrowhead may be too large (no intersect)");
       Flg=2;
     );
-    if(Flg==1,
-      Houkou=Unscaling(Houkou);
-      pP=Unscaling(pP);
-    );
   );
   if(Flg<2,
-//    pP=Doscaling(pP);
-//    Houkou=Doscaling(Houkou);
-    pP=Pcrd(pP);
-    if(!ispoint(point),
-      Houkou=Pcrd(Houkou);
-    );
-//    if(MeasureDepth(Houkou)==0,Houkou=Pcrd(Houkou));
     Ev=-1/|Houkou|*Houkou;
-    Ev=Lcrd(Ev);
     Nv=[-Ev_2, Ev_1];
     if(indexof(Str,"c")>0,
       pP=pP-0.5*Ookisa*cos(Hiraki)*Ev;
@@ -5245,81 +5258,96 @@ Arrowheaddata(point,direction,options):=(
     pA=pP+Ookisa*cos(Hiraki)*Ev+Ookisa*sin(Hiraki)*Nv;
     pB=pP+Ookisa*cos(Hiraki)*Ev-Ookisa*sin(Hiraki)*Nv;
     list=[pA,pP,pB];
-    list=apply(list,LLcrd(#));
-//  Out=Unscaling(Out);
     list;
   );
 );
 ////%Arrowheaddata end////
 
 ////%Arrowhead start////
-Arrowhead(point,Houkou):=Arrowhead(point,Houkou,[]);
-Arrowhead(point,Houkou,options):=(
-//help:Arrowhead(B,B-A,[1.5,30]);
-//help:Arrowhead(A,"gr1");
-  // global ArrowheadNumber
-  regional(name,Ltype,Noflg,reL,opstr,opcindy,color,
-         ptstr,hostr,tmp,tmp1,list);
-  name="arh"+text(ArrowheadNumber);
-  ArrowheadNumber=ArrowheadNumber+1;
-  ptstr=textformat(point,5);
-  if(isstring(Houkou),  // 15.01.11
-    tmp=parse(Houkou);
-    if(MeasureDepth(tmp)<2,
-      hostr=Houkou;
-    ,
-      hostr=Houkou+"(1)";
-    );
+Arrowhead(point,Houkou):=Arrowhead(point,Houkou,[]); //181018from
+Arrowhead(Arg1,Arg2,Arg3):=(
+  if(isstring(Arg1),
+    Arrowhead(Arg1,Arg2,Arg3,[]);
   ,
-    if(ispoint(point),
-      hostr=textformat(LLcrd(Houkou),5);
-    ,
-      hostr=textformat(Houkou,5);
-    );
+    Arrowhead(text(ArrowheadNumber),Arg1,Arg2,Arg3);
   );
+);
+Arrowhead(nm,point,direction,optionsorg):=(//181018from
+//help:Arrowhead("1",B,B-A);
+//help:Arrowhead(options=[1.5,30,"Coor=P(L)"]);
+//help:Arrowhead(A,"gr1");
+   regional(name,Ltype,Noflg,reL,opstr,opcindy,color,eqL,coord,
+         options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
+  name="arh"+nm; //181018
+  ArrowheadNumber=ArrowheadNumber+1;
+  options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   reL=tmp_6;
   color=tmp_(length(tmp)-2);
-  opstr=tmp_(length(tmp)-1);
-  opcindy=tmp_(length(tmp));
-  list=Arrowheaddata(point,Houkou,options);
-  if(!Inwindow(point),Noflg=2);//180902
+//  opstr=tmp_(length(tmp)-1);
+//  opcindy=tmp_(length(tmp));
+  eqL=tmp_5;
+  coord="P";
+  forall(eqL,
+     tmp=Strsplit(#,"=");
+     tmp1=substring(tmp_1,0,1);
+     tmp2=substring(tmp_2,0,1);
+     if(Toupper(tmp1)=="C",
+       coord=Touppera(tmp2);
+       options=remove(options,[#]);
+     );
+  ); //181018to
+  if(ispoint(direction),Houkou=direction.xy); //181018
+  if(isstring(direction),Houkou=parse(direction),Houkou=direction);
+  if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
+  if(coord=="P",//181018from
+    if(ispoint(point),pP=point.xy,pP=point);
+  ,
+    pP=Pcrd(point);
+    if(!islist(Houkou_1),
+      Houkou=Pcrd(Houkou);
+    ,
+      Houkou=apply(Houkou,Pcrd(#)); 
+    );
+  );//181018to
+  list=Arrowheaddata(pP,Houkou,options);
+  if(!Inwindow(LLcrd(pP)),Noflg=2);//181018
   if(Noflg<3,
-//    println("generate Arrowhead "+name);
-    tmp1=apply(list,Pcrd(#));
+    tmp1=apply(list,LLcrd(#));
     tmp=name+"="+textformat(tmp1,5);
     parse(tmp);
-//	  GLIST=append(GLIST,name+"=Listplot("+list+")");
   );
   if(Noflg<2,
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
+      Listplot("-arh"+nm,apply(list,LLcrd(#)),append(options,"notex"));
       Ltype=GetLinestyle(text(1)+Ltype,name);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
-    ,
-//	  if(Noflg==1,Ltype=0);
-      Ltype=0;
     );
-    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
   if(Noflg==0,
-    if(length(reL)<3,  // 16.04.09 from
-      forall(1..(2-length(reL)),
-        opstr=opstr+",1";
+    tmp=Divoptions(options);
+    opstr=tmp_(length(tmp)-1);
+    ptstr=Textformat(LLcrd(pP),5);
+    if(isstring(direction),  //181019
+      hostr=direction;
+    ,
+      if(!islist(Houkou_1),
+        hostr=format(LLcrd(Houkou),5);
+      ,
+        hostr=format(apply(Houkou,LLcrd(#)),5);
       );
-      tmp=PenThick/PenThickInit;
-      opstr=opstr+","+text(tmp);
-    );  // 16.04.09 until
+    );
     if(color!=KCOLOR, //180904
       Texcom("{");Com2nd("Setcolor("+color+")");//180722
     );
-	Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");
+    Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");
     if(color!=KCOLOR, //180904
       Texcom("}");//180722
     );
@@ -5328,179 +5356,99 @@ Arrowhead(point,Houkou,options):=(
 ////%Arrowhead end////
 
 ////%Arrowdata start////
-Arrowdata(ptlist):=Arrowdata(ptlist,[]);
-Arrowdata(Arg1,Arg2):=(
-  regional(tmp,nm,ptlist,flg,pA,pB,options);
-  flg=0;
-  if(isstring(Arg1),
-    nm=Arg1;
-    ptlist=Arg2;
-    Arrowdata(nm,ptlist,[]);
-    flg=1;
-  );
-  if(flg==0,
-    tmp=MeasureDepth(Arg1);
-    if(tmp==0,
-      pA=Arg1;
-      pB=Arg2;
-      Arrowdata(pA,pB,[]);
-    ,
-      ptlist=Arg1;
-      options=Arg2;
-//      nm=text(ArrowlineNumber);
-      nm="";
-      forall(ptlist, //180719from
-        nm=nm+#.name;
-      );// 180719to
-//      ArrowlineNumber=ArrowlineNumber+1;
-      Arrowdata(nm,ptlist,options);
-    );
-  );
-);
-Arrowdata(Arg1,Arg2,optionsorg):=(
-//help:Arrowdata([A,B],[2,10]);
-//help:Arrowdata("1",[p1,p2]);
-//help:Arrowdata(Options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0"]);
-  regional(options,Retflg,nm,ptlist,name,opstr,opcindy,eqL,realL,strL,size,
-      flg,Ltype,Noflg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,color);
+Arrowdata(nm,ptlist):=Arrowdata(nm,ptlist,[]);
+Arrowdata(nm,ptlist,optionsorg):=(
+//help:Arrowdata("1",[A,B]);
+//help:Arrowdata("1",[pt1,pt2]);
+//help:Arrowdata(options=[1,18,pos(1),cut(0),"Cutend=0,0","Coord=p/n"]);
+  regional(options,Ltype,Noflg,name,opstr,opcindy,eqL,reL,strL,color,size,coord,
+      flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos);
+  name="ar"+nm;
   options=optionsorg;
-  Retflg=0;
-  Noflg=0;
-  Ltype=0;
-  if(!isstring(Arg1),
-    pA=Arg1;
-    pB=Arg2;
-    Arrowdata(pA,pB,options,"old");
-    Retflg=1;
-    ptlist=[pA,pB];
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  eqL=tmp_5;
+  reL=tmp_6;
+  strL=tmp_7;
+  color=tmp_(length(tmp)-2);
+  opstr=tmp_(length(tmp)-1);
+  opcindy=tmp_(length(tmp));
+  size=1;  // 15.06.11
+  angle=18;
+  segpos=1;
+  if(length(reL)>0,
+    size=relL_1;
+    if(length(reL)>1, //180719from
+      angle=reL_2;
+      if(length(reL)>2,
+        segpos=reL_3;
+      );
+    );//180719to
   );
-  if(Retflg==0,
-    nm=Arg1;
-    ptlist=Arg2;
-    name="ar"+nm;
-    tmp=Divoptions(options);
-    Ltype=tmp_1;
-    Noflg=tmp_2;
-    eqL=tmp_5;
-    realL=tmp_6;
-    strL=tmp_7;
-    color=tmp_(length(tmp)-2);
-    opstr=tmp_(length(tmp)-1);
-    opcindy=tmp_(length(tmp));
-    size=1;  // 15.06.11
-    angle=18;
-    segpos=1;
-    if(length(realL)>0,
-      size=realL_1;
-      if(length(reaL)>1, //180719from
-        angle=reaL_2;
-        if(length(reaL)>2,
-          segpos=reaL_3;
-        );
-      );//180719to
+  lineflg=0;
+  if(contains(strL,"l")%contains(strL,"L"),
+    lineflg=1;
+  );//181018from
+  options=remove(options,strL);
+  cutend=[0,0];//180719
+  coord="P";//181018
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,2));
+    tmp2=tmp_2;
+    if(tmp1=="CU",//180719from
+      tmp2=replace(tmp2,"[","");
+      tmp2=replace(tmp2,"]","");
+      cutend=tokenize(tmp2,",");
+      if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
+      options=remove(options,[#]);
     );
-    cutend=[0,0];//180719
-    forall(eqL,
-      tmp=Strsplit(#,"=");
-	  tmp1=Toupper(substring(tmp_1,0,1));
-      tmp2=tmp_2;
-      if(tmp1=="C",//180719from
-        tmp2=replace(tmp2,"[","");
-        tmp2=replace(tmp2,"]","");
-        cutend=tokenize(tmp2,",");
-        if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
-        options=remove(options,[#]);
-      );//180719to
-    );
-    tmp2=select(strL,indexof(#,"l")>0); // 16.04.09
-    if(length(tmp2)>0,lineflg=1,lineflg=0); // 16.04.09
-//    segpos=1; //180719removed
-//    tmp1=tmp_5;
-//    if(length(tmp1)>2,
-//      segpos=tmp1_3;
-//    );
-    if(Noflg<3,
-      println("generate Arrowdata "+name);
-      ptlist=apply(ptlist,Pcrd(#));
-      if(|cutend|>0,//180719from
-        tmp=ptlist_2-ptlist_1;
-        tmp=tmp/|tmp|;
-        ptlist_1=ptlist_1+tmp*cutend_1;
-        ptlist_2=ptlist_2-tmp*cutend_2;
-      );//180719to
-      tmp=name+"="+textformat(ptlist,5);
-      parse(tmp);
-      tmp1=Pcrd(ptlist_1);//16.10.20
-      tmp2=Pcrd(ptlist_2);//16.10.20
-      if(lineflg==0, // 16.04.09 from
-        tmp=tmp2-0.2*size/2*(tmp2-tmp1)/|tmp2-tmp1|;   // 15.06.11
-      ,
-        tmp=tmp2;
-      );  // 16.04.09 until
-      tmp=[LLcrd(tmp1),LLcrd(tmp)];//16.10.20
-      GLIST=append(GLIST,name+"=Listplot("+textformat(tmp,5)+")");
-    );
-    if(Noflg<2,
-      if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
-		Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
-          Texcom("}");//180722
-        );
-	  ,
-        if(Noflg==1,Ltype=0);
-      );
-      tmp=textformat(ptlist,5);
-      tmp=substring(tmp,1,length(tmp)-1);
-      tmp1=indexof(tmp,"],[");
-      if(tmp1>0,
-        pA=substring(tmp,0,tmp1);
-        pB=substring(tmp,tmp1+1,length(tmp));
-      ,
-        tmp1=indexof(tmp,",");
-        pA=substring(tmp,0,tmp1-1);
-        pB=substring(tmp,tmp1,length(tmp));
-      );
-      tmp1="Lcrd("+pA+")+"
-	      +textformat(segpos,5)+"*(Lcrd("+pB+")-"+"Lcrd("+pA+"))";
-      tmp1=parse(tmp1);
-      tmp2="Lcrd("+pB+")-Lcrd("+pA+")";
-      tmp2=parse(tmp2);
-	  Arrowhead(tmp1,tmp2,options);
-      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+    if(tmp1=="CO",//181018from
+      coord=Toupper(substring(tmp2,0,1));
+      options=remove(options,[#]);
     );
   );
-  ptlist;
-);
-Arrowdata(pA,pB,options,str):=(
-  regional(ptA,ptB,opstr,Astr,Bstr,name,tmp,opcindy);
-  Astr=textformat(pA,5);
-  Bstr=textformat(pB,5);  
-  name="ar"+pA.name+pB.name;
-  println("generate Arrow "+name);
-  opstr="";
-  opcindy="";
-  forall(options,
-    if(isstring(#),
-      if(indexof(#,"->")>0,
-        opcindy=opcindy+","+#;
-      ,
-        tmp="'"+#+"'";
+  if(coord=="P",
+    pA=ptlist_1; pB=ptlist_2;
+    if(ispoint(pA),pA=pA.xy);
+    if(ispoint(pB),pB=pB.xy);
+  ,
+    pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
+  );//181018to
+  if(Noflg<3,
+    println("generate Arrowdata "+name);
+    if(|cutend|>0,//180719from
+      tmp=ptlist_2-ptlist_1;
+      tmp=tmp/|tmp|;
+      ptlist_1=ptlist_1+tmp*cutend_1;
+      ptlist_2=ptlist_2-tmp*cutend_2;
+    );//180719to
+    tmp=name+"="+Textformat([pA,pB],5);
+    parse(tmp);
+    if(lineflg==0, // 16.04.09 from
+      tmp=pA-0.2*size/2*(pB-pA)/|pB-pA|;   // 15.06.11
+    ,
+      tmp=pB;
+    );  // 16.04.09 until
+    tmp=format([LLcrd(pA),LLcrd(tmp)],6);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      if(color!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      );
+      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],options);
+      Arrowhead(nm,pB,pB-pA,options);
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if(color!=KCOLOR, //180904
+        Texcom("}");//180722
       );
     ,
-      tmp=text(#);
+      if(Noflg==1,Ltype=0);
     );
-    opstr=opstr+","+tmp;
   );
-  ptA=Lcrd(pA);
-  ptB=Lcrd(pB);
-  Arrowheaddata(ptB,ptB-ptA,options);
-  tmp="connect("+textformat([ptA,ptB],5)
-     +",linecolor->"+text(KCOLOR)+opcindy+");";
-  parse(tmp);  // 14.11.17
-  Com2nd("Arrowline("+Astr+","+Bstr+opstr+")"); // 14.10.04
+  [Lcrd(pA),Lcrd(pB)];
 );
 ////%Arrowdata end////
 

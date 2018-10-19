@@ -1015,11 +1015,12 @@ Arrowhead<-function(...){
     JL<-seq(I,1,by=-1)
     for (J in JL){
       Tmp1=matrix(c(P,Op(J,Houkou)),ncol=2,byrow=TRUE) #181019
-      Tmp<-IntersectcurvesPp(Tmp1,G,0.0001,0.001) 
+#      Tmp<-IntersectcurvesPp(Tmp1,G,0.001,0.01) 
+      Tmp<-IntersectcrvsPp(Tmp1,G) 
       if(Length(Tmp)>0){
         Houkou<-P-Op(1,Tmp[[1]])
-        Flg<- 1
-        break
+	    Flg<- 1
+	    break
       }
     }
     if(Flg==0){ # 13.11.13

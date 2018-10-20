@@ -1,3 +1,6 @@
+// 20181020
+//   if(color!=KCOLOR => if((Noflg==0)&(color!=KCOLOR)
+//   Setscaling,...   ([SCALEX,SCALEY])
 // 20181018
 //   Arrowheaddata,Arrowhead, Arrowdata changed (let pcrd be default )
 //   Setscaling moved from basic2

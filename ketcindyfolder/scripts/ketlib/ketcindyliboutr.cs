@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181014 loaded");
+println("ketcindylibout(20181020 loaded");
 
 //help:start();
 
@@ -1360,7 +1360,7 @@ HatchdataR(nm,iostr,pltlist,optionorg):=( //17.09.18
   tmp=[tmp1,tmp2];
   tmp=concat(tmp,reL);
   cmdL=concat(cmdL,[
-    "Setscaling",[SCALEY],
+    "Setscaling",[SCALEX,SCALEY], //181020
     "Setunitlen",[Dq+ULEN+Dq],
     name+"=Hatchdata",tmp, //16.12.23
     "WriteOutData",[Dq+fname+Dq,Dq+name+Dq,name]
@@ -2276,7 +2276,7 @@ Dotfilldata(nm,iostr,pltlist,optionorg):=(
   tmp=[tmp1,tmp2];
   tmp=concat(tmp,dense);
   cmdL=concat(cmdL,[
-    "Setscaling",[SCALEY],
+    "Setscaling",[SCALEX,SCALEY], //181020
     "Setunitlen",[Dq+ULEN+Dq],
     name+"=Dotfilldata",tmp,
     "WriteOutData",[Dq+fname+Dq,Dq+name+Dq,name],

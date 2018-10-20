@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181017) loaded");
+println("ketcindybasic2(20181020) loaded");
 
 //help:start();
 
@@ -174,11 +174,11 @@ Rotatedata(nm,plist,angle,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -243,11 +243,11 @@ Translatedata(nm,plist,mov,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -336,11 +336,11 @@ Scaledata(nm,plist,rx,ry,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -421,11 +421,11 @@ Reflectdata(nm,plist,symL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -720,11 +720,11 @@ Letter(list,options):=(
     Str=replace(Str,"`","'");//180303
     tmp=Dq+","+Dq+Str+Dq+")";
     if(Noflg==0,
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	);
@@ -999,11 +999,11 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -2976,11 +2976,11 @@ Extractdata(number,name,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,

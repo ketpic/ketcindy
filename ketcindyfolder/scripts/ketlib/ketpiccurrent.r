@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181019)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181020)" 
 
 print(ThisVersion)
 
+# 20181020
+#   Setscaling changed  ( Setscaling(scalex,scaley) supported )
 # 20181019
 #   Arrowhead changed(debugged)  ( for basic1.cs )
 # 20181017
@@ -6783,41 +6785,39 @@ Setorigin<- function(...)
 
 ################################
 
-Setscaling<- function(...)
-{
+Setscaling<- function(...){
   varargin<- list(...)
   Nargs<- length(varargin)
-  if(Nargs==0)
-  {
-      return(c(SCALEY,LOGX,LOGY))
+  if(Nargs==0){
+    return(c(SCALEX,SCALEY,LOGX,LOGY))
   }
-  for (I in 1:Nargs)
-  {
+  Tmp=varargin[[1]] #181020from
+  if((Nargs==1)&&(is.numeric(Tmp))){
+    SCALEY<<- Tmp
+	return(invisible(c(SCALEX,SCALEY,LOGX,LOGY)))
+  }
+  nCtr=1 #181020to
+  for (I in 1:Nargs){
     Tmp<- varargin[[I]]
-    if(mode(Tmp)=="numeric")
-    {
-      SCALEY<<- Tmp
+    if(mode(Tmp)=="numeric"){
+      if(nCtr==1)SCALEX<<- Tmp #181020(2llines)
+      if(nCtr==2)SCALEY<<- Tmp
+      nCtr=nCtr+1
     }
-    if(mode(Tmp)=="character")
-    {
-      if(Tmp=="l")
-      {
+    if(mode(Tmp)=="character"){
+      if(Tmp=="l"){
         LOGX<<- 0
         LOGY<<- 1
-      }
-      else if(Tmp=="ll")
-      {
+      }else if(Tmp=="ll"){
         LOGX<<- 1
         LOGY<<- 1
-      }
-      else
-      {
+      }else{
         LOGX<<- 0
         LOGY<<- 0
       }
     }
   }
-  Tmp<- c(SCALEY,LOGX,LOGY);
+  Tmp<- c(SCALEX,SCALEY,LOGX,LOGY)
 }
 
 #########################################

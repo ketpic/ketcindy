@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20181018)");
+println("KeTCindy V.3.2.1(20181020)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181018) loaded");
+println("ketcindylibbasic1(20181020) loaded");
 
 //help:start();
 
@@ -716,11 +716,11 @@ Changestyle(nameL,style):=(
         (indexof(#,"("+name)==0)%(indexof(#,"Shade")>0)); // 15.05.23,16.12.13
       if(Noflg<2,
         if(isstring(Ltype),
-          if(color!=KCOLOR, //180904
+          if((Noflg==0)&(color!=KCOLOR), //180904
             Texcom("{");Com2nd("Setcolor("+color+")");//180722
           );
           Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-          if(color!=KCOLOR, //180904
+          if((Noflg==0)&(color!=KCOLOR), //180904
             Texcom("}");//180722
           );
         ,
@@ -2783,9 +2783,17 @@ Setpen(width):=(
 ////%Setscaling start////
 Setscaling(sc):=(
 //help:Setscaling(3);
-  SCALEX=1;
-  SCALEY=sc;
-  Com0th("Setscaling("+sc+")");
+  regional(tmp);
+  tmp=format(sc,5);
+  if(!islist(sc),
+    SCALEX=1;
+    SCALEY=sc;
+    Com0th("Setscaling("+tmp+")");
+  ,
+    SCALEX=sc_1;
+    SCALEY=sc_2;
+    Com0th("Setscaling("+tmp_1+","+tmp_2+")");
+  );
   Setwindow("Msg=no");
 );
 ////%Setscaling end////
@@ -3483,11 +3491,11 @@ AddGraph(nm,pltdata,options):=(
   );  // 16.04.04 until
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180722
       );
 	,
@@ -3582,11 +3590,11 @@ Joincrvs(nm,plotstrL,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180722
       );
 	,
@@ -3675,11 +3683,11 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      iif((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180722
       );
 	,
@@ -3778,11 +3786,11 @@ Pointdata(nm,listorg,options):=(
       if(length(size)>0,tmp1=parse(size),tmp1=1);
       tmp1=max(tmp1,1)/8; 
       Setpen(tmp1); // 16.04.09 until
-      if(color!=KCOLOR, //180904
+      iif((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180711
       );
       Com2nd("Drwpt(list("+name+")"+opstr+")");
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180711
       );
       Setpen(thick); // 16.04.09
@@ -3850,11 +3858,11 @@ Listplot(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180711
      );
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180711
       );
     ,
@@ -3923,11 +3931,11 @@ Lineplot(nm,list,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180722
       );
 	,
@@ -4121,11 +4129,11 @@ Plotdata(name1,func,variable,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("}");//180722
         );
      ,
@@ -4137,11 +4145,11 @@ Plotdata(name1,func,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("}");//180722
         );
       ,
@@ -4291,11 +4299,11 @@ Paramplot(nm,funstr,variable,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("}");//180722
         );
       ,
@@ -4307,11 +4315,11 @@ Paramplot(nm,funstr,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("}");//180722
         );
 	  ,
@@ -4522,11 +4530,11 @@ Implicitplot(name1,func,xrng,yrng,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+     if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180722
       );
 	,
@@ -4635,11 +4643,11 @@ Circledata(nm,cenrad,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180722
       );
 	,
@@ -4728,11 +4736,11 @@ Framedata(nm,list,optionsorg):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
 		Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //181020
           Texcom("}");//180722
         );
 	  ,
@@ -4764,11 +4772,11 @@ Framedata(nm,cent,dx,dy,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -4845,11 +4853,11 @@ Ovaldata(nm,Pdata,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -5220,7 +5228,7 @@ Arrowheaddata(point,direction,options):=(
   );//181018to
   if(islist(Houkou_1),
     tmp=Nearestpt(pP,Houkou);
-    pA=tmp_1;
+    pP=tmp_1;
     rF=floor(tmp_2);
     if(rF==1,
       if(|Ptend(Houkou)-Ptstart(Houkou)|<Eps,
@@ -5232,9 +5240,9 @@ Arrowheaddata(point,direction,options):=(
     forall(1..rF,Nj,
       if(Flg==0,
         pB=Ptcrv(rF+1-Nj,Houkou);
-        tmp1=apply([pA,pB],LLcrd(#));
+        tmp1=apply([pP,pB],LLcrd(#));
         tmp2=apply(gG,LLcrd(#));
-        tmp=IntersectcrvsPp([pA,pB],gG);
+        tmp=IntersectcrvsPp([pP,pB],gG);
         if(length(tmp)>0,
           Houkou=pP-Pcrd(tmp_1_1);
           Flg=1;
@@ -5286,8 +5294,6 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   Noflg=tmp_2;
   reL=tmp_6;
   color=tmp_(length(tmp)-2);
-//  opstr=tmp_(length(tmp)-1);
-//  opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   coord="P";
   forall(eqL,
@@ -5321,14 +5327,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
-      Listplot("-arh"+nm,apply(list,LLcrd(#)),append(options,"notex"));
-      Ltype=GetLinestyle(text(1)+Ltype,name);
-      if(color!=KCOLOR, //180904
-        Texcom("}");//180722
-      );
+      Listplot("-arh"+nm,apply(list,LLcrd(#)),concat(options,["notex","Msg=n"]));
     );
   );
   if(Noflg==0,
@@ -5344,14 +5343,14 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
         hostr=format(apply(Houkou,LLcrd(#)),5);
       );
     );
-    if(color!=KCOLOR, //180904
+    if((Noflg==0)&(color!=KCOLOR), //180904
       Texcom("{");Com2nd("Setcolor("+color+")");//180722
     );
     Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");
-    if(color!=KCOLOR, //180904
+    if((Noflg==0)&(color!=KCOLOR), //180904
       Texcom("}");//180722
     );
-  );
+);
 );
 ////%Arrowhead end////
 
@@ -5435,15 +5434,15 @@ Arrowdata(nm,ptlist,optionsorg):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
-      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],options);
+//      if((Noflg==0)&(color!=KCOLOR), //180904
+//        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+//      );
+      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
       Arrowhead(nm,pB,pB-pA,options);
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
-        Texcom("}");//180722
-      );
+//      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+//      if((Noflg==0)&(color!=KCOLOR), //180904
+//        Texcom("}");//180722
+//      );
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5545,11 +5544,11 @@ Anglemark(nm,plist,options):=(
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //180904
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
 		Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if(color!=KCOLOR, //180904
+        if((Noflg==0)&(color!=KCOLOR), //180904
           Texcom("}");//180722
         );
 	  ,
@@ -5636,11 +5635,11 @@ Paramark(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -5823,11 +5822,11 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -6039,11 +6038,11 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -6200,11 +6199,11 @@ EnclosingS(nm,plist,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -6371,11 +6370,11 @@ Enclosing2(nm,plistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,
@@ -6407,7 +6406,8 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
     tmp="["+substring(tmp,0,length(tmp)-1)+"]";
     iolist_#=parse(tmp);
   );
-  Scalebkup=SCALEY;
+  Scalebkup=[SCALEX,SCALEY];//181020(2lines)
+  SCALEX=1;
   SCALEY=1;
   sg=Lineplot("",[pt,pt+vec],["nodata"]);
   nb=length(bdylist);
@@ -6491,7 +6491,8 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
       );
     );
   );
-  SCALEY=Scalebkup;
+  SCALEX=Scalebkup_1; //181020
+  SCALEY=Scalebkup_2;
   out;
 );
 ////%Makehatch end////
@@ -6673,11 +6674,11 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if(color!=KCOLOR, //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
 	,

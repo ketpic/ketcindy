@@ -1,3 +1,5 @@
+// 20181020
+//   HatchdataR,Dotfilldata  (Setscaling(SCALEX,SCALEY)
 // 20181014
 //   Rulerscale changed  (mag added to "r" )
 // 20181013

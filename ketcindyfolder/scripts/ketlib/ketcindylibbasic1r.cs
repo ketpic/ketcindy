@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.1(20181020)");
+println("KeTCindy V.3.2.2(20181021)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181020) loaded");
 
@@ -3683,7 +3683,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      iif((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
 	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
@@ -3786,7 +3786,7 @@ Pointdata(nm,listorg,options):=(
       if(length(size)>0,tmp1=parse(size),tmp1=1);
       tmp1=max(tmp1,1)/8; 
       Setpen(tmp1); // 16.04.09 until
-      iif((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("{");Com2nd("Setcolor("+color+")");//180711
       );
       Com2nd("Drwpt(list("+name+")"+opstr+")");

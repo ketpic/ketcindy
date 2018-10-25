@@ -35,7 +35,7 @@ int cuspsplitpara(short ch,double pdata[][2], double outkL[][3]);
 int makexybdy(short ch,double ehL[][2]);
 void partitionseg(double fig[][2],double gL[][2], int ns, double parL[]);
 double funpthiddenQ(short ch,double u, double v,double pa[3]);
-double pthiddenQ(short ch,double pta[3], int uveq);
+int pthiddenQ(short ch,double pta[3], int uveq,double out[4]);
 int nohiddenpara2(short ch,double paL[], double fk[][3], int uveq, double figkL[][3]);
 void borderparadata(short ch,double fkL[][3], double fsL[][3]);
 int dropnumlistcrv3(double qd[][3], double eps1, int out[]);

@@ -5854,7 +5854,9 @@ CalcbyC(name,path,cmd,optionorg):=(
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
 ExeccmdC(nm,options):=ExeccmdC(nm,options,["do"]);
 ExeccmdC(nm,optionorg,optionhorg):=( 
-//help:ExeccmdC("1",["m/r","Wait=30"],["do"]);
+//help:ExeccmdC("1",options1,options2);
+//help:ExeccmdC(options1=["dr(/da/do)","m/r","Wait=30"]);
+//help:ExeccmdC(options2=["do(/nodisp/da/do)"]);
   regional(options,optionsh,name2,name3,waiting,dirbkup,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,varL);
   fname=Fhead+nm+".txt";
@@ -5900,6 +5902,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(wflg==1,tmp1=append(options,"m"));
   if(wflg==-1,tmp1=append(options,"r"));
   tmp1=append(tmp1,"Wait="+text(waiting));
+  tmp1=append(tmp1,"Disp=n"); //181024
   CommandListC=prepend("  char fnameall[]="+Dqq(fname)+";",CommandListC);
   CommandListC=prepend("  printf("+Dqq("%s\n")+","+Dqq(Fhead)+");",CommandListC); //180608
   tmp=select(CommandListC,indexof(#,"outputend")>0);

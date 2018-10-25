@@ -16,10 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181020)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181024)" 
 
 print(ThisVersion)
 
+# 20181024
+#   Wireparadata debugged ( for DuL(DvL)=c(..) )
+#   Nohiddenpara2 debugged  (for SeL=Null )
 # 20181020
 #   Setscaling changed  ( Setscaling(scalex,scaley) supported )
 # 20181019
@@ -13904,10 +13907,14 @@ Nohiddenpara2<- function (Par,Fk,Uveq,Np,Eps1,Eps2){
       FigkL=c(FigkL,list(Fk))
     }
   }
-  Tmp=c()
-  for(I in Looprange(1,length(PaL)-1)){
-    if(!Member(I,SeL)){
-      Tmp=c(Tmp,I)
+  if(length(SeL)==0){#181024from
+    Tmp=Looprange(1,length(PaL)-1) 
+  }else{ #181024to
+    Tmp=c()
+    for(I in Looprange(1,length(PaL)-1)){
+      if(!Member(I,SeL)){
+        Tmp=c(Tmp,I)
+      }
     }
   }
   SeL=Tmp
@@ -14568,7 +14575,7 @@ Wireparadata<- function(...){
       if(ctr==2){Eps2=tmp}
     }
   }
-  if(length(DuL)==1){ #180430
+  if(!is.list(DuL)){ #181024
     tmp1=DuL
     DuL=list()
     for(jj in Looprange(1,tmp1)){
@@ -14576,7 +14583,7 @@ Wireparadata<- function(...){
       DuL=c(DuL,list(tmp))
     }
   }
-  if(length(DvL)==1){ #180430
+  if(!is.list(DvL)){ #181024
     tmp1=DvL
     DvL=list()
     for(jj in Looprange(1,tmp1)){

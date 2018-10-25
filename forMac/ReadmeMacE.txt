@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Sep. 14th  2018
+Install of KeTCindy(Mac)       Modified : Oct. 25th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -56,8 +56,9 @@ Install of KeTCindy(Mac)       Modified : Sep. 14th  2018
                * How to execute Terminal
                      sh (not be displayed the process) , open(displyed the process)
                * Contents of work will be copied into "ketcindy".
-               * "ketcindychange.txt" will be also generated in User's home.
+               * ".ketcindy.conf" will be also generated in User's home.
                        You can change the setting of PathT, Mackc, etc.
+               * "ketcindy.conf" will be also copied to work directory.
 
 	  (3) Installing manually
                * Generate /ketcindy and copy

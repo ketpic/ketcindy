@@ -408,7 +408,7 @@ Plotdata("1","f(x)","x");
 \vspace{\baselineskip}
 \hypertarget{setscaling}{}
 \item[関数]  Setscaling(倍率)
-\item[機能]  縦方向の倍率を設定する
+\item[機能]  縦方向の倍率を設定する。倍率は実数またはリスト。実数の場合は縦方向，リストの場合は[横方向，縦方向]の指定となる。
 \item[説明]  2次関数の応用問題などでは，グラフが縦に大きくなる場合があり，$y$軸方向のスケーリングを変えたいことがよくある。次のスクリプトは，$f(x)=-x^2+10x$ のグラフを縦軸方向を半分にして描くものである。
 
 \begin{layer}{150}{0}
@@ -1575,7 +1575,7 @@ optionsは以下のものをリストで与える。省略した場合は実線�
 
   また，通る点のかわりに，焦点からの距離の和を実数で与えることもできる。
   
-  実際には，媒介変数表示$x=a \cos \theta,x=b \sin \theta$ を，回転・平行移動して描いている。定義域はこのときの$t$の定義域で，省略も可能。省略したときの初期値は[-5,5]
+  実際には，媒介変数表示$x=a \cos \theta,y=b \sin \theta$ を，回転・平行移動して描いている。定義域はこのときの$t$の定義域で，省略も可能。省略したときの初期値は[-5,5]
 
 \vspace{\baselineskip}
 【例】点A,Bを焦点とする楕円を描く。
@@ -6075,7 +6075,7 @@ optionsがないときは，以下の 初期設定を用いる。
 \hypertarget{drawpoint3d}{}
 \item[関数]  Drawpoint3d(座標)
 \item[機能]  空間点を描く
-\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} と用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
+\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} を用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
 
 引数は，座標のリストにすることもできる。\\
 \vspace{\baselineskip}
@@ -6336,7 +6336,7 @@ Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
 Putpoint3d("A",2*[-1,-1/sqrt(3),0],"fix");
 Putpoint3d("B",2*[1,-1/sqrt(3),0],"fix");
 Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0],"fix");
-Putpoint3d("D",2*[0,0,sqrt(3)],"fix");
+Putpoint3d("D",2*[0,0,2*sqrt(6)/3],"fix");
 phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
 VertexEdgeFace("1",phd,["Edg=nogeo"]);
 Nohiddenbyfaces("1","phf3d1"); 
@@ -6538,7 +6538,7 @@ Partcrv3d("1",3.3,8.5,"sc3d1");
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\hypertarget{Pointdata3d}{}
+\hypertarget{pointdata3d}{}
 \item[関数]  Pointdata3d(名前,点リスト,options)
 \item[機能]  点の3Dデータと2Dデータを作成し，画面と\TeX に出力する。
 \item[説明]  optionsは\hyperlink{pointdata}{Pointdata()}と同様。
@@ -6555,7 +6555,7 @@ Partcrv3d("1",3.3,8.5,"sc3d1");
 \hypertarget{projcoordpara}{}
 \item[関数]  Projcoordpara(座標)
 \item[機能]  投影座標を求める
-\item[説明]  空間座標を投影した座標を求める。
+\item[説明]  空間座標を平面に投影した座標を求める。
 
 戻り値の第１，第2要素はCinderellaの描画面のx,y座標。第3要素はxy平面に垂直なzの座標で．投影面からの（符号付）距離を表す。
 
@@ -6658,7 +6658,17 @@ optionは，"fix" または "free" ( 初期設定)。
   VertexEdgeFace("1",polydt,["Edg=nogeo"]);
   Nohiddenbyfaces("1","phf3d1");
 \end{verbatim}
-      \begin{center} \input{Fig/readobj} \end{center}
+ \begin{center} \input{Fig/readobj} \end{center}
+
+主なデータは次の通り。
+
+\vspace{\baselineskip}
+ \input{Fig/kobayashi} 
+
+この他にn01〜n92まで整面凸多面体がある。
+
+Webページは，http://mitani.cs.tsukuba.ac.jp/polyhedron/
+
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -6986,25 +6996,25 @@ options2は，陰線に関するoptionで，"nodisp" または 線種。"nodisp"
 \item[機能]  折れ線を描く
 \item[説明]  点の名称または座標のリストを与えて折れ線を描く。平面での Listplot() にあたる。
 
-
-\vspace{\baselineskip}
-【例】Spaceline("1",[[2,5,1],[4,2,3]]);   指定された2点を結んだ線分を描く。
-
-Spaceline("2",[A,B,C,A]);  作図されている2点A,B,Cを結んだ三角形を描く。
-
 options は線種（dr,da,do）
 
-節点が多い場合は，空間の点のリストと，投影した点のリストを作って描画する。
+\vspace{\baselineskip}
+【例】いくつか示す。
+
+・Spaceline("1",[[2,5,1],[4,2,3]]);   指定された2点を結んだ線分を描く。
+
+・Spaceline("2",[A,B,C,A]);  作図されている2点A,B,Cを結んだ三角形を描く。
+
+
+・節点を表示する場合は，Pointdata3d() で描画する。
 
 \begin{layer}{150}{0}
-\putnotese{80}{20}{ \input{Fig/oresenex01}}
+\putnotese{80}{10}{ \input{Fig/oresenex01}}
 \end{layer}
 \begin{verbatim}
   pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]];
-  pt2d=apply(pt,[Projcoordpara(#)_1,Projcoordpara(#)_2]);
   Spaceline("1",pt);
-  Ptsize(3);
-  Drawpoint(pt2d);
+  Pointdata3d("1",pt,["Size=3"]);
 \end{verbatim}
 
 点の名前が必要であれば
@@ -7550,7 +7560,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{perpplane}{Perpplane(点名, 点, ベクトル,option)}  \>点を通り垂直な平面上の基準点\\
 \hyperlink{perppt}{Perppt(点名,点,点list,option)}  \>平面に下ろした垂線の足\\
 \hyperlink{phparadata}{Phparadata(name,name2,options)}  \>多面体を陰線処理して描く\\
-\hyperlink{pointdata}{Pointdata(名前,点list,options)} \>空間点のデータを作成する\\
+\hyperlink{pointdata3d}{Pointdata3d(名前,点list,options)} \>空間点のデータを作成する\\
 \hyperlink{putaxes3d}{Putaxes3d([x,y,z])}  \>軸上に幾何点をとる\\
 \hyperlink{putonCurve3d}{PutonCurve3d(点名,PD)}  \>空間曲線上に点をとる\\
 \hyperlink{putonseg3d}{Putonseg3d(点名,点1,点2)}  \>線分上に点をとる\\

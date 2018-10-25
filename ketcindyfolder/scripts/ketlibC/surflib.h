@@ -1,3 +1,7 @@
+// 181025
+//    crv3onsfparadata debugged  (case of out=NULL )
+// 181023
+//    pthiddenQ changed  ( int flg, double out[4] )
 // 180430 
 //    crv2sfparadata,wireparadata added
 //    output3h,output3 chanded       
@@ -626,10 +630,10 @@ double funpthiddenQ(short ch,double u, double v,double pa[3]){
   return out;
 }
 
-double pthiddenQ(short ch,double pta[3], int uveq){
+int pthiddenQ(short ch,double pta[3], int uveq,double out[4]){
   int i, j, k;
   double Vec[3]={sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA)};
-  double v1,v2,v3,out=-Inf;
+  double v1,v2,v3;
   double du=(Urng[1]-Urng[0])/Mdv, dv=(Vrng[1]-Vrng[0])/Ndv;
   double uval1,uval2,vval1,vval2,eval11,eval12,eval21,eval22;
   double pl[5][2], vl[5], ql[11][2],p1[2],p2[2],m1,m2;
@@ -637,6 +641,7 @@ double pthiddenQ(short ch,double pta[3], int uveq){
   double tmpd1, tmpd2[2],tmpd3[3],tmp1d3[3];
 //     Out=1 : hidden
 //     SL : List of segments near PtA+Vec
+  out[3]=-Inf;
   for(j=0; j<=Ndv-1; j++){
     vval1=Vrng[0]+j*dv;
     vval2=Vrng[0]+(j+1)*dv;
@@ -718,23 +723,27 @@ double pthiddenQ(short ch,double pta[3], int uveq){
         if(norm(3,tmp1d3)<Eps1){
 		  tmpd1=zparapt(ptd3)-zparapt(pta)-Eps2;
           if(tmpd1>0){
-            return tmpd1;
+	        copyd(0,2,ptd3,out); out[3]=tmpd1;
+            return 1;
           }else{
-            out=fmax(out,tmpd1);
+            if(tmpd1>out[3]){
+	          copyd(0,2,ptd3,out); out[3]=tmpd1;
+            }
           }
         }
       }
     }
   }
-  return out;
+  return 0;
 }
 
 int nohiddenpara2(short ch,double par[], double fk[][3], int uveq, double figkL[][3]){
   double eps0=pow(10,-4.0), s, p1[2], p2[2], q[2],tmpd1, tmpd2[2],tmp1,tmp2;
-  double paL[DsizeM], fh[DsizeM][2], pta[3], ptap[2], vec[3],flgd;
+  double paL[DsizeM], fh[DsizeM][2], pta[3], ptap[2], vec[3];
   double figL[DsizeM][2], tmpmd2[DsizeM][2], tmpmd3[DsizeM][3];
   double tmp1d2[2], tmp2d2[2], tmp3d2[2], tmpd3[3],tmpd4[4];
   double pd2[2], qd2[2], pd3[3], qd3[3], sp, sq, tp, tq, dtmp, dtmp1, dtmp2;
+  int flg;
   int ncusp=floor(Cusppt[0][0]+0.5), seL[DsizeM];
   int i,j,n, nfh, nfk, cspflg,tmpi1[DsizeM];
   vec[0]=sin(THETA)*cos(PHI);
@@ -787,8 +796,8 @@ int nohiddenpara2(short ch,double par[], double fk[][3], int uveq, double figkL[
 	s=(paL[n]+paL[n+1])/2.0;
     invparapt(s,fh,fk, pta);
     parapt(pta,ptap);
-    flgd=pthiddenQ(ch,pta, uveq);
-    if(flgd<=0){ //180518
+    flg=pthiddenQ(ch,pta, uveq, tmpd4);
+    if(flg==0){ //180518
       appendi1(n,seL);
     }
   }
@@ -1331,8 +1340,9 @@ void crv3onsfparadata(short ch,double fk[][3], double fbdyd3[][3], double out[][
   connectseg3(out, Eps1,tmpmd3);
   out[0][0]=0;
   appendd3(0,1,length3(tmpmd3),tmpmd3,out);
+  push3(Inf,3,0,out);  //181025
   connectseg3(outh, Eps1,tmpmd3);
-  appendd3(3,1,length3(tmpmd3),tmpmd3,out);
+  appendd3(0,1,length3(tmpmd3),tmpmd3,out);//181025
 }
 
 void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], double out[][3]){

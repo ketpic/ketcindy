@@ -1,4 +1,4 @@
-Install of KeTCindy(Win)       Modified : Sep. 16th  2018
+Install of KeTCindy(Win)       Modified : Oct. 25th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -44,8 +44,9 @@ Install of KeTCindy(Win)       Modified : Sep. 16th  2018
 
 	  (2) Double-click copywork.bat.
                * Contents of work are copied into ketcindy(work).
-                  And ketcindyhead.txt is generated in User's home.
-
+               *  .ketcindy.conf will be generated in User's home.
+               *  And ketincy.conf will be copied to work folder.
+                        Modify these files to change TeX, etc. 
 	  (3) Installing manually
                * Generate ketcindy folder somewhere.
                      (KeTeX) C:\kettex\texlive\texmf-dist\scripts\ketcindy　

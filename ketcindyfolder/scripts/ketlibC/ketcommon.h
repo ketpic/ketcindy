@@ -1,3 +1,4 @@
+//20181024 memberi debugged (for null list )
 //20180308 norm added
 
 int length1(double gdata[]){
@@ -817,6 +818,7 @@ void simplesort(double number[]){
 
 int memberi(int a, int list[]){
   int i, n=list[0];
+  if(n==0){return 0;} //181024
   for(i=1; i<=n; i++){
     if(a==list[i]){
       return 1;

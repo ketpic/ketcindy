@@ -1,3 +1,5 @@
+// 20181024
+//   ReadOutData changed (option Disp= )
 // 20181021
 //   Htickmark,Vtickmark debugged ( Setscaling )
 //   Partcrv, Pointdata debugged  (iif => if )

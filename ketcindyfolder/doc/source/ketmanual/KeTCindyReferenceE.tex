@@ -376,6 +376,7 @@ The coordinate of apparent origin is $(3,2)$ but we use the original coordinate 
 \begin{cmd}{Setscaling}{setscaling}
 \itemket{Usage}Setscaling(scale)
 \itemket{Description}Generic function to set the scale of vertical direction.
+Argument  is real number or list. If it is a real number, vertical scaling. If the list [a, b], scaling a in the horizontal direction and b in the vertical direction.
 \itemket{Examples}\mbox{}
 
 \verb|Setscaling(0.5);|\\
@@ -4472,7 +4473,7 @@ Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
 Putpoint3d("A",2*[-1,-1/sqrt(3),0],"fix");
 Putpoint3d("B",2*[1,-1/sqrt(3),0],"fix");
 Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0],"fix");
-Putpoint3d("D",2*[0,0,sqrt(3)],"fix");
+Putpoint3d("D",2*[0,0,2*sqrt(6)/3],"fix");
 phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
 VertexEdgeFace("1",phd,["Edg=nogeo"]);
 Nohiddenbyfaces("1","phf3d1"); 
@@ -4698,8 +4699,20 @@ In the 3D-drawings the coordinate of the point name A is A3d.
 \verb|Setdirectory(Dirwork);|  //Chage work space.\\
 \verb|VertexEdgeFace("1",polydt,["Edg=nogeo"]);|  //output data name is phf3d1\\
 \verb|Nohiddenbyfaces("1","phf3d1");|
-      \begin{center} \input{Fig/readobj} \end{center}
+\begin{center} \input{Fig/readobj} \end{center}
+
+\begin{center} \input{Fig/readobj} \end{center}
+
+The main polyhedral data is as follows.
+
+ \input{Fig/kobayashiE}
+
+Besides this, there are facing convex polyhedrons from n01 to n92.
+
+cf.http://mitani.cs.tsukuba.ac.jp/polyhedron/
+
 \end{cmd}
+
 
 %---------------Reflectdata3d-----------------------------
 \begin{cmd}{Reflectdata3d}{reflectdata3d}
@@ -4917,7 +4930,7 @@ If we specify only option2 then we denote that option1 is empty list:[].
 \itemket{Description}Generic function to draw the space curve.
 \itemket{Examples}  \mbox{}
 \verb|Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|\\
-\ \ //option=["Num=100"]: division number of the interval "t=[0,4*pi]"
+option=["Num=100"]: division number of the interval "t=[0,4*pi]"
  \begin{center} \input{Fig/rasen} \end{center}
 \end{cmd}
 %--------------Spaceline------------------------------
@@ -4932,14 +4945,12 @@ If we specify only option2 then we denote that option1 is empty list:[].
 \verb|Spaceline("2",[A,B,C,A]);|  //draw the triangle ABC\\
 
 \begin{layer}{150}{0}
-\putnotese{80}{20}{ \input{Fig/oresenex01}}
+\putnotese{100}{-5}{ \input{Fig/oresenex01}}
 \end{layer}
 
-\verb| pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]]; |\\
-\verb| pt2d=apply(pt,[Projcoordpara(#)_1,Projcoordpara(#)_2]); |\\
-\verb| Spaceline("1",pt); |\\
-\verb| Ptsize(3); |\\
-\verb| Drawpoint(pt2d);|
+\verb|pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]]; |\\
+\verb|Spaceline("1",pt); |\\
+\verb|Pointdata3d("1",pt,["Size=3"]);|
 
 \vspace{30mm}
 \end{cmd}

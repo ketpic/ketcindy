@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181021) loaded");
+println("ketcindybasic2(20181024) loaded");
 
 //help:start();
 
@@ -3011,15 +3011,25 @@ RemoveOut(pltlist):=(
 ////%ReadOutData start////
 ReadOutData():=ReadOutData(Fnameout);
 ReadOutData(filename):=ReadOutData("",filename);  //16.03.07
-ReadOutData(pathorg,filenameorg):=(
+ReadOutData(path,filename):=ReadOutData(path,filename,[]);//181024(2lines)
+ReadOutData(pathorg,filenameorg,optins):=(
 //help:ReadOutData();
-//help:Readoutdata();
 //help:ReadOutData("file.txt");
-//help:Readoutdata("file.txt");
 //help:ReadOutData("/datafolder","file.txt");
-//help:Readoutdata("/datafolder","file.txt");
+//help:ReadOutdata(options=["Disp=n(/y)]");
   regional(path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
-     nmbr,cmdall,cmd,cmdorg,outdt,goutdt);
+     nmbr,cmdall,cmd,cmdorg,outdt,goutdt,eqL,dispflg);
+  dispflg=1;
+  tmp=Divoptions(options); //181024from
+  eqL=tmp_5;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=substring(tmp_1,0,1); tmp1=Toupper(tmp1);
+    tmp2=substring(tmp_2,0,1); tmp2=Toupper(tmp2);
+    if(tmp1=="D",
+      if(tmp2=="N",dispflg=0);
+    );
+  ); //181024to
   path=pathorg;   //16.03.07 from
   if(length(path)>0,
     setdirectory(path);
@@ -3098,7 +3108,9 @@ ReadOutData(pathorg,filenameorg):=(
     setdirectory(Dirwork); // 16.03.07
   );
   print("readoutdata from "+tmp+" : ");
-  println(varL);
+  if(dispflg==1, //181024from
+    println(varL);
+  ); //181024to
   varL;
 );
 ////%ReadOutData end////

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181017) loaded");
+println("ketcindylib3d(20181025) loaded");
 
 //help:start();
 
@@ -1942,6 +1942,7 @@ Ptseg3data(options):=(
 );
 ////%Ptseg3data end////
 
+////%Putonseg3d start////
 Putonseg3d(name,ptL):=Putonseg3d(name,ptL_1,ptL_2,[]);
 Putonseg3d(name,Arg1,Arg2):=(
   if(islist(Arg1),
@@ -1983,7 +1984,9 @@ Putonseg3d(name,pt1,pt2,options):=(
   tmp=Xyzcoord(tmp1,tmp2,tmp3);
   Defvar(name+"3d",tmp);
 );
+////%Putonseg3d end////
 
+////%Putpoint3d start////
 Putpoint3d(ptslist):=Putpoint3d(ptslist,"",0);
 Putpoint3d(Arg1,Arg2):=( // 16.03.02 from
   if(islist(Arg1),
@@ -2045,7 +2048,9 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
     Fixpoint3d(ptslist);
   );
 );
+////%Putpoint3d end////
 
+////%Fixpoint3d start////
 Fixpoint3d(ptlist):=(
 // help:Fixpoint3d(["O",[0,0,0],"X",[1,0,0]]);
   regional(name,pt3,pt2,tmp,tmp1,tmp2);
@@ -2064,7 +2069,9 @@ Fixpoint3d(ptlist):=(
     parse(tmp);
   );
 );
+////%Fixpoint3d end////
 
+////%Perppt start////
 Perppt(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"draw");
 Perppt(name,ptstr,pLstr,option):=Putperp(name,ptstr,pLstr,option);
 Putperp(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"put");
@@ -2122,7 +2129,9 @@ Putperp(name,ptstr,pLstr,option):=(
   );
   out;
 );  
+////%Perppt end////
 
+////%Perpplane start////
 Perpplane(name,ptstr,nvec):=
     Perpplane(name,ptstr,nvec,"draw");
 Perpplane(name,ptstr,nstr,option):=(
@@ -2158,6 +2167,7 @@ Perpplane(name,ptstr,nstr,option):=(
   );
   [pA,pB];
 );
+////%Perpplane end////
 
 ////%Drawpoint3d start////
 Drawpoint3d(pt3):=(
@@ -2187,6 +2197,7 @@ Pointdata3d(nm,pt3,options):=( //181017from
 ); //181017to
 ////%Pointdata3d end////
 
+////%Putaxes3d start////
 Putaxes3d(size):=(
 //help:Putaxes3d(5);
 //help:Putaxes3d([1,2,3]);
@@ -2199,16 +2210,47 @@ Putaxes3d(size):=(
 //  Fixpoint3d(["O",[0,0,0]]);
 //  Fixpoint3d(["X",[sL_1,0,0],"Y",[0,sL_2,0],"Z",[0,0,sL_3]]);//17.06.02funtil
 );
+////%Putaxes3d end////
 
+////%IntersectsgpL start////
 IntersectsgpL(name,sgstr,pLstr):=
-   IntersectsgpL(name,sgstr,pLstr,"draw");
-IntersectsgpL(name,sgstr,pLstr,option):=(
+   IntersectsgpL(name,sgstr,pLstr,["Draw=ie"]);
+IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
 //help:IntersectsgpL("R","P-Q","A-B-C");
-//help:IntersectsgpL("",[p1,p2],[p3,p4,p5],["draw"]);
-//help:IntersectsgpL(option=["put/draw/none"]);
-  regional(opstr,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,flg,
-    nvec,tmp,tmp1,tmp2,tmp3,tmp4);
-  if(islist(option),opstr=option_1,opstr=option);
+//help:IntersectsgpL("",[p1,p2],[p3,p4,p5]);
+//help:IntersectsgpL(options=["Draw(/Put)=ie"+pointoptions]);
+  regional(options,eqL,ptflg,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,
+    flg,nvec,tmp,tmp1,tmp2,tmp3,tmp4);
+  options=optionsorg; //181025from
+  if(isstring(options),options=[options+"=ie"]);
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  ptflg=["D","ie"];
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="P",
+      ptflg_1="P";
+      if(length(tmp_2)==1,
+        ptflg_2=tmp_2+"e";
+      );
+      if(length(tmp_2)==2,
+        ptflg_2=tmp_2;
+      );
+      options=remove(options,strL); 
+    );
+    if(tmp1=="D",
+      if(length(tmp_2)==1,
+        ptflg_2=tmp_2+"o";
+      );
+      if(length(tmp_2)==2,
+        ptflg_2=tmp_2;
+      );
+      options=remove(options,strL); 
+    );
+  );
+  tmp=select(options,substring(#,0,1)=="C");
+  if(length(tmp)==0,options=append(options,"Color=green"));//181025to
   Eps=10^(-4);
   flg=0;
   if(!isstring(sgstr),  // 15.05.29
@@ -2248,14 +2290,6 @@ IntersectsgpL(name,sgstr,pLstr,option):=(
     tmp=tmp_1;
     tseg=tmp1_tmp/tmp2_tmp;
     pR=(1-tseg)*pH+tseg*pK;
-    tmp=substring(opstr,0,1);
-    if(Toupper(tmp)=="P",
-      Putpoint3d([name,pR]);
-      Fixpoint3d([name,pR]);
-    );
-    if(Toupper(tmp)=="D",
-      Drawpoint3d(pR);
-    );
     tmp=Dotprod(pB-pA,pC-pA);
     tmp1=Dotprod(pB-pA,pB-pA);
     tmp2=Dotprod(pC-pA,pC-pA);
@@ -2264,14 +2298,27 @@ IntersectsgpL(name,sgstr,pLstr,option):=(
     ss=-(tmp*tmp4-tmp3*tmp2)/(tmp1*tmp2-tmp^2);
     tt=(tmp1*tmp4-tmp*tmp3)/(tmp1*tmp2-tmp^2);
     out=[pR,tseg,ss,tt];
-  ,
-    if(Toupper(substring(opstr,0,1))!="N",
-      println("   "+sgstr+","+pLstr+" are parallel");
+    tmp=ptflg_2;
+    tmp1=((tseg>-Eps)&(tseg<1+Eps))%(substring(tmp,0,1)=="e"); //181025from
+    tmp2=((ss>-Eps)&(ss<1+Eps)&(tt>-Eps)&(tt<1+Eps))%(substring(tmp,1,2)=="e");
+    if(tmp1&tmp2,
+      if(ptflg=="P", //181025
+        Putpoint3d([name,pR]);
+        Fixpoint3d([name,pR]);
+      ,
+        Pointdata3d(name,pR,options);
+      ); 
+      println("    pt"+name+" data:"+format(out,5));
+    ,
+      println("pt"+name+" data:"+format(out,5));
     );
+  ,
+    println("   "+sgstr+" and "+pLstr+" may be parallel");//181025to
     out=[];
   );
   out;
 );
+////%IntersectsgpL end////
 
 Bezier3d(nm,ptctrlist):=Bezier3(nm,ptctrlist);
 Bezier3d(nm,Ag1,Ag2):=Bezier3(nm,Ag1,Ag2);

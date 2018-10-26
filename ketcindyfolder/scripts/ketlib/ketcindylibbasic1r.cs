@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.2(20181021)");
+println("KeTCindy V.3.2.2(20181026)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181020) loaded");
+println("ketcindylibbasic1(20181026) loaded");
 
 //help:start();
 
@@ -2495,7 +2495,7 @@ FindareaP(pdstr):=( //180722
 ////%FindareaP end////
 
 ////%FindareaO start////
-FindareaO(pdstr,line):=(  // 18.10,13
+FindareaO(pdstr,len):=(  // 18.10,13
   regional(pd,p0,p1,p2,p3,s,tmp,Lflg);
   if(isstring(pdstr),pd=parse(pdstr),pd=pdstr);
   Lflg=0;
@@ -2503,11 +2503,11 @@ FindareaO(pdstr,line):=(  // 18.10,13
   forall(1..(length(pd)-1),
     p1=pd_#;
     p2=pd_(#+1);
-    if(Dist(p1,p2)<line,
+    if(Dist(p1,p2)<len,
       if(#==1,p0=pd_(length(pd)-1),p0=pd_(#-1));
-      if(Dist(p0,p1)>line,p0=2*p1-p2);
+      if(Dist(p0,p1)>len,p0=2*p1-p2);
       if(#==length(pd)-1,p3=pd_2,p3=pd_(#+2));
-      if(Dist(p2,p3)>line,p3=2*p2-p1);
+      if(Dist(p2,p3)>len,p3=2*p2-p1);
       tmp=IntegrateO(p0,p1,p2,p3);
     ,
       tmp=(p1_2+p2_2)*(p2_1-p1_1)/2;
@@ -2523,12 +2523,12 @@ FindareaO(pdstr,line):=(  // 18.10,13
 Findarea(pdstr):=Findarea(pdstr,[]);//180722from
 Findarea(pdstr,options):=(
 //help:Findarea("cr1");
-//help:Findarea("cr1",["Line=0.5"]);
-  regional(tmp,tmp1,tmp2,eqL,way,line,out);
+//help:Findarea(options=["Len=1"]);
+  regional(tmp,tmp1,tmp2,eqL,way,len,out);
   tmp=Divoptions(options);
   eqL=tmp_5;
   way="O";
-  line=0.5;
+  len=1;
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -2537,11 +2537,11 @@ Findarea(pdstr,options):=(
       way=Toupper(substring(tmp2,0,1));
     );
     if(tmp1=="L",//181013from
-      line=parse(tmp2);
+      len=parse(tmp2);
     );//181013to
   );
   if(way=="O",
-    out=FindareaO(pdstr,line);//181013
+    out=FindareaO(pdstr,len);//181013
   ,
     out=FindareaP(pdstr);
   );

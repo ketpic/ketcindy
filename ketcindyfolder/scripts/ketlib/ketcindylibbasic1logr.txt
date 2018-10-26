@@ -1,3 +1,5 @@
+// 20181026
+//   Findarea changed  ( default of length=1)
 // 20181020
 //   if(color!=KCOLOR => if((Noflg==0)&(color!=KCOLOR)
 //   Setscaling,...   ([SCALEX,SCALEY])

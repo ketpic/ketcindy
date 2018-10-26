@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181025) loaded");
+println("ketcindylib3d(20181026) loaded");
 
 //help:start();
 
@@ -397,19 +397,24 @@ Cancoordpara(pc):=(
   [tmp1,tmp2,tmp3];
 );
 
+////%Zparapt start////
 Zparapt(cc):=(
   regional(x,y,z);
   x=cc_1; y=cc_2; z=cc_3;
   x*cos(PHI)*sin(THETA)+y*sin(PHI)*sin(THETA)+z*cos(THETA);
 );
+////%Zparapt end////
 
+////%Projcoordpara start////
 Projcoordpara(cc):=(
 //help:Projcoordpara([3,1,2]);
   regional(tmp);
   tmp=Parapt(cc);
   [tmp_1,tmp_2,Zparapt(cc)];
 );
+////%Projcoordpara end////
 
+////%Parapt start////
 Parapt(pt):=(
 //help:Parapt([2,1,5]);
   regional(Xz,Yz);
@@ -417,6 +422,7 @@ Parapt(pt):=(
   Yz=-pt_1*cos(PHI)*cos(THETA)-pt_2*sin(PHI)*cos(THETA)+pt_3*sin(THETA);
   [Xz,Yz];
 );
+////%Parapt end////
 
 ProjCurve(crv):=(
 //help:Projcurve("sl3d1");
@@ -2218,39 +2224,38 @@ IntersectsgpL(name,sgstr,pLstr):=
 IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
 //help:IntersectsgpL("R","P-Q","A-B-C");
 //help:IntersectsgpL("",[p1,p2],[p3,p4,p5]);
-//help:IntersectsgpL(options=["Draw(/Put)=ie"+pointoptions]);
-  regional(options,eqL,ptflg,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,
+//help:IntersectsgpL(options=["draw(put)","ie"+pointoptions]);
+  regional(options,strL,ptflg,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,
     flg,nvec,tmp,tmp1,tmp2,tmp3,tmp4);
-  options=optionsorg; //181025from
-  if(isstring(options),options=[options+"=ie"]);
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  ptflg=["D","ie"];
-  forall(eqL,
-    tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,1));
-    if(tmp1=="P",
-      ptflg_1="P";
-      if(length(tmp_2)==1,
-        ptflg_2=tmp_2+"e";
-      );
-      if(length(tmp_2)==2,
-        ptflg_2=tmp_2;
-      );
-      options=remove(options,strL); 
-    );
-    if(tmp1=="D",
-      if(length(tmp_2)==1,
-        ptflg_2=tmp_2+"o";
-      );
-      if(length(tmp_2)==2,
-        ptflg_2=tmp_2;
-      );
-      options=remove(options,strL); 
-    );
+  options=optionsorg; //181026from
+  tmp1="";
+  if(isstring(options),
+    tmp1=options;
+    options=[];
   );
+  options=remove(options,["draw","Draw"]);
+  tmp=Divoptions(options);
+  strL=tmp_7;
+  if(length(tmp1)>0,
+    strL=append(strL,tmp1);
+  );
+  ptflg=["D","ie"];
+  forall(strL,
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="P",
+      ptflg_1="P";
+    );
+    if((tmp=="I")%(tmp=="E"),
+      if(length(#)==1,
+        ptflg_2=#+"e";
+      ,
+        ptflg_2=#;
+      );
+     );
+  );
+  options=remove(options,strL); 
   tmp=select(options,substring(#,0,1)=="C");
-  if(length(tmp)==0,options=append(options,"Color=green"));//181025to
+  if(length(tmp)==0,options=append(options,"Color=green"));//181026to
   Eps=10^(-4);
   flg=0;
   if(!isstring(sgstr),  // 15.05.29

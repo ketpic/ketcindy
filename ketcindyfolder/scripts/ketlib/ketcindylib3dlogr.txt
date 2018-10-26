@@ -1,3 +1,5 @@
+// 20181026
+//   IntersectsgpL changed  ( option "ie" )
 // 20181017
 //   Pointdata3d added  (simillar to Pointdata)
 // 20181015

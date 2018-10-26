@@ -1348,7 +1348,7 @@ Ospline(nm,ptlist,options):=(
     pQ=p2+(p2-p1);
     ctrL_tmp=[pQ];
   );
-  Bezier("o"+nm,list,ctrL,options);
+  Bezier("o"+nm,list,ctrL,options); 
 );
 ////%Ospline end////
 

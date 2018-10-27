@@ -1,3 +1,5 @@
+// 20181027
+//   IntersectsgpL changed  ( return=[pt,isinseg,isinplane,tseg,t,s] )
 // 20181026
 //   IntersectsgpL changed  ( option "ie" )
 // 20181017

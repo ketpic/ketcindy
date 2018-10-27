@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181026) loaded");
+println("ketcindylib3d(20181027) loaded");
 
 //help:start();
 
@@ -368,6 +368,7 @@ Dist3d(pt1,pt2):=(
 );
 ////%Dist3d end////
 
+////%Findangle start////
 Findangle(vec):=(
 //help:Findangle([2,1,4]);
 //help:Findangle([0,0,1,0]);
@@ -386,7 +387,9 @@ Findangle(vec):=(
   );
   [th,ph];
 );
+////%Findangle end////
 
+////%Cancoordpara start////
 Cancoordpara(pc):=(
 //help:Cancoordpara([1,2,0]);
   regional(Xz,Yz,Zz,tmp1,tmp2,tmp3);
@@ -396,6 +399,7 @@ Cancoordpara(pc):=(
   tmp3=Yz*sin(THETA)+Zz*cos(THETA);
   [tmp1,tmp2,tmp3];
 );
+////%Cancoordpara end////
 
 ////%Zparapt start////
 Zparapt(cc):=(
@@ -424,6 +428,7 @@ Parapt(pt):=(
 );
 ////%Parapt end////
 
+////%ProjCurve start////
 ProjCurve(crv):=(
 //help:Projcurve("sl3d1");
   regional(CurveL,Curve,Eps,AnsL,Out,sp,cp,st,,ct,ii,pt,
@@ -475,7 +480,9 @@ ProjCurve(crv):=(
   );
   Out;
 );
+////%ProjCurve end////
 
+////%Projpara start////
 Projpara(ptdata):=Projpara(ptdata,[]);
 Projpara(ptdata,optionsorg):=(
 //help:Projpara("sf3d1");
@@ -545,7 +552,9 @@ Projpara(ptdata,optionsorg):=(
   Out=tmp;
   Out;
 );
+////%Projpara end////
 
+////%InvparaptPp start////
 InvparaptPp(pt,pd):=(
   regional(Eps,fk,nfk,ph,fh,ah,bh,ak,bk,v1,v2,
     nn,s0,t2,out,tmp,tmp1,tmp2,flg);
@@ -602,13 +611,17 @@ InvparaptPp(pt,pd):=(
   );
   out;
 );
+////%InvparaptPp end////
 
+////%Invparapt start////
 Invparapt(pt,pd):=(
   regional(tmp);
   tmp=InvparaptPp(pt,pd);
   tmp_1;
 );
+////%Invparapt end////
 
+////%Subgraph start////
 Subgraph(name,opcindy):=(
   regional(tht,tmp,tmp1);
   tht=THETA; THETA=pi/2;
@@ -622,7 +635,9 @@ Subgraph(name,opcindy):=(
   );
   THETA=tht;  // 15.11.03
 );
+////%Subgraph end////
 
+////%Spaceline start////
 Spaceline(ptlist):=Spaceline(ptlist,[]); // 16.02.22 from
 Spaceline(Arg1,Arg2):=(
   regional(name,tmp,tmp1,tmp2);
@@ -715,7 +730,9 @@ Spaceline(nm,ptlistorg,optionorg):=(
   );
   ptlist;
 );
+////%Spaceline end////
 
+////%Spacecurve start////
 Spacecurve(nm,funstr,variable):=Spacecurve(nm,funstr,variable,[]);
 Spacecurve(nm,funstr,variable,optionorg):=(
 //help:Spacecurve("1","[cos(t),sin(t),0.5*t]","t=[0,4*pi]",["Num=200"]);
@@ -883,7 +900,9 @@ Spacecurve(nm,funstr,variable,optionorg):=(
   );
   Out;
 );
+////%Spacecurve end////
 
+////%Partcrv3d start////
 Partcrv3d(nm,pA,pB,PkLstr):=Partcrv3d(nm,pA,pB,PkLstr,[]);
 Partcrv3d(nm,pA,pB,PkLstr,options):=(
 //help:Partcrv3d("1",A,B,"sl3d1");
@@ -920,7 +939,9 @@ Partcrv3d(nm,pA,pB,PkLstr,options):=(
   Xyzcoord(dt1_#_1,dt1_#_2,dts_#_2));
   Spaceline("-part3d"+nm,dt,options);
 );
+////%Partcrv3d end////
 
+////%Joincrvs3d start////
 Joincrvs3d(nm,plotstrL):=Joincrvs3d(nm,plotstrL,[]);//16.10.06
 Joincrvs3d(nm,plotstrL,options):=(
 //help:Joincrvs3d("1",["bz3da1","bz3da1"]);
@@ -1017,7 +1038,9 @@ Joincrvs3d(nm,plotstrL,options):=(
   );
   PtL;
 );
+////%Joincrvs3d end////
 
+////%Xyzax3data start////
 Xyzax3data(nm,Xrange,Yrange,Zrange):=
           Xyzax3data(nm,Xrange,Yrange,Zrange,[]);
 Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
@@ -1123,7 +1146,9 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
   );
   Out;
 );
+////%Xyzax3data end////
 
+////%Xyzaxparaname start////
 Xyzaxparaname(Xrange,Yrange,Zrange):=
    Xyzaxparaname(Xrange,Yrange,Zrange,[]);
 Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
@@ -1167,7 +1192,9 @@ Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
     Expr(ch,"c",Zname);
   );
 );
+////%Xyzaxparaname end////
 
+////%Datalist3d start////
 Datalist3d():=(
 //help:Datalist3d();
   regional(out,tmp,tmp2,tmp3);
@@ -1177,7 +1204,9 @@ Datalist3d():=(
   tmp3=apply(tmp2,replace(#,"2d","3d"));
   out=tmp3;
 );
+////%Datalist3d end////
 
+////%Datalist2d start////
 Datalist2d():=(
 //help:Datalist2d();
   regional(out,tmp,tmp2,tmp3);
@@ -1187,7 +1216,9 @@ Datalist2d():=(
 //  tmp3=apply(tmp2,replace(#,"2d","3d"));
   out=tmp2;
 );
+////Datalist2d end////
 
+////%Embed start////
 Embed(nm,Pd2str,funstr,varstr):=
     Embed(nm,Pd2str,funstr,varstr,[]);
 Embed(nm,Pd2str,funstr,varstr,options):=(
@@ -1277,6 +1308,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   );
   Out;
 );
+////%Embed end////
 
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
@@ -2302,10 +2334,12 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     tmp4=Dotprod(pR-pA,pC-pA);
     ss=-(tmp*tmp4-tmp3*tmp2)/(tmp1*tmp2-tmp^2);
     tt=(tmp1*tmp4-tmp*tmp3)/(tmp1*tmp2-tmp^2);
-    out=[pR,tseg,ss,tt];
+    tmp1=(tseg>-Eps)&(tseg<1+Eps); //181027from
+    tmp2=(ss>-Eps)&(ss<1+Eps)&(tt>-Eps)&(tt<1+Eps);
+    out=[pR,tmp1,tmp2,tseg,ss,tt]; //181027to
     tmp=ptflg_2;
-    tmp1=((tseg>-Eps)&(tseg<1+Eps))%(substring(tmp,0,1)=="e"); //181025from
-    tmp2=((ss>-Eps)&(ss<1+Eps)&(tt>-Eps)&(tt<1+Eps))%(substring(tmp,1,2)=="e");
+    tmp1=(tmp1)%(substring(tmp,0,1)=="e"); //181025from
+    tmp2=(tmp2)%(substring(tmp,1,2)=="e");
     if(tmp1&tmp2,
       if(ptflg=="P", //181025
         Putpoint3d([name,pR]);

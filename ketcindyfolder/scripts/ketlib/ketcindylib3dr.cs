@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181027) loaded");
+println("ketcindylib3d(20181028) loaded");
 
 //help:start();
 
@@ -2335,7 +2335,7 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     ss=-(tmp*tmp4-tmp3*tmp2)/(tmp1*tmp2-tmp^2);
     tt=(tmp1*tmp4-tmp*tmp3)/(tmp1*tmp2-tmp^2);
     tmp1=(tseg>-Eps)&(tseg<1+Eps); //181027from
-    tmp2=(ss>-Eps)&(ss<1+Eps)&(tt>-Eps)&(tt<1+Eps);
+    tmp2=(ss>-Eps)&(ss<1+Eps)&(tt>-Eps)&(tt<1+Eps)&(ss+tt<1+Eps);//181029
     out=[pR,tmp1,tmp2,tseg,ss,tt]; //181027to
     tmp=ptflg_2;
     tmp1=(tmp1)%(substring(tmp,0,1)=="e"); //181025from

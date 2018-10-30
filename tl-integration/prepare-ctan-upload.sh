@@ -132,11 +132,12 @@ rmdir ketcindy/ketcindyfolder/doc
 
 # work stuff
 mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
+mv ketcindy/ketcindyfolder/work/template0.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template2advanced.cdy scripts/ketcindy/
-for i in Scriptfigure.txt Scriptketlibsci.txt Scriptkelib.txt ScriptKeytyped.txt ; do
-  mv ketcindy/ketcindyfolder/work/$i doc/support/ketcindy/
-done
+mv ketcindy/ketcindyfolder/work/template2slide.cdy scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/template3Dfigure.cdy scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/ketcindy.conf scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/Scriptkelib.txt doc/support/ketcindy/
 rmdir ketcindy/ketcindyfolder/work
 
 # now the ketcindyfolder dir should be empty

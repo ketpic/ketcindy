@@ -6,6 +6,13 @@ set -e
 
 export PATH=/usr/share/fslint/fslint:$PATH
 
+forceIt=false
+
+if [ "$1" = "-force" ] ; then
+  forceIt=true
+  shift
+fi
+
 if [ -z "$1" ] ; then
   echo "need version number for CTAN upload preparation" >&2
   exit 1
@@ -79,10 +86,16 @@ if [ -n "$bla" ] ; then
   error=true
 fi
 
+
 if $error ; then
-  cd "$GITREPO"
-  rm -rf $TMP
-  exit 1
+  if $forceIt ; then
+	echo "Forcing packaging creation despite of above errors!"
+  else
+	echo "Errors found, exiting (override with -force)"
+    cd "$GITREPO"
+    rm -rf $TMP
+    exit 1
+  fi
 fi
 
 # go back to main git

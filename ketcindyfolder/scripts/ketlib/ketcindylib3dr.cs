@@ -1967,7 +1967,11 @@ Putonseg3d(name,pt1,pt2,options):=(
   if(length(tmp_6)>0,
     par=tmp_6_1;
   );
-  Putonseg(name,pt1,pt2,[par]);
+  if(ispoint(pt1), //181030from
+    Putonseg(name,pt1,pt2,[par]);
+  ,
+    Putonseg(name,Parapt(pt1),Parapt(pt2),[par]);
+  ); //181030from
   inspect(parse(name),"ptsize",3);
   inspect(parse(name),"color",2);
   inspect(parse(name),"textsize",TSIZEZ);
@@ -1978,24 +1982,22 @@ Putonseg3d(name,pt1,pt2,options):=(
   if(ispoint(pt1),
     pn1=text(pt1);
     pn2=text(pt2);
-    tmp1=replace("PTCz.y=PTAz.y+|PTC-PTA|/|PTB-PTA|*(PTBz.y-PTAz.y)","PTC",name);
-    tmp1=replace(tmp1,"PTA",pn1);
-    tmp1=replace(tmp1,"PTB",pn2);
-    tmp2=replace("PTCz.x=PTAz.x+|PTC-PTA|/|PTB-PTA|*(PTBz.x-PTAz.x)","PTC",name);
-    tmp2=replace(tmp2,"PTA",pn1);
-    tmp2=replace(tmp2,"PTB",pn2); 
+    tmp1=replace("PCz.xy=PAz.xy+|PC-PA|/|PB-PA|*(PBz.xy-PAz.xy)","PC",name);
+    tmp1=replace(tmp1,"PA",pn1);
+    tmp1=replace(tmp1,"PB",pn2);
+    parse(tmp1);  
   ,
-    pn1=format(pt1,6); //181026from
-    pn2=format(pt2,6);
-//    tmp1=replace("PTCz.y=PTA_3+norm(PTC-PTA)/norm(PTB-PTA)*(PTB_3-PTA_3)","PTC",name);
-//    tmp1=replace(tmp1,"PTA",pn1);
-//    tmp1=replace(tmp1,"PTB",pn2);
-//    tmp2=replace("PTCz.x=PTAz.x+|PTC-PTA|/|PTB-PTA|*(PTBz.x-PTAz.x)","PTC",name);
-//    tmp2=replace(tmp2,"PTA",pn1);
-//    tmp2=replace(tmp2,"PTB",pn2);  //181026to
+    pn1=Textformat(Parapt(pt1),5); //181030from
+    pn2=Textformat(Parapt(pt2),5);
+    tmp1=replace("PCz.xy=PAs+Norm(PC-PAm)/Norm(PBm-PAm)*(PBs-PAs)","PC",name);
+    tmp1=replace(tmp1,"PAm",pn1);
+    tmp1=replace(tmp1,"PBm",pn2);
+    pn1=Textformat(Parasubpt(pt1),5); //181030from
+    pn2=Textformat(Parasubpt(pt2),5);
+    tmp1=replace(tmp1,"PAs",pn1);
+    tmp1=replace(tmp1,"PBs",pn2);
+    parse(tmp1);
   );
-  parse(tmp2);
-  parse(tmp1);  
   tmp1=parse(name+".xy"); //181028(3lines)
   tmp2=parse(name+"z.xy"); 
   tmp=Xyzcoord(tmp1,tmp2);
@@ -2187,15 +2189,20 @@ Perpplane(name,ptstr,nstr,option):=(
 ////%Perpplane end////
 
 ////%Drawpoint3d start////
-Drawpoint3d(pt3):=(
+Drawpoint3d(pt3):=Drawpoint3d(pt3,["Color=green"]);
+Drawpoint3d(pt3,options):=(
 //help:Drawpoint3d(pt3d);
+//help:Drawpoint3d(options=["Color=(green)"]);
   regional(ptL,tmp,tmp1,tmp2);
+  tmp=Divoptions(options);
+  opcindy=tmp_(length(tmp));
   if(MeasureDepth(pt3)==0,ptL=[pt3],ptL=pt3);
   forall(ptL,
-    tmp=parapt(#);
-    draw(tmp_(1..2));
+    tmp="draw("+Textformat(Parapt(#),6)+opcindy+")";
+    parse(tmp);
     if(SUBSCR==1,
-      draw([tmp_1+NE.x-SW.x, #_3]);
+      tmp="draw("+Textformat(Parasubpt(#),6)+opcindy+")";
+       parse(tmp);
     );
   );
 );

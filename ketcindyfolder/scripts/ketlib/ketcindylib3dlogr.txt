@@ -1,6 +1,8 @@
 // 20181030
 //   Mkpointlist debugged (workprocess adopted)
 //   Parcrv3d, IntersectsgpL debugged
+//   Ptonseg3d changed  ( for non-geo point )
+//   Drawpoint3d changed  ( color option )
 // 20181029
 //   Mkpointlist debugged
 //   Subgraph change

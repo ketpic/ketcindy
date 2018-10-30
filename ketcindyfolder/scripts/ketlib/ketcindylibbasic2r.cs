@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181024) loaded");
+println("ketcindybasic2(20181030) loaded");
 
 //help:start();
 
@@ -3011,14 +3011,21 @@ RemoveOut(pltlist):=(
 ////%ReadOutData start////
 ReadOutData():=ReadOutData(Fnameout);
 ReadOutData(filename):=ReadOutData("",filename);  //16.03.07
-ReadOutData(path,filename):=ReadOutData(path,filename,[]);//181024(2lines)
-ReadOutData(pathorg,filenameorg,options):=(
+ReadOutData(Arg1,Arg2):=( //181030from
+  if(islist(Arg2),
+    ReadOutData("",Arg1,Arg2);
+  ,
+    ReadOutData(Arg1,Arg2,[]);
+  );
+); //181030to
+ReadOutData(pathorg,filenameorg,optionsorg):=(
 //help:ReadOutData();
 //help:ReadOutData("file.txt");
 //help:ReadOutData("/datafolder","file.txt");
 //help:ReadOutdata(options=["Disp=n(/y)]");
-  regional(path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
+  regional(options,path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
      nmbr,cmdall,cmd,cmdorg,outdt,goutdt,eqL,dispflg);
+  options=optionsorg;
   dispflg=1;
   tmp=Divoptions(options); //181024from
   eqL=tmp_5;
@@ -3028,6 +3035,7 @@ ReadOutData(pathorg,filenameorg,options):=(
     tmp2=substring(tmp_2,0,1); tmp2=Toupper(tmp2);
     if(tmp1=="D",
       if(tmp2=="N",dispflg=0);
+      options=remove(options,[#]); //181030
     );
   ); //181024to
   path=pathorg;   //16.03.07 from
@@ -3036,8 +3044,8 @@ ReadOutData(pathorg,filenameorg,options):=(
     if(indexof(path,"\")>0,tmp1="\",tmp1="/");
     tmp=substring(path,length(path)-1,length(path));
     if(tmp!=tmp1,path=path+tmp1);
-  );   //16.03.07 until
-  filename=filenameorg;  // 16.04.17
+  );   //16.03.07to
+   filename=filenameorg;  // 16.04.17
   if(indexof(filename,".")==0,filename=filename+".txt");
   tmp=load(filename);
   cmdall=tokenize(tmp,"//");
@@ -3110,6 +3118,8 @@ ReadOutData(pathorg,filenameorg,options):=(
   print("readoutdata from "+tmp+" : ");
   if(dispflg==1, //181024from
     println(varL);
+  ,
+    println("");
   ); //181024to
   varL;
 );

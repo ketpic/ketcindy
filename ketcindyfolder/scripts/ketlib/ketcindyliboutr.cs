@@ -5851,6 +5851,7 @@ CalcbyC(name,path,cmd,optionorg):=(
   );//180615to
 );
 
+////%ExeccmdC start////
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
 ExeccmdC(nm,options):=ExeccmdC(nm,options,["do"]);
 ExeccmdC(nm,optionorg,optionhorg):=( 
@@ -5947,6 +5948,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(length(addpath)>0,Changework(dirbkup,["Sub=n"])); //180605
   varL;
 );
+////%ExeccmdC end////
 
 Sfbdparadata(nm,fd):=SfbdparadataC(nm,fd);
 Sfbdparadata(nm,fd,options):=SfbdparadataC(nm,fd,options);

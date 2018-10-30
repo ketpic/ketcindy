@@ -2331,7 +2331,7 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
         Putpoint3d([name,pR]);
         Fixpoint3d([name,pR]);
       ,
-        Pointdata3d(name,pR,options);
+        Drawpoint3d(pR,options);
       ); 
 //      println("    pt"+name+" data:"+format(out,5));
     ,

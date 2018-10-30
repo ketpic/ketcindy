@@ -3,6 +3,7 @@
 //   Parcrv3d, IntersectsgpL debugged
 //   Ptonseg3d changed  ( for non-geo point )
 //   Drawpoint3d changed  ( color option )
+//   IntersectsgpL changed ( Pointdata3d => Drawpoint3d )
 // 20181029
 //   Mkpointlist debugged
 //   Subgraph change

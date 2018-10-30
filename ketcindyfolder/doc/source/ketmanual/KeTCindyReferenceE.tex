@@ -146,7 +146,7 @@ Hide coordinate axes.
 \verb|  Letter([A,"ne","A",B,"sw","B",C,"se","C"]);|
 
 \begin{center}
-\input{Fig/FigE}
+\input{Fig/addax2}
 \end{center}
 \end{cmd}
 
@@ -2171,7 +2171,7 @@ near point from start position : Set in case where the first curve and the last 
 \verb|Hatchdata("8",["i"],[["crAB"]]);|
 
 \begin{center}
-\input{Fig/HatchZuKita7E.tex}\hspace{10mm}\input{Fig/HatchZuKita8.tex}
+\input{Fig/HatchZuKita7E.tex}\hspace{10mm}\input{Fig/HatchZuKita8E.tex}
 \end{center}
 
 %\verb|Hatchdata("9a",["iii"],[["crAB"],["ln1","n"],["ln2","n"]]);|\\
@@ -4702,25 +4702,27 @@ In the 3D-drawings the coordinate of the point name A is A3d.
 
 \itemket{Usage}Readobj(filename, option)
 \itemket{Description}Read in the polyhedron data in the folder name \verb|polyhedrons_obj|
-\itemket{Details}Option is ["size=n"] then we get the magnification of n times. If n is negative value then we have the image of vertical inversion.
+\itemket{Details}\mbox{}
+
+Data of all \verb|Johnson solid| can be downloaded from\\
+\hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
+Store the folder into the work folder of \ketcindy\ for example, and execute\\
+\verb|    Setdirectory(gethome+''/ketcindy/polyhedrons_obj");|\\
+\verb|    polydt=Readobj("r02.obj",["size=2"]);|\\
+\verb|    Setdirectory(Dirwork);|\\
+Then the data of \verb|r02.obj| are assigned to the variable \verb|polydt|.
+
+Option is ["size=n"] then we get the magnification of n times. If n is negative value then we have the image of vertical inversion.
 \itemket{Examples}  \mbox{}
 
-\verb|Setdirectory( Dirhead+"/data/polyhedrons_obj");|  //Many polyhedron data exist in this directory.\\
-\verb|polydt=Readobj("r02.obj",["size=2"]);|  //"r02" is the name of regular octahedron data.\\
-\verb|Setdirectory(Dirwork);|  //Chage work space.\\
 \verb|VertexEdgeFace("1",polydt,["Edg=nogeo"]);|  //output data name is phf3d1\\
 \verb|Nohiddenbyfaces("1","phf3d1");|
-\begin{center} \input{Fig/readobj} \end{center}
 
 \begin{center} \input{Fig/readobj} \end{center}
 
 The main polyhedral data is as follows.
 
  \input{Fig/kobayashiE}
-
-Besides this, there are facing convex polyhedrons from n01 to n92.
-
-cf.http://mitani.cs.tsukuba.ac.jp/polyhedron/
 
 \end{cmd}
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181030) loaded");
+println("ketcindylib3d(20181031) loaded");
 
 //help:start();
 
@@ -2122,7 +2122,7 @@ Putperp(name,ptstr,pLstr,option):=(
       N3d=pP+tmp;
       Defvar("tmp3d",N3d); // temporary
       sgstr=ptstr+"-tmp";
-      tmp=IntersectsgpL(name,sgstr,pLstr,"none");
+      tmp=IntersectsgpL(name,sgstr,pLstr,["Screen=n"]); //181031
       VLIST=select(VLIST,#_1!="tmp3d");
       out=tmp_1;
       Defvar(name+"3d",tmp_1);
@@ -2238,13 +2238,13 @@ Putaxes3d(size):=(
 
 ////%IntersectsgpL start////
 IntersectsgpL(name,sgstr,pLstr):=
-   IntersectsgpL(name,sgstr,pLstr,["Draw=ie"]);
+   IntersectsgpL(name,sgstr,pLstr,["ie"]);
 IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
 //help:IntersectsgpL("R","P-Q","A-B-C");
 //help:IntersectsgpL("",[p1,p2],[p3,p4,p5]);
-//help:IntersectsgpL(options=["draw(put)","ie"+pointoptions]);
-  regional(options,strL,ptflg,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,
-    flg,nvec,tmp,tmp1,tmp2,tmp3,tmp4);
+//help:IntersectsgpL(options=["draw(put)","ie","Screen=n"+pointoptions]);
+  regional(options,eqL, strL,ptflg,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,
+    flg,scrflg,nvec,tmp,tmp1,tmp2,tmp3,tmp4);
   options=optionsorg; //181026from
   tmp1="";
   if(isstring(options),
@@ -2253,6 +2253,7 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
   );
   options=remove(options,["draw","Draw"]);
   tmp=Divoptions(options);
+  eqL=tmp_5;
   strL=tmp_7;
   if(length(tmp1)>0,
     strL=append(strL,tmp1);
@@ -2271,7 +2272,16 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
       );
      );
   );
-  options=remove(options,strL); 
+  options=remove(options,strL);
+  scrflg="Y"; //181031from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(tmp_1);
+    if(substring(tmp1,0,3)=="SCR",
+      scrflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //181031to
   tmp=select(options,substring(#,0,1)=="C");
   if(length(tmp)==0,options=append(options,"Color=green"));//181026to
   Eps=10^(-4);
@@ -2326,7 +2336,7 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     tmp=ptflg_2;
     tmp1=(tmp1)%(substring(tmp,0,1)=="e"); //181025from
     tmp2=(tmp2)%(substring(tmp,1,2)=="e");
-    if(tmp1&tmp2,
+    if(tmp1&tmp2&(scrflg=="Y"), //181031
       if(ptflg_1=="P", //181025
         Putpoint3d([name,pR]);
         Fixpoint3d([name,pR]);
@@ -3057,15 +3067,13 @@ Nohiddenseg(seg,rng,triang,Eps):=(
     );
     tmp1=Crossprod(pB3-pA3,pC3-pA3);
     if(abs(Dotprod(tmp1,sg2-sg1))>Eps,
-      tmp=IntersectsgpL("",[sg1,sg2],[pA3,pB3,pC3],["nodisp"]);//180815
-      if(tmp_2>-Eps & tmp_2<1+Eps,
-        if(tmp_3>-Eps & tmp_4>-Eps & tmp_3+tmp_4<1+Eps,
-          tmp1=select(parL,abs(tmp_2-#)<Eps);
-          if(length(tmp1)==0,
-            parL=sort(append(parL,tmp_2));
-          );
+      tmp=IntersectsgpL("",[sg1,sg2],[pA3,pB3,pC3],["Screen=n"]);//181031from
+      if(tmp_2&tmp_3,
+        tmp1=select(parL,abs(tmp_4-#)<Eps);
+        if(length(tmp1)==0,
+          parL=sort(append(parL,tmp_4));
         );
-      );
+      );//181031to
     );
     flgL=[];
     forall(parL,
@@ -3073,7 +3081,7 @@ Nohiddenseg(seg,rng,triang,Eps):=(
       tmp=Projcoordpara(tmp1);
       tmp_3=tmp_3+1;
       tmp2=Cancoordpara(tmp);
-      tmp=IntersectsgpL("",[tmp1,tmp2],[pA3,pB3,pC3],["nodisp"]);//180815
+      tmp=IntersectsgpL("",[tmp1,tmp2],[pA3,pB3,pC3],["Screen=n"]);//181031
       tmp1=Projcoordpara(tmp1);
       tmp2=Projcoordpara(tmp_1);
       flg1=0;

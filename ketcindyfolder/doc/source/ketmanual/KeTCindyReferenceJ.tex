@@ -150,7 +150,7 @@ Parent ボタンで出力するファイル名は 初期設定がないので，
 \end{verbatim}
 
 \vspace{\baselineskip}
-\hspace{10mm} \input{Fig/addax1}  \input{Fig/FigE}
+\hspace{10mm} \input{Fig/addax1}  \input{Fig/addax2}
 
 
 \hypertarget{setax}{}
@@ -6650,17 +6650,20 @@ optionは，"fix" または "free" ( 初期設定)。
 \hypertarget{readobj}{}
 \item[関数]  Readobj(ファイル名)
 \item[機能]  objファイルを読み込む．
-\item[説明]  小林・鈴木・三谷による多面体データ \verb|polyhedrons_obj|   を読み込む。
-
-オプションは "size=n"  で，n倍したデータにする。負の数にすると上下が反転される。
-
-データはKeTCindyのdataフォルダの中にある。したがって，次のようなスクリプトを書く。読み込むのは一度だけなので， Draw スロットではなくInitialization スロットに置けばよいが，コードの可読性を高めるには Draw スロットでもよい。
+\item[説明]  小林・鈴木・三谷による整面凸多面体のデータは\\
+\hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
+からダウンロードできる．\verb|polyhedrons_obj|を，例えば，ユーザホームのketcindy作業フォルダに入れておく．
 \begin{verbatim}
-  Setdirectory( Dirhead+"/data/polyhedrons_obj");
+  Setdirectory(gethome()+"/ketcindy/polyhedrons_obj");
   polydt=Readobj("r02.obj");
   Setdirectory(Dirwork);
 \end{verbatim}
 これで，r02.obj データが，変数 polydt に代入される。
+
+オプションは "size=n"  で，n倍したデータにする。負の数にすると上下が反転される。
+
+データはKeTCindyのdataフォルダの中にある。したがって，次のようなスクリプトを書く。読み込むのは一度だけなので， Draw スロットではなくInitialization スロットに置けばよいが，コードの可読性を高めるには Draw スロットでもよい。
+
 
 この多面体データは，頂点リストと面リストからなっているが，頂点リストは座標のリストなので，読み込んで表示するときには，点の名称を v1,v2,・・・ とする。
 
@@ -6687,8 +6690,6 @@ optionは，"fix" または "free" ( 初期設定)。
  \input{Fig/kobayashi} 
 
 この他にn01〜n92まで整面凸多面体がある。
-
-Webページは，http://mitani.cs.tsukuba.ac.jp/polyhedron/
 
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}

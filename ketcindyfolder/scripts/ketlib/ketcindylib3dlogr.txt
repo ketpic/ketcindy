@@ -1,3 +1,6 @@
+// 20181031
+//   IntersectsgpL changed  ( option "Screen=" added )
+//   Perpplane, Nohiddenseg  changed ( for change of IntersectsgpL)
 // 20181030
 //   Mkpointlist debugged (workprocess adopted)
 //   Parcrv3d, IntersectsgpL debugged

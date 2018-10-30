@@ -3012,7 +3012,7 @@ RemoveOut(pltlist):=(
 ReadOutData():=ReadOutData(Fnameout);
 ReadOutData(filename):=ReadOutData("",filename);  //16.03.07
 ReadOutData(path,filename):=ReadOutData(path,filename,[]);//181024(2lines)
-ReadOutData(pathorg,filenameorg,optins):=(
+ReadOutData(pathorg,filenameorg,options):=(
 //help:ReadOutData();
 //help:ReadOutData("file.txt");
 //help:ReadOutData("/datafolder","file.txt");

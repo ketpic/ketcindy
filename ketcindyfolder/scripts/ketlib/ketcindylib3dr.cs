@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181028) loaded");
+println("ketcindylib3d(20181030) loaded");
 
 //help:start();
 
@@ -144,61 +144,7 @@ Start3d(ptexception):=(
       ChNum=1;
     );
     Ch=[0];
-  );// 17.05.18until
-  if(length(VLIST)==0, // 16.06.20
-    tmp=remove(allpoints(),[NE,SW,TH,FI,O,X,Y,Z]);//17.06.02
-    tmp4=remove(tmp,ptexception);
-    forall(tmp4,pt,
-      tmp1=text(pt);
-      tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-      if(tmp!="z",
-        tmp=parse(tmp1+"z.y");
-        pt3=Xyzcoord(pt.x,pt.y,tmp);
-        Defvar(tmp1+"3d",pt3);
-        pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28until
-      );
-    );
-  ,
-    if(isselected(NE) % isselected(SW), 
-      tmp=remove(allpoints(),[NE,SW,TH,FI]);
-      tmp4=remove(tmp,ptexception);
-      forall(tmp4,pt,
-        tmp1=text(pt);
-        tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-        if(tmp!="z",
-          tmp=select(VLIST,#_1==tmp1+"3d"); //17.10.07
-          pt3=tmp_1_2;
-          tmp=tmp1+".xy=Parapt("+pt3+")_[1,2];";
-          parse(tmp);
-        );
-      );
-    ,
-      tmp=remove(allpoints(),[NE,SW,TH,FI]);
-      tmp4=remove(tmp,ptexception);
-      forall(tmp4,pt,
-        tmp1=text(pt);
-        tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-        if(tmp!="z",
-          tmp2=parse(tmp1+"z");
-          if(isselected(pt) % isselected(tmp2),
-            Defvar(tmp1+"2d",pt.xy);
-            tmp=parse(tmp1+"z.y");
-            tmp=Xyzcoord(pt.x,pt.y,tmp);
-            Defvar(tmp1+"3d",tmp);
-          );
-        ,
-          if(isselected(pt),
-            tmp1=substring(tmp1,0,length(tmp1)-1);
-	        tmp=parse(tmp1);
-            Defvar(tmp1+"2d",tmp.xy); 
-            pt3=Xyzcoord(tmp.x,tmp.y,pt.y);//181013from
-            Defvar(tmp1+"3d",pt3);
-          );
-        ); //181013to
-      );
-    );
-  );
+  );// 17.05.18to
   if(SUBSCR==1,
     xmn=SW.x+NE.x-SW.x;
     xMx=NE.x+NE.x-SW.x;
@@ -246,11 +192,11 @@ Setangle(theta,phi):=( //16.12.24
       tmp1=text(pt);
       tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
       if(tmp!="z",
-        tmp=parse(tmp1+"z.y");
-        pt3=Xyzcoord(pt.x,pt.y,tmp);
+        tmp=parse(tmp1+"z.xy"); //181028(2lines);
+        pt3=Xyzcoord(pt.xy,tmp);
         Defvar(tmp1+"3d",pt3);
         pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28until
+        Defvar(tmp1+"2d",pt2);  // 16.05.28to
       );
     );
   ,
@@ -277,8 +223,8 @@ Setangle(theta,phi):=( //16.12.24
           tmp2=parse(tmp1+"z");
           if(isselected(pt) % isselected(tmp2),
             Defvar(tmp1+"2d",pt.xy);
-            tmp=parse(tmp1+"z.y");
-            tmp=Xyzcoord(pt.x,pt.y,tmp);
+            tmp=parse(tmp1+"z.xy"); //181028(2lines)
+            tmp=Xyzcoord(pt.xy,tmp);
             Defvar(tmp1+"3d",tmp);
           );
         );
@@ -368,7 +314,6 @@ Dist3d(pt1,pt2):=(
 );
 ////%Dist3d end////
 
-////%Findangle start////
 Findangle(vec):=(
 //help:Findangle([2,1,4]);
 //help:Findangle([0,0,1,0]);
@@ -387,9 +332,7 @@ Findangle(vec):=(
   );
   [th,ph];
 );
-////%Findangle end////
 
-////%Cancoordpara start////
 Cancoordpara(pc):=(
 //help:Cancoordpara([1,2,0]);
   regional(Xz,Yz,Zz,tmp1,tmp2,tmp3);
@@ -399,7 +342,6 @@ Cancoordpara(pc):=(
   tmp3=Yz*sin(THETA)+Zz*cos(THETA);
   [tmp1,tmp2,tmp3];
 );
-////%Cancoordpara end////
 
 ////%Zparapt start////
 Zparapt(cc):=(
@@ -427,6 +369,47 @@ Parapt(pt):=(
   [Xz,Yz];
 );
 ////%Parapt end////
+
+///%Parasubpt start////
+Parasubpt(pt):=( //181027
+  regional(mv,dp,xs);
+  mv=NE.x-SW.x;
+  dp=pi/24;
+  xs=-pt_1*sin(PHI+dp)+pt_2*cos(PHI+dp);
+  [xs+mv,pt_3];
+);
+////%Parasubpt end////
+
+////%Parasubptlog start////
+Parasubptlog(pt):=( //181027
+  regional(dp,xs);
+  dp=pi/24;
+  xs=-pt_1*sin(PHI+dp)+pt_2*cos(PHI+dp);
+  [xs,pt_3];
+);
+////%Parasubptlog end////
+
+////%Mainsubpt3d start////
+Mainsubpt3d(pm,psv):=( //181027
+  regional(Eps,mv,dp,v,x,y,z);
+  // when Th neq 90, psv=ps_2, else  psv=ps_1
+  Eps=10^(-4);
+  mv=NE.x-SW.x;
+  dp=pi/24;
+  if(abs(cos(THETA))>Eps,
+    if(length(psv)>1,v=psv_2, v=psv);
+    x=(v*cos(PHI)*sin(THETA)-pm_1*sin(PHI)*cos(THETA)-pm_2*cos(PHI))/cos(THETA);
+    y=(v*sin(PHI)*sin(THETA)+pm_1*cos(PHI)*cos(THETA)-pm_2*sin(PHI))/cos(THETA);
+    z=v;
+  ,
+    if(length(psv)>1,v=psv_1, v=psv);
+    x=(pm_1*cos(PHI+dp)-(v-mv)*cos(PHI))/sin(dp);
+	y=(pm_1*sin(PHI+dp)-(v-mv)*sin(PHI))/sin(dp);
+    z=pm_2;
+  );
+  [x,y,z];
+);
+////%Mainsubpt3d end////
 
 ////%ProjCurve start////
 ProjCurve(crv):=(
@@ -554,7 +537,6 @@ Projpara(ptdata,optionsorg):=(
 );
 ////%Projpara end////
 
-////%InvparaptPp start////
 InvparaptPp(pt,pd):=(
   regional(Eps,fk,nfk,ph,fh,ah,bh,ak,bk,v1,v2,
     nn,s0,t2,out,tmp,tmp1,tmp2,flg);
@@ -611,7 +593,6 @@ InvparaptPp(pt,pd):=(
   );
   out;
 );
-////%InvparaptPp end////
 
 ////%Invparapt start////
 Invparapt(pt,pd):=(
@@ -622,18 +603,23 @@ Invparapt(pt,pd):=(
 ////%Invparapt end////
 
 ////%Subgraph start////
-Subgraph(name,opcindy):=(
-  regional(tht,tmp,tmp1);
-  tht=THETA; THETA=pi/2;
-  tmp=Projpara(name3,["nodata"]);
-  if(length(tmp)>0, //15.08.17
-    tmp=Translatedata("",[tmp],[NE.x-SW.x,0],["nodata"]);
-    tmp1=replace("sub"+name,"3d","2d");
-    tmp=tmp1+"="+Textformat(tmp,5);
-    parse(tmp);
-    GCLIST=append(GCLIST,[tmp1,0,opcindy]);
+Subgraph(name3,opcindy):=( //181029
+  regional(name,crvL,sub2d,color,tmp,tmp1,tmp2);
+  name=replace("sub"+name3,"3d","2d");
+  crvL=parse(name3);
+  if(MeasureDepth(crvL)==1,crvL=[crvL]);
+  sub2d=[];
+  forall(crvL,tmp1,
+    tmp2=[];
+    forall(tmp1,
+      tmp2=append(tmp2,Parasubpt(#));
+    );
+  sub2d=append(sub2d,tmp2);
   );
-  THETA=tht;  // 15.11.03
+  tmp=name+"="+Textformat(sub2d,5);
+  parse(tmp);
+  GCLIST=append(GCLIST,[name,0,opcindy]);
+  sub2d;
 );
 ////%Subgraph end////
 
@@ -936,12 +922,13 @@ Partcrv3d(nm,pA,pB,PkLstr,options):=(
   dt1=partcrv("",p1,p2,tmp,["nodata"]);
   dts=partcrv("",q1,q2,"sub"+tmp,["nodata"]);
   dt=apply(1..length(dt1),
-  Xyzcoord(dt1_#_1,dt1_#_2,dts_#_2));
+    Xyzcoord(dt1_#,dts_#); //181028
+  );
   Spaceline("-part3d"+nm,dt,options);
 );
 ////%Partcrv3d end////
 
-////%Joincrvs3d start////
+////%Joincrvs3d( start////
 Joincrvs3d(nm,plotstrL):=Joincrvs3d(nm,plotstrL,[]);//16.10.06
 Joincrvs3d(nm,plotstrL,options):=(
 //help:Joincrvs3d("1",["bz3da1","bz3da1"]);
@@ -1038,7 +1025,7 @@ Joincrvs3d(nm,plotstrL,options):=(
   );
   PtL;
 );
-////%Joincrvs3d end////
+////%Joincrvs3d( end////
 
 ////%Xyzax3data start////
 Xyzax3data(nm,Xrange,Yrange,Zrange):=
@@ -1141,14 +1128,14 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
       );
     );  // 16.08.14until
     if(SUBSCR==1, //  15.02.11
-      Subgraph(name3,opcindy);
+      Subgraph(name3,opcindy); //181029
     );
   );
   Out;
 );
 ////%Xyzax3data end////
 
-////%Xyzaxparaname start////
+////%Xyzax3paraname start////
 Xyzaxparaname(Xrange,Yrange,Zrange):=
    Xyzaxparaname(Xrange,Yrange,Zrange,[]);
 Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
@@ -1192,9 +1179,8 @@ Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
     Expr(ch,"c",Zname);
   );
 );
-////%Xyzaxparaname end////
+////%Xyzax3paraname end////
 
-////%Datalist3d start////
 Datalist3d():=(
 //help:Datalist3d();
   regional(out,tmp,tmp2,tmp3);
@@ -1204,9 +1190,7 @@ Datalist3d():=(
   tmp3=apply(tmp2,replace(#,"2d","3d"));
   out=tmp3;
 );
-////%Datalist3d end////
 
-////%Datalist2d start////
 Datalist2d():=(
 //help:Datalist2d();
   regional(out,tmp,tmp2,tmp3);
@@ -1216,9 +1200,7 @@ Datalist2d():=(
 //  tmp3=apply(tmp2,replace(#,"2d","3d"));
   out=tmp2;
 );
-////Datalist2d end////
 
-////%Embed start////
 Embed(nm,Pd2str,funstr,varstr):=
     Embed(nm,Pd2str,funstr,varstr,[]);
 Embed(nm,Pd2str,funstr,varstr,options):=(
@@ -1308,7 +1290,6 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   );
   Out;
 );
-////%Embed end////
 
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
@@ -1748,14 +1729,15 @@ Scaledata3d(nm,P3data,ratio,options):=(
   Out;
 );
 
-Xyzcoord(X,Y,z):=(
+////%Xyzcoord start////
+Xyzcoord(pm,ps):=Xyzcoord(pm_1,pm_2,ps); //181028from
+Xyzcoord(X,Y,ps):=(
 //help:Xyzcoord(A.x,A.y,Az.y);
-  regional(Eps,x3d,y3d,z3d);
-  x3d=(-X*sin(PHI)*cos(THETA)-Y*cos(PHI)+z*cos(PHI)*sin(THETA))/cos(THETA);
-  y3d=(X*cos(PHI)*cos(THETA)-Y*sin(PHI)+z*sin(PHI)*sin(THETA))/cos(THETA);
-  z3d=z;
-  [x3d,y3d,z3d];
+  regional(pt3d);
+  pt3d=Mainsubpt3d([X,Y],ps);
+  pt3d;//181028to
 );
+////%Xyzcoord end////
 
 PutonCurve3d(name,pdstr):=(
 //help:PutonCurve3d("T","sc3d1");
@@ -1767,139 +1749,126 @@ PutonCurve3d(name,pdstr):=(
   tmp1=ParamonCurve(tmp_1,tmp_2,pd2str);
   tmp="sub"+pd2str;
   tmp2=PointonCurve(tmp1,tmp);
-  pt=append(pt,tmp2_2);
-  pt=Xyzcoord(pt_1,pt_2,pt_3); // 15.03.13
+//  pt=append(pt,tmp2_2); //181028(2lines)
+  pt=Xyzcoord(pt,tmp2); // 15.03.13
   tmp=name+"z.xy="+textformat(tmp2,5);
   parse(tmp);
   VLIST=select(VLIST,#_1!=name+"3d");
   Defvar(name+"3d",pt);
 );
 
+////%Mkpointlist start////
 Mkpointlist():=Mkpointlist([]); //16.11.12
-Mkpointlist(options):=( //16.11.12
-  regional(Eps,pos,ptL,plist,ilist,plistrest,
-    inforest,free,pt,pt3,ptz,par,vlistpre,
+Mkpointlist(options):=( //181030
+  regional(Eps,pos,worklist,plist,pt,ptstr,pt3,ptz,par,
+     vlistpre,
      tmp,tmp1,tmp2,tmp3,tmp4,p1,p2,flg);
-  vlistpre=VLIST; //181015
   Eps=10^(-4);
-  tmp=Finddef(NE);
-  free=tmp_1;
   pos=[NE.x+1,NE.y];
-  tmp=remove(allpoints(),[NE,SW,TH,FI]);
-  tmp=remove(tmp,options); //16.11.12
-  plist=select(tmp,
-    substring(text(#),length(text(#))-1,length(text(#)))!="z"
-  );
+  worklist=Workprocess(); //181030
+  plist=select(worklist,length(#_3)!=2);
+  plist=apply(plist,#_1);
+  plist=remove(plist,PTEXCEPTION);
+  tmp=apply(VLIST,#_1);//181029from
+  tmp=select(tmp,indexof(#,"3d")>0);
+  tmp2=apply(tmp,replace(#,"3d",""));
+  forall(tmp2,ptstr,
+    if(!contains(plist,ptstr),
+      tmp=select(VLIST,
+            (#_1==pt+"3d")%(#_1==pt+"2d")%(#_1==pt+"fix"));
+      VLIST=remove(VLIST,tmp);
+    );
+  ); //181029to
+//  vlistpre=VLIST; //181015
   if(SUBSCR==0,plist=[]);
-  ptL=[];
-  plistrest=[];
-  inforest=[];
-  forall(plist,pt,
+  forall(plist,ptstr,
+    pt=parse(ptstr);
     inspect(pt,"ptsize",3);
     inspect(pt,"color",2);
     inspect(pt,"textsize",TSIZE);
     ptz=text(pt)+"z";
     tmp=Finddef(pt);
-    if(indexof(tmp_1,free)>0,  // free point
-	  tmp=select(VLIST,#_1==text(pt)+"3d");
-      if(length(tmp)==0,
-        tmp=pt.x+NE.x-SW.x;
-        Putpoint(ptz,[tmp,0],[tmp,parse(ptz+".y")]);
-        pt3=Xyzcoord(pt.x,pt.y,parse(text(ptz)+".y"));
-        Defvar(text(pt)+"3d",pt3);
-        Defvar(text(pt)+"fix",0);
-        vlistpre=VLIST; //16.08.20
-      );
-      flg=0;
-      if(isselected(pt),
-        if(parse(text(pt)+"fix")!=1, // 15.03.01
-          tmp=pt.x+NE.x-SW.x;
-          Putpoint(ptz,[tmp,0],[tmp,parse(ptz+".y")]);
-          pt3=Xyzcoord(pt.x,pt.y,parse(text(ptz)+".y"));
-          VLIST=select(VLIST,#_1!=text(pt)+"3d");
-          Defvar(text(pt)+"3d",pt3);
-          vlistpre=VLIST; //16.08.20
-          flg=1;
-        );
-      );
-      inspect(parse(ptz),"ptsize",3);
-      inspect(parse(ptz),"color",3);
-      inspect(parse(ptz),"textsize",TSIZEZ);
-      if(isselected(parse(ptz)),
-        if(parse(ptz+"fix")!=1, // 15.03.01
-          tmp=select(vlistpre,#_1==text(pt)+"3d"); //16.08.20
-          pt3=tmp_1_2;
-          pt3_3=parse(ptz+".y");
-          pt.xy=Parapt(pt3);
-          tmp=ptz+".x=pt.x+NE.x-SW.x";
-          parse(tmp);
-          VLIST=select(VLIST,#_1!=text(pt)+"3d");
-          Defvar(text(pt)+"3d",pt3);
-          flg=2;
-        );
-      );
-      if(flg==0,
-        tmp=select(VLIST,#_1==text(pt)+"3d");
-        if(length(tmp)>0, //17.10.07
-          pt3=tmp_1_2;
-          pt.xy=Parapt(pt3);
-          tmp=ptz+".x=pt.x+NE.x-SW.x";
-          parse(tmp);
-        ); //17.10.07
-      );
-      if(isselected(pt) % isselected(parse(ptz)),
-        drawtext(pos,text(pt3));
-      );
-      if(!contains(["p","q"],text(pt)),
-        ptL=append(ptL,pt);
-      );
-    ,
-      tmp=Findgeoinfo(pt);
-      tmp1=[parse(tmp_1),parse(tmp_2),parse(tmp_3)];
-      plistrest=append(plistrest,pt);
-      inforest=append(inforest,tmp);
-    );
-  );
-  if(length(plistrest)>0,
-    tmp=Sortpointlist([plistrest,inforest]);
-    plist=tmp_1;
-    ilist=tmp_2;
-    forall(1..length(plist),
-      pt=plist_#;
-      ptz=text(pt)+"z";
-      tmp=ilist_#;
-      p1=parse(tmp_3);
-      p2=p1+parse(tmp_2)-parse(tmp_1);
-      tmp1=p2-p1;
-      tmp2=pt-p1;
-      if(abs(tmp1_1)>abs(tmp1_2),
-        par=tmp2_1/tmp1_1;
+    tmp=select(VLIST,#_1==text(pt)+"3d");
+    if(length(tmp)==0,
+      if(abs(cos(THETA))>Eps,//181028from
+        tmp1=Mainsubpt3d(pt.xy,0); 
+        tmp=Parasubpt(tmp1);
+        Putpoint(ptz,tmp,[tmp_1,parse(ptz+".y")]);
+        pt3=Mainsubpt3d(pt.xy,parse(ptz+".xy"));
       ,
-        par=tmp2_2/tmp1_2;
-      );
-      tmp=ilist_#;
-      tmp1=parse(tmp_1+"3d");
-      tmp2=parse(tmp_2+"3d");
-      tmp3=parse(tmp_3+"3d");
-      tmp1=(1-par)*tmp3+par*(tmp3+tmp2-tmp1);
-      Putpoint(ptz,[pt.x+NE.x-SW.x,tmp1_3]);
-      inspect(parse(ptz),"ptsize",3);
-      inspect(parse(ptz),"color",3);
-      inspect(parse(ptz),"textsize",TSIZEZ);
-      pt3=Xyzcoord(pt.x,pt.y,parse(text(ptz)+".y"));
-      VLIST=select(VLIST,#_1!=tmp1+"3d");
+        if(abs(sin(PHI))>abs(cos(PHI)), //181029from
+          tmp=Parasubpt([-pt.x/sin(PHI),0,pt.y]);
+        ,
+          tmp=Parasubpt([0,pt.x/cos(PHI),pt.y]);
+        );
+        Putpoint(ptz,tmp,[parse(ptz+".x"),pt.y]);//181029to
+        pt3=Mainsubpt3d(pt.xy,parse(ptz+".xy"));
+      ); //181028to
       Defvar(text(pt)+"3d",pt3);
-      vlistpre=VLIST; //16.08.20
-      if(isselected(pt) % isselected(parse(ptz)),
-        drawtext(pos,text(pt3));
-      );
-      if(!contains(["p","q"],text(pt)),
-        ptL=append(ptL,pt);
+      Defvar(text(pt)+"fix",0);
+//      vlistpre=VLIST; //16.08.20
+    );
+    flg=0;
+    if(isstring(ptz),ptz=parse(ptz));//181029from
+    inspect(ptz,"ptsize",3);
+    inspect(ptz,"color",3);
+    inspect(ptz,"textsize",TSIZEZ);//181029to
+    if(isselected(pt),
+      if(parse(text(pt)+"fix")!=1,
+        tmp=select(VLIST,#_1==text(pt)+"3d");
+        tmp1=tmp_1_2;
+        tmp2=Mainsubpt3d(pt.xy,ptz.xy); //181029
+        if(Norm(tmp1-tmp2)>Eps,
+          VLIST=select(VLIST,#_1!=text(pt)+"3d");
+          Defvar(text(pt)+"3d",tmp2);
+//      vlistpre=VLIST; //16.08.20
+        );
+        Putpoint(text(ptz),Parasubpt(tmp2));
+        pt3=tmp2;
+        flg=1;
       );
     );
+    if(isselected(ptz),
+//      tmp=select(vlistpre,#_1==text(pt)+"3d"); //16.08.20
+      tmp=select(VLIST,#_1==text(pt)+"3d"); //181030
+      tmp1=tmp_1_2;
+      tmp2=Mainsubpt3d(pt.xy,ptz.xy); 
+      if(Norm(tmp1-tmp2)>Eps,
+      if(abs(cos(THETA))>Eps,
+        tmp2=[tmp1_1,tmp1_2,tmp2_3];
+      ,
+      ); //181028to
+      VLIST=select(VLIST,#_1!=text(pt)+"3d");
+      Defvar(text(pt)+"3d",tmp2);
+    );
+      Putpoint(text(ptz),Parasubpt(tmp2));
+      pt3=tmp2; 
+      flg=2;
+    );
+    if(isselected(TH) % isselected(FI), //181029
+      tmp=select(VLIST,#_1==text(pt)+"3d");
+      if(length(tmp)>0, //17.10.07
+        tmp1=Parapt(tmp_1_2);
+        Putpoint(text(pt),tmp1); //181029
+        tmp2=Parasubpt(tmp_1_2);//181027(2lines)
+        Putpoint(text(ptz),tmp2); //181029
+        flg=3;
+      ); //17.10.07
+    );
+    if(flg==0, //181030from
+      pt3=Mainsubpt3d(pt.xy,ptz.xy);
+      VLIST=select(VLIST,#_1!=text(pt)+"3d");
+      Defvar(text(pt)+"3d",pt3);
+    ); //181030to
+    if(isselected(pt) % isselected(ptz),
+      drawtext(pos,text(pt3));
+    );
+    if(!contains(["p","q"],text(pt)),
+      ptL=append(ptL,pt);
+    );
   );
-  ptL;
 );
+////%Mkpointlist end////
 
 Mkseg3d():=Mkseg3d([]);
 Mkseg3d(options):=(
@@ -2006,20 +1975,30 @@ Putonseg3d(name,pt1,pt2,options):=(
   inspect(parse(name+"z"),"ptsize",3);
   inspect(parse(name+"z"),"color",3);
   inspect(parse(name+"z"),"textsize",TSIZEZ);
-  pn1=text(pt1);
-  pn2=text(pt2);
-  tmp1=replace("PTCz.y=PTAz.y+|PTC-PTA|/|PTB-PTA|*(PTBz.y-PTAz.y)","PTC",name);
-  tmp1=replace(tmp1,"PTA",pn1);
-  tmp1=replace(tmp1,"PTB",pn2);
-  tmp2=replace("PTCz.x=PTAz.x+|PTC-PTA|/|PTB-PTA|*(PTBz.x-PTAz.x)","PTC",name);
-  tmp2=replace(tmp2,"PTA",pn1);
-  tmp2=replace(tmp2,"PTB",pn2); 
+  if(ispoint(pt1),
+    pn1=text(pt1);
+    pn2=text(pt2);
+    tmp1=replace("PTCz.y=PTAz.y+|PTC-PTA|/|PTB-PTA|*(PTBz.y-PTAz.y)","PTC",name);
+    tmp1=replace(tmp1,"PTA",pn1);
+    tmp1=replace(tmp1,"PTB",pn2);
+    tmp2=replace("PTCz.x=PTAz.x+|PTC-PTA|/|PTB-PTA|*(PTBz.x-PTAz.x)","PTC",name);
+    tmp2=replace(tmp2,"PTA",pn1);
+    tmp2=replace(tmp2,"PTB",pn2); 
+  ,
+    pn1=format(pt1,6); //181026from
+    pn2=format(pt2,6);
+//    tmp1=replace("PTCz.y=PTA_3+norm(PTC-PTA)/norm(PTB-PTA)*(PTB_3-PTA_3)","PTC",name);
+//    tmp1=replace(tmp1,"PTA",pn1);
+//    tmp1=replace(tmp1,"PTB",pn2);
+//    tmp2=replace("PTCz.x=PTAz.x+|PTC-PTA|/|PTB-PTA|*(PTBz.x-PTAz.x)","PTC",name);
+//    tmp2=replace(tmp2,"PTA",pn1);
+//    tmp2=replace(tmp2,"PTB",pn2);  //181026to
+  );
   parse(tmp2);
   parse(tmp1);  
-  tmp1=parse(name+".x");
-  tmp2=parse(name+".y");
-  tmp3=parse(name+"z.y"); 
-  tmp=Xyzcoord(tmp1,tmp2,tmp3);
+  tmp1=parse(name+".xy"); //181028(3lines)
+  tmp2=parse(name+"z.xy"); 
+  tmp=Xyzcoord(tmp1,tmp2);
   Defvar(name+"3d",tmp);
 );
 ////%Putonseg3d end////
@@ -2057,7 +2036,7 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
       if(islist(fixstr),tmp=fixstr_1,tmp=fixstr);
       tmp=Toupper(tmp);
       if(tmp!="FIX", 
-        tmp=Xyzcoord(tmp2.x,tmp2.y,parse(tmp1+"z").y);
+        tmp=Xyzcoord(tmp2.xy,parse(tmp1+"z.xy")); //181028
       ,
         tmp=pt3;
       ); 
@@ -2229,7 +2208,7 @@ Pointdata3d(nm,pt3,options):=( //181017from
   regional(pt3L,pt2L,tmp);
   if(MeasureDepth(pt3)==0,pt3L=[pt3],pt3L=pt3);
   pt2L=apply(pt3L,Parapt(#));
-  Pointdata("2d"+nm,pt2L,options);
+  Pointdata("2d"+nm,pt2L,append(options,"Disp=n"));
   tmp="pt3d"+nm+"="+format(pt3L,6);
   parse(tmp);
 ); //181017to
@@ -2341,19 +2320,19 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     tmp1=(tmp1)%(substring(tmp,0,1)=="e"); //181025from
     tmp2=(tmp2)%(substring(tmp,1,2)=="e");
     if(tmp1&tmp2,
-      if(ptflg=="P", //181025
+      if(ptflg_1=="P", //181025
         Putpoint3d([name,pR]);
         Fixpoint3d([name,pR]);
       ,
         Pointdata3d(name,pR,options);
       ); 
-      println("    pt"+name+" data:"+format(out,5));
+//      println("    pt"+name+" data:"+format(out,5));
     ,
-      println("pt"+name+" data:"+format(out,5));
+//      println("pt"+name+" data:"+format(out,5));
     );
   ,
     println("   "+sgstr+" and "+pLstr+" may be parallel");//181025to
-    out=[];
+    out=[[],false,false]; //181029
   );
   out;
 );

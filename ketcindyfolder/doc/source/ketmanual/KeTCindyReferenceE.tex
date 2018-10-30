@@ -4270,15 +4270,15 @@ To output in the \TeX file, use \hyperlink{pointdata}{Pointdata()} or \hyperlink
 \begin{cmd}{ExeccmdC}{execcmdc}
 
 \itemket{Usage}ExeccmdC(name,options1,options2)
-\itemket{Description}Generic function to draw 3D-surface. 
-\itemket{Details}options1=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 20.\\
+\itemket{Description}Generic function to draw 3D-surface. The return value is the list of processed plot data.
+\itemket{Details}options1=no option or " "(space) or "r" or "m" and "Wait=integer" , line type. Default value of Wait is 20.\\
 No option or " "(space) means\\
 (1) If there exist no deta then it make a new data file.\\
 (2) If there exist deta then it read the data file.\\
 "m" means that it remake the new data file.\\
 "r" means that it reread the existing data file.\\
 
-option2="nodisp" or line type. Default is "nodisp".\\
+option2="nodisp" or line type of hidden line. Default is "do".\\
 
 If we specify only option2 then we denote that option1 is empty list:[].
 \itemket{Examples}  \mbox{}
@@ -4287,7 +4287,7 @@ left figure
 
 \verb| Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
 \verb| Putpoint3d(["A",[0,-3,0],"B",[0,3,3]],"fix"); |\\
-\verb| Spaceline("1",[A,B]); |\\
+\verb| Spaceline([A,B]); |\\
 \verb| fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"]; |\\
 \verb| Startsurf(); |\\
 \verb| Sfbdparadata("1",fd); |\\
@@ -4300,6 +4300,17 @@ right figure
 \verb|    ExeccmdC("1",[],["nodisp"]);|
 
 \hspace{20mm}\input{Fig/crvsfparadata2} \hspace{20mm}   \input{Fig/crvsfparadata1} 
+
+By using the return value, you can change the hidden line style (line style, color). 
+The same as the return value is displayed as "readoutdata from template3D1.txt:" on the console, so you can decide the operation target by looking at it. For example, in the left diagram above, the hidden line of line AB is the fourth crvsfh3d1 in the list, so you can make it a red dashed line as follows.
+
+\verb|    ret=ExeccmdC("1");|\\
+\verb|    Changestyle3d(ret_4,["da","Color=red"]);|\\
+
+\hspace{20mm} \input{Fig/execcmdc1}
+
+In addition, please refer to the next. \hyperlink{sfbdparadata}{Sfbdparadata()},\hyperlink{wireparadata}{Wireparadata()} 
+
 \end{cmd}
 %--------------Embed------------------------------
 
@@ -4867,8 +4878,8 @@ Options are the followings.\\
 %-------------Sfbdparadata-------------------------------
 \begin{cmd}{Sfbdparadata}{sfbdparadata}
 
-\itemket{Usage}Sfbdparadata(name, list, list of options1, list of options2)
-\itemket{Description}Generic function to draw the surface by performing hidden line processing.
+\itemket{Usage}Sfbdparadata(name, list, list of options)
+\itemket{Description}Generic function to make the surface by performing hidden line processing.
 \itemket{Details}Second argument is the list of equations and ranges same as the function "Sf3data". \\
 options1=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 20.\\
 No option or " "(space) means\\
@@ -4888,17 +4899,17 @@ If we specify only option2 then we denote that option1 is empty list:[].
 \verb|  ,|\\
 \verb|  Startsurf();|\\
 \verb|  Sfbdparadata("1",fd);|\\
-\verb|  ExeccmdC("1");|  //draw the surface\\
+\verb|  ExeccmdC("1",[],["nodisp"]);|  //draw the surface\\
 \verb|);|\\
 (left figure)\\
 
-\verb|Sfbdparadata("1",fd,["dr,2"],["do"]);|  //the surface with thick line, hidden line with dotted line.\\
+\verb|ExeccmdC("1",["dr,2"],["do"]);|  //the surface with thick line, hidden line with dotted line.\\
 (right figure)
 \begin{center} \input{Fig/sfbdpara01}    \input{Fig/sfbdpara02}\end{center}
 
 \verb|fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];|\\
 \ \ //"e"=east indicate the boundary line $R=2$, $0 < T < 2\pi$.\\
-\verb|Sfbdparadata("1",fd,[],["da"]);|
+
 \begin{center} \input{Fig/sfbdpara03}  \input{Fig/sfbdpara04} \end{center}
 
 \end{cmd}
@@ -5022,19 +5033,17 @@ no option: output edges as the geometric elements but don't to \TeX file.\\
 %-------------Wireparadata-------------------------------
 \begin{cmd}{Wireparadata}{wireparadata}
 
-\itemket{Usage} Wireparadata(name, PD, formula, integer, integer, options1, options2)
+\itemket{Usage} Wireparadata(name, PD, formula, integer, integer, options)
 \itemket{Description}Generic function to draw the surface by wire frame data with performing hidden line processing.
 \itemket{Details}The second argument PD is the surface data made by Sfbdparadata function.\\
-options1=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 30.\\
+options=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 30.\\
 No option or " "(space) means\\
 (1) If there exist no deta then it make a new data file.\\
 (2) If there exist deta then it read the data file.\\
 "m" means that it remake the new data file.\\
 "r" means that it reread the existing data file.\\
 
-option2="nodisp" or line type of hidden line. Default is "nodisp", in this case we denote that option1 is empty letter list:\verb|[""]|.
 \itemket{Examples}  \mbox{}
-
 
 \verb|fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"]; |\\
 \verb|if(Isangle(), |\\
@@ -5050,26 +5059,26 @@ option2="nodisp" or line type of hidden line. Default is "nodisp", in this case 
 \input{Fig/wirepara1}
 \end{center}
 
-
+Change the following code.
 
 \verb|fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];|\\
-\verb|Sfbdparadata("1",fd);|\\
 \verb|Wireparadata("1","sfbd3d1",fd,5,7,[""]);|
 
 \begin{center}
 \input{Fig/wirepara2}
 \end{center}
 
-
 \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]", |\\
 \verb| "v=[0,2*pi]","s"]; |\\
-\verb|Sfbdparadata("1",fd); |\\
 \verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
 
 \begin{center}
 \input{Fig/wirepara3}
 \end{center}
 
+\begin{layer}{150}{0}
+\putnotese{90}{15}{ \input{Fig/wirepara4}}
+\end{layer}
 
 \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]",|\\
 \verb|         "v=[0,2*pi]","s"];|\\
@@ -5079,11 +5088,14 @@ option2="nodisp" or line type of hidden line. Default is "nodisp", in this case 
 \verb|   Startsurf();|\\
 \verb|   Sfbdparadata("1",fd);|\\
 \verb|   Wireparadata("1","sfbd3d1",fd,12,12,[""]);|\\
-\verb|   Crvsfparadata("1","ax3d","sfbd3d1",fd,[],["do"]);|\\
-\verb|   ExeccmdC("1");|\\
+\verb|   Crvsfparadata("1","ax3d","sfbd3d1",fd);|\\
+\verb|    ret=ExeccmdC("1");|\\
+\verb|    forall(1..length(ret),|\\
+\verb|      if(indexof(ret_#,"wireh")>0,|\\
+\verb|        Changestyle3d([ret_#],["nodisp"]);|\\
+\verb|      );|\\
+\verb|    );|\\
 \verb|);|
-
-(left figure)
 
 \vspace{\baselineskip}
 \verb|fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",|\\
@@ -5091,9 +5103,7 @@ option2="nodisp" or line type of hidden line. Default is "nodisp", in this case 
 \verb|Sfbdparadata("1",fd);|\\
 \verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
 
-(right figure)
-
-\begin{center} \input{Fig/wirepara4}\hspace{10mm}\input{Fig/wirepara5} \end{center}
+\begin{center} \input{Fig/wirepara5} \end{center}
 
 \end{cmd}
 %-------------Xyzax3data-------------------------------

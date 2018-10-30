@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Oct. 25th  2018
+Install of KeTCindy(Mac)       Modified : Oct. 30th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -59,6 +59,10 @@ Install of KeTCindy(Mac)       Modified : Oct. 25th  2018
                * ".ketcindy.conf" will be also generated in User's home.
                        You can change the setting of PathT, Mackc, etc.
                * "ketcindy.conf" will be also copied to work directory.
+               * Configuration filse are read in order of the following.
+                     (1) ketoutset.txt in Script folder
+                     (2) .ketcindy.conf in User's home
+                     (3) ketcindy.conf in the work folder.
 
 	  (3) Installing manually
                * Generate /ketcindy and copy

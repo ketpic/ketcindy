@@ -1,5 +1,15 @@
+// 20181030
+//   Mkpointlist debugged (workprocess adopted)
+//   Parcrv3d, IntersectsgpL debugged
+// 20181029
+//   Mkpointlist debugged
+//   Subgraph change
+// 20181028
+//   Start3d changed ( pt,ptz removed)
+//   Mkpointlist, Xyzcoord changed
 // 20181027
 //   IntersectsgpL changed  ( return=[pt,isinseg,isinplane,tseg,t,s] )
+//   Parasubpt, Mainsubpt, Mainsubptlog added
 // 20181026
 //   IntersectsgpL changed  ( option "ie" )
 // 20181017

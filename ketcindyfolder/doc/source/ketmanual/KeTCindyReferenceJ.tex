@@ -6015,12 +6015,15 @@ optionsがないときは，以下の 初期設定を用いる。
 
 \hypertarget{crvsfparadata}{}
 \item[関数]  Crvsfparadata(name,PD1,PD2,式)
-\item[機能]  曲線の曲面による陰線処理
-\item[説明]  曲線PD1を表示するにあたり，曲面PD2によって隠れる部分を非表示にする。
+\item[機能]  曲面による曲線の陰線処理を行う。
+\item[説明]  曲線PD1を表示するにあたり，曲面PD2によって隠れる部分処理を行う。
 
-通常は曲面PD2も表示するので，Sfbdparadata() も同時に用いることになる。曲面を表示しなければ，曲線だけが陰線処理された状態で表示される。
+曲面PD2のプロットデータを作るため，Sfbdparadata() も同時に用いることになる。nameは，Sfbdparadata() と同じものにする。
 
-作図例は，ExeccmdC() を参照のこと。
+作図例は，\hyperlink{execcmdc}{ExeccmdC()} を参照のこと。
+
+C言語が使えない場合は，CrvsfparadataR(name,PD1,PD2,式,options1,options2) を使う。
+options1 は分割数と誤差限界， options2 は陰線の線種。
 
 \vspace{\baselineskip}
 \hypertarget{datalist}{}    
@@ -6088,10 +6091,10 @@ optionsがないときは，以下の 初期設定を用いる。
 
 \hypertarget{execcmdc}{}
 \item[関数]  ExeccmdC(name,options1,options2)
-\item[機能]  曲面を表示する
+\item[機能]  曲面を表示する。戻り値は，対象にしたプロットデータのリスト。
 \item[説明]  データが作成された曲面を表示する。
 
-options1 には"r","m", "Wait=n" が指定できる。Wait の初期値は20
+options1 には"r","m", "Wait=n" と輪郭線の線種が指定できる。Wait の初期値は20
 
   "r","m"に関しては，オプションなしまたは，”” のとき
   
@@ -6103,7 +6106,7 @@ options1 には"r","m", "Wait=n" が指定できる。Wait の初期値は20
   
   "r" のとき，すでにあるデータファイルを読み込む。
   
-options2 には 軸の陰線の表示について "nodisp" または線種が指定できる。 初期設定は "nodisp"。
+options2 には 軸の陰線について "nodisp" または線種が指定できる。 初期設定は "do"。
 
 options2だけを指定したい場合は，options1 を空リスト [ ] にする。
 
@@ -6115,7 +6118,7 @@ options2だけを指定したい場合は，options1 を空リスト [ ] にす�
 \begin{verbatim}
     Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
     Putpoint3d(["A",[0,-3,0],"B",[0,3,3]],"fix");
-    Spaceline("1",[A,B]);
+    Spaceline([A,B]);
     fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];
     Startsurf();
     Sfbdparadata("1",fd);
@@ -6123,13 +6126,27 @@ options2だけを指定したい場合は，options1 を空リスト [ ] にす�
     Crvsfparadata("2","ax3d","sfbd3d1",fd);
     ExeccmdC("1");
 \end{verbatim}
-options2に線種指定 ["nodisp"] をつけると，陰線は非表示になる。（下図右）
+options2を ["nodisp"] にすると，陰線は非表示になる。（下図右）
 \begin{verbatim}
     ExeccmdC("1",[],["nodisp"]);
 \end{verbatim}
 
         \begin{center} \input{Fig/crvsfparadata2}     \input{Fig/crvsfparadata1} \end{center}
 
+戻り値を使うと，陰線のスタイル（線種，色）を変えることができる。戻り値と同じものがコンソールに「readoutdata from template3D1.txt : 」として表示されるので，これを見て操作対象を決めればよい。たとえば，上の左図で，線分ABの陰線はリストの４番目の crvsfh3d1 なので，
+
+\begin{verbatim}
+    ret=ExeccmdC("1");
+    Changestyle3d(ret_4,["da","Color=red"]);
+\end{verbatim}
+
+とすると，赤の破線になる。
+
+\hspace{20mm} \input{Fig/execcmdc1}
+
+この他，\hyperlink{sfbdparadata}{Sfbdparadata()},\hyperlink{wireparadata}{Wireparadata()} も参照のこと。
+
+\vspace{\baselineskip}
 \hypertarget{embed}{}
 \item[関数]  Embed(name,PDリスト,式,変数リスト)
 \item[機能]  2Ｄ図形の空間内平面へ埋め込む
@@ -6651,14 +6668,18 @@ optionは，"fix" または "free" ( 初期設定)。
 
 \vspace{\baselineskip}
 【例】正八面体を描く
+\begin{layer}{150}{0}
+\putnotese{55}{0}{ \input{Fig/readobj}}
+\end{layer}
+
 \begin{verbatim}
+
   Setdirectory( Dirhead+"/data/polyhedrons_obj");
   polydt=Readobj("r02.obj",["size=2"]);
   Setdirectory(Dirwork);
   VertexEdgeFace("1",polydt,["Edg=nogeo"]);
   Nohiddenbyfaces("1","phf3d1");
 \end{verbatim}
- \begin{center} \input{Fig/readobj} \end{center}
 
 主なデータは次の通り。
 
@@ -6879,12 +6900,12 @@ optionsは，解像度（各変数に対応する分割数）とメッシュの�
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \hypertarget{sfbdparadata}{}
-\item[関数]  Sfbdparadata(name,式,options1,options2)
+\item[関数]  Sfbdparadata(name,式,options)
 \item[機能]  空間曲面の陰線処理
 \item[説明]  曲面について陰線処理を行う。
   曲面の式はSf3data()の場合と同じ。ただし，(2) と(3)のパターンでは式の最後に境界の指定 ewns を明示する必要がある。(3)では境界の指定を" "(中は半角スペース)とする。省略すると不要な境界線が表示されることがある。境界指定については，Sf3data()の項を参照のこと。
   
-options1は，"Wait=n","r","m",線種。Wait の初期値は30。
+optionsは，"Wait=n","r","m",線種。Wait の初期値は30。
 
  "r","m"に関しては，オプションなしまたは，”” のとき
  
@@ -6896,16 +6917,16 @@ options1は，"Wait=n","r","m",線種。Wait の初期値は30。
 
 "r" のとき，すでにあるデータファイルを読み込む。
 
-options2は，陰線に関するoptionで，"nodisp" または 線種。"nodisp" にすると陰線は消去されるため，輪郭線だけが描かれることになる（ 初期設定）。options2 だけを指定する場合は，options1 を空リストにしてつける必要がある。
-
 この処理は時間がかかるため，この関数を実行した状態で画面上のスライダを動かそうとすると反応が悪くなる。そこで，Isangle() を用いて，スライダの点を選択しているときはワイヤフレームモデルを描画するようにするとよい。
 
 また，この関数はデータを作るだけなので，表示するには ExeccmdC() を用いる。
 
+C言語の環境がない場合は，ExeccmdC() が使えないので，SfbdparadataR(name,式,optons1,optons2) を使う。options2には陰線の表示方法について "nodisp" または線種 を指定する。 初期設定は"nodisp" 。options2のみ指定するときは，options1に [""] （空文字）を書いておく。
+
 \vspace{\baselineskip}
 【例】サドル面
 
-陰線を消去して表示（ 初期設定）（下図左）
+陰線を消去して表示（下図左）
 \begin{verbatim}
     fd=["x=x^2-y^2","x=[-2,2]","y=[-2,2]"];
     if(Isangle(),
@@ -6913,22 +6934,26 @@ options2は，陰線に関するoptionで，"nodisp" または 線種。"nodisp"
       ,
       Startsurf();
       Sfbdparadata("1",fd);
-      ExeccmdC("1");
+      ExeccmdC("1",[],["nodisp"]);
    );
 \end{verbatim}
-全体を実線で太めにして，陰線を点線で表示（下図右）
+全体を実線で太めにして，陰線を点線で表示（下図右）: \verb|ExeccmdC()| を変更する。
 \begin{verbatim}
-  Sfbdparadata("1",fd,["dr,2"],["do"]);
+      ExeccmdC("1",["dr,2"],["do"]);
 \end{verbatim}
       \begin{center} \input{Fig/sfbdpara01}    \input{Fig/sfbdpara02}\end{center}
 
-【例】放物面  ：  陰線を破線で表示（下図右）
+【例】放物面  ： 式を変更する。
 \begin{verbatim}
   fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];
-  Sfbdparadata("1",fd,[],["da"]);
 \end{verbatim}
+
+ 陰線を消去（下図左）：\verb|ExeccmdC("1",[],["nodisp"]);|
+ 
+ 陰線を破線で表示（下図右）：\verb|ExeccmdC("1",[],["da"]);|
       \begin{center} \input{Fig/sfbdpara03}  \input{Fig/sfbdpara04} \end{center}
 
+なお，表示については，\hyperlink{execcmdc}{ExeccmdC()} を参照のこと。
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -7106,11 +7131,11 @@ phf3d：面リスト
 
 %\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \hypertarget{wireparadata}{}
-\item[関数]  Wireparadata(name,PD,式,整数,整数,optons1,options2)
-\item[機能]  曲面のワイヤフレームを陰線処理して描く
+\item[関数]  Wireparadata(name,PD,式,整数,整数,optons)
+\item[機能]  曲面のワイヤフレームを陰線処理してプロットデータを作る。
 \item[説明]  PDは，第3引数の式で描いたワイヤフレームモデルのプロットデータ名。第4，第5引数は分割線の数。
 
-options1 には "r","m","Wait=n" が指定できる。Wait の初期値は30。
+options には "r","m","Wait=n" が指定できる。Wait の初期値は30。
 
   "r","m"に関しては，オプションなしまたは，”” のとき
   
@@ -7122,13 +7147,14 @@ options1 には "r","m","Wait=n" が指定できる。Wait の初期値は30。
   
   "r" のとき，すでにあるデータファイルを読み込む。
   
-optons2 には陰線の表示方法について "nodisp" または線種 がある。 初期設定は"nodisp" 。何も指定しないときは，[""] （空文字）を書いておく。
-
 曲面の陰線処理を行うので，Sfbdparadata() とペアで使う。
 
 この処理は時間がかかるため，この関数を実行した状態で画面上のスライダを動かそうとすると反応が悪くなる。そこで，Isangle() を用いて，スライダの点を選択しているときはワイヤフレームモデルを描画するようにするとよい。
 
-また，この関数はデータを作るだけなので，表示するには ExeccmdC() を用いる。
+また，この関数はデータを作るだけなので，表示するには \hyperlink{execcmdc}{ExeccmdC()} を用いる。
+
+C言語の環境がない場合は，ExeccmdC() が使えないので，WireparadataR(name,PD,式,整数,整数,optons1,optons2) を使う。options2には陰線の表示方法について "nodisp" または線種 を指定する。 初期設定は"nodisp" 。options2のみ指定するときは，options1に [""] （空文字）を書いておく。
+
 
 \vspace{\baselineskip} 
 【例】式のタイプ別に例を示す。
@@ -7146,20 +7172,19 @@ optons2 には陰線の表示方法について "nodisp" または線種 があ�
       ,
       Startsurf();
       Sfbdparadata("1",fd);
-      Wireparadata("1","sfbd3d1",fd,4,5,[""]);
+      Wireparadata("1","sfbd3d1",fd,4,5);
       ExeccmdC("1");
     );
 \end{verbatim}
 
-回転放物面
+回転放物面：次を変更
 
 \begin{layer}{150}{0}
 \putnotese{85}{10}{ \input{Fig/wirepara2}}
 \end{layer}
 \begin{verbatim}
   fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];
-  Sfbdparadata("1",fd);
-  Wireparadata("1","sfbd3d1",fd,5,7,[""]);
+  Wireparadata("1","sfbd3d1",fd,5,7);
 \end{verbatim}
 \vspace{25mm}
 
@@ -7168,42 +7193,57 @@ optons2 には陰線の表示方法について "nodisp" または線種 があ�
 このタイプでは，媒介変数形式の識別のため，先頭に "p" をつけておく。
 
 \begin{layer}{150}{0}
-\putnotese{80}{10}{ \input{Fig/wirepara3}}
+\putnotese{80}{0}{ \input{Fig/wirepara3}}
 \end{layer}
 \begin{verbatim}
-  fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]",
-      "v=[0,2*pi]","s"];
+  fd=["p","x=2*sin(u)*cos(v)",
+       "y=2*sin(u)*sin(v)",
+       "z=2*cos(u)","u=[0,pi]",
+       "v=[0,2*pi]","s"];
   Sfbdparadata("1",fd);
-   Wireparadata("1","sfbd3d1",fd,12,12,[""]); 
+  Wireparadata("1","sfbd3d1",fd,12,12); 
 \end{verbatim}
 
-%\vspace{\baselineskip}
+\vspace{8mm}
 %\begin{center} \input{Fig/wirepara1}  \input{Fig/wirepara2}  \input{Fig/wirepara3} \end{center}
 
 \vspace{\baselineskip}
-【例】球面で座標軸を陰線処理して点線で表す。（次図左）
+【例】球面で座標軸を陰線処理し，面の陰線は非表示で表す。
+
+\begin{layer}{150}{0}
+\putnotese{70}{5}{ \input{Fig/wirepara4}}
+\end{layer}
+
 \begin{verbatim}
-    fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)",
+    fd=["p","x=2*sin(u)*cos(v)",
+       "y=2*sin(u)*sin(v)",
+       "z=2*cos(u)",
        "u=[0,pi]","v=[0,2*pi]","s"];
     if(Isangle(),
       Sf3data("1",fd);
     ,
       Startsurf();
       Sfbdparadata("1",fd);
-      Wireparadata("1","sfbd3d1",fd,12,12,[""]);
-      Crvsfparadata("1","ax3d","sfbd3d1",fd,[],["do"]);
-      ExeccmdC("1");
+      Wireparadata("1","sfbd3d1",fd,12,12);
+      Crvsfparadata("1","ax3d","sfbd3d1",fd);
+      ret=ExeccmdC("1");
+      forall(1..length(ret),
+        if(indexof(ret_#,"wireh")>0,
+          Changestyle3d([ret_#],["nodisp"]);
+        );
+      );
     );
 \end{verbatim}
-【例】トーラスを描く（次図右）
+【例】トーラスを描く
+
+式を次のように変え，軸は非表示にして，\verb|ExeccmdC("1",[],["nodisp"])| にする。
+
 \begin{verbatim}
   fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",
       "u=[0,2*pi]","v=[0,2*pi]","s"];
-  Sfbdparadata("1",fd);
-  Wireparadata("1","sfbd3d1",fd,12,12,[""]); 
 \end{verbatim}
 \vspace{\baselineskip}
-    \begin{center} \input{Fig/wirepara4}   \input{Fig/wirepara5} \end{center}
+    \begin{center}  \input{Fig/wirepara5} \end{center}
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
@@ -7361,7 +7401,7 @@ Cinderellaで使っている用語に次のものがある。
 【描画】\\
 \hyperlink{addgraph}{AddGraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
 \hyperlink{anglemark}{Anglemark(点list, options)}  \>角の印を入れる\\
-\hyperlink{arrowdata}{Arrowdata(始点,終点,options)}  \>2点間を結ぶ矢線を描く\\
+\hyperlink{arrowdata}{Arrowdata(name.[始点,終点],options)}  \>2点間を結ぶ矢線を描く\\
 \hyperlink{arrowhead}{Arrowhead(点,方向,options)}  \>点に矢じりだけを描く\\
 \hyperlink{bezier}{Bezier(name, list,list,options )} \>単独のベジェ曲線を描く\\
 \hyperlink{beziersmooth}{Beziersmooth(name , list,options )} \>なめらかなベジェ曲線を描く。その１\\

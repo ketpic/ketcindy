@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181020 loaded");
+println("ketcindylibout(20181029 loaded");
 
 //help:start();
 
@@ -5916,7 +5916,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(ErrFlag==1,
     err("CommandListC is empty or execcmd is not completed");
   ,
-    varL=ReadOutData(fname);
+    varL=ReadOutData(fname,["Disp=n"]); //181029
     GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
     tmp1=select(varL,indexof(#,"h3d")==0);
     tmp2=remove(varL,tmp1);
@@ -6033,7 +6033,7 @@ SfbdparadataC(nm,fdorg,optionorg,optionsh):=(
     if(ErrFlag==1,
       err("Sfbdparadata not completed");
     ,
-      ReadOutData(fname);
+      ReadOutData(fname,["Disp=n"]); //181029
       GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
       if(islist(parse(name3)),
         tmp1=name2+"=Projpara("+Dqq(name3)+",[";
@@ -6163,7 +6163,7 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
     if(ErrFlag==1,
       err("Crvsfparadata not completed");
     ,
-      ReadOutData(fname);
+      ReadOutData(fname,["Disp=n"]); //181029
       GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
       if(islist(parse(name3)),
         tmp1=name2+"=Projpara("+Dqq(name3)+",[";
@@ -6299,7 +6299,7 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=(
     if(ErrFlag==1,
       err("Crvonsfparadata not completed");
     ,
-      ReadOutData(fname);
+      ReadOutData(fname,["Disp=n"]);
       GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
       if(islist(parse(name3)),
         tmp1=name2+"=Projpara("+Dqq(name3)+",[";
@@ -6466,7 +6466,7 @@ WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh):=(
     if(ErrFlag==1,
       err("Wireparadata not completed");
     ,
-      ReadOutData(fname);
+      ReadOutData(fname,["Disp=n"]);
       GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
       ReadOutData(fnameh);
       GLIST=append(GLIST,"ReadOutData("+Dqq(fnameh)+")");
@@ -6590,7 +6590,7 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
     if(ErrFlag==1,
    	  err("Intersectcrvsf not completed");
     ,
-      ReadOutData(fname);
+      ReadOutData(fname,["Disp=n"]); //181029
     );
     println("generate "+name);
     parse(name);
@@ -6687,7 +6687,7 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionsh):=(
     if(ErrFlag==1,
       err("Sfcutparadata not completed");
     ,
-      ReadOutData(fname);
+      ReadOutData(fname,["Disp=n"]); //1810209
       GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
       ReadOutData(fnameh);
       GLIST=append(GLIST,"ReadOutData("+Dqq(fnameh)+")");

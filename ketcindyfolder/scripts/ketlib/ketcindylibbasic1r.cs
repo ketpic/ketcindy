@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.2(20181026)");
+println("KeTCindy V.3.2.2(20181030)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181026) loaded");
+println("ketcindylibbasic1(20181030) loaded");
 
 //help:start();
 
@@ -844,14 +844,27 @@ Dependgeo(geo):=(
 ////%Dependgeo end////
 
 ////%Workprocess start////
-Workprocess():=Workprocess(300);
-Workprocess(nn):=Drawprocess(nn);
+Workprocess():=Drawprocess(300,["Disp=n"]); //181030
+Workprocess(nn):=(
+//help:Workprocess();
+  Drawprocess(nn,["Disp=n"]); 
+);
 ////%Workprocess end////
 ////%Drawprocess start////
-Drawprocess():=Drawprocess(300);
-Drawprocess(nn):=(
+Drawprocess():=Drawprocess(300,["Disp=y"]);
+Drawprocess(nn):=Drawprocess(nn,["Disp=y"]);
+Drawprocess(nn,options):=(
 //help:Workprocess();
-  regional(All,added,remain,out,flg,tmp,tmp1,tmp2);
+  regional(All,added,remain,out,flg,dispflg,eqL,tmp,tmp1,tmp2);
+  tmp=Divoptions(options); //181030from
+  eqL=tmp_5;
+  dispflg="Y";
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=Toupper(substring(tmp_2,0,1));
+    if(tmp1=="D",dispflg=tmp2);
+  ); //181030to
   tmp=remove(allpoints(),[NE,SW,TH,FI]);
   tmp1=select(tmp,
     substring(text(#),length(text(#))-1,length(text(#)))!="z");
@@ -871,11 +884,18 @@ Drawprocess(nn):=(
       if(length(remain)==0,flg=1);
     );
   );
-  println("Process of drawing");
-  forall(out,
-    println(Dependgeo(parse(#)));
+  if(dispflg=="Y",
+    println("Process of drawing");
   );
-  out;
+  tmp1=[];//181030from
+  forall(out,
+    tmp=Dependgeo(parse(#));
+    tmp1=append(tmp1,tmp);
+    if(dispflg=="Y",
+      println(Dependgeo(parse(#)));
+    );
+  );
+  tmp1;//181030to
 );
 ////%Drawprocess end////
 
@@ -3717,10 +3737,9 @@ Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
   regional(list,name,nameL,ptlist,opstr,opcindy,
-      eqL,size,thick,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color);
+      eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color);
   name="pt"+nm;
   nameL=name+"L";
-  println("generate pointdata "+name);
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -3729,16 +3748,24 @@ Pointdata(nm,listorg,options):=(
   opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
   size="";
+  dispflg="Y";
   if(length(eqL)>0,
     forall(eqL,
-      tmp=substring(#,0,1);
-      if(Toupper(tmp)=="S",
-        tmp=indexof(#,"=");
-        size=substring(#,tmp,length(#));
+      tmp=Strsplit(#,"=");
+      tmp1=Toupper(substring(tmp_1,0,1));
+      tmp2=Toupper(substring(tmp_2,0,1));
+      if(tmp1=="S",
+        size=tmp2;
         opcindy=opcindy+",size->"+text(size); //181013
+      );
+      if(tmp1=="D", //181030from
+        dispflg=tmp2;
       );
     );
   );
+  if(dispflg=="Y", 
+    println("generate pointdata "+name);
+  ); //181030to
   if(isstring(listorg),list=parse(listorg),list=listorg); //17.10.23
   if(MeasureDepth(list)==0,list=[list]);//180530
   tmp=MeasureDepth(list);

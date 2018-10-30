@@ -1,3 +1,5 @@
+// 20181029
+//   in ReadOutData C callings, option=["Disp=n"] added 
 // 20181020
 //   HatchdataR,Dotfilldata  (Setscaling(SCALEX,SCALEY)
 // 20181014

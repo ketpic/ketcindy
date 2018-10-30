@@ -1,3 +1,5 @@
+// 20181030
+//   Drawprocess,Workprocess changed (dispflg added)
 // 20181026
 //   Findarea changed  ( default of length=1)
 // 20181020

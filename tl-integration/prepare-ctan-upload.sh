@@ -60,7 +60,7 @@ if [ -n "$bla" ] ; then
 fi
 
 # check for duplicate file names
-bla=$(findsn .)
+bla="$(findsn .)"
 if [ -n "$bla" ] ; then
   echo "Found duplicate file *names*"
   echo "----------------------------"

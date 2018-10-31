@@ -18,7 +18,7 @@ if "%STR_INPUT%" == "p" (
   set tex=platex
   copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
   copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideJ.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyStyleJ.pdf" "%dist%\"
+  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleJ.pdf" "%dist%\"
 )
 if "%STR_INPUT%" == "u" (
   set tex=uplatex

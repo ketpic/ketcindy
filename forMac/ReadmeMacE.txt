@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Oct. 30th  2018
+Install of KeTCindy(Mac)       Modified : Oct. 31th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -13,7 +13,7 @@ Install of KeTCindy(Mac)       Modified : Oct. 30th  2018
       (2) Password of Administrator will be required in 1), 2) and 3)(1) in the following.
       (3) Download/Copy the followings and make their virtual disks.
                   Macstart.dmg
-                  ketcindyfolder.dmg
+                  ketcindyfolder.dmg(or ketcindyfolder.zip)
                   kettexnormal.dmg (when you use kettex)
       (4) Select copyfilessetketcindy.sh in ketcindyfoler and "get info".
                  Change "Open with " to "Terminal".

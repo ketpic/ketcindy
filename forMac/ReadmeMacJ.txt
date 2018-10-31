@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2018.10.30
+KETCindyの通常インストール（Mac）　　　修正日：2018.10.31
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -14,9 +14,9 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.10.30
 　　　　Finderで次のようにする．
 　　　　　Finder => 環境設定 => 一般 => ハードディスクにチェック
 　（２）以下の１)，２)，３)(１)では管理者としてログインしておく必要がある．
-　（３）以下の圧縮ファイルをデスクトップにコピーして，ダブルクリック
+　（３）以下の圧縮ファイルをデスクトップにコピーしてダブルクリック
 　　　　　　Macstart.dmg
-　　　　　　ketcindyfolder.dmg
+　　　　　　ketcindyfolder.dmg（またはkecindyfolder.zip）
 　　　　　　kettexnormal.dmg（kettexを用いる場合）
 　　　　それぞれの仮想ディスクができる．
 　（４）ketcindyfolderのcopyfilessetcindy.shを選択，「情報を見る」を開いて，

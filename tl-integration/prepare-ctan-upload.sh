@@ -161,13 +161,13 @@ rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows
 rmdir ketcindy
 
 # Now the TDS directory should contain a proper TDS path, package it up
-zip -r ../ketcindy.tds.zip *
+zip -r $TMP/ketcindy.tds.zip *
 cd ..
 rm -rf TDS
 
 # Finally, package up everyting!
 cd $TMP
-zip -r "$GITREPO/ketcindy-ctan-upload-$VER.zip" ketcindy-$VER
+zip -r "$GITREPO/ketcindy-ctan-upload-$VER.zip" ketcindy-$VER ketcindy.tds.zip
 echo "upload ready file is in"
 echo " $GITREPO/ketcindy-ctan-upload-$VER.zip"
 echo

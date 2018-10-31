@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181024)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181031)" 
 
 print(ThisVersion)
 
+# 20181031
+#   space before # removed
 # 20181024
 #   Wireparadata debugged ( for DuL(DvL)=c(..) )
 #   Nohiddenpara2 debugged  (for SeL=Null )
@@ -964,8 +966,8 @@ Arrowdata<- function(...)
 #  2013.11.13   No Intersect debugged
 
 Arrowhead<-function(...){
-      ## Scaling is implemented
-　	   ## 12.01.08  Kirikomi 
+## Scaling is implemented
+## 12.01.08  Kirikomi 
   Eps=10^(-3)
   varargin<-list(...)
   Nargs<-length(varargin)

@@ -1,3 +1,8 @@
+// 20181101
+//   CalcbyC chanded  (wflg retured)
+//   ExeccmdC changed  ( WritedataC added when necessary )
+//   Contsurf added
+//   ExeccmdC changed  ( for Contsurf )
 // 20181029
 //   in ReadOutData C callings, option=["Disp=n"] added 
 // 20181020

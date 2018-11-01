@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181029 loaded");
+println("ketcindylibout(20181101 loaded");
 
 //help:start();
 
@@ -4745,6 +4745,7 @@ Mkketcindyjs(libname,options):=( //17.11.18
 
 ///////////////// C function //////////////////
 
+////%Cform start////
 Cform(strorg):=(
 //help:Cform(str);
   regional(str,ter,out,hat,ns,ne,nn,jj,flg,
@@ -4840,7 +4841,9 @@ Cform(strorg):=(
   out=substring(out,0,length(out)-1);
   out;
 );
+////%Cform end////
 
+////%ConvertFdtoC start////
 ConvertFdtoC(Fd):=ConvertFdtoC(Fd,["x","y","z"]);
 ConvertFdtoC(Fd,name):=(
 //help:ConvertFd(Fd);
@@ -4857,7 +4860,9 @@ ConvertFdtoC(Fd,name):=(
   FdC=concat(FdC,[Cform(tmp1_4),Cform(tmp1_5)]);
   FdC=concat(FdC,[tmp1_6]); 
 );
+////%ConvertFdtoC end////
 
+////%Startsurf start////
 Startsurf():=StartsurfC();
 Startsurf(Arg):=StartsurfC(Arg);
 Startsurf(restr,Nplist,Dsizelist,Epslist):=StartsurfC(restr,Nplist,Dsizelist,Epslist);
@@ -4903,6 +4908,22 @@ StartsurfC(restr,Nplist,Dsizelist,Epslist):=(//180501
   epsL=prepend(0.00001,epsL);
   ConstantListC=[divL,sizeL,epsL];
 );
+////%Startsurf end////
+
+////%Contsurf start////
+Contsurf():=ContsurfC("");
+Contsurf(restr):=ContsurfC(restr);
+ContsurfC(restr):=(//181101
+//help:Contsurf();
+  regional(cL,tmp,tmp1,tmp2);
+  if(substring(restr,0,1)=="R",
+    GLIST=[];
+  );
+  cL=CommandListC;
+  cL=cL_(1..(length(cL)-1));
+  CommandListC=cL;
+);
+////%Contsurf end////
 
 Cheader():=Cheader(FdC,FheadC+"header.h");
 Cheader(fdc,fname):=(
@@ -5741,6 +5762,7 @@ WritetoC(nm,header,main):=(
   closefile(SCEOUTPUT);  
 );
 
+////%CalcbyC start////
 CalcbyC(name,cmd):=CalcbyC(name,PathC,cmd,[]);
 CalcbyC(name,Arg1,Arg2):=(
   if(isstring(Arg1),
@@ -5849,7 +5871,9 @@ CalcbyC(name,path,cmd,optionorg):=(
       );
     );
   );//180615to
+  wflg; //181101
 );
+////%CalcbyC end////
 
 ////%ExeccmdC start////
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
@@ -5859,7 +5883,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
 //help:ExeccmdC(options1=["dr(/da/do)","m/r","Wait=30"]);
 //help:ExeccmdC(options2=["do(/nodisp/da/do)"]);
   regional(options,optionsh,name2,name3,waiting,dirbkup,
-     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,varL);
+     eqL,reL,strL,fname,cL,tmp,tmp1,tmp2,flg,wflg,varL);
   fname=Fhead+nm+".txt";
   options=optionorg;
   optionsh=optionhorg;
@@ -5904,8 +5928,24 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(wflg==-1,tmp1=append(options,"r"));
   tmp1=append(tmp1,"Wait="+text(waiting));
   tmp1=append(tmp1,"Disp=n"); //181024
-  CommandListC=prepend("  char fnameall[]="+Dqq(fname)+";",CommandListC);
-  CommandListC=prepend("  printf("+Dqq("%s\n")+","+Dqq(Fhead)+");",CommandListC); //180608
+  cL=CommandListC; //181101from
+  tmp2="  char fnameall[]="+Dqq(fname)+";";
+  tmp=select(1..(length(cL)),indexof(cL_#,"char fnameall[]=")>0); 
+  if(length(tmp)==0,
+    CommandListC=prepend(tmp2,CommandListC);
+  ,
+    tmp=tmp_1;
+    CommandListC_tmp=tmp2;
+  );
+  cL=CommandListC;
+  tmp2="  printf("+Dqq("%s\n")+","+Dqq("Execcmd "+nm)+");";
+  tmp=select(1..(length(cL)),indexof(cL_#,"printf("+Dqq("%s\n")+","+Dq+"Execcmd ")>0); 
+  if(length(tmp)==0,
+    CommandListC=prepend(tmp2,CommandListC);
+  ,
+    tmp=tmp_1;
+    CommandListC_tmp=tmp2;
+  ); //181101to
   tmp=select(CommandListC,indexof(#,"outputend")>0);
   if(length(tmp)==0,
     CommandListC=append(CommandListC,"  outputend(dirfname);");
@@ -5946,10 +5986,21 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   varL=select(varL,length(parse(#))>0);
   if(length(addpath)>0,Changework(dirbkup,["Sub=n"])); //180605
+  forall(varL,tmp,  //181101from
+    if(indexof(tmp,"h3d")==0,
+      tmp1=Fhead+tmp+".dat";
+      if((wflg==1)%(!isexists(Dirwork,tmp1)),
+        tmp1=Fhead+tmp+".dat";
+        tmp2=parse(tmp);
+        WritedataC(tmp1,tmp2);
+      );
+    );
+  );  //181101to
   varL;
 );
 ////%ExeccmdC end////
 
+////%Sfbdparadata start////
 Sfbdparadata(nm,fd):=SfbdparadataC(nm,fd);
 Sfbdparadata(nm,fd,options):=SfbdparadataC(nm,fd,options);
 Sfbdparadata(nm,fdorg,optionorg,optionsh):=SfbdparadataC(nm,fdorg,optionorg,optionsh);
@@ -6062,7 +6113,9 @@ SfbdparadataC(nm,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%Sfbdparadata end////
 
+////%Crvsfparadata start////
 Crvsfparadata(nm,fk,sfbd,fd):=CrvsfparadataC(nm,fk,sfbd,fd);
 Crvsfparadata(nm,fk,sfbd,fd,options):=CrvsfparadataC(nm,fk,sfbd,fd,options);
 Crvsfparadata(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=
@@ -6192,6 +6245,7 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%Crvsfparadata start////
 
 Crv3onsfparadata(nm,crv3d,sfbd,fd):=Crv3onsfparadataC(nm,crv3d,sfbd,fd);
 Crv3onsfparadata(nm,crv3d,sfbd,fd,options):=Crv3onsfparadataC(nm,crv3d,sfbd,fd,options);

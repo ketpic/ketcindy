@@ -15,6 +15,7 @@ use File::Copy;
 my $BinaryName = "Cinderella2";
 my $TemplateFile = "template1basic.cdy";
 my $devnull = "/dev/null";
+my $prog = "ketcindy";
 my $systype;
 if (win32()) {
   $systype = "Windows";
@@ -48,11 +49,11 @@ if (! "$cinderella") {
 }
 
 if (! "$cinderella") {
-  die "Cannot find $BinaryName!";
+  die "$prog: Cannot find $BinaryName!";
 }
 
 if ( ! -x "$cinderella" ) {
-  die "Program $cinderella is not executable!";
+  die "$prog: Program $cinderella is not executable!";
 }
 
 # find real path
@@ -72,17 +73,17 @@ chomp(my $TempCdy = `kpsewhich -format=texmfscripts $TemplateFile`);
 chomp(my $DirHead=`kpsewhich -format=texmfscripts ketcindy.ini`);
 
 if (-z "$TempCdy" || -z "$KetCdyJar") {
-  die "Cannot find $TemplateFile via kpsewhich, is ketpic installed?";
+  die "$prog: Cannot find $TemplateFile via kpsewhich, is ketpic installed?";
 }
 
 
 if ( ! -r "$plugin" || ! -r "$dirheadplugin" ) {
-  print "Cinderella is *NOT* set up for KETCindy!\n";
-  print "You need to copy\n";
-  print "   $KetCdyJar\n";
-  print "   $DirHead\n";
-  print "into\n";
-  print "   $plugindir\n";
+  print "$prog: Cinderella is *NOT* set up for KETCindy!\n";
+  print "$prog: You need to copy\n";
+  print "$prog:    $KetCdyJar\n";
+  print "$prog:    $DirHead\n";
+  print "$prog: into\n";
+  print "$prog:    $plugindir\n";
   print "\n";
   exit(1);
 }
@@ -91,17 +92,17 @@ my $myjarmd = md5digest($KetCdyJar);
 my $sysjarmd = md5digest($plugin);
 
 if ( $myjarmd ne $sysjarmd ) {
-  print "The installed version of the plugin in\n";
-  print "  $plugin\n";
-  print "differs from the version shipped in\n";
-  print "  $KetCdyJar\n";
-  print "You might need to update the former one with the later one!\n";
+  print "$prog: The installed version of the plugin in\n";
+  print "$prog:   $plugin\n";
+  print "$prog: differs from the version shipped in\n";
+  print "$prog:   $KetCdyJar\n";
+  print "$prog: You might need to update the former one with the later one!\n";
 }
 
 # print "DEBUG workdir =$workdir=\n";
 # print "DEBUG TemplateFile =$TemplateFile=\n";
 mkdir($workdir);
-copy($TempCdy, $workdir) or die "Copy failed: $!";
+copy($TempCdy, $workdir) or die "$prog: Copy failed: $!";
 
 # print "Exec $cinderella $workdir/$TemplateFile\n";
 if (win32()) {
@@ -114,7 +115,7 @@ if (win32()) {
 
 sub md5digest {
   my $file = shift;
-  open(FILE, $file) || die "open($file) failed: $!";
+  open(FILE, $file) || die "$prog: open($file) failed: $!";
   binmode(FILE);
   my $out = Digest::MD5->new->addfile(*FILE)->hexdigest;
   close(FILE);

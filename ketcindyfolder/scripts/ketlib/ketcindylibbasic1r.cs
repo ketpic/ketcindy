@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181101)");
+println("KeTCindy V.3.2.3(20181103)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181030) loaded");
+println("ketcindylibbasic1(20181103) loaded");
 
 //help:start();
 
@@ -6524,6 +6524,18 @@ Makehatch(iolistorg,pt,vec,bdylist):=(
 );
 ////%Makehatch end////
 
+////%Anyselected start////
+Anyselected(ptL):=(
+  regional(tmp,out);
+  out=false;
+  forall(ptL,
+    if(isstring(#),tmp=parse(#),tmp=#);
+    out=(out)%(isselected(tmp));
+  );
+  out;
+);
+////%Anyselected end////
+
 ////%Hatchdata start////
 Hatchdata(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);//180619
 Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
@@ -6555,13 +6567,15 @@ Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
   );
 ); //181003to
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdata(nm,iostr,bdylist,[]);
-Hatchdatacindy(nm,iostr,bdylistorg,options):=(
+Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
  //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
-//help:Hatchdata(options=["Out=n(//m/r)","Maxnum=20",angle,width]);
+//help:Hatchdata(options=["Not=pointlist","File=y(/m/n)","Max=20",angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,
-    eqL,maxnum,startP,angle,interval,vec,nvec,ctr,pt,kk,delta,sha,AnsL,
-    color,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2); //180717
+    options,eqL,maxnum,startP,angle,interval,vec,nvec,ctr,pt,kk,delta,sha,AnsL,
+    color,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2, //180717
+    fname,fileflg,mkflg,vaL,pL,nL,nn,str,is,ie); //181102
   name="ha"+nm;
+  fname=Fhead+name+".txt";
   bdylist=[]; 
   bdynameL=[];
   forall(1..(length(bdylistorg)),kk,
@@ -6625,6 +6639,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
     bdylist=append(bdylist,parse(bname));
     bdynameL=append(bdynameL,bname);
   );
+  options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -6638,16 +6653,34 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
   interval=0.25*1000/2.54/MilliIn; //180706
   startP=[(XMIN+XMAX)/2, (YMIN+YMAX)/2];
   maxnum=[30,0]; //181005 [first,second]
+  fileflg="N";//181102from
+  mkflg=1;
   forall(eqL,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(tmp_1);
-    if(substring(tmp1,0,1)=="M",
+    tmp1=Toupper(substring(tmp_1,0,2));
+    if(tmp1=="MA",
       maxnum=parse(tmp_2);
       if(!islist(maxnum),
         maxnum=[maxnum,0];
       );
+      options=remove(options,[#]);
     );
-  );//181003to
+    if(tmp1=="FI", //181102from
+      fileflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    ); //181102to
+    if(tmp1=="NO", //181103from
+      tmp=parse(tmp_2);
+      if(Anyselected(tmp),
+        mkflg=-1;
+      );
+      options=remove(options,[#]);
+    );
+    if(tmp1=="CH",
+      chkL=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+  );//181102,03to
   tmp1=1;
   forall(reL,
     if(islist(#),
@@ -6661,45 +6694,114 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
       );
     );
   );
-  angle=angle*pi/180;
-  vec=[cos(angle),sin(angle)];
-  nvec=[-sin(angle),cos(angle)];
-  AnsL=[]; 
-  ctr=0;//181005(2lines)
-  forall(0..(maxnum_1), kk,
-    pt=startP+kk*interval*nvec;
-    sha=Makehatch(iostr,pt,vec,bdylist);
-    if((sha!=-1)&(length(sha)>0),
-      AnsL=concat(AnsL,sha);
-      ctr=ctr+1; //181005
+  if((fileflg=="Y")%(fileflg=="M")&(mkflg>-1), //181102from
+    wflg=1;
+    varL=flatten(bdylistorg);
+    varL=select(varL,length(#)>1);
+    varL=sort(varL);
+    pL=[];
+    forall(1..(length(varL)),nn,
+      tmp1=varL_nn;
+      tmp=select(GLIST,substring(#,0,length(tmp1))==tmp1);
+      str=tmp_1;
+      varL_nn=str;
+      tmp1=Bracket(str,"()");
+      tmp2=max(apply(tmp1,#_2));
+      nL=select(1..(length(tmp1)),tmp1_#_2==tmp2);
+      forall(nL,nn,
+        is=tmp1_nn_1; ie=tmp1_(nn+1)_1;
+        tmp=substring(str,is,ie-1);
+        tmp=replace(tmp,"'",Dq);
+        tmp=parse("["+tmp+"]");
+        tmp2=flatten(tmp);
+        tmp2=flatten(tmp2);
+        tmp2=flatten(tmp2);
+        forall(tmp2,
+          if(ispoint(#),
+            if(!contains(pL,text(#)),
+              pL=append(pL,text(#));
+            );
+          );
+        );
+      );
+    );
+    forall(chkL,
+      if(!contains(pL,#),pL=append(pL,#));
+    );
+    forall(pL,
+      tmp=#+"="+Textformat(parse(#+".xy"),5);
+      varL=append(varL,tmp);
+    );
+    tmp="reL="+Textformat(reL,5);
+    varL=append(varL,tmp);
+    if(fileflg=="M",
+      fileflg="Y";
+    ,
+      tmp1="hatch"+nm+".txt";
+      if(isexists(Dirwork,tmp1),
+        tmp2=load(tmp1);
+        tmp2=tokenize(tmp2,"//");
+        tmp2=tmp2_(1..(length(tmp2)-1));
+        if(tmp2==varL,
+          wflg=0;
+          if(isexists(Dirwork,fname),
+            mkflg=0;
+            ReadOutData(fname);
+            tmp=name+"="+Textformat(parse(name),5);
+            parse(tmp);
+          );
+        );
+      );
     );
   );
-  maxnum_2=maxnum_2+(maxnum_1-ctr); //181005
-  forall(1..(maxnum_2),kk, //181005
-    pt=startP-kk*interval*nvec;
-    sha=Makehatch(iostr,pt,vec,bdylist);
-    if((sha!=-1)&(length(sha)>0),
-      AnsL=concat(AnsL,sha);
+  if(mkflg==1, //181102to
+    angle=angle*pi/180;
+    vec=[cos(angle),sin(angle)];
+    nvec=[-sin(angle),cos(angle)];
+    AnsL=[]; 
+    ctr=0;//181005(2lines)
+    forall(0..(maxnum_1), kk,
+      pt=startP+kk*interval*nvec;
+      sha=Makehatch(iostr,pt,vec,bdylist);
+      if((sha!=-1)&(length(sha)>0),
+        AnsL=concat(AnsL,sha);
+        ctr=ctr+1; //181005
+      );
     );
-  );
-  if(Noflg<3,
-    println("generate Hatchdata "+name);
-    tmp=name+"="+textformat(AnsL,5);
+    maxnum_2=maxnum_2+(maxnum_1-ctr); //181005
+    forall(1..(maxnum_2),kk, //181005
+      pt=startP-kk*interval*nvec;
+      sha=Makehatch(iostr,pt,vec,bdylist);
+      if((sha!=-1)&(length(sha)>0),
+        AnsL=concat(AnsL,sha);
+      );
+    );
+    tmp1=apply(AnsL,textformat(#,5));
+    tmp=name+"="+tmp1;
     parse(tmp);
-    if(!islist(iostr),tmp1=[iostr],tmp1=iostr);
-    tmp="c(";
-    forall(tmp1,
-      tmp=tmp+Dq+#+Dq+",";
-    );
-    tmp=substring(tmp,0,length(tmp)-1)+")";
-    tmp2=name+"=Hatchdata("+tmp;
-    forall(bdynameL,
-      tmp2=tmp2+",list("+#+")";
-    );
-    tmp2=tmp2+opstr+")";
-    GLIST=append(GLIST,tmp2);
   );
-  if(Noflg<2,
+  if((Noflg<3)&(mkflg>-1),
+    if(fileflg!="Y", //181102
+      println("generate Hatchdata "+name);
+      tmp=name+"="+textformat(AnsL,5);
+      parse(tmp);
+      if(!islist(iostr),tmp1=[iostr],tmp1=iostr);
+      tmp="c(";
+      forall(tmp1,
+        tmp=tmp+Dq+#+Dq+",";
+      );
+      tmp=substring(tmp,0,length(tmp)-1)+")";
+      tmp2=name+"=Hatchdata("+tmp;
+      forall(bdynameL,
+        tmp2=tmp2+",list("+#+")";
+      );
+      tmp2=tmp2+opstr+")";
+      GLIST=append(GLIST,tmp2);
+    ,
+      GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
+    );
+  );
+  if((Noflg<2)&(mkflg>-1),
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -6713,12 +6815,23 @@ Hatchdatacindy(nm,iostr,bdylistorg,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
-  tmp2=[];
-  forall(AnsL,tmp1,
-    tmp=apply(tmp1,LLcrd(#));
-    tmp2=append(tmp2,tmp);
+  if(mkflg>-1,
+    if((fileflg=="Y")&(wflg==1), //181102from
+      tmp1="hatch"+nm+".txt";
+      SCEOUTPUT = openfile(tmp1);
+      forall(varL,
+        println(SCEOUTPUT,#+"//");
+      );
+      closefile(SCEOUTPUT);
+      WriteOutData(fname,[name,parse(name)]);
+    );  //181102to
+    tmp2=[];
+    forall(AnsL,tmp1,
+      tmp=apply(tmp1,LLcrd(#));
+      tmp2=append(tmp2,tmp);
+    );
+    tmp2;
   );
-  tmp2;
 );
 ////%Hatchdata end////
 

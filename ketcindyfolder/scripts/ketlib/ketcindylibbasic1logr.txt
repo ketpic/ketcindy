@@ -1,3 +1,6 @@
+// 20181103
+//   Anyselected added
+//   Hatchdata changed  (option "File=", "Not=","Check=" added)
 // 20181030
 //   Drawprocess,Workprocess changed (dispflg added)
 // 20181026

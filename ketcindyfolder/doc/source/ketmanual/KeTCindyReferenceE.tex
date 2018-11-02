@@ -2094,7 +2094,10 @@ near point from start position : Set in case where the first curve and the last 
 \itemket{Details}Options are:\\
 \hspace*{5mm}angle(degree,45), interval(ratio,1) of hatches, \\
 \hspace*{5mm}\verb|"Max=(default:20)"| maximum of the number of hatches.\\
-\hspace*{5mm}\verb|"Out=y/n(default:n)"| whether it uses R and make the data file or not.
+\hspace*{5mm}\verb|"No=pointlist"| not executed when any point is selected\\
+\hspace*{5mm}\verb|"File=y/m/n(default:n)"| whether to make data file or not\\
+\hspace*{5mm}\verb|"Check=pointlist"| data file updated if any point is changed
+
 \itemket{Examples}\mbox{}
 
 
@@ -4921,6 +4924,13 @@ If we specify only option2 then we denote that option1 is empty list:[].
 \itemket{Usage}Skeletonparadata(name, PDlist, PDlist, option)
 \itemket{Description}Generic function to draw the lines by performing hidden line processing.
 \itemket{Details}This function draw the second argument(the list of the lines) by performing hidden line processing which are hidden by the third argument(the list of the lines). If both arguments are omitted the function draw all lines by performing hidden line processing.
+
+Options:\\
+\hspace*{5mm}\verb|real number| gap of line\\
+\hspace*{5mm}\verb|"No=pointlist"| not executed when any point is selected\\
+\hspace*{5mm}\verb|"File=y/m/n(default:n)"| whether to make data file or not\\
+\hspace*{5mm}\verb|"Check=pointlist"| data file updated if any point is changed
+
 \itemket{Examples}  \mbox{}
 
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,4]","z=[-5,3]");|  //Data name is "ax3d".\\

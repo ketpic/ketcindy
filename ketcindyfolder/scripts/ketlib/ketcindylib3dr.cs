@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181031) loaded");
+println("ketcindylib3d(20181103) loaded");
 
 //help:start();
 
@@ -265,8 +265,11 @@ Getangle(option):=(
 ////%Angleselected start////
 Angleselected():=IsAngle(); //180713
 //isAngle():=Isangle(); //180517
+////%Angleselected end////
+////%Isangle start////
 Isangle():=isselected(TH)%isselected(FI); //180517
 ////%Angleselected end////
+////%Isangle end////
 
 ////%Changestyle3d start////
 Changestyle3d(nameL,style):=(
@@ -2516,7 +2519,7 @@ Mkbezierptcrv3(ptdata,options):=(  //17.10.08 greatly changed
   Out;
 );
 
-///////////////////////////////////////////
+//////////old version ///////////////////////////////
 
 Readobj(filename):=Readobj(filename,[]);
 Readobj(filename,options):=(
@@ -2549,8 +2552,8 @@ Readobj(filename,options):=(
   [vL,fnL];
 );
 
-/////////////////////////////////////////
-
+//////////new version ///////////////////////////////
+////%Readobj start////
 Readobj(filename,options):=(
 //help:Readobj("file.obj",["size=-3"]);
   regional(eqL,size,vL,fnL,dtL,numer,flg,flg2,
@@ -2654,6 +2657,7 @@ Readobj(filename,options):=(
   );
   [vL,fnL];
 );
+////%Readobj end////
 
 Concatobj(objL):=Concatobj(objL,[]);
 Concatobj(objL,options):=(
@@ -4554,6 +4558,7 @@ Makeskeletondata(ObjL,PltL,R0):=(
 
 ////////////// current skeleton  2018.01.04 ////////////////
 
+////%Skeletonparadata start////
 Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
 Skeletondatacindy(nm,options):=(
   regional(tmp); 
@@ -4562,15 +4567,17 @@ Skeletondatacindy(nm,options):=(
 );
 Skeletondatacindy(nm,pltdata1,pltdata2):=
      Skeletondatacindy(nm,pltdata1,pltdata2,[]);
-Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
+Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
 //help:Skeletondatacindy("1");
 //help:Skeletondatacindy("1",[pdata1,pdata2],[pdata3]);
-//help:Skeletondatacindy(options2=[1(width)]);
-  regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,
+//help:Skeletondatacindy(options=[1(width),"File=y(/m/n)","Not=ptlist","Check=ptlist"]);
+  regional(Eps,Eps2,name2,name3,options,Ltype,Noflg,reL,eqL,opcindy,
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
-     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color);
+     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color,
+     fileflg,wflg,mkflg,fname,varL,nn,chkL); //181101
   name2="sk2d"+nm;
   name3="sk3d"+nm;
+  fname=Fhead+"sk"+nm+".txt"; //181102
   pltdata1=[];// 16.01.31
   forall(pltdata1org,tmp1,
     tmp=parse(tmp1);
@@ -4581,65 +4588,140 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
     tmp=parse(tmp1);
     pltdata2=append(pltdata2,tmp);
   );
+  options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
   reL=tmp_6; //16.02.28 
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Rr=0.075*1000/2.54/MilliIn;
   size=1;
   Eps2=0.05;
+  fileflg="N";
+  mkflg=1;
   if(length(reL)>0, //16.02.28 
     size=reL_1;
     Rr=size*Rr;
     if(length(reL)>1,Eps2=reL_2);
+  );
+  forall(eqL, //181101from
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,2));
+    if(tmp1=="FI",
+      fileflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+    if(tmp1=="NO",
+      tmp=parse(tmp_2);
+      if(Anyselected(tmp),
+        mkflg=-1;
+      );
+      options=remove(options,[#]);
+    );
+    if(tmp1=="CH",
+      chkL=parse(tmp_2);
+      options=remove(options,[#]);
+    );
   );
   Eps=10^(-4);
   ObjL=Flattenlist(pltdata1);
   Plt3L=Flattenlist(pltdata2);
   tmp=apply(Plt3L,ProjcoordCurve(#));
   Plt2L=Flattenlist(tmp);
-///////////  tmp=apply(pltdata1,replace(#,"3d","2d"));
-  Out=[];
-  forall(1..(length(ObjL)),ii,
-    Obj3=ObjL_ii;
-    tmp=ProjcoordCurve(Obj3);
-    Data=Makeskeletondata([tmp],Plt2L,Rr,Eps2);
-    forall(1..(length(Data)),jj,
-      Gd=Data_jj;
-      if((length(Gd)>1) 
-       & (Norm(Ptcrv(1,Gd)-Ptcrv(2,Gd))>Eps),
-        PtD=[];
-        forall(1..(length(Gd)),
-          tmp=Gd_#;
-          tmp1=Invparapt(tmp,Obj3);
-          PtD=append(PtD,tmp1);
+  if((fileflg=="Y")%(fileflg=="M")&(mkflg>-1),  //181101from, 181103
+    wflg=1;
+    tmp=flatten(pltdata1org);
+    varL=tmp;
+    tmp1=flatten(pltdata2org);
+    forall(tmp1,
+      if(!contains(varL,#),
+        varL=append(varL,#);
+      );
+    );
+    varL=sort(varL);
+    forall(1..(length(varL)),nn,
+      tmp1=varL_nn;
+      tmp=select(GLIST,substring(#,0,length(tmp1))==tmp1);
+      varL_nn=tmp_1;
+    );
+    tmp=["THETA="+format(THETA,5),"PHI="+format(PHI,5)];
+    varL=concat(tmp,varL);
+    forall(chkL,
+      tmp=#+"="+Textformat(parse(#+".xy"),5);
+      varL=append(varL,tmp);
+    );
+    if(fileflg=="M",
+      fileflg="Y";
+    ,
+      tmp1="skeleton"+nm+".txt";
+      if(isexists(Dirwork,tmp1),
+        tmp2=load(tmp1);
+        tmp2=tokenize(tmp2,"//");
+        tmp2=tmp2_(1..(length(tmp2)-1));
+        if(tmp2==varL,
+          wflg=0;
+          if(isexists(Dirwork,fname),
+            mkflg=0;
+            ReadOutData(fname);
+            tmp=name3+"="+Textformat(parse(name3),5);
+            parse(tmp);
+            tmp=name2+"="+Textformat(parse(name2),5);
+            parse(tmp);
+          );
         );
-        Out=append(Out,PtD);
       );
     );
   );
-  Out=select(Out,length(Projcurve(#))>0); // 16.12.19
-  tmp1=apply(Out,textformat(#,5));
-  tmp=name3+"="+tmp1;
-  parse(tmp);
-  tmp=name2+"=Projcurve("+tmp1+");";
-  parse(tmp);
-  Changestyle3d(pltdata1org,["nodisp"]);
-  if(Noflg<3,
-    println("generate skeleton :"+name3);
-    tmp1=text(pltdata1org);
-    tmp1="list("+substring(tmp1,1,length(tmp1)-1)+")";
-    tmp2=text(pltdata2org);
-    tmp2="list("+substring(tmp2,1,length(tmp2)-1)+")";
-    tmp=name3+"=Skeletonpara3data("+tmp1+","+tmp2+",";
-    tmp=tmp+text(size)+")";
-    GLIST=append(GLIST,tmp);  
-    tmp=name2+"=Projpara("+name3+")";
-    GLIST=append(GLIST,tmp);
+  if(mkflg==1, //181102
+/////////////  tmp=apply(pltdata1,replace(#,"3d","2d"));
+    Out=[];
+    forall(1..(length(ObjL)),ii,
+      Obj3=ObjL_ii;
+      tmp=ProjcoordCurve(Obj3);
+      Data=Makeskeletondata([tmp],Plt2L,Rr,Eps2);
+      forall(1..(length(Data)),jj,
+        Gd=Data_jj;
+        if((length(Gd)>1) 
+         & (Norm(Ptcrv(1,Gd)-Ptcrv(2,Gd))>Eps),
+          PtD=[];
+          forall(1..(length(Gd)),
+            tmp=Gd_#;
+            tmp1=Invparapt(tmp,Obj3);
+            PtD=append(PtD,tmp1);
+          );
+          Out=append(Out,PtD);
+        );
+      );
+    );
+    Out=select(Out,length(Projcurve(#))>0); // 16.12.19
+    tmp1=apply(Out,textformat(#,5));
+    tmp=name3+"="+tmp1;
+    parse(tmp);
+    tmp=name2+"=Projcurve("+tmp1+");";
+    parse(tmp);
+  ); 
+  if(mkflg>-1,
+    Changestyle3d(pltdata1org,["nodisp"]);
   );
-  if(Noflg<2,
+  if((Noflg<3)&(mkflg>-1), //181103
+    if(fileflg!="Y", //181102
+      println("generate skeleton :"+name3);
+      tmp1=text(pltdata1org);
+      tmp1="list("+substring(tmp1,1,length(tmp1)-1)+")";
+      tmp2=text(pltdata2org);
+      tmp2="list("+substring(tmp2,1,length(tmp2)-1)+")";
+      tmp=name3+"=Skeletonpara3data("+tmp1+","+tmp2+",";
+      tmp=tmp+text(size)+")";
+      GLIST=append(GLIST,tmp);  
+      tmp=name2+"=Projpara("+name3+")";
+      GLIST=append(GLIST,tmp);
+    ,
+      GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
+    );
+  );
+  if((Noflg<2)&(mkflg>-1), //181103
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
@@ -4652,9 +4734,22 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
       Subgraph(name3,opcindy);
     );
   );
-  Out;
+  if(mkflg>-1,
+    if((fileflg=="Y")&(wflg==1), //181102from
+      tmp1="skeleton"+nm+".txt";
+      SCEOUTPUT = openfile(tmp1);
+      forall(varL,
+        println(SCEOUTPUT,#+"//");
+      );
+      closefile(SCEOUTPUT);
+      WriteOutData(fname,[name3,parse(name3),name2,parse(name2)]);
+    );  //181102to
+    Out;
+  );
 );
+////%Skeletonparadata end////
 
+////%Makeskeletondata start////
 Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
   regional(Allres,Eps,Dmat,Dind,ii,Dt,nn1,nn2,Nind,Nobj,
       Plt2,PhL,ClipL,ns,pt1,pt2,pt,pta,ptb,za,zb,z1,z2,t1,t2,te,
@@ -4857,7 +4952,9 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
   );
   Allres;
 );
+////%Makeskeletondata end////
 
+////%Kukannozoku start////
 Kukannozoku(Jokyo,KukanL):=(
   regional(Res,Eps,nn,ii,t1,t2,Ku,Flg,contflg,tmp,tmp1);
   Eps=10^(-6);
@@ -4910,6 +5007,7 @@ Kukannozoku(Jokyo,KukanL):=(
   );
   Res;
 );
+////%Kukannozoku end////
 
 ////////////////// end of current skeleton//////////////
 

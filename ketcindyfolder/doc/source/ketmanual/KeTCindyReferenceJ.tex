@@ -708,12 +708,18 @@ optionsは，$x$座標の範囲をリストで与える。
 \hypertarget{putonseg}{}
 \item[関数]  PutonSeg(点名 , 座標１ ,座標2 )
 \item[機能]  線分上に点を作る
-\item[説明]  座標１，座標2を通る線分上に点名の点を作る。できた点は線分に対してインシデントとなる。
+\item[説明]  座標１，座標2を端点とする線分上に点名の点を作る。できた点は線分に対してインシデントとなる。指定した点がすでに存在する場合は動かさない。
 
 \vspace{\baselineskip}
-【例】  点A,\ Bを通る線分上に点Pをとる。
+【例】
 
-    \verb|PutonSeg("P",A,B);|
+線分AB上に点Cをとる。
+
+ \verb|PutonSeg("C",A,B);|
+
+点(-1,0),(2,2)を通る線分上に点Cをとる。
+
+ \verb|PutonSeg("C",[[-1,0],[2,2]]);|
 
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -2535,8 +2541,10 @@ optionsは線種      "dr, n"  , "da,m,n" , "do,m,n"
 \item[説明]  引数は，曲線名，内部外部のパターンを与える''i''，''o''の文字列，閉曲線を与える曲線と領域の内部を定める方向のリストとオプション。\\
 オプション（カッコ内はデフォルト値）\\
 　角度(45)，間隔(1)，\verb|"Max=(20)"| 斜線の最大本数，\\
-　\verb|"Out=y/n (n)"| Rを呼び出して外部ファイルを作るか
-  
+　\verb|"No=点リスト"| 点リストの点が選ばれているときは実行しない\\
+　\verb|"File=y/m/n (n)"| データファイルを作るか\\
+　\verb|"Check=点リスト"| 点リストの点が変更されていたら，ファイルを作り直す
+ 
 \vspace{\baselineskip}
 【例】円の内部。(次図左)
 \begin{verbatim}
@@ -6242,12 +6250,28 @@ options2を ["nodisp"] にすると，陰線は非表示になる。（下図右
 \vspace{\baselineskip}
 \hypertarget{intersectsgpL}{}
 \item[関数]  IntersectsgpL(点名，線分，面，描画方法)
-\item[機能]  空間の線分と平面の交点を作図する
+\item[機能]  空間の線分（直線）と平面の交点を求める。
 \item[説明]  引数の線分は線分の端点を "A-B" の形もしくは空間座標のリストで与える。
 
   引数の面は，面内の3点を "C-D-E" の形もしくは空間座標のリストで与える。
+
+  戻り値は，[pt,flag1,flag2,val1,val2]
   
-  描画方法は，"put" または "draw" で，描画方法を指定しない場合は "draw" と同じ。"draw"では交点が緑の点で表示されるだけで，幾何点はできない。"put" では幾何点を作る。
+  pt：直線と平面の交点の座標。直線と平面が平行で交点が存在しない場合は空リスト[]
+  
+  flag1 ： 交点が線分内にあれば true ，なければ false
+  
+  flag2 ： 交点が面内にあれば true，なければ false
+  
+  val1,val2 ： 
+  
+  描画方法は，"put" または "i" , "e" 。
+  
+  put ：　幾何点を作る
+
+   i ： 線分内にあれば点を描く
+
+　e :  平面で交われば点を描く
   
 \vspace{\baselineskip}
 【例】座標のリストで与える記述例\\
@@ -6319,7 +6343,7 @@ Cinderellaの描画面はつぎのようになる。点E,F,Gをドラッグし�
   p2=Invparapt(tmp_2,"sc3d1");
   Partcrv3d("1",p1,p2,"sc3d1"); 
 \end{verbatim}
- \begin{center} \input{Fig/invparapt} \end{center}
+ \begin{center}\scalebox{0.8}{ \input{Fig/invparapt}} \end{center}
  
 ここで，sl2d1,sc2d1 は線分と螺旋の描画面上での（平面の）プロットデータである。Intersectcrvs() で平面上の交点の座標（複数あるのでリストが返る）を求め，Invparapt() で対応する螺旋上の点の座標を求めて部分曲線を描いている。実際に交わる点での部分曲線ではないことに注意。
 
@@ -6607,16 +6631,21 @@ Partcrv3d("1",3.3,8.5,"sc3d1");
 
 \vspace{\baselineskip}
 \hypertarget{putonseg3d}{}
-\item[関数]  Putonseg3d(点名，点１，点2)
-\item[機能]  線分上に点を取る
-\item[説明]  点１と点2の中点に，指定された名前の点を取る。点１と点2が線分として結ばれていなくてもよい。とった点は線分にインシデントとなる（線分が描かれていなくても）。点１と点2はリストにすることもできる。\\
+\item[関数]  Putonseg3d(点名，点1，点2)
+\item[機能]  線分上に点を作る
+\item[説明]  点１と点2の中点に，指定された名前の点を取る。点１と点2が線分として結ばれていなくてもよい。とった点は線分にインシデントとなる（線分が描かれていなくても）。点１と点2はリストにすることもできる。指定した点がすでに存在する場合は動かさない。
+
+点1，点2は幾何点の名称または座標で指定する。
+
 \vspace{\baselineskip}
-【例】AとBの中点に点Cをとる。つぎのいずれでもよい。
+【例】A(1,-1,0)とB(0,2,2) の中点に点Cをとる。つぎのいずれでもよい。
 
     \verb|Putonseg3d("C",A,B);|
 
     \verb|Putonseg3d("C",[A,B]);|
     
+    \verb|Putonseg3d("C",[[1,-1,0],[0,2,2]]);|
+
 \vspace{\baselineskip}
 
 \hypertarget{putpoint3d}{}
@@ -6649,10 +6678,10 @@ optionは，"fix" または "free" ( 初期設定)。
 \vspace{\baselineskip}
 \hypertarget{readobj}{}
 \item[関数]  Readobj(ファイル名)
-\item[機能]  objファイルを読み込む．
+\item[機能]  objファイルを読み込む。
 \item[説明]  小林・鈴木・三谷による整面凸多面体のデータは\\
 \hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
-からダウンロードできる．\verb|polyhedrons_obj|を，例えば，ユーザホームのketcindy作業フォルダに入れておく．
+からダウンロードできる。\verb|polyhedrons_obj|を，例えば，ユーザホームのketcindy作業フォルダに入れておく。
 \begin{verbatim}
   Setdirectory(gethome()+"/ketcindy/polyhedrons_obj");
   polydt=Readobj("r02.obj");
@@ -6664,22 +6693,21 @@ optionは，"fix" または "free" ( 初期設定)。
 
 データはKeTCindyのdataフォルダの中にある。したがって，次のようなスクリプトを書く。読み込むのは一度だけなので， Draw スロットではなくInitialization スロットに置けばよいが，コードの可読性を高めるには Draw スロットでもよい。
 
-
 この多面体データは，頂点リストと面リストからなっているが，頂点リストは座標のリストなので，読み込んで表示するときには，点の名称を v1,v2,・・・ とする。
 
 読み込んだあとの使い方を含めて例を示す。
 
-\vspace{\baselineskip}
-【例】正八面体を描く
 \begin{layer}{150}{0}
-\putnotese{55}{0}{ \input{Fig/readobj}}
+\putnotese{80}{0}{ \input{Fig/readobj}}
 \end{layer}
+
+
+\vspace{\baselineskip}
+【例】\verb|polydt|を用いて正八面体を描く
+
 
 \begin{verbatim}
 
-  Setdirectory( Dirhead+"/data/polyhedrons_obj");
-  polydt=Readobj("r02.obj",["size=2"]);
-  Setdirectory(Dirwork);
   VertexEdgeFace("1",polydt,["Edg=nogeo"]);
   Nohiddenbyfaces("1","phf3d1");
 \end{verbatim}
@@ -6929,7 +6957,7 @@ C言語の環境がない場合は，ExeccmdC() が使えないので，Sfbdpara
 
 陰線を消去して表示（下図左）
 \begin{verbatim}
-    fd=["x=x^2-y^2","x=[-2,2]","y=[-2,2]"];
+    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];
     if(Isangle(),
       Sf3data("1",fd);
       ,
@@ -6963,7 +6991,12 @@ C言語の環境がない場合は，ExeccmdC() が使えないので，Sfbdpara
 \item[機能]  陰線処理（スケルトン処理）をおこなう
 \item[説明]  描画されている線と軸について陰線処理をおこなう。
 
-第2引数の線（プロットデータ）が，第3引数の線（プロットデータ）によって隠される部分を消去する。第2，第3引数を省略した場合は，すべての線について，互いの陰線処理をおこなう。optionで消去する部分の長さを指定できる。
+第2引数の線（プロットデータ）が，第3引数の線（プロットデータ）によって隠される部分を消去する。第2，第3引数を省略した場合は，すべての線について，互いの陰線処理をおこなう。optionで消去する部分の長さを指定できる。\\
+他のオプション\\
+　\verb|"No=点リスト"| 点リストの点が選ばれているときは実行しない\\
+　\verb|"File=y/m/n (n)"| データファイルを作るか\\
+　\verb|"Check=点リスト"| 点リストの点が変更されていたら，ファイルを作り直す
+
 
 \vspace{\baselineskip}
 【例】螺旋と線分，座標軸の陰線処理

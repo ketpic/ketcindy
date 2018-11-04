@@ -5,19 +5,6 @@ main::メインスライド１//
 \slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
-new::画面上のボタン//
-\slidepage//
-
-itemize//
-item::\Ltab{20mm}{Figure}静止画（Fhead+".tex"）をfigに作成//
-item::\Ltab{20mm}{Title}タイトル(default : slide0)をfigに作成//
-item::\Ltab{20mm}{ParaF}パラパラ動画フォルダを作成\\//
-\Ltab{25mm}{}Setparaで引数を書いておく//
-item::\Ltab{20mm}{Slide}Texparent+".txt"からスライドを作成//
-item::\Ltab{20mm}{Sum}SummaryのPDFを作成//
-end//
-
-%%%%%%%%%%%%%%%%//
 new::enumerate環境の使い方//
 %repeat=3,para//
 \slidepage//

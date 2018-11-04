@@ -18,7 +18,7 @@ new::How to use enumerate//
 \slidepage//
 
 enumerate::[(1)]//
-item::Change the style of number adding, for example, [(1)]//
-item::Same as usual//
+item::Change the style of items, for example, [(1)].//
+item::Do same as usual.//
 end//
 

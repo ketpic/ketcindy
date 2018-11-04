@@ -1,9 +1,11 @@
-title::slideE::%wallpaperi//
+title::slide0::%wallpaperi//
 
 %%%%%%%%%%%%%%%%//
-new::parapara//
+new::Example1//
 %repeat=,para=sinemove:{0}:s{65}{10}:input:1.2//
+\slidepage//
 
 %%%%%%%%%%%%%%%%//
-%new::parapara2//
-%%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2//
+new::Example2//
+%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2//
+\slidepage//

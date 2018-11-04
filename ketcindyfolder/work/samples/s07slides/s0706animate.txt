@@ -2,9 +2,11 @@
 
 %%%%%%%%%%%%%%%%//
 main::メインスライド１//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::Animation1//
+\slidepage//
 
 \begin{center}//
 \input{fig/animsinemove}//
@@ -12,6 +14,7 @@ new::Animation1//
 
 %%%%%%%%%%%%%%%%//
 %new::Animation2//
+\slidepage//
 
 %\begin{center}//
 %\input{fig/animsinemove2}//

@@ -1,18 +1,21 @@
-Title::slideE::%wallpaper//
+Title::slide0::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//
+\slidepage[m]//
 
 %%%%%%%%%%%%%%%%//
 new::Animation1//
+\slidepage//
 
 \begin{center}//
 \input{fig/animsinemove}//
 \end{center}//
 
 %%%%%%%%%%%%%%%%//
-%new::Animation2//
+new::Animation2//
+\slidepage//
 
-%\begin{center}//
-%\input{fig/animsinemove2}//
-%\end{center}//
+\begin{center}//
+\input{fig/animsinemove2}//
+\end{center}//

@@ -30,7 +30,7 @@ new::グラフとrepeat//
 \slidepage//
 
 layer::{100}{0}//
-%[1]::putnote::se{10}{15}::sinecurve,0.8//
-%[2]::putnote::se{30}{40}::sinecurve,0.8//
+%[1]::putnote::se{10}{15}::sine,0.8//
+%[2]::putnote::se{30}{40}::sine,0.8//
 end//
 

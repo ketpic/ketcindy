@@ -1,4 +1,4 @@
-title::slideE::%wallpaper//
+title::slide0::%wallpaper//
 
 %%%%%%%%%%%%%%%%//
 main::Main Slide//

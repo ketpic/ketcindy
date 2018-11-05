@@ -1,3 +1,5 @@
+// 20181105
+//   Crvsfparadata  changed ( multi surface supported )
 // 20181101
 //   CalcbyC chanded  (wflg retured)
 //   ExeccmdC changed  ( WritedataC added when necessary )

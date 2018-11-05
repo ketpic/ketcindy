@@ -1,7 +1,3 @@
-// 181025
-//    crv3onsfparadata debugged  (case of out=NULL )
-// 181023
-//    pthiddenQ changed  ( int flg, double out[4] )
 // 180430 
 //    crv2sfparadata,wireparadata added
 //    output3h,output3 chanded       
@@ -96,6 +92,7 @@ int output3h(const char *wa,const char *var, const char *varh, const char *fname
   for(i=1; i<=length2i(din2); i++){
     fprintf(fp,"start//\n");
     fprintf(fp,"[");
+    ctr=0; //181105
     for(j=din2[i][0]; j<=din2[i][1]; j++){
       pull3(j,out1,tmpd);
       fprintf(fp,"[ %7.5f, %7.5f, %7.5f]",tmpd[0],tmpd[1],tmpd[2]);
@@ -130,7 +127,6 @@ int writedataC(const char *fname, double out[][3]){
   int i, nall;
   FILE *fp;
   nall=length3(out);
-  printf("123 %d\n",nall);
   fp=fopen(fname,"w");
   for(i=1; i<=nall; i++){
     fprintf(fp,"%7.5f %7.5f %7.5f %6s",out[i][0],out[i][1],out[i][2],"-99999");
@@ -1963,6 +1959,7 @@ int skeletondata3(double data[][3], double r00,
 void readoutdata3(const char *fname, const char *var, double data[][3]){
   double x,y,z;
   float xx;
+  char dstrorg[256] = {'\0'};
   char dstr[256] = {'\0'};
   char str[10] = {'\0'},tmp[2]={'\0'};
   int linectr=0, start=0, jj,nn,nctr;
@@ -1977,6 +1974,12 @@ void readoutdata3(const char *fname, const char *var, double data[][3]){
   while( !feof(fp)){
     fgets(dstr,250,fp);
     linectr++;
+    jj=strlen(dstr);
+    if(jj>1){
+      dstr[jj-3]='\0';
+    }else{
+      dstr[0]='\0';
+    }
     if(strncmp(dstr,var,nn)==0){
       start=linectr;
     }else{

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181101 loaded");
+println("ketcindylibout(20181105 loaded");
 
 //help:start();
 
@@ -1459,6 +1459,7 @@ PlotdataR(name1,path,func,variable,optionorg):=(
 );
 ////%PlotdataR end////
 
+////%PlotdiscR start////
 PlotdiscR(nm,fun,varrng):=PlotdiscR(nm,fun,varrng,[]);
 PlotdiscR(nm,fun,varrng,options):=(
 //help:PlotdiscR("1","dbinom(k,10,0.4)","k=[0,10]");
@@ -1489,7 +1490,9 @@ PlotdiscR(nm,fun,varrng,options):=(
     Listplot(name,tmp,options);
   );
 );
+////%PlotdiscR end////
 
+////%Boxplot start////
 Boxplot(nm,dataorg,ypos,dy):=Boxplot(nm,dataorg,ypos,dy,[]);
 Boxplot(nm,dataorg,ypos,dy,optionorg):=(
 //help:Boxplot("1",dt,2,1/2,[""]);
@@ -1648,7 +1651,9 @@ Boxplot(nm,dataorg,ypos,dy,optionorg):=(
     [bp_(1..5),out];
   );
 );
+////%Boxplot end////
 
+////%Histplot start//
 Histplot(nm,dataorg):=Histplot(nm,dataorg,[]);
 Histplot(nm,dataorg,optionorg):=(
 //help:Histplot("1",data(fillename));
@@ -1665,11 +1670,11 @@ Histplot(nm,dataorg,optionorg):=(
   relative=0;
   waiting=3;
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,tmp,length(#));
-    if(Toupper(substring(#,0,1))=="B",
-      if(substring(tmp1,0,1)=="[",
-        tmp1="c("+substring(tmp1,1,length(tmp1)-1)+")";
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="B",
+      if(substring(tmp_2,0,1)=="[",
+        tmp1="c("+substring(tmp_2,1,length(tmp_2)-1)+")"; //181104
       );
       breaks="breaks="+tmp1;
       options=remove(options,[#]);
@@ -1827,6 +1832,7 @@ Histplot(nm,dataorg,optionorg):=(
     [bdata,cdata];
   );
 );
+////%Histplot end//
 
 ////%Scatterplot start////
 Scatterplot(nm,file):=Scatterplot(nm,file,[],[]);
@@ -2338,6 +2344,7 @@ WritetoA(fname,cmdL):=(
   closefile(SCEOUTPUT);
 );
 
+////%kcA start////
 kcA(fname):=kcA(fname,[]);
 kcA(fname,optionorg):=(
 //help:kcA("boxdata");
@@ -2424,7 +2431,9 @@ kcA(fname,optionorg):=(
     setdirectory(Dirwork);
   );
 );
+////%kcA end////
 
+////%CalcbyA start////
 CalcbyA(name,cmd):=CalcbyA(name,cmd,[]);
 CalcbyA(name,cmd,optionorg):=(
 //help:CalcbyA("a",cmd);
@@ -2611,6 +2620,7 @@ CalcbyA(name,cmd,optionorg):=(
     println("      CalcbyA succeeded "+name+" ("+text(tmp2)+" sec)");
   );
 );
+////%CalcbyA end////
 
 AsfunO(name,fun,argL):=AsirfunO(name,fun,argL); // 16.02.03
 AsfunO(name,fun,argL,options):=AsirfunO(name,fun,argL,options);
@@ -2772,6 +2782,7 @@ WritetoM(fname,cmdL,allflg):=(
   closefile(SCEOUTPUT);
 );
 
+////%kcyM start////
 kcM(fname):=kcM(fname,[]);
 kcM(fname,optionorg):=(
 //help:kcM("boxdata");
@@ -2868,7 +2879,9 @@ kcM(fname,optionorg):=(
     setdirectory(Dirwork);
   );
 );
+////%kcyM end////
 
+////%CalcbyM start////
 CalcbyM(name,cmd):=CalcbyM(name,cmd,[]);
 CalcbyM(name,cmd,optionorg):=(
 //help:CalcbyM("a",cmdL);
@@ -3127,7 +3140,9 @@ CalcbyM(name,cmd,optionorg):=(
     );
   );
 );
+////%CalcbyM end////
 
+////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);
 Mxfun(name,fun,argL,optionorg):=(
 //help:Mxfun("ca1","diff",["sin(x)^3","x"],[""]);
@@ -3195,7 +3210,9 @@ Mxfun(name,fun,argL,optionorg):=(
   );
   parse(nm);
 );
+////%Mxfun end////
 
+////%Mxtex start////
 Mxtex(nm,ex):=Mxtex(nm,ex,[]);
 Mxtex(nm,ex,optionorg):=(
 //help:Mxtex("1","sin(x)/x");
@@ -3257,7 +3274,9 @@ Mxtex(nm,ex,optionorg):=(
   parse(tmp);
   out;
 );
+////%Mxtex end////
 
+////%MxtexL start////
 MxtexL(nm,exlist):=MxtexL(nm,exlist,[]);  // 16.05.27
 MxtexL(nm,exlist,options):=(
   regional(out,tmp,tmp1);
@@ -3287,7 +3306,9 @@ Mxbatch(file):=(
   );
   out;
 );
+////%MxtexL end////
 
+////%Mxload start////
 Mxload(file):=( //17.06.16
 //help:Mxload(["rkfun.lispp"]);
   regional(figL,out,path,tmp,tmp1,tmp2);
@@ -3302,7 +3323,9 @@ Mxload(file):=( //17.06.16
   );
   out;
 );
+////%Mxload end////
 
+////%Maxima2Cindydata start////
 Maxima2Cindydata(str):=( //17.10.24
   regional(out,numstr,eL,nn,ne,flg,tmp);
   numstr="-0123456789";
@@ -3333,6 +3356,7 @@ Maxima2Cindydata(str):=( //17.10.24
   );
   parse(out);
 );
+////%Maxima2Cindydata end////
 
 kcV3(fname):=kcV3(Dirwork,fname);
 kcV3(path,fname):=(
@@ -4925,510 +4949,7 @@ ContsurfC(restr):=(//181101
 );
 ////%Contsurf end////
 
-Cheader():=Cheader(FdC,FheadC+"header.h");
-Cheader(fdc,fname):=(
-  regional(tmp,tmp1,tmp2,j, dW,dE,dS,dN,dstr,
-      DsizeLL,DsizeL,DsizeM,DsizeS,Eps,Eps1,Eps2,Eps3);
-  Mdv=50; Ndv=50; 
-  DsizeLL=15000; DsizeL=1500; DsizeM=500; DsizeS=200;
-  Eps=0.00001; Eps1=0.05; Eps2=0.2; Eps3=1;
-  SCEOUTPUT = openfile(fname);
-  tmp=indexof(fdc_2,"=");
-  tmp1=substring(fdc_2,tmp,length(fdc_2));
-  tmp1=replace(tmp1,"[","{");
-  tmp1=replace(tmp1,"]","}");
-  tmp=indexof(fdc_3,"=");
-  tmp2=substring(fdc_3,tmp,length(fdc_3));
-  tmp2=replace(tmp2,"[","{");
-  tmp2=replace(tmp2,"]","}");
-  tmp="const double Urng[2]="+tmp1+", Vrng[2]="+tmp2;
-  println(SCEOUTPUT,tmp+";");
-  tmp="const double XMIN="+Sprintf(XMIN,6);
-  tmp=tmp+",XMAX="+Sprintf(XMAX,6);
-  println(SCEOUTPUT,tmp+";");
-  tmp="const double THETA="+Sprintf(THETA,6);
-  tmp=tmp+",PHI="+Sprintf(PHI,6);
-  println(SCEOUTPUT,tmp+";");
-  tmp="  //THETA:"+Sprintf(THETA*180/pi,2);
-  tmp=tmp+", PHI:"+Sprintf(PHI*180/pi,2);
-  println(SCEOUTPUT,tmp+";");
-  dstr=fdc_4;
-  if(indexof(dstr,"w")>0,dW=1,dW=0);
-  if(indexof(dstr,"e")>0,dE=1,dE=0);
-  if(indexof(dstr,"s")>0,dS=1,dS=0);
-  if(indexof(dstr,"n")>0,dN=1,dN=0);
-  tmp="const int DrawW="+text(dW)+", DrawE="+text(dE);
-  tmp=tmp+", DrawS="+text(dS)+", DrawN="+text(dN);
-  println(SCEOUTPUT,tmp+";");
-  forall(j=5..(length(fdc)),
-    tmp=fdc_#; //17.05.21from
-    if(length(tmp)==2,
-       if(tmp_1>1, //17.05.24from
-         Mdv=tmp_1; Ndv=tmp_2;
-       ,
-         if(length(tmp_1)>0, Eps1=tmp_1);
-         if(length(tmp_1)>0, Eps2=tmp_2);	
-       );	 //17.05.24until
-    );
-    if(length(tmp)==3,
-      if(length(tmp_1)>0, DsizeLL=tmp_1);//17.06.09(3lines)
-      if(length(tmp_2)>0, DsizeL=tmp_2);
-      if(length(tmp_3)>0, DsizeM=tmp_3);
-    );
-    if(length(tmp)==4,
-      if(min(tmp)<1,
-        if(length(tmp_1)>0, Eps=tmp_1);
-        if(length(tmp_2)>0, Eps1=tmp_2);
-        if(length(tmp_3)>0, Eps2=tmp_3);
-        if(length(tmp_4)>0, Eps3=tmp_4);
-      ,
-        if(length(tmp_1)>0, DsizeLL=tmp_1);
-        if(length(tmp_2)>0, DsizeL=tmp_2);
-        if(length(tmp_3)>0, DsizeM=tmp_3);
-        if(length(tmp_4)>0, DsizeS=tmp_4);
-      )  
-    );//17.05.21until
-  );
-  tmp1=text(fdc_5_1);
-  tmp2=text(fdc_5_2);
-  tmp="const int Mdv="+text(Mdv)+", Ndv="+text(Ndv);
-  println(SCEOUTPUT,tmp+";");
-  tmp="#define DsizeLL "+text(DsizeLL);//17.05.21
-  println(SCEOUTPUT,tmp);
-  tmp="#define DsizeL "+text(DsizeL);
-  println(SCEOUTPUT,tmp);
-  tmp="#define DsizeM "+text(DsizeM);
-  println(SCEOUTPUT,tmp);
-  tmp="#define DsizeS "+text(DsizeS);
-  println(SCEOUTPUT,tmp);
-  tmp="const double Eps="+format(Eps,7);
-  tmp=tmp+", Eps1="+format(Eps1,7);
-  tmp=tmp+", Eps2="+format(Eps2,7);
-  tmp=tmp+", Eps3= "+format(Eps3,7);
-  println(SCEOUTPUT,tmp+";");
-  tmp="void surffun(double u, double v, double pt[3]){";
-  println(SCEOUTPUT,tmp);
-  forall(fdc_1,
-    tmp1=replace(#,"x=","pt[0]=");
-    tmp1=replace(tmp1,"y=","pt[1]=");
-    tmp1=replace(tmp1,"z=","pt[2]=");
-    println(SCEOUTPUT,"  "+tmp1+";");
-  );
-  println(SCEOUTPUT,"}");
-  closefile(SCEOUTPUT);
-);
-
-Cmain():=Cmain(FheadC+".c",MainC);
-Cmain(fname,cmdLorg):=(
-//help:MainC(writesfbd("sfbd");)
-//help:MainC(writeax("ax");)
-//help:MainC(writewire("wire" (,2), [10,10]);)
-//help:MainC(writewire("wire", [[0.5,1],[0,1,2]]]);)
-//help:MainC(writecut("sfcut","x+y+2*z-4");)
-//help:MainC(writesc("sl3d1");)
-//help:MainC(skeleton("sk",[objlist],[pltlist] (,width));)
-//help:MainC(writewire ptincrease (=2)  are optional);)
-  regional(cmdL, tmp,tmp1,tmp2,tmp3,tmp4,nL, nn,kk,jj, num, en,cmd, 
-                 ax1,ax2,ax3,path, var,varh,file,fileh, flg, cutctr);
-  path=Dirwork+"/";  //17.05.29from
-  path=replace(path,"\","/");
-  cmdL=cmdLorg;// 17.05.26from
-  nL=select(1..(length(cmdL)),cmdL_#=="writeax");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  forall(1..(length(nL)),
-    tmp2=cmdL_(nL_#+1);
-    if(length(tmp2)==1,tmp2=append(tmp2,"Surf"));
-    tmp=tmp2_1; // 17.06.08(5lines)
-    if(substring(tmp,length(tmp)-2,length(tmp))!="3d",
-      tmp=tmp+"3d";
-    );
-    tmp1=parse(tmp);
-    tmp="axx="+textformat(tmp1_1,5);
-    parse(tmp);
-    tmp="axy="+textformat(tmp1_2,5);
-    parse(tmp);
-    tmp="axz="+textformat(tmp1_3,5);
-    parse(tmp);
-    tmp3=concat(tmp3,[
-      "double "+tmp2_1+"[DsizeL][3];",[], //17.06.07(2lines)
-      "double axx[3][3], axy[3][3], axz[3][3];",[],
-      "spaceline",["axx"],
-      "spaceline",["axy"],
-      "spaceline",["axz"],
-       tmp2_1+"[0][0]=0;",[],
-      "appendd3(2,1,2,axx,"+tmp2_1+");",[],
-      "appendd3(2,1,2,axy,"+tmp2_1+");",[],
-      "appendd3(2,1,2,axz,"+tmp2_1+");",[],
-      "writecrv",[tmp2_1,tmp2_2] //17.06.07
-    ]);
-	cmd=concat(cmd,tmp3);
-      if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(nL_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );
-  nL=select(1..(length(cmdL)),cmdL_#=="writesc");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  forall(1..(length(nL)),
-    tmp2=cmdL_(nL_#+1);
-    if(length(tmp2)==1,
-      tmp2=[tmp2_1,"Surf"];
-    );
-    tmp3=concat(tmp3,[
-      "double "+tmp2_1+"[DsizeL][3];",[], //17.06.07(2lines)
-      "double "+tmp2_1+"h[DsizeL][3];",[],
-      "spaceline",[tmp2_1],
-      "writecrv",[tmp2_1,tmp2_2] //17.06.07
-    ]);
-    cmd=concat(cmd,tmp3);
-    if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(nL_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );
-  nL=select(1..(length(cmdL)),cmdL_#=="writesfbd");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  forall(1..(length(nL)),
-    tmp2=cmdL_(nL_#+1);
-    if(length(tmp2)==1,tmp2=append(tmp2,"Surf"));
-    var=Dq+tmp2_1+"3d"+Dq;
-    varh=Dq+tmp2_1+"h3d"+Dq;
-    file=Dq+path+FheadC+tmp2_1+".txt"+Dq; 
-    fileh=Dq+path+FheadC+tmp2_1+"h.txt"+Dq; 
-    tmp="Borderhiddendata";
-    tmp3=concat(tmp3,[
-      "double "+tmp2_1+"[DsizeL][3];",[], //17.06.09(6lines)
-     "sfbdparadata",[tmp2_1],
-     "output3h",["w",var, varh,file,tmp2_1],
-     "dataindexd3",[3,tmp2_1,"din"],
-     tmp2_2+"[0][0]=0;",[],
-     "appendd3",[2,"din[1][0]","din[1][1]",tmp2_1,tmp2_2]
-     ]);
-    cmd=concat(cmd,tmp3);
-    if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(nL_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );
-  nL=select(1..(length(cmdL)),cmdL_#=="writecrv");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  forall(1..(length(nL)),
-	tmp2=cmdL_(nL_#+1);
-    if(length(tmp2)==1,tmp2=append(tmp2,"Surf"));
-    var=Dq+tmp2_1+"3d"+Dq;
-    varh=Dq+tmp2_1+"h3d"+Dq;
-    file=Dq+path+FheadC+tmp2_1+".txt"+Dq; 
-    tmp3=concat(tmp3,[
-      "crvsfparadata",[tmp2_1,tmp2_2,1,"Crvdata"],
-       tmp2_1+"[0][0]=0;",[], //17.06.09(3lines)
-      "appendd3",[0,1,"length3(Crvdata)","Crvdata",tmp2_1],
-      "output3h",["w",var,  varh, file,tmp2_1]
-    ]);
-    cmd=concat(cmd,tmp3);
-    if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(nL_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );
-  nL=select(1..(length(cmdL)),cmdL_#=="writescrvonsf");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  forall(1..(length(nL)),
-    tmp2=cmdL_(nL_#+1);
-    if(length(tmp2)==1,tmp2=append(tmp2,"Surf"));
-    var=Dq+tmp2_1+"3d"+Dq;
-    varh=Dq+tmp2_1+"h3d"+Dq; //17.06.09(8lines)
-    file=Dq+path+FheadC+tmp2_1+".txt"+Dq; 
-    tmp3=concat(tmp3,[
-      "double "+tmp2_1+"[DsizeL][3];",[], 
-      " crv3onsfparadata",[tmp2_1,tmp2_2,1,"Crvdata"],
-      tmp2_1+"[0][0]=0;",[],
-      "appendd3",[0,1,"length3(Crvdata)","Crvdata",tmp2_1],
-      "output3h",["w",var,varh, file ,tmp2_1]
-    ]);
-    cmd=concat(cmd,tmp3);
-    if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(nL_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );
-  nL=select(1..(length(cmdL)),cmdL_#=="writecut");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  cutctr=0;
-  forall(1..(length(nL)),
-    cutctr=#;
-    tmp2=cmdL_(nL_#+1);
-    if(length(tmp2)==2,
-      tmp2=[tmp2_1,"Surf",tmp2_2];
-    );
-    var=Dq+tmp2_1+"3d"+Dq;
-    varh=Dq+tmp2_1+"h3d"+Dq; //17.06.09(10lines)
-    file=Dq+path+FheadC+tmp2_1+".txt"+Dq; 
-    tmp3=concat(tmp3,[
-      "cutfun",[tmp2_3], 
-      "double "+tmp2_1+"[DsizeL][3];",[], 
-      "sfcutdata",[text(cutctr),"out"], //17.06.02
-      "crv3onsfparadata",["out",tmp2_2,"Crvdata"],
-       tmp2_1+"[0][0]=0;",[], 
-      "appendd3",[0,1,"length3(Crvdata)","Crvdata",tmp2_1],
-      "output3h",["w",var, varh, file, tmp2_1]
-    ]);
-    cmd=concat(cmd,tmp3);
-    if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(nL_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );
-  nL=select(1..(length(cmdL)),cmdL_#=="writewire");
-  cmd=[];
-  if(length(nL)>0,tmp3=cmdL_(1..(nL_1-1)),tmp3=[]);
-  forall(1..(length(nL)),
-    tmp2=cmdL_(nL_#+1);
-    if(!isstring(tmp2_2),
-      tmp2=[tmp2_1,"Surf",tmp2_2,tmp2_3];
-    );
-    var=Dq+tmp2_1+"3d"+Dq;
-    varh=Dq+tmp2_1+"h3d"+Dq; //17.06.09
-    file=Dq+path+FheadC+tmp2_1+".txt"+Dq; 
-    tmp4=tmp2_(length(tmp2)); num=2;
-    if(!islist(tmp4),
-      num=tmp4; tmp4=tmp2_(length(tmp2)-1);
-    );
-    if(!islist(tmp4_1),
-      tmp3=concat(tmp3,[
-         "double udv[2]={-1,"+text(tmp4_1)+"};",[]
-      ]);
-    ,
-      len=length(tmp4_1);
-      tmp="double udv["+text(len+1)+"]={"+text(len)+",";
-      forall(tmp4_1,
-        tmp=tmp+format(#,5)+",";
-      );
-      tmp=substring(tmp,0,length(tmp)-1)+"};";
-      tmp3=concat(tmp3,[tmp,[]]);
-    );
-    if(!islist(tmp4_2),
-      tmp3=concat(tmp3,[
-         "double vdv[2]={-1,"+text(tmp4_2)+"};",[]
-      ]);
-    ,
-	  len=length(tmp4_2);
-      tmp="double vdv["+text(len+1)+"]={"+text(len)+",";
-      forall(tmp4_2,
-        tmp=tmp+format(#,5)+",";
-      );
-      tmp=substring(tmp,0,length(tmp)-1)+"};";
-      tmp3=concat(tmp3,[tmp,[]]);
-    );
-    tmp3=concat(tmp3,[
-      "double "+tmp2_1+"[DsizeLL][3];",[],  //17.06.09(5lines)
-      "wireparadata",["Surf", "udv","vdv", num, "Wiredata"],
-       tmp2_1+"[0][0]=0;",[],
-      "appendd3",[0,1,"length3(Wiredata)","Wiredata",tmp2_1],
-      "output3h",["w",var, varh, file, tmp2_1]
-    ]);
-    cmd=concat(cmd,tmp3);
-    if(#<length(nL),
-      tmp3=cmdL_((nL_#+2)..(tmp_(#+1)-1));
-    ,
-      tmp3=cmdL_((nL_#+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );
-  );// 17.05.29until
-  nL=select(1..(length(cmdL)),cmdL_#=="skeleton");// 17.06.05from
-  cmd=[];
-  if(length(nL)>0,
-    tmp3=cmdL_(1..(nL_1-1));
-    tmp3=concat(tmp3,["double sk[DsizeLL][3];",[]]);//17.06.13
-  ,
-    tmp3=[];
-  );
-  forall(1..(length(nL)),nn,
-    tmp2=cmdL_(nL_nn+1);
-    var=Dq+tmp2_1+"3d"+Dq;
-    file=Dq+path+FheadC+tmp2_1+".txt"+Dq; 
-    tmp3=concat(tmp3,[ //17.06.08from
-      "data[0][0]=0;",[]
-    ]);
-    forall(tmp2_2, 
-      if(substring(#,length(#)-1,length(#))!="h", 
-        tmp1=#;
-        tmp=[0,"din[1][0]","din[1][1]",tmp1,"data"];
-      ,
-        tmp1=substring(#,0,length(#)-1);
-        tmp=[0,"din[2][0]","din[2][1]",tmp1,"data"];
-      );
-      tmp3=concat(tmp3,[ 
-      "dataindexd3",[3,tmp1,"din"],
-      "appendd3",tmp
-      ]);
-    );
-    forall(1..(length(tmp2_3)),
-      if(substring(tmp2_3_#,length(tmp2_3_#)-1,length(tmp2_3_#))!="h", 
-        tmp1=tmp2_3_#;
-        tmp=[0,"din[1][0]","din[1][1]",tmp1,"data"];
-      ,
-        tmp1=substring(tmp2_3_#,0,length(tmp2_3_#)-1);
-        tmp=[0,"din[2][0]","din[2][1]",tmp1,"data"];
-      );
-      tmp3=concat(tmp3,[
-      "push3",["Inf",3,0,"data"],
-      "dataindexd3",[3,tmp1,"din"],
-      "appendd3",tmp
-      ]);
-    );
-    if(length(tmp2)<=3,tmp=1,tmp=tmp2_4);
-    tmp3=concat(tmp3,[
-      "skeletondata3",["data", tmp, "Eps1","Eps2","sk"],//17.06.13
-      "output3",["w",var, file, 2, "sk"]
-    ]);
-    cmd=concat(cmd,tmp3);
-    if(nn<length(nL),
-      tmp3=cmdL_((nL_nn+2)..(nL_(nn+1)-1));
-    ,
-      tmp3=cmdL_((nL_nn+2)..(length(cmdL)));
-      cmdL=concat(cmd,tmp3);
-    );//17.06.08until
-  );// 17.06.05until
-  path=DirlibC+"/";
-  path=replace(path,"\","/");
-  cmd=[
-    "#include <stdio.h>", "#include <math.h>",
-    "#include "+Dq+FheadC+"header.h"+Dq,
-    "#include "+Dq+path+"ketcommon.h"+Dq,
-    "#include "+Dq+path+"surflibhead.h"+Dq,
-    "#include "+Dq+path+"surflib.h"+Dq,
-    "int main(void){",
-    "  double out[DsizeL][3], data[DsizeLL][3];", //17.06.10
-    "  int i, j, nall, din[DsizeS][2];" //17.06.09
-  ];
-//  tmp=select(cmdL,#=="cutfun");
-//  if(length(tmp)==0,
-  if(cutctr==0, //17.06.02
-    cmdL=prepend(["1"],cmdL);
-    cmdL=prepend("cutfun",cmdL);
-  );// 17.05.26until
-  cutctr=0;
-  forall(1..(floor(length(cmdL))/2),nn,
-    tmp1=cmdL_(2*nn-1); tmp2=cmdL_(2*nn);
-    flg=0; // 17.05.26from
-    if(tmp1=="cutfun",
-       cutctr=cutctr+1;
-       tmp=select(1..(length(cmd)), indexof(cmd_#,"main")>0);
-       tmp3=cmd_((tmp_1)..(length(cmd)));
-       cmd=cmd_(1..(tmp_1-1));
-       cmd=append(cmd,"double cutfun"+text(cutctr)+"(double u, double v){");
-       cmd=append(cmd,"  double p[3],val;");
-       cmd=append(cmd,"  surffun(u,v,p);");
-       tmp="  val="+assign(tmp2_1,["x","p[0]","y","p[1]","z","p[2]"])+";";
-       cmd=concat(cmd, [tmp,"  return val;", "}"]);
-       cmd=concat(cmd, tmp3);
-       flg=1;
-    );
-    if(tmp1=="xyzax3data",
-      tmp="  "+tmp1+"(";
-      tmp=tmp+textformat(tmp2_1_1_1_1,5)+",";
-      tmp=tmp+textformat(tmp2_1_1_2_1,5)+",";
-      tmp=tmp+textformat(tmp2_1_2_1_2,5)+",";
-      tmp=tmp+textformat(tmp2_1_2_2_2,5)+",";
-      tmp=tmp+textformat(tmp2_1_3_1_3,5)+",";
-      tmp=tmp+textformat(tmp2_1_3_2_3,5)+",";
-      tmp=tmp+tmp2_2+");";
-      cmd=append(cmd,tmp);
-      flg=1;
-    );
-    if(tmp1=="spaceline",
-      if(!isstring(tmp2_1),
-        println(tmp2_1+" should be assgined as a string");
-      ,
-        tmp3=parse(tmp2_1);
-        tmp=text(length(tmp3)+1);
-//        cmd=append(cmd, "  double "+tmp2_1+"["+tmp+"][3];");
-        tmp=text(length(tmp3));
-        cmd=append(cmd, "  "+tmp2_1+"[0][0]="+tmp+";");
-        forall(1..(length(tmp3)),
-          tmp="  "+tmp2_1+"["+text(#)+"][0]="+textformat(tmp3_#_1,5)+",";
-          tmp=tmp+tmp2_1+"["+text(#)+"][1]="+textformat(tmp3_#_2,5)+",";
-          tmp=tmp+tmp2_1+"["+text(#)+"][2]="+textformat(tmp3_#_3,5)+";";
-          cmd=append(cmd,tmp);
-        );
-      );
-      flg=1;
-    );
-	if(flg==0,
-      tmp="  "+tmp1;
-      if(length(tmp2)>0,
-        tmp=tmp+"(";
-        forall(1..length(tmp2),kk,
-          if(isstring(tmp2_kk),
-            if((kk==1)&(substring(tmp1,0,5)=="write"),
-              file=path+FheadC+tmp2_kk+".txt"; 
-              fileh=path+FheadC+tmp2_kk+"h.txt"; 
-              tmp=tmp+Dq+tmp2_kk+Dq+","+Dq+file+Dq+","+Dq+fileh+Dq; 
-            ,
-              tmp=tmp+tmp2_kk;
-            );
-          ,
-            if(!islist(tmp2_kk),
-              tmp=tmp+textformat(tmp2_kk,5);
-            , 
-            );
-          );
-          if(kk<length(tmp2),
-            tmp=tmp+",";
-          ,
-            tmp=tmp+");";
-          );
-        );
-      );
-	  cmd=append(cmd, tmp);// 17.05.26until
-	);
-  );
-  tmp=select(1..(length(cmd)), indexof(cmd_#,"main")>0);//17.06.02from
-  tmp3=cmd_((tmp_1)..(length(cmd)));
-  cmd=cmd_(1..(tmp_1-1));
-  cmd=append(cmd,"double cutfun(int ch, double u, double v){");
-  cmd=append(cmd,"  double val;");
-  forall(1..cutctr,
-    tmp=text(#);
-    cmd=append(cmd,"  if(ch=="+tmp+"){val=cutfun"+tmp+"(u,v);}");
-  );
-  cmd=concat(cmd,["  return val;", "}"]);
-  cmd=concat(cmd, tmp3);//17.06.02until
-  cmd=concat(cmd, ["  return 0;", "}"]);
-  SCEOUTPUT = openfile(fname);
-  forall(cmd,
-    println(SCEOUTPUT,#);
-  );
-  closefile(SCEOUTPUT);
-  tmp=fileslist(Dirwork); // 17.05.20from
-  tmp=tokenize(tmp,",");
-  tmp=select(tmp,indexof(#,".txt")>0);
-  tmp=select(tmp,indexof(#,FheadC)>0);
-  forall(tmp, 
-     SCEOUTPUT = openfile(#);
-     println(SCEOUTPUT,"");
-     closefile(SCEOUTPUT);
-  ); // 17.05.20until
-);
-
+////%kcC start////
 kcC():=kcC(FheadC);
 kcC(cname):=(
   regional(tmp, tmp1,flg,rfile);
@@ -5482,6 +5003,7 @@ kcC(cname):=(
     println("kcC succeeded");
   );
 );
+////%kcC end////
 
 ReaddataCold(var, fname):=ReaddataC(var, fname,[]);
 ReaddataC(var, fname,options):=(
@@ -5509,6 +5031,7 @@ ReaddataC(var, fname,options):=(
   );//17.06.16until
 );
 
+////%ReaddataC start////
 ReaddataC(fnameorg):=(
   regional(tmp,tmp1,fname,data,out);
   fname=fnameorg;
@@ -5531,7 +5054,9 @@ ReaddataC(fnameorg):=(
   if(length(tmp1)>0,out=append(out,tmp1));
   out;
 );
+////%ReaddataC end////
 
+////%WritedataC start////
 WritedataC(fnameorg,dataorg):=(
 //help:WritedataC(filename, 3ddata);
   regional(tmp,fname,data,kk,nn,pt);
@@ -5557,6 +5082,7 @@ WritedataC(fnameorg,dataorg):=(
   );
   closefile(SCEOUTPUT);
 );
+////%WritedataC end////
 
 DisplayC():=DisplayC(DispC);
 DisplayC(name,options):=DisplayC([name,options]);
@@ -5605,6 +5131,7 @@ DisplayC(dispc):=(
   );
 );
 
+////%Cheadsurf start////
 Cheadsurf():=(
   regional(cmd,jj,divL,sizeL,epsL,nf,var1,var2,tmp,tmp1,tmp2);
   divL=ConstantListC_1;
@@ -5693,7 +5220,9 @@ Cheadsurf():=(
   cmd=append(cmd,"}");
   cmd;
 );
+////%Cheadsurf end////
 
+////%Ctopsurf start////
 Ctopsurf(name):=Ctopsurf(name,CutFunList);
 Ctopsurf(name,cutfunLorg):=(
   regional(cutfunL,path,cmd,tmp,tmp1,tmp2);
@@ -5737,7 +5266,9 @@ Ctopsurf(name,cutfunLorg):=(
   ]);
   cmd;
 );
+////%Ctopsurf end////
 
+////%WritetoC start////
 WritetoC(nm,header,main):=(
   regional(hfile,mfile,top,body,tmp,tmp1,tmp2);
   hfile=Fhead+nm+"header.h";
@@ -5761,6 +5292,7 @@ WritetoC(nm,header,main):=(
   println(SCEOUTPUT,"}");
   closefile(SCEOUTPUT);  
 );
+////%WritetoC end////
 
 ////%CalcbyC start////
 CalcbyC(name,cmd):=CalcbyC(name,PathC,cmd,[]);
@@ -5986,16 +5518,16 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   varL=select(varL,length(parse(#))>0);
   if(length(addpath)>0,Changework(dirbkup,["Sub=n"])); //180605
-  forall(varL,tmp,  //181101from
-    if(indexof(tmp,"h3d")==0,
-      tmp1=Fhead+tmp+".dat";
-      if((wflg==1)%(!isexists(Dirwork,tmp1)),
-        tmp1=Fhead+tmp+".dat";
-        tmp2=parse(tmp);
-        WritedataC(tmp1,tmp2);
-      );
-    );
-  );  //181101to
+//  forall(varL,tmp,  //181101from
+//    if(indexof(tmp,"h3d")==0,
+//      tmp1=Fhead+tmp+".dat";
+//      if((wflg==1)%(!isexists(Dirwork,tmp1)),
+//        tmp1=Fhead+tmp+".dat";
+//        tmp2=parse(tmp);
+//        WritedataC(tmp1,tmp2);
+//      );
+//    );
+//  );  //181101to
   varL;
 );
 ////%ExeccmdC end////
@@ -6126,8 +5658,9 @@ CrvsfparadataC(nm,fk,sfbd,fd,options):=
     CrvsfparadataC(nm,fk,sfbd,fd,options,["nodisp"]);
 CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
 //help:Crvsfparadata("1","ax3d","sfbd3d1",Fd);
+//help:Crvsfparadata(options=["Use=y(/n)"];
   regional(funnm,sfbd,fd,options,name2,name3,name2h,name3h,waiting,
-     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdlfg);
+     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,useflg,cmdlfg,ii,jj,eps);
   eps=10^(-5);
   sfbd=replace(sfbdorg,"bdy","sfbd");
   fd=ConvertFdtoC(fdorg);
@@ -6163,48 +5696,74 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
       options=remove(options,[#]);
     );
   );
+  useflg="N"; //181105from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="U",
+      useflg=Toupper(substring(tmp_2,0,1));
+    );
+  ); //181105to
   options=remove(options,eqL);
   options=remove(options,reL);
   options=select(options,length(#)>0);
-  tmp2=parse(Fk);
-  flg=0;
-  tmp=Fhead+Fk+".dat";
-  if(!isexists(Dirwork,tmp),flg=1);
-  if(flg==0,
-    tmp1=ReaddataC(tmp);
-    if(length(tmp1)!=length(tmp2),flg=1);
+  if(useflg=="N",
+    flg=0;
+    tmp=Fhead+Fk+".dat";
+    if(!isexists(Dirwork,tmp),flg=1);
     if(flg==0,
-      forall(1..(length(tmp1)),ii,
-        if(length(tmp1_ii)!=length(tmp2_ii),flg=1);
-        forall(1..(length(tmp1_ii)),jj,
-          if(flg==0,
-            if(Norm(tmp1_ii_jj-tmp2_ii_jj)>eps,flg=1);
+      tmp1=ReaddataC(tmp);
+      tmp2=parse(Fk);
+      if(length(tmp1)==length(tmp2),
+        forall(1..(length(tmp1)),ii,
+          if(length(tmp1_ii)!=length(tmp2_ii),flg=1);
+          forall(1..(length(tmp1_ii)),jj,
+            if(flg==0,
+              if(Norm(tmp1_ii_jj-tmp2_ii_jj)>eps,flg=1);
+            );
           );
         );
       );
     );
-  );
-  if(flg==1,WritedataC(tmp,Fk));
+    if(flg==1,
+      if((islist(parse(Fk))),
+        tmp=Fhead+Fk+".dat";
+        WritedataC(tmp,Fk);
+      ,
+        useflg="Y";
+      );
+    );
+  ); //181105to
   if(cmdflg==1,
     EraseList=append(EraseList,Fk);
   ,
     Changestyle3d(Fk,["nodisp"]);
   );
   cmdL=[
-	"  char fname"+nm+"[]="+Dqq(fname)+";",
+    "  char fname"+nm+"[]="+Dqq(fname)+";",
     "  rangeUV("+funnm+");",
-    "  boundary("+funnm+");",
-    "  readdataC("+Dqq(Fhead+Fk+".dat")+",data);",
-    "  readoutdata3("+Dqq(Fhead+replace(sfbd,"3d","")+".txt")+","+Dqq(sfbd)+",sfbd);", //180531
+    "  boundary("+funnm+");"
+  ];
+  if(useflg=="N", //181105from
+    cmdL=concat(cmdL,[
+       "  readdataC("+Dqq(Fhead+Fk+".dat")+",data);"
+    ]);
+  ,
+    cmdL=concat(cmdL,[
+       "  readoutdata3(dirfname,"+Dqq(Fk)+",data);"
+    ]);
+  );
+  cmdL=concat(cmdL,[
+    "  readoutdata3("+Dqq(Fhead+replace(sfbd,"3d","")+".txt")+","+Dqq(sfbd)+",sfbd);",
     "  crvsfparadata("+funnm+",data,sfbd, 0, out);",
     "  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fname"+nm+");",
     "  output3h("+Dqq("w")+","+Dqq("crvsf3d"+nm)+","+Dqq("crvsfh3d"+nm)+",dirfname,out);",
     "  outputend(dirfname);"
-  ];
+  ]); //181105to
   if(cmdflg==1,//180531from
     println("  ExeccmdC will generate "+ name3+","+name3h);
-	cmdL_5="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
-    cmdL_7="  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fnameall);"; //180607
+	cmdL_(length(cmdL)-4)="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";  //181105(2lines)
+    cmdL_(length(cmdL)-2)="  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fnameall);"; 
     tmp=replace(cmdL_(length(cmdL)-1),Dqq("w"),Dqq("a")); cmdL_(length(cmdL)-1)=tmp;
     cmdL=remove(cmdL,[cmdL_(length(cmdL))]);
     CommandListC=concat(CommandListC,cmdL); //180531to
@@ -6245,8 +5804,9 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
     );
   );
 );
-////%Crvsfparadata start////
+////%Crvsfparadata end////
 
+////%Crv3onsfparadata start////
 Crv3onsfparadata(nm,crv3d,sfbd,fd):=Crv3onsfparadataC(nm,crv3d,sfbd,fd);
 Crv3onsfparadata(nm,crv3d,sfbd,fd,options):=Crv3onsfparadataC(nm,crv3d,sfbd,fd,options);
 Crv3onsfparadata(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=
@@ -6382,7 +5942,9 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%Crv3onsfparadata end////
 
+////%Crv2onsfparadata start////
 Crv2onsfparadata(nm,crv2d,sfbd,fd):=Crv2onsfparadataC(nm,crv2d,sfbd,fd);
 Crv2onsfparadata(nm,crv2d,sfbd,fd,options):=Crv2onsfparadataC(nm,crv2d,sfbd,fd,options);
 Crv2onsfparadata(nm,crv2d,sfbd,fdorg,options,optionsh):=
@@ -6413,7 +5975,9 @@ Crv2onsfparadataC(nm,crv2d,sfbd,fdorg,options,optionsh):=(
   parse(tmp);
   Crv3onsfparadataC(nm,crv3d,sfbd,fdorg,options,optionsh);
 );
+////%Crv2onsfparadata end////
 
+////%Wireparadata start////
 Wireparadata(nm,sfbd,fd,wr1,wr2):=WireparadataC(nm,sfbd,fd,wr1,wr2);
 Wireparadata(nm,sfbd,fd,wr1,wr2,options):=WireparadataC(nm,sfbd,fd,wr1,wr2,options);
 Wireparadata(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh):=
@@ -6551,7 +6115,9 @@ WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh):=(
     );
   );
 );
+////%Wireparadata end////
 
+////%Intersectcrvsf start////
 Intersectcrvsf(nm,crv,fd):=IntersectcrvsfC(nm,crv,fd);
 Intersectcrvsf(nm,crv,fd,Arg):=IntersectcrvsfC(nm,crv,fd,Arg);
 Intersectcrvsf(nm,crv3d,fdorg,bdyeq,optionorg):=
@@ -6652,7 +6218,9 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
     parse(name);
   );
 );
+////%Intersectcrvsf end////
 
+////%Sfcutparadata start////
 Sfcutparadata(nm,cutfunL,sfbd,fd):=SfcutparadataC(nm,cutfunL,sfbd,fd);
 Sfcutparadata(nm,cutfunL,sfbd,fd,options):=SfcutparadataC(nm,cutfunL,sfbd,fd,options);
 Sfcutparadata(nm,cutfunLorg,sfbd,fdorg,optionorg,optionsh):=
@@ -6772,6 +6340,7 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%Sfcutparadata end////
 
 //help:end();
 

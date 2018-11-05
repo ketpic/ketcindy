@@ -1,3 +1,12 @@
+181105
+   output3h debugged  ( ctr=0 added in varh )
+   readoutdata3 debugged  (//,etc )
+181104
+    line display(123) for debugging removed
+181025
+    crv3onsfparadata debugged  (case of out=NULL )
+181023
+    pthiddenQ changed  ( int flg, double out[4] )
 180705
   nohiddenparadata2 debugged  (|sp-sq}>1)
 180703

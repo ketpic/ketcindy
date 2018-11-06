@@ -1,3 +1,5 @@
+// 20181107
+//   Nohiddenbyfaces changed  ( frn3d,frnh3d returned, option "Disp=" added )
 // 20181103
 //   Skeletonparadata changed  ( option "Not=","Check=" added )
 // 20181102

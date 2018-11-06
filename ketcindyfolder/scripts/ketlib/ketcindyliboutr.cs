@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181105 loaded");
+println("ketcindylibout(20181106 loaded");
 
 //help:start();
 
@@ -4769,14 +4769,14 @@ Mkketcindyjs(libname,options):=( //17.11.18
 
 ///////////////// C function //////////////////
 
-////%Cform start////
-Cform(strorg):=(
+Cformold(strorg):=(
 //help:Cform(str);
-  regional(str,ter,out,hat,ns,ne,nn,jj,flg,
+  regional(str,ter,out,hat,pare,ns,ne,nn,jj,flg,flg2,
     lv,str1,str2,tmp,tmp1,tmp2);
   ter=["+","-","*","/","(",")","="]; //180517
   str=replace(strorg,"pi","M_PI");
   hat=Indexall(str,"^");
+  pare=Bracket(str,"()");
   out="";
   ns=0;
   forall(hat,nn,
@@ -4863,6 +4863,76 @@ Cform(strorg):=(
     );
   );
   out=substring(out,0,length(out)-1);
+  out;
+);
+
+////%Cform start////
+Cform(strorg):=( //181106
+//help:Cform(str);
+  regional(str,str2,out,ter,hat,pare,jj,ns,ne,nsa,nea,flg,flg2,tmp,tmp1,tmp2);
+  ter=["+","-","*","/","(",")","="]; //180517
+  str=replace(strorg,"pi","M_PI");
+  out="";
+  flg=0;
+  forall(1..100,jj,
+    if(flg==0,
+      hat=indexof(str,"^");
+      if(hat==0,
+        out=out+str;
+        flg=1;
+      ,
+        ne=hat-1;
+        if(substring(str,ne-1,ne)==")",
+          ne=ne-1;
+          pare=Bracket(str,"()");
+          tmp=select(pare,#_1==hat-1);
+          tmp=tmp_1_2;
+          tmp1=select(pare,(#_1<hat)&(#_2==-tmp));
+          ns=tmp1_(length(tmp1))_1+1;
+          nsa=ns-1;
+       ,
+          flg2=0;
+          forall(reverse(1..ne),
+            if(flg2==0,
+              if(contains(ter,substring(str,#-1,#)),
+                ns=#+1;
+                flg2=1;
+              );
+            );
+          );
+          if(flg2==0,ns=1);
+          nsa=ns;
+        );
+        str2="pow("+substring(str,ns-1,ne)+",";
+        ns=hat;
+        if(substring(str,ns,ns+1)=="(",
+          ns=ns+2;
+          pare=Bracket(str,"()");
+          tmp=select(pare,#_1==hat+1);
+          tmp=tmp_1_2;
+          tmp1=select(pare,(#_1>hat)&(#_2==-tmp));
+          ne=tmp1_1_1-1;
+          nea=ne+1;
+        ,
+          ns=ns+1;
+          flg2=0;
+          forall(ns..(length(str)),
+            if(flg2==0,
+              if(contains(ter,substring(str,#-1,#)),
+                ne=#-1;
+                flg2=1;
+              );
+            );
+          );
+          if(flg2==0,ne=length(str));
+          nea=ne;
+        );
+        str2=str2+substring(str,ns-1,ne)+")";
+        out=out+substring(str,0,nsa-1)+str2;
+        str=substring(str,nea,length(str));
+      );
+    );
+  );
   out;
 );
 ////%Cform end////
@@ -5708,31 +5778,31 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=(
   options=remove(options,reL);
   options=select(options,length(#)>0);
   if(useflg=="N",
-    flg=0;
-    tmp=Fhead+Fk+".dat";
-    if(!isexists(Dirwork,tmp),flg=1);
-    if(flg==0,
-      tmp1=ReaddataC(tmp);
-      tmp2=parse(Fk);
-      if(length(tmp1)==length(tmp2),
-        forall(1..(length(tmp1)),ii,
-          if(length(tmp1_ii)!=length(tmp2_ii),flg=1);
-          forall(1..(length(tmp1_ii)),jj,
-            if(flg==0,
-              if(Norm(tmp1_ii_jj-tmp2_ii_jj)>eps,flg=1);
-            );
-          );
-        );
-      );
-    );
-    if(flg==1,
+//    flg=0;
+//    tmp=Fhead+Fk+".dat";
+//    if(!isexists(Dirwork,tmp),flg=1);
+//    if(flg==0,
+//      tmp1=ReaddataC(tmp);
+//      tmp2=parse(Fk);
+//      if(length(tmp1)==length(tmp2),
+//        forall(1..(length(tmp1)),ii,
+//          if(length(tmp1_ii)!=length(tmp2_ii),flg=1);
+//          forall(1..(length(tmp1_ii)),jj,
+//            if(flg==0,
+//              if(Norm(tmp1_ii_jj-tmp2_ii_jj)>eps,flg=1);
+//            );
+//          );
+//        );
+//      );
+//    );
+//    if(flg==1,
       if((islist(parse(Fk))),
         tmp=Fhead+Fk+".dat";
         WritedataC(tmp,Fk);
       ,
         useflg="Y";
       );
-    );
+//    );
   ); //181105to
   if(cmdflg==1,
     EraseList=append(EraseList,Fk);

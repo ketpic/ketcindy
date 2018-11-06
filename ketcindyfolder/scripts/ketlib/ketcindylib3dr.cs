@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181103) loaded");
+println("ketcindylib3d(20181107) loaded");
 
 //help:start();
 
@@ -86,7 +86,7 @@ Ketinit3d(subflg,position):=(
 Start3d():=Start3d([]); 
 Start3d(ptexception):=(
 //help:Start3d();
-//help:Start3d(execptionptlist);
+//help:Start3d(["A","B"](exceptionptlist));
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
   Setfiles(Namecdy); //180608
@@ -161,8 +161,10 @@ Start3d(ptexception):=(
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   ThinDense=0.1; //17.07.01to
-   Ptseg3data(ptexception);  //16.08.23
-   PTEXCEPTION=ptexception; //180916
+  tmp=ptexception; //181106(3lines)
+  if(!islist(tmp),PTEXCEPTION=[tmp],PTEXCEPTION=tmp);
+  Ptseg3data(PTEXCEPTION);  //16.08.23
+  PTEXCEPTION=ptexception; //180916
 );
 ////%Start3d end////
 
@@ -1294,6 +1296,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   Out;
 );
 
+////%Rotatepoint3d start////
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
 Rotatepoint3d(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);//180809
@@ -1381,7 +1384,9 @@ Rotatepoint3d(point,w1,w2,center):=(
   );
   Ans;
 );
+////%Rotatepoint3d end////
 
+////%Rotatedata3d start////
 Rotatedata3d(nm,P3data,w1,w2):=Rotatedata3d(nm,P3data,w1,w2,[]);
 Rotatedata3d(nm,P3data,w1,w2,options):=(
 //help:Rotatedata3d("1",["sl3d1","sc3d2"],[0,0,1],pi/3);
@@ -1453,7 +1458,9 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
   );
   Out;
 );
+////%Rotatedata3d end////
 
+////%Translatepoint3d start////
 Translate3pt(point,w1):=Translatepoint3d(point,w1);
 Translatepoint3d(point,w1):=(
 //help:Translatepoint3d(pt3d,[1,2,3]);
@@ -1482,7 +1489,9 @@ Translatepoint3d(point,w1):=(
   );
   Ans;
 );
+////%Translatepoint3d end////
 
+////%Translatedata3d start////
 Translatedata3d(nm,P3data,w1):=Translatedata3d(nm,P3data,w1,[]);
 Translatedata3d(nm,P3data,w1,options):=(
 //help:Translatedata3d("1",["sl3d1"],[1,2,3]);
@@ -1546,7 +1555,9 @@ Translatedata3d(nm,P3data,w1,options):=(
   );
   Out;
 );
+////%Translatedata3d end////
 
+////%Reflectpoint3d start////
 Reflect3pt(point,vecL):=Reflectpoint3d(point,vecL);
 Reflectpoint3d(point,vecL):=(
 //help:Reflectpoint3d(pt3d,[v1,v2,v3]);
@@ -1572,7 +1583,9 @@ Reflectpoint3d(point,vecL):=(
   );
   ans;
 );
+////%Reflectpoint3d end////
 
+////%Reflectdata3d start////
 Reflectdata3d(nm,P3data,vecL):=Reflectdata3d(nm,P3data,vecL,[]);
 Reflectdata3d(nm,P3data,vecL,options):=(
 //help:Reflectdata3d("1",["sl3d1"],[v1,v2,v3]);
@@ -1639,8 +1652,10 @@ Reflectdata3d(nm,P3data,vecL,options):=(
   );
   Out;
 );
+////%Reflectdata3d end////
 
 // 180806
+////%Scalepoint3d start////
 Scale3pt(point,ratio,center):=Scalepoint3d(point,ratio,center);
 Scalepoint3d(point,ratio):=Scalepoint3d(point,ratio,[0,0,0]);//180809
 Scalepoint3d(point,ratio,center):=(
@@ -1659,8 +1674,10 @@ Scalepoint3d(point,ratio,center):=(
   Z2=Cz+ra3*(Z1-Cz);
   [X2,Y2,Z2];
 );
+////%Scalepoint3d end////
 
 // 180808
+////%Scaledata3d start////
 Scaledata3d(nm,P3data,ratio):=Scaledata3d(nm,P3data,ratio,[]);
 Scaledata3d(nm,P3data,ratio,options):=(
 //help:Scaledata3d("1",["sl3d1"],[v1,v2,v3]);
@@ -1731,6 +1748,7 @@ Scaledata3d(nm,P3data,ratio,options):=(
   );
   Out;
 );
+////%Scaledata3d end////
 
 ////%Xyzcoord start////
 Xyzcoord(pm,ps):=Xyzcoord(pm_1,pm_2,ps); //181028from
@@ -2764,6 +2782,7 @@ Mkobjfile(path,fnameorg,objL):=(
 
 );
 
+////%VertexandEdgeFace start////
 VertexandEdge(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);
 VertexandEdge(nm,vfnL,options):=VertexEdgeFace(nm,vfnL,options);
 VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
@@ -2772,7 +2791,7 @@ VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
 //help:VertexEdgeFace(options=["Pt=fix","Vtx=geo","Edg=geo"]);
 VertexEdgeFace(nm,vfnLorg,optionorg):=(
   regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL,
-      vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,tmp,tmp1,tmp2);
+      vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
   name3="phvef"+nm;
   namev="phv3d"+nm;
   namee="phe3d"+nm;
@@ -2792,6 +2811,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   fixflg=1;
   vtxflg=1; //180905
   edgflg=1;
+  dispflg=1; //181106
   forall(eqL,
     tmp1=Toupper(substring(#,0,1));
     tmp=indexof(#,"=");
@@ -2808,6 +2828,12 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       if(substring(tmp2,0,1)=="N", edgflg=0);
       options=remove(options,[#]);
     );
+    if(tmp1=="D", //181106from
+      if(substring(tmp2,0,1)=="N",
+        dispflg=0; vtxflg=0; edgflg=0;
+      );
+      options=remove(options,[#]);
+    ); //181106to
   );
   forall(strL,
     if(Toupper(#)=="FREE",
@@ -2838,7 +2864,9 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
         tmp=vname+"2d=Parapt("+vname+"3d)";
         parse(tmp);
         Defvar(vname+"2d",parse(vname+"2d"));
-        drawtext(parse(vname+"2d"),vname);
+        if(dispflg==1, //181106
+          drawtext(parse(vname+"2d"),vname);
+        );
       ); //180905to
     );
     vL=append(vL,vname); // 16.02.10 until
@@ -2926,7 +2954,9 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   );
   [namev,namee,namef];
 );
+////%VertexEdgeFace end////
 
+////%Phparadata start////
 Phparadata(nm,nmvf):=(
   regional(tmp1,tmp2);
   tmp1=parse("phv3d"+nmvf);
@@ -3030,7 +3060,9 @@ Phparadata(nm,nmvf,vfL,options):=(
    );
   );
 );
+////%Phparadata end////
 
+////%Nohiddenseg start////
 Nohiddenseg(seg,rng,triang,Eps):=(
 // help:Nohiddenseg("1",seg1,[0,1],["v1","v2","v3"]);
   regional(pA3,pB3,pC3,pA,pB,pC,sg1,sg2,ss1,ss2,parL,flgL,flg1,flg2,
@@ -3161,7 +3193,9 @@ Nohiddenseg(seg,rng,triang,Eps):=(
   sgnoh=apply(sgnoh,rng_1+#*(rng_2-rng_1));
   sgnoh;
 );
+////%Nohiddenseg end////
 
+////%Nohiddensegs start////
 Nohiddensegs(seg,range,faceno,vtxL,Eps):=(
   regional(rng,face,vtx,out,ra,rb,tmp,tmp1,tmp2);
 //  Eps=10^(-2);
@@ -3200,7 +3234,9 @@ Nohiddensegs(seg,range,faceno,vtxL,Eps):=(
   );
   rng;
 );
+////%Nohiddensegs end////
 
+////%Nohiddenbyfaces start////
 Nohiddenbyfaces(nm,facestr):=
     Nohiddenbyfaces(nm,Datalist3d(),facestr,[],["do"]);
 Nohiddenbyfaces(nm,Arg1,Arg2):=(
@@ -3370,8 +3406,11 @@ Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
   tmp="frh3d"+nm+"="+text(tmp1);
   parse(tmp);
   println("   generate totally "+"frh3d"+nm);
+  [frnL,frhL]; //181106
 );
+////%Nohiddenbyfaces end////
 
+////%Faceremovaldata start////
 Faceremovaldata(nm,vfdata,crvdata):=Faceremovaldata(nm,vfdata,crvdata,[]);
 Faceremovaldata(nm,vfdata,crvdata,options):=(
   regional(name2,name3,nameh2,nameh3,Ltype,Noflg,eqL,Hidden,
@@ -3456,6 +3495,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
     );
   );
 );
+////%Faceremovaldata end////
 
 Fullformfunc(FdL):=(
   regional(Out,nn,ii,Jrg,flg,Urg,Vrg,kk,Uname,

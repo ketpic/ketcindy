@@ -2182,7 +2182,11 @@ Perpplane(name,ptstr,nstr,option):=(
     th,ph,pA,pB,tmp,tmp1,tmp2);
   Eps=10^(-4);
   if(isstring(nstr),nvec=parse(nstr+"3d"),nvec=nstr);
-  pP=parse(ptstr+"3d");
+  if(indexof(ptstr,"3d")==0, //181107from
+    pP=parse(ptstr+"3d");
+  ,
+    pP=parse(ptstr);
+  ); //181107to
   v3=nvec/|nvec|;
   th=THETA; ph=PHI;
   tmp=findangle(v3);
@@ -2190,16 +2194,19 @@ Perpplane(name,ptstr,nstr,option):=(
   v1=Cancoordpara([1,0,0]);
   v2=Cancoordpara([0,1,0]);
   THETA=th; PHI=ph;
+  tmp=indexof(name,"-");
+  tmp1=substring(name,0,tmp-1);
+  tmp2=substring(name,tmp,length(name));
   tmp=indexof(pLstr,"-");
   pA=pP+v1;
   pB=pP+v2;
   if(islist(option),tmp=option_1,tmp=option);
   tmp=Toupper(substring(tmp,0,1)); // 16.06.19
   if(tmp=="P",
-    tmp=indexof(name,"-");
-    tmp1=substring(name,0,tmp-1);
-    tmp2=substring(name,tmp,length(name));
     Putpoint3d([tmp1,pA,tmp2,pB],["fix"]);
+  ,
+    Defvar(tmp1+"3d",pA); //181107(2lines)
+    Defvar(tmp2+"3d",pB);
   );
   if(tmp=="D",
     Drawpoint3d(pA);
@@ -2782,14 +2789,12 @@ Mkobjfile(path,fnameorg,objL):=(
 
 );
 
-////%VertexandEdgeFace start////
-VertexandEdge(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);
-VertexandEdge(nm,vfnL,options):=VertexEdgeFace(nm,vfnL,options);
+////%VertexEdgeFace start////
 VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
+VertexEdgeFace(nm,vfnLorg,optionorg):=(
 //help:VertexEdgeFace("1",[vL,fnL]);
 //help:VertexEdgeFace("1",["A","B","C"]);
 //help:VertexEdgeFace(options=["Pt=fix","Vtx=geo","Edg=geo"]);
-VertexEdgeFace(nm,vfnLorg,optionorg):=(
   regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL,
       vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
   name3="phvef"+nm;
@@ -2810,18 +2815,21 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   strL=tmp_7;
   fixflg=1;
   vtxflg=1; //180905
-  edgflg=1;
+  edgflg=0;
   dispflg=1; //181106
   forall(eqL,
-    tmp1=Toupper(substring(#,0,1));
-    tmp=indexof(#,"=");
-    tmp2=Toupper(substring(#,tmp,length(#)));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=Toupper(tmp_2);
     if(tmp1=="P",
       if(tmp2=="FREE", fixflg=0);
       options=remove(options,[#]);
     );
     if(tmp1=="V", //180905from
-      if(substring(tmp2,0,1)=="N", vtxflg=0);
+      if(substring(tmp2,0,1)=="N", 
+        vtxflg=0;
+        edgflg=0; //181107
+      );
       options=remove(options,[#]);
     ); //180905to
     if(tmp1=="E",
@@ -2852,7 +2860,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
 //      tmp="v"+text(#)+"3d="+textformat(tmp,5);
 //      parse(tmp);
     ,
-      vname="v"+text(#);
+      vname="V"+text(#); //181107
       if(vtxflg==1, //180905
         if(fixflg==1,
           Putpoint3d([vname,vtx],"fix"); 
@@ -2883,8 +2891,6 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       if(tmp2<tmp1,
         tmp=tmp2; tmp2=tmp1; tmp1=tmp;
       );
-//      tmp1="v"+text(tmp1)+"3d";
-//      tmp2="v"+text(tmp2)+"3d";
       tmp1=vL_tmp1+"3d";
       tmp2=vL_tmp2+"3d";
       tmp=select(eL,#==[tmp1,tmp2] % #==[tmp2,tmp1]);

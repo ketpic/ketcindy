@@ -1,5 +1,7 @@
 // 20181107
 //   Nohiddenbyfaces changed  ( frn3d,frnh3d returned, option "Disp=" added )
+//   Perplane debugged ( for "draw" )
+//   VertexEdgeFace changed  (point name v =>V, option "Edg=n" as default ) 
 // 20181103
 //   Skeletonparadata changed  ( option "Not=","Check=" added )
 // 20181102

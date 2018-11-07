@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181030) loaded");
+println("ketcindybasic2(20181106) loaded");
 
 //help:start();
 
@@ -2743,12 +2743,16 @@ WritetoRS(filename,shchoice):=(
   Plist=[];
   Pnamelist=[];
   forall(remove(allpoints(),[SW,NE]),
-    tmp=Lcrd(#);
-    tmp1=format(re(tmp_1),6);// 15.02.05
-    tmp2=format(re(tmp_2),6);
-    tmp=#.name+"="+"c("+tmp1+","+tmp2+");";
-	tmp=tmp+"Assignadd('"+#.name+"',"+#.name+")";
-    Plist=append(Plist,tmp);
+    if(indexof(#.name,"[")==0, //181106
+      tmp=Lcrd(#);
+      tmp1=format(re(tmp_1),6);// 15.02.05
+      tmp2=format(re(tmp_2),6);
+      tmp=#.name+"="+"c("+tmp1+","+tmp2+");";
+	  tmp=tmp+"Assignadd('"+#.name+"',"+#.name+")";
+      Plist=append(Plist,tmp);
+    ,
+      println("Remove the abnormal poiint "+#.name); //181106
+    );
   );
   SCEOUTPUT = openfile(filename);
   tmp=Datetime();

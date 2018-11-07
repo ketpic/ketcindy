@@ -1,3 +1,5 @@
+// 20181106
+//   WritetoRS changed ( Abnormal point ignored )
 // 20181030
 //   ReadOutData debugged (option Disp= )
 // 20181024

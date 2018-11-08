@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181107)");
+println("KeTCindy V.3.2.3(20181109)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181103) loaded");
+println("ketcindylibbasic1(20181109) loaded");
 
 //help:start();
 
@@ -6539,7 +6539,7 @@ Anyselected(ptL):=(
 ////%Hatchdata start////
 Hatchdata(nm,iostr,bdylist):=Hatchdatacindy(nm,iostr,bdylist,[]);//180619
 Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
-  regional(options,tmp,tmp1,tmp2,eqL,strL,outflg);
+  regional(options,tmp,tmp1,tmp2,eqL,strL,chkL,outflg);
   options=optionsorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
@@ -6569,7 +6569,7 @@ Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdata(nm,iostr,bdylist,[]);
 Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
  //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
-//help:Hatchdata(options=["Not=pointlist","File=y(/m/n)","Max=20",angle,width]);
+//help:Hatchdata(options=["Not=pointlist","File=y(/m/n)","Max=50","Check=",angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,
     options,eqL,maxnum,startP,angle,interval,vec,nvec,ctr,pt,kk,delta,sha,AnsL,
     color,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2, //180717
@@ -6652,31 +6652,32 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
 //  interval=0.125*1000/2.54/MilliIn;
   interval=0.25*1000/2.54/MilliIn; //180706
   startP=[(XMIN+XMAX)/2, (YMIN+YMAX)/2];
-  maxnum=[30,0]; //181005 [first,second]
+  maxnum=[50,0]; //181109changed [first,second]
   fileflg="N";//181102from
   mkflg=1;
+  chkL=[]; //181109
   forall(eqL,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,2));
-    if(tmp1=="MA",
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
       maxnum=parse(tmp_2);
       if(!islist(maxnum),
         maxnum=[maxnum,0];
       );
       options=remove(options,[#]);
     );
-    if(tmp1=="FI", //181102from
+    if(tmp1=="F", //181102from
       fileflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     ); //181102to
-    if(tmp1=="NO", //181103from
+    if(tmp1=="N", //181103from
       tmp=parse(tmp_2);
       if(Anyselected(tmp),
         mkflg=-1;
       );
       options=remove(options,[#]);
     );
-    if(tmp1=="CH",
+    if(tmp1=="C",
       chkL=parse(tmp_2);
       options=remove(options,[#]);
     );

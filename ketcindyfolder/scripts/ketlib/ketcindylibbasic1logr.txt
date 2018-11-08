@@ -1,3 +1,5 @@
+// 20181109
+//   Hatchdata changed  (Default of "Max" changed to 50)
 // 20181103
 //   Anyselected added
 //   Hatchdata changed  (option "File=", "Not=","Check=" added)

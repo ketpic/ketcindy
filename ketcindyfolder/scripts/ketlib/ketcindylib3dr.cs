@@ -1866,7 +1866,7 @@ Mkpointlist(options):=( //181030
           tmp=-(ptz.x-mv-tmp1_2*cos(PHI+dp))/sin(PHI+dp);
           tmp=Parapt([tmp,tmp1_2,tmp1_3]);
         ,
-          tmp=(ptz.x-mv-tmp1_1*sin(PHI+dp))/cos(PHI+dp);
+          tmp=(ptz.x-mv+tmp1_1*sin(PHI+dp))/cos(PHI+dp); //181109pm
           tmp=Parapt([tmp1_1,tmp,tmp1_3]);
         );
         Putpoint(text(pt),tmp);

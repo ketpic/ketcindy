@@ -5209,8 +5209,8 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
 Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
 // help:Arrowheaddata(A,B);
-// help:Arrowheaddata(options=[1,18,"Coord=phy"]);
-  regional(list,ookisa,hiraki,kiri,Houkou,Str,Flg,Ev,Nv,pA,pB,
+// help:Arrowheaddata(options=[size(1),angle(18), "Coord=phy"]);
+  regional(list,ookisa,hiraki,Houkou,Str,Flg,Ev,Nv,pA,pB,
        reL,eqL,coord,pP,rF,gG,Flg,Nj,Eps,scx,scy,tmp,tmp1,tmp2);
   Eps=10^(-3);
   coord="P";
@@ -5241,7 +5241,6 @@ Arrowheaddata(point,direction,options):=(
         hiraki=tmp;
       );
     );
-    if(#==3,kiri=tmp);
   ); //181110to
   Flg=0;
   hiraki=hiraki*pi/180;
@@ -5314,10 +5313,10 @@ Arrowhead(Arg1,Arg2,Arg3):=(
 );
 Arrowhead(nm,point,direction,optionsorg):=(//181018from
 //help:Arrowhead("1",B,B-A);
-//help:Arrowhead(options=[1.5,30,"Coor=P(L)"]);
+//help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Coor=P(L)"]);
 //help:Arrowhead(A,"gr1");
    regional(name,Ltype,Noflg,reL,opstr,opcindy,color,eqL,coord,
-         options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
+         options,cut,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
   name="arh"+nm; //181018
   ArrowheadNumber=ArrowheadNumber+1;
   options=optionsorg;
@@ -5337,6 +5336,11 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
        options=remove(options,[#]);
      );
   ); //181018to
+  cut=0; //181110from
+  if(length(reL)>3,
+    cut=reL_4;
+    options=remove(options,[reL_4]);
+  ); //181110from
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
   if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
@@ -5365,6 +5369,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   if(Noflg==0,
     tmp=Divoptions(options);
     opstr=tmp_(length(tmp)-1);
+    opstr=opstr+","+Dqq("Cut="+format(cut,5));
     ptstr=Textformat(LLcrd(pP),5);
     if(isstring(direction),  //181019
       hostr=direction;
@@ -5405,7 +5410,7 @@ Arrowdata(Arg1,Arg2):=(
 Arrowdata(nm,ptlist,optionsorg):=(
 //help:Arrowdata("1",[A,B]);
 //help:Arrowdata("1",[pt1,pt2]);
-//help:Arrowdata(options=[1,18,pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
+//help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
   regional(options,Ltype,Noflg,name,opstr,opcindy,eqL,reL,strL,color,size,coord,
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut);
   name="ar"+nm;

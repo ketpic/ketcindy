@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181109)");
+println("KeTCindy V.3.2.3(20181110)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181109) loaded");
+println("ketcindylibbasic1(20181110) loaded");
 
 //help:start();
 
@@ -5210,12 +5210,14 @@ Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
 // help:Arrowheaddata(A,B);
 // help:Arrowheaddata(options=[1,18,"Coord=phy"]);
-  regional(list,Ookisa,Hiraki,Futosa,Houkou,Str,Flg,Ev,Nv,pA,pB,
+  regional(list,ookisa,hiraki,kiri,Houkou,Str,Flg,Ev,Nv,pA,pB,
        reL,eqL,coord,pP,rF,gG,Flg,Nj,Eps,scx,scy,tmp,tmp1,tmp2);
   Eps=10^(-3);
   coord="P";
-  Ookisa=0.2*YaSize;
-  Hiraki=YaAngle;
+  ookisa=0.2*YaSize;
+  hiraki=YaAngle;
+  iti=1;
+  kiri=0;
   Futosa=0;
   Str=YaStyle;
   tmp=Divoptions(options);
@@ -5229,17 +5231,20 @@ Arrowheaddata(point,direction,options):=(
        coord=Touppera(tmp2);
      );
   ); //181018to
-  if(length(reL)>0,Ookisa=Ookisa*reL_1);
-  if(length(reL)>1,
-    tmp=reL_2;
-    if(tmp<5, 
-      Hiraki=Hiraki*tmp;
-    ,
-      Hiraki=tmp;
+  forall(1..(length(reL)), //181110from
+    tmp=reL_#;
+    if(#==1,ookisa=ookisa*tmp);
+    if(#==2,
+      if(tmp<5, 
+        hiraki=hiraki*tmp;
+      ,
+        hiraki=tmp;
+      );
     );
-  );
+    if(#==3,kiri=tmp);
+  ); //181110to
   Flg=0;
-  Hiraki=Hiraki*pi/180;
+  hiraki=hiraki*pi/180;
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
   if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
@@ -5262,7 +5267,7 @@ Arrowheaddata(point,direction,options):=(
         rF=Numptcrv(Houkou);
       );
     );
-    gG=apply(0..10,pP+Ookisa*cos(Hiraki)*[cos(2*pi/10*#),sin(2*pi/10*#)]);
+    gG=apply(0..10,pP+ookisa*cos(hiraki)*[cos(2*pi/10*#),sin(2*pi/10*#)]);
 	Flg=0; 
     forall(1..rF,Nj,
       if(Flg==0,
@@ -5285,13 +5290,13 @@ Arrowheaddata(point,direction,options):=(
     Ev=-1/|Houkou|*Houkou;
     Nv=[-Ev_2, Ev_1];
     if(indexof(Str,"c")>0,
-      pP=pP-0.5*Ookisa*cos(Hiraki)*Ev;
+      pP=pP-0.5*ookisa*cos(hiraki)*Ev;
     );
     if(indexof(Str,"b")>0,
-      pP=pP-Ookisa*cos(Hiraki)*Ev;
+      pP=pP-ookisa*cos(hiraki)*Ev;
     );
-    pA=pP+Ookisa*cos(Hiraki)*Ev+Ookisa*sin(Hiraki)*Nv;
-    pB=pP+Ookisa*cos(Hiraki)*Ev-Ookisa*sin(Hiraki)*Nv;
+    pA=pP+ookisa*cos(hiraki)*Ev+ookisa*sin(hiraki)*Nv;
+    pB=pP+ookisa*cos(hiraki)*Ev-ookisa*sin(hiraki)*Nv;
     list=[pA,pP,pB];
     list;
   );
@@ -5382,13 +5387,27 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
 ////%Arrowhead end////
 
 ////%Arrowdata start////
-Arrowdata(nm,ptlist):=Arrowdata(nm,ptlist,[]);
+Arrowdata(ptlist):=Arrowdata(ptlist,[]); //181110from
+Arrowdata(Arg1,Arg2):=(
+  regional(name);
+  if(isstring(Arg1),
+    Arrowdata(Arg1,Arg2,[]);
+  ,
+    name="";
+    forall(Arg1,
+      if(ispoint(#),
+        name=name+text(#);
+      );
+    );
+    Arrowdata(name,Arg1,Arg2);
+  );
+);  //181110from
 Arrowdata(nm,ptlist,optionsorg):=(
 //help:Arrowdata("1",[A,B]);
 //help:Arrowdata("1",[pt1,pt2]);
-//help:Arrowdata(options=[1,18,pos(1),cut(0),"Cutend=0,0","Coord=p/n"]);
+//help:Arrowdata(options=[1,18,pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
   regional(options,Ltype,Noflg,name,opstr,opcindy,eqL,reL,strL,color,size,coord,
-      flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos);
+      flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut);
   name="ar"+nm;
   options=optionsorg;
   tmp=Divoptions(options);
@@ -5403,15 +5422,17 @@ Arrowdata(nm,ptlist,optionsorg):=(
   size=1;  // 15.06.11
   angle=18;
   segpos=1;
-  if(length(reL)>0,
-    size=relL_1;
-    if(length(reL)>1, //180719from
-      angle=reL_2;
-      if(length(reL)>2,
-        segpos=reL_3;
-      );
-    );//180719to
-  );
+  cut=0; //181110from
+  forall(1..(length(reL)),
+    tmp=reL_#;
+    if(#==1,size=tmp);
+    if(#==2,angle=tmp);
+    if(#==3,
+      segpos=tmp;
+      options=remove(options,[#]);
+    );
+    if(#==4,cut=tmp);
+  ); //181110to
   lineflg=0;
   if(contains(strL,"l")%contains(strL,"L"),
     lineflg=1;
@@ -5435,6 +5456,12 @@ Arrowdata(nm,ptlist,optionsorg):=(
       options=remove(options,[#]);
     );
   );
+  if(|cutend|>0,//181110from
+    tmp=ptlist_2-ptlist_1;
+    tmp=tmp/|tmp|;
+    ptlist_1=ptlist_1+tmp*cutend_1;
+    ptlist_2=ptlist_2-tmp*cutend_2;
+  );//181110to
   if(coord=="P",
     pA=ptlist_1; pB=ptlist_2;
     if(ispoint(pA),pA=pA.xy);
@@ -5444,12 +5471,6 @@ Arrowdata(nm,ptlist,optionsorg):=(
   );//181018to
   if(Noflg<3,
     println("generate Arrowdata "+name);
-    if(|cutend|>0,//180719from
-      tmp=ptlist_2-ptlist_1;
-      tmp=tmp/|tmp|;
-      ptlist_1=ptlist_1+tmp*cutend_1;
-      ptlist_2=ptlist_2-tmp*cutend_2;
-    );//180719to
     tmp=name+"="+Textformat([pA,pB],5);
     parse(tmp);
     if(lineflg==0, // 16.04.09 from
@@ -5461,15 +5482,8 @@ Arrowdata(nm,ptlist,optionsorg):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-//      if((Noflg==0)&(color!=KCOLOR), //180904
-//        Texcom("{");Com2nd("Setcolor("+color+")");//180722
-//      );
       Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
-      Arrowhead(nm,pB,pB-pA,options);
-//      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-//      if((Noflg==0)&(color!=KCOLOR), //180904
-//        Texcom("}");//180722
-//      );
+      Arrowhead(nm,pA+segpos*(pB-pA),pB-pA,options); //181110
     ,
       if(Noflg==1,Ltype=0);
     );

@@ -1,3 +1,6 @@
+// s:20181110
+//    Arrowdata,Arrowheaddata debugged  ( option position,cut )
+//    Arrowdata changed  ( automatic naming supported)
 // 20181109
 //   Hatchdata changed  (Default of "Max" changed to 50)
 // 20181103

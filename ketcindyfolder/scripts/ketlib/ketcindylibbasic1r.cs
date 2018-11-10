@@ -5339,7 +5339,9 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   cut=0; //181110from
   if(length(reL)>3,
     cut=reL_4;
-    options=remove(options,[reL_4]);
+    tmp=reL_(1..3);
+    options=remove(options,reL);
+    options=concat(options,tmp);
   ); //181110from
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
@@ -5434,7 +5436,6 @@ Arrowdata(nm,ptlist,optionsorg):=(
     if(#==2,angle=tmp);
     if(#==3,
       segpos=tmp;
-      options=remove(options,[#]);
     );
     if(#==4,cut=tmp);
   ); //181110to

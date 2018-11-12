@@ -6348,6 +6348,7 @@ Sfcutparadatacdy(nm,cutfun,fd,options):=(
   Implicitplot("sfc"+nm,tmp,fd_5,fd_6,["Msg=n","nodisp"]);
   out3=[]; out2=[];
   tmp1=parse("impsfc"+nm);
+  if(MeasureDepth(tmp1)==1,tmp1=[tmp1]);
   forall(1..(length(tmp1)),jj,
     pL=tmp1_jj;
     tmp2=[];

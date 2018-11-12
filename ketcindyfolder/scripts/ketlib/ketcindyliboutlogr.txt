@@ -1,5 +1,6 @@
 // 20181112
 //   Sfcutparadatacdy added
+//   Sfcutparadatacdy debugged  (case of MeasureDepth==1)
 // 20181107
 //   Cform debugged (integer => integer.0)
 //   global StyleListC added ( to Sfbdparadata,... )

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181110)");
+println("KeTCindy V.3.2.3(20181112)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181110) loaded");
+println("ketcindylibbasic1(20181112) loaded");
 
 //help:start();
 
@@ -646,7 +646,8 @@ Changework(dirorg,options):=( //16.10.21
   makesub=1;
   forall(eqL,
     tmp=Strsplit(#,"=");
-    if(Toupper(tmp_1)=="SUB",
+    tmp1=Toupper(substring(#,0,1)); //181111
+    if(tmp1=="S",
       tmp=Toupper(tmp_2);
       if(substring(tmp,0,1)=="N",
         makesub=0;
@@ -4431,7 +4432,7 @@ Connectseg(Pdata):=(
       );
     );
     if(flg==0,
-      PlotL=concat(PlotL,Pdata_(vL_1));
+      PlotL=concat(PlotL,[Pdata_(vL_1)]); //181112
       vL=remove(vL,[vL_1]);
     );
   );
@@ -4441,14 +4442,15 @@ Connectseg(Pdata):=(
 
 ////%Implicitplot start////
 Implicitplot(name1,func,xrng,yrng):=Implicitplot(name1,func,xrng,yrng,[]);
-Implicitplot(name1,func,xrng,yrng,options):=(
+Implicitplot(name1,func,xrng,yrng,optionsorg):=(
 //help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
-//help:Implicitplot(options=["Num=[50,50]"]);
-  regional(name,Fn,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
-      Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,
+//help:Implicitplot(options=["Num=[50,50]","Msg=y(n)"]);
+  regional(name,options,Fn,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
+      Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,
       yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
   name="imp"+name1;
   Eps=10^(-4);
+  options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -4457,10 +4459,11 @@ Implicitplot(name1,func,xrng,yrng,options):=(
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Mdv=50;Ndv=50;
+  msg="Y";
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,tmp-1));
-    tmp2=substring(#,tmp,length(#));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
     opstr=opstr+",'"+#+"'";
     if(substring(#,0,1)=="N",
       Mdv=parse(tmp2);
@@ -4471,6 +4474,10 @@ Implicitplot(name1,func,xrng,yrng,options):=(
         Mdv=Mdv_1;
       );
     );
+    if(substring(#,0,1)=="M", //181112from
+      msg=Toupper(substring(tmp2,0,1));
+      options=remove(options,[#]);
+    ); //181112to
   );
   tmp=indexof(func,"=");
   if(tmp==0,
@@ -4541,7 +4548,9 @@ Implicitplot(name1,func,xrng,yrng,options):=(
     out=out_1;
   );
   if(Noflg<3,
-    println("generate Implicitplotdata "+name);
+    if(msg=="Y", //181112
+      println("generate Implicitplotdata "+name);
+    );
     if(MeasureDepth(out)==1,
       tmp1=apply(out,Pcrd(#));
     ,
@@ -4922,14 +4931,14 @@ Drawsegmark(nm,ptlist,options):=(
     tmp=indexof(#,"=");
     tmp1=substring(#,tmp,length(#));
     tmp1=parse(tmp1);
-    tmp=substring(#,0,1);
-    if(tmp=="S" % tmp=="s",
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="S",
       size=size*tmp1;
     );
-    if(tmp=="W" % tmp=="w",
+    if(tmp=="W",
       wid=wid*tmp1;
     );
-    if(tmp=="T" % tmp=="t",
+    if(tmp=="T",
       tp=tmp1;
     );
   );
@@ -5332,7 +5341,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
      tmp1=substring(tmp_1,0,1);
      tmp2=substring(tmp_2,0,1);
      if(Toupper(tmp1)=="C",
-       coord=Touppera(tmp2);
+       coord=Toupper(tmp2);
        options=remove(options,[#]);
      );
   ); //181018to

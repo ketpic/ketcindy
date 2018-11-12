@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181107 loaded");
+println("ketcindylibout(20181112 loaded");
 
 //help:start();
 
@@ -209,29 +209,29 @@ CalcbyS(name,path,cmd,optionorg):=(
   wfile="";
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,2));
+    tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="CA",
+    if(tmp1=="C",
       cat=Toupper(substring(tmp2,0,1));// 16.11.24
       options=remove(options,[#]);
     );
-    if(tmp1=="NC",
+    if(tmp1=="N",
       ncoL=parse(tmp2);
       options=remove(options,[#]);
     );
-    if(tmp1=="EX",
+    if(tmp1=="E",
       if(indexof(tmp2,".")==0,ext="."+tmp2,ext=tmp2);
       options=remove(options,[#]);
     );
-    if(tmp1=="WA",
+    if(tmp1=="W",
       waiting=parse(tmp2);
       options=remove(options,[#]);
     );
-    if(tmp1=="DI",
+    if(tmp1=="D",
       dig=parse(tmp2);
       options=remove(options,[#]);
     );
-    if(tmp1=="FI",  // 16.06.26from
+    if(tmp1=="F",  // 16.06.26from
       wfile=tmp2;
       options=remove(options,[#]);
     ); // 16.06.26until
@@ -442,9 +442,9 @@ Scifun(name,fun,argL,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp2=substring(#,tmp,length(#));
-    if((tmp1=="DIS") % (tmp1=="DSP") ,
+    if(tmp1=="D" ,
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
@@ -1074,9 +1074,9 @@ Rfun(name,fun,argL,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp2=substring(#,tmp,length(#));
-    if((tmp1=="DIS") % (tmp1=="DSP") ,
+    if(tmp1=="D",
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
@@ -1125,31 +1125,31 @@ Readcsv(pathorg,file,optionorg):=(
     tmp=indexof(#,"=");
     tmp1=substring(#,0,tmp-1);
     tmp2=substring(#,tmp,length(#));
-    tmp=Toupper(substring(tmp1,0,2));
-    if(tmp=="HE",
+    tmp=Toupper(substring(tmp1,0,1)); //181111
+    if(tmp=="H",
       tmp=Toupper(substring(tmp2,0,1));
       if(tmp=="F" % tmp=="N",
         header=0;
         options=remove(options,[#]);
       );
     );
-//    if(tmp=="WA",  // removed:17.02.19
+//    if(tmp=="W",  // removed:17.02.19
 //      waiting=parse(tmp2);
 //      options=remove(options,[#]);
 //    );
-    if(tmp=="SE",
+    if(tmp=="S",
       sep=tmp2;
       options=remove(options,[#]);
     );
-    if(tmp=="CS",
+    if(tmp=="C",
       csv=Toupper(substring(tmp2,0,1));
       options=remove(options,[#]);
     );
-    if(tmp=="US",
+    if(tmp=="U",
       use=Toupper(substring(tmp2,0,1));
       options=remove(options,[#]);
     );
-    if(tmp=="FL",
+    if(tmp=="F",
       flat=Toupper(substring(tmp2,0,1));
       options=remove(options,[#]);
     );
@@ -2635,9 +2635,9 @@ AsirfunO(name,fun,argLorg,options):=(
   argL=argLorg;
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="PRO",  // 16.05.26from
+    if(tmp1=="P",  // 16.05.26from
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="T") % (tmp=="Y"),
         tmp1=argL_(length(argL));
@@ -2664,13 +2664,13 @@ Asirfun(name,fun,argL,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="PRE",
+    if(tmp1=="P",
       precise=parse(tmp2);
       options=remove(options,[#]);
     );
-    if((tmp1=="DIS") % (tmp1=="DSP"),
+    if(tmp1=="D",
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
@@ -3159,13 +3159,13 @@ Mxfun(name,fun,argL,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="PRE",
+    if(tmp1=="P",
       precise=parse(tmp2);
       options=remove(options,[#]);
     );
-    if((tmp1=="DIS") % (tmp1=="DSP") ,
+    if(tmp1=="DIS" ,
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
@@ -3227,9 +3227,9 @@ Mxtex(nm,ex,optionorg):=(
   set=[];
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
-	if((tmp1=="DIS") % (tmp1=="DSP") ,
+	if(tmp1=="D" ,
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
@@ -4610,9 +4610,9 @@ Frifun(name,fun,argL,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,3));
+    tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,length(#));
-    if((tmp1=="DIS") % (tmp1=="DSP") ,
+    if(tmp1=="D" ,
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
@@ -5200,7 +5200,7 @@ DisplayC(dispc):=(
     eqL=tmp_5;
     opcindy=tmp_(length(tmp));
     forall(eqL,
-      if(Toupper(substring(#,0,2))=="CO",
+      if(Toupper(substring(#,0,1))=="C",
         tmp=indexof(#,"=");
         color=substring(#,tmp,length(#));
         if(substring(color,0,1)=="[",
@@ -5538,7 +5538,8 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   forall(eqL,
     tmp=Strsplit(#,"=");
-    if(Toupper(tmp_1)=="WAIT",
+    tmp1=Toupper(substring(tmp_1,0,1)); //181111
+    if(tmp1=="W",
       waiting=parse(tmp_2);
       options=remove(options,[#]);
     );
@@ -5636,9 +5637,9 @@ Sfbdparadata(nm,fd):=SfbdparadataC(nm,fd);
 Sfbdparadata(nm,fd,options):=SfbdparadataC(nm,fd,options);
 Sfbdparadata(nm,fdorg,optionorg,optionsh):=SfbdparadataC(nm,fdorg,optionorg,optionsh);
 SfbdparadataC(nm,fd):=
-   SfbdparadataC(nm,fd,[],["nodisp"]);
+   SfbdparadataC(nm,fd,[],["do"]);
 SfbdparadataC(nm,fd,options):=
-    SfbdparadataC(nm,fd,options,["nodisp"]);
+    SfbdparadataC(nm,fd,options,["do"]);
 SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
 //help:Sfbdparadata("1",Fd);
   regional(funnm,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
@@ -5754,9 +5755,9 @@ Crvsfparadata(nm,fk,sfbd,fd,options):=CrvsfparadataC(nm,fk,sfbd,fd,options);
 Crvsfparadata(nm,Fk,sfbdorg,fdorg,optionorg,optionsh):=
    CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionsh);
 CrvsfparadataC(nm,fk,sfbd,fd):=
-   CrvsfparadataC(nm,fk,sfbd,fd,[],["nodisp"]);
+   CrvsfparadataC(nm,fk,sfbd,fd,[],["do"]);
 CrvsfparadataC(nm,fk,sfbd,fd,options):=
-    CrvsfparadataC(nm,fk,sfbd,fd,options,["nodisp"]);
+    CrvsfparadataC(nm,fk,sfbd,fd,options,["do"]);
 CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
 //help:Crvsfparadata("1","ax3d","sfbd3d1",Fd);
 //help:Crvsfparadata(options=["Use=y(/n)"];
@@ -5915,9 +5916,9 @@ Crv3onsfparadata(nm,crv3d,sfbd,fd,options):=Crv3onsfparadataC(nm,crv3d,sfbd,fd,o
 Crv3onsfparadata(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=
   Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh);
 Crv3onsfparadataC(nm,crv3d,sfbd,fd):=
-  Crv3onsfparadataC(nm,crv3d,sfbd,fd,[],["nodisp"]);
+  Crv3onsfparadataC(nm,crv3d,sfbd,fd,[],["do"]);
 Crv3onsfparadataC(nm,crv3d,sfbd,fd,options):=
-   Crv3onsfparadataC(nm,crv3d,sfbd,fd,options,["nodisp"]);
+   Crv3onsfparadataC(nm,crv3d,sfbd,fd,options,["do"]);
 Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
 //help:Crv3onsfparadata("1","sc3","sfbd3d1",fd);
   regional(funnm,sfbd,fd,options,optionsh,name3,name3h,name2,name2h,waiting,
@@ -6088,9 +6089,9 @@ Wireparadata(nm,sfbd,fd,wr1,wr2,options):=WireparadataC(nm,sfbd,fd,wr1,wr2,optio
 Wireparadata(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh):=
   WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh);
 WireparadataC(nm,sfbd,fd,wr1,wr2):=
-  WireparadataC(nm,sfbd,fd,wr1,wr2,[],["nodisp"]);
+  WireparadataC(nm,sfbd,fd,wr1,wr2,[],["do"]);
 WireparadataC(nm,sfbd,fd,wr1,wr2,options):=
-   WireparadataC(nm,sfbd,fd,wr1,wr2,options,["nodisp"]);
+   WireparadataC(nm,sfbd,fd,wr1,wr2,options,["do"]);
 WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionshorg):=(
 //help:Wireparadata("1","sfbd3d1",fd,5,5);
   regional(funnm,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
@@ -6327,13 +6328,62 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
 );
 ////%Intersectcrvsf end////
 
+////%Sfcutparadatacdy start//// 181112
+Sfcutparadatacdy(nm,cutfun,fd):=
+   Sfcutparadatacdy(nm,cutfun,fd,[]);
+Sfcutparadatacdy(nm,cutfun,fd,options):=(
+//help:Sfcutparadatacdy("1","2*x+3*y+z=1","sfbd3d",fd,options);
+  regional(out3,out2,name3,name2,eps,fdL,rep,jj,pL,vn1,vn2,
+       tmp,tmp1,tmp2);
+  eps=10^(-5);
+  name2="sfcc2d"+nm;
+  name3="sfcc3d"+nm;
+  fdL=Fullformfunc(fd);
+  tmp=Strsplit(fdL_5,"=");
+  vn1=tmp_1;
+  tmp=Strsplit(fdL_6,"=");
+  vn2=tmp_1;
+  rep=["x",fdL_2,"y",fdL_3,"z",fdL_4];
+  tmp=Assign(cutfun,rep);
+  Implicitplot("sfc"+nm,tmp,fd_5,fd_6,["Msg=n","nodisp"]);
+  out3=[]; out2=[];
+  tmp1=parse("impsfc"+nm);
+  forall(1..(length(tmp1)),jj,
+    pL=tmp1_jj;
+    tmp2=[];
+    forall(pL,
+      tmp=Assign("[x,y,z]",rep);
+      tmp=Assign(tmp,[vn1,#_1,vn2,#_2]);
+      tmp=parse(tmp);
+      tmp2=append(tmp2,tmp);
+    );
+    Spaceline("-sfc"+nm+"n"+text(jj),tmp2,append(options,"Msg=n"));
+    out3=append(out3,tmp2);
+    tmp=Projcurve(tmp2);
+    out2=append(out2,tmp);
+  );
+  tmp=name3+"=["; tmp1=name3+"=[";
+  forall(1..(length(out3)),
+    tmp=tmp+"sfc"+nm+"n"+text(#)+"3d"+",";
+    tmp1=tmp1+Dqq("sfc"+nm+"n"+text(#)+"3d")+",";
+  );
+  tmp=substring(tmp,0,length(tmp)-1)+"]";
+  parse(tmp);
+  tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
+  println("generate sfcutparadata "+tmp1);
+  tmp=name2+"="+Textformat(out2,6);
+  parse(tmp);
+  out3;
+);
+////%Sfcutparadatacdy end////
+
 ////%Sfcutparadata start////
 Sfcutparadata(nm,cutfunL,sfbd,fd):=SfcutparadataC(nm,cutfunL,sfbd,fd);
 Sfcutparadata(nm,cutfunL,sfbd,fd,options):=SfcutparadataC(nm,cutfunL,sfbd,fd,options);
 Sfcutparadata(nm,cutfunLorg,sfbd,fdorg,optionorg,optionsh):=
       SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionsh);
 SfcutparadataC(nm,cutfunL,sfbd,fd):=(//180505
-  SfcutparadataC(nm,cutfunL,sfbd,fd,[],["nodisp"]);
+  SfcutparadataC(nm,cutfunL,sfbd,fd,[],["do"]);
 );
 SfcutparadataC(nm,cutfunL,sfbd,fd,options):=
    SfcutparadataC(nm,cutfunL,sfbd,fd,options,["nodisp"]);

@@ -272,16 +272,16 @@ Animatefile(path,folder):=(
   OpA="loop,controls,buttonsize=3mm";
   remflg=0;
   forall(eqL,
-    tmp1=Toupper(substring(#,0,2));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp=indexof(#,"=");
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="FR",
+    if(tmp1=="F",
       FRate=tmp2;
     );
-    if(tmp1=="SC",
+    if(tmp1=="S",
       Scale=tmp2;
     );
-    if(tmp1=="OP",  // 17.12.07from
+    if(tmp1=="O",  // 17.12.07from
       if(length(tmp2)>0,
 	    tmp2=replace(tmp2,"[","");
         tmp2=replace(tmp2,"]","");

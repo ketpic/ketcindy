@@ -248,12 +248,13 @@ Getangle():=getangle(["Disp=y"]); //180613from
 Getangle(option):=(
   regional(tmp,tmp1,dispflg,eqL);
   tmp=divoptions(option);
-  dispflg="N";
-  eqL=tmp_7;
+  dispflg="Y";
+  eqL=tmp_5; //181111
   forall(eqL,
-    if(Toupper(#_1)=="DISP",
-      dispflg=Toupper(#_1);
-      dispflg=substring(dispflg,0,1);
+    tmp=Strsplit(#,"="); //181111(4lines)
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="D",
+      dispflg=Toupper(substring(tmp_2,0,1));
     );
   );
   tmp=[THETA*180/pi, PHI*180/pi];
@@ -487,7 +488,8 @@ Projpara(ptdata,optionsorg):=(
   msgflg=0; //180602from
   forall(eqL,
     tmp=Strsplit(#,"=");
-    if(Toupper(tmp_1)=="MSG",
+    tmp1=Toupper(substring(tmp_1,0,1)); //181111
+    if(tmp=="M",
       tmp=substring(tmp_2,0,1);
       if(Toupper(tmp)=="Y", msgflg=1);
       options=remove(options,[#]);
@@ -640,10 +642,11 @@ Spaceline(Arg1,Arg2):=(
     name="-"+replace(tmp,",","");
     Spaceline(name,Arg1,Arg2);
   );
-); // 16.02.22 until
+); // 16.02.22 to
 Spaceline(nm,ptlistorg,optionorg):=(
 //help:Spaceline("1",[[2,5,1],[4,2,3]]);
 //help:Spaceline([A,B]);
+//help:Spaceline(options=["Msg=y(n)"]);
   regional(name2,name3,options,Out,tmp,tmp1,tmp2,
         opstr,opcindy,Ltype,Noflg,eqL,ptlist, Msg,color);
   ptlist=apply(ptlistorg,if(ispoint(#),parse(text(#)+"3d"),#)); // 16.02.10
@@ -754,8 +757,8 @@ Spacecurve(nm,funstr,variable,optionorg):=(
     tmp=substring(#,0,1);
     if(Toupper(tmp)=="M",
       tmp=indexof(#,"=");
-      tmp1=substring(#,tmp,tmp+2);
-      if(Toupper(tmp1)=="NO",
+      tmp1=substring(#,tmp,tmp+1);
+      if(Toupper(tmp1)=="N",
         Msg=0;
       );
     );
@@ -2313,8 +2316,8 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
   scrflg="Y"; //181031from
   forall(eqL,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(tmp_1);
-    if(substring(tmp1,0,3)=="SCR",
+    tmp1=Toupper(substring(tmp_1,0,1)); //181111
+    if(tmp1=="S",
       scrflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
@@ -3362,8 +3365,8 @@ Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
   opcindy=tmp_(length(tmp));
   forall(eqL, //180815from
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(tmp_1);
-    if(substring(tmp1,0,3)=="EPS",
+    tmp1=Toupper(substring(tmp_1,0,1)); //181111
+    if(substring(tmp1,0,3)=="E",
       Eps=parse(tmp_2);
       options=remove(options,[#]);
     );
@@ -4664,19 +4667,19 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   );
   forall(eqL, //181101from
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,2));
+    tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="FI",
       fileflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
-    if(tmp1=="NO",
+    if(tmp1=="N",
       tmp=parse(tmp_2);
       if(Anyselected(tmp),
         mkflg=-1;
       );
       options=remove(options,[#]);
     );
-    if(tmp1=="CH",
+    if(tmp1=="C",
       chkL=parse(tmp_2);
       options=remove(options,[#]);
     );

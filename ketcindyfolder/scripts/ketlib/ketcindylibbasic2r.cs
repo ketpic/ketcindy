@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181106) loaded");
+println("ketcindybasic2(20181107) loaded");
 
 //help:start();
 
@@ -1891,9 +1891,9 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   rng="Y";
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,2));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp2=Toupper(substring(#,tmp,tmp+1));
-    if(tmp1=="RN",
+    if(tmp1=="R",
       rng=tmp2;
       options=remove(options,[#]);
     );
@@ -1987,9 +1987,9 @@ Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
   rng="Y";
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,2));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp2=Toupper(substring(#,tmp,tmp+1));
-    if(tmp1=="RN",
+    if(tmp1=="R",
       rng=tmp2;
       options=remove(options,[#]);
     );
@@ -2812,6 +2812,7 @@ WritetoRS(filename,shchoice):=(
   forall(Plist,
     println(SCEOUTPUT,#);
   );
+  VLIST=select(VLIST,substring(#_1,0,1)!="["); //181107
   forall(VLIST, 
     tmp=#_1;
     tmp1=#_2;
@@ -2831,7 +2832,7 @@ WritetoRS(filename,shchoice):=(
 //    tmp=substring(tmp,0,length(tmp)-1);
     println(SCEOUTPUT,"Assignadd('"+tmp+"',"+tmp+")");
   );
-  forall(FUNLIST,
+ forall(FUNLIST,
     println(SCEOUTPUT,#);
   );
   forall(GLIST,
@@ -5424,13 +5425,13 @@ BBdata(fname,optionorg):=(
   );
   forall(eqL,
     tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,2));
+    tmp1=Toupper(substring(#,0,1)); //181111
     tmp2=substring(#,tmp,length(#));
-    if(tmp1=="W=",
+    if(tmp1=="W",
       addop=addop+",width="+tmp2;
       options=remove(options,[#]);
     );
-    if(tmp1=="H=",
+    if(tmp1=="H",
       addop=addop+",height="+tmp2;
       options=remove(options,[#]);
     );

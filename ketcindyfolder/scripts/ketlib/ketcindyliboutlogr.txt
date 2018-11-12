@@ -1,3 +1,5 @@
+// 20181112
+//   Sfcutparadatacdy added
 // 20181107
 //   Cform debugged (integer => integer.0)
 //   global StyleListC added ( to Sfbdparadata,... )

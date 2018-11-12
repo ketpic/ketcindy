@@ -677,23 +677,37 @@ This Point P on the asteroid can be move along the curve on the Euclidean view.
 \end{cmd}
 
 %------------Arrowdata--------------------------------
-\begin{cmd}{Arrowdata}{arrow data}
+\begin{cmd}{Arrowdata}{arrowdata}
 \itemket{Usage}Arrowdata(name,[starting point,  ending point] , options) 
 \itemket{Description}draw an arrow line between two points.
 
-Options : arrowhead size, arrowhead angle,position,line type,line color.\\
+Options : arrowhead size, arrowhead angle,position,cut position,line type,line color,trimming.\\
 All options do not always reflect on Euclidean view.
 \itemket{Examples}\mbox{}
 
-\verb|Arrowdata([A,B]);|\\
-\verb|Arrowdata("1",[[2,0],[4,3]],[1,45,0.5]);  | //(2,0) to (4,3) , angle : 45$^\circ$\\
-\verb|Arrowdata([C,D],[2,1,1,"dr,2"]);|\\
-\verb|Arrowdata([E,F],["da,0.5"]);|\\
-\verb|Arrowdata([G,H],[2,1,"do,2,3","Color=[1,0,0]"]);| \\%
+\verb|  Arrowdata("1",[A,B]);|\\
+\verb|  Arrowdata("2",[[1,0],[2,3]],[2]);|\\
+\verb|  Arrowdata("3",[[2,0],[3,3]],[3,45]);|\\
+\verb|  Arrowdata("4",[[3,0],[4,3]],[3,1,0.5]);|\\
+\verb|  Arrowdata("5",[[4,0],[5,3]],[3,1,1,0.5]);|\\
+\verb|  Arrowdata("6",[[5,0],[6,3]],[3,1,1,1]);|\\
+\verb|  Arrowdata("7",[[6,0],[7,3]],[3,"dr,2"]);|\\
+\verb|  Arrowdata("8",[[7,0],[8,3]],[3,1,1,0.5,"Color=red"]);|\\
 
 \begin{center}
 \input{Fig/arrowdata}
 \end{center}
+
+\begin{layer}{150}{0}
+\putnotese{75}{0}{  \input{Fig/trimarrow}}
+\end{layer}
+\hspace{20mm}
+
+\verb| Circledata("1",[A,A.xy+[0.5,0]]);|\\
+\verb| Circledata("2",[B,B.xy+[0.7,0]]);|\\
+\verb| Arrowdata([A,B],["Cutend=[0.5,0.7]"]);|\\
+\verb| Letter([A,"c","A",B,"c","B"]);|\\
+
 \end{cmd}
 
 %--------------Arrowhead------------------------------
@@ -1757,7 +1771,7 @@ It is also possible to write as follows, abbreviated for the amount of movement.
 
 \hspace{15mm} numerical value  size of mark (default is 1)
 
-\hspace{15mm} draw text \verb|"Expr=n,str"|
+\hspace{15mm} draw text \verb|"Expr=n,str"| or  \verb|"Let=n,str"| 
 
 \itemket{Examples}\mbox{}
 
@@ -1770,6 +1784,17 @@ draw an angle mark at interior angles of a triangle, write characters.\\
 
 \begin{center}
 \input{Fig/anglemark}
+\end{center}
+
+draw $\circ$ at interior angles of a triangle.\\
+
+\verb|  Listplot([A,B,C,A]);|\\
+\verb|  Letter([A,"n1","A",B,"w1","B",C,"e1","C"]);|\\
+\verb|  Anglemark([C,B,A],["Expr=\circ","nodisp"]);|\\
+
+\begin{center}
+\input{Fig/anglemark2}
+
 \end{center}
 \item{Remark} You can draw an angle mark with a parallelogram.
 Refer to \hyperlink{paramark}{Paramark} .
@@ -4215,7 +4240,7 @@ For example code, see \hyperlink{execcmdc}{ExeccmdC()}.
 We execute the following program then the computer will display "PD=[ax2d,AB2d]" on the console.\\
 
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");  |\\
-\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]],"fix"); |\\
+\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
 \verb|  Spaceline("1",[A,B]); |\\
 \verb|  println("PD="+Datalist2d());|
 
@@ -4231,7 +4256,7 @@ We execute the following program then the computer will display "PD=[ax2d,AB2d]"
 We execute the following program then the computer will display "PD=[ax3d,AB3d]" on the console.\\
 
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
-\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]],"fix"); |\\
+\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
 \verb|  Spaceline("1",[A,B]); |\\
 \verb|  println("PD="+Datalist3d()); |
 
@@ -4289,7 +4314,7 @@ If we specify only option2 then we denote that option1 is empty list:[].
 left figure
 
 \verb| Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
-\verb| Putpoint3d(["A",[0,-3,0],"B",[0,3,3]],"fix"); |\\
+\verb| Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
 \verb| Spaceline([A,B]); |\\
 \verb| fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"]; |\\
 \verb| Startsurf(); |\\
@@ -4331,7 +4356,7 @@ Embed an equilateral triangle and its circumscribed circle in a plane in 3D spac
 \verb|Defvar("vo=[3,3,3]");| // Defined in R\\
 \verb|Defvar("vx=[0,1,0]");| // Defined in R\\
 \verb|Defvar("vy=[0,0,1]");| // Defined in R\\
-\verb|Putpoint3d(["A",[3,3,3]],"fix");|\\
+\verb|Putpoint3d(["A",[3,3,3]]);|\\
 \verb|Circledata("1",[[0,0],[2,0]],["nodisp"]);|\\
 \verb|Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);|\\
 \verb|Embed("1",["cr1","sg1"],"vo+x*vx+y*vy","[x,y]");|\\
@@ -4342,26 +4367,26 @@ Following view is as \verb|TH|=75,\verb|FI|=70.
  \begin{center} \input{Fig/embed01} \end{center}
 
 (2) A, B, and C are defined instead of vo, vx, vy defined by Defvar. But, in this case, points B and C are not drawn in the plane. So, the figure may be difficult to understand.\\
-\verb|Putpoint3d(["A",[3,3,3],"B",[0,1,0],"C",[0,0,1]],"fix");|\\
+\verb|Putpoint3d(["A",[3,3,3],"B",[0,1,0],"C",[0,0,1]]);|\\
 \verb|Embed("1",["cr1","sg1"],"A3d+x*B3d+y*C3d","[x,y]");|\\
 \begin{center}
 \includegraphics[bb=0.00 0.00 477.02 383.02,width=8cm]{Fig/embed03.pdf}
 \end{center}
 To draw the B and C on the embedded figure, code changes as follows.
 
-\verb|Putpoint3d(["A",[3,3,3],"B",[3,4,3],"C",[3,3,4]],"fix");|\\
+\verb|Putpoint3d(["A",[3,3,3],"B",[3,4,3],"C",[3,3,4]]);|\\
 \verb|Embed("1",["cr1","sg1"],"A3d+x*B3d+y*C3d","[x,y]");|\\
 
 (3) The function {\tt \hyperlink{perpplane}{Perpplane}} is used in next.\\
 \verb|Xyzax3data("","x=[-5,5]","y=[-8,5]","z=[-5,5]");|\\
-\verb|Putpoint3d(["O",[0,0,0],"P",[1,1,2]],"fix");|\\
+\verb|Putpoint3d(["O",[0,0,0],"P",[1,1,2]]);|\\
 \verb|Perpplane("E-F","P",P3d-O3d,"put");|\\
 \verb|vec1=3*(E3d-P3d);|\\
 \verb|vec2=3*(F3d-P3d);|\\
-\verb|Putpoint3d(["A",P3d+vec1+vec2],"fix");|\\
-\verb|Putpoint3d(["B",P3d+vec1-vec2],"fix");|\\
-\verb|Putpoint3d(["C",P3d-vec1-vec2],"fix");|\\
-\verb|Putpoint3d(["D",P3d-vec1+vec2],"fix");|\\
+\verb|Putpoint3d(["A",P3d+vec1+vec2]);|\\
+\verb|Putpoint3d(["B",P3d+vec1-vec2]);|\\
+\verb|Putpoint3d(["C",P3d-vec1-vec2]);|\\
+\verb|Putpoint3d(["D",P3d-vec1+vec2]);|\\
 \verb|Spaceline("1",[A,B,C,D,A]);|\\
 \verb|Circledata("1",[[0,0],[2,0]],["nodisp"]);|\\
 \verb|Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);|\\
@@ -4380,7 +4405,7 @@ To draw the B and C on the embedded figure, code changes as follows.
 \itemket{Details}PD is plotting data of curve. Curved face is given by formula.
 \itemket{Examples}  \mbox{}
 
-\verb|Putpoint3d(["A",[0,-3,0],"B",[0,3,2]],"fix");|\\
+\verb|Putpoint3d(["A",[0,-3,0],"B",[0,3,2]]);|\\
 \verb|Spaceline("1",[A,B]);|\\
 \verb|fd=[|\\
 \verb| "z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)",|\\
@@ -4415,10 +4440,10 @@ cutcube
 
 \verb|  Hn=3; |\\
 \verb|  Putaxes3d(Hn); |\\
-\verb|  Putpoint3d("A",[Hn,Hn,0],"fix"); |\\
-\verb|  Putpoint3d("B",[Hn,0,Hn],"fix"); |\\
-\verb|  Putpoint3d("C",[Hn,Hn,Hn],"fix"); |\\
-\verb|  Putpoint3d("D",[0,Hn,Hn],"fix"); |\\
+\verb|  Putpoint3d("A",[Hn,Hn,0]); |\\
+\verb|  Putpoint3d("B",[Hn,0,Hn]); |\\
+\verb|  Putpoint3d("C",[Hn,Hn,Hn]); |\\
+\verb|  Putpoint3d("D",[0,Hn,Hn]); |\\
 \verb|  Putonseg3d("E",X,B);  |\\
 \verb|  Putonseg3d("F",Z,B);  |\\
 \verb|  Putonseg3d("G",Z,D);  |\\
@@ -4426,7 +4451,7 @@ cutcube
 \verb|  IntersectsgpL("N","D-Y","E-F-G","put");  |\\
 \verb|  phd=Concatobj([[O,X,A,Y],[X,A,M,E],[A,Y,N,M],[Y,N,G,Z,O], |\\
 \verb|      [O,Z,F,E,X],[Z,F,G],[E,M,N,G,F]]); |\\
-\verb|  VertexEdgeFace("1",phd,["Edg=nogeo"]); |\\
+\verb|  VertexEdgeFace("1",phd); |\\
 \verb|  Nohiddenbyfaces("1","phf3d1");  |
 
 \hspace{20mm}\includegraphics[bb=0.00 0.00 713.04 327.02,width=10cm]{Fig/IntersectsgpL0.pdf}
@@ -4484,12 +4509,12 @@ If we specify only option2 then option1 must be null list:[].\\
 
 \begin{verbatim}
 Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
-Putpoint3d("A",2*[-1,-1/sqrt(3),0],"fix");
-Putpoint3d("B",2*[1,-1/sqrt(3),0],"fix");
-Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0],"fix");
-Putpoint3d("D",2*[0,0,2*sqrt(6)/3],"fix");
+Putpoint3d("A",2*[-1,-1/sqrt(3),0]);
+Putpoint3d("B",2*[1,-1/sqrt(3),0]);
+Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
+Putpoint3d("D",2*[0,0,2*sqrt(6)/3]);
 phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
-VertexEdgeFace("1",phd,["Edg=nogeo"]);
+VertexEdgeFace("1",phd);
 Nohiddenbyfaces("1","phf3d1"); 
 \end{verbatim}
 (left figure)
@@ -4536,15 +4561,15 @@ Draw point A,B,C,D by draw tool of Cinderella.
 \end{layer}
 
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
-\verb|  Putpoint3d(["O",[0,0,0]],"fix"); |\\
-\verb|  Putpoint3d(["P",[1,1,1]],"fix"); |\\
+\verb|  Putpoint3d(["O",[0,0,0]]); |\\
+\verb|  Putpoint3d(["P",[1,1,1]]); |\\
 \verb|  Perpplane("E-F","P",P3d-O3d,"put"); |\\
 \verb|  vec1=2*(E3d-P3d); |\\
 \verb|  vec2=2*(F3d-P3d); |\\
-\verb|  Putpoint3d(["A",P3d+vec1+vec2],"fix"); |\\
-\verb|  Putpoint3d(["B",P3d+vec1-vec2],"fix"); |\\
-\verb|  Putpoint3d(["C",P3d-vec1-vec2],"fix"); |\\
-\verb|  Putpoint3d(["D",P3d-vec1+vec2],"fix"); |\\
+\verb|  Putpoint3d(["A",P3d+vec1+vec2]); |\\
+\verb|  Putpoint3d(["B",P3d+vec1-vec2]); |\\
+\verb|  Putpoint3d(["C",P3d-vec1-vec2]); |\\
+\verb|  Putpoint3d(["D",P3d-vec1+vec2]); |\\
 \verb|  Spaceline("1",[A,B,C,D,A]); |\\
 \verb|  Arrowdata([O,P],["dr,2"]); |\\
 \verb|  Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]); |\\
@@ -4571,10 +4596,10 @@ We get the coordinate of the point H in the variable H3d for the following examp
 Example
 
 \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
-\verb|Putpoint3d("O",[0,0,0],"fix"); |\\
-\verb|Putpoint3d("A",[3,0,0],"fix"); |\\
-\verb|Putpoint3d("B",[0,3,0],"fix"); |\\
-\verb|Putpoint3d("C",[0,0,3],"fix"); |\\
+\verb|Putpoint3d("O",[0,0,0]); |\\
+\verb|Putpoint3d("A",[3,0,0]); |\\
+\verb|Putpoint3d("B",[0,3,0]); |\\
+\verb|Putpoint3d("C",[0,0,3]); |\\
 \verb|Perppt("H","O","A-B-C","put"); |\\
 \verb|Spaceline("1",[A,B,C,A]); |\\
 \verb|Spaceline("2",[O,H]); |\\
@@ -4616,11 +4641,11 @@ Example
 \verb|Setdirectory( Dirhead+"/data/polyhedrons_obj");|  //Many polyhedron data exist in this directory.\\
 \verb|phd=Readobj("s06.obj",["size=3"]);|  //"s06" is the name of truncated icosahedron data.\\
 \verb|Setdirectory(Dirwork);|  //Chage work space.\\
-\verb|VertexEdgeFace("s06",phd,["Edg=nogeo"]);|\\
+\verb|VertexEdgeFace("s06",phd);|\\
 \verb|Phparadata("1","s06");|  //default usage, left figure\\
 
 The last two lines we can write the following.\\
-\verb|VertexEdgeFace("1",phd,["Edg=nogeo"]);|\\
+\verb|VertexEdgeFace("1",phd);|\\
 \verb|Phparadata("1","1");|
 \begin{center}
  \includegraphics[bb=0 0 1452 730 , width=10cm]{Fig/phparadata01.pdf}
@@ -4686,12 +4711,12 @@ Make reference to \hyperlink{partcrv3d}{Partcrv3d()}
 
 \itemket{Usage}Putpoint3d(list of 3D-points, option)
 \itemket{Description}Generic function to draw the geometric point in the space.
-\itemket{Details}Option is "fix" or "free"(default).
+\itemket{Details}Option is "free" or "fix"(default).
 \itemket{Examples}  \mbox{}
 
 \verb|Putpoint3d(["A",[2,1,3]]);|\\
-\verb|Putpoint3d(["A",[2,1,3]],"free");|  //same as above\\
-\verb|Putpoint3d(["A",[1,1,1],"C",[1,0,1]],"fix");|\\
+\verb|Putpoint3d(["A",[2,1,3]],"free");| \\
+\verb|Putpoint3d(["A",[1,1,1],"C",[1,0,1]]);|\\
 
 These points don't output in the \TeX file. To output in the \TeX file use the following \hyperlink{pointdata}{Pointdata()} or \hyperlink{drwpt}{Drawpoint()}
 
@@ -4718,7 +4743,7 @@ Then the data of \verb|r02.obj| are assigned to the variable \verb|polydt|.
 Option is ["size=n"] then we get the magnification of n times. If n is negative value then we have the image of vertical inversion.
 \itemket{Examples}  \mbox{}
 
-\verb|VertexEdgeFace("1",polydt,["Edg=nogeo"]);|  //output data name is phf3d1\\
+\verb|VertexEdgeFace("1",polydt);|  //output data name is phf3d1\\
 \verb|Nohiddenbyfaces("1","phf3d1");|
 
 \begin{center} \input{Fig/readobj} \end{center}
@@ -4739,7 +4764,7 @@ The main polyhedral data is as follows.
 \itemket{Examples}\mbox{}
 
 \verb| Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,0,1], |\\
-\verb| "E",[1,0,0]],"fix");  |\\
+\verb| "E",[1,0,0]]);  |\\
 \verb| Spaceline("1",[A,B,C,A]); |\\
 
 Reflection on the point D
@@ -4784,7 +4809,7 @@ Reflection on the plane BDE
 \itemket{Examples}  \mbox{}
 
 \verb|Xyzax3data("","x=[-5,4]","y=[-5,5]","z=[-5,4]",["a","O"]); |\\
-\verb|Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,-2,3]],"fix"); |\\
+\verb|Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,-2,3]]); |\\
 \verb|Spaceline("1",[A,B,C,A]); |\\
 \verb|Spaceline("2",[C,D]); |\\
 \verb|Rotatedata3d("1",["sl3d1","CD3d"],[0,0,1],pi/2,["dr,2"]); |\\
@@ -4823,7 +4848,7 @@ Reflection on the plane BDE
 \itemket{Details}Vec is a three-dimensional vector to express ratio. The center and options are given in a list.
 \itemket{Examples}\mbox{}
   
-\verb|Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2]],"fix");|\\
+\verb|Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2]]);|\\
 \verb|Spaceline("1",[A,B,C,A]);|\\
 \verb|Spacecurve("1","[cos(t)+1,sin(t)+1,1]","t=[0,2*pi]",["Num=100"]);|\\
 \verb|Scaledata3d("1",["sl3d1","sc3d1"],[2,2,2],[[0,0,0],"dr,2"]);|\\
@@ -4841,9 +4866,9 @@ Reflection on the plane BDE
 \itemket{Details}$\text{Scalepoint3d}([a_i],[v_i],[c_i])=[(a_i-c_i)v_i+c_i]$
 \itemket{Examples}  \mbox{}
 
-\verb|Putpoint3d(["A",[2,-1,2]],"fix");|\\
+\verb|Putpoint3d(["A",[2,-1,2]]);|\\
 \verb|pt=Scalepoint3d(A3d,[3,2,4],[1,1,1]); //pt=[4,-3,5]|\\
-\verb|Putpoint3d(["B",pt],"fix");|
+\verb|Putpoint3d(["B",pt]);|
 
 \end{cmd}
 
@@ -4934,8 +4959,8 @@ Options:\\
 \itemket{Examples}  \mbox{}
 
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,4]","z=[-5,3]");|  //Data name is "ax3d".\\
-\verb|  Putpoint3d(["A",[0,-2,-2]],"fix");|\\
-\verb|  Putpoint3d(["B",[-1,1,3]],"fix");|\\
+\verb|  Putpoint3d(["A",[0,-2,-2]]);|\\
+\verb|  Putpoint3d(["B",[-1,1,3]]);|\\
 \verb|  Spaceline([A,B]);|  //Data name is "AB3d".\\
 \verb|  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|  //Data name is "sc3d1".\\
 
@@ -4998,7 +5023,7 @@ Since polygons drawn with VertexEdgeFace() can not be translated by this functio
 \verb|Setdirectory(Dirwork); |\\
 \verb|dn=length(phd_1); |\\
 \verb|repeat(dn,s,phd_1_s=phd_1_s+[0,2,0]); |\\
-\verb|VertexEdgeFace("1",phd,["Edg=nogeo"]); |\\
+\verb|VertexEdgeFace("1",phd); |\\
 
 \begin{center} 
 \input{Fig/translate01} 
@@ -5013,9 +5038,9 @@ Since polygons drawn with VertexEdgeFace() can not be translated by this functio
 \itemket{Details}$\text{Translatepoint3d}([a_i],[v_i])=[a_i+v_i]$
 \itemket{Examples}  \mbox{}
 
-\verb|Putpoint3d(["A",[1,0,0]],"fix"); |\\
+\verb|Putpoint3d(["A",[1,0,0]]); |\\
 \verb|pt=Translatepoint3d(A3d,[-1,1,1]); |\\
-\verb|Putpoint3d(["B",pt],"fix"); |
+\verb|Putpoint3d(["B",pt]); |
 
 \end{cmd}
 
@@ -5027,18 +5052,16 @@ Since polygons drawn with VertexEdgeFace() can not be translated by this functio
 \itemket{Details}We use the faces data of the polyhedron.\\
 The second argument is the list of vertexes list and the faces list.\\
 For example, the faces data of the tetrahedron is [[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]].\\
-Option is the following.\\
-no option: output edges as the geometric elements but don't to \TeX file.\\
-\verb|["Edg=nogeo"]|: output data to \TeX file.\\
-\verb|["Pt=free"]|: Vertexes are free geometric points.
+%Option is the following.\\
+
 \itemket{Examples}  \mbox{}
 
-\verb| Putpoint3d("A",2*[-1,-1/sqrt(3),0],"fix"); |\\
-\verb| Putpoint3d("B",2*[1,-1/sqrt(3),0],"fix"); |\\
-\verb| Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0],"fix"); |\\
-\verb| Putpoint3d("D",2*[0,0,sqrt(3)],"fix"); |\\
+\verb| Putpoint3d("A",2*[-1,-1/sqrt(3),0]); |\\
+\verb| Putpoint3d("B",2*[1,-1/sqrt(3),0]); |\\
+\verb| Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]); |\\
+\verb| Putpoint3d("D",2*[0,0,sqrt(3)]); |\\
 \verb| phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]); |\\
-\verb| VertexEdgeFace("1",phd,["Edg=nogeo"]); |\\
+\verb| VertexEdgeFace("1",phd); |\\
   //Three data lists are made, phv3d1:vertex, phe3d1:edge and phf3d1:face.
  \begin{center} \input{Fig/vertex01} \end{center}
 \end{cmd}

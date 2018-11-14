@@ -1775,7 +1775,6 @@ Periodfun(defL,reporg,optionorg):=(  // 16.11.24
     tmp=indexof(#,"=");//180725from
     tmp=[substring(#,0,tmp-1),substring(#,tmp,length(#))];
     if(Toupper(substring(tmp_1,0,3))=="CON",
-	println([1658,tmp_2]);
       tmp1=Toupper(Op(1,tmp_2));
       if(tmp1=="N",
         connect=[];

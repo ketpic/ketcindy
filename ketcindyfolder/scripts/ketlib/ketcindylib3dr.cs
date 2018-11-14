@@ -3709,8 +3709,8 @@ SfbdparadataR(nm,fd):=
 SfbdparadataR(nm,fd,options):=
    SfbdparadataR(nm,fd,options,["nodisp"]);
 SfbdparadataR(nm,fdorg,optionorg,optionsh):=(
-//help:SfbdparadataR("1",Fd);
-//help:SfbdparadataR(options2=["Wait=60",division(c(50,50)),Eps1(0.01), Eps2(0.05)]);
+// help:SfbdparadataR("1",Fd);
+// help:SfbdparadataR(options2=["Wait=60",division(c(50,50)),Eps1(0.01), Eps2(0.05)]);
   regional(fd,options,name3,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg);
   tmp=ConvertFdtoC(fdorg);//180430(2lines)
@@ -3814,8 +3814,8 @@ CrvsfparadataR(nm,crv,sf,fd):=
 CrvsfparadataR(nm,crv,sf,fd,options):=
    CrvsfparadataR(nm,crv,sf,fd,options,["nodisp"]);
 CrvsfparadataR(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
-//help:CrvsfparadataR("1","ax3d","sfbd3d1",fd);
-//help:CrvsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+// help:CrvsfparadataR("1","ax3d","sfbd3d1",fd);
+// help:CrvsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   tmp=replace(crvstr,"3d","2d");
@@ -3918,8 +3918,8 @@ Crv3onsfparadataR(nm,crv3d,sf,fd):=
 Crv3onsfparadataR(nm,crv3d,sf,fd,options):=
    Crv3onsfparadataR(nm,crv3d,sf,fd,options,["nodisp"]);
 Crv3onsfparadataR(nm,crv3dstr,sfstr,fdorg,optionorg,optionsh):=(
-//help:Crv3onsfparadataR("1","sc1","sfbd3d1",fd);
-//help:Crv3onsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+// help:Crv3onsfparadataR("1","sc1","sfbd3d1",fd);
+// help:Crv3onsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   tmp1=replace(crv3dstr,"3d","2d");
@@ -4020,8 +4020,8 @@ Crv2onsfparadataR(nm,crv2d,sf,fd):=
 Crv2onsfparadataR(nm,crv2d,sf,fd,options):=
    Crv2onsfparadataR(nm,crv2d,sf,fd,options,["nodisp"]);
 Crv2onsfparadataR(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
-//help:Crv2onsfparadataR("1","pa1","sfbd3d1",fd);
-//help:Crv2onsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+//help :Crv2onsfparadataR("1","pa1","sfbd3d1",fd);
+//help :Crv2onsfparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   Changestyle(crv2dstr,["nodisp"]);
@@ -4123,8 +4123,8 @@ WireparadataR(nm,sf,wr1,wr2,fd):=
 WireparadataR(nm,sf,fd,wr1,wr2,options):=
    WireparadataR(nm,sf,fd,wr1,wr2,options,["nodisp"]);
 WireparadataR(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
-//help:WireparadataR("1","sfbd3d1",fd,5,5);
-//help:WireparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]); 
+// help:WireparadataR("1","sfbd3d1",fd,5,5);
+// help:WireparadataR(options2=[division(c(50,50)),Eps1(0.01), Eps2(0.05)]); 
   regional(fd,options,name3,name3h,outreg,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,flg,wflg);
   name3="wire3d"+nm;
@@ -4230,9 +4230,9 @@ IntersectcrvsfR(nm,crv,fd,Arg):=(
   );
 );
 IntersectcrvsfR(nm,crvstr,fdorg,bdyeq,optionorg):=(
-//help:IntersectcrvsfR("1",curve,fd);
-//help:IntersectcrvsfR("1",curve,fd,curveequation);
-//help:IntersectcrvsfR(options=[Np([50,50]),Eps(0.01)]);
+// help:IntersectcrvsfR("1",curve,fd);
+// help:IntersectcrvsfR("1",curve,fd,curveequation);
+// help:IntersectcrvsfR(options=[Np([50,50]),Eps(0.01)]);
   regional(name,crv,fd,options,reL,fname,crvfname,argR,
      waiting,tmp,tmp1,tmp2,flg,wflg,pts);  name="crvsf"+nm;
   name="crvsf"+nm;
@@ -4316,8 +4316,8 @@ SfcutparadataR(nm,eqstr,sf,fd):=
 SfcutparadataR(nm,eqstr,sf,fd,options):=
   SfcutparadataR(nm,eqstr,sf,fd,options,["nodisp"]);
 SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
-//help:SfcutparadataR("1","x+y+z=1","sfbd3d1",fd);
-//help:SfcutparadataR(options2=[Division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
+// help:SfcutparadataR("1","x+y+z=1","sfbd3d1",fd);
+// help:SfcutparadataR(options2=[Division(c(50,50)),Eps1(0.01), Eps2(0.05)]);    
   regional(gd,out,fd,options,name3,name3h,eqstr,
      eqL,reL,strL,fname,rfname,waiting,tmp,tmp1,tmp2,tmp3,flg,wflg);
   tmp=Strsplit(eqstrorg,"=");

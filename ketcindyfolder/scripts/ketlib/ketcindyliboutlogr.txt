@@ -1,3 +1,6 @@
+// 20181114
+//   Execcmd debugged  ( Changestye3d for sfcut,wire )
+//   Sfbdparadata,... changed ("Color=.." copied to optionh if no color option )
 // 20181112
 //   Sfcutparadatacdy added
 //   Sfcutparadatacdy debugged  (case of MeasureDepth==1)

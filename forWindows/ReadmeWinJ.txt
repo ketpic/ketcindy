@@ -1,4 +1,4 @@
-KETCindyのインストール（Windows）　　　修正日：2018.10.30
+KETCindyのインストール（Windows）　　　修正日：2018.11.16
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -64,13 +64,13 @@ KETCindyのインストール（Windows）　　　修正日：2018.10.30
 　　　　　　3)　作業ディレクトリの ketcindy.conf
 
 　（３）手動でインストールする場合
-　　　　・適当な場所にketcindyを作成する．
-　　　　　　　KeTTeXの場合は，C:\kettex\texlive\texmf-dist\scripts\ketcindy　　　　　　
+　　　　・ketcindyfolderをDesktopにおき，　copywork.batをその中に入れる．
+　　　　・TeXの中の適当な場所にketcindyを作成する．
+　　　　　　　　　KeTTeXの場合は，C:\kettex\texlive\texmf-dist\scripts\ketcindy　　　　　　
 　　　　・ketcindyfolder\scriptのketcindyjs, ketlib, ketlibCketcindyをその中にコピーする．
-　　　　・ketcindyfolder\styleをTeXの中の適当な場所にコピーする．
-　　　　　　　KeTTeXの場合は，C:\kettex\texlive\texmf-dist\tex\latex　　　　　　
-　　　　　　styleをketcindyに名称変更する．
-　　　　　　mktexlsrを実行する．
+　　　　・ketcindyfolder\styleをTeXの中の適当な場所にコピーして，　styleをketcindyに名称変更する．
+  　　　　　　　KeTTeXの場合は，C:\kettex\texlive\texmf-dist\tex\latex　　　　　　　　　　　　
+　　　　・mktexlsrを実行する．
 　　　　・ketcindy.iniをテキストエディタで修正する．
 　　　　　　　PathThead="(TeXのbin のパス)";
 　　　　　　　　　KeTTeXの場合は，="C:\kettex\texlive\bin\x86_64-darwin\";
@@ -83,6 +83,7 @@ KETCindyのインストール（Windows）　　　修正日：2018.10.30
 　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
 　　　　　　　ketcindy.iniとketcindyfolder\ketjavaの中身をコピーする．
 　　　　　（Cinderellaを終了）
+　　　　・copywork.batを実行する．
 
 ４）KeTCindyのテストラン
 

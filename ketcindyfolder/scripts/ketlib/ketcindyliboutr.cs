@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181114 loaded");
+println("ketcindylibout(20181116 loaded");
 
 //help:start();
 
@@ -4985,6 +4985,7 @@ ConvertFdtoC(Fd,name):=(
 ////%Startsurf start////
 Startsurf():=StartsurfC();
 Startsurf(Arg):=StartsurfC(Arg);
+Startsurf(Nplist,Dsizelist,Epslist):=StartsurfC("",Nplist,Dsizelist,Epslist); //181116
 Startsurf(restr,Nplist,Dsizelist,Epslist):=StartsurfC(restr,Nplist,Dsizelist,Epslist);
 StartsurfC():=StartsurfC("",[50,50],[1500,500,200],[0.01,0.1]);//180611renewed
 StartsurfC(Arg):=(

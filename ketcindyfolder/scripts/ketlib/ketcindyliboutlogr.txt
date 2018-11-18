@@ -1,3 +1,5 @@
+// 20181116
+//   Startsurf changed ( case of 4 argments added )
 // 20181114
 //   Execcmd debugged  ( Changestye3d for sfcut,wire )
 //   Sfbdparadata,... changed ("Color=.." copied to optionh if no color option )

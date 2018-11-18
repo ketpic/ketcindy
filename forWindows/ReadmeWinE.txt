@@ -1,4 +1,4 @@
-Install of KeTCindy(Win)       Modified : Oct. 30th  2018
+Install of KeTCindy(Win)       Modified : Nov. 16th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -52,14 +52,13 @@ Install of KeTCindy(Win)       Modified : Oct. 30th  2018
                      (3) ketcindy.conf in the work folder.
 
       (3) Installing manually
-               * Generate ketcindy folder somewhere.
+               * Put ketcindyfolder on Desktop and copy copywork.bat in the folder.
+               * Make a folder "ketcindy"  in TeX.
                      (KeTeX) C:\kettex\texlive\texmf-dist\scripts\ketcindy　
-               * Copy
-                     ketcindyjs, ketlib, ketlibC in ketcindyfolder\script.
-                  into C:\ketcindylib.
-               * Copy ketcindyfolder\style into somewhere of TeX folder.
-                     Rename style to ketcindy
-                     Execute mktexlsr.
+               * Copy ketcindyjs, ketlib, ketlibC in ketcindyfolder\script into C:\ketcindylib.
+               * Copy ketcindyfolder\style into somewhere of TeX folder and rename to ketcindy.
+             　　　　　　　 (KeTTeX) C:\kettex\texlive\texmf-dist\tex\latex　　　　　　　　　　　　
+               * Execute mktexlsr.
                * Edit ketcindy.ini using a text editor.
                      PathThead="(path of bin of TeX)";
                          (KeTTeX)="C:\kettex\texlive\bin\x86_64-darwin\"; 
@@ -70,7 +69,8 @@ Install of KeTCindy(Win)       Modified : Oct. 30th  2018
                      import("setketcindy.txt");
                      import("ketoutset.txt");
                * Boot up Cinderella and select editscripting/plugin.
-                    Copy ketcindy.ini and the contents of ketcindyfolder\ketjava.
+                    Copy ketcindy.ini and the contents of ketcindyfolder\ketjava and once terminate.
+               * Execute copywork.bat.
 
 5) Test run of KeTCindy
       (1) Double-click "template1basic.cdy" in "ketcindy\ketfiles".

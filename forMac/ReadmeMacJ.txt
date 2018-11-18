@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2018.10.31
+KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -91,12 +91,13 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.10.31
 　　　　　　3)　作業ディレクトリの ketcindy.conf
 
 　（３）手動でインストールする場合
-　　　　・/ketcindyを作成して，ketcindyfolder/scriptの
-　　　　　　ketcindyjs, ketlib, ketlibC
-　　　　　をその中にコピーする．
-　　　　・ketcindyfolder/styleをTeXの中の適当な場所にコピーする．
-　　　　　　styleをketcindyに名称変更する．
-　　　　　　mktexlsrを実行する．
+　　　　・ketcindyfolderをDesktopにおき，　copywork.shをその中に入れる．
+　　　　・TeXの中の適当な場所にをketcindyを作成する．
+　　　　　　　　　KeTTeXの場合は， /Applications/kettex/texlive/texmf-dist/scripts/ketcindy　　　　　　
+　　　　・ketcindyfolder\scriptのketcindyjs, ketlib, ketlibCketcindyをその中にコピーする．
+　　　　・ketcindyfolder\styleをTeXの中の適当な場所にコピーして，　styleをketcindyに名称変更する．
+  　　　　　　　KeTTeXの場合は， /kettex/texlive/texmf-dist/tex/latex　　　　　　　　　　　　
+　　　　・mktexlsrを実行する．
 　　　　・ketcindy.iniをテキストエディタで修正する．
 　　　　　　　PathThead=(TeXのbin のパス);
 　　　　　　　Homehead="/Users";

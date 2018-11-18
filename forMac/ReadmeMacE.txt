@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Oct. 31th  2018
+Install of KeTCindy(Mac)       Modified : Nov. 16th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -65,18 +65,19 @@ Install of KeTCindy(Mac)       Modified : Oct. 31th  2018
                      (3) ketcindy.conf in the work folder.
 
 	  (3) Installing manually
-               * Generate /ketcindy and copy
-                     ketcindyjs, ketlib, ketlibC in ketcindyfolder/script.
-                  into /ketcindy.
-               * Copy /ketcindyfolder/style into somewhere of TeX folder.
-                     Rename style to ketcindy
-                     Execute mktexlsr.
+               * Put kettindyfolder on Desktop and copy copywork.sh in the folder.
+               * Make a folder "ketcindy" in TeX.
+                    　(KeTTeX) kettex/texlive/texmf-dist/scripts/ketcindy　　　　　
+               * Copy ketcindyjs, ketlib, ketlibC in ketcindyfolder/script into the folder.
+               * Copy /ketcindyfolder/style into somewhere of TeX folder and rename to ketcindy.
+             　　　　　　　 (KeTTeX) kettex/texlive/texmf-dist/tex/latex　　　　　　　　　　　　
+               * Execute mktexlsr.
                * Edit ketcindy.ini using a text editor.
                      PathThead : path of bin of TeX
                      Homehead   head of user home (/Users)
                      Dirhead   path of libraries of KeTCindy
                * Boot up Cinderella and select editscripting/plugin.
-                    Copy ketcindy.ini and the contents of ketcindyfolder/ketjava.
+                    Copy ketcindy.ini and the contents of ketcindyfolder/ketjava and once terminate Cindyerella.
                * Execute copywork.sh.
 
 4) Test run of KeTCindy

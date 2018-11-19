@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Nov. 16th  2018
+Install of KeTCindy(Mac)       Modified : Nov. 19th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -34,7 +34,8 @@ Install of KeTCindy(Mac)       Modified : Nov. 16th  2018
       (2) Using other TeXLive
                  Execute the following 3)(1).
       (3) Using other TeX
-                 Install necessary files manually according to 3)(3).
+              * Copy copyfilessetketcindy.sh in ketcindyfolder to Desktop and edit paths of TeX with a text editor. 
+              * Or install necessary files manually according to 3)(3).
 
 2) Install Cinderella, R and Maxima using files in Macstart.
         Rem ) Also install Skim and Texworks if necessary.

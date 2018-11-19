@@ -1,14 +1,19 @@
 #!/bin/sh
-#      20180907
+#      20181119
+
+# Edit the following 2 lines if necessary
+texpath=/Applications/kettex/texlive
+texbinpath=${texpath}/bin/x86_64-darwin
+
 ketsrc=/Volumes/ketcindyfolder
 if [ ! -e $ketsrc ]; then
   ketsrc=~/Desktop/ketcindyfolder
 fi
 echo ${ketsrc} will be used
-echo 1. "/Applications/kettex/texlive"
+echo 1. "/Applications/kettex/texlive".
 echo 2. "/Applications/kettex.app/texlive"
 echo 3. "/Library/TeX (TeXLive)"
-echo If other, install KeTCindy manually according to ReadMe.
+echo 4. This sh file has been modified
 read -p 'Choose path of TeX from the above (number) : ' ans
 if [ ${ans} = "1" ]; then 
   texpath=/Applications/kettex/texlive

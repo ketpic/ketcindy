@@ -1,10 +1,12 @@
 #!/bin/sh
 #      20181120
 
-# Edit and uncomment the following 3 lines if necessary
+# Edit and uncomment the following lines if necessary
 texpath=/Applications/kettex/texlive
 texbinpath=${texpath}/bin/x86_64-darwin
 ketsrc=~/Desktop/ketcindyfolder
+cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
+homehead=/Users
 
 if [ ! -e $ketsrc ]; then
   ketsrc=/Volumes/ketcindyfolder
@@ -64,11 +66,9 @@ else
   sudo ${texbinpath}/mktexlsr
 fi
 
-read -p 'Input path of Cinderella d(efault)=/Applications/Cinderella2.app : ' ans
-if [ ${ans} = "d" ]; then
-  cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
-else
-  cindyplug=${ans}/Contents/PlugIns
+read -p 'Plugins d(efault)='${cindyplug}' : ' ans
+if [ ${ans} != "d" ]; then
+  cindyplug=${ans}
 fi
 echo Cinderella Plugins=${cindyplug}
 cd ${ketcindyscripts}

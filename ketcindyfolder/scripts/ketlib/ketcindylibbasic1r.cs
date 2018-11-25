@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181112)");
+println("KeTCindy V.3.2.3(20181125)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181112) loaded");
+println("ketcindylibbasic1(20181125) loaded");
 
 //help:start();
 
@@ -173,6 +173,52 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   );//17.12.03until
 );
 ////%Ketinit end////
+
+////%Fillstore start////
+Fillstore():=(
+  regional(tmp,tmp1,out);
+  tmp1=allelements();
+  tmp1=select(tmp1,indexof(#.name,"Text")>0);
+  out=apply(tmp1,[#.name,#.fillcolor]);
+  out;
+);
+////%Fillstore end////
+
+////%Fillblack start////
+Fillblack():=Fillblack("Running");
+Fillblack(str):=(
+  regional(tmp,tmp1,store);
+  tmp1=allelements();
+  tmp1=select(tmp1,indexof(#.name,"Text")>0);
+  store=apply(tmp1,[#.name,#.fillcolor,#.text]);
+  tmp=select(tmp1,#.name=="Text0");
+  if(length(tmp)==0,
+    forall(store,
+      tmp=parse(#_1);
+      tmp.fillcolor=[0,0,0];
+    );
+  ,
+    Text0.text=str;
+  );
+  store;
+);
+////%Fillblack end////
+
+////%Fillrestore start////
+Fillrestore(store):=(
+  regional(tmp);
+  tmp=select(store,#_1=="Text0");
+  if(length(tmp)==0,
+    forall(store,
+      tmp=parse(#_1);
+      tmp.fillcolor=#_2;
+    );
+  ,
+    tmp=tmp_1;
+    Text0.text=tmp_3;
+  );
+);
+////%Fillrestore end////
 
 ////%Changesetting start////
 Changesetting(dir):=( //181017

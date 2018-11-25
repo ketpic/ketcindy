@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.*;
 import java.util.Date;
+import java.nio.file.Files;
 
 public class KetCindyPlugin extends CindyScriptPlugin {
 
     @CindyScript("ketjavaversion")
     public String ketjavaversion() {
-        return "Ketjava 20180727";
+        return "Ketjava 20181125";
     }
 
 	public String getName() {
@@ -347,6 +348,29 @@ public class KetCindyPlugin extends CindyScriptPlugin {
       return path;
   }
 
+      @CindyScript("readfile2str")
+     // 18.11.25
+      public static String readfile2str(String dir,String fname){
+      String res = "";
+      try {
+        File file = new File(dir+File.separator+fname);
+        if (!file.exists()) {
+          return "";
+        }
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String data;
+        while ((data = bufferedReader.readLine()) != null) {
+          res=res+data+"//";
+        }
+        bufferedReader.close();
+      } catch (IOException e) {
+            e.printStackTrace();
+      }
+      return res;
+  }
+  
+  
     @CindyScript("makedir")
      // 17.09.06
       public static String makedir(String dir,String dirname){

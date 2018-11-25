@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20180711) loaded");
+println("ketcindymv(20181125) loaded");
 
 //help:start();
 
@@ -109,8 +109,9 @@ Parafolder(fstr,sL,optionorg):=(
 //help:Parafolder(optionsadd=[""Outfile=n",Pause=10(ms)"]); 
 //help:Paraslide(para=folder:layery:pos:input,scale); 
 //help:Paraslide(para=folder:layery:pos:include:[width=100]); 
-  regional(nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,pause,
+  regional(store,nn,tmp,tmp1,tmp2,strL,eqL,waiting,outflg,pause,
         mkr,mktex,options,sfL,dirbkup,pfile,ctr,flg,varL,waitingR,timeC,timeR);
+  store=Fillblack(); //181125
   tmp=indexof(fstr,"(");
   tmp1=substring(fstr,tmp,length(fstr));
   tmp=indexof(tmp1,")");
@@ -258,6 +259,7 @@ Parafolder(fstr,sL,optionorg):=(
   ); //180617to
   Changework(Dirworkbkup);
   Setfiles(Fheadbkup);
+  Fillrestore(store); //181125
 );
 
 Animatefile():=Animatefile(Dirwork,ParaPath);
@@ -346,8 +348,9 @@ Mkanimation(folder):=Mkanimation(Dirwork,folder);
 Mkanimation(path,folder):=(
 //help:Mkanimation();
 //help:Mkanimation(path,folder);
-  regional(Fheadbkup,Pathpdfbkup,tex,article,parent,
+  regional(store,Fheadbkup,Pathpdfbkup,tex,article,parent,
      eqL,mag,title,tmp,tmp1,tmp2,tmp3,flg);
+  store=Fillblack(); //181125
   tmp=Divoptions(ParaOpAnim); //17.11.25from
   eqL=tmp_5;
   mag="1600";
@@ -479,6 +482,7 @@ Mkanimation(path,folder):=(
   );
   Fhead=Fheadbkup;
   Pathpdf= Pathpdfbkup;
+  Fillrestore(store); //181125
 );
 
 Mkflipanime():=(
@@ -492,8 +496,9 @@ Mkflipanime(folder):=Mkflipanime(Dirwork,folder);
 Mkflipanime(path,folder):=(
 //help:Mkfilpanime();
 //help:Mkflipanime(path,folder);
-  regional(Fheadbkup,tex,article,parent,eqL,mag,title,
+  regional(store,Fheadbkup,tex,article,parent,eqL,mag,title,
      tmp,tmp1,tmp2,tmp3,texfiles,flg);
+  store=Fillblack(); //181125
   tmp=Divoptions(ParaOpAnim); //17.11.25from
   eqL=tmp_5;
   mag="1600";
@@ -634,6 +639,7 @@ Mkflipanime(path,folder):=(
     kc();
   );
   Fhead=Fheadbkup;
+  Fillrestore(store); //181125
 );
 
 //help:end();

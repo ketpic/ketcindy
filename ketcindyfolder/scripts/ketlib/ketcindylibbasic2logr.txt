@@ -1,3 +1,6 @@
+// 20181125
+//   Mkslides, Mksldesummary chanded  (Fillblack added )
+//   Presentation changed ( load => readfile2str )
 // 20181106
 //   WritetoRS changed ( Abnormal point ignored )
 // 20181030

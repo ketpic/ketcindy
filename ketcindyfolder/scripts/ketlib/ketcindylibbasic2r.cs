@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181107) loaded");
+println("ketcindybasic2(20181125) loaded");
 
 //help:start();
 
@@ -4577,8 +4577,11 @@ Presentation(texfile,txtfile):=(
   paractr=0; //16.12.31
   if(indexof(texfile,".")==0,file=texfile+".tex",file=texfile);
   if(indexof(txtfile,".")==0,tmp1=txtfile+".txt",tmp1=txtfile);
-  tmp=load(tmp1);
-  tmp=replace(tmp,"////","||||");// 16.05.11, 06.24(reactivated)
+//  tmp=load(tmp1); //181125from
+  tmp=readfile2str(Dirwork,tmp1);
+  tmp=replace(tmp,"////","//");
+//  tmp=replace(tmp,"////","||||");// 16.05.11, 06.24(reactivated)
+  tmp=replace(tmp,"//::","::"); //181125upto
   slideL=tokenize(tmp,"//");
   slideorgL=slideL; // 16.07.11
   slideL=apply(slideL,Removespace(#));
@@ -5224,7 +5227,8 @@ Presentation(texfile,txtfile):=(
 
 ////%Mkslides start////
 Mkslides():=(
-  regional(sep,parent,texparentorg,tmp,tmp1,tmp2,tmp3,tmp4,flg);
+  regional(store,sep,parent,texparentorg,tmp,tmp1,tmp2,tmp3,tmp4,flg);
+  store=Fillblack();//181125
   tmp4=Fhead;
   Fhead=""; 
   if(!iswindows(), //17.10.13
@@ -5285,6 +5289,7 @@ Mkslides():=(
   setdirectory(Dirwork);
   Fhead=tmp4;
   Texparent=texparentorg;//17.04.10
+  Fillrestore(store);//181125
 );
 ////%Mkslides end////
 
@@ -5302,7 +5307,8 @@ Mkslidesummary(fin,fout):=
    Mkslidesummary(fin,fout,["m","Wait=3"]);
 Mkslidesummary(inputfile,outputfile,options):=(
 //help:Mkslidesummary(fin,fout,options);
-  regional(fin,fout,out,figflg,dirworkorg,dirtop,tmp);
+  regional(store,fin,fout,out,figflg,dirworkorg,dirtop,tmp);
+  store=Fillblack();//181125
   dirworkorg=Dirwork;//17.04.10from
   dirtop=replace(Dirwork,pathsep()+"fig","");
   Changework(dirtop);//17.04.10uptp
@@ -5352,6 +5358,7 @@ Mkslidesummary(inputfile,outputfile,options):=(
   );
   kc();
   Changework(dirworkorg);//17.04.10
+  Fillstore(store);//181125
 );
 ////%Mkslidesummary end////
 

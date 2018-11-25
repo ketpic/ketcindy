@@ -1,3 +1,5 @@
+// 201811225
+//   Readcsv majorly changed ( readfile2str used )
 // 20181116
 //   Startsurf changed ( case of 4 argments added )
 // 20181114

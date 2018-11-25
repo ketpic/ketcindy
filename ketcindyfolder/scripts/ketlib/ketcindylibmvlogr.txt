@@ -1,3 +1,5 @@
+// 20181125
+//  Mkflipanime,Mkanimation,Parafolder changed (Fillblack added)
 // 20180711
 //  Setpara changed  ("Mag" removed )
 // 20180617

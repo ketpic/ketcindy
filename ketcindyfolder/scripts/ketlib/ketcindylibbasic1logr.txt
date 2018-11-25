@@ -1,9 +1,13 @@
-// s:20181112
+// 20181125
+//    Fillstore,Fillblack,Fillrestore added
+// 2018111
+//    Connectseg debugged  ( concat )
+// 20181112
 //    Connectseg debugged  ( concat )
 //    Implicitplot changed  ( "Msg=" added)
-// s:20181111
+// 20181111
 //    eqL : Only the1st character used (basic2,... )
-// s:20181110
+// 20181110
 //    Arrowdata,Arrowheaddata debugged  ( option position,cut )
 //    Arrowdata changed  ( automatic naming supported)
 //    Arrowhead changed  ( cut option supported)

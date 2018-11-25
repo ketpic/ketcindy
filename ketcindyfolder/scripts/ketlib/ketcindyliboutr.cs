@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181116 loaded");
+println("ketcindylibout(20181125 loaded");
 
 //help:start();
 
@@ -1099,6 +1099,7 @@ Rfun(name,fun,argL,optionorg):=(
   parse(nm);
 );
 
+////%Readcsv start////
 Readcsv(file):=Readcsv(Dirwork,file,[]);
 Readcsv(Arg1,Arg2):=(
   if(isstring(Arg2),
@@ -1108,9 +1109,9 @@ Readcsv(Arg1,Arg2):=(
   );
 );
 Readcsv(pathorg,file,optionorg):=(
-//help:Readcsv("ex.csv");
-//help:Readcsv(directory,"ex.csv");
-//help:Readcsv(options=["Head=yes","Sep=-999","Flat=no","Use=R"]);
+// help:Readcsv("ex.csv");
+// help:Readcsv(directory,"ex.csv");
+// help:Readcsv(options=["Head=yes","Sep=-999","Flat=no","Use=R"]);
   regional(path,fname,fout,options,eqL,header,cmdL,sep,
         dt,nrow,tmp,tmp1,tmp2,csv,use,flat);
   options=optionorg;
@@ -1239,6 +1240,22 @@ Readcsv(pathorg,file,optionorg):=(
     );
   );
 );
+// New readcsv (181125) 
+Readcsv(file):=Readcsv(Dirwork,file);
+Readcsv(path,file):=(
+//help:Readcsv("ex.csv");
+//help:Readcsv(directory,"ex.csv");
+//help:Readcsv(options=["Head=yes","Sep=-999","Flat=no","Use=R"]);
+  regional(dt);
+  dt=readfile2str(path,file);
+  dt=tokenize(dt,"//");
+  if(dt_(length(dt))=="",
+    dt=dt_(1..(length(dt)-1));
+  );
+  dt=apply(dt,tokenize(#,","));
+  dt;
+);
+////%Readcsv end////
 
 Writecsv(nmL,data,file):=Writecsv(nmL,data,file,[]);
 Writecsv(nmL,dataorg,file,optionorg):=(

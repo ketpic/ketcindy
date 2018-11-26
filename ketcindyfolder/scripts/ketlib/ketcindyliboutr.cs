@@ -48,6 +48,7 @@ WritetoS(fname,cmdL):=(
  closefile(SCEOUTPUT);
 );
 
+////%kcS start////
 kcS(path,fname):=kcS(path,fname,[]);
 kcS(path,fname,optionorg):=(
 //help:kcS(PathS,"boxdata");
@@ -114,7 +115,11 @@ kcS(path,fname,optionorg):=(
       closefile(SCEOUTPUT);
       println(kc(Dirwork+Batparent,Dirlib,Fnametex));// 16.05.29, 0605
     ,
-      SCEOUTPUT = openfile("kc.sh");
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       tmp=Dq+path+Dq+" -nwni -f "+filename;
@@ -127,6 +132,7 @@ kcS(path,fname,optionorg):=(
     setdirectory(Dirwork);
   );
 );
+////%kcS end////
 
 SetpathS():=(
   regional(tmp,tmp1);
@@ -602,7 +608,11 @@ kcR(path,fname,optionorg):=(
       closefile(SCEOUTPUT);
       println(kc(Dirwork+Batparent,Dirlib,Fnametex));// 16.05.29,06.05
     ,
-      SCEOUTPUT = openfile("kc.sh");
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       if(PathR=="",tmp="R",tmp=PathR);//16.10.20
@@ -730,6 +740,7 @@ MkprecommandR(prec,chstr):=(
   cmdL;
 );
 
+////%CalcbyR start////
 CalcbyR(name,cmd):=CalcbyR(name,PathR,cmd,[]);
 CalcbyR(name,Arg1,Arg2):=(
   if(isstring(Arg1),
@@ -1056,6 +1067,7 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
   );
 );
+////%CalcbyR end////
 
 Rfun(name,fun,argL):=Rfun(name,fun,argL,[]);//16.10.22
 Rfun(name,fun,argL,optionorg):=(
@@ -2431,7 +2443,11 @@ kcA(fname,optionorg):=(
       tmp=replace(filename,".rr",".txt");
       println(kc(Dirwork+Batparent,Dirlib,tmp)); // 16.05.29,06.05
     ,
-      SCEOUTPUT = openfile("kc.sh");
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       tmp="rm "+replace(filename,".rr",".txt");
@@ -2799,7 +2815,7 @@ WritetoM(fname,cmdL,allflg):=(
   closefile(SCEOUTPUT);
 );
 
-////%kcyM start////
+////%kcM start////
 kcM(fname):=kcM(fname,[]);
 kcM(fname,optionorg):=(
 //help:kcM("boxdata");
@@ -2880,7 +2896,11 @@ kcM(fname,optionorg):=(
       tmp=replace(filename,".max",".txt");
       println(kc(Dirwork+Batparent,Mackc+Dirlib,tmp));// 16.05.29,06.05
     ,
-      SCEOUTPUT = openfile("kc.sh");
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       tmp="rm "+replace(filename,".max",".txt");
@@ -2896,7 +2916,7 @@ kcM(fname,optionorg):=(
     setdirectory(Dirwork);
   );
 );
-////%kcyM end////
+////%kcM end////
 
 ////%CalcbyM start////
 CalcbyM(name,cmd):=CalcbyM(name,cmd,[]);
@@ -3404,7 +3424,11 @@ kcV3(path,fname):=(
       closefile(SCEOUTPUT);
       println(kc(Dirwork+Batparent,Dirlib,Fnametex));// 16.05.29,06.05
     ,
-      SCEOUTPUT = openfile("kc.sh");
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       tmp=Dq+PathV3+Dq+" "+tmp1+filename;
@@ -4394,7 +4418,12 @@ kcF(fname,optionorg):=(
       println(SCEOUTPUT,tmp);
       println(SCEOUTPUT,"exit 0");
       closefile(SCEOUTPUT);
-      SCEOUTPUT = openfile("kc.sh");
+    ,
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       Lf=unicode("10",base->10);
       print(SCEOUTPUT,"#!/bin/sh"+Lf);
       tmp1=replace(Dirwork,"\","/");
@@ -4414,7 +4443,11 @@ kcF(fname,optionorg):=(
       closefile(SCEOUTPUT);
       println(kc(Dirwork+Batparent,Dirlib,Fnametex));// 16.05.29,06.05
     ,
-      SCEOUTPUT = openfile("kc.sh");
+      if(ismacosx(), //181125from
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
       tmp=Dq+PathF+Dq+"  -nox -eval "+Dq+")read "+filename+Dq;
@@ -5087,7 +5120,11 @@ kcC(cname):=(
     tmp=cname+".txt";
     println(kc(Dirwork+Batparent,Mackc+Dirlib,tmp));
   ,
-    SCEOUTPUT = openfile("kc.sh");
+    if(ismacosx(), //181125from
+      SCEOUTPUT = openfile("kc.command");
+    ,
+      SCEOUTPUT = openfile("kc.sh");
+    ); //181125to
     println(SCEOUTPUT,"#!/bin/sh");
     println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
     tmp=PathC+" -lm "+cname+".c -o main.out"; //180612

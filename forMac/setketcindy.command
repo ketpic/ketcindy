@@ -2,8 +2,12 @@
 #      20181120
 
 # Edit and uncomment the following lines if necessary
-texpath=/Applications/kettex/texlive
-texbinpath=${texpath}/bin/x86_64-darwin
+#texpath=/Applications/kettex/texlive
+#texbinpath=${texpath}/bin/x86_64-darwin
+#ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
+#ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
+#ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
+
 ketsrc=~/Desktop/ketcindyfolder
 cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
 homehead=/Users
@@ -20,25 +24,33 @@ echo ketcindyfolder=${ketsrc}
 echo 1. "/Applications/kettex/texlive".
 echo 2. "/Applications/kettex.app/texlive"
 echo 3. "/Library/TeX (TeXLive)"
-echo 4. This sh file has been modified
+echo 4. Modification of this file is finished
 read -p 'Choose path of TeX from the above (number) : ' ans
 if [ ${ans} = "1" ]; then 
   texpath=/Applications/kettex/texlive
   texbinpath=${texpath}/bin/x86_64-darwin
+  ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
+  ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
+  ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
 fi
 if [ ${ans} = "2" ]; then 
   texpath=/Applications/kettex.app/texlive
   texbinpath=${texpath}/bin/x86_64-darwin
+  ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
+  ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
+  ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
 fi
 if [ ${ans} = "3" ]; then
   texpath=/Library/TeX/Root
   texbinpath=/Library/TeX/texbin
+  ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
+  ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
+  ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
 fi
 echo texpath=${texpath}
 echo texbinpath=${texbinpath}
-ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
-read -p 'Do you really copy ketcindyscripts? (y,n): ' ans
-if [ ${ans} = "y" ]; then
+#read -p 'Do you really copy ketcindyscripts? (y,n): ' ans
+#if [ ${ans} = "y" ]; then
   echo copying scripts
   sudo cp -r -p ${ketsrc}/scripts/ ${ketcindyscripts}/
   if [ $? -gt 0 ]; then
@@ -47,8 +59,7 @@ if [ ${ans} = "y" ]; then
   else
     echo "scripts copied to "${ketcindyscripts}
   fi
-fi
-ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
+#fi
 sudo cp -r -p ${ketsrc}/doc/ ${ketcindydoc}/
 if [ $? -gt 0 ]; then
   echo Error $?
@@ -56,7 +67,6 @@ if [ $? -gt 0 ]; then
 else
   echo "doc copied to "${ketcindydoc}
 fi
-ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
 sudo cp -r -p ${ketsrc}/style/ ${ketcindystyle}/
 if [ $? -gt 0 ]; then
   echo Error $?

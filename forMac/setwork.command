@@ -14,7 +14,7 @@ if [ $? -gt 0 ]; then
   sleep 5
 else
   echo Workfolder is ${dist}
-  echo "It can be moved to any place" ##180913
+  echo "Folder ketcindy can be moved to any place" ##180913
 fi
 read -p 'Choose platex(p),uplatex(u),latex(l),xelatex(x),pdflatex(pd),lualatex(lu):' tex
 if [ ${tex} = "p" ]; then
@@ -61,7 +61,7 @@ if [ ${tex} = "lu" ]; then
 fi
 dist=~ #180913
 echo  generating ${dist}/${changesetting}
-echo  // Re-setting PathT,PathR,Pathpdf,PathM,PathAd >${dist}${changesetting}
+echo  // Re-setting PathT,PathR,Pathpdf,PathM,PathAd,Mackc >${dist}${changesetting}
 echo  "PathT=PathThead+\"${tex}\";" >>${dist}${changesetting}
 read -p 'Choose pdfviewer from preview(p),skim(s): ' ans
 if [ ${ans} = "s" ]; then
@@ -69,11 +69,11 @@ if [ ${ans} = "s" ]; then
 else
   echo  "Pathpdf=\"preview\";" >> ${dist}${changesetting}
 fi
-read -p 'Execute kc.sh with sh(s),open(o):' ans
-if [ ${ans} = "o" ]; then
+#read -p 'Execute kc.sh with sh(s),open(o):' ans
+#if [ ${ans} = "o" ]; then
   echo  "Mackc=\"open\";" >>${dist}${changesetting}
-else
-  echo  "Mackc=\"sh\";" >>${dist}${changesetting}
-fi
+#else
+#  echo  "Mackc=\"sh\";" >>${dist}${changesetting}
+#fi
 sleep 1
 exit 0

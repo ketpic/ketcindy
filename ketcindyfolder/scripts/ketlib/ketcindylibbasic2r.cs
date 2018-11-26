@@ -4579,10 +4579,10 @@ Presentation(texfile,txtfile):=(
   if(indexof(txtfile,".")==0,tmp1=txtfile+".txt",tmp1=txtfile);
 //  tmp=load(tmp1); //181125from
   tmp=readfile2str(Dirwork,tmp1);
-  tmp=replace(tmp,"////","//");
-//  tmp=replace(tmp,"////","||||");// 16.05.11, 06.24(reactivated)
-  tmp=replace(tmp,"//::","::"); //181125upto
-  slideL=tokenize(tmp,"//");
+  tmp=replace(tmp,"////","||||");
+  tmp=replace(tmp,"/LF/::","::");
+  tmp=replace(tmp,"///LF/","/LF/");
+  slideL=tokenize(tmp,"/LF/"); //181125to
   slideorgL=slideL; // 16.07.11
   slideL=apply(slideL,Removespace(#));
   tmp=select(1..length(slideL),length(slideL_#)>0); // 16.07.11from
@@ -5448,7 +5448,11 @@ BBdata(fname,optionorg):=(
   if(iswindows(),
     kcfile="kc.bat";
   ,
-    kcfile="kc.sh";
+    if(macosx(),
+      kcfile="kc.command";
+    ,
+      kcfile="kc.sh";
+    );
   );
   if(flg==0,
     tmp=load(fout); //

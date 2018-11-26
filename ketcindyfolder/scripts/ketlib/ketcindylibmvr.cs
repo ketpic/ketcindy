@@ -18,6 +18,7 @@ println("ketcindymv(20181125) loaded");
 
 //help:start();
 
+////%Setpara start////
 Setpara(path,fstr,sL):=Setpara(path,fstr,sL,[],[]); 
 Setpara(pathorg,fstr,sL,options):= 
     Setpara(pathorg,fstr,sL,options,[]);
@@ -98,7 +99,9 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
   );
   COM2ndlistback=ctmp;
 );
+////%Setpara end////
 
+////%Parafolder start////
 Parafolder():=Parafolder(ParaFstr,ParaSL,ParaOp);
 Parafolder(fstr,sL):=Parafolder(fstr,sL,[]);
 Parafolder(fstr,sL,optionorg):=(
@@ -261,7 +264,9 @@ Parafolder(fstr,sL,optionorg):=(
   Setfiles(Fheadbkup);
   Fillrestore(store); //181125
 );
+////%Parafolder end////
 
+////%Animatefile start////
 Animatefile():=Animatefile(Dirwork,ParaPath);
 Animatefile(path,folder):=(
 //help:Animatefile();
@@ -335,7 +340,9 @@ Animatefile(path,folder):=(
   closefile(SCEOUTPUT);
   println(fname+" has been generated");
 );
+////%Animatefile end////
 
+////%Mkanimation start////
 Mkanimation():=(
   regional(remflg,tmp,eqL,tmp1,tmp2);
   if(!isexists(Dirwork,ParaPath), //17.10.14from
@@ -484,7 +491,9 @@ Mkanimation(path,folder):=(
   Pathpdf= Pathpdfbkup;
   Fillrestore(store); //181125
 );
+////%Mkanimation end////
 
+////%Mkflipanime start////
 Mkflipanime():=(
   regional(remflg,tmp,eqL,tmp1,tmp2);
   if(!isexists(Dirwork,ParaPath), //17.10.14from
@@ -641,6 +650,7 @@ Mkflipanime(path,folder):=(
   Fhead=Fheadbkup;
   Fillrestore(store); //181125
 );
+////%Mkflipanime end////
 
 //help:end();
 

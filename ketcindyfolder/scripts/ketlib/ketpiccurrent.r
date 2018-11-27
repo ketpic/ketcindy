@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181031)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181128)" 
 
 print(ThisVersion)
 
+# 20181128
+#   Objthicksurf debugged
 # 20181031
 #   space before # removed
 # 20181024
@@ -11956,25 +11958,25 @@ Objsurf<- function(...){ #17.12.18
 Objthicksurf<- function(...){
   Args=list(...)
   Nargs=length(Args)
-  Sel=Args[[Nargs]]; Nargs=Nargs-1
+  Sel=Args[[Nargs]]; Nargs=Nargs-1 #181128from
   Selsurf=substring(Sel,1,1)
   Selside=c("0","0","0","0")
-  Tmp=grep("w",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[1]="w"
+  Tmp=strsplit(Sel,"w");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[1]]=substr(Tmp[2],1,1)
   }
-  Tmp=grep("e",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[2]="e"
+  Tmp=strsplit(Sel,"e");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[2]]=substr(Tmp[2],1,1)
   }
-  Tmp=grep("s",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[3]="s"
+  Tmp=strsplit(Sel,"s");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[3]]=substr(Tmp[2],1,1)
   }
-  Tmp=grep("n",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[4]="n"
-  }
+  Tmp=strsplit(Sel,"n");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[4]]=substr(Tmp[2],1,1)
+  } #181128to
   Nfth=Args[[Nargs-2]]
   Thick1=Args[[Nargs-1]]
   Thick2=Args[[Nargs]]
@@ -12060,21 +12062,20 @@ Objthicksurf<- function(...){
   }
   Dt2=Objsurf(F2,U,V,Tmp);
   Out=list(Dt1,Dt2);
-
-  if(Selside[1]!="0"){
-    Dt=Objrecs(Op(3,Dt1),Op(3,Dt2),Selside[1])
+  if(Selside[[1]]!="0"){
+    Dt=Objrecs(Op(3,Dt1),Op(3,Dt2),Selside[[1]])
     Out=c(Out,list(Dt))
   }
-  if(Selside[2]!="0"){
-    Dt=Objrecs(Op(4,Dt1),Op(4,Dt2),Selside[2])
+  if(Selside[[2]]!="0"){
+    Dt=Objrecs(Op(4,Dt1),Op(4,Dt2),Selside[[2]])
     Out=c(Out,list(Dt))
   }
-  if(Selside[3]!="0"){
-    Dt=Objrecs(Op(5,Dt1),Op(5,Dt2),Selside[3])
+  if(Selside[[3]]!="0"){
+    Dt=Objrecs(Op(5,Dt1),Op(5,Dt2),Selside[[3]])
     Out=c(Out,list(Dt))
   }
-  if(Selside[4]!="0"){
-    Dt=Objrecs(Op(6,Dt1),Op(6,Dt2),Selside[4])
+  if(Selside[[4]]!="0"){
+    Dt=Objrecs(Op(6,Dt1),Op(6,Dt2),Selside[[4]])
     Out=c(Out,list(Dt))
   }
   OBJJOIN<<- Join

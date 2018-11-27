@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181125 loaded");
+println("ketcindylibout(20181128 loaded");
 
 //help:start();
 
@@ -3395,6 +3395,7 @@ Maxima2Cindydata(str):=( //17.10.24
 );
 ////%Maxima2Cindydata end////
 
+////%kcV3 start////
 kcV3(fname):=kcV3(Dirwork,fname);
 kcV3(path,fname):=(
 //help:kcV3(path,"ex.obj");
@@ -3444,6 +3445,7 @@ kcV3(path,fname):=(
   );
 );
 
+////%Changeobjscale start////
 Changeobjscale(fname):=(
   regional(fout);
   fout=replace(fname,".obj","");
@@ -3543,7 +3545,9 @@ Changeobjscale(unitlen,fnameorg,foutorg,optionorg):=(
   CalcbyR("cs",cmdL,options);
   println("Scale of "+fname+" changed");
 );
+////%Changeobjscale end////
 
+////%Mkviewobj start////
 Mkviewobj(fname,cmdL):=Mkviewobj(Dirwork,fname,cmdL,[]);
 Mkviewobj(Arg1,Arg2,Arg3):=(
   if(!isstring(OCNAME), //17.04.13from
@@ -3563,7 +3567,8 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
 //help:Mkviewobj(path,fname,cmdlist);
 //help:Mkviewobj(options=["M/R","V","Unit=in","Wait=5"]);
   regional(path,cmdL,eqL,strL,flg,fname,options,make,view,cmdlist,
-      vtx,face,unit,tmp,tmp1,tmp2);
+      vtx,face,unit,tmp,tmp1,tmp2,store);
+  store=Fillblack(); //181128
   path=replace(pathorg,"\","/");
   if(substring(path,length(path)-1,length(path))!="/",path=path+"/");
   fname=fnameorg;
@@ -3682,8 +3687,11 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
       ViewFile=fname;
     );  // 16.03.14 until
   );
+  Fillrestore(store); //181128
 );
+////%Mkviewobj end////
 
+////%Setobj start////
 //Objname(str):=Objname(str,["m","v"]); //180906from
 //Objname(str,options):=Setobj(str,options);
 Setobj():=Setobj(Fhead,["m","v"]); //180901
@@ -3711,7 +3719,9 @@ Setobj(str,optionsorg):=( //180906to
   ); //17.12.23until
   println("generate OBJCMD. name="+OCNAME+", option="+OCOPTION);
 );
+////%Setobj end////
 
+////%Mkobjcmd start////
 Mkobjcmd(nm,fd):=Mkobjcmd(nm,fd,[40,40,"+"]);
 Mkobjcmd(nm,fd,options):=(
 //help:Mkobjcmd("1",fd,[40,40,"+"]);
@@ -3763,7 +3773,9 @@ Mkobjcmd(nm,fd,options):=(
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );
+////%Mkobjcmd end////
 
+////%Mkobjnrm start////
 Mkobjnrm(nm,fd):=Mkobjnrm(nm,fd,[]);
 Mkobjnrm(nm,fd,optionorg):=(
 //help:Mkobjnrm("1",fd1,["Disp=y"]);
@@ -3857,7 +3869,9 @@ Mkobjnrm(nm,fd,optionorg):=(
   ); // 16.05.02until
   out;
 );
+////%Mkobjnrm end////
 
+////%Mkobjthickcmd start////
 Mkobjthickcmd(nm,fd):=Mkobjthickcmd(nm,fd,"",[40,40,"+"]);
 Mkobjthickcmd(nm,fd,Arg):=(
   if(islist(Arg),
@@ -3963,7 +3977,10 @@ Mkobjthickcmd(nm,fd,fnrm,optionorg):=(
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );
+////%Mkobjthickcmd end////
 
+
+////%Mkobjpolycmd start////
 Mkobjpolycmd(nm,pd):=Mkobjpolycmd(nm,pd,[]);
 Mkobjpolycmd(nm,pd,optionorg):=(
 //help:Mkobjpolycmd("1",pd);
@@ -4033,7 +4050,9 @@ Mkobjpolycmd(nm,pd,optionorg):=(
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );
+////%Mkobjpolycmd end////
 
+////%Mkobjplatecmd start////
 Mkobjplatecmd(nm,pd):=Mkobjplatecmd(nm,pd,[]);
 Mkobjplatecmd(nm,pdorg,optionorg):=( // 16.06.18
 //help:Mkobjplatecmd("1",pd);
@@ -4110,7 +4129,9 @@ Mkobjplatecmd(nm,pdorg,optionorg):=( // 16.06.18
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );
+////%Mkobjplatecmd end////
 
+////%Mkobjcrvcmd start////
 Mkobjcrvcmd(nm,pst):=Mkobjcrvcmd(nm,pst,[]);
 Mkobjcrvcmd(nm,pstorg,options):=(
 //help:Mkobjcrvcmd("1","sc3d1",[0.02,6,"xy"]);
@@ -4182,7 +4203,9 @@ Mkobjcrvcmd(nm,pstorg,options):=(
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );
+////%Mkobjcrvcmd end////
 
+////%Mkobjsymbcmd start////
 Mkobjsymbcmd(symb,size,rot,dir,pos):=
   Mkobjsymbcmd("",symb,size,rot,dir,pos,[]);
 Mkobjsymbcmd(Ar1,Ar2,Ar3,Ar4,Ar5,Ar6):=(
@@ -4311,7 +4334,9 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
 );
+////%Mkobjsymbcmd end////
 
+////%Concatcmd start////
 Concatcmd(cmdlist):=(
 //help:Concatcmd([cmdL1,cmdL2]);
   regional(out);
@@ -4321,6 +4346,7 @@ Concatcmd(cmdlist):=(
   );
   out;
 );
+////%Concatcmd end////
 
 WritetoF(fname,cmdL):=(
 // help:WritetoF("outdata",cmdL);

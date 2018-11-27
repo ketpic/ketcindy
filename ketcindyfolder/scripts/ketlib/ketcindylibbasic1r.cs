@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181125)");
+println("KeTCindy V.3.2.3(20181128)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181125) loaded");
 
@@ -225,7 +225,9 @@ Fillrestore(store):=(
 ////%Fillrestore end////
 
 ////%Readlines start////
-Readlines(path,file):=( //181126
+Readlines(file):=Readlines(Dirwork,file); //181126
+Readlines(path,file):=(
+//help:Readlines(path,file);
   regional(tmp,out);
   out=readfile2str(path,file);
   out=tokenize(out,"/LF/");

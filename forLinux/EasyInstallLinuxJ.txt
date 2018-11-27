@@ -1,4 +1,4 @@
-KETCindyの簡単インストール（Mac）　　　修正日：2018.11.25
+KETCindyの簡単インストール（Mac）　　　修正日：2018.11.26
 
 １) Cinderella, R, Maxima をインストールする． 
  　　　　　　   ・ https://beta.cinderella.de  (Cinderella)
@@ -7,28 +7,22 @@ KETCindyの簡単インストール（Mac）　　　修正日：2018.11.25
  
 ２) TeXをインストールする．
 
-　 (1) TeXLiveを推奨
- 　　　　　　　　　・２０１８以降ではketcindyが既に入っている、
-  　　　　　　　　　・大きいので，多少時間がかかる．
- 　(2) KeTTeXはTeXLiveの軽量版
-　　　　　　　　　　・仮想ディスクkettexnormalを開き，kettexをApplicationsに入れればよい．
-　 (3) 他のTeXを使っている場合
-　　　　　　　　　　・　setcindy.commandをデスクトップにコピー
- 　　　　　　　  ・ テキストエディタでパスを修正する．
-
 3) KeTCindyのインストール
+　　　　　　　　　・　ketcindyfolderをデスクトップにコピー
+ 　　　　　　　 ・ setketcindy．shをテキストエディタで修正する．
+ 　　　　　　　 ・ ketcindyfolder/scriptsのsetketcindy．txt, ketouset.txtを適宜修正する．
 
-　　（1） setketcindy.commandをダブルクリック（管理者権限必要）
+　　（1） ターミナルのshコマンドでsetketcindy.shを実行（管理者権限必要）
 　　　　    ・scriptsの内容が選択したTeXの中にコピーされる
 　　　　    ・ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
 　　　　    ・CinderellaのPluginsにKetcindyPlugin.jarがコピーされ，　ketcindy.iniが作成される．
 
-　　（２） setwork.commandをダブルクリック（管理者権限不要）
+　　（２） ターミナルのshコマンドでsetwork.shを実行（管理者権限不要）
 　　　　    ・作業ディレクトリketcindyがユーザホームに作成される．
 　　　　    ・タイプセットの方法（TeXの種類）
 　　　　　   　　 　　通常は，platex (p)またはuplatex(u)を選ぶ．
 　    　　　・ketcindyフォルダにworkフォルダの中身がコピーされる．
-　　　　    ・.ketcindy.conf（不可視ファイルだが編集可能）がユーザホームに作成される．
+　　　　    ・.ketcindy.conf（不可視ファイルだが編集可能）がketcindyフォルダに作成される．
       　　　　　　　注）TeXを切り替えるときなどはこのファイルを修正する．
 　　　    　・マニュアルもコピーされる．
 　　　    　・作業ディレクトリにketincy.confの雛形がコピーされる．
@@ -46,13 +40,7 @@ KETCindyの簡単インストール（Mac）　　　修正日：2018.11.25
 　
 　　（２）スクリーンの左上部にあるFigureボタンを押してPDFが表示されれば成功．
 
-　　注）PDFの表示後，ターミナル画面を閉じるようにするには：
-　　　　　   ・アプリケーション／ユーティリティ／ターミナルを開く
-　　　　　   ・トップメニューから
-　　　　　　　　ターミナル＞環境設定＞（プロファイル）>シェル
-　　　　　　　　　「シェルが正常に終了した場合閉じる」を選択
-
-５）TeXworksの設定（kettexnormalの場合）
+５）　TeXworksの設定（kettexの場合）
 　　　　　   ・TeXworksを立ち上げる
 　　    　　・次を選択
 　　　　      　　　　TeXworks > 環境設定 > タイプセット
@@ -70,8 +58,5 @@ KETCindyの簡単インストール（Mac）　　　修正日：2018.11.25
                                  $fullname
 　　　　　　OKボタンを押し，デフォルトを変更してOKボタンを押す．
 
-6) gccのインストール
+6) gccをインストール
 　　　　　　・曲面描画のためには, gccが必要である．
-　　　　　　・Xcodeがインストールされていなければ，インストールする．
-　　　　　　　　　注）ターミナルで次を実行すれば，gccだけがインストールされる．
-　　　　　　　　　　　　　　　sudo xcode-select --install

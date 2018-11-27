@@ -1,14 +1,14 @@
-Easy install of KeTCindy(Mac)       Modified : Nov. 25th  2018
+Easy install of KeTCindy(Windows)       Modified : Nov. 27th  2018
   
-1) Install Cinderella, R and Maxima.
- 　　　　　　   ・ https://beta.cinderella.de  (Cinderella)
- 　　　　　 　  ・ https://cran.r-project.org   (R)
- 　　　　　   　・ https://sourceforge.net/projects/maxima　( Maxima )
+1) Install Cinderella, R, Maxima and Sumatra.
+ 　・ https://beta.cinderella.de  (Cinderella)
+ 　・ https://cran.r-project.org  (R)
+  ・ https://sourceforge.net/projects/maxima (Maxima)
 
 2) Install TeX
 
       (1) TeXLive is recommended.
-              * Files necessary for KeTCindy are already implemented.
+              * Files necessary for KeTCindy are already implemented.(later 2018)
                   i) texmf-dist/scripts/ketcindy   ketlib, setketcindy, ketoutset, etc.
                   ii) texmf-dist/tex/latex/ketcindy   Style files for ketcindy
                   iii) texmf-dist/doc/support/ketcindy  Manuals and source files
@@ -16,13 +16,11 @@ Easy install of KeTCindy(Mac)       Modified : Nov. 25th  2018
               * Open  kettexnormal and copy kettex to applications.
                     Rem) It will take time.
       (3) Using other TeX
-              * Copy setketcindy.command in ketcindyfolder to Desktop.
-              * Edit paths with a text editor. 
+              * Open setketcindy.bat with a text editor.
+              * Edit paths. 
 
 3) Install KeTCdindy
-                Put ketcindyfolder on Desktop and open it.
-      (1) Double-click setketcindy.command.
-               * Password of an administrator is required.
+      (1) Right click setketcindy.bat and select "Run as adiministrator"
                * Contents of scripts will be copied into TeX.
                * ketcindystyle files will be copied and mktexlsr will be executed .
                * Head of userhome : choose usually "d".
@@ -30,7 +28,7 @@ Easy install of KeTCindy(Mac)       Modified : Nov. 25th  2018
                       KetcindyPluign.jar will be copied
                       ketcindy.ini will be generated .
 
-	  (2) Double-click setwork.command.
+	  (2) Click setwork.bat.
                * Work directory "ketcindy" will be generated in User's home.
                * TeX(typeset) will be usually latex,xelatex or pdflatex.
                * Contents of work will be copied into "ketcindy".
@@ -57,6 +55,5 @@ Easy install of KeTCindy(Mac)       Modified : Nov. 25th  2018
                     ( or path of your TeX )
        (3) Select Xelatex or pdflatex.
 
-6) Install Xcode if you use gcc for drawings of surface.
- 　　　　　　   ・ if you want to use only gcc, execute on Terminal:
-                  sudo xcode-select --install
+6) Install gcc for surface drawing.
+        minGW : http://www.mingw.org

@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
+KETCindyの通常インストール（Mac）　　　修正日：2018.11.25
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -19,10 +19,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 　　　　　　ketcindyfolder.dmg（またはkecindyfolder.zip）
 　　　　　　kettexnormal.dmg（kettexを用いる場合）
 　　　　それぞれの仮想ディスクができる．
-　（４）ketcindyfolderのcopyfilessetcindy.shを選択，「情報を見る」を開いて，
-　　　　　「このアプリケーションで開く」を「ターミナル」に変更
-　　　　　　　その他＞すべてのアプリケーション＞ユーティリティ＞ターミナル＞追加
-　　　　　「すべてを変更する」をクリック
+
 　　注１）ターミナルは以下の場所にある．
 　　　　　　Macintosh HD>アプリケーション>ユーティリティ>ターミナル
 　　注２）Sierra以降の場合
@@ -48,7 +45,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 　　　・３)(１)を実行すれば，必要なファイルがコピーされる．
 　　　・「ketpic stylesをコピーする」を選ぶ．
 　（３）既にインストールしている他のTeXを用いる場合
-　　　・　　ketcindyfolder内のcopyfilessetketcindy.shをデスクトップにコピーしてTeXのパスを修正する．　
+　　　・　　ketcindyfolder内のsetketcindy.commandをデスクトップにコピーしてTeXのパスを修正する．　
    ・３)(３)にしたがって，手動で必要なファイルをコピーする．
 
 ２） Cinderella, R, Maximaのインストール
@@ -66,7 +63,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 
 ３）KeTCindyのインストール
 
-　（ 1）copyfilessetcindy.shをダブルクリック（管理者権限必要）
+　（ 1）setcindy.commandをダブルクリック（管理者権限必要）
 　　　　・TeXのパス
 　　　　　　　kettexは１，kettex.appは２，通常のTeXLiveは３を選択する．
 　　　　・scriptsの内容が選択したTeXの中にコピーされる
@@ -75,7 +72,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 　　　　　　注）通常の/Users の場合は単に d でよい．
 　　　　・CinderellaのPluginsに，KetcindyPlugin.jarがコピーされketcindy.iniが作成される．
 
-　（２）copywork.shをダブルクリック（管理者権限不要）
+　（２）setwork.commandをダブルクリック（管理者権限不要）
 　　　　・作業ディレクトリketcindyがユーザホームに作成される．
 　　　　・タイプセットの方法（TeXの種類）
 　　　　　　　通常は，platex (p)またはuplatex(u)を選ぶ．
@@ -92,7 +89,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 　　　　　　3)　作業ディレクトリの ketcindy.conf
 
 　（３）手動でインストールする場合
-　　　　・ketcindyfolderをDesktopにおき，　copywork.shをその中に入れる．
+　　　　・ketcindyfolderをDesktopにおき，　setwork.commandをその中に入れる．
 　　　　・TeXの中の適当な場所にをketcindyを作成する．
 　　　　　　　　　KeTTeXの場合は， /Applications/kettex/texlive/texmf-dist/scripts/ketcindy　　　　　　
 　　　　・ketcindyfolder\scriptのketcindyjs, ketlib, ketlibCketcindyをその中にコピーする．
@@ -106,7 +103,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 　　　　・Cinderellaを立ち上げ，スクリプト/Pluiginを選択
 　　　　　　　ketcindy.iniとketcindyfolder/ketjavaの中身をコピーする．
 　　　　　（Cinderellaを終了）
-　　　　・copywork.shを実行する．
+　　　　・setwork.commandを実行する．
 
 ４）KeTCindyのテストラン
 
@@ -172,8 +169,8 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.16
 ８）トラブルシューティング
 
 ・一般的な手順
-　（１）ketworkにできているkc.shをエディタで開く．
-　（２）ターミナルも開いて，kc.shの１行ずつをコピーして実行，結果を見る．
+　（１）ketworkにできているkc.commandをエディタで開く．
+　（２）ターミナルも開いて，kc.commandの１行ずつをコピーして実行，結果を見る．
 　　　注）１行目の「#!/bin/sh」は実行不要
 
 ・El Capitan以降でAsirを使うとき

@@ -1,0 +1,42 @@
+Easy install of KeTCindy(Mac)       Modified : Nov. 26th  2018
+  
+1) Install Cinderella, R and Maxima.
+ 　　　　　　   ・ https://beta.cinderella.de  (Cinderella)
+ 　　　　　 　  ・ https://cran.r-project.org   (R)
+ 　　　　　   　・ https://sourceforge.net/projects/maxima　( Maxima )
+
+2) Install TeX
+ 
+3) Install KeTCdindy
+　　　　　　　　 * Copy ketcindyfolder to Desktop.
+     　　　　* Edit setketcindy.sh in ketcindyfolder with a text editor. 
+     　　　　* Edit setketcindy.txt and ketoutset.txt in ketcindyfolder/scripits if necessary. 
+      (1) Execute setketcindy.sh with sh command on Terminal.
+               * Password of an administrator is required.
+               * Contents of scripts will be copied into TeX.
+               * ketcindystyle files will be copied and mktexlsr will be executed .
+               * Head of userhome : choose usually "d".
+               * In Cinderella/Plugins
+                      KetcindyPluign.jar will be copied
+                      ketcindy.ini will be generated .
+
+	  (2)  Execute setwork.ｓｈ.
+               * Work directory "ketcindy" will be generated in User's home.
+               * TeX(typeset) will be usually latex,xelatex or pdflatex.
+               * Contents of work will be copied into "ketcindy".
+               * ".ketcindy.conf" will be also generated in User's home.
+                       You can change the setting of PathT, Mackc, etc.
+               * "ketcindy.conf" will be also copied to work directory.
+               * Configuration files are read in order of 
+                     (1) ketoutset.txt in Script folder
+                     (2) .ketcindy.conf in User's home
+                     (3) ketcindy.conf in the work folder.
+
+4) Test run of KeTCindy
+      (1) Double-click "template1basic.cdy" in the work folder "ketcindy".
+            Then a frame in white appear on the screen.
+	  (2) Press "Figure" button at the top left. then the final PDF output is displayed. 
+
+5)  Set Texworks if necessary. 
+
+6) Install gcc for drawings of surface.

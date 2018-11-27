@@ -132,7 +132,11 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   if(iswindows(),
     Batparent="\kc.bat";
   ,
-    Shellparent="/kc.sh";
+    if(ismacosx(), //181125from
+      Shellparent="/kc.command"; 
+    ,
+      Shellparent="/kc.sh"; 
+    );  //181125to
     if(!isexists(Dirwork,""),
       println(Dirwork+" not exists");
     ,
@@ -219,6 +223,19 @@ Fillrestore(store):=(
   );
 );
 ////%Fillrestore end////
+
+////%Readlines start////
+Readlines(path,file):=( //181126
+  regional(tmp,out);
+  out=readfile2str(path,file);
+  out=tokenize(out,"/LF/");
+  tmp=out_(length(out));
+  if(length(tmp)==0,
+    out=out_(1..(length(out)-1));
+  );
+  out;
+);
+////%Readlines end////
 
 ////%Changesetting start////
 Changesetting(dir):=( //181017
@@ -735,9 +752,9 @@ Changework(dirorg,options):=( //16.10.21
     setdirectory(Dirwork);
     if(!iswindows(), //17.04.11
       if(!iskcexists(Dirwork),
-        SCEOUTPUT = openfile("/kc.sh");
+        SCEOUTPUT = openfile("/kc.command"); //181125
         closefile(SCEOUTPUT);
-        println(setexec(Dirwork,"/kc.sh"));
+        println(setexec(Dirwork,"/kc.command")); //181125
       );
     );
   );

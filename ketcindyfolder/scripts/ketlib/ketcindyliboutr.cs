@@ -1260,7 +1260,7 @@ Readcsv(path,file):=(
 //help:Readcsv(options=["Head=yes","Sep=-999","Flat=no","Use=R"]);
   regional(dt);
   dt=readfile2str(path,file);
-  dt=tokenize(dt,"//");
+  dt=tokenize(dt,"/LF/");
   if(dt_(length(dt))=="",
     dt=dt_(1..(length(dt)-1));
   );

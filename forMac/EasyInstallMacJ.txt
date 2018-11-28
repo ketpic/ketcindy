@@ -1,4 +1,4 @@
-KETCindyの簡単インストール（Mac）　　　修正日：2018.11.25
+KETCindyの簡単インストール（Mac）　　　修正日：2018.11.29
 
 １) Cinderella, R, Maxima をインストールする． 
  　　　　　　   ・ https://beta.cinderella.de  (Cinderella)
@@ -13,11 +13,11 @@ KETCindyの簡単インストール（Mac）　　　修正日：2018.11.25
  　(2) KeTTeXはTeXLiveの軽量版
 　　　　　　　　　　・仮想ディスクkettexnormalを開き，kettexをApplicationsに入れればよい．
 　 (3) 他のTeXを使っている場合
-　　　　　　　　　　・　setcindy.commandをデスクトップにコピー
- 　　　　　　　  ・ テキストエディタでパスを修正する．
+　　　　　　　　　　・　setketcindy.commandをテキストエディタでパスを修正する．
 
 3) KeTCindyのインストール
-
+ 　　　　　　　　　・ ketcindyfolder.zipをダウンロードして解凍する．
+ 　　　　　　　　　・ setketcindy.command/setwork.commandがなかったら入れる．
 　　（1） setketcindy.commandをダブルクリック（管理者権限必要）
 　　　　    ・scriptsの内容が選択したTeXの中にコピーされる
 　　　　    ・ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．

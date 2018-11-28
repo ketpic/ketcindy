@@ -1,4 +1,4 @@
-KETCindyの通常インストール（Mac）　　　修正日：2018.11.25
+KETCindyの通常インストール（Mac）　　　修正日：2018.11.29
 
  注）既にインストールが済んでいて，KeTCindyだけを更新するとき
 　　　・通常は，以下３) だけを実行すればよい．
@@ -16,9 +16,8 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.25
 　（２）以下の１)，２)，３)(１)では管理者としてログインしておく必要がある．
 　（３）以下の圧縮ファイルをデスクトップにコピーしてダブルクリック
 　　　　　　Macstart.dmg
-　　　　　　ketcindyfolder.dmg（またはkecindyfolder.zip）
+　　　　　　kecindyfolder.zip
 　　　　　　kettexnormal.dmg（kettexを用いる場合）
-　　　　それぞれの仮想ディスクができる．
 
 　　注１）ターミナルは以下の場所にある．
 　　　　　　Macintosh HD>アプリケーション>ユーティリティ>ターミナル
@@ -45,7 +44,7 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.25
 　　　・３)(１)を実行すれば，必要なファイルがコピーされる．
 　　　・「ketpic stylesをコピーする」を選ぶ．
 　（３）既にインストールしている他のTeXを用いる場合
-　　　・　　ketcindyfolder内のsetketcindy.commandをデスクトップにコピーしてTeXのパスを修正する．　
+　　　・　　ketcindyfolder内のsetketcindy.commandをテキストエディタで修正する．　
    ・３)(３)にしたがって，手動で必要なファイルをコピーする．
 
 ２） Cinderella, R, Maximaのインストール
@@ -89,7 +88,6 @@ KETCindyの通常インストール（Mac）　　　修正日：2018.11.25
 　　　　　　3)　作業ディレクトリの ketcindy.conf
 
 　（３）手動でインストールする場合
-　　　　・ketcindyfolderをDesktopにおき，　setwork.commandをその中に入れる．
 　　　　・TeXの中の適当な場所にをketcindyを作成する．
 　　　　　　　　　KeTTeXの場合は， /Applications/kettex/texlive/texmf-dist/scripts/ketcindy　　　　　　
 　　　　・ketcindyfolder\scriptのketcindyjs, ketlib, ketlibCketcindyをその中にコピーする．

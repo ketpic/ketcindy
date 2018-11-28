@@ -1,4 +1,4 @@
-Install of KeTCindy(Mac)       Modified : Nov. 25th  2018
+Install of KeTCindy(Mac)       Modified : Nov. 29th  2018
 
   Rem) If you have installed softwares, 
                 * Execute only the following 4).
@@ -11,9 +11,9 @@ Install of KeTCindy(Mac)       Modified : Nov. 25th  2018
                Finder > Preference > General
              Check "Hard Disk".
       (2) Password of Administrator will be required in 1), 2) and 3)(1) in the following.
-      (3) Download/Copy the followings and make their virtual disks.
+      (3) Download/Copy the followings and make their virtual disks　or unzip.
                   Macstart.dmg
-                  ketcindyfolder.dmg(or ketcindyfolder.zip)
+                  ketcindyfolder.zip
                   kettexnormal.dmg (when you use kettex)
       (4) Select setketcindy.command in ketcindyfoler and "get info".
                  Change "Open with " to "Terminal".
@@ -34,7 +34,7 @@ Install of KeTCindy(Mac)       Modified : Nov. 25th  2018
       (2) Using other TeXLive
                  Execute the following 3)(1).
       (3) Using other TeX
-              * Copy setketcindy.command in ketcindyfolder to Desktop and edit paths of TeX with a text editor. 
+              * Edit setketcindy.command in ketcindyfolder with a text editor. 
               * Or install necessary files manually according to 3)(3).
 
 2) Install Cinderella, R and Maxima using files in Macstart.
@@ -66,7 +66,6 @@ Install of KeTCindy(Mac)       Modified : Nov. 25th  2018
                      (3) ketcindy.conf in the work folder.
 
 	  (3) Installing manually
-               * Put kettindyfolder on Desktop and copy setwork.command in the folder.
                * Make a folder "ketcindy" in TeX.
                     　(KeTTeX) kettex/texlive/texmf-dist/scripts/ketcindy　　　　　
                * Copy ketcindyjs, ketlib, ketlibC in ketcindyfolder/script into the folder.

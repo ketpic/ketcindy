@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20181120
+#      20181129
 
 # Edit and uncomment the following lines if necessary
 #texpath=/Applications/kettex/texlive
@@ -8,19 +8,11 @@
 #ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
 #ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
 
-ketsrc=~/Desktop/ketcindyfolder
 cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
 homehead=/Users
 
-if [ ! -e $ketsrc ]; then
-  ketsrc=/Volumes/ketcindyfolder
-  if [ ! -e $ketsrc ]; then
-    echo "Edit path of ketcindyfolder"
-    sleep 5
-    exit 0
-  fi
-fi
-echo ketcindyfolder=${ketsrc}
+cd `dirname $0`
+echo `pwd ` will be used
 echo 1. "/Applications/kettex/texlive".
 echo 2. "/Applications/kettex.app/texlive"
 echo 3. "/Library/TeX (TeXLive)"
@@ -52,7 +44,7 @@ echo texbinpath=${texbinpath}
 #read -p 'Do you really copy ketcindyscripts? (y,n): ' ans
 #if [ ${ans} = "y" ]; then
   echo copying scripts
-  sudo cp -r -p ${ketsrc}/scripts/ ${ketcindyscripts}/
+  sudo cp -r -p scripts/ ${ketcindyscripts}/
   if [ $? -gt 0 ]; then
     echo Error $?
     sleep 5
@@ -60,14 +52,14 @@ echo texbinpath=${texbinpath}
     echo "scripts copied to "${ketcindyscripts}
   fi
 #fi
-sudo cp -r -p ${ketsrc}/doc/ ${ketcindydoc}/
+sudo cp -r -p doc/ ${ketcindydoc}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
 else
   echo "doc copied to "${ketcindydoc}
 fi
-sudo cp -r -p ${ketsrc}/style/ ${ketcindystyle}/
+sudo cp -r -p style/ ${ketcindystyle}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5

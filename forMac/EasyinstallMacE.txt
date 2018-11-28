@@ -16,11 +16,11 @@ Easy install of KeTCindy(Mac)       Modified : Nov. 25th  2018
               * Open  kettexnormal and copy kettex to applications.
                     Rem) It will take time.
       (3) Using other TeX
-              * Copy setketcindy.command in ketcindyfolder to Desktop.
-              * Edit paths with a text editor. 
+              * Edit setketcindy.command in ketcindyfolder
 
 3) Install KeTCdindy
-                Put ketcindyfolder on Desktop and open it.
+               * Download ketcindyfolder.zip and unzip it.
+               * Copy setketcindy.command/setwork.command into the folder if necessary.
       (1) Double-click setketcindy.command.
                * Password of an administrator is required.
                * Contents of scripts will be copied into TeX.

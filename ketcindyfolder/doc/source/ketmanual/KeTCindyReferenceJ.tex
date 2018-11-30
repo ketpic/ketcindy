@@ -4222,6 +4222,7 @@ Rは主に統計解析のためのソフトウェアで，  binorm（二項分�
 \item[関数]  Histplot(name,data,option)
 \item[機能]  Rを利用してヒストグラムを描く
 \item[説明]  dataはリストにして作成するか，外部ファイルからReadcsv()で読み込む。
+戻り値は，階級境界値と，対応する度数のリスト。
 
 階級境界値（ブレークポイント）は，自動的に設定される（スタージェスの公式による）が，オプションで，
 
@@ -4343,8 +4344,8 @@ PlotdiscR("3","dgeom(k,0.3)","k=[0,10]");
 
 \hypertarget{readcsv}{}
 \item[関数]  Readcsv(path,filename,option)
-\item[機能]  Rを利用してcsvファイルを読む。
-\item[説明]  Rを使ってcsvファイルを読みこむ。戻り値は読み込んだデータのリスト。
+\item[機能]  csvファイルを読む。
+\item[説明]  csvファイルを読みこむ。戻り値は読み込んだデータのリスト。
 
 第１引数の path は，ファイルを作業フォルダ（ 初期設定は fig ）に置いた場合は省略することができる。そうでない場合は，フルパスで指定する。たとえば，"/Users/Hoge/Desktop"
 
@@ -4377,6 +4378,13 @@ option は，"Flat=" で，"Flat=y" の場合は，読み込んだデータを�
 \end{verbatim}
 
 とする。
+
+\hypertarget{readlines}{}
+\item[関数]  Readlines(path,filename,option)
+\item[機能]  テキストファイルを1行ずつ読む。
+\item[説明]  テキストファイルを1行ずつ読みこむ。戻り値は読み込んだ文字列のリスト。
+
+第１引数の path は，ファイルを作業フォルダ（ 初期設定は fig ）に置いた場合は省略することができる。そうでない場合は，フルパスで指定する。たとえば，"/Users/Hoge/Desktop"
 
 \vspace{\baselineskip}
 \hypertarget{scatterplot}{}
@@ -7566,6 +7574,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{plotdatar}{PlotdataR(name,式,変数)}  \>Rの関数のグラフを描く\\
 \hyperlink{plotdiscr}{PlotdiscR(name,式,変数)}  \>離散型のグラフを描く\\
 \hyperlink{readcsv}{Readcsv(name,filename,option)}  \>csvファイルを読む\\
+\hyperlink{readlines}{Readlines(name,filename,option)}  \>テキストファイルを1行ずつ読む\\
 \hyperlink{scatterplot}{Scatterplot(name,filename,option)}  \>2次元データを読み込み，散布図を描く\\
 \vspace{\baselineskip}
 【Maximaとの連携】\\

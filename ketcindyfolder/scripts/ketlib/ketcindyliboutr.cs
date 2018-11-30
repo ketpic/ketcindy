@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181128 loaded");
+println("ketcindylibout(20181130 loaded");
 
 //help:start();
 
@@ -751,7 +751,7 @@ CalcbyR(name,Arg1,Arg2):=(
 );
 CalcbyR(name,path,cmd,optionorg):=(
 //help:CalcbyR(name,cmd);
-//help:CalcbyR(options=["m/r","Wait=2","Out=yes","Pre=PVOFG","Res=" ]);
+//help:CalcbyR(options=["m/r","Wait=2","Out=y/n","Pre=PVOFG"]);
 //help:CalcbyR(options2=["Pre=!G" ]);
   regional(options,tmp,tmp1,tmp2,tmp3,realL,strL,eqL,
        cat,dig,prestr,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,waiting);
@@ -761,7 +761,17 @@ CalcbyR(name,path,cmd,optionorg):=(
   realL=tmp_6;
   strL=tmp_7;
   dig=5;
-  cat="Y";
+  tmp=cmd_(length(cmd)-1); //181130from
+  if(indexof(tmp,"=")+indexof(tmp,"::")>0,
+    cat="Y";
+  ,
+    tmp=cmd_(length(cmd));
+    if(length(tmp)>0,
+      cat="Y";
+    ,
+      cat="N";
+    );
+  ); //181130to
   wfile="";
   prestr="PVOFG"; //180508
   waiting=30; //180608
@@ -3565,7 +3575,7 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
 //help:Mkviewobj(fname,cmdlist);
 //help:Mkviewobj(fname,[]);
 //help:Mkviewobj(path,fname,cmdlist);
-//help:Mkviewobj(options=["M/R","V","Unit=in","Wait=5"]);
+//help:Mkviewobj(options=["M/R","V","Unit=in","Wait=(10)"]);
   regional(path,cmdL,eqL,strL,flg,fname,options,make,view,cmdlist,
       vtx,face,unit,tmp,tmp1,tmp2,store);
   store=Fillblack(); //181128
@@ -3639,13 +3649,12 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
       cmdlist=MkprecommandR();
       cmdlist=concat(cmdlist,["Openobj",[Dq+path+fname+Dq]]);
       cmdlist=concat(cmdlist,cmdL);
-      tmp=["Closeobj()",[],""+Dq+"||||"+Dq,[]];//16.12.26
+      tmp=["Closeobj()",[]];//181130
       cmdlist=concat(cmdlist,tmp);
-      tmp=append(options,"Cat=y");
-      tmp1=apply(tmp,Toupper(substring(#,0,1))); // 16.04.23from
+      tmp1=apply(options,Toupper(substring(#,0,1))); // 16.04.23from
       tmp1=select(tmp1,#=="W");
       if(length(tmp1)==0,
-        tmp=append(tmp,"Wait=5");
+        tmp=append(tmp,"Wait=10");
       );// 16.04.23to
       CalcbyR("",cmdlist,tmp); //180902
       wait(WaitUnit*100); // 16.03.18

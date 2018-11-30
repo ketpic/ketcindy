@@ -155,13 +155,13 @@ Hide coordinate axes.
 \itemket{Usage}Setax(a list of parameters);
 \itemket{Description}Generic function to set the style of axis.
 \itemket{Details}Parameters are:\\
-1. Style of axis ("l'' ; line(default), "a'' : arrow)\\
+1. Style of axis ("l" ; line(default), "a" : arrow)\\
 2. Name of horizontal ax  ( default  is x)\\
-3. Posion of horizontal name (default is "e'')\\
+3. Posion of horizontal name (default is "e")\\
 4. Name of horizontal ax  ( default  is y)\\
-5. Posion of horizontal name (default is "n'')\\
+5. Posion of horizontal name (default is "n")\\
 6. Name of origin (default is O)\\
-7. Position of origin (default is "sw'')
+7. Position of origin (default is "sw")
 \itemket{Examples}\mbox{}
 
 \verb|Setax(["a","","","","","","nw"]);|\\
@@ -317,8 +317,8 @@ $f(x)=\left\{\begin{array}{l}1  (x\geq 0)\\ -1   (x<0)\\ \end{array}\right.$
 \begin{cmd}{Setpt}{setpt}
 \itemket{Usage}Setpt(ratio);
 \itemket{Description}Generic funtion to set the size of points.
-\itemket{Details}''ratio'' is the ratio from the standard size.\\
-Size can be change as a option of ``Pointdata''.
+\itemket{Details}"ratio" is the ratio from the standard size.\\
+Size can be change as a option of ``Pointdata".
 \itemket{Examples}\mbox{}
 
 \verb|Pointdata("1",A,["Size=1"]);|\\
@@ -382,7 +382,7 @@ Argument  is real number or list. If it is a real number, vertical scaling. If t
 \verb|Setscaling(0.5);|\\
 \verb|Plotdata("1","-2*x^2+10*x","x");|\\
 \verb|p1=[5/2,0]; p2=[5/2,25/2]; p3=[0,25/2];|\\
-\verb|Listplot(``1'',[p1,p2,p3],["da"]);|\\
+\verb|Listplot(``1",[p1,p2,p3],["da"]);|\\
 \verb|Expr([[5,0],"s2w","5",p3,"w2","\frac{25}{2}",p1,"s4","\frac{5}{2}"]);|
 
 \begin{center}
@@ -459,7 +459,7 @@ It is recommended to put this function to the beginning of a script.
 
 \item Direction
 
-The direction is represented by e(east : right), w(west: left), n(north : upper), s(south:lower) and c(center). The distance from the specified position can also be given as a numerical value.  For example, ''e2'' and ''e3'' are placed twice and three times of the slightly unit distance away from ''e'', respectively. 
+The direction is represented by e(east : right), w(west: left), n(north : upper), s(south:lower) and c(center). The distance from the specified position can also be given as a numerical value.  For example, "e2" and "e3" are placed twice and three times of the slightly unit distance away from "e", respectively. 
 
 \begin{center}\input{Fig/ewns}  \end{center}
 
@@ -1110,7 +1110,7 @@ In the case of a single B\'ezier curve, \verb|[ ]| outside the list can be omitt
 Mkbeziercrv(name,  [nodes, control  points], options) is same as Bezier(name,  [nodes, control  points], options). \\
 \verb|Mkbeziercrv("n",[[A,B,C],[[D],[E,F]]])| is same as \verb|Bezier("n",[A,B,C],|\\
 \verb|[[D],[E,F]])|. 
-The name of the plotting data is ''bz''. 
+The name of the plotting data is "bz". 
 \item[Example1]\mbox{}
 
 \verb|Mkbeziercrv("5",[[[A,B,C],[[D],[E,F]]],[[G,H,K,L],[[M],[N,O],[P]]]]);|
@@ -1515,7 +1515,7 @@ Assign a value to the letter "b".\\
 The differential equation and its initial conditions should be specified as arguments.
 \itemket{Examples}\mbox{}
 
-The solution curve of the equation $y''=-y$ with initial conditions $y(0)=1,y'(0)=0$
+The solution curve of the equation $y"=-y$ with initial conditions $y(0)=1,y'(0)=0$
 
 \verb|Deqplot("1","y``=-y","x",0, [1,0]);|\\
 \begin{center}
@@ -1589,7 +1589,7 @@ Draw ellipses with options.\\
 \itemket{Description}Function to draw the graph of a periodic function.
 \itemket{Details}
 \verb|defL| is a list of fun(str),interval,division number.\\
-The options are "Con=n/do, Color=name'' for discontinuous parts.
+The options are "Con=n/do, Color=name" for discontinuous parts.
 
 ex. "Con=do,Color=red" , " Con=n".  Default is broken line and draw.
 
@@ -1672,7 +1672,7 @@ The option "nth" is used to set the number when plotting data has multi intersec
 Write the string at the position specified by position (or coordinates) and direction. \\
 The position (or coordinates) can also be specified by the geometric point name. \\
 The direction is "e", "w", "n", "s", "c". 
-The distance from the specified position can also be given as a numerical value.  For example, ''e2'' and ''e3'' are placed twice and three times of the slightly unit distance away from ''e'', respectively. \\
+The distance from the specified position can also be given as a numerical value.  For example, "e2" and "e3" are placed twice and three times of the slightly unit distance away from "e", respectively. \\
 Multiple strings can be passed in the form of a list. \\
 \itemket{Remark}\mbox{}
 The derivative symbol $'$ uses \$ $'$ \$ (single quart) in mathematical mode (interleaved with two \$ s).
@@ -1745,7 +1745,7 @@ It is also possible to write as follows, abbreviated for the amount of movement.
 
 \hspace{15mm} dir : direction vector :  coordinate or name
 
-\hspace{15mm}  move: "t'':tangent , "n":normal
+\hspace{15mm}  move: "t":tangent , "n":normal
 
 \hspace{15mm}  string : expression
 \itemket{Examples}\mbox{}
@@ -1904,7 +1904,7 @@ Extra options :\\
 
 \verb|ticks=apply(-5..5,x,[x,text(x)]);| // ticks is [ [-5,"5"],...,[5,"5"] ]\\
 \verb|ticks=remove(ticks,[[0,"0"]]);   | // [0,"0"] is removed\\
-\verb|ticks=flatten(ticks);            | // ticks becomes [-5,"5'',...,5,"5'']\\
+\verb|ticks=flatten(ticks);            | // ticks becomes [-5,"5",...,5,"5"]\\
 \verb|Htickmark(ticks);|
 
 \begin{center}
@@ -2092,7 +2092,7 @@ In the last example we draw the pice of parabola:$y=x^2$ which is cut off by the
 \item[Description]This function makes a closed curve form the list of plotdata.
 \item[Details]Options are:\\
 near point from start position : Set in case where the first curve and the last curve have multi intersects.\\
-\verb|"dr","da", "do","`notex","nodisp",''Color= "| : as usual.
+\verb|"dr","da", "do","`notex","nodisp","Color= "| : as usual.
 \item[Examples]\mbox{}
 
 \verb|Plotdata("1","x^2","x");|\\
@@ -2919,8 +2919,8 @@ This section describes data processing by \ketcindy .  Cooperation with spreadsh
 \itemket{Usage}Tab2list(string data, option);
 \itemket{Description}Sheet function to convert contents of string data to list.
 \item[Ditails]The options are as follows.\\
-\verb|"Blank=a"| : translate cells that is NULL to ``a''\\
-\verb|"Sep=b"| : separators of the string are ``b''. The default separators are Tab code.
+\verb|"Blank=a"| : translate cells that is NULL to ``a"\\
+\verb|"Sep=b"| : separators of the string are ``b". The default separators are Tab code.
 \itemket{Examples} \mbox{}
 
 In the Cindyscrpt editor, prepare a local variable, for example "data".
@@ -3057,7 +3057,7 @@ The image files are PDF, PNG, JPG, and so on.\\
 \itemket{Description}Generic function to change colorcode from colortype1 to colortype2.
 \itemket{Details}Return value is changed color code.
 
-Color type is one of "rgb'',"cmyk",''hsv''.
+Color type is one of "rgb","cmyk","hsv".
 \item[Example]\mbox{}
 
 RGB to CMYK
@@ -3206,7 +3206,7 @@ Draw the point A near the origin.
 
 %-------------Slider-------------------------------
 \begin{cmd}{Slider}{slider}
-\itemket{Usage}Slider("endpoint1-pt-endpoint2'',endpoint1,endpoint2);
+\itemket{Usage}Slider("endpoint1-pt-endpoint2",endpoint1,endpoint2);
 \itemket{Description}Generic function to make a slider on a Euclidean view.\\
 \itemket{Examples}\mbox{}
 
@@ -3227,8 +3227,8 @@ Draw the point A near the origin.
 \itemket{Details}\hspace{9mm} Convert a real value to a string to the specified number of digits after the decimal point. 
 \itemket{Examples}\mbox{}
 
-\verb|Sprintf(pi,2);|  // returns "3.14''.\\
-\verb|Sprintf(pi,7);|  // returns "3.1415927''.\\
+\verb|Sprintf(pi,2);|  // returns "3.14".\\
+\verb|Sprintf(pi,7);|  // returns "3.1415927".\\
 
 \verb|Remark| : \verb|pi| is a reserved variable in Cindyscript, representing the number $\pi$.
 
@@ -3268,8 +3268,8 @@ Draw the point A near the origin.
 Cindyscript has a function \verb|format(value, number)|, like as Textformat.
 \itemket{Examples}\mbox{} 
 
-\verb|  Textformat(1/6,4);| // return value is string "0.1667'' \\
-\verb|  format(1/6,4);    | // return value is string "0.1667'' 
+\verb|  Textformat(1/6,4);| // return value is string "0.1667" \\
+\verb|  format(1/6,4);    | // return value is string "0.1667" 
 
 \verb|  dt=[1/6,0.5];|\\
 \verb|  Textformat(dt,4); | // return valu is string "[ 0.1667 , 0.5 ]" \\
@@ -3284,7 +3284,7 @@ Cindyscript has a function \verb|format(value, number)|, like as Textformat.
 \begin{cmd}{Toupper}{toupper}
 \itemket{Usage}Toupper(string);
 \itemket{Description}This function returns the upper case letters of the string.
-\itemket{Examples}\verb|Toupper("aBc123'');| // "ABC123" is returned.
+\itemket{Examples}\verb|Toupper("aBc123");| // "ABC123" is returned.
 
 %\verb|Windispg();|
 \end{cmd}
@@ -3418,11 +3418,13 @@ Before you use \verb|Framedata|, you need to take two diagonal points of the dra
 \itemket{Usage}Histplot(name,data,options)
 \itemket{Description}create histograms.
 \itemket{Details}data is given in a list  or read an external data file in csv format.\\
+Return value is list of breaks and frequency.
+
 You can specify the breaks  as a vector of points to get exactly what is wanted, for example\\
-\hspace{20mm} \verb|''Breaks=[0,10,20,30,40,50,60]''| .\\
+\hspace{20mm} \verb|"Breaks=[0,10,20,30,40,50,60]"| .\\
 The Sturges algorithm is the default.\\
 Other options:\\
-\verb|''Rel=yes/no''| : draw a histogram of proportions or frequencies (default is no)\\
+\verb|"Rel=yes/no"| : draw a histogram of proportions or frequencies (default is no)\\
 
 \itemket{Examples}  \mbox{}
 
@@ -3484,7 +3486,7 @@ Example2\\
 
 \itemket{Usage}PlotdiscR(name,fromaula,var)
 \itemket{Description}draw graphs of discrete distributions by calling R’s built-in functions.
-\itemket{Details}The ''d''  functions in R to draw graphs of discrete distributions:\\
+\itemket{Details}The "d"  functions in R to draw graphs of discrete distributions:\\
 dbinom (binomial distribution), dpois (poisson distribution), dgeom (geometric distribution), etc.
 \itemket{Examples}  \mbox{}
 
@@ -3503,6 +3505,7 @@ Example2
 \verb|    PlotdiscR("3","dgeom(k,0.3)","k=[0,10]");|
 
 \end{cmd}
+
 %------------Readcsv--------------------------------
 \begin{cmd}{Readcsv}{readcsv}
 
@@ -3514,6 +3517,17 @@ option: By the argument "Flat=y", you can flatten a list of the data (the defaul
 \itemket{Examples}  \mbox{}
 Examples can be found in the command Boxplot().
 \end{cmd}
+
+%------------Readlines--------------------------------
+\begin{cmd}{Readlines}{readlines}
+
+\itemket{Usage}Readlines(path,filename,option)
+\itemket{Description}read a text file line by line. The return value is a list of strings.
+\itemket{Details}The first argument sets a path to the current working folder where the data file is  (the default  is fig).
+If you put the data file in fig folder, the pathname can be omitted. Otherwise a full pathname is required.\\
+option: By the argument "Flat=y", you can flatten a list of the data (the default is "Flat=n" ).
+\end{cmd}
+
 %------------Scatterplot--------------------------------
 \begin{cmd}{Scatterplot}{scatterplot}
 
@@ -3557,8 +3571,8 @@ Position is coordinate or name of point.
 \itemket{Details}The second argument is a command to be executed by Maxima.\\
 Create a list (eg. cmdL) consisting of a repetition of commands and argument lists, and execute at once.\\
 There is no return value. 
-For the result (of undefined value), the value of the variable of the command list last described (argument is the empty list) is assigned to the variable specified by ''name''. 
-When you want to return more than one result, if you describe it by separating it with ''::'', it will be substituted into the list.
+For the result (of undefined value), the value of the variable of the command list last described (argument is the empty list) is assigned to the variable specified by "name". 
+When you want to return more than one result, if you describe it by separating it with "::", it will be substituted into the list.
 \itemket{Examples}  \mbox{}
 
 Example1: derivative
@@ -4144,7 +4158,7 @@ Drawing of a curved surface with hidden line processing is performed in the foll
 
 \itemket{Usage}Isangle()
 \itemket{Description}Decide the selection of the angle slider. 
-\itemket{Details}Returns ``true'' if select slider, and ``false'' if not.\\
+\itemket{Details}Returns ``true" if select slider, and ``false" if not.\\
 In drawing including hidden line processing, reaction is bad when recalculating while moving the viewpoint. With this function, you can write code that does not recalculate while moving the viewpoint.
 
 \itemket{Examples} \mbox{}
@@ -4199,7 +4213,7 @@ then\\
 \verb|Changestyle3d("sl3d1",["dr,3"]);| // one edge become thick.\\
 or\\
 \verb|edges=apply(1..6,"sl3d"+text(#));|\\
-\verb|Changestyle3d(edges,["notex"]);| // all edges become ``notex''.\\
+\verb|Changestyle3d(edges,["notex"]);| // all edges become ``notex".\\
 \end{cmd}
 %------------Concatobj--------------------------------
 
@@ -4428,7 +4442,7 @@ To draw the B and C on the embedded figure, code changes as follows.
 \begin{cmd}{IntersectsgpL}{intersectsgpL}
 \itemket{Usage}IntersectsgpL(name,segment,plane,option)
 \itemket{Description}Returns a intersection of a line segment and plane.
-\itemket{Details}Specify a line segment with two endpoints. Specify the plane as three points that it contains. Options are ``put'' or ``draw'', and if omitted select ``draw''.\\
+\itemket{Details}Specify a line segment with two endpoints. Specify the plane as three points that it contains. Options are ``put" or ``draw", and if omitted select ``draw".\\
 Following two programs return the same result.\\
 \verb|  IntersectsgpL("P","A-B","C-D-E"); |\\
 \verb|  IntersectsgpL("P",[A3d,B3d],[C3d,D3d,E3d]); |
@@ -4735,7 +4749,7 @@ In the 3D-drawings the coordinate of the point name A is A3d.
 Data of all \verb|Johnson solid| can be downloaded from\\
 \hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
 Store the folder into the work folder of \ketcindy\ for example, and execute\\
-\verb|    Setdirectory(gethome+''/ketcindy/polyhedrons_obj");|\\
+\verb|    Setdirectory(gethome+"/ketcindy/polyhedrons_obj");|\\
 \verb|    polydt=Readobj("r02.obj",["size=2"]);|\\
 \verb|    Setdirectory(Dirwork);|\\
 Then the data of \verb|r02.obj| are assigned to the variable \verb|polydt|.
@@ -5287,6 +5301,8 @@ Options are the followings.\\
 \hyperlink{putonline}{PutonLine} \> put a point on the line.\\
 \hyperlink{putonSeg}{Putonseg} \> put a point on the segment.\\
 \hyperlink{putpoint}{Putpoint} \> put a point.\\
+\hyperlink{readcsv}{Readcsv} \> read a file in csv format.\\
+\hyperlink{readlines}{Readlines} \> read a text file line by line.\\
 \hyperlink{reflectdata}{Reflectdata} \> draw a reflective curve.\\
 \hyperlink{reflectpoint}{Reflectpoint} \> return the reflect point.\\
 \hyperlink{rotatedata}{Rotatedata} \> rotate plotting data.\\

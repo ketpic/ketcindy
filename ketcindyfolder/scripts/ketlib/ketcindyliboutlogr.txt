@@ -1,3 +1,6 @@
+// 20181103
+//   Mkviewobj changed  ( change coord in case of "preview")
+//   Setobj changed  ( option "preview" added )
 // 20181102
 //   kcV3 changed  ( "preview" for Mac )
 // 20181123

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181202 loaded");
+println("ketcindylibout(20181203 loaded");
 
 //help:start();
 
@@ -3582,7 +3582,7 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
 //help:Mkviewobj(path,fname,cmdlist);
 //help:Mkviewobj(options=["M/R","V","Unit=in","Wait=(10)"]);
   regional(path,cmdL,eqL,strL,flg,fname,options,make,view,cmdlist,
-      vtx,face,unit,tmp,tmp1,tmp2,store);
+      vtx,face,unit,tmp,tmp1,tmp2,store,dt,nn);
   store=Fillblack(); //181128
   path=replace(pathorg,"\","/");
   if(substring(path,length(path)-1,length(path))!="/",path=path+"/");
@@ -3597,37 +3597,20 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   view=0;
   unit="";
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
-    if(tmp1=="M",
-      tmp2=Toupper(substring(tmp2,0,1));     
-      if(tmp2=="N" % tmp2=="F",
-        make=0;
-      );
-      options=remove(options,[#]);
-    );
-    if(tmp1=="V",
-      tmp2=Toupper(substring(tmp2,0,1));     
-      if(tmp2=="N" % tmp2=="F",
-        view=0;
-      );
-      options=remove(options,[#]);
-    );
     if(tmp1=="U", // 16.06.30from
         unit=tmp2;
       options=remove(options,[#]);
-    ); // 16.06.30until
+    ); // 16.06.30to
   );
   forall(strL,
     tmp=Toupper(substring(#,0,1));
     if(tmp=="M",
       make=1;
-      options=remove(options,[#]);
+//      options=remove(options,[#]); //181203
     );
     if(tmp=="R",
       make=0;
-      options=remove(options,[#]);
+//      options=remove(options,[#]); //181203
     );
     if(tmp=="V",
       view=1;
@@ -3692,14 +3675,26 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
     Changeobjscale(fname,["Unit="+unit]);//16.10.04 
   );  // 16.06.30until
   if(view==1,
-    flg=0;  // 16.03.14 from
-    if(isstring(ViewFile),
-      if(ViewFile==fname,flg=1);
+    if(PathV3=="preview",
+      dt=Readlines(fname);
+      forall(1..(length(dt)),nn,
+        tmp1=dt_nn;
+        if(substring(tmp1,0,2)=="v ",
+        tmp=replace(tmp1,"  "," ");
+        tmp=tokenize(tmp," ");
+        tmp=Sprintf(tmp_(2..4),4);
+        tmp2="v "+tmp_2+" "+tmp_3+" "+tmp_1;
+        dt_nn=tmp2;
+        );
+      );
+      fname=replace(fname,".","prv.");
+      SCEOUTPUT = openfile(fname);
+      forall(dt,
+        println(SCEOUTPUT,#);
+      );
+      closefile(SCEOUTPUT);
     );
-    if(flg==0,
-      kcV3(path,fname);
-      ViewFile=fname;
-    );  // 16.03.14 until
+    kcV3(path,fname);
   );
   Fillrestore(store); //181128
 );
@@ -3717,15 +3712,22 @@ Setobj(Arg1):=(
   );
 );
 Setobj(str,optionsorg):=( //180906to
-//help:Setobj(["m","v"]);
-//help:Setobj("sample");
-//help:Setobj("sample",options);
-//help:Setobj(options=["m","v"]);
-  regional(options);
+//help:Setobj();
+//help:Setobj(["v"]);
+//help:Setobj(options=["m","v","preview"]);
+  regional(options,tmp,strL);
+  options=select(optionsorg,length(#)>0); //17.12.23from
+  tmp=Divoptions(options); //181203from
+  strL=tmp_7;
+  forall(strL,
+    if(Toupper(substring(#,0,1))=="P",
+      PathV3="preview";
+      options=remove(options,[#]);
+    );
+  ); //181203to
   if(length(str)>0,
     OCNAME=str;
   );
-  options=select(optionsorg,length(#)>0); //17.12.23from
   if(length(options)>0,
     OCOPTION=options;
   ,

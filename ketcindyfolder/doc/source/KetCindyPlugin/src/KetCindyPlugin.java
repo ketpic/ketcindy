@@ -196,7 +196,8 @@ public class KetCindyPlugin extends CindyScriptPlugin {
           flg=14;
         }
         // 16.07.21
-        if(str.indexOf(".SH")>-1 || str.indexOf(".BAT")>-1){
+        if(str.indexOf(".SH")>-1|| str.indexOf(".SH")>-1 || str.indexOf(".BAT")>-1){
+        //181125
           if(str.indexOf("MAXIMA.")==-1 && str.indexOf("KC.")==-1){ /* 2016.07.22 */
             flg=15;
           }
@@ -311,16 +312,30 @@ public class KetCindyPlugin extends CindyScriptPlugin {
 
     @CindyScript("iskcexists")
       public static boolean iskcexists(String dir){
-      File file = new File(dir+"/kc.sh");
-      if(file.exists()){
-        file.setExecutable(true,false);
-        //16.10.19
-        return true;
-     }
-     else{
-       return false;
-     }
-  }
+      if(ismacosx()){
+        File file = new File(dir+"/kc.command");
+        if(file.exists()){
+          file.setExecutable(true,false);
+          //16.10.19
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+      if(islinux()){
+        File file = new File(dir+"/kc.sh");
+        if(file.exists()){
+          file.setExecutable(true,false);
+          //16.10.19
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+      return false;
+    }
 
     @CindyScript("pathsep")
      // 17.09.06
@@ -357,13 +372,14 @@ public class KetCindyPlugin extends CindyScriptPlugin {
         if (!file.exists()) {
           return "";
         }
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+//        FileReader fileReader = new FileReader(file);
+//        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
         String data;
-        while ((data = bufferedReader.readLine()) != null) {
-          res=res+data+"//";
+        while ((data = br.readLine()) != null) {
+          res=res+data+"/LF/";
         }
-        bufferedReader.close();
+        br.close();
       } catch (IOException e) {
             e.printStackTrace();
       }

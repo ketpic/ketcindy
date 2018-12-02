@@ -1,4 +1,6 @@
-// 201811230
+// 20181102
+//   kcV3 changed  ( "preview" for Mac )
+// 20181123
 //   Mkviewobj debugged  ( Out=n )
 //   CalcbyR changed  ( for cat )
 // 201811225

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181130 loaded");
+println("ketcindylibout(20181202 loaded");
 
 //help:start();
 
@@ -3429,7 +3429,7 @@ kcV3(path,fname):=(
     if(iswindows(),
       SCEOUTPUT = openfile("kc.bat");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
-      tmp=Dq+PathV3+Dq+" "+tmp1+filename;
+      tmp=Dqq(PathV3)+" "+Dqq(tmp1+filename); 
       println(SCEOUTPUT,tmp); 
       println(SCEOUTPUT,"exit");
       closefile(SCEOUTPUT);
@@ -3442,7 +3442,12 @@ kcV3(path,fname):=(
       ); //181125to
       println(SCEOUTPUT,"#!/bin/sh");
       println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
-      tmp=Dq+PathV3+Dq+" "+tmp1+filename;
+      if(PathV3=="preview", //181202from
+         tmp="open -a "+Dqq("preview");
+     ,
+        tmp=Dqq(PathV3);
+      );
+      tmp=tmp+" "+Dqq(tmp1+filename); //181202to
       println(SCEOUTPUT,tmp); 
       println(SCEOUTPUT,"exit 0");
       closefile(SCEOUTPUT);

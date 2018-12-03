@@ -37,7 +37,7 @@ cd $PKGDIR
 error=false
 
 # check for files with executable permissions
-bla=$(find . -type f -a -executable | grep -v '\.\(sh\|pl\)$' || true)
+bla=$(find . -type f -a -executable | grep -v '\(\./forMac/.*\.command\|\.\(sh\|pl\)\)$' || true)
 if [ -n "$bla" ] ; then
   echo "Found files with executable permission"
   echo "--------------------------------------"

@@ -57,7 +57,10 @@ if [ -n "$bla" ] ; then
 fi
 
 # check for duplicate files
-bla=$(findup -t .)
+# ignore
+# ketcindyfolder/scripts/ketlib/ketcindylibmvhelpE.txt
+# ketcindyfolder/scripts/ketlib/ketcindylibmvhelpJ.txt
+bla=$(findup -t . \( ! -path './ketcindyfolder/scripts/ketlib/ketcindylibmvhelpE.txt' \))
 if [ -n "$bla" ] ; then
   echo "Found duplicate file *contents*"
   echo "-------------------------------"
@@ -67,7 +70,7 @@ if [ -n "$bla" ] ; then
 fi
 
 # check for duplicate file names
-bla="$(findsn . \( ! -name 'ketcindy.ini' \))"
+bla="$(findsn . \( ! -path './tl-integration/ketcindy.ini' \))"
 if [ -n "$bla" ] ; then
   echo "Found duplicate file *names*"
   echo "----------------------------"

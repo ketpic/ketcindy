@@ -14,10 +14,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181203 loaded");
+println("ketcindylibout(20181209 loaded");
 
 //help:start();
 
+////%WritetoS start////
 WritetoS(fname,cmdL):=(
 // help:WritetoS("outdata",cmdL);
   regional(tmp,tmp1,tmp2,filename);
@@ -47,6 +48,7 @@ WritetoS(fname,cmdL):=(
   );
  closefile(SCEOUTPUT);
 );
+////%WritetoS end////
 
 ////%kcS start////
 kcS(path,fname):=kcS(path,fname,[]);
@@ -134,6 +136,7 @@ kcS(path,fname,optionorg):=(
 );
 ////%kcS end////
 
+////%SetpathS start////
 SetpathS():=(
   regional(tmp,tmp1);
   if(!isstring(PathS),  // 15.12.11
@@ -151,7 +154,9 @@ SetpathS():=(
   );
   PathS;
 );
+////%SetpathS end////
 
+////%ErrhandleS start////
 ErrhandleS(fname):=(  // 2016.02.28
   regional(str); //17.04.14
   if(indexof(PathS,"-6.")==0,
@@ -167,7 +172,9 @@ ErrhandleS(fname):=(  // 2016.02.28
     str=[]; //17.04.14
   );
 );
+////%ErrhandleS end////
 
+////%Testfunstr start////
 Testfunstr(funstr,varx,vary):=(
   regional(var,val,fun,tmp,tmp1,tmp2);
   fun=replace(funstr,".x","(1)"); // 16.05.19
@@ -186,7 +193,9 @@ Testfunstr(funstr,varx,vary):=(
   tmp1=replace(tmp1,var,"("+val+")");
   tmp1;
 );
+////%Testfunstr end////
 
+////%CalcbyS start////
 CalcbyS(name,cmd):=CalcbyS(name,SetpathS(),cmd,[]);
 CalcbyS(name,Arg1,Arg2):=(
   if(isstring(Arg1),
@@ -429,7 +438,9 @@ CalcbyS(name,path,cmd,optionorg):=(
 //    wait(WaitUnit);
   );
 );
+////%CalcbyS end////
 
+////%Scifun start////
 Scifun(name,fun,argL):=Scifun(name,fun,argL,[]);//16.10.22
 Scifun(name,fun,argL,optionorg):=(
 //help:Scifun("1","date()",[]);
@@ -486,7 +497,9 @@ Scifun(name,fun,argL,optionorg):=(
   );
   parse(nm);
 );
+////%Scifun end////
 
+////%WritetoR start////
 WritetoR(fname,cmdL):=WritetoR(fname,cmdL,[]);
 WritetoR(fname,cmdL,options):=(
 // help:WritetoR("outdata",cmdL);
@@ -536,7 +549,9 @@ WritetoR(fname,cmdL,options):=(
 //    );
 //  );
 );
+////%WritetoR end////
 
+////%kcR start////
 kcR(path,fname):=kcR(path,fname,[]);
 kcR(path,fname,optionorg):=(
 //help:kcR(PathR,"boxdata");
@@ -626,7 +641,9 @@ kcR(path,fname,optionorg):=(
     setdirectory(Dirwork);
   );
 );
+////%kcR end////
 
+////%Dataframe start////
 Dataframe(nmL,dL):=Dataframe(nmL,dL,[]);
 Dataframe(nmL,dL,options):=(
 //help:Dataframe(["name","no1","no2"],dtL);
@@ -655,7 +672,9 @@ Dataframe(nmL,dL,options):=(
   out=replace(out,"[","c(");
   out=replace(out,"]",")");
 );
+////%Dataframe end////
 
+////%MkprecommandR start////
 MkprecommandR():=MkprecommandR(6,"PVOFG");  //180508(9lines)
 MkprecommandR(Arg):=(
   regional(out,tmp1);
@@ -677,6 +696,7 @@ MkprecommandR(Arg):=(
 MkprecommandR(prec,chstr):=(
   regional(cmdL,Plist,tmp,tmp1,tmp2);
   cmdL=[];
+  cmdL=concat(cmdL,["arccos=acos; arcsin=asin; arctan=atan",[]]); //181209
   if(indexof(chstr,"P")>0,
     Plist=[];
     forall(remove(allpoints(),[SW,NE]),
@@ -739,6 +759,7 @@ MkprecommandR(prec,chstr):=(
   );
   cmdL;
 );
+////%MkprecommandR end////
 
 ////%CalcbyR start////
 CalcbyR(name,cmd):=CalcbyR(name,PathR,cmd,[]);
@@ -1079,6 +1100,7 @@ CalcbyR(name,path,cmd,optionorg):=(
 );
 ////%CalcbyR end////
 
+////%Rfun start////
 Rfun(name,fun,argL):=Rfun(name,fun,argL,[]);//16.10.22
 Rfun(name,fun,argL,optionorg):=(
 //help:Rfun("1","rnorm",[10]);
@@ -1120,6 +1142,7 @@ Rfun(name,fun,argL,optionorg):=(
   );
   parse(nm);
 );
+////%Rfun end////
 
 ////%Readcsv start////
 Readcsv(file):=Readcsv(Dirwork,file,[]);
@@ -1279,6 +1302,7 @@ Readcsv(path,file):=(
 );
 ////%Readcsv end////
 
+////%Writecsv start////
 Writecsv(nmL,data,file):=Writecsv(nmL,data,file,[]);
 Writecsv(nmL,dataorg,file,optionorg):=(
 //help:Writecsv([],data,"ex.csv");
@@ -1334,6 +1358,7 @@ Writecsv(nmL,dataorg,file,optionorg):=(
   );
   closefile(SCEOUTPUT);
 );
+////%Writecsv end////
 
 ////%HatchdataR start////
 HatchdataR(nm,iostr,pltlist):=HatchdataR(nm,iostr,pltlist,[]);
@@ -3562,7 +3587,45 @@ Changeobjscale(unitlen,fnameorg,foutorg,optionorg):=(
 );
 ////%Changeobjscale end////
 
+////%Setobj start////
+//Objname(str):=Objname(str,["m","v"]); //180906from
+//Objname(str,options):=Setobj(str,options);
+Setobj():=Setobj(Fhead,["m","v"]); //180901
+Setobj(Arg1):=(
+  if(isstring(Arg1),
+    Setobj(Arg1,["m","v"]); //17.01.12
+  ,
+    Setobj(Fhead,Arg1); //180902
+  );
+);
+Setobj(str,optionsorg):=( //180906to
+//help:Setobj();
+//help:Setobj(["v"]);
+//help:Setobj(options=["m","v","preview","Zax=y(/n)"]);
+  regional(options,tmp,strL);
+  options=select(optionsorg,length(#)>0); //17.12.23from
+  tmp=Divoptions(options); //181203from
+  strL=tmp_7;
+  forall(strL,
+    if(Toupper(substring(#,0,1))=="P",
+      PathV3="preview";
+      options=remove(options,[#]);
+    );
+  ); //181203to
+  if(length(str)>0,
+    OCNAME=str;
+  );
+  if(length(options)>0,
+    OCOPTION=options;
+  ,
+    OCOPTION=["m","v"];
+  ); //17.12.23until
+  println("generate OBJCMD. name="+OCNAME+", option="+OCOPTION);
+);
+////%Setobj end////
+
 ////%Mkviewobj start////
+Mkviewobj():=Mkviewobj(OCNAME,OBJCMD,OCOPTION); //181209
 Mkviewobj(fname,cmdL):=Mkviewobj(Dirwork,fname,cmdL,[]);
 Mkviewobj(Arg1,Arg2,Arg3):=(
   if(!isstring(OCNAME), //17.04.13from
@@ -3577,13 +3640,11 @@ Mkviewobj(Arg1,Arg2,Arg3):=(
   );
 );
 Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
-//help:Mkviewobj(fname,cmdlist);
-//help:Mkviewobj(fname,[]);
-//help:Mkviewobj(path,fname,cmdlist);
-//help:Mkviewobj(options=["M/R","V","Unit=in","Wait=(10)"]);
+//help:Mkviewobj();
   regional(path,cmdL,eqL,strL,flg,fname,options,make,view,cmdlist,
-      vtx,face,unit,tmp,tmp1,tmp2,store,dt,nn);
+      vtx,face,unit,tmp,tmp1,tmp2,store,dt,nn,zax);
   store=Fillblack(); //181128
+println([3647,store]);
   path=replace(pathorg,"\","/");
   if(substring(path,length(path)-1,length(path))!="/",path=path+"/");
   fname=fnameorg;
@@ -3596,9 +3657,16 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   make=-1;
   view=0;
   unit="";
+  zax="Y";
   forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="U", // 16.06.30from
-        unit=tmp2;
+      unit=tmp2;
+      options=remove(options,[#]);
+    ); // 16.06.30to
+    if(tmp1=="Z", // 16.06.30from
+      zax=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     ); // 16.06.30to
   );
@@ -3675,7 +3743,7 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
     Changeobjscale(fname,["Unit="+unit]);//16.10.04 
   );  // 16.06.30until
   if(view==1,
-    if(PathV3=="preview",
+    if((PathV3=="preview")%(zax=="Y"), //181209
       dt=Readlines(fname);
       forall(1..(length(dt)),nn,
         tmp1=dt_nn;
@@ -3699,43 +3767,6 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   Fillrestore(store); //181128
 );
 ////%Mkviewobj end////
-
-////%Setobj start////
-//Objname(str):=Objname(str,["m","v"]); //180906from
-//Objname(str,options):=Setobj(str,options);
-Setobj():=Setobj(Fhead,["m","v"]); //180901
-Setobj(Arg1):=(
-  if(isstring(Arg1),
-    Setobj(Arg1,["m","v"]); //17.01.12
-  ,
-    Setobj(Fhead,Arg1); //180902
-  );
-);
-Setobj(str,optionsorg):=( //180906to
-//help:Setobj();
-//help:Setobj(["v"]);
-//help:Setobj(options=["m","v","preview"]);
-  regional(options,tmp,strL);
-  options=select(optionsorg,length(#)>0); //17.12.23from
-  tmp=Divoptions(options); //181203from
-  strL=tmp_7;
-  forall(strL,
-    if(Toupper(substring(#,0,1))=="P",
-      PathV3="preview";
-      options=remove(options,[#]);
-    );
-  ); //181203to
-  if(length(str)>0,
-    OCNAME=str;
-  );
-  if(length(options)>0,
-    OCOPTION=options;
-  ,
-    OCOPTION=["m","v"];
-  ); //17.12.23until
-  println("generate OBJCMD. name="+OCNAME+", option="+OCOPTION);
-);
-////%Setobj end////
 
 ////%Mkobjcmd start////
 Mkobjcmd(nm,fd):=Mkobjcmd(nm,fd,[40,40,"+"]);

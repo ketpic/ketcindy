@@ -1,4 +1,4 @@
-REM 20181127
+REM 20181207
 echo off
 
 rem Edit the followings if necessary
@@ -9,7 +9,6 @@ set style=\texmf-dist\tex\latex\ketcindy
 set doc=\texmf-dist\doc\support\ketcindy
 set homehead=C:\Users
 
-set ketsrc=%~dp0
 set prgcin=C:\Program Files (x86)
 set xcp="\Windows\System32\xcopy"
 if not exist "%prgcin%\Cinderella" (
@@ -39,26 +38,33 @@ if "%ans%" == "n" (
   exit
 )
 
+cd %~dp0
+if not exist "ketcindyfolder" (
+  cd ../ketcindyfolder
+)
+echo ketcindyfolder is
+cd
+
 if exist "%pathT%%scripts%\." (
   echo Deleting "%pathT%%scripts%"
   rd /s "%pathT%%scripts%"
 )
 echo Copying ketcindy to "%pathT%%scripts%"
-%xcp% /Y /Q /S /E /R "%ketsrc%\scripts\*.*" "%pathT%%scripts%\"
+%xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%%scripts%\"
 if exist "%pathT%%doc%\." (
   echo Deleting docs to "%pathT%%doc%"
   rd /s "%pathT%%doc%"
 )
 echo Copying doc to "%pathT%%doc%"
 set docsrc=doc
-%xcp% /Y /Q /S /E /R "%ketsrc%\%docsrc%\*.*" "%pathT%%doc%\"
+%xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%%doc%\"
 if exist "%pathT%%style%\." (
   echo Deleting "%pathT%%style%"
   rd /s "%pathT%%style%"
 )
 echo Copying ketcindy styles to "%pathT%%style%"
 set stylesrc=style
-%xcp% /Y /Q /S /E /R "%ketsrc%\%stylesrc%\*.*" "%pathT%%style%\"
+%xcp% /Y /Q /S /E /R "%stylesrc%\*.*" "%pathT%%style%\"
 "%pathT%%bin%\mktexlsr"
 
 set cindyplug=%prgcin%\Cinderella\Plugins

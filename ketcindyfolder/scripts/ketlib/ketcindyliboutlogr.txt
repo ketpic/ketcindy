@@ -1,3 +1,6 @@
+// 20181209
+//   MkprecommandR debugged  (arc..  added )
+//   Mkviewobj changed  ( option "Zax=" added)
 // 20181103
 //   Mkviewobj changed  ( change coord in case of "preview")
 //   Setobj changed  ( option "preview" added )

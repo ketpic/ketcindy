@@ -1,7 +1,11 @@
 #!/bin/sh
-#      20181129
+#      20181207
 cd `dirname $0`
-echo `pwd`/work will be used
+if [ -e ../ketcindyfolder ]; then
+  cd ../ketcindyfolder
+fi
+echo Files will be copied from
+echo "    "`pwd`/work
 changesetting=/.ketcindy.conf #181017
 dist=~/ketcindy #180913
 cp -r -p work/  ${dist}/
@@ -9,8 +13,8 @@ if [ $? -gt 0 ]; then
   echo Error:$?
   sleep 5
 else
-  echo Workfolder will be generated as ${dist}
-  echo This folder ketcindy can be moved to any place ##180913
+  echo Workfolder has been generated as ${dist}
+  echo "    "This folder can be moved to any place ##180913
 fi
 read -p 'Choose platex(p),uplatex(u),latex(l),xelatex(x),pdflatex(pd),lualatex(lu):' tex
 if [ ${tex} = "p" ]; then
@@ -65,11 +69,6 @@ if [ ${ans} = "s" ]; then
 else
   echo  "Pathpdf=\"preview\";" >> ${dist}${changesetting}
 fi
-#read -p 'Execute kc.sh with sh(s),open(o):' ans
-#if [ ${ans} = "o" ]; then
-  echo  "Mackc=\"open\";" >>${dist}${changesetting}
-#else
-#  echo  "Mackc=\"sh\";" >>${dist}${changesetting}
-#fi
+echo  "Mackc=\"open\";" >>${dist}${changesetting}
 sleep 1
 exit 0

@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20181129
+#      20181207
 
 # Edit and uncomment the following lines if necessary
 #texpath=/Applications/kettex/texlive
@@ -7,11 +7,23 @@
 #ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
 #ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
 #ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
-
-cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
 homehead=/Users
+cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
+
+echo Plugins of Cinderella
+read -p '    '${cindyplug}?' (y/n): ' ans
+if [ ${ans} != "y" ]; then
+  echo Edit cindyplug in this file
+  sleep 2
+  exit 0
+fi
+echo Cinderella Plugins=${cindyplug}
 
 cd `dirname $0`
+if [ -e ../ketcindyfolder ]; then
+  cd ../ketcindyfolder
+fi
+
 echo `pwd ` will be used
 echo 1. "/Applications/kettex/texlive".
 echo 2. "/Applications/kettex.app/texlive"
@@ -68,11 +80,6 @@ else
   sudo ${texbinpath}/mktexlsr
 fi
 
-read -p 'Plugins d(efault)='${cindyplug}' : ' ans
-if [ ${ans} != "d" ]; then
-  cindyplug=${ans}
-fi
-echo Cinderella Plugins=${cindyplug}
 cd ${ketcindyscripts}
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
 echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/ketcindy.ini

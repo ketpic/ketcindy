@@ -1,54 +1,61 @@
-REM 20181017
+REM 20181207
 echo off
 set xcp="\Windows\System32\xcopy"
 rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
-set ketsrc=%~dp0
+
+cd %~dp0
+if not exist "ketcindyfolder" (
+  cd ../ketcindyfolder
+)
+echo ketcindyfolder is
+cd
+
 set change=\.ketcindy.conf
 set dist=%HOMEPATH%\ketcindy
 if exist "%dist%\." (
   echo Deleting "%dist%"
   rd /s "%dist%"
 )
-%xcp% /Y /Q /S /E /R "%ketsrc%\work\*.*" "%dist%\"
-echo Workfolder is %dist%
-echo It can be moved to any place
+%xcp% /Y /Q /S /E /R "work\*.*" "%dist%\"
+echo Workfolder has been generated as %dist%
+echo This folder can be moved to any place
 echo platex(p) uplatex(u) latex(l) xelatex(x) pdflatex(pd) lualatex(lu)
 set /P STR_INPUT="Choose LaTeX from the above :"
 if "%STR_INPUT%" == "p" (
   set tex=platex
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideJ.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleJ.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyGuideJ.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTpicStyleJ.pdf" "%dist%\"
 )
 if "%STR_INPUT%" == "u" (
   set tex=uplatex
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideJ.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleJ.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyGuideJ.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTpicStyleJ.pdf" "%dist%\"
 )
 if "%STR_INPUT%" == "l" (
   set tex=latex
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
 )
 if "%STR_INPUT%" == "x" (
   set tex=xelatex
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
 )
 if "%STR_INPUT%" == "pd" (
   set tex=pdflatex
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
 )
 if "%STR_INPUT%" == "lu" (
   set tex=lualatex
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
-  copy /Y "%ketsrc%\doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyReferenceE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTCindyGuideE.pdf" "%dist%\"
+  copy /Y "doc\ketmanual\KeTpicStyleE.pdf" "%dist%\"
 )
 set dist=%HOMEPATH%
 echo  generating %dist%\%changesetting%

@@ -3498,7 +3498,7 @@ Addpackage(packorg):=(
 
 ////%Usegraphics start////
 Usegraphics(gpack):=( //180817
-//help:Usegrapchics("pict2e");
+//help:Usegraphics("pict2e");
   if(!contains(ADDPACK,gpack),
     Addpackage([gpack]);
   );

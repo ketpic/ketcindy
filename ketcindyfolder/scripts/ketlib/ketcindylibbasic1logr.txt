@@ -1,3 +1,5 @@
+// 20181209
+//    Fillstore changed  ( The color of ketcindy buttons fixed)
 // 20181125
 //    Fillstore,Fillblack,Fillrestore added
 // 2018111

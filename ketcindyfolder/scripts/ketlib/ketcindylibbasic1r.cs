@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181202)");
+println("KeTCindy V.3.2.3(20181209)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181125) loaded");
 
@@ -180,10 +180,34 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
 
 ////%Fillstore start////
 Fillstore():=(
-  regional(tmp,tmp1,out);
+  regional(tmp,tmp1,out,dtL,txtL,clrL,txt,clr,nn,jj);
+  dtL=[  //181209from
+    ["Figure",[1,0.29,0.29]],["Parent",[1,1,0]],
+    ["ParaF",[0,1,1]],["Flip",[0,0,1]],["Anime",[0.51,0.95,1]],
+    ["Title",[0,1,0]],["Slide",[0.47,0,0.72]],["Digest",[1,0.74,0.47]],
+    ["KeTJS",[0,1,1]],["KeTJSoff",[0,1,1]],
+    ["Objview",[0,1,0]]
+  ];
+  txtL=apply(dtL,#_1);
+  clrL=apply(dtL,#_2);
   tmp1=allelements();
   tmp1=select(tmp1,indexof(#.name,"Text")>0);
-  out=apply(tmp1,[#.name,#.fillcolor]);
+  out=[];
+  forall(1..(length(tmp1)),nn,
+    tmp=tmp1_nn;
+    txt=tmp.text;
+    tmp=select(1..(length(txtL)),txtL_#==txt);
+    if(length(tmp)>0,
+      jj=tmp_1;
+      clr=clrL_jj;
+      tmp=tmp1_nn;
+      tmp.fillcolor=clr;
+    ,
+      tmp=tmp1_nn;
+      clr=tmp.fillcolor;
+    );
+    out=append(out,[tmp.name,clr,tmp.text]);
+  ); //181209to
   out;
 );
 ////%Fillstore end////
@@ -192,9 +216,7 @@ Fillstore():=(
 Fillblack():=Fillblack("Running");
 Fillblack(str):=(
   regional(tmp,tmp1,store);
-  tmp1=allelements();
-  tmp1=select(tmp1,indexof(#.name,"Text")>0);
-  store=apply(tmp1,[#.name,#.fillcolor,#.text]);
+  store=Fillstore(); //181209
   tmp=select(tmp1,#.name=="Text0");
   if(length(tmp)==0,
     forall(store,

@@ -1,4 +1,9 @@
-// 20181209
+// 20181212
+//    Colorrgb2cmyk debugged
+//    Colorcode changed ( some have been deleted)
+//    Colorname2rgb added
+//    Divoptions changed  (color name)
+/ 20181209
 //    Fillstore changed  ( The color of ketcindy buttons fixed)
 // 20181125
 //    Fillstore,Fillblack,Fillrestore added

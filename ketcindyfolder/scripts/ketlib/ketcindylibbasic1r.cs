@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181209)");
+println("KeTCindy V.3.2.3(20181212)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181125) loaded");
 
@@ -1247,14 +1247,7 @@ Divoptions(options):=(
               tmp1=colorCmyk2Rgb(tmp1);
             );
           ,
-            if(tmp2=="red",tmp1=[1,0,0];color=tmp1);
-            if(tmp2=="green",tmp1=[0,1,0];color=tmp1);
-            if(tmp2=="blue",tmp1=[0,0,1];color=tmp1);
-            if(tmp2=="black",tmp1=[0,0,0];color=tmp1);
-            if(tmp2=="white",tmp1=[1,1,1];color=tmp1);
-            if(tmp2=="cyan",tmp1=[0,1,1];color=tmp1);
-            if(tmp2=="magenta",tmp1=[1,0,1];color=tmp1);
-            if(tmp2=="yellow",tmp1=[1,1,0];color=tmp1);
+            tmp1=Colorname2rgb(tmp2); color=tmp1; //181212
          );
           tmp="color->"+text(tmp1);
           opcindy=opcindy+","+tmp;
@@ -3064,8 +3057,12 @@ ColorRgb2Cmyk(clr):=(
   regional(clrnew,tmp,black);
   tmp=apply(clr,1-#);
   black=min(tmp);
-  tmp=apply(clr,(1-#-black)/(1-black));
-  clrnew=append(tmp,black);
+  if(black!=1, //181112from
+    tmp=apply(clr,(1-#-black)/(1-black));
+    clrnew=append(tmp,black);
+  ,
+    clrnew=[0,0,0,1];
+  ); //181112to
   clrnew;
 );
 ////%ColorRgb2Cmyk end////
@@ -3200,7 +3197,7 @@ Colorhslrgb(hsl):=(
 );
 ////%Colorhslrgb end////
 
-////%hue2rgb start////
+////%Colorhue2rgb start////
 hue2rgb(vv1,vv2,vh):=(
   regional(out);
   if ( vh < 0.0 ,vh =vh+1);
@@ -3220,7 +3217,7 @@ hue2rgb(vv1,vv2,vh):=(
   );
   out;
 );
-////%hue2rgb end////
+////%Colorhue2rgb end////
 
 ////%Colorrgbhwb start////
 Colorrgbhwb(sL):=(
@@ -3261,113 +3258,75 @@ Colorhwbrgb(sLorg):=(
 );
 ////%Colorhwbrgb end////
 
-////%Colorhslhsv start////
-Colorhslhsv(sL):=(
-  regional(dl1,dl2,dl3,dL);
-  dl1=sL_1;
-  if(sL_3 == 0,
-    // no need to do calc on black
-    // also avoids divide by 0 error
-    dL= [0, 0, 0];
-  ,
-  sL_3 = sL_3 * 2;
-  if(sL_3 <= 1,sL_2 = sL_2 * sL_3,sL_2 = sL_2 * (2 - sL_3));
-  dl3 = (sL_3 + sL_2) / 2;
-  dl2 = (2 * sL_2) / (sL_3 + sL_2);
-  dL = [dl1, dl2, dl3];
-  );
-  dL;
-);
-////%Colorhslhsv end////
-
 ////%Colorcode start////
-Colorcode(src,dest,sL):=(
+Colorcode(src,dest,sL):=( // 181212 some colorchange deleted
 //help:Colorcode("rgb","cmyk",[1,0.5,0]);
   regional(tmp,tmp1,tmp2,tmp3,mn,mx,delta,black,dL,flg);
   regional(dl1,dl2,dl3);
+  if(src=="rgb" & dest=="cmyk",dL=Colorrgb2cmyk(sL));
+  if(src=="cmyk" & dest=="rgb",dL=Colorcmyk2rgb(sL));
   if(src=="rgb" & dest=="hsv", dL=Colorrgbhsv(sL));
-  if(src=="hsv" & dest=="rgb", dL=Colorhsvrgb(sL));
   if(src=="rgb" & dest=="hsl", dL=Colorrgbhsl(sL));
-  if(src=="hsl" & dest=="rgb", dL=Colorhslrgb(sL));
   if(src=="rgb" & dest=="hwb", dL=Colorrgbhwb(sL));
+  if(src=="hsv" & dest=="rgb", dL=Colorhsvrgb(sL));
+  if(src=="hsl" & dest=="rgb", dL=Colorhslrgb(sL));
   if(src=="hwb" & dest=="rgb", dL=Colorhwbrgb(sL));
-  if(src=="hsl" & dest=="hsv", dL=Colorhslhsv(sL));
-  if(src=="hsv" & dest=="hsl",
-    dl1 = sL_1; 
-    dl3 = (2 - sL_2) * sL_3;
-    dl2 = sL_2 * sL_3;
-    if(dl3 <= 1,dl2 = dl2/dl3,dl2=dl2/(2 - dl3));
-    dl3 =d l3/ 2;
-    dL = [dl1, dl2 , dl3 ];
-  );
-
-  if(src=="rgb" & dest=="cmyk",
-    tmp=apply(sL,1-#);
-    black=min(tmp);
-    tmp=apply(sL,(1-#-black)/(1-black));
-    dL=append(tmp,black);
-  );
-  if(src=="cmyk" & dest=="rgb",
-    black=sL_4;
-    tmp=apply(sL,1-min(1,#*(1-black)+black));
-    dL=tmp_(1..3);
-  );
-  if(src=="hsv" & dest=="cmyk",
-    tmp=Colorcode("hsv","rgb",sL);
-    dL=Colorcode("rgb","cmyk",tmp);
-  );
-  if(src=="cmyk" & dest=="hsv",
-    tmp=Colorcode("cmyk","rgb",sL);
-    dL=Colorcode("rgb","hsv",tmp);
-  );
-
-  if(src=="hsv" & dest=="hwb",
-    tmp = Colorcode("hsv","rgb",sL);
-    dL = Colorcode("rgb","hwb",tmp);
-  );
-  if(src=="hwb" & dest=="hsv",
-    tmp = Colorcode("hwb","rgb",sL);
-    dL = Colorcode("rgb","hsv",tmp);
-  );
-  if(src=="hsl" & dest=="hwb",
-    tmp = Colorcode("hsl","rgb",sL);
-    dL = Colorcode("rgb","hwb",tmp);
-  );
-  if(src=="hwb" & dest=="hsl",
-    tmp = Colorcode("hwb","rgb",sL);
-    dL = Colorcode("rgb","hsl",tmp);
-  );
-  if(src=="hsl" & dest=="cmyk",
-    tmp = Colorcode("hsl","rgb",sL);
-    dL = Colorcode("rgb","cmyk",tmp);
-  );
-  if(src=="hwb" & dest=="cmyk",
-    tmp = Colorcode("hwb","rgb",sL);
-    dL = Colorcode("rgb","cmyk",tmp);
-  );
-  if(src=="cmyk" & dest=="hsl",
-    tmp = Colorcode("cmyk","rgb",sL);
-    dL = Colorcode("rgb","hsl",tmp);
-  );
-  if(src=="cmyk" & dest=="hwb",
-    tmp = Colorcode("cmyk","rgb",sL);
-    dL = Colorcode("rgb","hwb",tmp);
-  );
-  if(src=="hsb" & dest=="rgb",dL=Colorcode("hsv","rgb",sL));
-  if(src=="rgb" & dest=="hsb",dL=Colorcode("rgb","hsv",sL));
-
-  if(src=="hsb" & dest=="hsl",dL=Colorcode("hsv","hsl",sL));
-  if(src=="hsl" & dest=="hsb",dL=Colorcode("hsl","hsv",sL));
-
-  if(src=="hsb" & dest=="hwb",dL=Colorcode("hsv","hwb",sL));
-  if(src=="hwb" & dest=="hsb",dL=Colorcode("hwb","hsv",sL));
-
-  if(src=="hsb" & dest=="cmyk",dL=Colorcode("hsv","cmyk",sL));
-  if(src=="cmyk" & dest=="hsb",dL=Colorcode("cmyk","hsv",sL));
-
   dL;
 );
 ////%Colorcode end////
+
+
+////%Colorname2rgb start////
+Colorname2rgb(name):=( //181212
+//help:Colorname2rgb("sepia");
+  regional(dL,nameL,codeL,tmp);
+  dL=[
+    ["greenyellow",[0.15,0,0.69,0]],["yellow",[0,0,1,0]],
+    ["goldenrod",[0,0.1,0.84,0]],["dandelion",[0,0.29,0.84,0]],
+    ["apricot",[0,0.32,0.52,0]],["peach",[0,0.5,0.7,0]],
+    ["melon",[0,0.46,0.5,0]],["yelloworange",[0,0.42,1,0]],
+    ["orange",[0,0.61,0.87,0]],["burntorange",[0,0.51,1,0]],
+    ["bittersweet",[0,0.75,1,0.24]],["redorange",[0,0.77,0.87,0]],
+    ["mahogany",[0,0.85,0.87,0.35]],["maroon",[0,0.87,0.68,0.32]],
+    ["brickred",[0,0.89,0.94,0.28]],["red",[0,1,1,0]],
+    ["orangered",[0,1,0.5,0]],["rubinered",[0,1,0.13,0]],
+    ["wildstrawberry",[0,0.96,0.39,0]],["salmon",[0,0.53,0.38,0]],
+    ["carnationpink",[0,0.63,0,0]],["magenta",[0,1,0,0]],
+    ["violetred",[0,0.81,0,0]],["rhodamine",[0,0.82,0,0]],
+    ["mulberry",[0.34,0.9,0,0.02]],["redviolet",[0.07,0.9,0,0.34]],
+    ["fuchsia",[0.47,0.91,0,0.08]],["lavender",[0,0.48,0,0]],
+    ["thistle",[0.12,0.59,0,0]],["orchid",[0.32,0.64,0,0]],
+    ["darkorchid",[0.4,0.8,0.2,0]],["purple",[0.45,0.86,0,0]],
+    ["plum",[0.5,1,0,0]],["violet",[0.79,0.88,0,0]],
+    ["royalpurple",[0.75,0.9,0,0]],["blueviolet",[0.86,0.91,0,0.04]],
+    ["periwinkle",[0.57,0.55,0,0]], ["cadetblue",[0.62,0.57,0.23,0]],
+    ["cornflowerblue",[0.65,0.13,0,0]],["midnightblue",[0.98,0.13,0,0.43]],
+    ["navyblue",[0.94,0.54,0,0]],["royalblue",[1,0.5,0,0]],
+    ["blue",[1,1,0,0]],["cerulean",[0.94,0.11,0,0]],
+    ["cyan",[1,0,0,0]],["processblue",[0.96,0,0,0]],
+    ["skyblue",[0.62,0,0.12,0]],["turquoise",[0.85,0,0.2,0]],
+    ["tealblue",[0.86,0,0.34,0.02]],["aquamarine",[0.82,0,0.3,0]],
+    ["bluegreen",[0.85,0,0.33,0]],["emerald",[1,0,0.5,0]],
+    ["junglegreen",[0.99,0,0.52,0]],["seagreen",[0.69,0,0.5,0]],
+    ["green",[1,0,1,0]],["forestgreen",[0.91,0,0.88,0.12]],
+    ["pinegreen",[0.92,0,0.59,0.25]],["limegreen",[0.5,0,1,0]],
+    ["yellowgreen",[0.44,0,0.74,0]],["springgreen",[0.26,0,0.76,0]],
+    ["olivegreen",[0.64,0,0.95,0.4]],["rawsienna",[0,0.72,1,0.45]],
+    ["sepia",[0,0.83,1,0.7]],["brown",[0,0.81,1,0.6]],
+    ["tan",[0.14,0.42,0.56,0]],["gray",[0,0,0,0.5]],
+    ["black",[0,0,0,1]],["white",[0,0,0,0]]
+  ];
+  tmp=select(dL,#_1==name);
+  if(length(tmp)>0,
+    tmp=tmp_1;
+    code=tmp_2;
+    code=Colorcmyk2rgb(code);
+  ,
+    println("    "+name+" not found");
+    code=[0,0,0];
+  );
+);
+////%Colorname2rgb end////
 
 ////%Colorinfile start////
 Colorinfile(filename,clrf,clrt):=(

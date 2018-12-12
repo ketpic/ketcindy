@@ -3,6 +3,7 @@
 //    Colorcode changed ( some have been deleted)
 //    Colorname2rgb added
 //    Divoptions changed  (color name)
+//    Ketinit changed  (Fillstore added)
 / 20181209
 //    Fillstore changed  ( The color of ketcindy buttons fixed)
 // 20181125

@@ -1,7 +1,9 @@
-REM 20181207
+REM 20181212
 echo off
-set xcp="\Windows\System32\xcopy"
-rem set ketsrc=%HOMEPATH%\Desktop\ketcindyfolder
+
+REM Edit the followings if necessary.
+set verR=3.4.2
+set verM=5.37.3
 
 cd %~dp0
 if not exist "ketcindyfolder" (
@@ -9,6 +11,8 @@ if not exist "ketcindyfolder" (
 )
 echo ketcindyfolder is
 cd
+
+set xcp="\Windows\System32\xcopy"
 
 set change=\.ketcindy.conf
 set dist=%HOMEPATH%\ketcindy
@@ -66,10 +70,9 @@ if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
 echo Pathpdf="%prgSm%"; >> "%dist%%change%"
-set /P STR_INPUT="Input version of R d(efault)=3.4.2 :"
-if "%STR_INPUT:~0,1%" == "d" (
-  set verR=3.4.2
-) else (
+echo "Version of R : d:%verR%"
+set /P STR_INPUT="Input version of R d(efault)=%verR% :"
+if not "%STR_INPUT:~0,1%" == "d" (
   set verR=%STR_INPUT%
 )
 echo %verR%
@@ -83,10 +86,8 @@ if exist "%prg%\R\R-%verR%\bin\" (
     echo "R-%verR% not found"
   )
 )
-set /P STR_INPUT="Input version of Maxima d(efault)=5.37.3 :"
-if "%STR_INPUT:~0,1%" == "d" (
-  set verM=5.37.3
-) else (
+set /P STR_INPUT="Input version of Maxima d(efault)=%verM% :"
+if not "%STR_INPUT:~0,1%" == "d" (
   set verM=%STR_INPUT%
 )
 echo %verM%

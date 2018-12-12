@@ -1,3 +1,5 @@
+// 20181212
+//   Vertexedgeface debugged  ( Vname changed for multi 3d )
 // 20181108
 //   Mkpointlist debugged (theta=90)
 // 20181107

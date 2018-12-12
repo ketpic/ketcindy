@@ -167,11 +167,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   SlideMargin=[0,0]; //180908
   ThinDense=0.1;//17.01.08
-  if(indexof(PathS,"-5.")>0,//17.12.03from
-    LibnameS=Dirlib+pathsep()+"ketpicsciL5";
-  ,
-    LibnameS=Dirlib+pathsep()+"ketpicscifiles6";
-  );
+  Fillstore(); //181212
   if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0,
     LibnameS=replace(LibnameS,"ketpic","ketpic2e");
   );//17.12.03until
@@ -3275,7 +3271,6 @@ Colorcode(src,dest,sL):=( // 181212 some colorchange deleted
 );
 ////%Colorcode end////
 
-
 ////%Colorname2rgb start////
 Colorname2rgb(name):=( //181212
 //help:Colorname2rgb("sepia");
@@ -3327,53 +3322,6 @@ Colorname2rgb(name):=( //181212
   );
 );
 ////%Colorname2rgb end////
-
-////%Colorinfile start////
-Colorinfile(filename,clrf,clrt):=(
-  regional(tmp,tmp1,tmp2,head,cstrL,chstrL,head,body);
-  if(length(clrf_1)==3,
-    head="[rgb]{";
-  ,
-    head="[cmyk]{";
-  );
-  tmp=apply(clrf,text(#));
-  cstrL=apply(tmp,head+substring(#,1,length(#)-1)+"}");
-  if(length(clrt_1)==3,
-    head="[rgb]{";
-  ,
-    head="[cmyk]{";
-  );
-  tmp=apply(clrt,text(#));
-  chstrL=apply(tmp,head+substring(#,1,length(#)-1)+"}");
-  tmp1=load(filename);
-  tmp=tokenize(tmp1,"{\unitlength");
-  head=tokenize(tmp_1,"%%%");
-  head=head_(2..(length(head)));
-  head=apply(head,"%%%"+#);
-  tmp2=tmp_2;
-  forall(1..5,
-    tmp2=replace(tmp2,cstrL_#,chstrL_#);
-  );
-  body=tokenize(tmp2,"%");
-  body_1="{\unitlength"+body_1;
-  body=apply(body,#+"%");
-  body=body_(1..(length(body)-1));
-  tmp=replace(filename,".tex","new.tex");
-  SCEOUT=openfile(tmp);
-  forall(head,
-    println(SCEOUT,#);
-  );
-  forall(1..(length(body)),
-    tmp=body_#;
-    if(#<length(body),
-      println(SCEOUT,tmp);
-    ,
-      print(SCEOUT,tmp)
-    );
-  );
-  closefile(SCEOUT);
-);
-////%Colorinfile end////
 
 ////%GetLinestyle start////
 GetLinestyle(str,name):=(

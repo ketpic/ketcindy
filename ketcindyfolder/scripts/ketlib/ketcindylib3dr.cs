@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181108) loaded");
+println("ketcindylib3d(20181212) loaded");
 
 //help:start();
 
@@ -2870,7 +2870,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       tmp=parse(text(vtx)+"3d");
       vname=text(vtx);
     ,
-      vname="V"+text(#); //181107
+      vname="V"+nm+text(#); //181212
       if(vtxflg==1, //180905
         if(fixflg==1,
           Putpoint3d([vname,vtx],"fix");

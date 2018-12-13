@@ -492,23 +492,23 @@ Sep1000(va):=( //17.07.18
 );
 ////%Sep1000 end////
 
-////%acos start////
-acos(x):=(
-//help:acos(1.000001);
+////%Acos start////
+Acos(x):=(
+//help:Acos(1.000001);
   re(arccos(x));
 );
-////%acos end////
+////%Acos end////
 
-////%asin start////
-asin(x):=(
+////%Asin start////
+Asin(x):=(
 //help:Asin(1.000001);
   re(arcsin(x));
 );
-////%asin end////
+////%Asin end////
 
-////%atan start////
-atan(x):=(
-//help:atan(1);
+////%Atan start////
+Atan(x):=(
+//help:Atan(1);
   re(arctan(x));
 );
 ////%atan end////

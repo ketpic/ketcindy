@@ -2803,6 +2803,9 @@ WritetoRS(filename,shchoice):=(
   println(SCEOUTPUT,"FnameR='"+FnameR+"'");
   println(SCEOUTPUT,"Fnameout='"+Fnameout+"'");
   println(SCEOUTPUT,"arccos=acos; arcsin=asin; arctan=atan");
+  println(SCEOUTPUT,"Acos<- function(x){acos(max(-1,min(1,x)))}");
+  println(SCEOUTPUT,"Asin<- function(x){asin(max(-1,min(1,x)))}");
+  println(SCEOUTPUT,"Atan<- atan");
   println(SCEOUTPUT,"Sqr<- function(x){if(x>=0){sqrt(x)}else{0}}");
   println(SCEOUTPUT,"");
   forall(COM0thlist,

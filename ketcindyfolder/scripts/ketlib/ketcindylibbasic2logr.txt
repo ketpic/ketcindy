@@ -1,3 +1,5 @@
+// 20181213
+//   Usegraphics, Viewtex changed ( tikz added)
 // 20181125
 //   Mkslides, Mksldesummary chanded  (Fillblack added )
 //   Presentation changed ( load => readfile2str )

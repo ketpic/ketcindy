@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181125) loaded");
+println("ketcindybasic2(20181213) loaded");
 
 //help:start();
 
@@ -3500,7 +3500,11 @@ Addpackage(packorg):=(
 Usegraphics(gpack):=( //180817
 //help:Usegraphics("pict2e");
   if(!contains(ADDPACK,gpack),
-    Addpackage([gpack]);
+    if(gpack =="tikz", //181213from
+      Addpackage(["pgf","tikz"]);
+    ,
+      Addpackage([gpack]);
+    ); //181213to
   );
   GPACK=gpack;
 );
@@ -3521,36 +3525,27 @@ Viewtex():=(
     );//17.08.13until
   ); // 16.06.09until
   println(SCEOUTPUT,tmp);
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0)
-      %(GPACK=="pict2e"), //16.11.23,12.16,180817
-    if(indexof(PathT,"pdflatex")>0,
-      println(SCEOUTPUT,"\usepackage[pdftex]{pict2e}");//16.11.24
-    ,
-      println(SCEOUTPUT,"\usepackage{pict2e}");//16.12.16
-      if(indexof(PathT,"lualatex")>0, //180817
-        println(SCEOUTPUT,"\usepackage{luatexja}");
-      );
-    );
-    tmp=replace(Dirhead,"\","/"); //17.10.30from
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic2e}");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer2e}");
-    );
-  ,
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0), //181213from
+    if(GPACK=="tpic", GPACK="pict2e");
+  );
+  if(GPACK=="tpic", 
     tmp=replace(Dirhead,"\","/");
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
+    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
+  );
+  if(GPACK=="pict2e", 
+    println(SCEOUTPUT,"\usepackage{pict2e}");
+    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
+    if(indexof(PathT,"lualatex")>0,
+      println(SCEOUTPUT,"\usepackage{luatexja}");
     );
-  );//17.10.30until
+  );
+  if(GPACK=="tikz", 
+    println(SCEOUTPUT,"\usepackage[pgf,tikz}");//16.11.24
+    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
+    if(indexof(PathT,"lualatex")>0, 
+      println(SCEOUTPUT,"\usepackage{luatexja}");
+    );
+  );//181213to
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{graphicx}");
   println(SCEOUTPUT,"\usepackage{color}");

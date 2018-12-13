@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181213) loaded");
+println("ketcindybasic2(20181214) loaded");
 
 //help:start();
 
@@ -2803,6 +2803,7 @@ WritetoRS(filename,shchoice):=(
   println(SCEOUTPUT,"FnameR='"+FnameR+"'");
   println(SCEOUTPUT,"Fnameout='"+Fnameout+"'");
   println(SCEOUTPUT,"arccos=acos; arcsin=asin; arctan=atan");
+  println(SCEOUTPUT,"Sqr<- function(x){if(x>=0){sqrt(x)}else{0}}");
   println(SCEOUTPUT,"");
   forall(COM0thlist,
     if(indexof(#,"Texcom")==0, //17.09.22

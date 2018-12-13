@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181212)");
+println("KeTCindy V.3.2.3(20181214)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181125) loaded");
 
@@ -491,6 +491,34 @@ Sep1000(va):=( //17.07.18
   out;
 );
 ////%Sep1000 end////
+
+////%acos start////
+acos(x):=(
+//help:acos(1.000001);
+  re(arccos(x));
+);
+////%acos end////
+
+////%asin start////
+asin(x):=(
+//help:Asin(1.000001);
+  re(arcsin(x));
+);
+////%asin end////
+
+////%atan start////
+atan(x):=(
+//help:atan(1);
+  re(arctan(x));
+);
+////%atan end////
+
+////%Sqr start////
+Sqr(x):=(
+//help:Sqr(-0.00001);
+  if(x<0,0,sqrt(x));
+);
+////%Sqr end////
 
 ////%Factorial start////
 Factorial(n):=(

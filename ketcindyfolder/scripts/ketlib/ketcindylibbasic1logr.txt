@@ -1,3 +1,5 @@
+// 20181214
+//    acos, asin, atan, Sqr added
 // 20181212
 //    Colorrgb2cmyk debugged
 //    Colorcode changed ( some have been deleted)

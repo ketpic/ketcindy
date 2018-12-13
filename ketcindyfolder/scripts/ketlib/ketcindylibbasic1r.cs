@@ -91,6 +91,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   OutComList=[];
   OutFileLIst=[];   // 15.10.22
   FigPdfList=[];  // 16.04.08
+  Fillstore(); //181212
   ADDPACK=[]; // 16.05.16
   GPACK="tpic"; //180817
   ErrFlag=0;
@@ -167,7 +168,6 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
   SlideMargin=[0,0]; //180908
   ThinDense=0.1;//17.01.08
-  Fillstore(); //181212
   if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0,
     LibnameS=replace(LibnameS,"ketpic","ketpic2e");
   );//17.12.03until

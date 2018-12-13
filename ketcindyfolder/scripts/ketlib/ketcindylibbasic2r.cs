@@ -2786,13 +2786,18 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,"setwd('"+tmp1+"')"); 
   );//180409to
   tmp=replace(Libname,"\","/"); //17.09.24from
-  println(SCEOUTPUT,"source('"+tmp+".r')");//temporary
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0)
-         %(GPACK=="pict2e"), //  180817
+  println(SCEOUTPUT,"source('"+tmp+".r')"); //181213
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
+    if(GPACK=="tpic",GPACK="pict2e");
+  );
+  if(GPACK=="pict2e", //  180817
     tmp=replace(tmp+"_rep2e","\","/");
     println(SCEOUTPUT,"source('"+tmp+".r')");
   ); 
-  println(SCEOUTPUT,"Ketinit()");
+  if(GPACK=="tikz", //181213from
+    tmp=replace(tmp+"_reptikz","\","/");
+    println(SCEOUTPUT,"source('"+tmp+".r')");
+  ); //181213to println(SCEOUTPUT,"Ketinit()");
   println(SCEOUTPUT,"cat(ThisVersion,'\n')"); 
   println(SCEOUTPUT,"Fnametex='"+Fnametex+"'");
   println(SCEOUTPUT,"FnameR='"+FnameR+"'");

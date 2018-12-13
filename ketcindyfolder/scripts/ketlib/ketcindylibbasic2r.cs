@@ -2805,8 +2805,10 @@ WritetoRS(filename,shchoice):=(
   println(SCEOUTPUT,"arccos=acos; arcsin=asin; arctan=atan");
   println(SCEOUTPUT,"Acos<- function(x){acos(max(-1,min(1,x)))}");
   println(SCEOUTPUT,"Asin<- function(x){asin(max(-1,min(1,x)))}");
-  println(SCEOUTPUT,"Atan<- atan");
+  println(SCEOUTPUT,"Atan=atan");
   println(SCEOUTPUT,"Sqr<- function(x){if(x>=0){sqrt(x)}else{0}}");
+  println(SCEOUTPUT,"Factorial=factorial");
+  println(SCEOUTPUT,"Norm<- function(x){norm(matrix(x,nrow=1),"+Dqq("2")+")}");
   println(SCEOUTPUT,"");
   forall(COM0thlist,
     if(indexof(#,"Texcom")==0, //17.09.22

@@ -511,7 +511,7 @@ Atan(x):=(
 //help:Atan(1);
   re(arctan(x));
 );
-////%atan end////
+////%Atan end////
 
 ////%Sqr start////
 Sqr(x):=(

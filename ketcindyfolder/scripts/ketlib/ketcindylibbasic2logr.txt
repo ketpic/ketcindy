@@ -1,5 +1,5 @@
 // 20181214
-//   WritetoRS changed ( Definition of Sqr added )
+//   WritetoRS changed ( Definition of Acos,Asin,Atan,Sqr,Factorial,Norm added )
 // 20181213
 //   Usegraphics, WritetoRS changed ( tikz added)
 // 20181125

@@ -5239,6 +5239,7 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
 ////%Putintersect end////
 
 ////%Setarrow start////
+Setarrow():=Setarrow([]);
 Setarrow(arglist):=(
 //help:Setarrow([-1,-1,-1,1,0.3]);
 //help:Setarrow([size(1),angle(18),position(1),cut(0),segstyle("dr,1")]);
@@ -5248,19 +5249,21 @@ Setarrow(arglist):=(
     println([YaSize,YaAngle,YaPosition,YaCut,YasenStyle]);
   );
   if(length(tmp)>=1,
-    if(tmp_1>=0,YaSize=tmp_1,YaSize=1);
+    if((tmp_1>0),YaSize=tmp_1);
   );
   if(length(tmp)>=2,
-    if(tmp_2>=0,YaAngle=tmp_2,YaAngle=18);
+    if((tmp_2>0)&(tmp_2<90),YaAngle=tmp_2);
    );
   if(length(tmp)>=3,
-     if(tmp_3>=0,YaPosition=tmp_3,YaPosition=1);
+     if((tmp_3>=0)&(tmp_3<=1),YaPosition=tmp_3);
   );
   if(length(tmp)>=4,
-    if(tmp_4>=0,YaCut=tmp_4,YaCut=0);
+    if((tmp_4>=0)&(tmp_4<1),YaCut=tmp_4);
   );
   tmp=select(arglist,isstring(#));
-  if(length(tmp)>0,YasenStyle=tmp_1,YasenStyle="dr,1");
+  if(length(tmp)>0,
+    YasenStyle=tmp_1;
+  );
   [YaSize,YaAngle,YaPosition,YaCut,YasenStyle];
 );
 ////%Setarrow start////
@@ -5398,7 +5401,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
        options=remove(options,[#]);
      );
   ); //181018to
-  tmp1=[YaSize,YaAngle,Yaposition,YaCut]; //181214from
+  tmp1=[YaSize,YaAngle,YaPosition,YaCut]; //181214from
   forall(1..(length(reL)),
     if(reL_#<0, reL_#=tmp1_#);
   );  
@@ -5407,7 +5410,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   );
   cut=reL_4;
   tmp=reL_(1..3);
-  options=remove(options,reL);
+  options=select(options,!isreal(#));
   options=concat(options,tmp); //181214to
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);

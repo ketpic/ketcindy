@@ -1,5 +1,6 @@
 // 20181215
 //    Ketinit changed (AXSTYLE added)
+//    Setarrow debugged
 // 20181214
 //    Acos, Asin, Atan, Sqr added
 //    Setarrow added

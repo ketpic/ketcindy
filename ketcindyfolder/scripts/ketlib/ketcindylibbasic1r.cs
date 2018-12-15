@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181214)");
+println("KeTCindy V.3.2.3(20181215)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181125) loaded");
 
@@ -66,7 +66,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   TenSizeInit=0.02;
   TenSize=TenSizeInit;
   YaSize=1; YaAngle=18; YaPosition=1;
-  YaThick=1; YaStyle="tf";
+  YaCut=0; YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
   KCOLOR=[0,0,0];
   GLIST=[];
@@ -82,6 +82,8 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   COM2ndlist=[];
   COM2ndlistb=[]; //180612
   ADDAXES="1";
+  AXSTYLE=["l","x","e","y","n","O","sw"]; //181215
+  AXCOUNT=1; //181215
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
   Dq=unicode("0022");
@@ -5236,6 +5238,34 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
 );
 ////%Putintersect end////
 
+////%Setarrow start////
+Setarrow(arglist):=(
+//help:Setarrow([-1,-1,-1,1,0.3]);
+//help:Setarrow([size(1),angle(18),position(1),cut(0),segstyle("dr,1")]);
+  regional(tmp);
+  tmp=select(arglist,isreal(#));
+  if(length(tmp)==0,
+    println([YaSize,YaAngle,YaPosition,YaCut,YasenStyle]);
+  );
+  if(length(tmp)>=1,
+    if(tmp_1>=0,YaSize=tmp_1,YaSize=1);
+  );
+  if(length(tmp)>=2,
+    if(tmp_2>=0,YaAngle=tmp_2,YaAngle=18);
+   );
+  if(length(tmp)>=3,
+     if(tmp_3>=0,YaPosition=tmp_3,YaPosition=1);
+  );
+  if(length(tmp)>=4,
+    if(tmp_4>=0,YaCut=tmp_4,YaCut=0);
+  );
+  tmp=select(arglist,isstring(#));
+  if(length(tmp)>0,YasenStyle=tmp_1,YasenStyle="dr,1");
+  [YaSize,YaAngle,YaPosition,YaCut,YasenStyle];
+);
+////%Setarrow start////
+
+
 ////%Arrowheaddata start////
 Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
@@ -5344,7 +5374,8 @@ Arrowhead(Arg1,Arg2,Arg3):=(
 );
 Arrowhead(nm,point,direction,optionsorg):=(//181018from
 //help:Arrowhead("1",B,B-A);
-//help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Coor=P(L)"]);
+//help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Coord=P(L)"]);
+//help:Arrowhead(the default is -1 for numeric option);
 //help:Arrowhead(A,"gr1");
    regional(name,Ltype,Noflg,reL,opstr,opcindy,color,eqL,coord,
          options,cut,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
@@ -5367,13 +5398,17 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
        options=remove(options,[#]);
      );
   ); //181018to
-  cut=0; //181110from
-  if(length(reL)>3,
-    cut=reL_4;
-    tmp=reL_(1..3);
-    options=remove(options,reL);
-    options=concat(options,tmp);
-  ); //181110from
+  tmp1=[YaSize,YaAngle,Yaposition,YaCut]; //181214from
+  forall(1..(length(reL)),
+    if(reL_#<0, reL_#=tmp1_#);
+  );  
+  forall((length(reL)+1)..4,
+    reL=append(reL,tmp1_#);
+  );
+  cut=reL_4;
+  tmp=reL_(1..3);
+  options=remove(options,reL);
+  options=concat(options,tmp); //181214to
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
   if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
@@ -5444,10 +5479,14 @@ Arrowdata(nm,ptlist,optionsorg):=(
 //help:Arrowdata("1",[A,B]);
 //help:Arrowdata("1",[pt1,pt2]);
 //help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
+//help:Arrowdata(optionsadded=["line"]);
   regional(options,Ltype,Noflg,name,opstr,opcindy,eqL,reL,strL,color,size,coord,
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut);
   name="ar"+nm;
   options=optionsorg;
+  tmp=select(options,isstring(#)); //181214from
+  tmp1=select(tmp,contains(["dr","da","do","id"],substring(#,0,2)));
+  if(length(tmp1)==0,options=append(options,YasenStyle)); //181214to
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -5457,19 +5496,17 @@ Arrowdata(nm,ptlist,optionsorg):=(
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-  size=1;  // 15.06.11
-  angle=18;
-  segpos=1;
-  cut=0; //181110from
+  tmp1=[YaSize,YaAngle,YaPosition,YaCut]; //181214from
   forall(1..(length(reL)),
-    tmp=reL_#;
-    if(#==1,size=tmp);
-    if(#==2,angle=tmp);
-    if(#==3,
-      segpos=tmp;
-    );
-    if(#==4,cut=tmp);
-  ); //181110to
+    if(reL_#<0, reL_#=tmp1_#);
+  ); 
+  forall((length(reL)+1)..4,
+    reL=append(reL,tmp1_#);
+  );
+  size=reL_1;
+  angle=reL_2;
+  segpos=reL_3;
+  cut=reL_4;
   lineflg=0;
   if(contains(strL,"l")%contains(strL,"L"),
     lineflg=1;

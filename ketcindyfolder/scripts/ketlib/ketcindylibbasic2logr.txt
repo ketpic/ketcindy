@@ -1,3 +1,5 @@
+// 20181215
+//   Setax, Drwxy, Windispg changed  ( Axstyle )
 // 20181214
 //   WritetoRS changed ( Definition of Acos,Asin,Atan,Sqr,Factorial,Norm added )
 // 20181213

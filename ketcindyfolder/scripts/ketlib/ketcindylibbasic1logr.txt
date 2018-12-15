@@ -1,5 +1,9 @@
+// 20181215
+//    Ketinit changed (AXSTYLE added)
 // 20181214
 //    Acos, Asin, Atan, Sqr added
+//    Setarrow added
+//    Arrowhead changed (options)
 // 20181212
 //    Colorrgb2cmyk debugged
 //    Colorcode changed ( some have been deleted)

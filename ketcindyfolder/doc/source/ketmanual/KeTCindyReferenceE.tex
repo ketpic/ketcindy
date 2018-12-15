@@ -676,6 +676,15 @@ This Point P on the asteroid can be move along the curve on the Euclidean view.
 \end{center}
 \end{cmd}
 
+%-------------Setarrow------------------------------
+\begin{cmd}{Setarrow}{setarrow}
+\itemket{Usage}Setarrow([arrowsize,angle,position,cut,linestyle]);
+\itemket{Description}Generic function to set styles of arrows.
+\itemket{Details}Defaults are arrowsize(1),angle(18),position(1),cut(1),linestyle("dr").
+\verb|-1| means to unchange the default.
+\itemket{Examples}Setsarrow([-1,30,-1,0.2]);
+\end{cmd}
+
 %------------Arrowdata--------------------------------
 \begin{cmd}{Arrowdata}{arrowdata}
 \itemket{Usage}Arrowdata(name,[starting point,  ending point] , options) 
@@ -3032,7 +3041,6 @@ Perform multiple replacements by list.
 \verb|Assign("a*x^2+b*x",["a",1,"b",2]);|   \hspace{10mm}// \verb|a| $\to$ \verb|1  and b| $\to$ \verb|2|
 \end{cmd}
 
-
 %-----------BBdata---------------------------------
 \begin{cmd}{BBdata}{bbdata}
 \itemket{Usage}BBdata(file name, options);
@@ -3048,6 +3056,19 @@ The image files are PDF, PNG, JPG, and so on.\\
 \itemket{Examples}  \mbox{}
 
 \includegraphics[bb=0.00 0.00 562.03 124.01,width=12cm]{Fig/bbdata.pdf} 
+
+\end{cmd}
+%-----------Asin---------------------------------
+\begin{cmd}{Asin}{asin}
+\itemket{Usage}Asin(real) , Acos(real)
+\itemket{Description} Return arcsine and arccosine.
+
+\end{cmd}
+
+%-----------Sqr---------------------------------
+\begin{cmd}{Sqr}{sqr}
+\itemket{Usage}Sqr(real)
+\itemket{Description} Return square root.
 
 \end{cmd}
 
@@ -5251,6 +5272,7 @@ Options are the followings.\\
 {\bf Drawing} \> \\
 \hyperlink{addgraph}{AddGraph} \> manipulate more than one PD all together.\\
 \hyperlink{anglemark}{Anglemark} \> draw an angle mark.\\
+\hyperlink{setarrow}{Setarrowdata}  \> set styles of arrows.\\
 \hyperlink{arrowdata}{Arrowdata}  \> draw an arrow line between two points.\\
 \hyperlink{arrowhead}{Arrowhead}  \>draw an arrowhead with specified direction at a designated point.\\
 \hyperlink{bezier}{Bezier} \> draw a  Bezier curve.\\
@@ -5318,6 +5340,7 @@ Options are the followings.\\
 \hyperlink{vtickmark}{Vtickmark} \> tick on the vertical ax.\\
 
 {\bf Calculus and I/O} \> \\
+\hyperlink{asin}{Asin} \> return arcsine and arccosine.\\
 \hyperlink{crossprod}{Crossprod} \> return the cross product of 2 vectors.\\
 \hyperlink{derivative}{Derivative} \> find the derivative of a function or a plotting data.\\
 \hyperlink{dotprod}{Dotprod} \> return the dot product of 2 vectors.\\
@@ -5336,6 +5359,7 @@ Options are the followings.\\
 \hyperlink{ptstart, ptend}{Ptstart, Ptend} \> returns start point and end point of PD.\\
 \hyperlink{ptcrv}{Ptcrv} \> Returns n-th point from PD.\\
 \hyperlink{readoutdata}{ReadOutData} \> read external data.\\
+\hyperlink{sqr}{Sqr} \> return square root.\\
 \hyperlink{writeoutdata}{WriteOutData} \> write out data in \ketcindy\ format.\\
 
 {\bf Making Table} \> \\

@@ -503,9 +503,19 @@ MakeRarg(arglist):=(
 Setax(arglist):=(
 //help:Setax(["l","x","e","y","n","O","sw"]);
 //help:Setax([7,"nw"]);
-  regional(tmp);
-  tmp=MakeRarg(arglist);
-  Com1st("Setax("+tmp+")");
+  regional(st,nn,tmp); //181215from
+  st=1; nn=1;
+  if(isreal(arglist_1),
+    st=2;
+    nn=arglist_1;
+  );
+  forall(st..(length(arglist)),
+    tmp=arglist_#;
+    if(length(tmp)>0,AXSTYLE_nn=tmp);
+    nn=nn+1;
+  ); //181215from
+//  tmp=MakeRarg(arglist);
+//  Com1st("Setax("+tmp+")");
 );
 ////%Setax end////
 
@@ -590,20 +600,70 @@ Htick(px,lenorg,options):=(
 ////%Htick end////
 
 ////%Drwxy start////
-Drwxy():=Drwxy([]); //180820from
-Drwxy(options):=(
+Drwxy():=Drwxy([]);
+Drwxy(optionsorg):=(
 //help:Drwxy();
 //help:Drwxy(options=["Origin=[0,0]","Xrng=","Yrng=","Ax=l,x,e,..."]);
-  regional(tmp);
-  tmp="";
-  forall(options,
-    if(length(tmp)>0,
-      tmp=tmp+","+Dqq(#);
-    ,
-      tmp=Dqq(#);
+  regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,tmp,tmp1,tmp2);
+  options=optionsorg;
+  tmp=Divoptions(options);
+  color=tmp_(length(tmp)-2);
+  eqL=tmp_5;
+  org=[0,0];
+  xrng=[XMIN,XMAX];
+  yrng=[YMIN,YMAX];
+  ax=AXSTYLE;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="O",
+      org=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="X",
+      xrng=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="Y",
+      yrng=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="A",
+      tmp2=tokenize(tmp_2,",");
+      st=1; nn=1;
+      if(isreal(tmp2_1),
+        st=2;
+        nn=tmp2_1;
+      );
+      forall(st..(length(tmp2)),
+        tmp=tmp2_#;
+        if(length(tmp)>0,ax_nn=tmp);
+        nn=nn+1;
+      );
+      options=remove(options,[#]);
     );
   );
-  Com2nd("Drwxy("+tmp+")"); //180820to
+  if(substring(ax_1,0,1)=="a",
+    tmp=divoptions(options);
+    strL=tmp_7;
+    tmp=select(strL,contains(["dr","da","do","id"],substring(#,0,2)));
+    if(length(tmp)==0,options=append(options,YasenStyle));
+    size=parse(substring(ax_1,1,length(ax_1)));
+    tmp1=concat(options,[size,YaAngle,YaPosition,YaCut]);
+    tmp=[[xrng_1,org_2],[xrng_2,org_2]];
+    Arrowdata("axx"+text(AXCOUNT),tmp,tmp1); 
+    tmp=[[org_1,yrng_1],[org_1,yrng_2]];
+    Arrowdata("axy"+text(AXCOUNT),tmp,tmp1);
+  ,
+    tmp=[[xrng_1,org_2],[xrng_2,org_2]];
+    Listplot("axx"+text(AXCOUNT),tmp,options); 
+    tmp=[[org_1,yrng_1],[org_1,yrng_2]];
+    Listplot("axy"+text(AXCOUNT),tmp,options); 
+  );
+  AXCOUNT=AXCOUNT+1;
+  Expr([[xrng_2,org_2],ax_3,ax_2],["Color="+text(color)]);
+  Expr([[org_1,yrng_2],ax_5,ax_4],["Color="+text(color)]);
+  Letter([org,ax_7,ax_6],["Color="+text(color)]);
   Addax(0);  // 16.01.21
 );
 ////%Drwxy end////
@@ -651,7 +711,7 @@ Drawpoint(ptlistorg,nn):=(
 ////%Addax start////
 Addax(param):=(
 //help:Addax(0);
-  ADDAXES=textformat(param,5);
+  ADDAXES=text(param);
 );
 ////%Addax end////
 
@@ -2649,6 +2709,10 @@ Inwindow(point,xrng,yrng):=(
 ////%Windispg start////
 Windispg():=(
   regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,opcindy);
+  if(ADDAXES=="1", //181215from
+    Drwxy();
+    ADDAXES="0";
+  ); //181215to
   gsave();
   layer(KETPIClayer);
   forall(GCLIST,Nj,
@@ -2797,7 +2861,8 @@ WritetoRS(filename,shchoice):=(
   if(GPACK=="tikz", //181213from
     tmp=replace(tmp+"_reptikz","\","/");
     println(SCEOUTPUT,"source('"+tmp+".r')");
-  ); //181213to println(SCEOUTPUT,"Ketinit()");
+  ); //181213to
+  println(SCEOUTPUT,"Ketinit()");
   println(SCEOUTPUT,"cat(ThisVersion,'\n')"); 
   println(SCEOUTPUT,"Fnametex='"+Fnametex+"'");
   println(SCEOUTPUT,"FnameR='"+FnameR+"'");

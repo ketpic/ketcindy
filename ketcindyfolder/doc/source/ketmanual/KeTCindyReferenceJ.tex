@@ -894,6 +894,13 @@ optionsは矢じりの形状などの指定。
 
 円A,Bの半径が同じ（たとえば0.5）であれば，\verb|Arrowdata([A,B],["Cutend=0.5"]);| でよい。
 
+\vspace{\baselineskip}
+\hypertarget{setarrow}{}
+\item[関数]  Setarrow([arrowsize,angle,position,cut,linestyle])
+\item[機能]  Arrowdata,Arrowheadで描く矢印のスタイルを設定する。
+\item[説明]  arrowsize,angle,position,cut,linestyleは，順に大きさ(1)，開き角(18)，位置(1)，切り込み(0)，矢線スタイル("dr")である。（カッコ内はデフォルト値）
+
+
 %\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{arrowhead}{}
@@ -3287,6 +3294,19 @@ end////
   計算値やプロットデータの値を取得したり，R用とのデータのやりとりをする。
 
 \begin{description}
+
+\hypertarget{asin}{}
+\item[関数]  Asin(実数）,Acos(実数)
+\item[機能]  逆三角関数の値を求める。
+\item[説明]  CindyScriptの組み込み関数に，arcsin(x),arccos(x) があるが，xの絶対値が１より大きい場合は虚数を返す。このことがＲではエラーになるので，計算誤差により１よりわずかに大きくなる場合のために用意した関数。
+
+\vspace{\baselineskip}
+\hypertarget{sqr}{}
+\item[関数]  Sqr(実数）
+\item[機能]  平方根を求める。
+\item[説明]  CindyScriptの組み込み関数に，sqrt(x) があるが，xが負の場合は虚数を返す。これに対し，xが負の場合は０を返すようにした関数。計算誤差により１よりわずかに大きくなる場合のために用意した。
+
+\vspace{\baselineskip}
 \hypertarget{bbdata}{}
 \item[関数]  BBdata(ファイル名,option）
 \item[機能]  画像ファイルのサイズを求める
@@ -6375,7 +6395,7 @@ Cinderellaの描画面はつぎのようになる。点E,F,Gをドラッグし�
 \item[機能]  面に対し曲線を陰線処理する
 \item[説明]  PD2で与えられた面に対し，曲線PD1の面に隠れている部分を陰線処理する。
 
-引数PD1を省略するとすべての曲線が対象となる。陰線処理された線は初期設定では点線で表される。この線種はoption2で変更できる。たとえば，["da"] とすると破線になる。option1は曲線全体のoptionであるので，option2 だけを指定する場合は，option1 として空リスト[ ] が必要である。
+引数PD1を省略するとすべての曲線が対象となる。陰線処理された線は初期設定では点線で表される。この線種はoption2で変更できる。たとえば，["da"] とすると破線になる。["nodsip"] とすると，陰線は表示されない。option1は曲線全体のoptionであるので，option2 だけを指定する場合は，option1 として空リスト[ ] が必要である。
 option2では，"Eps=" で，陰線処理時の許容限界を設定できる。陰線処理がうまくいかないときは，この値を \verb|Eps=10^(-4)| のように変えてみるとよい。初期設定は \verb|Eps=10^(-2)|。
 
 \vspace{\baselineskip}
@@ -6929,7 +6949,7 @@ optionsは，解像度（各変数に対応する分割数）とメッシュの�
  
  \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)",|
     
-\verb|"u=[0,pi]","v=[0,2*pi]"];|
+\verb|"u=[0,pi]","v=[0,2*pi]",""];|
 \verb|Sf3data("1",fd);|
 
 \begin{center} \input{Fig/sf3ddata4} \end{center}
@@ -7237,7 +7257,7 @@ C言語の環境がない場合は，ExeccmdC() が使えないので，Wirepara
   fd=["p","x=2*sin(u)*cos(v)",
        "y=2*sin(u)*sin(v)",
        "z=2*cos(u)","u=[0,pi]",
-       "v=[0,2*pi]","s"];
+       "v=[0,2*pi]",""];
   Sfbdparadata("1",fd);
   Wireparadata("1","sfbd3d1",fd,12,12); 
 \end{verbatim}
@@ -7256,7 +7276,7 @@ C言語の環境がない場合は，ExeccmdC() が使えないので，Wirepara
     fd=["p","x=2*sin(u)*cos(v)",
        "y=2*sin(u)*sin(v)",
        "z=2*cos(u)",
-       "u=[0,pi]","v=[0,2*pi]","s"];
+       "u=[0,pi]","v=[0,2*pi]",""];
     if(Isangle(),
       Sf3data("1",fd);
     ,
@@ -7439,6 +7459,7 @@ Cinderellaで使っている用語に次のものがある。
 【描画】\\
 \hyperlink{addgraph}{AddGraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
 \hyperlink{anglemark}{Anglemark(点list, options)}  \>角の印を入れる\\
+\hyperlink{setarrow}{Setarrow(options)}  \>矢線をスタイルを設定する\\
 \hyperlink{arrowdata}{Arrowdata(name.[始点,終点],options)}  \>2点間を結ぶ矢線を描く\\
 \hyperlink{arrowhead}{Arrowhead(点,方向,options)}  \>点に矢じりだけを描く\\
 \hyperlink{bezier}{Bezier(name, list,list,options )} \>単独のベジェ曲線を描く\\
@@ -7516,6 +7537,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{tlistplot}{Tlistplot(セルラベル1,セルラベル2)} \>セルに斜線を引く\\
 \vspace{\baselineskip}
 【値の取得と入出力】\\
+\hyperlink{asin}{Asin(real),Acos(real) }  \>逆三角関数の値を返す\\
 \hyperlink{crossprod}{Crossprod(list,list)}  \>ベクトルの外積を計算する\\
 \hyperlink{derivative}{Derivative(関数式,変数,値)}  \>関数の微分係数を求める\\
 \hyperlink{dotprod}{Dotprod(list,list)}  \>ベクトルの内積を計算する\\
@@ -7536,6 +7558,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ptcrv}{Ptcrv(n,PD)}  \>曲線PD のn 番目の節点を取得する\\
 \hyperlink{ptstart}{Ptstart(PD)}      \>プロットデータの始点・終点を取得する\\
 \hyperlink{readoutdata}{ReadOutData(ファイル名)}  \>外部データをPDとして読み込む\\
+\hyperlink{sqr}{Sqr(real)}  \>平方根を返す\\
 \hyperlink{viewtex}{Viewtex()}  \>\TeX のソースファイルを書き出す。引数なし\\
 \hyperlink{workprocess}{Workprocess()}  \>作図の経過を取得する\\
 \hyperlink{writeoutdata}{WriteOutData()}  \>PDデータを書き出す\\

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181215)");
+println("KeTCindy V.3.2.3(20181216)");
 println(ketjavaversion());
 println("ketcindylibbasic1(20181125) loaded");
 
@@ -82,7 +82,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   COM2ndlist=[];
   COM2ndlistb=[]; //180612
   ADDAXES="1";
-  AXSTYLE=["l","x","e","y","n","O","sw"]; //181215
+  AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
   AXCOUNT=1; //181215
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13

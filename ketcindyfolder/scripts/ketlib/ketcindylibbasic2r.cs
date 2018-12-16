@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181214) loaded");
+println("ketcindybasic2(20181216) loaded");
 
 //help:start();
 
@@ -499,26 +499,6 @@ MakeRarg(arglist):=(
 );
 ////%MakeRarg end////
 
-////%Setax start////
-Setax(arglist):=(
-//help:Setax(["l","x","e","y","n","O","sw"]);
-//help:Setax([7,"nw"]);
-  regional(st,nn,tmp); //181215from
-  st=1; nn=1;
-  if(isreal(arglist_1),
-    st=2;
-    nn=arglist_1;
-  );
-  forall(st..(length(arglist)),
-    tmp=arglist_#;
-    if(length(tmp)>0,AXSTYLE_nn=tmp);
-    nn=nn+1;
-  ); //181215from
-//  tmp=MakeRarg(arglist);
-//  Com1st("Setax("+tmp+")");
-);
-////%Setax end////
-
 ////%Htickmark start////
 Htickmark(arglist):=(
 //help:Htickmark([1,"1",2,"sw","2"]);
@@ -599,12 +579,34 @@ Htick(px,lenorg,options):=(
 );
 ////%Htick end////
 
+////%Setax start////
+Setax(arglist):=(
+//help:Setax(["l","x","e","y","n","O","sw",]);
+//help:Setax([7,"nw"]);
+//help:Setax([8,linestyle,colorax,colorlabel]);
+  regional(st,nn,tmp); //181215from
+  st=1; nn=1;
+  if(isreal(arglist_1),
+    st=2;
+    nn=arglist_1;
+  );
+  forall(st..(length(arglist)),
+    tmp=arglist_#;
+    if(length(tmp)>0,AXSTYLE_nn=tmp);
+    nn=nn+1;
+  ); //181215from
+//  tmp=MakeRarg(arglist);
+//  Com1st("Setax("+tmp+")");
+);
+////%Setax end////
+
 ////%Drwxy start////
 Drwxy():=Drwxy([]);
 Drwxy(optionsorg):=(
 //help:Drwxy();
 //help:Drwxy(options=["Origin=[0,0]","Xrng=","Yrng=","Ax=l,x,e,..."]);
-  regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,tmp,tmp1,tmp2);
+  regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,
+  linesty,colorax,colorla,tmp,tmp1,tmp2);
   options=optionsorg;
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
@@ -613,6 +615,15 @@ Drwxy(optionsorg):=(
   xrng=[XMIN,XMAX];
   yrng=[YMIN,YMAX];
   ax=AXSTYLE;
+  linesty=ax_8;
+  if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
+  if(length(colorax)>0,
+    colorax="Color="+colorax;
+  );
+  if(isstring(ax_10),colorla=ax_10,colorla=text(ax_10));
+  if(length(colorax)>0,
+    colorla="Color="+colorla;
+  ); //181216to
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -643,27 +654,29 @@ Drwxy(optionsorg):=(
       options=remove(options,[#]);
     );
   );
+  options=append(options,linesty); //181216
   if(substring(ax_1,0,1)=="a",
-    tmp=divoptions(options);
-    strL=tmp_7;
+    strL=select(options,isstring(#)); //181216
     tmp=select(strL,contains(["dr","da","do","id"],substring(#,0,2)));
     if(length(tmp)==0,options=append(options,YasenStyle));
-    size=parse(substring(ax_1,1,length(ax_1)));
-    tmp1=concat(options,[size,YaAngle,YaPosition,YaCut]);
+    tmp=substring(ax_1,1,length(ax_1)); //181216(2lines)
+    if(length(tmp)>0,size=parse(tmp),size=YaSize);
+    tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//181216
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
-    Arrowdata("axx"+text(AXCOUNT),tmp,tmp1); 
+    Arrowdata("axx"+text(AXCOUNT),tmp,tmp1);
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
     Arrowdata("axy"+text(AXCOUNT),tmp,tmp1);
   ,
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
-    Listplot("axx"+text(AXCOUNT),tmp,options); 
+    tmp1=append(options,colorax);//181216
+    Listplot("axx"+text(AXCOUNT),tmp,tmp1); 
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
-    Listplot("axy"+text(AXCOUNT),tmp,options); 
+    Listplot("axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
-  Expr([[xrng_2,org_2],ax_3,ax_2],["Color="+text(color)]);
-  Expr([[org_1,yrng_2],ax_5,ax_4],["Color="+text(color)]);
-  Letter([org,ax_7,ax_6],["Color="+text(color)]);
+  Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216(3lines)
+  Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
+  Letter([org,ax_7,ax_6],[colorla]);
   Addax(0);  // 16.01.21
 );
 ////%Drwxy end////

@@ -1,4 +1,6 @@
-// 20181209
+/ 20181217
+//   Sfbdparadata debugged  (replace fname+nm to fnameall )
+/// 20181209
 //   MkprecommandR debugged  (arc..  added )
 //   Mkviewobj changed  ( option "Zax=" added)
 // 20181103

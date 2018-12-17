@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181209 loaded");
+println("ketcindylibout(20181217 loaded");
 
 //help:start();
 
@@ -5849,7 +5849,7 @@ SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
   ];
   if(cmdflg==1, //180531from
     println("  ExeccmdC will generate "+ name3+","+name3h);
-    tmp=replace(cmdL_5,"fname"+funnm,"fnameall");cmdL_5=tmp;
+    tmp=replace(cmdL_5,"fname"+nm,"fnameall");cmdL_5=tmp; //181217
     tmp=select(CommandListC,indexof(#,"output3")>0); //180601from
     if(length(tmp)>0,
       tmp=replace(cmdL_6,Dqq("w"),Dqq("a"));cmdL_6=tmp;

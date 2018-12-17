@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181216) loaded");
+println("ketcindybasic2(20181217) loaded");
 
 //help:start();
 
@@ -621,9 +621,13 @@ Drwxy(optionsorg):=(
     colorax="Color="+colorax;
   );
   if(isstring(ax_10),colorla=ax_10,colorla=text(ax_10));
-  if(length(colorax)>0,
+  if(length(colorla)>0, //181217from
     colorla="Color="+colorla;
-  ); //181216to
+  ,
+    if(length(colorax)>0,
+      colorla=colorax;
+    );
+  ); //181217to
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));

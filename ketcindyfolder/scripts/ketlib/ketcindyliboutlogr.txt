@@ -1,4 +1,6 @@
-/ 20181217
+// 20181218
+//   Help (Sfbdparadata ,,,, )
+// 20181217
 //   Sfbdparadata debugged  (replace fname+nm to fnameall )
 /// 20181209
 //   MkprecommandR debugged  (arc..  added )

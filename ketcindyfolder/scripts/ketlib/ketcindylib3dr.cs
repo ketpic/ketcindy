@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181212) loaded");
+println("ketcindylib3d(20181218) loaded");
 
 //help:start();
 
@@ -2104,7 +2104,7 @@ Putpoint3d(Arg1,Arg2,Arg3):=(
 
 ////%Fixpoint3d start////
 Fixpoint3d(ptlist):=(
-// help:Fixpoint3d(["O",[0,0,0],"X",[1,0,0]]);
+//    help:Fixpoint3d(["O",[0,0,0],"X",[1,0,0]]);
   regional(name,pt3,pt2,tmp,tmp1,tmp2);
   forall(1..(length(ptlist)/2),
     name=ptlist_(2*#-1);
@@ -2122,6 +2122,54 @@ Fixpoint3d(ptlist):=(
   );
 );
 ////%Fixpoint3d end////
+
+////%Letter3d start////
+Letter3d(dtlist):=Letter3d(dtlist,[]); //181218from
+Letter3d(pt3d,dir,name):=Letter3d([pt3d,dir,name],[]); 
+Letter3d(pt3d,dir,name,options):=Letter3d([pt3d,dir,name],options);
+Letter3d(dtlist,options):=(
+//help:Letter3d(point3d,,direction,name);
+//help:Letter3d([point3d,,direction,name],options]);
+  regional(dt,nall,jj);
+  dt=dtlist;
+  if(mod(length(dt),3)!=0,
+    println("   Improper data");
+  ,
+    nall=length(dt)/3;
+    forall(1..nall,
+      jj=#*3-2;
+      tmp=dt_jj;
+      if(ispoint(tmp),tmp=parse(text(tmp)+"3d"));
+      dt_jj=Parapt(tmp);
+    );
+    Letter(dt,options);
+  );
+); //181218to
+////%Letter3d end////
+
+////%Expr3d start////
+Expr3d(dtlist):=Expr3d(dtlist,[]); //181218from
+Expr3d(pt3d,dir,name):=Expr3d([pt3d,dir,name],[]); //181218from
+Expr3d(pt3d,dir,name,options):=Expr3d([pt3d,dir,name],options);
+Expr3d(dtlist,options):=(
+//help:Expr3d(point3d,,direction,name);
+//help:Expr3d([point3d,,direction,name],options]);
+  regional(dt,nall,jj);
+  dt=dtlist;
+  if(mod(length(dt),3)!=0,
+    println("   Improper data");
+  ,
+    nall=length(dt)/3;
+    forall(1..nall,
+      jj=#*3-2;
+      tmp=dt_jj;
+      if(ispoint(tmp),tmp=parse(text(tmp)+"3d"));
+      dt_jj=Parapt(tmp);
+    );
+    Expr(dt,options);
+  );
+); //181218to
+////%Expr3d end////
 
 ////%Perppt start////
 Perppt(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"draw");

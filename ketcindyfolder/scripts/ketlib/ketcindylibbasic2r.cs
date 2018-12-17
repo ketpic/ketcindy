@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181217) loaded");
+println("ketcindybasic2(20181218) loaded");
 
 //help:start();
 
@@ -753,6 +753,7 @@ Expr(listorg,options):=( //16.10.09
 ////%Letter start////
 Letter(Pt,Dr,St):=Letter([Pt,Dr,St]);
 Letter(list):=Letter(list,[]);
+Letter(Pt,Dr,St,options):=Letter([Pt,Dr,St],options);//181218
 Letter(list,options):=(
 //help:Letter([C,"c","Graph of $f(x)$"]);
 //help:Letter([C,"c","xy"],["size->30"]);
@@ -889,6 +890,7 @@ Letterrot(pt,dir,tmov,nmov,str,options):=(
 
 ////%Exprrot start////
 Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str,[]);
+Expr(pt,dir,str,options):=Expr([pt,dir,str],options);//181218
 Exprrot(pt,dir,Arg1,Arg2):=(
   if(islist(Arg2),
     Exprrot(pt,dir,"t0n0",Arg1,Arg2);

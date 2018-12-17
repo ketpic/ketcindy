@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181217 loaded");
+println("ketcindylibout(20181218 loaded");
 
 //help:start();
 
@@ -5773,7 +5773,7 @@ SfbdparadataC(nm,fd):=(
 SfbdparadataC(nm,fd,options):=
     SfbdparadataC(nm,fd,options,["do"]);
 SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
-//help:Sfbdparadata("1",Fd);
+//help:Sfbdparadata("1",Fd,nohiddenoptions,hiddenoptions);
   regional(funnm,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,cmdflg);
   if(ChNumber==0,ChNumber=Ch);
@@ -5905,8 +5905,7 @@ CrvsfparadataC(nm,fk,sfbd,fd):=
 CrvsfparadataC(nm,fk,sfbd,fd,options):=
     CrvsfparadataC(nm,fk,sfbd,fd,options,["do"]);
 CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
-//help:Crvsfparadata("1","ax3d","sfbd3d1",Fd);
-//help:Crvsfparadata(options=["Use=y(/n)"];
+//help:Crvsfparadata("1","ax3d","sfbd3d1",Fd,,nohiddenoptions,hiddenoptions);
   regional(funnm,sfbd,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,useflg,cmdlfg,ii,jj,eps);
   eps=10^(-5);
@@ -6080,7 +6079,7 @@ Crv3onsfparadataC(nm,crv3d,sfbd,fd):=
 Crv3onsfparadataC(nm,crv3d,sfbd,fd,options):=
    Crv3onsfparadataC(nm,crv3d,sfbd,fd,options,["do"]);
 Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
-//help:Crv3onsfparadata("1","sc3","sfbd3d1",fd);
+//help:Crv3onsfparadata("1","sc3","sfbd3d1",fd,,nohiddenoptions,hiddenoptions);
   regional(funnm,sfbd,fd,options,optionsh,name3,name3h,name2,name2h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdflg);
   tmp1=replace(crv3d,"3d","2d");
@@ -6235,7 +6234,7 @@ Crv2onsfparadataC(nm,crv2d,sfbd,fd):=
 Crv2onsfparadataC(nm,crv2d,sfbd,fd,options):=
    Crv2onsfparadataC(nm,crv2d,sfbd,fd,options,["do"]);
 Crv2onsfparadataC(nm,crv2d,sfbd,fdorg,options,optionsh):=(
-//help:Crv2onsfparadata("1","gp1","sfbd3d1",fd);
+//help:Crv2onsfparadata("1","gp1","sfbd3d1",fd,nohiddenoptions,hiddenoptions);
   regional(fd,uname,vname,str,tmpfun,ii,jj,crv3d,tmp,tmp1,tmp2);
   Changestyle3d(crv2d,["nodisp"]);
   crv3d=crv2d+"3d";
@@ -6268,7 +6267,7 @@ WireparadataC(nm,sfbd,fd,wr1,wr2):=
 WireparadataC(nm,sfbd,fd,wr1,wr2,options):=
    WireparadataC(nm,sfbd,fd,wr1,wr2,options,["do"]);
 WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionshorg):=(
-//help:Wireparadata("1","sfbd3d1",fd,5,5);
+//help:Wireparadata("1","sfbd3d1",fd,5,5,nohiddenoptions,hiddenoptions);
   regional(funnm,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
      eqL,reL,strL,fname,fnameh,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,udata,vdata,cmdflg);
   eps=10^(-5);
@@ -6582,7 +6581,7 @@ SfcutparadataC(nm,cutfunL,sfbd,fd):=(//180505
 SfcutparadataC(nm,cutfunL,sfbd,fd,options):=
    SfcutparadataC(nm,cutfunL,sfbd,fd,options,["nodisp"]);
 SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
-//help:Sfcutparadata("1","2*x+3*y+z=1","sfbd3d",fd);
+//help:Sfcutparadata("1","2*x+3*y+z=1","sfbd3d",fd,nohiddenoptions,hiddenoptions);
   regional(funnm,cutfunL,fd,options,optionsh,name2,name3,name2h,name3h,
      waiting,eqL,reL,strL,fname,fnameh,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdflg);
   eps=10^(-5);

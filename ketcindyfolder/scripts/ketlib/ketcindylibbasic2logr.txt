@@ -1,3 +1,5 @@
+// 20181219
+//   BBdata debugged  (macosx => ismacosx )
 // 20181218
 //   Letter, Expr changed  (pt,dir,str,options added )
 // 20181216

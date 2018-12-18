@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181218) loaded");
+println("ketcindybasic2(20181219) loaded");
 
 //help:start();
 
@@ -5538,7 +5538,7 @@ BBdata(fname,optionorg):=(
   if(iswindows(),
     kcfile="kc.bat";
   ,
-    if(macosx(),
+    if(ismacosx(), //181219
       kcfile="kc.command";
     ,
       kcfile="kc.sh";

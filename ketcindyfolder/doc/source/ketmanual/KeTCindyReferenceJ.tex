@@ -136,7 +136,7 @@ Parent ボタンで出力するファイル名は 初期設定がないので，
 \hypertarget{addax}{}
 \item[関数]  Addax(0または1)
 \item[機能]  座標軸の表示
-\item[説明]  引数が1のとき座標軸を描き，0のとき描かない。ただし，描画面には座標軸は表示されない。
+\item[説明]  引数が1のとき座標軸を描き，0のとき描かない。
 初期設定は1で，座標軸を描かない場合のみ \verb|Addax(0)| とすればよい。
 
 \vspace{\baselineskip}
@@ -176,9 +176,21 @@ Parent ボタンで出力するファイル名は 初期設定がないので，
 
 7. 原点名の位置   初期設定は \verb|"sw"|
 
+<<<<<<< HEAD
+8. 線種
+
+9. 色
+
+10. 文字の色
+
+それぞれダブルクウォートでくくる。色は，色名が使える。"red" など。
+
+10の引数のうちn番目だけを指定する場合は，[n,"内容"]で指定できる。
+=======
 8. 線スタイル
 
 9. 線の色
+>>>>>>> 8640fc8c8ce40892b14715d7a28d85d1079ee61b
 
 10.ラベルの色
 
@@ -194,6 +206,10 @@ n番目以降を指定する場合は，[n,"内容"]で指定できる。
 【例】原点の北西にOを書く。
 
 \hspace{10mm}  \verb|Setax([7,"nw"]);|
+
+【例】軸を赤の点線にする。
+
+\hspace{10mm}  \verb|Setax(["","","","","","","","do","red"]);|
 
 【例】先端を矢印にし，横軸を$\theta$，縦軸を$x$にして矢じりの左側に書く。
 
@@ -371,6 +387,14 @@ Plotdata("1","f(x)","x");
 \end{verbatim}
 \hspace{10mm}\input{Fig/pointsize}
 
+\hypertarget{setarrow}{}
+\item[関数]  Setarrow(size,angle,position,cut,segstyle)  
+\item[機能]  矢線の形状の設定をする。
+\item[説明]  引数は，順に，矢じりの大きさ, 開き角, 矢じり位置, 切り込み位置, 線種と表示色 
+
+それぞれの意味と値は，\hyperlink{arrowdata}{Arrowdata()} を参照のこと。
+
+\vspace{\baselineskip}
 \hypertarget{setmarklen}{}
 \item[関数]  Setmarklen(数)  
 \item[機能]  座標軸の目盛の長さを設定する
@@ -867,6 +891,8 @@ optionsは矢じりの形状などの指定。
 ただし，Cinderellaの画面上には全ては反映されない。たとえば，太さ指定をしても画面上では太さは同じ。
  
 トリミング :  "Cutend=m" または "Cutend=[m,n]" で，右辺が数のときは両端をmだけカットする。リストのときは始点をm,終点をnだけカットする。mが負のときは延長する。
+
+これらの設定は，\hyperlink{setarrow}{Setarrow()} で初期設定を変更することができる。
 
 \vspace{\baselineskip}
 【例】オプションの設定とその結果を示す。
@@ -2056,13 +2082,15 @@ options は線種が有効
 
 \vspace{\baselineskip}
 \hypertarget{expr}{}
-\item[関数]  Expr([座標 , 位置 , 文字列])
+\item[関数]  Expr([座標 , 位置 , 文字列],option)
 \item[機能]  \TeX 記法の文字列を与えて数式を書く。
 \item[説明]  Letterで文字列の前後に\$ \$をおくのと同じ。
 
 導関数の記号は，$'$（シングルクウォート）を用いる。
 
 複数の箇所に文字を書く場合は，Letter() と同様，引数をリストにして与える。
+
+optionは フォントサイズで，["size=32"] のように指定する。
 
 \vspace{\baselineskip}
 【例】  $f(x)=\dfrac{1}{4} x^2$  とその導関数 $f'(x)=\dfrac{1}{2} x$ の式，軸上に必要な数を入れる。
@@ -2091,15 +2119,17 @@ options は線種が有効
 
 \vspace{\baselineskip}
 \hypertarget{exprrot}{}
-\item[関数]  Exprrot([座標 , 向き , 方向，文字列])
+\item[関数]  Exprrot(座標 , 向き , 方向，文字列,option)
 \item[機能]  \TeX 記法の文字列を与えて傾いた数式を書く。
 \item[説明]  「座標」の位置に，指定された向きで数式を書く。
 
 向きはベクトルで与える。
 
-方向はオプションで， t (ベクトルと同じ向き) と n（ベクトルと垂直な向き） の両方を数字つきで与える。ただし，方向はオプション。
+方向は t (ベクトルと同じ向き) と n（ベクトルと垂直な向き） の両方を数字つきで与える。ただし，方向はオプション。
 
 座標，向きとも，Cinderellaで作図した幾何点を用いることができる。
+
+optionは フォントサイズで，["size=32"] のように指定する。
 
 \begin{verbatim}
       Exprrot([3,2],[2,-1],"t0n1","\sqrt{3}");
@@ -2110,7 +2140,7 @@ options は線種が有効
 \hspace{10mm}\includegraphics[bb=0.00 0.00 181.01 131.01,width=4cm]{Fig/exprrot.pdf} \hspace{10mm} \input{Fig/exprrot}
 
 \vspace{\baselineskip}
-\hypertarget{letter}{}\item[関数]  Letter([位置, 方向, 文字列])
+\hypertarget{letter}{}\item[関数]  Letter([位置, 方向, 文字列],option)
 \item[機能]  文字列を表示する
 \item[説明]  「位置（座標）」と方向で指定された場所に文字を書き込む。
 
@@ -2124,6 +2154,14 @@ options は線種が有効
 複数の文字列をリストの形にして渡すことができる。
 
   注）導関数の記号$'$は，数式モード（\$ ではさむ）で$'$（シングルクウォート）を用いる。
+
+optionは フォントサイズで，["size=32"] のように指定する。
+
+文字列が一つのときは，
+
+Letter(位置, 方向, 文字列,option)
+
+にできる。
 
 \vspace{\baselineskip}
 【例】
@@ -2141,11 +2179,13 @@ options は線種が有効
 \hspace{10mm}  \verb|Letter([A,"sw","A",E,"s","$ f(x)=\frac{1}{4} x^2 $"]);| 
 
 \vspace{\baselineskip}
-\hypertarget{letterrot}{}\item[関数]  Letterrot(座標, 方向ベクトル,移動量, 文字列)
+\hypertarget{letterrot}{}\item[関数]  Letterrot(座標, 方向ベクトル,移動量, 文字列,option)
 \item[機能]  文字列を回転して表示する
 \item[説明]  座標で示された位置に，方向ベクトルで指定された向きに回転して文字を書き込む。
 
 第3引数は微小移動量で，略すこともできる。
+
+optionは フォントサイズで，["size=32"] のように指定する。
 
 \begin{verbatim}
       Letterrot(C,B-A,"t2n5","AB");
@@ -3937,7 +3977,7 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \verb|  );|
 
 \vspace{\baselineskip}
-\hspace{5mm} 点Aをドラッグ中（選択状態）\hspace{5mm} 他の点をクリックして選択状態を解除
+\hspace{5mm} 点Aをドラッグ中（選択状態）\hspace{5mm} 点A以外をクリックして選択状態を解除
 
 \hspace{10mm}\includegraphics[bb=0.00 0.00 218.01 204.51,width=40mm]{Fig/ptselected01.pdf} 
 \hspace{10mm}\includegraphics[bb=0.00 0.00 219.01 204.51,width=40mm]{Fig/ptselected02.pdf} 
@@ -5877,7 +5917,7 @@ Settitleのオプションは次をリストで与える。
 
 \end{description}
 \newpage
-%================== 3D ===============
+%================== 3D  概要 ===============
 \section{\ketcindy 3D}
 \subsection{概要}
 \ketcindy 3Dの画面は次のように構成される。
@@ -5899,8 +5939,9 @@ Cinderellaの描画面に，白の矩形で囲んだ領域が2つできる。NE,
 
 KeTCindy3Dでは，線や面についての陰線処理を行う。陰線処理はＣ言語との連携により処理を速めている。C言語を使う環境整備が必要であるが，現在はこれを標準としている。C言語が使えない場合はRで計算する関数を用いることになるが，その場合はかなり時間がかかる。（場合にもよるが2分程度）
 
+%================== 3D  設定 ===============
 \newpage
-\subsection{設定・定義}
+\subsection{設定}
 
 \begin{description}
 
@@ -5915,6 +5956,7 @@ Cinderellaの描画面に，視点移動のための2つのスライダを作る
 
   この関数は Initialization スロットに置く。Ketinit() も，平面の場合と異なり Initialization スロットに置く。KeTCindy3Dにおける変数の初期化などを行う，Start3d()はDrawスロットに書く。
   
+%----------------  Start3d --------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{start3d}{}
 \item[関数]  Start3d(option)
@@ -5927,6 +5969,7 @@ Cinderellaの作図ツールで，点・線分を作図すると，内部関数�
 
 optionに，除外点のリストを与えると，その点は空間点としない。（始点を移動しても位置は変わらない）
 
+ %----------------  Startsurf --------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{startsurf}{}
 \item[関数]  Startsurf(options)
@@ -5947,7 +5990,1528 @@ optionsがないときは，以下の 初期設定を用いる。
 
 (3) ExeccmdC(); で，C言語を用いてまとめて描画する。
 
+%-------------------Xyzcoord  -----------------------------------------------
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+\hypertarget{xyzax3data}{}
+\item[関数]  Xyzax3data(name，ｘの範囲，yの範囲，zの範囲,options)
+\item[機能]  座標軸を描く
+\item[説明]  描画面に座標軸を描き，プロットデータ ax3d  を作成する。nameは空文字列でよい。option は次の2つ。
 
+矢じり："an"：nは数字で矢じりの大きさ。nはなくてもよい。
+
+原点O："Onesw"：neswは微小位置。数字も付けられる。neswをつけない場合の初期値はsw。
+
+【例】 初期設定の座標軸\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|
+        
+ 矢じりをつける
+ 
+ \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]","a");|
+ 
+ 矢じりを大きくする
+ 
+ \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a2"]);|
+  
+原点のOを表示する。
+
+ \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["O"]);|
+ 
+ 原点のOの位置を調整して右上に表示する。やじりもつける。
+ 
+ \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a","Oe2n2"]);|
+ 
+
+【注意】Putaxes3d() で点を取ると原点に点Oが作成される。この点名Oと表示が重複するのが煩わしい場合は，作図後にこのoptionをつけてから出力するとよい。
+
+\end{description}
+%================== 3D  描画 ===============
+
+\newpage
+\subsection{描画}
+
+%================== 3D  点・線 ===============
+\subsubsection{点・線}
+
+\begin{description}
+ %----------------  Drawpoint3d --------------------------------------------
+\hypertarget{drawpoint3d}{}
+\item[関数]  Drawpoint3d(座標)
+\item[機能]  空間点を描く
+\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} を用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
+
+引数は，座標のリストにすることもできる。
+
+\vspace{\baselineskip}
+【例】
+\begin{verbatim}
+  Drawpoint3d([1,1,1]);
+  Drawpoint3d([[1,1,1],[0,1,0]]);
+\end{verbatim}
+
+\vspace{\baselineskip}
+
+ %----------------  Pointdata3d --------------------------------------------
+\hypertarget{pointdata3d}{}
+\item[関数]  Pointdata3d(名前,点リスト,options)
+\item[機能]  点の3Dデータと2Dデータを作成し，画面と\TeX に出力する。
+\item[説明]  optionsは\hyperlink{pointdata}{Pointdata()}と同様。
+\vspace{\baselineskip}
+
+【例】
+\begin{verbatim}
+  Pointdata3d("1",[[1,1,1],[0,1,0]],["Size=2","Color=red"]);
+\end{verbatim}
+\vspace{\baselineskip}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+ %---------------- Putpoint3d----------------------------------------------
+\hypertarget{putpoint3d}{}
+\item[関数]  Putpoint3d(リスト,option)
+\item[機能]  空間に幾何点を作図する
+\item[説明]  点の名称と座標を与えて点を作図する。複数の点を一度に作図できる。
+
+optionは，"fix"( 初期設定) または "free"。リスト ["free"] にしてもよい。
+ 
+"fix" では，固定点（ドラッグで移動できない点）とする。同じ名称の点がすでに存在する場合は，指定した位置に移動して固定点とする。
+
+"free" では，自由点（ドラッグで移動できる）とする。同じ名称の点がすでに存在する場合はなにもしない。
+
+\vspace{\baselineskip}
+【例】いくつか記述例を示す。
+
+    \verb|Putpoint3d(["A",[2,1,3]]);|
+    
+    \verb|Putpoint3d(["A",[1,1,1],"C",[1,0,1]],"fix");|
+    
+    \verb|Putpoint3d(["A",[2,1,3]],"free");|
+    
+\vspace{\baselineskip}
+  なお，この関数は幾何点を作るものであり，TeXには出力されない。TeXに点を出力するには，\hyperlink{pointdata}{Pointdata()} または \hyperlink{drwpt}{Drawpoint()}を併用する。
+  
+  空間における点の座標は，点名に"3d"を付加した名前の変数に代入される。たとえば，点Aの座標はA3dである。これにより，点の座標を取得できる。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+ %----------------  Putaxes3d---------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{putaxes3d}{}
+\item[関数]  Putaxes3d([x,y,z])
+\item[機能]  軸上に幾何点を作る。
+\item[説明]  引数のリスト [x,y,z] に対し，点X(x,0,0) ,Y(0,y,0) , Z(0,0,z) および 原点Oを主画面上にとり，副画面上に対応する点Xz，Yz，Zz，Oz を作る。すでに同じ名称の点がある場合は，指定された位置に移動する。
+
+引数は，実数にすることもでき，Putaxes3d(a) は，Putaxes3d([a,a,a]) と同じになる。
+  
+\vspace{\baselineskip}
+【例】
+
+Putaxes3d(5);  原点と，$x(5,0,0),y(0,5,0),z(0,0,5)$ を作る。
+
+Putaxes3d([1,2,3]);  原点と，$x(1,0,0),y(0,2,0),z(0,0,3)$ を作る。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+ %----------------  PutonCurve3d---------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{putonCurve3d}{}
+\item[関数]  PutonCurve3d(点名，PD)
+\item[機能]  空間曲線上に点をとる
+\item[説明]  プロットデータPDの曲線上に，点名の点をとる。
+
+とった点は固定点ではなく，曲線上にインシデントとなる。したがって，ドラッグして曲線上を動かすことができる。例は \hyperlink{partcrv3d}{Partcrv3d()} を参照のこと。
+ %---------------- Putonseg3d----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{putonseg3d}{}
+\item[関数]  Putonseg3d(点名，点1，点2)
+\item[機能]  線分上に点を作る
+\item[説明]  点１と点2の中点に，指定された名前の点を取る。点１と点2が線分として結ばれていなくてもよい。とった点は線分にインシデントとなる（線分が描かれていなくても）。点１と点2はリストにすることもできる。指定した点がすでに存在する場合は動かさない。
+
+点1，点2は幾何点の名称または座標で指定する。
+
+\vspace{\baselineskip}
+【例】A(1,-1,0)とB(0,2,2) の中点に点Cをとる。つぎのいずれでもよい。
+
+    \verb|Putonseg3d("C",A,B);|
+
+    \verb|Putonseg3d("C",[A,B]);|
+    
+    \verb|Putonseg3d("C",[[1,-1,0],[0,2,2]]);|
+
+\vspace{\baselineskip}
+
+%------------------ Spaceline-----------------------------------------------
+\hypertarget{spaceline}{}
+\item[関数]  Spaceline(name,list)
+\item[機能]  折れ線を描く
+\item[説明]  点の名称または座標のリストを与えて折れ線を描く。平面での Listplot() にあたる。
+
+options は線種（dr,da,do）
+
+\vspace{\baselineskip}
+【例】いくつか示す。
+
+・Spaceline("1",[[2,5,1],[4,2,3]]);   指定された2点を結んだ線分を描く。
+
+・Spaceline("2",[A,B,C,A]);  作図されている2点A,B,Cを結んだ三角形を描く。
+
+
+・節点を表示する場合は，Pointdata3d() で描画する。
+
+\begin{layer}{150}{0}
+\putnotese{80}{10}{ \input{Fig/oresenex01}}
+\end{layer}
+\begin{verbatim}
+  pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]];
+  Spaceline("1",pt);
+  Pointdata3d("1",pt,["Size=3"]);
+\end{verbatim}
+
+点の名前が必要であれば
+
+\verb|pname=apply(1..6,"P"+text(#));|
+
+のようにして，名前リストを作ることができる。
+\vspace{\baselineskip}
+%------------------ Spacecurve-----------------------------------------------
+\hypertarget{spacecurve}{}
+\item[関数]  Spacecurve(name,式,定義域,options)
+\item[機能]  空間曲線を描く
+\item[説明]  媒介変数で表された曲線を描く。optionは解像度 Num
+
+\vspace{\baselineskip}
+【例】螺旋を描く
+
+\verb|Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|
+    
+\vspace{\baselineskip}
+ \begin{center} \input{Fig/rasen} \end{center}
+
+
+ %---------------- Bezier3d-----------------------------------------------
+\hypertarget{bezier3d}{}
+\item[関数]  Bezier3d(name,リスト1,リスト2)
+\item[機能]  空間ベジェ曲線を描く
+\item[説明]  引数はリスト1が端点リスト，リスト2が制御点リスト
+
+１組の端点につき，2つの制御点を使う。
+
+\vspace{\baselineskip}
+【例】いくつかの点をベジェ曲線で結ぶ
+
+  端点A,Bに対し，制御点をD,Eとする。
+  
+    \verb|Bezier3d("1",["A","B"],["D","E"]);| \vspace{\baselineskip}
+
+  端点A,Bに対し，制御点をD,Eとし，端点BCに対し制御点をE,Fとする。
+  
+    \verb|Bezier3d("1",["A","B","C"],["D","E","E","F"]);|
+    
+ 端点A,Bに対し，制御点をD,Eとし，端点BCに対し制御点をF,Gとする。（図）
+ 
+    \verb|Bezier3d("1",["A","B","C"],["D","E","F","G"]);|
+    
+    \begin{center} \input{Fig/bezier3d1} \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%------------------ Mkbezierptcrv3d-----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{mkbezierptcrv3d}{}
+\item[関数]  Mkbezierptcrv3d(点リスト)
+\item[機能]  制御点を自動的にとる空間ベジェ曲線
+\item[説明]  リストで与えた点に対し，制御点を自動的に生成してベジェ曲線を描く。
+
+  制御点は，2つの点に対して，その点を端点とする線分上に2つ作られる。これを適宜移動して任意の曲線にすることができる。\hyperlink{bezier3d}{空間ベジェ曲線 Bezier3d()} を参照のこと。
+  
+\vspace{\baselineskip}
+【例】\verb|Mkbezierptcrv3d(["A","B","C","D"]);|\\
+    線分AB上に2点a1p,a2p，線分BC上に2点a2p,a2q，線分CD上に2点a3p,a3qができる。
+    
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\vspace{\baselineskip}
+%------------------ Skeletonparadata-----------------------------------------------
+\hypertarget{skeletonparadata}{}
+\item[関数]  Skeletonparadata(name,PDリスト,PDリスト,option)
+\item[機能]  陰線処理（スケルトン処理）をおこなう
+\item[説明]  描画されている線と軸について陰線処理をおこなう。
+
+第2引数の線（プロットデータ）が，第3引数の線（プロットデータ）によって隠される部分を消去する。第2，第3引数を省略した場合は，すべての線について，互いの陰線処理をおこなう。optionで消去する部分の長さを指定できる。\\
+他のオプション\\
+　\verb|"No=点リスト"| 点リストの点が選ばれているときは実行しない\\
+　\verb|"File=y/m/n (n)"| データファイルを作るか\\
+　\verb|"Check=点リスト"| 点リストの点が変更されていたら，ファイルを作り直す
+
+
+\vspace{\baselineskip}
+【例】螺旋と線分，座標軸の陰線処理
+
+次のように螺旋と線分，座標軸を描いておく。
+\begin{verbatim}
+  Xyzax3data("","x=[-5,5]","y=[-5,4]","z=[-5,3]");
+  Putpoint3d(["A",[0,-2,-2]]);
+  Putpoint3d(["B",[-1,1,3]]);
+  Spaceline([A,B]);
+  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);
+\end{verbatim}
+座標軸のプロットデータは ax3d，線分は AB3d，螺旋は sc3d1 である。これに対し，
+
+\hspace{10mm} \verb|Skeletonparadata("1");|
+
+ 描画されている線と軸について陰線処理をおこなう。（図左）
+
+\hspace{10mm} \verb|Skeletonparadata("1",[2]);|
+
+ 重なった部分の空きを2にする。（図中央）
+ 
+\hspace{10mm} \verb|Skeletonparadata("1",["AB3d","ax3d"],["sc3d1"]);|
+  
+螺旋によって隠れる部分だけ消去する。（図右）
+
+\begin{center} \input{Fig/skeletonparadata01}   \input{Fig/skeletonparadata02} 
+ \input{Fig/skeletonparadata03} \end{center}
+
+このほか，次も可能。
+
+\hspace{10mm} \verb|Skeletonparadata("1",["AB3d","ax3d"],["sc3d1"],[2]);|
+
+\hspace{10mm} \verb|Skeletonparadata("1",["AB3d"],["ax3d","sc3d1"]);|
+
+
+\end{description}
+
+%================== 3D  多面体 ===============
+\subsubsection{多面体}
+
+多面体の描画について，四面体の場合を例にして説明する。
+
+四面体は4つの面からなっている。頂点をA,B,C,Dとすると，4つの面は
+  
+\hspace{20mm} △ABC，△ABD，△ACD，△BCD
+
+である。
+
+ \begin{center} \input{Fig/concatobj} \end{center}
+
+頂点のリスト[A,B,C,D] に対し，Aから順に番号をつけると，各面の頂点の順番は
+
+\hspace{20mm}[1,2,3],[1,2,4],[1,3,4],[2,3,4]
+
+と表現できる。
+
+頂点のリストと，この面リストを組にして　[[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]]　としたものを「面データ」という。この面データを使って，多面体を描画するのが VertexEdgeFace() である。
+
+多面体の陰線処理は２通りある。ひとつは，多面体を線画と考えて，隠れる部分だけを処理する方法で，Skeletonparadata() を用いる。\hyperlink{concatobj}{Concatobj()} の例を参照のこと。
+
+もうひとつは，面と考えて，面に隠れる部分を点線で描いたり，非表示にしたりする方法で，Phparadata() を用いる。 \hyperlink{phparadata}{Phparadata()}の例を参照のこと。
+  
+\begin{description}
+
+ %-----------------Concatobj -----------------------------------------------
+\hypertarget{concatobj}{}    
+\item[関数]  Concatobj(リスト,option)
+\item[機能]  いくつかのobjデータを結合する
+\item[説明]  多面体の各面の頂点リストから面データ（頂点リストと面リスト）を作る。
+
+たとえば，\verb|Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);| とすると，面データ  [[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]]   が返される。
+
+\vspace{\baselineskip}
+【例】4点A,B,C,Dを幾何点として作り，これを頂点とする四面体を描く。
+
+\begin{verbatim}
+Putpoint3d("A",2*[0,0,sqrt(3)]);
+Putpoint3d("B",2*[1,-1/sqrt(3),0]);
+Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
+Putpoint3d("D",2*[-1,-1/sqrt(3),0]);
+phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
+VertexEdgeFace("1",phd);
+Skeletonparadata("1");
+pa=Parapt(A3d);
+pb=Parapt(B3d);
+pc=Parapt(C3d);
+pd=Parapt(D3d);
+Letter([pa,"ne","A",pb,"sw","B",pc,"se","C",pd,"e","D"]);
+\end{verbatim}
+
+\begin{center} \input{Fig/concatobj} \end{center}
+
+＜参考１＞
+
+幾何点を作らないで四面体を描くのであれば，
+
+\begin{verbatim}
+a=2*[-1,-1/sqrt(3),0];
+b=2*[1,-1/sqrt(3),0];
+c=2*[0,sqrt(3)-1/sqrt(3),0];
+d=2*[0,0,sqrt(3)];
+phd=Concatobj([[a,b,c],[a,b,d],[a,c,d],[b,c,d]]);
+\end{verbatim}
+
+としてもよい。
+
+\vspace{\baselineskip}
+＜参考２＞
+四面体のような凸型多角形の場合は，CindyScriptの convexhull3d() 関数を用いて次のようにすることができる。面リストではなく頂点リストを与えるだけなので手間を省くことができる。
+
+\begin{verbatim}
+a=2*[0,0,sqrt(3)];
+b=2*[1,-1/sqrt(3),0];
+c=2*[0,sqrt(3)-1/sqrt(3),0];
+d=2*[-1,-1/sqrt(3),0];
+phd=convexhull3d([a,b,c,d]);
+\end{verbatim}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%-------------------VertexEdgeFace -----------------------------------------------
+\hypertarget{vertexedgeface}{}
+\item[関数]  VertexEdgeFace(name,面データ,options)
+\item[機能]  面データを用いて多面体を描く
+\item[説明]  面データは，たとえば四面体ABCDの場合は，[[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]] である。
+
+4点A,B,C,Dをとっておき，このリストを引数に与えると，四面体が描かれる。
+
+生成されるプロットデータは，
+
+phv3d：頂点のリスト
+
+phe3d：辺のリスト
+
+phf3d：面リスト
+
+なお，それぞれ末尾にnameが付加される。
+
+\vspace{\baselineskip}
+【例】4点A,B,C,Dを取り，正四面体ABCDを描く
+\begin{verbatim}
+  Putpoint3d("A",2*[-1,-1/sqrt(3),0]);
+  Putpoint3d("B",2*[1,-1/sqrt(3),0]);
+  Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
+  Putpoint3d("D",2*[0,0,sqrt(3)]);
+  phd=[[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]];
+  VertexEdgeFace("1",phd);
+\end{verbatim}
+ \begin{center} \input{Fig/vertex01} \end{center}
+面リストは，Congatobj() を使って作ることができる。陰線処理して描く場合も含め，\hyperlink{concatobj}{Concatobj()} の例を参照のこと。
+
+\vspace{\baselineskip}
+ %------------------Phparadata -----------------------------------------------
+\hypertarget{phparadata}{}
+\item[関数]  Phparadata(name,name2,options)
+\item[機能]  多面体を陰線処理して描く
+\item[説明]  多面体のプロットデータをVertexEdgeFace() で作る。このプロットデータに対し，隠れている面（辺）を陰線処理して表示する。第1引数は通常のname，第2引数のname2は，VertexEdgeFace() で与えたnameと同じものとする。
+
+  optionsは，全体の線種（"dr,2"など）と，陰線の線種を"Hidden=線種" で指定できる。 初期設定では陰線は表示しない。
+
+\vspace{\baselineskip}
+\begin{layer}{150}{0}
+\putnotese{80}{0}{ \input{Fig/phparadata04}}
+\end{layer}
+
+【例】  四面体を描く。
+\begin{verbatim}
+Putpoint3d("A",2*[-1,-1/sqrt(3),0]);
+Putpoint3d("B",2*[1,-1/sqrt(3),0]);
+Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
+Putpoint3d("D",2*[0,0,sqrt(3)]);
+phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
+VertexEdgeFace("1",phd);
+Phparadata("1","1",["Hidden=do"]);
+\end{verbatim}
+
+なお，VertexEdgeFace() で四面体が描かれるが，Phparadata() により非表示になる。
+Figureボタンで描き出せば正しく出力されるので，Phparadata() を実行する前に画面上に表示して確認してからPhparadata() を実行するとよい。
+
+\vspace{\baselineskip}
+【例】切頂二十面体を描く。
+
+小林・鈴木・三谷による多面体データ  \verb|polyhedrons_obj|  を用いて，s06の切頂二十面体（サッカーボール型）を描く。 \verb|polyhedrons_obj| は KeTCindyシステムの data ディレクトリにあるので，Setdirectory() でカレントディレクトリを作業ディレクトリと切替ながら出力する。
+\begin{verbatim}
+  Setdirectory( Dirhead+"/data/polyhedrons_obj");
+  phd=Readobj("s06.obj",["size=3"]);
+  Setdirectory(Dirwork);
+  VertexEdgeFace("s06",phd);
+  Phparadata("1","s06");
+\end{verbatim}
+  VertexEdgeFace() の name は通常の "1" でもよい。その場合は，\verb|Phparadata("1","1");| とするが，わかりにくいので上のようにした。
+  
+実行すると，Cinderellaの描画面は次のように頂点だけが描かれる。
+
+\vspace{\baselineskip}
+\begin{center}
+ \includegraphics[bb=0 0 726.04 365.02 , width=10cm]{Fig/phparadata01.pdf}
+\end{center}
+ 
+\vspace{\baselineskip}
+全体の線種と，陰線の線種を
+  
+\verb|Phparadata("1","s06",["dr,2","Hidden=do"]);|
+
+で指定したのが下図右である。
+
+ \begin{center} \input{Fig/phparadata02}   \input{Fig/phparadata03} \end{center}
+
+【注意】
+
+  polyhedrons obj のデータを使って，続けて異なる多面体を描きたい場合は注意が必要である。Readobj()だけを変更して別のデータを読めばよさそうであるが，前のデータが残っていてうまくいかない。VertexEdgeFace() のname を（したがって，Phparadata()の第2引数も）書き換えるか，作業フォルダ(fig) の中身を削除してから実行する。たとえば，上のコードで切頂二十面体を描いた後，正八面体（r02）を描こうとするならば，
+\begin{verbatim}
+  Setdirectory( Dirhead+"/data/polyhedrons_obj");
+  phd=Readobj("r02.obj",["size=3"]);
+  Setdirectory(Dirwork);
+  VertexEdgeFace("2",phd);
+  Phparadata("1","2");
+\end{verbatim}
+  のようにする。
+  
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%------------------- Nohiddenbyfaces -----------------------------------------------
+\hypertarget{nohiddenbyfaces}{}
+\item[関数]  Nohiddenbyfaces(name,PD1,PD2,option1,option2)
+\item[機能]  面に対し曲線を陰線処理する
+\item[説明]  PD2で与えられた面に対し，曲線PD1の面に隠れている部分を陰線処理する。
+
+引数PD1を省略するとすべての曲線が対象となる。陰線処理された線は初期設定では点線で表される。この線種はoption2で変更できる。たとえば，["da"] とすると破線になる。["nodsip"] とすると，陰線は表示されない。option1は曲線全体のoptionであるので，option2 だけを指定する場合は，option1 として空リスト[ ] が必要である。
+option2では，"Eps=" で，陰線処理時の許容限界を設定できる。陰線処理がうまくいかないときは，この値を \verb|Eps=10^(-4)| のように変えてみるとよい。初期設定は \verb|Eps=10^(-2)|。
+
+\vspace{\baselineskip}
+【例】座標平面上に正四面体を描き，各軸と正四面体の辺を陰線処理する。（下図左）
+\begin{verbatim}
+Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
+Putpoint3d("A",2*[-1,-1/sqrt(3),0]);
+Putpoint3d("B",2*[1,-1/sqrt(3),0]);
+Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
+Putpoint3d("D",2*[0,0,2*sqrt(6)/3]);
+phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
+VertexEdgeFace("1",phd);
+Nohiddenbyfaces("1","phf3d1"); 
+\end{verbatim}
+
+  \verb|VertexEdgeFace("1",phd);| によって，辺，頂点，面のプロットデータが作られる。\verb|phf3d1| は，面のプロットデータである。
+  
+ここで，\verb|Nohiddenbyfaces("1","phe3d1","phf3d1",["dr,2"],["da"]); | とすると，座標軸は陰線処理されず，正四面体の辺（\verb|phe3d1|）だけが陰線処理されて破線で描かれる。四面体は太く描かれる。（下図右）
+  
+\vspace{\baselineskip}
+  \begin{center} \input{Fig/nohiddenbyfaces1}    \input{Fig/nohiddenbyfaces2} \end{center}
+同様に，
+
+  \verb|Nohiddenbyfaces("1","ax3d","phf3d1",[],["da"]);|
+  
+とすれば，座標軸だけが陰線処理されて破線で描かれる。
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+
+\end{description}
+
+%================== 3D  曲面 ===============
+\subsubsection{曲面}
+
+曲面の描画には，ワイヤーフレームモデルとサーフェスモデルがある。ワイヤーフレームモデルは，曲面を編目で表すものであり，サーフェスモデルは編目のない面として，その輪郭線を描くものである。
+ 
+ \begin{center} \input{Fig/surfacemodel} \end{center}
+ 
+%\hspace{20mm}ワイヤーフレームモデル \hspace{10mm}サーフェスモデル
+
+KeTCindyでは，それぞれ次の関数を用いて描画する。
+\begin{tabbing}
+12345678901234567890123456789012345678\=\kill
+陰線処理をしないワイヤーフレームモデル \>Sf3data(name,form,options)\\
+サーフェスモデル \>Sfbdparadata(name,form,options)\\
+陰線処理をしたワイヤーフレームモデル \>Wireparadata(name,PD,form,n1,n2,options)
+\end{tabbing}
+ただし，陰線処理をするためには面のデータが必要なので，Sfbdparadata() で描画した後，Wireparadata()で陰線処理して描画する。
+
+また，サーフェスモデルの描画では，陰線処理に時間がかかるため，Ｃ言語の使用を前提としている。したがって，Ｃ言語を用いて描画を行う ExeccmdC() を併用する。
+
+引数の form は，方程式 と，変数の定義域を文字列のリストにしたものである。方程式のパターンは次の3通りがある。
+
+(1) $z=f(x,y)$
+
+ \hspace{5mm} 【例】式：$z=x^2-y^2$
+
+ \hspace{15mm} 定義域：$x=(-2,2) , y=(-2,2)$
+
+(2) $z=f(x,y),x=g(r,t),y=h(r,t)$
+
+ \hspace{5mm} 【例】式：$z=4-(x^2+y^2) , x=r\cos t , y=r\sin t$ 
+
+\hspace{15mm} 定義域：$r=(0,2) , t=(0,2\pi)$
+
+(3) $x=f(u,v),y=g(u,v),z=h(u,v),$
+
+ \hspace{5mm} 【例】式：$x=2\sin u \cos v , y=2\sin u \sin v  , z=2\cos u $ 
+
+\hspace{15mm} 定義域：$u=(0,\pi) , v=(0,2\pi)$
+
+ここで，(2)と(3)は媒介変数型で，$x,y,z$ それぞれの式と，媒介変数２つの定義域からなっている。そのままでは区別がつかないので，引数として与えるときは，(3) の型には，識別文字として "p" を先頭に付加する。
+
+また，定義域については，開区間でとる場合と閉区間でとる場合がある。その区別を境界指定として"ewsn"で表す（ともに閉区間）。"ewsn" の意味は次のように考える。
+
+変数が $u,v$ のとき，$u,v$平面において，$a \leq u \leq b,c \leq v \leq d$ の矩形を考え，境界値を東西南北(ewsn)で示す。それぞれの文字が書かれたときは境界値を含む。
+
+ \begin{center} \input{Fig/ewsn} \end{center}
+
+この境界指定を最後に付加するが，省略することもでき，省略した場合は初期値の "ewsn" （閉区間）とする。ともに開区間とする場合は，"" を付加する。ただし，陰線処理をしない Sf3data() では，境界にも線を引くので，この指定は省略してよい。
+
+具体的な例を示そう。
+
+次は，円錐の form である。（formは form data を短縮した fd がよく使われる）
+
+\vspace{\baselineskip}
+\verb|fd=["p","x=r*cos(t)","y=r*sin(t)","z=2*(2-r)","r=[1,2]","t=[0,2*pi]","ew"]|
+
+\vspace{\baselineskip}
+"ew" は $1 \leq r \leq 2$ であることを示す。したがって，円錐台の上面と底面が表示される。
+
+これを "e" とすると $1 <  r \leq 2$ となり，上面が表示されない。
+
+また，これを "w" とすると $1 \leq r < 2$ となり，底面が表示されない。
+
+さらに，"ewn" あるいは "ews" としたり，指定を略して初期値の "ewsn" とすると，$t=(0,2\pi)$ の左右いずれかの値が含まれることになり，不要な境界線が現れる。
+
+\vspace{\baselineskip}
+\hspace{12mm}"ew" \hspace{25mm}"e" \hspace{25mm}"w" \hspace{25mm}"ewn"
+
+\input{Fig/frustumew} \input{Fig/frustume} \input{Fig/frustumw} \input{Fig/frustumewn}
+
+\begin{description}
+
+%------------------ Sf3data -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{sf3data}{}
+\item[関数]  Sf3data(name,リスト,options)
+\item[機能]  陰線処理なしの曲面をワイヤーフレームモデルで描く
+\item[説明]  optionsは，メッシュの密度と解像度（各変数に対応する分割数）。
+
+メッシュ密度は，縦横で "Wire=[a,b]" で指定。初期値はa,bとも20。
+
+解像度は，"Num=[a,b]" で指定。初期値はa,bとも25。
+
+\begin{layer}{150}{0}
+\putnotese{88}{10}{ \input{Fig/saddle1}} 
+\end{layer}
+
+\vspace{\baselineskip}
+【例】 $z=f(x,y)$ 型
+ 
+ $z=x^2-y^2$を定義域$x=[-2,2],y=[-2,2]$ で描画する。
+  
+\verb|   fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];|\\
+\verb|   Sf3data("1",fd)|;
+      
+メッシュの数を縦横とも10，解像度をx,yとも10にすると
+ 
+ メッシュ密度，解像度とも下げるので粗い描画となる。
+ 
+\verb|Sf3data("1",fd,["Num=[10,10]","Wire=[10,10]"]);|
+  
+\vspace{\baselineskip}
+【例】$z=f(x,y),x=g(r,t),y=h(r,t)$型
+
+次図左
+  
+\verb|fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]"];|
+
+\verb|Sf3data("1",fd);|
+    
+次図右
+
+\verb|fd=["z=sin(sqrt(abs(x^2+y^2)))","x=r*cos(t)","y=r*sin(t)",|
+
+\verb|   "r=[0,3]","t=[0,2*pi]"];|
+ 
+\verb|Sf3data("1",fd);|
+
+  \begin{center} \input{Fig/parabola}   \input{Fig/sf3ddata3} \end{center}
+
+(3) $x=f(u,v),y=g(u,v),z=h(u,v),$ 型
+
+  この場合，(2)と区別するために，"p" を先頭につけておく。
+  
+ \vspace{\baselineskip}
+ 【例】球面
+ 
+ \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)",|
+    
+\verb|"u=[0,pi]","v=[0,2*pi]",""];|
+\verb|Sf3data("1",fd);|
+
+\begin{center} \input{Fig/sf3ddata4} \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%------------------ Sfbdparadata -----------------------------------------------
+\hypertarget{sfbdparadata}{}
+\item[関数]  Sfbdparadata(name,式,options)
+\item[機能]  陰線処理した曲面のデータを作る
+\item[説明]  この関数はデータを作るだけなので，表示するには ExeccmdC() を併用する。
+
+optionsは，"Wait=n","r","m",および線種。Wait の初期値は30。
+
+ "r","m"に関しては，
+ 
+\hspace{5mm} オプションなしまたは，”” のとき
+ 
+\hspace{10mm}  i) データファイルがなければ，新しく作る
+  
+\hspace{10mm}  ii) データファイルが既にあればそれを読み込む
+  
+\hspace{5mm}"m"  のとき，強制的にデータファイルを作り直す。
+
+\hspace{5mm}"r" のとき，すでにあるデータファイルを読み込む。
+
+この処理は時間がかかるため，この関数を実行した状態で画面上のスライダやその他の点を動かそうとすると反応が悪くなる。そこで，Isangle() または Isptselected() を用いて，スライダの点を選択しているときはワイヤフレームモデルを描画するようにするとよい。
+
+なお，C言語の環境がない場合は，ExeccmdC() が使えないので，SfbdparadataR(name,式,optons1,optons2) を使う。options2には陰線の表示方法について "nodisp" または線種 を指定する。 初期設定は"nodisp" 。options2のみ指定するときは，options1に [""] （空文字）を書いておく。
+
+作図例は 次の ExeccmdC を参照のこと。
+
+%------------------- ExeccmdC -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{execcmdc}{}
+\item[関数]  ExeccmdC(name,options1,options2)
+\item[機能]  曲面を表示する。戻り値は，対象にしたプロットデータのリスト。
+\item[説明]  データが作成された曲面を表示する。
+
+options1 には"r","m", "Wait=n" と輪郭線の線種が指定できる。
+  
+options2 には 軸の陰線について "nodisp" または線種が指定できる。 初期設定は "do"。
+
+options2だけを指定したい場合は，options1 を空リスト [ ] にする。
+
+\vspace{\baselineskip}
+
+【例】サドル面
+
+\begin{layer}{150}{0}
+\putnotese{85}{0}{ \input{Fig/sfbdpara01}}
+\putnotese{85}{45}{ \input{Fig/sfbdpara02}}
+\end{layer}
+
+陰線を消去して表示
+\begin{verbatim}
+    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];
+    if(Isangle(),
+      Sf3data("1",fd);
+      ,
+      Startsurf();
+      Sfbdparadata("1",fd);
+      ExeccmdC("1",[],["nodisp"]);
+   );
+\end{verbatim}
+全体を実線で太めにして，陰線を点線で表示
+
+\verb|ExeccmdC()| を変更する。
+
+\verb|      ExeccmdC("1",["dr,2"]);|
+
+\vspace{10mm}
+【例】放物面  ： 式を変更する。
+\begin{verbatim}
+  fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];
+\end{verbatim}
+
+ 陰線を消去（下図左）：\verb|ExeccmdC("1",[],["nodisp"]);|
+ 
+ 陰線を破線で表示（下図右）：\verb|ExeccmdC("1",[],["da"]);|
+      \begin{center} \input{Fig/sfbdpara03}  \input{Fig/sfbdpara04} \end{center}
+      
+【例】曲面を２つ表示するときは，Sfbdparadata() の name は "1" と "2" にするが，まとめて \verb|ExeccmdC("1")| で表示できる。
+
+\begin{verbatim}
+fd=[
+ "p",
+ "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",
+ "r=[1,2]","t=[0,2*pi]","ew"
+];
+fd2=[
+ "p",
+ "x=r*cos(t)-3","y=r*sin(t)+3","z=2*(2-r)",
+ "r=[0,2]","t=[0,2*pi]","ew"
+];
+if(!ptselected(),
+ Startsurf(); 
+ Sfbdparadata("1",fd);
+ Sfbdparadata("2",fd2);
+ ExeccmdC("1");
+);
+\end{verbatim}
+      \begin{center} \input{Fig/sfbdpara05}  \end{center}
+      
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+
+
+%-------------------Wireparadata  -----------------------------------------------
+\hypertarget{wireparadata}{}
+\item[関数]  Wireparadata(name,PD,式,整数,整数,optons)
+\item[機能]  Sfbdparadataで作成した曲面について，陰線処理したワイヤーフレームモデルを作る。
+\item[説明]  PDは，第3引数の式で描いたワイヤフレームモデルのプロットデータ名。第4，第5引数は分割線の数。
+
+options には "r","m","Wait=n" が指定できる。
+  
+Sfbdparadata() とペアで使い，そのあとに ExeccmdC で描画する。
+
+C言語の環境がない場合は，ExeccmdC() が使えないので，WireparadataR(name,PD,式,整数,整数,optons1,optons2) を使う。options2には陰線の表示方法について "nodisp" または線種 を指定する。 初期設定は"nodisp" 。options2のみ指定するときは，options1に [""] （空文字）を書いておく。
+
+\vspace{\baselineskip} 
+【例】
+
+サドル面
+
+\begin{layer}{150}{0}
+\putnotese{85}{5}{ \input{Fig/wirepara1}}
+\end{layer}
+\begin{verbatim}
+    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];
+    if(Isangle(),
+      Sf3data("1",fd);
+      ,
+      Startsurf();
+      Sfbdparadata("1",fd);
+      Wireparadata("1","sfbd3d1",fd,4,5);
+      ExeccmdC("1");
+    );
+\end{verbatim}
+
+回転放物面：次を変更
+
+\begin{layer}{150}{0}
+\putnotese{85}{0}{ \input{Fig/wirepara2}}
+\end{layer}
+\begin{verbatim}
+  fd=["z=4-(x^2+y^2)","x=r*cos(t)",
+  "y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];
+  Wireparadata("1","sfbd3d1",fd,5,7);
+\end{verbatim}
+\vspace{10mm}
+
+球面
+
+\begin{layer}{150}{0}
+\putnotese{80}{0}{ \input{Fig/wirepara3}}
+\end{layer}
+\begin{verbatim}
+  fd=["p","x=2*sin(u)*cos(v)",
+       "y=2*sin(u)*sin(v)",
+       "z=2*cos(u)","u=[0,pi]",
+       "v=[0,2*pi]",""];
+  Sfbdparadata("1",fd);
+  Wireparadata("1","sfbd3d1",fd,12,12); 
+\end{verbatim}
+
+\vspace{8mm}
+
+【例】球面で座標軸を陰線処理し，面の陰線は非表示で表す。
+
+\begin{layer}{150}{0}
+\putnotese{70}{5}{ \input{Fig/wirepara4}}
+\end{layer}
+
+\begin{verbatim}
+    fd=["p","x=2*sin(u)*cos(v)",
+       "y=2*sin(u)*sin(v)",
+       "z=2*cos(u)",
+       "u=[0,pi]","v=[0,2*pi]",""];
+    if(Isangle(),
+      Sf3data("1",fd);
+    ,
+      Startsurf();
+      Sfbdparadata("1",fd);
+      Wireparadata("1","sfbd3d1",fd,12,12);
+      Crvsfparadata("1","ax3d","sfbd3d1",fd);
+      ret=ExeccmdC("1");
+      forall(1..length(ret),
+        if(indexof(ret_#,"wireh")>0,
+          Changestyle3d([ret_#],["nodisp"]);
+        );
+      );
+    );
+\end{verbatim}
+【例】トーラスを描く
+
+式を次のように変え，軸は非表示にして，\verb|ExeccmdC("1",[],["nodisp"])| にする。
+
+\begin{verbatim}
+  fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",
+      "u=[0,2*pi]","v=[0,2*pi]","s"];
+\end{verbatim}
+%\vspace{\baselineskip}
+    \begin{center}  \input{Fig/wirepara5} \end{center}
+ 
+%------------------- Crvsfparadata -----------------------------------------------
+
+\hypertarget{crvsfparadata}{}
+\item[関数]  Crvsfparadata(name,PD1,PD2,式)
+\item[機能]  曲面による曲線の陰線処理を行う。
+\item[説明]  曲線PD1と曲面PD2について，PD1はPD2による陰線処理を行う。
+
+Crvsfparadata() のあとに ExeccmdC() でまとめて描画する。
+
+C言語が使えない場合は，CrvsfparadataR(name,PD1,PD2,式,options1,options2) を使う。
+options1 は分割数と誤差限界， options2 は陰線の線種。
+
+【例】回転放物面と座標軸，線分を陰線処理したデータを作って表示する。線分の端点A,Bはあらかじめ作図しておく。
+
+ExeccmdC()の 初期設定では陰線は点線で表示される。（下図左）
+\begin{verbatim}
+    Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
+    Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]);
+    Spaceline([A,B]);
+    fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];
+    Startsurf();
+    Sfbdparadata("1",fd);
+    Crvsfparadata("1","AB3d","sfbd3d1",fd);
+    Crvsfparadata("2","ax3d","sfbd3d1",fd);
+    ExeccmdC("1");
+\end{verbatim}
+ExeccmdC()の options2を ["nodisp"] にすると，陰線は非表示になる。（下図右）
+\begin{verbatim}
+    ExeccmdC("1",[],["nodisp"]);
+\end{verbatim}
+
+        \begin{center} \input{Fig/crvsfparadata2}     \input{Fig/crvsfparadata1} \end{center}
+
+戻り値を使うと，Changestyle3d() を使って陰線のスタイル（線種，色）を変えることができる。戻り値の内容は，コンソールに「readoutdata from template3D1.txt : 」として表示されるので，これをテキストエディタで開き，操作対象を決めればよい。たとえば，上の左図で，線分ABの陰線はリストの４番目の crvsfh3d1 なので，
+
+\begin{verbatim}
+    ret=ExeccmdC("1");
+    Changestyle3d(ret_4,["da","Color=red"]);
+\end{verbatim}
+
+とすると，赤の破線にすることができる。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\end{description}
+\newpage
+%================== 3D  プロットデータの操作 ===============
+\subsection{プロットデータの操作}
+
+\begin{description}
+%------------------- Datalist2d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{datalist}{}    
+\item[関数]  Datalist2d()
+\item[機能]  画面上のプロットデータのリストを取得する
+\item[説明]  画面に描かれているすべてのプロットデータのリストを返す。
+
+空間図形は，Cinderellaの画面上に射影し表示する。そのため，KeTCindy3Dは，空間におけるプロットデータと，画面上に表示するプロットデータの2つを作っている。Datalist2d()では，画面上に表示するプロットデータのリストを返す。
+
+\vspace{\baselineskip}
+【例】
+\begin{verbatim}
+  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
+  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]);
+  Spaceline("1",[A,B]);
+  println("PD="+Datalist2d());
+\end{verbatim}
+とすると，コンソールに  PD=[ax2d,AB2d]   と表示される。ax2dは座標軸のプロットデータ ax3d に，AB2d は線分ABのプロットデータ AB3d に対応している。
+%------------------- Datalist3d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{datalist}{}
+\item[関数]  Datalist3d()
+\item[機能]  空間のプロットデータのリストを取得する
+\item[説明]  空間に描かれているすべてのプロットデータのリストを返す
+
+\vspace{\baselineskip}
+【例】
+\begin{verbatim}
+  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
+  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]);
+  Spaceline("1",[A,B]);
+  println("PD="+Datalist3d());
+\end{verbatim}
+とすると，コンソールに  PD=[ax3d,AB3d]   と表示される。
+
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%------------------- Changestyle3d -----------------------------------------------
+\hypertarget{changestyle3d}{}
+\item[関数]  Changestyle3d(リスト,リスト)
+\item[機能]  3Dプロットデータの属性を変更
+\item[説明]  第１引数のプロットデータの属性を，第2引数に変更する。
+
+たとえば，補助線など，画面には描いてもTeXに書き出さない線を描画するときは，optionに["notex"] をつけるが，これをあとから付加したい場合に利用する。プロットデータはリストにできるので，複数のプロットデータの属性をまとめて変更することができて便利である。
+
+\vspace{\baselineskip}
+【例】4つの点で四面体の辺を描き，まとめて notex にする。点A,B,C,Dはとってあるものとする。
+\begin{verbatim}
+  Spaceline("1",[A,B]);
+  Spaceline("2",[A,C]);
+  Spaceline("3",[B,C]);
+  Spaceline("4",[A,D]);
+  Spaceline("5",[B,D]);
+  Spaceline("6",[C,D]);
+  edges=apply(1..6,"sl3d"+text(#));
+  Changestyle3d(edges,["notex"]);
+\end{verbatim}
+
+%------------------- Intersectcrvsf -----------------------------------------------
+\hypertarget{intersectcrvsf}{}
+\item[関数]  Intersectcrvsf(name,PD，式)
+\item[機能]  曲線と曲面の交点の座標を求める
+\item[説明]  PDは曲線のプロットデータ。式は曲面の式。
+
+  曲面は，Sfbdparadata()でデータを作成し，ExeccmdC()で表示しておく。交点の座標は，"intercrvsf"+name に代入される。コマンドの実行順序は次の例のようにする。
+  
+\begin{layer}{150}{0}
+\putnotese{80}{40}{ \includegraphics[bb=0 0 149.51 121.51 , height=4cm]{Fig/Intersectcurvsf.pdf}}
+\end{layer}
+
+\vspace{\baselineskip}
+【例】回転放物面と線分の交点の座標を表示する。
+\begin{verbatim}
+    Putpoint3d(["A",[0,-3,0],"B",[0,3,2]]);
+    Spaceline("1",[A,B]);
+    fd=[
+     "z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)",
+     "R=[0,2]","T=[0,2*pi]","e"
+    ];
+    Startsurf();
+    Sfbdparadata("1",fd);
+    Intersectcrvsf("1","sl3d1",fd);
+    ExeccmdC("1",[""]);
+    println("Intersect="+intercrvsf1);
+    Drawpoint3d(intercrvsf1); 
+\end{verbatim}
+実行すると，コンソールに
+
+\verb|   Intersect=[[0,1.57,1.52],[0,-1.91,0.36]] |
+    
+のように表示され，画面には緑で交点が表示される。
+
+%------------------- IntersectsgpL -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{intersectsgpL}{}
+\item[関数]  IntersectsgpL(点名，線分，面，描画方法)
+\item[機能]  空間の線分（直線）と平面の交点を求める。
+\item[説明]  引数の線分は線分の端点を "A-B" の形もしくは空間座標のリストで与える。
+
+引数の面は，面内の3点を "C-D-E" の形もしくは空間座標のリストで与える。
+
+戻り値は，[pt,flag1,flag2,val1,val2]
+  
+pt：直線と平面の交点の座標。直線と平面が平行で交点が存在しない場合は空リスト[]
+  
+flag1 ： 交点が線分内にあれば true ，なければ false
+  
+flag2 ： 交点が面内にあれば true，なければ false
+  
+val1,val2 ： 線分についてのパラメータ値，平面についてのパラメータ値
+  
+描画方法は，"put" または "i" , "e" 。
+  
+\hspace{10mm} put ：　幾何点を作る
+
+\hspace{10mm} i ： 線分内にあれば点を描く
+
+\hspace{10mm} e :  平面で交われば点を描く
+  
+\vspace{\baselineskip}
+【例】交点の有無と戻り値
+
+次のスクリプトで\verb|p2| を変えたときの戻り値の \verb|flag1, flag2|
+
+\begin{verbatim}
+p1=[1,-1,0];
+p2=[0,0,1/2];
+p3=[0,1,0];
+p4=[-1,0,0];
+p5=[0,0,1];
+Spaceline("1",[p1,p2]);
+Spaceline("2",[p3,p4,p5,p3]);
+ret=IntersectsgpL("P",[p1,p2],[p3,p4,p5],"put");
+println("flag1="+ret_2+": flag2="+ret_3);
+\end{verbatim}
+\begin{layer}{150}{0}
+\putnotese{10}{20}{ \input{Fig/wire01}}
+\putnotese{60}{20}{ \input{Fig/wire02}}
+\putnotese{10}{60}{ \input{Fig/wire03}}
+\putnotese{60}{60}{ \input{Fig/wire04}}
+\end{layer}
+ \begin{verbatim}
+  p2=[0,0,1/2];                   p2=[-1,1,1];
+  flag1=false : flag2=true        flag1=true : flag2=true 
+  
+ 
+ 
+ 
+ 
+ 
+ p2=[1,2,1];                       p2=[1,0,1/2];
+ flag1=true : flag2=false　　    flag1=false : flag2=false 
+\end{verbatim}
+
+\vspace{30mm}
+【例】立方体を平面で切った図を描く。
+
+   いろいろな手順が考えられるが，ここでは次の手順で描く。
+   
+ (1) 立方体の頂点をとる。１辺の長さをHnとし，軸上の点をPutaxes3d()でとる。
+    
+(2) 切断面を決める点E,F,Gを辺上の自由点としてPutonseg3d()でとる。
+
+(3) E,F,Gを通る平面と，辺AC,DYとの交点をとり，M,Nとする。
+
+(4) 全体を多面体として面データを作って描画する。
+\begin{verbatim}
+  Hn=3;
+  Putaxes3d(Hn);
+  Putpoint3d("A",[Hn,Hn,0]);
+  Putpoint3d("B",[Hn,0,Hn]);
+  Putpoint3d("C",[Hn,Hn,Hn]);
+  Putpoint3d("D",[0,Hn,Hn]);
+  Putonseg3d("E",X,B); 
+  Putonseg3d("F",Z,B); 
+  Putonseg3d("G",Z,D); 
+  IntersectsgpL("M","A-C","E-F-G","put"); 
+  IntersectsgpL("N","D-Y","E-F-G","put"); 
+  phd=Concatobj([[O,X,A,Y],[X,A,M,E],[A,Y,N,M],[Y,N,G,Z,O],
+      [O,Z,F,E,X],[Z,F,G],[E,M,N,G,F]]);
+  VertexEdgeFace("1",phd);
+  Nohiddenbyfaces("1","phf3d1"); 
+\end{verbatim}
+スクリプトを実行後，点E,F,Gをドラッグして適当な位置の断面にする。
+
+\begin{center}\includegraphics[bb=0 0 713.04 327.02 , width=10cm]{Fig/IntersectsgpL0.pdf}\end{center}
+
+できた図は下図左。これに，次のスクリプトを追加すれば，断面上方の立方体の各辺も点線で描かれる。（下図右）
+\begin{verbatim}
+  Spaceline("1",[E,B,F],["do"]);
+  Spaceline("2",[B,C,M],["do"]);
+  Spaceline("3",[C,D,N],["do"]);
+  Spaceline("4",[D,G],["do"]);
+\end{verbatim}
+\begin{center} \input{Fig/IntersectsgpL1}    \input{Fig/IntersectsgpL2} \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%------------------- Sfcutparadatacdy -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{sfcutparadatacdy}{}
+\item[関数]  Sfcutparadatacdy(name,面,曲面,options)
+\item[機能]  平面と曲面の交線を求める。
+\item[説明]  面の方程式はx,y,zの方程式，曲面は媒介変数表示で与える。
+
+\vspace{\baselineskip}
+【例】円錐を平面$y+2z=3$で切った断面を表示する。
+
+\begin{layer}{150}{0}
+\putnotese{70}{0}{\input{Fig/sfcut}}
+\end{layer}
+\begin{verbatim}
+fd=[
+ "p",
+ "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",
+ "r=[0,2]","t=[0,2*pi]","e"
+];
+Startsurf(); 
+Sfbdparadata("1",fd);
+Sfcutparadatacdy("1","y+2*z=3",fd);
+ExeccmdC("1");
+\end{verbatim}
+%\begin{center} \input{Fig/sfcut}   \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+
+ %------------------Partcrv3d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{partcrv3d}{}
+\item[関数]  Partcrv3d(name，始点，終点，PD)
+\item[機能]  部分曲線のプロットデータを作成する
+\item[説明]  曲線PDにおいて，始点から終点までのプロットデータを作成する。
+
+始点と終点は，プロットデータの番号もしくは曲線上にとった点の識別名で示す。
+
+\vspace{\baselineskip}
+【例】螺旋を描き一部分を太くする。PutonCurve3d() で螺旋上に点C,Dができるので，ドラッグして適当な位置に移動する。
+\begin{verbatim}
+  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
+  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);
+  PutonCurve3d("C","sc3d1");
+  PutonCurve3d("D","sc3d1");
+  Partcrv3d("1",C,D,"sc3d1",["dr,3"]);
+  Letter([C,"n2","C",D,"n2","D"]);
+\end{verbatim}
+  ここで，\verb|"sc3d1"| は，螺旋，\verb|"part3d1"| は，部分曲線のプロットデータである。
+  
+\begin{center} \input{Fig/partcrv3d1} \end{center}
+
+\vspace{\baselineskip}
+【例】稲妻状の螺旋を点線で描き，その一部を実線にする。位置はプロットデータの番号で示す。小数にすると曲線を分割している線分の途中の位置になる。
+\begin{verbatim}
+Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=10","do"]);
+Partcrv3d("1",3.3,8.5,"sc3d1");
+\end{verbatim}
+\begin{center} \input{Fig/partcrv3d2} \end{center}
+
+%------------------Reflectdata3d-----------------------------------------------
+\hypertarget{reflectdata3d}{}
+\item[関数]  Reflectdata3d(name , PDlist , list , options)
+\item[機能]  PDの鏡映を作る
+\item[説明]  第3引数のタイプにより，点に関する鏡映，直線に関する鏡映，面に関する鏡映を作る。戻り値は鏡映したプロットデータのリスト。
+
+\vspace{\baselineskip}
+【例】点A,B,C,D,Eを空間にとり，三角形ABCの鏡映を作る。
+
+\begin{verbatim}
+Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,0,1],"E",[1,0,0]]);
+Spaceline("1",[A,B,C,A]);
+\end{verbatim}
+
+で点をとり，三角形を描いておく。
+
+点Dに関する鏡映
+
+ \verb|    Reflectdata3d("1",["sl3d1"],[D3d],["Color=blue","dr,2"]);|
+
+\hspace{20mm} \input{Fig/reflectdata3d01}
+
+直線DEに関する鏡映 
+
+ \verb|    Reflectdata3d("1",["sl3d1"],[D3d,E3d],["Color=blue","dr,2"]);|
+
+\hspace{20mm} \input{Fig/reflectdata3d02}
+
+平面BDEに関する鏡映
+
+\verb|    Reflectdata3d("1",["sl3d1"],[D3d,E3d,B3d],["Color=blue","dr,2"]);|
+
+\hspace{20mm} \input{Fig/reflectdata3d03}
+ 
+ 
+ %------------------Reflectpoint3d-----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{reflectpoint3d}{}
+\item[関数]  Reflectpoint3d(座標,リスト)
+\item[機能]  点の鏡映点を求める
+\item[説明]  第2引数のタイプにより，点に関する鏡映，直線に関する鏡映，面に関する鏡映のそれぞれの点の座標を返す。
+
+\vspace{\baselineskip}
+【例】点A,B,C,Dを空間にとり，点Aの鏡映点の座標を求める。
+
+点Bに関する鏡映点      \verb|      Reflectpoint3d(A3d,[B3d]);|
+    
+直線BCに関する鏡映点  \verb|   Reflectpoint3d(A3d,[B3d,C3d]);|
+    
+平面BCDに関する鏡映点  \verb| Reflectpoint3d(A3d,[B3d,C3d,D3d]);|
+ 
+ %------------------Rotatedata3d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{rotatedata3d}{}
+\item[関数]  Rotatedata3d(name,PDリスト,vec,角度,options)
+\item[機能]  プロットデータを回転
+\item[説明]  プロットデータを，原点を始点とするベクトルvec 周りに回転する。複数のプロットデータをまとめて回転することができる。戻り値は回転したプロットデータのリスト。
+
+options として，中心点（vecの始点），線種を指定することができる。
+
+\vspace{\baselineskip}
+【例】コード例と結果を示す。
+\begin{verbatim}
+  Xyzax3data("","x=[-5,4]","y=[-5,5]","z=[-5,4]",["a","O"]);
+  Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,-2,3]]);
+  Spaceline("1",[A,B,C,A]);
+  Spaceline([C,D]);
+  Rotatedata3d("1",["sl3d1","CD3d"],[0,0,1],pi/2,["dr,2"]);
+  Letter([A,"s","A",B,"w","B",C,"ne","C",D,"ne","D"]);
+\end{verbatim}
+これを
+
+  \verb|Rotatedata3d("1",["sl3d1","CD3d"],[0,0,1],pi/2,[[1,0,0],"dr,2"]);|
+  
+とした場合が右図である。
+
+ \input{Fig/rotatedata3d01} \hspace{5mm} \input{Fig/rotatedata3d02} 
+
+%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+ %------------------Rotatepoint3d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{rotatepoint3d}{}
+\item[関数]  Rotatepoint3d(座標, vec , 角度, [点] )
+\item[機能]  点の位置を回転する
+\item[説明]  点をvecの周りに回転する。角度は弧度法で与える。
+
+第4引数に点を与えた場合，vecの始点が第4引数の位置になる。デフォルトは原点
+
+点Aを，$(0,-1,0)$に置いたときの記述例と戻り値
+ 
+\verb|  Putpoint3d("A",[0,-1,0]);| \\
+\verb|  Rotatepoint3d(A3d,[0,0,1],pi/2);          |  // 戻り値は [1,0,0]\\
+\verb|  Rotatepoint3d(A3d,[0,0,1],pi/2,[1,1,0]);  | // 戻り値は [3,0,0]\\
+
+ %------------------Scaledata3d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{scaledata3d}{}
+\item[関数]  Scaledata3d(name , PDリスト , vec , [中心,options])
+\item[機能]  PDを拡大/縮小する。
+\item[説明]  点は空間座標，vec は３次元ベクトルで倍率を表す。
+
+中心とoptionsはリストで与える。
+
+\vspace{\baselineskip}
+【例】三角形と円を拡大/縮小する。
+
+\begin{verbatim}
+  Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2]]);
+  Spaceline("1",[A,B,C,A]);
+  Spacecurve("1","[cos(t)+1,sin(t)+1,1]","t=[0,2*pi]",["Num=100"]);
+  Scaledata3d("1",["sl3d1","sc3d1"],[2,2,2],[[0,0,0],"dr,2"]);
+\end{verbatim}
+
+\hspace{20mm}\input{Fig/scaledata3d}
+%------------------Scalepoint3d-----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{scalepoint3d}{}
+\item[関数]  Scalepoint3d(点,vec,中心)
+\item[機能]  点の位置を拡大/縮小する。
+\item[説明]  点は空間座標，vec は３次元ベクトルで与える。
+
+\vspace{\baselineskip}
+【例】コード例と結果を示す。
+
+\begin{verbatim}
+  Putpoint3d(["A",[2,-1,2]]);
+  pt=Scalepoint3d(A3d,[3,2,4],[1,1,1]); 
+  Putpoint3d(["B",pt]);
+\vspace{\baselineskip}
+\end{verbatim}
+
+点Bの位置は(4,-3,5)になる。
+
+%------------------ Translatedata3d -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{translatedata3d}{}
+\item[関数]  Translatedata3d(name,PD,平行移動量)
+\item[機能]  空間プロットデータを平行移動
+\item[説明]  PDで表される図形を，平行移動する。戻り値は平行移動したプロットデータのリスト。
+
+\vspace{\baselineskip}
+【例】曲線 sc3d1 をy軸方向に2だけ平行移動する。
+
+\verb|Translatedata3d("1",["sc3d1"],[0,2,0]);|
+    
+結果として，もとの曲線と平行移動した曲線の2つが描かれる。
+
+\vspace{\baselineskip}
+【例】多面体の平行移動\\
+VertexEdgeFace() で描いた多角形はこの関数では平行移動できないので，面データを直接操作して平行移動を行う。
+  
+たとえば，小林・鈴木・三谷による多面体データ  polyhedrons obj  を用いて正八面体を描く場合，次のようにする。$y$軸方向に2だけ平行移動する場合である。
+
+\begin{verbatim}
+  Setdirectory( Dirhead+"/data/polyhedrons_obj");
+  phd=Readobj("r02.obj",["size=2"]);
+  Setdirectory(Dirwork);
+  dn=length(phd_1);
+  repeat(dn,s,phd_1_s=phd_1_s+[0,2,0]);
+  VertexEdgeFace("1",phd);
+\end{verbatim}
+      \begin{center} \input{Fig/translate01} \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%------------------Translatepoint3d( -----------------------------------------------
+\hypertarget{translatepoint3d}{}
+\item[関数]  Translatepoint3d(座標，平行移動量)
+\item[機能]  空間点を平行移動
+\item[説明]  点を平行移動する。
+
+\vspace{\baselineskip}
+【例】点A(1,0,0) を(-1,1,1)だけ平行移動した点をBとする。点Aの空間座標は A3d で表される。 
+\begin{verbatim}
+  Putpoint3d(["A",[1,0,0]]);
+  pt=Translatepoint3d(A3d,[-1,1,1]);
+  Putpoint3d(["B",pt]);
+\end{verbatim}
+\vspace{\baselineskip}
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+
+
+ \end{description}
+\newpage
+%  その他  ==================================
+\subsection{その他}
+
+\begin{description}
+
+
+%------------------- Perpplane-----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{perpplane}{}
+\item[関数]  Perpplane(点名,点,ベクトル，option)
+\item[機能]  点を通り線分に垂直な平面上に基準点を2つとる
+\item[説明]  引数の点名は，作成する2点で "A-B" の形
+
+第2引数は通る点の名称または座標
+  
+第3引数は法線ベクトル
+  
+optionは "put"  で，2つの幾何点を作図する。optionがない場合は幾何点は作らず，無名の点のみを表示する。put以外の文字列を書いたときは無効な命令とし，何も作成されない。
+  
+記述例を示すと
+  
+ \verb|Perpplane("A-B","P",[1,1,1],"put");|
+    
+点Pを通り，法線ベクトル(1,1,1)に垂直な平面上に点A,Bをとる。
+
+ \verb|Perpplane("A-B","P",P3d-O3d);|
+ 
+ 点Pを通り，線分OPに垂直な平面上に点A,Bをとる。
+ これらにおいて，PAとPBは垂直で，PA=PB=1 となる。
+ 
+\vspace{\baselineskip}
+【例】ベクトル $\vec{p}=(1,1,1)$ に垂直で点$(1,1,1)$を通る平面ABCDを描く。
+
+  点A,B,C,Dは作図ツールで適当に取っておく。正確な位置はスクリプトで決める。
+
+\begin{layer}{150}{0}
+\putnotese{80}{20}{ \input{Fig/perpplane}}
+\end{layer}
+
+\begin{verbatim}
+  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
+  Putpoint3d(["O",[0,0,0]]);
+  Putpoint3d(["P",[1,1,1]]);
+  Perpplane("E-F","P",P3d-O3d,"put");
+  vec1=2*(E3d-P3d);
+  vec2=2*(F3d-P3d);
+  Putpoint3d(["A",P3d+vec1+vec2]);
+  Putpoint3d(["B",P3d+vec1-vec2]);
+  Putpoint3d(["C",P3d-vec1-vec2]);
+  Putpoint3d(["D",P3d-vec1+vec2]);
+  Spaceline("1",[A,B,C,D,A]);
+  Arrowdata([O,P],["dr,2"]);
+  Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]);
+  Skeletonparadata("1");
+\end{verbatim}
+
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+ %-----------------Perppt( -----------------------------------------------
+\hypertarget{perppt}{}
+\item[関数]  Perppt(点名，点，点リスト,option)
+\item[機能]  平面に下ろした垂線の足を求める
+\item[説明]  第2引数の点から，第3引数の点リストで決まる平面に下した垂線の足を，第１引数の名前の点とする。
+
+オプションは次の通り。 初期設定は "draw"
+
+draw：点を打つ。幾何点は作らない
+
+put ：幾何点を作る
+
+none：計算だけ行い，点は作図しない。
+
+\vspace{\baselineskip}
+【例】原点から点ABCを通る平面に下した垂線の足Hの座標を求める。
+
+ \verb|Perppt("H","O","A-B-C","none");|   表示はされない。
+ 
+ \verb|Perppt("H","O","A-B-C");|         Ｈの位置に緑色の点が表示される。
+ 
+ \verb|Perppt("H","O","A-B-C","put");|     幾何点Hが作図される。
+ 
+  いずれの場合も，Hの座標は変数H3d に代入される
+  
+\vspace{\baselineskip}
+作図例
+\begin{verbatim}
+  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
+  Putpoint3d("O",[0,0,0]);
+  Putpoint3d("A",[3,0,0]);
+  Putpoint3d("B",[0,3,0]);
+  Putpoint3d("C",[0,0,3]);
+  Perppt("H","O","A-B-C","put");
+  Spaceline("1",[A,B,C,A]);
+  Spaceline("2",[O,H]);
+  Letter([A,"nw","A",B,"ne","B",C,"ne","C",O,"nw","O",H,"ne","H"]);
+\end{verbatim}
+
+\vspace{\baselineskip}
+\begin{center} \input{Fig/perppt} \end{center}
+ %------------------Projcoordpara -----------------------------------------------
+\hypertarget{projcoordpara}{}
+\item[関数]  Projcoordpara(座標)
+\item[機能]  投影座標を求める
+\item[説明]  空間座標を平面に投影した座標を求める。
+
+戻り値の第１，第2要素はCinderellaの描画面のx,y座標。第3要素はxy平面に垂直なzの座標で．投影面からの（符号付）距離を表す。
+
+\vspace{\baselineskip}
+【例】\verb|Projcoordpara([3,1,2]);|
+
+ 戻り値は  [-0.65,1.7,3.27]   のようになる。（視点によって値は異なる）
+
+
+ %------------------Readobj-----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{readobj}{}
+\item[関数]  Readobj(ファイル名)
+\item[機能]  objファイルを読み込む。
+\item[説明]  小林・鈴木・三谷による整面凸多面体のデータは\\
+\hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
+からダウンロードできる。\verb|polyhedrons_obj|を，例えば，ユーザホームのketcindy作業フォルダに入れておく。
+\begin{verbatim}
+  Setdirectory(gethome()+"/ketcindy/polyhedrons_obj");
+  polydt=Readobj("r02.obj");
+  Setdirectory(Dirwork);
+\end{verbatim}
+これで，r02.obj データが，変数 polydt に代入される。
+
+オプションは "size=n"  で，n倍したデータにする。負の数にすると上下が反転される。
+
+データはKeTCindyのdataフォルダの中にある。したがって，次のようなスクリプトを書く。読み込むのは一度だけなので， Draw スロットではなくInitialization スロットに置けばよいが，コードの可読性を高めるには Draw スロットでもよい。
+
+この多面体データは，頂点リストと面リストからなっているが，頂点リストは座標のリストなので，読み込んで表示するときには，点の名称を v1,v2,・・・ とする。
+
+読み込んだあとの使い方を含めて例を示す。
+
+\begin{layer}{150}{0}
+\putnotese{80}{0}{ \input{Fig/readobj}}
+\end{layer}
+
+
+\vspace{\baselineskip}
+【例】\verb|polydt|を用いて正八面体を描く
+
+
+\begin{verbatim}
+
+  VertexEdgeFace("1",polydt);
+  Nohiddenbyfaces("1","phf3d1");
+\end{verbatim}
+
+主なデータは次の通り。
+
+\vspace{\baselineskip}
+ \input{Fig/kobayashi} 
+
+この他にn01〜n92まで整面凸多面体がある。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+ 
+
+%-------------------Xyzcoord  -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{xyzcoord}{}
+\item[関数]  Xyzcoord(P.x,P.y,Pz.y)
+\item[機能]  主副画面で決まる点の座標
+\item[説明]  Cinderellaの描画面上の点が表す空間座標を求める
+
+  点Ｐについて，主画面の点Ｐに対応するのが副画面のPzである。点Pの2次元座標はP.x,P.yで，Pzのy座標はPz.yで表される。これを引数として与えると，点Ｐの空間座標が返される。
+  
+\vspace{\baselineskip}
+【例】点Aをドラッグして動かしたとき，Aの座標を求める。
+\verb|println(Xyzcoord(A.x,A.y,Az.y));|
+  
+により，コンソールに座標が表示される。
+
+%-------------------  Isangle -----------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{isangle}{}
 \item[関数]  Isangle()
@@ -5976,134 +7540,7 @@ optionsがないときは，以下の 初期設定を用いる。
    );
 \end{verbatim}
 
-\end{description}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\newpage
-\subsection{描画}
-\begin{description}
-
-\hypertarget{bezier3d}{}
-\item[関数]  Bezier3d(name,リスト1,リスト2)
-\item[機能]  空間ベジェ曲線を描く
-\item[説明]  引数はリスト1が端点リスト，リスト2が制御点リスト
-
-１組の端点につき，2つの制御点を使う。
-
-\vspace{\baselineskip}
-【例】いくつかの点をベジェ曲線で結ぶ
-
-  端点A,Bに対し，制御点をD,Eとする。
-  
-    \verb|Bezier3d("1",["A","B"],["D","E"]);| \vspace{\baselineskip}
-
-  端点A,Bに対し，制御点をD,Eとし，端点BCに対し制御点をE,Fとする。
-  
-    \verb|Bezier3d("1",["A","B","C"],["D","E","E","F"]);|
-    
- 端点A,Bに対し，制御点をD,Eとし，端点BCに対し制御点をF,Gとする。（図）
- 
-    \verb|Bezier3d("1",["A","B","C"],["D","E","F","G"]);|
-    
-    \begin{center} \input{Fig/bezier3d1} \end{center}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{changestyle3d}{}
-\item[関数]  Changestyle3d(リスト,リスト)
-\item[機能]  3Dプロットデータの属性を変更
-\item[説明]  第１引数のプロットデータの属性を，第2引数に変更する。
-
-たとえば，補助線など，画面には描いてもTeXに書き出さない線を描画するときは，optionに["notex"] をつけるが，これをあとから付加したい場合に利用する。プロットデータはリストにできるので，複数のプロットデータの属性をまとめて変更することができて便利である。
-
-\vspace{\baselineskip}
-【例】4つの点で四面体の辺を描き，まとめて notex にする。点A,B,C,Dはとってあるものとする。
-\begin{verbatim}
-  Spaceline("1",[A,B]);
-  Spaceline("2",[A,C]);
-  Spaceline("3",[B,C]);
-  Spaceline("4",[A,D]);
-  Spaceline("5",[B,D]);
-  Spaceline("6",[C,D]);
-  edges=apply(1..6,"sl3d"+text(#));
-  Changestyle3d(edges,["notex"]);
-\end{verbatim}
-
-\hypertarget{concatobj}{}    
-\item[関数]  Concatobj(リスト,option)
-\item[機能]  いくつかのobjデータを結合する
-\item[説明]  多面体の各面の頂点リストから面データ（頂点リストと面リスト）を作る。
-
-\vspace{\baselineskip}
-【例】4点A,B,C,Dを頂点とする四面体を描く。
-
-四面体は4つの面からなっている。頂点をA,B,C,Dとすると，4つの面は
-  
-              △ABC，△ABD，△ACD，△BCD\\
-である。
-  
-        \begin{center} \input{Fig/concatobj} \end{center}
-  
-そこで
-  
-    \verb|Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);|
-    
-とすると，面データ  [[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]]   が返される。
-  
-この面データを使って四面体を描くことができる。コード例は，\hyperlink{vertexedgeface}{VertexEdgeFace()} を参照のこと。
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{crvsfparadata}{}
-\item[関数]  Crvsfparadata(name,PD1,PD2,式)
-\item[機能]  曲面による曲線の陰線処理を行う。
-\item[説明]  曲線PD1を表示するにあたり，曲面PD2によって隠れる部分処理を行う。
-
-曲面PD2のプロットデータを作るため，Sfbdparadata() も同時に用いることになる。nameは，Sfbdparadata() と同じものにする。
-
-作図例は，\hyperlink{execcmdc}{ExeccmdC()} を参照のこと。
-
-C言語が使えない場合は，CrvsfparadataR(name,PD1,PD2,式,options1,options2) を使う。
-options1 は分割数と誤差限界， options2 は陰線の線種。
-
-\vspace{\baselineskip}
-\hypertarget{datalist}{}    
-\item[関数]  Datalist2d()
-\item[機能]  画面上のプロットデータのリストを取得する
-\item[説明]  画面に描かれているすべてのプロットデータのリストを返す。
-
-空間図形は，Cinderellaの画面上に射影し表示する。そのため，KeTCindy3Dは，空間におけるプロットデータと，画面上に表示するプロットデータの2つを作っている。Datalist2d()では，画面上に表示するプロットデータのリストを返す。
-
-\vspace{\baselineskip}
-【例】
-\begin{verbatim}
-  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
-  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]);
-  Spaceline("1",[A,B]);
-  println("PD="+Datalist2d());
-\end{verbatim}
-とすると，コンソールに  PD=[ax2d,AB2d]   と表示される。ax2dは座標軸のプロットデータ ax3d に，AB2d は線分ABのプロットデータ AB3d に対応している。
-
-\vspace{\baselineskip}
-\hypertarget{datalist}{}
-\item[関数]  Datalist3d()
-\item[機能]  空間のプロットデータのリストを取得する
-\item[説明]  空間に描かれているすべてのプロットデータのリストを返す
-
-\vspace{\baselineskip}
-【例】
-\begin{verbatim}
-  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
-  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]);
-  Spaceline("1",[A,B]);
-  println("PD="+Datalist3d());
-\end{verbatim}
-とすると，コンソールに  PD=[ax3d,AB3d]   と表示される。
-
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
+%------------------- Dist3d -----------------------------------------------
 \hypertarget{dist3d}{}
 \item[関数]  Dist3d(a1,a2)
 \item[機能]  空間の2点間の距離を返す
@@ -6115,79 +7552,8 @@ options1 は分割数と誤差限界， options2 は陰線の線種。
   Dist3d(A,B);
   Dist3d(A3d,B3d);
 \end{verbatim}
-\vspace{\baselineskip}
 
-\hypertarget{drawpoint3d}{}
-\item[関数]  Drawpoint3d(座標)
-\item[機能]  空間点を描く
-\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} を用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
-
-引数は，座標のリストにすることもできる。\\
-\vspace{\baselineskip}
-【例】
-\begin{verbatim}
-  Drawpoint3d([1,1,1]);
-  Drawpoint3d([[1,1,1],[0,1,0]]);
-\end{verbatim}
-\vspace{\baselineskip}
-
-\hypertarget{execcmdc}{}
-\item[関数]  ExeccmdC(name,options1,options2)
-\item[機能]  曲面を表示する。戻り値は，対象にしたプロットデータのリスト。
-\item[説明]  データが作成された曲面を表示する。
-
-options1 には"r","m", "Wait=n" と輪郭線の線種が指定できる。Wait の初期値は20
-
-  "r","m"に関しては，オプションなしまたは，”” のとき
-  
-    i) データファイルがなければ，新しく作る
-    
-    ii) データファイルが既にあればそれを読み込む
-    
-  "m"  のとき，強制的にデータファイルを作り直す。
-  
-  "r" のとき，すでにあるデータファイルを読み込む。
-  
-options2 には 軸の陰線について "nodisp" または線種が指定できる。 初期設定は "do"。
-
-options2だけを指定したい場合は，options1 を空リスト [ ] にする。
-
-
-\vspace{\baselineskip}
-【例】回転放物面と座標軸，線分を陰線処理したデータを作って表示する。線分の端点A,Bはあらかじめ作図しておく。
-
- 初期設定では陰線は点線で表示される。（下図左）
-\begin{verbatim}
-    Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
-    Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]);
-    Spaceline([A,B]);
-    fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];
-    Startsurf();
-    Sfbdparadata("1",fd);
-    Crvsfparadata("1","AB3d","sfbd3d1",fd);
-    Crvsfparadata("2","ax3d","sfbd3d1",fd);
-    ExeccmdC("1");
-\end{verbatim}
-options2を ["nodisp"] にすると，陰線は非表示になる。（下図右）
-\begin{verbatim}
-    ExeccmdC("1",[],["nodisp"]);
-\end{verbatim}
-
-        \begin{center} \input{Fig/crvsfparadata2}     \input{Fig/crvsfparadata1} \end{center}
-
-戻り値を使うと，陰線のスタイル（線種，色）を変えることができる。戻り値と同じものがコンソールに「readoutdata from template3D1.txt : 」として表示されるので，これを見て操作対象を決めればよい。たとえば，上の左図で，線分ABの陰線はリストの４番目の crvsfh3d1 なので，
-
-\begin{verbatim}
-    ret=ExeccmdC("1");
-    Changestyle3d(ret_4,["da","Color=red"]);
-\end{verbatim}
-
-とすると，赤の破線になる。
-
-\hspace{20mm} \input{Fig/execcmdc1}
-
-この他，\hyperlink{sfbdparadata}{Sfbdparadata()},\hyperlink{wireparadata}{Wireparadata()} も参照のこと。
-
+%------------------- Embed -----------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{embed}{}
 \item[関数]  Embed(name,PDリスト,式,変数リスト)
@@ -6252,118 +7618,23 @@ options2を ["nodisp"] にすると，陰線は非表示になる。（下図右
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-
-\hypertarget{intersectcrvsf}{}
-\item[関数]  Intersectcrvsf(name,PD，式)
-\item[機能]  曲線と曲面の交点の座標を求める
-\item[説明]  PDは曲線のプロットデータ。式は曲面の式。
-
-  曲面は，Sfbdparadata()でデータを作成し，ExeccmdC()で表示しておく。交点の座標は，"intercrvsf"+name に代入される。コマンドの実行順序は次の例のようにする。
+%------------------- Parapt -----------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{parapt}{}
+\item[関数]  Parapt(座標)
+\item[機能]  点の投影面での座標
+\item[説明]  引数の空間座標に対応するCinderellaの描画面の座標を返す。
 
 \vspace{\baselineskip}
-【例】回転放物面と線分の交点の座標を表示する。
-\begin{verbatim}
-    Putpoint3d(["A",[0,-3,0],"B",[0,3,2]]);
-    Spaceline("1",[A,B]);
-    fd=[
-     "z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)",
-     "R=[0,2]","T=[0,2*pi]","e"
-    ];
-    Startsurf();
-    Sfbdparadata("1",fd);
-    Intersectcrvsf("1","sl3d1",fd);
-    ExeccmdC("1",[""]);
-    println("Intersect="+intercrvsf1);
-    Drawpoint3d(intercrvsf1); 
-\end{verbatim}
-実行すると，コンソールに\\
-    \verb|Intersect=[[0,1.57,1.52],[0,-1.91,0.36]] |
-と表示され，画面には緑で交点が表示される。。
-
-
+【例】\verb|Parapt([2,1,5]);| により，点(2,1,5) が表示されている描画面の座標，たとえば [-0.52,3.27]  が返される。
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
-\hypertarget{intersectsgpL}{}
-\item[関数]  IntersectsgpL(点名，線分，面，描画方法)
-\item[機能]  空間の線分（直線）と平面の交点を求める。
-\item[説明]  引数の線分は線分の端点を "A-B" の形もしくは空間座標のリストで与える。
-
-  引数の面は，面内の3点を "C-D-E" の形もしくは空間座標のリストで与える。
-
-  戻り値は，[pt,flag1,flag2,val1,val2]
-  
-  pt：直線と平面の交点の座標。直線と平面が平行で交点が存在しない場合は空リスト[]
-  
-  flag1 ： 交点が線分内にあれば true ，なければ false
-  
-  flag2 ： 交点が面内にあれば true，なければ false
-  
-  val1,val2 ： 
-  
-  描画方法は，"put" または "i" , "e" 。
-  
-  put ：　幾何点を作る
-
-   i ： 線分内にあれば点を描く
-
-　e :  平面で交われば点を描く
-  
-\vspace{\baselineskip}
-【例】座標のリストで与える記述例\\
-  \verb|IntersectsgpL("P",[p1,p2],[p3,p4,p5],"draw");| 
-  
-\vspace{\baselineskip}
-【例】立方体を平面で切った図を描く。
-
-   いろいろな手順が考えられるが，ここでは次の手順で描く。
-   
- (1) 立方体の頂点をとる。１辺の長さをHnとする。
- 
-    ここでは軸上の点はPutaxes3d()でとる。
-    
-(2) 切断面を決める点E,F,Gを辺上の自由点としてPutonseg3d()でとる。
-
-(3) E,F,Gを通る平面と，辺AC,DYとの交点をとり，M,Nとする。
-
-(4) 全体を多面体として面データを作って描画する。
-\begin{verbatim}
-  Hn=3;
-  Putaxes3d(Hn);
-  Putpoint3d("A",[Hn,Hn,0]);
-  Putpoint3d("B",[Hn,0,Hn]);
-  Putpoint3d("C",[Hn,Hn,Hn]);
-  Putpoint3d("D",[0,Hn,Hn]);
-  Putonseg3d("E",X,B); 
-  Putonseg3d("F",Z,B); 
-  Putonseg3d("G",Z,D); 
-  IntersectsgpL("M","A-C","E-F-G","put"); 
-  IntersectsgpL("N","D-Y","E-F-G","put"); 
-  phd=Concatobj([[O,X,A,Y],[X,A,M,E],[A,Y,N,M],[Y,N,G,Z,O],
-      [O,Z,F,E,X],[Z,F,G],[E,M,N,G,F]]);
-  VertexEdgeFace("1",phd);
-  Nohiddenbyfaces("1","phf3d1"); 
-\end{verbatim}
-Cinderellaの描画面はつぎのようになる。点E,F,Gをドラッグして，適当な位置の断面にする。ただし，M,Nは辺上にあることが条件である。
-
-\vspace{\baselineskip}
-\includegraphics[bb=0 0 713.04 327.02 , width=12cm]{Fig/IntersectsgpL0.pdf}
-
-
-できた図は下図左。これに，次のスクリプトを追加すれば，断面上方の立方体の各辺も点線で描かれる。（下図右）
-\begin{verbatim}
-  Spaceline("1",[E,B,F],["do"]);
-  Spaceline("2",[B,C,M],["do"]);
-  Spaceline("3",[C,D,N],["do"]);
-  Spaceline("4",[D,G],["do"]);
-\end{verbatim}
-\begin{center} \input{Fig/IntersectsgpL1}    \input{Fig/IntersectsgpL2} \end{center}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
+%------------------- Invparapt -----------------------------------------------
 \hypertarget{invparapt}{}
 \item[関数]  Invparapt(座標，PD)
 \item[機能]  描画面上の座標に対応する曲線上の点の座標を返す
 \item[説明]  Cinderellaの描画面上の座標を与えて，それに対応する曲線上の3次元座標を返す。
-\\
+
 空間内の曲線を作図すると，曲線の空間内のプロットデータとともに，描画面上に描くためのプロットデータも作られる。これを利用すると，描画面上の位置から曲線上の座標を求めることができる。
 
 \vspace{\baselineskip}
@@ -6382,984 +7653,42 @@ Cinderellaの描画面はつぎのようになる。点E,F,Gをドラッグし�
 ここで，sl2d1,sc2d1 は線分と螺旋の描画面上での（平面の）プロットデータである。Intersectcrvs() で平面上の交点の座標（複数あるのでリストが返る）を求め，Invparapt() で対応する螺旋上の点の座標を求めて部分曲線を描いている。実際に交わる点での部分曲線ではないことに注意。
 
 \vspace{\baselineskip}
-\hypertarget{mkbezierptcrv3d}{}
-\item[関数]  Mkbezierptcrv3d(点リスト)
-\item[機能]  制御点を自動的にとる空間ベジェ曲線
-\item[説明]  リストで与えた点に対し，制御点を自動的に生成してベジェ曲線を描く。
+\hypertarget{expr3d}{}
+\item[関数]  Expr3d([位置, 方向, 文字列],option)
+\item[機能]  文字列を表示する
+\item[説明]  Expr() と同じ書式。「位置（座標）」だけ，空間座標にする。
 
-  制御点は，2つの点に対して，その点を端点とする線分上に2つ作られる。これを適宜移動して任意の曲線にすることができる。\hyperlink{bezier3d}{空間ベジェ曲線 Bezier3d()} を参照のこと。
-  
-\vspace{\baselineskip}
-【例】\verb|Mkbezierptcrv3d(["A","B","C","D"]);|\\
-    線分AB上に2点a1p,a2p，線分BC上に2点a2p,a2q，線分CD上に2点a3p,a3qができる。
-    
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{nohiddenbyfaces}{}
-\item[関数]  Nohiddenbyfaces(name,PD1,PD2,option1,option2)
-\item[機能]  面に対し曲線を陰線処理する
-\item[説明]  PD2で与えられた面に対し，曲線PD1の面に隠れている部分を陰線処理する。
-
-引数PD1を省略するとすべての曲線が対象となる。陰線処理された線は初期設定では点線で表される。この線種はoption2で変更できる。たとえば，["da"] とすると破線になる。["nodsip"] とすると，陰線は表示されない。option1は曲線全体のoptionであるので，option2 だけを指定する場合は，option1 として空リスト[ ] が必要である。
-option2では，"Eps=" で，陰線処理時の許容限界を設定できる。陰線処理がうまくいかないときは，この値を \verb|Eps=10^(-4)| のように変えてみるとよい。初期設定は \verb|Eps=10^(-2)|。
 
 \vspace{\baselineskip}
-【例】座標平面上に正四面体を描き，各軸と正四面体の辺を陰線処理する。（下図左）
+\hypertarget{letter3d}{}
+\item[関数]  Letter3d([位置, 方向, 文字列],option)
+\item[機能]  文字列を表示する
+\item[説明]  Letter() と同じ書式。「位置（座標）」だけ，空間座標にする。
+
+\vspace{\baselineskip}
+【例】三角錐ABCDを描いて，BCの中点に点Mを取ってA,Dと結ぶ。
+
+\begin{layer}{150}{0}
+\putnotese{90}{10}{ \input{Fig/letter3d}}
+\end{layer}
 \begin{verbatim}
-Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
-Putpoint3d("A",2*[-1,-1/sqrt(3),0]);
+Putpoint3d("A",2*[0,0,2*sqrt(6)/3]);
 Putpoint3d("B",2*[1,-1/sqrt(3),0]);
 Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
-Putpoint3d("D",2*[0,0,2*sqrt(6)/3]);
+Putpoint3d("D",2*[-1,-1/sqrt(3),0]);
+Putpoint3d("M",(B3d+C3d)/2);
 phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
 VertexEdgeFace("1",phd);
-Nohiddenbyfaces("1","phf3d1"); 
+Spaceline("1",[A,M,D]);
+Nohiddenbyfaces("1","phf3d1");
+Letter3d([A3d,"ne","A",B3d,"w","B",C3d,"se","C",D3d,"e","D"]);
+Letter3d(M3d,"sw","M",["Color=blue"]);
 \end{verbatim}
-
-  \verb|VertexEdgeFace("1",phd);| によって，辺，頂点，面のプロットデータが作られる。\verb|phf3d1| は，面のプロットデータである。
-  
-ここで，\verb|Nohiddenbyfaces("1","phe3d1","phf3d1",["dr,2"],["da"]); | とすると，座標軸は陰線処理されず，正四面体の辺（\verb|phe3d1|）だけが陰線処理されて破線で描かれる。四面体は太く描かれる。（下図右）
-  
-\vspace{\baselineskip}
-  \begin{center} \input{Fig/nohiddenbyfaces1}    \input{Fig/nohiddenbyfaces2} \end{center}
-同様に，
-
-  \verb|Nohiddenbyfaces("1","ax3d","phf3d1",[],["da"]);|
-  
-とすれば，座標軸だけが陰線処理されて破線で描かれる。
-%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\vspace{\baselineskip}
-\hypertarget{parapt}{}
-\item[関数]  Parapt(座標)
-\item[機能]  点の投影面での座標
-\item[説明]  引数の空間座標に対応するCinderellaの描画面の座標を返す。
-
-\vspace{\baselineskip}
-【例】\verb|Parapt([2,1,5]);| により，点(2,1,5) が表示されている描画面の座標，たとえば [-0.52,3.27]  が返される。
-%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\vspace{\baselineskip}
-\hypertarget{perpplane}{}
-\item[関数]  Perpplane(点名,点,ベクトル，option)
-\item[機能]  点を通り線分に垂直な平面上に基準点を2つとる
-\item[説明]  引数の点名は，作成する2点で "A-B" の形
-
-第2引数は通る点の名称または座標
-  
-第3引数は法線ベクトル
-  
-optionは "put"  で，2つの幾何点を作図する。optionがない場合は幾何点は作らず，無名の点のみを表示する。put以外の文字列を書いたときは無効な命令とし，何も作成されない。
-  
-記述例を示すと
-  
- \verb|Perpplane("A-B","P",[1,1,1],"put");|
-    
-点Pを通り，法線ベクトル(1,1,1)に垂直な平面上に点A,Bをとる。
-
- \verb|Perpplane("A-B","P",P3d-O3d);|
- 
- 点Pを通り，線分OPに垂直な平面上に点A,Bをとる。
- これらにおいて，PAとPBは垂直で，PA=PB=1 となる。
- 
-\vspace{\baselineskip}
-【例】ベクトル $\vec{p}=(1,1,1)$ に垂直で点$(1,1,1)$を通る平面ABCDを描く。
-
-  点A,B,C,Dは作図ツールで適当に取っておく。正確な位置はスクリプトで決める。
-
-\begin{layer}{120}{0}
-\putnotese{80}{20}{ \input{Fig/perpplane}}
-\end{layer}
-
-\begin{verbatim}
-  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
-  Putpoint3d(["O",[0,0,0]]);
-  Putpoint3d(["P",[1,1,1]]);
-  Perpplane("E-F","P",P3d-O3d,"put");
-  vec1=2*(E3d-P3d);
-  vec2=2*(F3d-P3d);
-  Putpoint3d(["A",P3d+vec1+vec2]);
-  Putpoint3d(["B",P3d+vec1-vec2]);
-  Putpoint3d(["C",P3d-vec1-vec2]);
-  Putpoint3d(["D",P3d-vec1+vec2]);
-  Spaceline("1",[A,B,C,D,A]);
-  Arrowdata([O,P],["dr,2"]);
-  Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]);
-  Skeletonparadata("1");
-\end{verbatim}
-
-
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\vspace{\baselineskip}
-
-\hypertarget{perppt}{}
-\item[関数]  Perppt(点名，点，点リスト,option)
-\item[機能]  平面に下ろした垂線の足を求める
-\item[説明]  第2引数の点から，第3引数の点リストで決まる平面に下した垂線の足を，第１引数の名前の点とする。
-
-オプションは次の通り。 初期設定は "draw"
-
-draw：点を打つ。幾何点は作らない
-
-put ：幾何点を作る
-
-none：計算だけ行い，点は作図しない。
-
-\vspace{\baselineskip}
-【例】原点から点ABCを通る平面に下した垂線の足Hの座標を求める。
-
- \verb|Perppt("H","O","A-B-C","none");|   表示はされない。
- 
- \verb|Perppt("H","O","A-B-C");|         Ｈの位置に緑色の点が表示される。
- 
- \verb|Perppt("H","O","A-B-C","put");|     幾何点Hが作図される。
- 
-  いずれの場合も，Hの座標は変数H3d に代入される
-  
-\vspace{\baselineskip}
-作図例
-\begin{verbatim}
-  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
-  Putpoint3d("O",[0,0,0]);
-  Putpoint3d("A",[3,0,0]);
-  Putpoint3d("B",[0,3,0]);
-  Putpoint3d("C",[0,0,3]);
-  Perppt("H","O","A-B-C","put");
-  Spaceline("1",[A,B,C,A]);
-  Spaceline("2",[O,H]);
-  Letter([A,"nw","A",B,"ne","B",C,"ne","C",O,"nw","O",H,"ne","H"]);
-\end{verbatim}
-
-\vspace{\baselineskip}
-\begin{center} \input{Fig/perppt} \end{center}
-
-\vspace{\baselineskip}
-\hypertarget{partcrv3d}{}
-\item[関数]  Partcrv3d(name，始点，終点，PD)
-\item[機能]  部分曲線のプロットデータを作成する
-\item[説明]  曲線PDにおいて，始点から終点までのプロットデータを作成する。
-
-始点と終点は，プロットデータの番号もしくは曲線上にとった点の識別名で示す。
-
-\vspace{\baselineskip}
-【例】螺旋を描き一部分を太くする。PutonCurve3d() で螺旋上に点C,Dができるので，ドラッグして適当な位置に移動する。
-\begin{verbatim}
-  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
-  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);
-  PutonCurve3d("C","sc3d1");
-  PutonCurve3d("D","sc3d1");
-  Partcrv3d("1",C,D,"sc3d1",["dr,3"]);
-  Letter([C,"n2","C",D,"n2","D"]);
-\end{verbatim}
-  ここで，\verb|"sc3d1"| は，螺旋，\verb|"part3d1"| は，部分曲線のプロットデータである。
-  
-\begin{center} \input{Fig/partcrv3d1} \end{center}
-
-\vspace{\baselineskip}
-【例】稲妻状の螺旋を点線で描き，その一部を実線にする。位置はプロットデータの番号で示す。小数にすると曲線を分割している線分の途中の位置になる。
-\begin{verbatim}
-Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=10","do"]);
-Partcrv3d("1",3.3,8.5,"sc3d1");
-\end{verbatim}
-              \begin{center} \input{Fig/partcrv3d2} \end{center}
-
-\hypertarget{phparadata}{}
-\item[関数]  Phparadata(name,name2,options)
-\item[機能]  多面体を陰線処理して描く
-\item[説明]  多面体を陰線処理して描く。多面体は面データ（頂点リストと面リスト）を与えて，VertexEdgeFace() でプロットデータを作る。このプロットデータに対し，隠れている面（辺）を非表示にして表示する。第1引数は通常のname，第2引数のname2は，VertexEdgeFace() で与えたnameと同じものとする。
-
-  optionsは，全体の線種（"dr,2"など）と，陰線の線種を"Hidden=線種" で指定できる。 初期設定では陰線は表示しない。
-  
-\vspace{\baselineskip}
-【例】小林・鈴木・三谷による多面体データ  \verb|polyhedrons_obj|  から，s06の切頂二十面体（サッカーボール型）を描く。 \verb|polyhedrons_obj| は KeTCindyシステムの data ディレクトリにあるので，Setdirectory() でカレントディレクトリを作業ディレクトリと切替ながら出力する。
-\begin{verbatim}
-  Setdirectory( Dirhead+"/data/polyhedrons_obj");
-  phd=Readobj("s06.obj",["size=3"]);
-  Setdirectory(Dirwork);
-  VertexEdgeFace("s06",phd);
-  Phparadata("1","s06");
-\end{verbatim}
-  VertexEdgeFace() の name は通常の "1" でもよい。その場合は，\verb|Phparadata("1","1");| とするが，わかりにくいので上のようにした。
-  
-実行すると，Cinderellaの描画面は次のように頂点だけが描かれる。
-
-\vspace{\baselineskip}
-\begin{center}
- \includegraphics[bb=0 0 726.04 365.02 , width=10cm]{Fig/phparadata01.pdf}
-\end{center}
- 
-\vspace{\baselineskip}
-全体の線種と，陰線の線種を
-  
-\verb|Phparadata("1","s06",["dr,2","Hidden=do"]);|
-
-で指定したのが下図右である。
-
- \begin{center} \input{Fig/phparadata02}   \input{Fig/phparadata03} \end{center}
-
-【注意】
-
-  polyhedrons obj のデータを使って，続けて異なる多面体を描きたい場合は注意が必要である。Readobj()だけを変更して別のデータを読めばよさそうであるが，VertexEdgeFace() のname も（したがって，Phparadata()の第2引数も）書き換えないと，前のデータが残っていてうまくいかない。たとえば，上のコードで切頂二十面体を描いた後，正八面体（r02）を描こうとするならば，
-\begin{verbatim}
-  Setdirectory( Dirhead+"/data/polyhedrons_obj");
-  phd=Readobj("r02.obj",["size=3"]);
-  Setdirectory(Dirwork);
-  VertexEdgeFace("2",phd);
-  Phparadata("1","2");
-\end{verbatim}
-  のようにする。
-  
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{pointdata3d}{}
-\item[関数]  Pointdata3d(名前,点リスト,options)
-\item[機能]  点の3Dデータと2Dデータを作成し，画面と\TeX に出力する。
-\item[説明]  optionsは\hyperlink{pointdata}{Pointdata()}と同様。
-\vspace{\baselineskip}
-
-【例】
-\begin{verbatim}
-  Pointdata3d("1",[[1,1,1],[0,1,0]],["Size=2","Color=red"]);
-\end{verbatim}
-\vspace{\baselineskip}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{projcoordpara}{}
-\item[関数]  Projcoordpara(座標)
-\item[機能]  投影座標を求める
-\item[説明]  空間座標を平面に投影した座標を求める。
-
-戻り値の第１，第2要素はCinderellaの描画面のx,y座標。第3要素はxy平面に垂直なzの座標で．投影面からの（符号付）距離を表す。
-
-\vspace{\baselineskip}
-【例】\verb|Projcoordpara([3,1,2]);|
-
- 戻り値は  [-0.65,1.7,3.27]   のようになる。（視点によって値は異なる）
-
-
-\vspace{\baselineskip}
-\hypertarget{putaxes3d}{}
-\item[関数]  Putaxes3d([x,y,z])
-\item[機能]  軸上に幾何点を作る。
-\item[説明]  引数のリスト [x,y,z] に対し，点X(x,0,0) ,Y(0,y,0) , Z(0,0,z) および 原点Oを主画面上にとり，副画面上に対応する点Xz，Yz，Zz，Oz を作る。すでに同じ名称の点がある場合は，指定された位置に移動する。
-
-引数は，実数にすることもでき，Putaxes3d(a) は，Putaxes3d([a,a,a]) と同じになる。
-  
-\vspace{\baselineskip}
-【例】Putaxes3d(5);  原点と，$x(5,0,0),y(0,5,0),z(0,0,5)$ を作る。
-
- Putaxes3d([1,2,3]);  原点と，$x(1,0,0),y(0,2,0),z(0,0,3)$ を作る。
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\vspace{\baselineskip}
-\hypertarget{putonCurve3d}{}
-\item[関数]  PutonCurve3d(点名，PD)
-\item[機能]  空間曲線上に点をとる
-\item[説明]  プロットデータPDの曲線上に，点名の点をとる。
-
-とった点は固定点ではなく，曲線上にインシデントとなる。したがって，ドラッグして曲線上を動かすことができる。例は \hyperlink{partcrv3d}{Partcrv3d()} を参照のこと。
-
-\vspace{\baselineskip}
-\hypertarget{putonseg3d}{}
-\item[関数]  Putonseg3d(点名，点1，点2)
-\item[機能]  線分上に点を作る
-\item[説明]  点１と点2の中点に，指定された名前の点を取る。点１と点2が線分として結ばれていなくてもよい。とった点は線分にインシデントとなる（線分が描かれていなくても）。点１と点2はリストにすることもできる。指定した点がすでに存在する場合は動かさない。
-
-点1，点2は幾何点の名称または座標で指定する。
-
-\vspace{\baselineskip}
-【例】A(1,-1,0)とB(0,2,2) の中点に点Cをとる。つぎのいずれでもよい。
-
-    \verb|Putonseg3d("C",A,B);|
-
-    \verb|Putonseg3d("C",[A,B]);|
-    
-    \verb|Putonseg3d("C",[[1,-1,0],[0,2,2]]);|
-
-\vspace{\baselineskip}
-
-\hypertarget{putpoint3d}{}
-\item[関数]  Putpoint3d(リスト,option)
-\item[機能]  空間に幾何点を作図する
-\item[説明]  点の名称と座標を与えて点を作図する。複数の点を一度に作図できる。
-
-optionは，"fix"( 初期設定) または "free"。リスト ["free"] にしてもよい。
- 
-"fix" では，固定点（ドラッグで移動できない点）とする。同じ名称の点がすでに存在する場合は，指定した位置に移動して固定点とする。
-
-"free" では，自由点（ドラッグで移動できる）とする。同じ名称の点がすでに存在する場合はなにもしない。
-
-\vspace{\baselineskip}
-【例】いくつか記述例を示す。
-
-    \verb|Putpoint3d(["A",[2,1,3]]);|
-    
-    \verb|Putpoint3d(["A",[1,1,1],"C",[1,0,1]],"fix");|
-    
-    \verb|Putpoint3d(["A",[2,1,3]],"free");|
-    
-\vspace{\baselineskip}
-  なお，この関数は幾何点を作るものであり，TeXには出力されない。TeXに点を出力するには，\hyperlink{pointdata}{Pointdata()} または \hyperlink{drwpt}{Drawpoint()}を併用する。
-  
-  空間における点の座標は，点名に"3d"を付加した名前の変数に代入される。たとえば，点Aの座標はA3dである。これにより，点の座標を取得できる。
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\vspace{\baselineskip}
-\hypertarget{readobj}{}
-\item[関数]  Readobj(ファイル名)
-\item[機能]  objファイルを読み込む。
-\item[説明]  小林・鈴木・三谷による整面凸多面体のデータは\\
-\hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
-からダウンロードできる。\verb|polyhedrons_obj|を，例えば，ユーザホームのketcindy作業フォルダに入れておく。
-\begin{verbatim}
-  Setdirectory(gethome()+"/ketcindy/polyhedrons_obj");
-  polydt=Readobj("r02.obj");
-  Setdirectory(Dirwork);
-\end{verbatim}
-これで，r02.obj データが，変数 polydt に代入される。
-
-オプションは "size=n"  で，n倍したデータにする。負の数にすると上下が反転される。
-
-データはKeTCindyのdataフォルダの中にある。したがって，次のようなスクリプトを書く。読み込むのは一度だけなので， Draw スロットではなくInitialization スロットに置けばよいが，コードの可読性を高めるには Draw スロットでもよい。
-
-この多面体データは，頂点リストと面リストからなっているが，頂点リストは座標のリストなので，読み込んで表示するときには，点の名称を v1,v2,・・・ とする。
-
-読み込んだあとの使い方を含めて例を示す。
-
-\begin{layer}{150}{0}
-\putnotese{80}{0}{ \input{Fig/readobj}}
-\end{layer}
-
-
-\vspace{\baselineskip}
-【例】\verb|polydt|を用いて正八面体を描く
-
-
-\begin{verbatim}
-
-  VertexEdgeFace("1",polydt);
-  Nohiddenbyfaces("1","phf3d1");
-\end{verbatim}
-
-主なデータは次の通り。
-
-\vspace{\baselineskip}
- \input{Fig/kobayashi} 
-
-この他にn01〜n92まで整面凸多面体がある。
-
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{reflectdata3d}{}
-\item[関数]  Reflectdata3d(name , PDlist , list , options)
-\item[機能]  PDの鏡映を作る
-\item[説明]  第3引数のタイプにより，点に関する鏡映，直線に関する鏡映，面に関する鏡映を作る。
-
-\vspace{\baselineskip}
-【例】点A,B,C,D,Eを空間にとり，三角形ABCの鏡映を作る。
-
-\begin{verbatim}
-Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,0,1],
-  "E",[1,0,0]]);
-Spaceline("1",[A,B,C,A]);
-\end{verbatim}
-
-で点をとり，三角形を描いておく。
-
-点Dに関する鏡映
-
- \verb|    Reflectdata3d("1",["sl3d1"],[D3d],["Color=blue","dr,2"]);|
-
-\hspace{20mm} \input{Fig/reflectdata3d01}
-
-直線DEに関する鏡映 
-
- \verb|    Reflectdata3d("1",["sl3d1"],[D3d,E3d],["Color=blue","dr,2"]);|
-
-\hspace{20mm} \input{Fig/reflectdata3d02}
-
-平面BDEに関する鏡映
-
-\verb|    Reflectdata3d("1",["sl3d1"],[D3d,E3d,B3d],["Color=blue","dr,2"]);|
-
-\hspace{20mm} \input{Fig/reflectdata3d03}
- 
-
-\vspace{\baselineskip}
-\hypertarget{reflectpoint3d}{}
-\item[関数]  Reflectpoint3d(座標,リスト)
-\item[機能]  点の鏡映点を求める
-\item[説明]  第2引数のタイプにより，点に関する鏡映，直線に関する鏡映，面に関する鏡映のそれぞれの点の座標を返す。
-
-\vspace{\baselineskip}
-【例】点A,B,C,Dを空間にとり，点Aの鏡映点の座標を求める。
-
-点Bに関する鏡映点      \verb|      Reflectpoint3d(A3d,[B3d]);|
-    
-直線BCに関する鏡映点  \verb|   Reflectpoint3d(A3d,[B3d,C3d]);|
-    
-平面BCDに関する鏡映点  \verb| Reflectpoint3d(A3d,[B3d,C3d,D3d]);|
- 
-    
-\vspace{\baselineskip}
-\hypertarget{rotatedata3d}{}
-\item[関数]  Rotatedata3d(name,PDリスト,vec,角度,options)
-\item[機能]  プロットデータを回転
-\item[説明]  プロットデータを，原点を始点とするベクトルvec 周りに回転する。複数のプロットデータをまとめて回転することができる。
-
-options として，中心点（vecの始点），線種を指定することができる。
-
-\vspace{\baselineskip}
-【例】コード例と結果を示す。
-\begin{verbatim}
-  Xyzax3data("","x=[-5,4]","y=[-5,5]","z=[-5,4]",["a","O"]);
-  Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2],"D",[1,-2,3]]);
-  Spaceline("1",[A,B,C,A]);
-  Spaceline("2",[C,D]);
-  Rotatedata3d("1",["sl3d1","CD3d"],[0,0,1],pi/2,["dr,2"]);
-  Letter([A,"s","A",B,"w","B",C,"ne","C",D,"ne","D"]);
-\end{verbatim}
-これを
-
-  \verb|Rotatedata3d("1",["sl3d1","CD3d"],[0,0,1],pi/2,[[1,0,0],"dr,2"]);|
-  
-とした場合が右図である。
-
- \input{Fig/rotatedata3d01} \hspace{5mm} \input{Fig/rotatedata3d02} 
-
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\vspace{\baselineskip}
-\hypertarget{rotatepoint3d}{}
-\item[関数]  Rotatepoint3d(座標, vec , 角度, [点] )
-\item[機能]  点の位置を回転する
-\item[説明]  点をvecの周りに回転する。角度は弧度法で与える。
-
-第4引数に点を与えた場合，vecの始点が第4引数の位置になる。デフォルトは原点
-
-点Aを，$(0,-1,0)$に置いたときの記述例と戻り値
- 
-\verb|  Putpoint3d("A",[0,-1,0]);| \\
-\verb|  Rotatepoint3d(A3d,[0,0,1],pi/2);          |  // 戻り値は [1,0,0]\\
-\verb|  Rotatepoint3d(A3d,[0,0,1],pi/2,[1,1,0]);  | // 戻り値は [3,0,0]\\
- 
-\vspace{\baselineskip}
-\hypertarget{scaledata3d}{}
-\item[関数]  Scaledata3d(name , PDリスト , vec , [中心,options])
-\item[機能]  PDを拡大/縮小する。
-\item[説明]  点は空間座標，vec は３次元ベクトルで倍率を表す。
-
-中心とoptionsはリストで与える。
-
-\vspace{\baselineskip}
-【例】三角形と円を拡大/縮小する。
-
-\begin{verbatim}
-  Putpoint3d(["A",[0,-2,0],"B",[2,-2,0],"C",[1,-2,2]]);
-  Spaceline("1",[A,B,C,A]);
-  Spacecurve("1","[cos(t)+1,sin(t)+1,1]","t=[0,2*pi]",["Num=100"]);
-  Scaledata3d("1",["sl3d1","sc3d1"],[2,2,2],[[0,0,0],"dr,2"]);
-\end{verbatim}
-
-\hspace{20mm}\input{Fig/scaledata3d}
-
-\vspace{\baselineskip}
-\hypertarget{scalepoint3d}{}
-\item[関数]  Scalepoint3d(点,vec,中心)
-\item[機能]  点の位置を拡大/縮小する。
-\item[説明]  点は空間座標，vec は３次元ベクトルで与える。
-
-\vspace{\baselineskip}
-【例】コード例と結果を示す。
-
-\begin{verbatim}
-  Putpoint3d(["A",[2,-1,2]]);
-  pt=Scalepoint3d(A3d,[3,2,4],[1,1,1]); 
-  Putpoint3d(["B",pt]);
-\vspace{\baselineskip}
-\end{verbatim}
-
-点Bの位置は(4,-3,5)になる。
-\vspace{\baselineskip}
-\hypertarget{sf3data}{}
-\item[関数]  Sf3data(name,リスト,options)
-\item[機能]  陰線処理なしの曲面をワイヤーフレームモデルで描く
-\item[説明]  リストは，関数式と定義域，境界指定をそれぞれ文字列にしたもののリスト。
-
-optionsは，解像度（各変数に対応する分割数）とメッシュの密度，境界指定。
-
-解像度は，"Num=[a,b]" で指定。初期値はa,bとも25
-
-メッシュ密度は，縦横で "Wire=[a,b]" で指定。初期値はa,bとも20
-
-境界指定は"ewsn"で行う。"ewsn" の意味は次のように考える。
-
-変数が u,v のとき，u,v平面において，$a \leq u \leq b,c \leq v \leq d$ の矩形を考え，
-
-その東西南北(ewsn)の境界を示す。
-
- \begin{center} \input{Fig/ewsn} \end{center}
-
-\vspace{\baselineskip}
-関数式のパターンはつぎの3通り。
-
-\vspace{\baselineskip}
-(1) $z=f(x,y)$
-
- 【例】：$z=x^2-y^2$を定義域$x=[-2,2],y=[-2,2]$ で描画する。
-  
-  \verb|Sf3data("1",["z=x^2-y^2","x=[-2,2]","y=[-2,2]"])|;
-      
-  \begin{center} \input{Fig/saddle1} \end{center}
-
- 【例】：同じく，解像度をx,yとも10，メッシュの数を縦横とも10にする。
- 
- 解像度，メッシュ密度とも下げるので粗い描画となる。
-   
-\verb|Sf3data("1",["z=x^2-y^2","x=[-2,2]","y=[-2,2]"],|
-      
-\verb|["Num=[10,10]","Wire=[10,10]"]);|
-  
-\vspace{\baselineskip}
-(2) $z=f(x,y),x=g(R,T),y=h(R,T)$
-
- x,y の媒介変数 r,t は大文字にする。
-    
-\vspace{\baselineskip}
-【例】：次図左
-  
-\verb|fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]"];|
-
- \verb|Sf3data("1",fd);|
-    
-【例】：次図右\\
- \verb|fd=["z=sin(sqrt(abs(x^2+y^2)))","x=r*cos(t)","y=r*sin(t)",|
-
-\verb|"r=[0,3]","t=[0,2*pi]"];|
- 
-\verb|Sf3data("1",fd);|
-
-  \begin{center} \input{Fig/parabola}   \input{Fig/sf3ddata3} \end{center}
-
-(3) $x=f(u,v),y=g(u,v),z=h(u,v),$
-
-  この場合，(2)と区別するために，"p" を先頭につけておく。
-  
- \vspace{\baselineskip}
- 【例】球面
- 
- \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)",|
-    
-\verb|"u=[0,pi]","v=[0,2*pi]",""];|
-\verb|Sf3data("1",fd);|
-
-\begin{center} \input{Fig/sf3ddata4} \end{center}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{sfbdparadata}{}
-\item[関数]  Sfbdparadata(name,式,options)
-\item[機能]  空間曲面の陰線処理
-\item[説明]  曲面について陰線処理を行う。
-  曲面の式はSf3data()の場合と同じ。ただし，(2) と(3)のパターンでは式の最後に境界の指定 ewns を明示する必要がある。(3)では境界の指定を" "(中は半角スペース)とする。省略すると不要な境界線が表示されることがある。境界指定については，Sf3data()の項を参照のこと。
-  
-optionsは，"Wait=n","r","m",線種。Wait の初期値は30。
-
- "r","m"に関しては，オプションなしまたは，”” のとき
- 
-  i) データファイルがなければ，新しく作る
-  
-  ii) データファイルが既にあればそれを読み込む
-  
-"m"  のとき，強制的にデータファイルを作り直す。
-
-"r" のとき，すでにあるデータファイルを読み込む。
-
-この処理は時間がかかるため，この関数を実行した状態で画面上のスライダを動かそうとすると反応が悪くなる。そこで，Isangle() を用いて，スライダの点を選択しているときはワイヤフレームモデルを描画するようにするとよい。
-
-また，この関数はデータを作るだけなので，表示するには ExeccmdC() を用いる。
-
-C言語の環境がない場合は，ExeccmdC() が使えないので，SfbdparadataR(name,式,optons1,optons2) を使う。options2には陰線の表示方法について "nodisp" または線種 を指定する。 初期設定は"nodisp" 。options2のみ指定するときは，options1に [""] （空文字）を書いておく。
-
-\vspace{\baselineskip}
-【例】サドル面
-
-陰線を消去して表示（下図左）
-\begin{verbatim}
-    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];
-    if(Isangle(),
-      Sf3data("1",fd);
-      ,
-      Startsurf();
-      Sfbdparadata("1",fd);
-      ExeccmdC("1",[],["nodisp"]);
-   );
-\end{verbatim}
-全体を実線で太めにして，陰線を点線で表示（下図右）: \verb|ExeccmdC()| を変更する。
-\begin{verbatim}
-      ExeccmdC("1",["dr,2"],["do"]);
-\end{verbatim}
-      \begin{center} \input{Fig/sfbdpara01}    \input{Fig/sfbdpara02}\end{center}
-
-【例】放物面  ： 式を変更する。
-\begin{verbatim}
-  fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];
-\end{verbatim}
-
- 陰線を消去（下図左）：\verb|ExeccmdC("1",[],["nodisp"]);|
- 
- 陰線を破線で表示（下図右）：\verb|ExeccmdC("1",[],["da"]);|
-      \begin{center} \input{Fig/sfbdpara03}  \input{Fig/sfbdpara04} \end{center}
-
-なお，表示については，\hyperlink{execcmdc}{ExeccmdC()} を参照のこと。
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{skeletonparadata}{}
-\item[関数]  Skeletonparadata(name,PDリスト,PDリスト,option)
-\item[機能]  陰線処理（スケルトン処理）をおこなう
-\item[説明]  描画されている線と軸について陰線処理をおこなう。
-
-第2引数の線（プロットデータ）が，第3引数の線（プロットデータ）によって隠される部分を消去する。第2，第3引数を省略した場合は，すべての線について，互いの陰線処理をおこなう。optionで消去する部分の長さを指定できる。\\
-他のオプション\\
-　\verb|"No=点リスト"| 点リストの点が選ばれているときは実行しない\\
-　\verb|"File=y/m/n (n)"| データファイルを作るか\\
-　\verb|"Check=点リスト"| 点リストの点が変更されていたら，ファイルを作り直す
-
-
-\vspace{\baselineskip}
-【例】螺旋と線分，座標軸の陰線処理
-
-次のように螺旋と線分，座標軸を描いておく。
-\begin{verbatim}
-  Xyzax3data("","x=[-5,5]","y=[-5,4]","z=[-5,3]");
-  Putpoint3d(["A",[0,-2,-2]]);
-  Putpoint3d(["B",[-1,1,3]]);
-  Spaceline([A,B]);
-  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);
-\end{verbatim}
-座標軸のプロットデータは ax3d，線分は AB3d，螺旋は sc3d1 である。これに対し，
-
-\hspace{10mm} \verb|Skeletonparadata("1");|
-
- 描画されている線と軸について陰線処理をおこなう。（図左）
-
-\hspace{10mm} \verb|Skeletonparadata("1",[2]);|
-
- 重なった部分の空きを2にする。（図中央）
- 
-\hspace{10mm} \verb|Skeletonparadata("1",["AB3d","ax3d"],["sc3d1"]);|
-  
-螺旋によって隠れる部分だけ消去する。（図右）
-
-\begin{center} \input{Fig/skeletonparadata01}   \input{Fig/skeletonparadata02} 
- \input{Fig/skeletonparadata03} \end{center}
-
-このほか，
-
-\hspace{10mm} \verb|Skeletonparadata("1",["AB3d","ax3d"],["sc3d1"],[2]);|
-
-\hspace{10mm} \verb|Skeletonparadata("1",["AB3d"],["ax3d","sc3d1"]);|
-
-も可能である。
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\vspace{\baselineskip}
-
-\hypertarget{spacecurve}{}
-\item[関数]  Spacecurve(name,式,定義域,options)
-\item[機能]  空間曲線を描く
-\item[説明]  媒介変数で表された曲線を描く。optionは解像度 Num
-
-\vspace{\baselineskip}
-【例】螺旋を描く
-
-\verb|Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|
-    
-\vspace{\baselineskip}
- \begin{center} \input{Fig/rasen} \end{center}
-
-\hypertarget{spaceline}{}
-\item[関数]  Spaceline(name,list)
-\item[機能]  折れ線を描く
-\item[説明]  点の名称または座標のリストを与えて折れ線を描く。平面での Listplot() にあたる。
-
-options は線種（dr,da,do）
-
-\vspace{\baselineskip}
-【例】いくつか示す。
-
-・Spaceline("1",[[2,5,1],[4,2,3]]);   指定された2点を結んだ線分を描く。
-
-・Spaceline("2",[A,B,C,A]);  作図されている2点A,B,Cを結んだ三角形を描く。
-
-
-・節点を表示する場合は，Pointdata3d() で描画する。
-
-\begin{layer}{150}{0}
-\putnotese{80}{10}{ \input{Fig/oresenex01}}
-\end{layer}
-\begin{verbatim}
-  pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]];
-  Spaceline("1",pt);
-  Pointdata3d("1",pt,["Size=3"]);
-\end{verbatim}
-
-点の名前が必要であれば
-
-\verb|pname=apply(1..6,"P"+text(#));|
-
-のようにして，名前リストを作ることができる。
-
-\vspace{\baselineskip}
-\hypertarget{translatedata3d}{}
-\item[関数]  Translatedata3d(name,PD,平行移動量)
-\item[機能]  空間プロットデータを平行移動
-\item[説明]  PDで表される図形を，平行移動する。
-
-\vspace{\baselineskip}
-【例】曲線 sc3d1 をy軸方向に2だけ平行移動する。
-
-\verb|Translatedata3d("1",["sc3d1"],[0,2,0]);|
-    
-結果として，もとの曲線と平行移動した曲線の2つが描かれる。
-
-\vspace{\baselineskip}
-【例】多面体の平行移動\\
-VertexEdgeFace() で描いた多角形はこの関数では平行移動できないので，面データを直接操作して平行移動を行う。
-  
-たとえば，小林・鈴木・三谷による多面体データ  polyhedrons obj  を用いて正八面体を描く場合，次のようにする。$y$軸方向に2だけ平行移動する場合である。
-
-\begin{verbatim}
-  Setdirectory( Dirhead+"/data/polyhedrons_obj");
-  phd=Readobj("r02.obj",["size=2"]);
-  Setdirectory(Dirwork);
-  dn=length(phd_1);
-  repeat(dn,s,phd_1_s=phd_1_s+[0,2,0]);
-  VertexEdgeFace("1",phd);
-\end{verbatim}
-      \begin{center} \input{Fig/translate01} \end{center}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{translatepoint3d}{}
-\item[関数]  Translatepoint3d(座標，平行移動量)
-\item[機能]  空間点を平行移動
-\item[説明]  点を平行移動する。
-
-\vspace{\baselineskip}
-【例】点A(1,0,0) を(-1,1,1)だけ平行移動した点をBとする。点Aの空間座標は A3d で表される。 
-\begin{verbatim}
-  Putpoint3d(["A",[1,0,0]]);
-  pt=Translatepoint3d(A3d,[-1,1,1]);
-  Putpoint3d(["B",pt]);
-\end{verbatim}
-\vspace{\baselineskip}
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{vertexedgeface}{}
-\item[関数]  VertexEdgeFace(name,面データ,options)
-\item[機能]  多面体の面データを用いて多面体を描く
-\item[説明]  面データは，頂点リストと，面リストからなる。面リストは，各面を構成する頂点を，外側から見て反時計回り（左回り）に並べたリストである。
-
-たとえば，四面体ABCDの面データは，[[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]] となる。
-
-4点A,B,C,Dをとっておき，このリストを引数に与えると，四面体の辺が描かれる。
-
-生成されるプロットデータは，
-
-phv3d：頂点のリスト
-
-phe3d：辺のリスト
-
-phf3d：面リスト
-
-なお，それぞれ末尾にnameが付加される。
-
-\vspace{\baselineskip}
-【例】：正四面体を描く
-\begin{verbatim}
-  Putpoint3d("A",2*[-1,-1/sqrt(3),0]);
-  Putpoint3d("B",2*[1,-1/sqrt(3),0]);
-  Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);
-  Putpoint3d("D",2*[0,0,sqrt(3)]);
-  phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);
-  VertexEdgeFace("1",phd);
-\end{verbatim}
-        \begin{center} \input{Fig/vertex01} \end{center}
-
-%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\hypertarget{wireparadata}{}
-\item[関数]  Wireparadata(name,PD,式,整数,整数,optons)
-\item[機能]  曲面のワイヤフレームを陰線処理してプロットデータを作る。
-\item[説明]  PDは，第3引数の式で描いたワイヤフレームモデルのプロットデータ名。第4，第5引数は分割線の数。
-
-options には "r","m","Wait=n" が指定できる。Wait の初期値は30。
-
-  "r","m"に関しては，オプションなしまたは，”” のとき
-  
-    i) データファイルがなければ，新しく作る
-    
-    ii) データファイルが既にあればそれを読み込む
-    
-  "m"  のとき，強制的にデータファイルを作り直す。
-  
-  "r" のとき，すでにあるデータファイルを読み込む。
-  
-曲面の陰線処理を行うので，Sfbdparadata() とペアで使う。
-
-この処理は時間がかかるため，この関数を実行した状態で画面上のスライダを動かそうとすると反応が悪くなる。そこで，Isangle() を用いて，スライダの点を選択しているときはワイヤフレームモデルを描画するようにするとよい。
-
-また，この関数はデータを作るだけなので，表示するには \hyperlink{execcmdc}{ExeccmdC()} を用いる。
-
-C言語の環境がない場合は，ExeccmdC() が使えないので，WireparadataR(name,PD,式,整数,整数,optons1,optons2) を使う。options2には陰線の表示方法について "nodisp" または線種 を指定する。 初期設定は"nodisp" 。options2のみ指定するときは，options1に [""] （空文字）を書いておく。
-
-
-\vspace{\baselineskip} 
-【例】式のタイプ別に例を示す。
-
-\vspace{\baselineskip}
-サドル面
-
-\begin{layer}{150}{0}
-\putnotese{85}{5}{ \input{Fig/wirepara1}}
-\end{layer}
-\begin{verbatim}
-    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];
-    if(Isangle(),
-      Sf3data("1",fd);
-      ,
-      Startsurf();
-      Sfbdparadata("1",fd);
-      Wireparadata("1","sfbd3d1",fd,4,5);
-      ExeccmdC("1");
-    );
-\end{verbatim}
-
-回転放物面：次を変更
-
-\begin{layer}{150}{0}
-\putnotese{85}{10}{ \input{Fig/wirepara2}}
-\end{layer}
-\begin{verbatim}
-  fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];
-  Wireparadata("1","sfbd3d1",fd,5,7);
-\end{verbatim}
-\vspace{25mm}
-
-球面
-
-このタイプでは，媒介変数形式の識別のため，先頭に "p" をつけておく。
-
-\begin{layer}{150}{0}
-\putnotese{80}{0}{ \input{Fig/wirepara3}}
-\end{layer}
-\begin{verbatim}
-  fd=["p","x=2*sin(u)*cos(v)",
-       "y=2*sin(u)*sin(v)",
-       "z=2*cos(u)","u=[0,pi]",
-       "v=[0,2*pi]",""];
-  Sfbdparadata("1",fd);
-  Wireparadata("1","sfbd3d1",fd,12,12); 
-\end{verbatim}
-
-\vspace{8mm}
-%\begin{center} \input{Fig/wirepara1}  \input{Fig/wirepara2}  \input{Fig/wirepara3} \end{center}
-
-\vspace{\baselineskip}
-【例】球面で座標軸を陰線処理し，面の陰線は非表示で表す。
-
-\begin{layer}{150}{0}
-\putnotese{70}{5}{ \input{Fig/wirepara4}}
-\end{layer}
-
-\begin{verbatim}
-    fd=["p","x=2*sin(u)*cos(v)",
-       "y=2*sin(u)*sin(v)",
-       "z=2*cos(u)",
-       "u=[0,pi]","v=[0,2*pi]",""];
-    if(Isangle(),
-      Sf3data("1",fd);
-    ,
-      Startsurf();
-      Sfbdparadata("1",fd);
-      Wireparadata("1","sfbd3d1",fd,12,12);
-      Crvsfparadata("1","ax3d","sfbd3d1",fd);
-      ret=ExeccmdC("1");
-      forall(1..length(ret),
-        if(indexof(ret_#,"wireh")>0,
-          Changestyle3d([ret_#],["nodisp"]);
-        );
-      );
-    );
-\end{verbatim}
-【例】トーラスを描く
-
-式を次のように変え，軸は非表示にして，\verb|ExeccmdC("1",[],["nodisp"])| にする。
-
-\begin{verbatim}
-  fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",
-      "u=[0,2*pi]","v=[0,2*pi]","s"];
-\end{verbatim}
-\vspace{\baselineskip}
-    \begin{center}  \input{Fig/wirepara5} \end{center}
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\vspace{\baselineskip}
-\hypertarget{xyzax3data}{}
-\item[関数]  Xyzax3data(name，ｘの範囲，yの範囲，zの範囲,options)
-\item[機能]  座標軸を描く
-\item[説明]  描画面に座標軸を描き，プロットデータ ax3d  を作成する。nameは空文字列でよい。option は次の2つ。
-
-矢じり："an"：nは数字で矢じりの大きさ。nはなくてもよい。
-
-原点O："Onesw"：neswは微小位置。数字も付けられる。neswをつけない場合の初期値はsw。
-
-【例】 初期設定の座標軸\\
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|
-        
- 矢じりをつける
- 
- \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]","a");|
- 
- 矢じりを大きくする
- 
- \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a2"]);|
-  
-原点のOを表示する。
-
- \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["O"]);|
- 
- 原点のOの位置を調整して右上に表示する。やじりもつける。
- 
- \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a","Oe2n2"]);|
- 
-
-【注意】Putaxes3d() で点を取ると原点に点Oが作成される。この点名Oと表示が重複するのが煩わしい場合は，作図後にこのoptionをつけてから出力するとよい。
-
-
-\vspace{\baselineskip}
-\hypertarget{xyzcoord}{}
-\item[関数]  Xyzcoord(P.x,P.y,Pz.y)
-\item[機能]  主副画面で決まる点の座標
-\item[説明]  Cinderellaの描画面上の点が表す空間座標を求める
-
-  点Ｐについて，主画面の点Ｐに対応するのが副画面のPzである。点Pの2次元座標はP.x,P.yで，Pzのy座標はPz.yで表される。これを引数として与えると，点Ｐの空間座標が返される。
-  
-\vspace{\baselineskip}
-【例】点Aをドラッグして動かしたとき，Aの座標を求める。
-\verb|println(Xyzcoord(A.x,A.y,Az.y));|
-  
-により，コンソールに座標が表示される。
 
 \end{description}
-\newpage
 
+\newpage
 %  付録  ==================================
 \section{付録}
 
@@ -7450,6 +7779,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{fontsize}{Fontsize(記号)}      \>フォントサイズを設定する\\
 \hyperlink{ketinit}{Ketinit(options)}      \>\ketcindy を初期化する\\
 \hyperlink{ptsize}{Ptsize(数)}       \>表示する点の大きさを設定する\\
+\hyperlink{setarrow}{Setarrow(size,angle,pos,cut,style}    \>矢線の形状を設定する\\
 \hyperlink{setax}{Setax(list)}    \>座標軸の書式を設定する\\
 \hyperlink{setcolor}{Setcolor(color,options)}    \>Windispgでの描画色を設定する\\
 \hyperlink{setfiles}{Setfiles(filename)}    \>出力するファイル名を設定する\\
@@ -7483,7 +7813,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{drwpt}{Drwpt([点,options])}      \>点を表示する\\
 \hyperlink{ellipseplot}{Ellipseplot(name,list,str,options)}  \>楕円を描く\\
 \hyperlink{enclosing}{Enclosing(name , [位置，方向，数式])}  \>複数の曲線から閉曲線を描く\\
-\hyperlink{expr}{Expr(文字列)}        \>\TeX 数式を書く\\
+\hyperlink{expr}{Expr([座標,位置,文字列],options)}        \>\TeX 数式を書く\\
 \hyperlink{exprrot}{Exprrot(位置，向き，文字列)}        \>傾いた\TeX 数式を書く\\
 \hyperlink{fourierseries}{Fourierseries(name,係数,周期,項数)}  \>フーリエ級数を描く\\
 \hyperlink{framedata}{Framedata(name , list)}  \>矩形を描く\\
@@ -7493,8 +7823,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{implicitplot}{Implicitplot(name,str,,str,str,options)}  \>陰関数のグラフを描く\\
 \hyperlink{invert}{Invert(PD)}        \>プロットデータの点を逆順にする（reverseと同じ）\\
 \hyperlink{joincrvs}{Joincrvs（name, PDlist, options)}  \>2つのプロットデータをつなげたデータを作る\\
-\hyperlink{letter}{Letter(「座標,位置,文字列]のlist」)}      \>文字列を表示する\\
-\hyperlink{letterrot}{Letterrot(「座標,方向,移動量,文字列])}      \>文字列を回転して表示する\\
+\hyperlink{letter}{Letter([座標,位置,文字列],options)}      \>文字列を表示する\\
+\hyperlink{letterrot}{Letterrot(座標,方向,移動量,文字列)}      \>文字列を回転して表示する\\
 \hyperlink{lineplot}{Lineplot(name,2点のlist,options)}    \>2点を結ぶ直線を描く\\
 \hyperlink{listplot}{Listplot(name,点のlist,options)}    \>点を線分で結ぶ\\
 \hyperlink{mkbeziercrv}{Mkbeziercrv(name,list,options)}  \>作図した点を使ってベジェ曲線を描く\\
@@ -7658,9 +7988,11 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{drawpoint3d}{Drawpoint3d(座標)}  \>空間点を描く\\
 \hyperlink{embed}{Embed(name,PD,式)}  \>埋め込みデータ作成\\
 \hyperlink{execcmdc}{ExeccmdC(name,options1,options2)}  \>C言語で命令実行\\
+\hyperlink{expr3d}{Expr3D([座標,位置,文字列],options)}      \>文字列を表示する\\
 \hyperlink{intersectcrvsf}{Intersectcrvsf(name,PD,式)}  \>曲線と曲面の交点を求める\\
 \hyperlink{intersectsgpL}{IntersectsgpL(点名,線分,面,描画方法)}  \>空間の直線と平面の交点\\
 \hyperlink{invparapt}{Invparapt(座標,PD)}  \>描画面座標に対応する曲線上の座標\\
+\hyperlink{letter3d}{Letter3D([座標,位置,文字列],options)}      \>文字列を表示する\\
 \hyperlink{mkbezierptcrv3d}{Mkbezierptcrv3d(点list)}  \>制御点を自動的にとる空間ベジェ曲線\\
 \hyperlink{nohiddenbyfaces}{Nohiddenbyfaces(name,PD,PD,opt1,opt2)}  \>多面体と空間曲線を陰線処理\\
 \hyperlink{parapt}{Parapt(座標)}  \>点の投影面での座標\\
@@ -7682,6 +8014,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{scalepoint3d}{Scalepoint3d(点, vec, 中心)}  \>点の位置を拡大/縮小\\
 \hyperlink{sf3data}{Sf3data(name, list,options)}  \>陰線処理なしの空間曲面を描く\\
 \hyperlink{sfbdparadata}{Sfbdparadata(name, 式,options)}  \>曲面を陰線処理して描く\\
+\hyperlink{sfcutparadatacdy}{Sfcutparadatacdy(name,面,曲面,options)} \>平面と曲面の交線を求める。\\
 \hyperlink{skeletonparadata}{Skeletonparadata(name,PD,PD,options)}  \>スケルトン処理のデータ作成\\
 \hyperlink{spacecurve}{Spacecurve(name, 式, 定義域,options)}  \>空間曲線のデータ作成\\
 \hyperlink{spaceline}{Spaceline(name,list)}  \>空間の折線データ作成\\

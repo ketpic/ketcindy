@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20181125) loaded");
+println("ketcindymv(20181224) loaded");
 
 //help:start();
 
@@ -56,6 +56,10 @@ Setpara(pathorg,fstr,sL,options,optionsanim):=(
     ParaOp=append(ParaOp,"m");//180604
   );
   ParaOpAnim=optionsanim;
+ if(ADDAXES=="1", //181224rom
+    Drwxy();
+//    ADDAXES="0";
+  ); //181224to
   GLISTback=GLIST;
   GCLISTback=GCLIST;
   GOUTLISTback=GOUTLIST;

@@ -1,3 +1,5 @@
+// 20181224
+//   WritetoRS changed  (Closefile("0"))
 // 20181219
 //   BBdata debugged  (macosx => ismacosx )
 // 20181218

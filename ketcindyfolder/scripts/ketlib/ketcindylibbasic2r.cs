@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181219) loaded");
+println("ketcindybasic2(20181224) loaded");
 
 //help:start();
 
@@ -681,7 +681,7 @@ Drwxy(optionsorg):=(
   Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216(3lines)
   Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
   Letter([org,ax_7,ax_6],[colorla]);
-  Addax(0);  // 16.01.21
+ // Addax(0);  // 16.01.21
 );
 ////%Drwxy end////
 
@@ -2730,7 +2730,7 @@ Windispg():=(
   regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,opcindy);
   if(ADDAXES=="1", //181215from
     Drwxy();
-    ADDAXES="0";
+//    ADDAXES="0";
   ); //181215to
   gsave();
   layer(KETPIClayer);
@@ -3001,7 +3001,8 @@ WritetoRS(filename,shchoice):=(
   if(length(GrL)>0,
     println(SCEOUTPUT,"  Drwline(GrL)");
   );
-  println(SCEOUTPUT,"Closefile('"+ADDAXES+"')");
+ // println(SCEOUTPUT,"Closefile('"+ADDAXES+"')"); //181224(2line)
+  println(SCEOUTPUT,"Closefile("+Dqq("0")+")");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"}");
   if(shchoice=="sh",

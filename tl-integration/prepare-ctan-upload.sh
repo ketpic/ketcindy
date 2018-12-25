@@ -131,6 +131,8 @@ for i in LICENSE README tl-integration/README.TeXLive ; do
     mv ketcindy/$i doc/support/ketcindy
   fi
 done
+mv ketcindy/HowToInstallE.pdf doc/support/ketcindy
+mv ketcindy/HowToInstallJ.pdf doc/support/ketcindy
 rmdir ketcindy/ketcindyfolder/doc
 
 # work stuff

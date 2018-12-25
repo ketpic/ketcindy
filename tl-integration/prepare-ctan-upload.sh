@@ -26,6 +26,22 @@ PKGDIR=$TMP/ketcindy-$VER
 
 mkdir $PKGDIR
 
+#
+# update README
+sed -e "s/^Version: .*$/Version: $VER/" README > README.new
+
+echo "Is the following change in README ok?"
+diff -u README README.new || true    # diff returns 1 for different files
+echo -n "Ok? (y/N) "
+read yn
+if [ "$yn" != "y" ] ; then
+  echo "Ok, giving up!"
+  exit 1
+fi
+mv README.new README
+git add README
+git commit -m "update README"
+
 # we export the stuff two times, once for the normal
 # upload and once for reshuffling in the TDS tree
 # this is the first export, which we than check for

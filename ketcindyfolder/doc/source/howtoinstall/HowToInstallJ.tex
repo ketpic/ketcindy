@@ -1,0 +1,68 @@
+\documentclass{ujarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx,colorlinks=true,urlcolor=blue]{hyperref}
+
+\setmargin{20}{20}{20}{20}
+
+\西暦
+
+\renewcommand{\labelitemi}{・}
+
+\begin{document}
+
+\begin{center}
+KETCindyのインストール
+\end{center}
+
+\hfill 修正日：\today
+
+\begin{enumerate}[\bf\large 1.]
+\item Cinderella, R, Maxima をインストールする．
+ \begin{itemize}
+ \item \url{https://beta.cinderella.de}  (Cinderella)
+ \item \url{https://cran.r-project.org}   (R)
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} (Sumatra)\\
+ \hspace*{10mm}注）SumatraはWindowsだけである．
+ \end{itemize}
+\item TeXをインストールしていない場合はインストールする．
+ \begin{enumerate}[(1)]
+ \item TeXLiveを推奨
+    \begin{itemize}
+    \item ２０１８以降ではketcindyが既に入っている.
+    \end{itemize}
+ \item KeTTeXはTeXLiveの軽量版
+    \begin{itemize}
+    \item 以下からダウンロードできる．\\
+    \hspace*{5mm}Mac (kettex.dmg)\\
+    \hspace*{10mm}\url{https://www.dropbox.com/s/dc4inuk06t07g26/kettex.dmg?dl=0}\\
+    \hspace*{5mm}Windows (kettex.exe)\\
+    \hspace*{10mm}\url{https://www.dropbox.com/s/fthw4btjqqs33tc/kettex.exe?dl=0}\\
+    \hspace*{5mm}Linux (kettex.tar.xz)\\
+    \hspace*{10mm}\url{https://www.dropbox.com/s/vg8p07832e9hzlk/KeTTeX-linux-20171022.tar.xz?dl=0}
+     \item ダブルクリックしてできるkettexを以下に入れる．\\
+     \hspace*{10mm}Mac\ \ /Applications，Windows\ \ C:\
+    \end{itemize}
+ \item 他のTeXの場合は，{\bf 3.}(2)のReadmeを参照する．
+ \end{enumerate}
+
+\item KeTCindyのインストール
+  \begin{enumerate}[(1)]
+  \item ketcindyをCTAN(\url{https://ctan.org})からダウンロードする．\\
+  \hspace*{10mm}ketcindyで検索 > Pack­age ketcindy > download
+    \begin{itemize}
+    \item[注)]最新版は，Repositoryのサイト\\
+        \hspace*{10mm}\url{https://github.com/ket­pic/ketcindy}\\
+       から以下のようにダウンロードできる．\\
+        \hspace*{10mm}Clone or download > Download ZIP
+    \item[注)]この場合は，ketcindy-masterになる．
+    \end{itemize}
+  \item forMac/forWindow/forLinuxにあるReadmeに従って，インストールする．
+  \end{enumerate}
+\end{enumerate}
+
+\end{document}

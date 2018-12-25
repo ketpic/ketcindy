@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm,enumerate}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+\setmargin{20}{20}{20}{20}
+
+\renewcommand{\labelitemi}{$\cdot$}
+\renewcommand{\labelitemii}{$\cdot$}
+
+\begin{document}
+
+\begin{center}
+How to install KeTCindy(Mac)
+\end{center}
+
+\hfill modified\ :\ \today
+
+\begin{enumerate}[\bf\large 1.]
+
+\item Install Cinderella, R and Maxima.
+ \begin{itemize}
+ \item \url{https://beta.cinderella.de}  (Cinderella)
+ \item \url{https://cran.r-project.org}   (R)
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \end{itemize}
+\hspace*{5mm}Rem) Check they start correctly.
+
+\item Install TeX if any TeX has not been installed.
+  \begin{enumerate}[(1)]
+  \item TeXLive is recommended.
+    \begin{itemize}
+    \item Files necessary for KeTCindy are already implemented (2018 or later).
+    \end{itemize}
+  \item kettex is a light-weight TeXLive.
+    \begin{itemize}
+    \item Download kettex.zip from\\
+    \hspace*{10mm}\url{https://www.dropbox.com/s/dc4inuk06t07g26/kettex.dmg?dl=0}
+    \item Double-click it and move kettex to \verb|/Applications|.
+    \end{itemize}
+  \item In case of other TeX, see {\bf 3.}(2).
+ \end{enumerate}
+
+
+\item Install KeTCdindy
+  \begin{enumerate}[(1)]
+  \item Download ketcindy from CTAN(\url{https://ctan.org})\\
+  \hspace*{10mm}Search ketcindy \verb|>| Pack­age ketcindy \verb|>| download
+    \begin{itemize}
+    \item[Rem)]The latest version can be download from Repository:\\
+        \hspace*{5mm}\url{https://github.com/ket­pic/ketcindy}\\
+        \hspace*{10mm}Clone or Download \verb|>| Download ZIP
+    \end{itemize}
+  \item Open ketcindy(-master)/forMac.
+    \begin{itemize}
+    \item[Rem)]If you use TeX other than TeXLIve/KeTTeX,
+      \begin{itemize}
+      \item Open setketcindy.command with a text editor.
+      \item Edit paths in it.
+      \end{itemize}
+    \end{itemize}
+  \item Double-click setketcindy.command.
+    \begin{itemize}
+    \item Password of an administrator is required.
+    \item Control-click and select Terminal if necessary. 
+    \item Contents of scripts will be copied into TeX.
+    \item ketcindystyle files will be copied and mktexlsr will be executed.
+    \item In Cinderella/PlugIns\\
+    \hspace*{5mm}KetcindyPluign.jar will be copied.\\
+    \hspace*{5mm}ketcindy.ini will be generated .
+    \end{itemize}
+    \item Double-click setwork.command.
+    \begin{itemize}
+    \item[Rem)]Control-click and select Terminal if necessary. 
+    \end{itemize}
+    \begin{itemize}
+    \item Work directory "ketcindy" will be generated in User's home.
+    \item TeX(typeset) will be usually latex,xelatex or pdflatex.
+    \item Contents of “work” will be copied into "ketcindy"
+    \item \verb|.ketcindy.conf| will be also generated in User's home.\\
+    \hspace*{10mm}You can change the setting of PasthT, Mackc, etc.
+    \item Template of "ketcindy.conf" will be also copied to work directory.
+    \item Configuration files are read in order of 
+      \begin{enumerate}[1)]
+      \item ketoutset.txt
+      \item ketcindy.conf in User's home
+      \item ketcindy.conf in the work folder.
+      \end{enumerate}
+    \end{itemize}
+  \end{enumerate}
+
+\item Test run of KeTCindy
+ \begin{enumerate}[(1)]
+  \item Double-click "template1basic.cdy" in "ketcindy/ketfiles".\\
+  \hspace*{10mm}Then a frame in white appear on the screen.  \end{enumerate}
+  \item Press "Figure" button at the top left, then the final PDF output is displayed. 
+    \begin{itemize}
+    \item[Rem)]To close the window of Terminal when the process exits :
+      \begin{itemize}
+      \item Start \verb|Terminal|.\\
+      \hspace*{10mm}Preferences \verb|>| Shell \verb|>| "Colse if the shell exited clearly"
+      \end{itemize}
+    \end{itemize} 
+
+\item Set Texworks if necessary. For example, in case of KeTTeX,
+  \begin{itemize}
+  \item Downloadable from \url{https://github.com/TeXworks/texworks/releases/}.
+  \item Launch TeXworks,\\
+  \hspace*{10mm}and choose Edit \verb|>| Preference \verb|>| Typeset.
+  \item Push upper + and add\\
+  \hspace*{5mm}\verb|/Applications/kettex/texlive/bin/x86_64-darwin|
+  \item Select Xelatex or pdflatex.
+  \end{itemize}
+
+\item Install Xcode if you use gcc for drawings of surface.
+  \begin{itemize}
+  \item[Rem)]f you want to use only gcc, execute on Terminal:\\
+    \hspace*{10mm}\verb|sudo xcode-select —install|
+  \end{itemize}
+
+\end{enumerate}
+
+\end{document}

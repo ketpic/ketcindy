@@ -1,0 +1,107 @@
+\documentclass{ujarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx,colorlinks=true,urlcolor=blue]{hyperref}
+
+\setmargin{20}{20}{20}{20}
+
+\西暦
+
+\renewcommand{\labelitemi}{・}
+\renewcommand{\labelitemii}{・}
+
+\begin{document}
+
+\begin{center}
+KETCindyのインストール (Linux)
+\end{center}
+
+\hfill 修正日：\today
+
+\begin{enumerate}[\bf\large 1.]
+\item Cinderella, R, Maxima をインストールする．
+ \begin{itemize}
+ \item \url{https://beta.cinderella.de}  (Cinderella)
+ \item \url{https://cran.r-project.org}   (R)
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \end{itemize}
+
+\item TeXをインストールしていない場合はインストールする．
+ \begin{enumerate}[(1)]
+ \item TeXLiveを推奨
+    \begin{itemize}
+    \item ２０１８以降ではketcindyが既に入っている.
+    \end{itemize}
+ \item 他のTeXの場合は，{\bf 3.}(2)を参照する．
+ \end{enumerate}
+
+\item KeTCindyのインストール
+  \begin{enumerate}[(1)]
+  \item ketcindyをCTAN(\url{https://ctan.org})からダウンロードする．\\
+  \hspace*{10mm}ketcindyで検索 \verb|>| Package ketcindy \verb|>| download
+    \begin{itemize}
+    \item[注)]最新版は，Repositoryのサイト\\
+        \hspace*{10mm}\url{https://github.com/ket­pic/ketcindy}\\
+       から以下のようにダウンロードできる．\\
+        \hspace*{10mm}Clone or download \verb|>| Download ZIP
+    \item[注)]この場合は，ketcindy-masterになる．
+    \end{itemize}
+  \item ketcindy(-master)/forLinuxを開く．
+    \begin{itemize}
+    \item[注)]他のTeXを使っている場合
+      \begin{itemize}
+      \item setketcindy.shをテキストエディタで開く．
+      \item パスを修正する．
+      \end{itemize}
+    \end{itemize}
+  \item ターミナルのshコマンドでsetketcindy.shを実行．
+    \begin{itemize}
+    \item scriptsの中身がTeXにコピーされる
+    \item ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
+    \item CinderellaのPluginsにKetcindyPlugin.jarをコピー，ketcindy.iniが作成される．
+    \end{itemize}
+  \item ターミナルのshコマンドでsetwork.shを実行．
+    \begin{itemize}
+    \item 作業ディレクトリketcindyがユーザホームに作成される．
+    \item タイプセットの方法（TeXの種類）\\
+    \hspace*{10mm}通常は，platex (p)またはuplatex(u)を選ぶ．
+    \item ketcindyフォルダにworkフォルダの中身がコピーされる．
+    \item \verb|.ketcindy.conf|（不可視ファイルだが編集可能）がユーザホームに作成される．\\
+    \hspace*{10mm}注）TeXを切り替えるときなどはこのファイルを修正する．
+    \item マニュアルもコピーされる．
+    \item 作業ディレクトリにketincy.confの雛形がコピーされる．
+    \item KeTCindyを立ち上げたとき，設定ファイルは次の順に読み込まれる．
+      \begin{enumerate}[1)]
+      \item ketoutset.txt
+      \item ユーザホームの\verb|.ketcindy.conf|
+      \item 作業ディレクトリketcindyの ketcindy.conf
+      \end{enumerate}
+    \end{itemize}
+  \end{enumerate}
+  \item KeTCindyのテストラン
+    \begin{enumerate}[(1)]
+    \item 作業ディレクトリketcindyを開く．
+    \item ketcindyの中のtemplate1basic.cdyを選び，「情報を見る」を開く．
+      \begin{itemize}
+      \item アプリケーションが所定のCinderella2になっていることを確かめる．
+      \item「情報」を閉じて，template1basic.cdyをダブルクリックする．
+      \item 画面に白い枠が出れば，ライブラリの読み込みは成功．
+      \end{itemize}
+    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．
+  \end{enumerate}
+
+\item TeXworksを設定する．
+  \begin{itemize}
+  \item \url{https://github.com/TeXworks/texworks/releases/} からダウンロードできる．
+  \end{itemize}
+
+\item gccのインストール
+  \begin{itemize}
+    \item 曲面描画のためには, gccが必要である．
+  \end{itemize}
+\end{enumerate}
+
+\end{document}

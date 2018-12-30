@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181230)");
+println("KeTCindy V.3.2.4");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181130) loaded");
+println("ketcindylibbasic1(20181131) loaded");
 
 //help:start();
 
@@ -3795,6 +3795,7 @@ Pointdata(nm,listorg,options):=(
         tmp2=substring(tmp_2,0,1);
         if(contains(["-","0","1",".","["],tmp2),
           tmp=parse(tmp_2);
+          if(length(tmp)==4,tmp=Colorcode("cmyk","rgb",tmp)); //181231
           if(!isstring(tmp),tmp=[tmp]);
         ,
           tmp=Colorname2rgb(tmp_2);

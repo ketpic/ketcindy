@@ -1,3 +1,5 @@
+// 20181231
+//    Pointdata changed  ( "Inside=(cmyk list)" option added )
 // 20181230
 //    Pointdata changed  ( "Inside" option added )
 //    Integrate debugged (case of funstr)

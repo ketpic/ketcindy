@@ -2403,7 +2403,7 @@ Drwpt<-function(...){
     }
     All=Nargs-1 
   }#181230to
-  CL<-c()
+  CL<- c()
   for (J in 0:N){
     Tmp<- TenSize*0.5*1000/2.54/MilliIn
     Tmp<- Tmp*c(cos(pi/4+J*2*pi/N),sin(pi/4+J*2*pi/N))
@@ -2425,8 +2425,8 @@ Drwpt<-function(...){
       for (J in 0:N){
         PL<- c(PL,P+CL[J+1,])
       }
-      PL<-matrix(PL,nrow=2)
-      PL<-t(PL)
+      PL<- matrix(PL,nrow=2)
+      PL<- t(PL)
       if(Same=="n"){ #181230from
         Str1<- paste("{\\special{pn 0}\\color[rgb]",Incolor,"%\n",sep="")
         cat(Str1,file=Wfile,append=TRUE)
@@ -2446,7 +2446,8 @@ Drwpt<-function(...){
         Str1<- paste("\\special{sh}\\special{fp}}%\n",sep="")
         cat(Str1,file=Wfile,append=TRUE)
       }
-      Mojisu<-0
+      cat("\\special{pn 4}",file=Wfile,append=TRUE) #181231
+      Mojisu=0
       for (J in 1:Nrow(PL)){
         Q<- PL[J,]
         X<- as.character(round(MilliIn*Q[1]))

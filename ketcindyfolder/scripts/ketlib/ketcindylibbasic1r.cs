@@ -3761,8 +3761,8 @@ Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
-//help:Pointdata(options=["Size=(1)","Disp=(y)"]);
-//help:Pointdata("Inside=(1),ratio,rgblist,no"]);
+//help:Pointdata(options=["Size=(1)","Disp=(y)","Inside="]);
+//help:Pointdata("Inside=1(def)/ratio/rgblist/colorname/-1"]);
   regional(list,name,nameL,ptlist,opstr,opcindy,
       eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
       Ltype,Noflg,color,inside);
@@ -3793,7 +3793,7 @@ Pointdata(nm,listorg,options):=(
         if(tmp_2=="no",inside=append(inside,-1));
       ,
         tmp2=substring(tmp_2,0,1);
-        if(contains(["0","1",".","["],tmp2),
+        if(contains(["-","0","1",".","["],tmp2),
           tmp=parse(tmp_2);
           if(!isstring(tmp),tmp=[tmp]);
         ,

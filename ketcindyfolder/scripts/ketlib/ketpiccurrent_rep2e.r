@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(180930)"
+ThisVersion<- "2ev5_2_4(181230)"
 
+# 20181230
+#   Drwpt changed ( Inside )
 # 20180930
 #   Drwpt debugged ( the last newline added)
 # 20180929
@@ -206,58 +208,40 @@ Drwline<-function(...)
 
 ###########################################
 
-Drwpt<-function(...)
+Drwpt<-function(...) #181230
 {
   varargin<-list(...)
   Nargs<-length(varargin)
   All=Nargs
-  if (TenSize>TenSizeInit){
-    N<- round(6*sqrt(TenSize/TenSizeInit))
-  }
-  else{
-    N<-4
-  }
-  Tmp<- varargin[[All]]
-  Iro=c(0,0,0,1)
-  Iroflg=0
-  if(is.character(Tmp)){
-    Iro=Ratiocmyk(Tmp)
-    Iroflg=1
-    All=All-1
-  }
-  Tmp<- varargin[[All]]
-  if (mode(Tmp)=="numeric"){
-    if (length(Tmp)>1){
-      Kosa<- 1; All<- Nargs
-    }
-    else{
-      Kosa<- Tmp; All<- All-1
-    }
-  }
-  else if (mode(Tmp)=="list"){
-      Kosa<- 1; All<- Nargs
-  }
-  Ra=TenSize*1000/2.54/MilliIn
-  if(Iroflg>0){
-    Str='{\\color[cmyk]{'
-    for(J in 1:4){
-      Str=paste(Str,as.character(Kosa*Iro[J]),sep="")
-      if(J<4){
-        Str=paste(Str,',',sep="")
+  Same="y"
+  Incolor=""
+  Tmp=varargin[[All]]
+  if(is.numeric(Tmp)){
+    if(length(Tmp)==4){
+      if(Tmp[4]<0){
+        Same="nn"
+      }else{
+        if(Tmp[4]!=1){
+          Tmp1=Tmp[4]*(c(1,1,1)-Tmp[1:3])
+          Tmp1=c(1,1,1)-Tmp1
+          Tmp=c(Tmp[1:3],Tmp1)
+        }
       }
     }
-    Str=paste(Str,'}%',sep="")
-    cat(Str,file=Wfile,append=TRUE)
+    if(length(Tmp)==6){
+      Same="n"
+      Incolor="\\color[rgb]{"
+      for(J in 4:6){
+        Incolor=paste(Incolor,as.character(Tmp[J]),sep="")
+        if(J<6){
+          Incolor=paste(Incolor,",",sep="")
+        }
+      }
+      Incolor=paste(Incolor,"}",sep="")
+    }
+    All=Nargs-1 
   }
-
-#  CL<-c()
-#  for (J in 0:N){
-#    Tmp<- TenSize*0.5*1000/2.54/MilliIn
-#    Tmp<- Tmp*c(cos(pi/4+J*2*pi/N),sin(pi/4+J*2*pi/N))
-#    CL<- append(CL,Tmp)
-#  }
-#  CL<- matrix(CL,nrow=2)
-#  CL<- t(CL)
+  Ra=TenSize*1000/2.54/MilliIn
   Mojisu=0
   for (II in Looprange(1,All)){
     MS<- varargin[[II]]
@@ -271,23 +255,33 @@ Drwpt<-function(...)
       P<- Doscaling(P)
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
+      Str=""
+      if(Same=="n"){
+        Str=paste("{\\linethickness{0 in}",Incolor,sep="")
+      }
+      if(Same!="nn"){
+        Str=paste(Str,'\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
+        cat(Str,file=Wfile,append=TRUE)
+        Mojisu=Mojisu+nchar(Str)
+      }
+      if(Same=="n"){
+        cat("}",file=Wfile,append=TRUE)
+      }
+      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}',sep="")
       cat(Str,file=Wfile,append=TRUE)
       Mojisu=Mojisu+nchar(Str)
       if(Mojisu>80){
         cat("\n",file=Wfile,append=TRUE)
         Mojisu=0
+        Str=""
       }
     }
   }
-  Str="%"
-  if(Iroflg>0){
-    Str='}%'
+  if(Same=="n"){
+ #   Str='}%'
   }
   if(Mojisu>0){
     Str=paste('\n',Str,'\n',sep="")
-  }else{
-    Fmt=paste(Str,'\n',sep="")
   }
   cat(Str,file=Wfile,append=TRUE)
   cat("\n",file=Wfile,append=TRUE) #180930

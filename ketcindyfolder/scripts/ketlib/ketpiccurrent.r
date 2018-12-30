@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181230)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181231)" 
 
 print(ThisVersion)
 
+# 20181231
+#   Drwpt debugged/changed  ( grep removed, N=8 set )
 # 20181230
 #   Drwpt changed  ( Same, Incolor )
 # 20181128
@@ -2363,23 +2365,31 @@ Drwline<-function(...)
 
 ###########################################
 
-Drwpt<-function(...)
-{       ##  Scaling is implemented
+Drwpt<-function(...){
   varargin<-list(...)
   Nargs<-length(varargin)
   if(TenSize>TenSizeInit){
-    N<- round(6*sqrt(TenSize/TenSizeInit))
+    N=round(10*sqrt(TenSize/TenSizeInit)) #181231
   }
   else{
-    N<-4
+    if(TenSize==TenSizeInit){  #181231from
+      N=10
+    }else{
+      N=4
+    }  #181231to
   }
   All=Nargs  #181230from
   Same="y"
   Incolor=""
   Tmp=varargin[[All]]
   if(is.numeric(Tmp)){
+    if(length(Tmp)==3){Tmp=c(Tmp,1)} #181231
     if(length(Tmp)==4){
-      Incolor=paste(" ",as.character(Tmp[4]),sep="")
+      if(Tmp[4]<0){  #181231from
+        Same="nn"
+      }else{
+        Incolor=paste(" ",as.character(Tmp[4]),sep="")
+      }  #181231to
     }else{
       Same="n"
       Incolor="{"
@@ -2436,7 +2446,6 @@ Drwpt<-function(...)
         Str1<- paste("\\special{sh}\\special{fp}}%\n",sep="")
         cat(Str1,file=Wfile,append=TRUE)
       }
-#      cat("{\\special{pn 4}%\n",file=Wfile,append=TRUE)
       Mojisu<-0
       for (J in 1:Nrow(PL)){
         Q<- PL[J,]
@@ -2450,7 +2459,6 @@ Drwpt<-function(...)
         }
         Mojisu=0
       }
-      if(grep("-",Incolor)>0){Same="n"}
       if(Same=="y"){
         Str1<- paste("\\special{sh",Incolor,"}\\special{fp}%\n",sep="")
       }else{

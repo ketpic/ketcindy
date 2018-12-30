@@ -217,6 +217,7 @@ Drwpt<-function(...) #181230
   Incolor=""
   Tmp=varargin[[All]]
   if(is.numeric(Tmp)){
+    if(length(Tmp)==3){Tmp=c(Tmp,1)}
     if(length(Tmp)==4){
       if(Tmp[4]<0){
         Same="nn"

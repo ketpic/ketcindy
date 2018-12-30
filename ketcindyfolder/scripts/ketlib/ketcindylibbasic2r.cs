@@ -686,6 +686,7 @@ Drwxy(optionsorg):=(
 ////%Drwxy end////
 
 ////%Drwpt start////
+////%Drawpoint start////
 Drwpt(pstr):=Drawpoint(pstr);
 Drwpt(ptlist,nn):=(  // 16.03.05 from
 //help:Drwpt(A);
@@ -723,6 +724,7 @@ Drawpoint(ptlistorg,nn):=(
   );
   Setpen(thick); // 16.04.09
 );// 16.03.05 until
+////%Drawpoint end////
 ////%Drwpt end////
 
 ////%Addax start////

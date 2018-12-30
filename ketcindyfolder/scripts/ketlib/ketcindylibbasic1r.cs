@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.3(20181216)");
+println("KeTCindy V.3.2.3(20181230)");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181125) loaded");
+println("ketcindylibbasic1(20181130) loaded");
 
 //help:start();
 
@@ -2485,7 +2485,7 @@ Integratefn(fnstr,rngstr,options):=( //180708from
     ex=range_2;
     dx=(ex-sx)/Num;
     xn=apply(0..Num,sx+#*dx);
-    yn=apply(xn,parse(Assign(fnstr,[var,textformat(#,5)])));
+    yn=apply(xn,parse(Assign(fnstr,[var,#]))); //181230
     plt=apply(1..(Num+1),[xn_#,yn_#]);
     Sm=IntegrateO(plt,range);
   );//180708to
@@ -3761,8 +3761,11 @@ Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
+//help:Pointdata(options=["Size=(1)","Disp=(y)"]);
+//help:Pointdata("Inside=(1),ratio,rgblist,no"]);
   regional(list,name,nameL,ptlist,opstr,opcindy,
-      eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color);
+      eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
+      Ltype,Noflg,color,inside);
   name="pt"+nm;
   nameL=name+"L";
   tmp=Divoptions(options);
@@ -3770,28 +3773,44 @@ Pointdata(nm,listorg,options):=(
   Noflg=tmp_2;
   eqL=tmp_5;
   opcindy=tmp_(length(tmp));
-  opstr=tmp_(length(tmp)-1);
+//  opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
   size="";
   dispflg="Y";
-  if(length(eqL)>0,
-    forall(eqL,
-      tmp=Strsplit(#,"=");
-      tmp1=Toupper(substring(tmp_1,0,1));
-      tmp2=Toupper(substring(tmp_2,0,1));
-      if(tmp1=="S",
-        size=tmp2;
-        opcindy=opcindy+",size->"+text(size); //181013
-      );
-      if(tmp1=="D", //181030from
-        dispflg=tmp2;
-      );
+  inside=color;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="S",
+      size=Toupper(substring(tmp_2,0,1));;
+      opcindy=opcindy+",size->"+text(size); //181013
     );
+    if(tmp1=="D", //181030from
+      dispflg=Toupper(substring(tmp_2,0,1));
+    );
+    if(tmp1=="I", //181229from
+      if(contains(["","no"],tmp_2),
+        if(tmp_2=="no",inside=append(inside,-1));
+      ,
+        tmp2=substring(tmp_2,0,1);
+        if(contains(["0","1",".","["],tmp2),
+          tmp=parse(tmp_2);
+          if(!isstring(tmp),tmp=[tmp]);
+        ,
+          tmp=Colorname2rgb(tmp_2);
+        );
+        inside=concat(inside,tmp);
+      );
+    ); //181229to
   );
   if(dispflg=="Y", 
     println("generate pointdata "+name);
   ); //181030to
-  if(isstring(listorg),list=parse(listorg),list=listorg); //17.10.23
+  if(isstring(listorg),
+    list=parse(listorg)
+  ,
+    list=listorg
+  ); //17.10.23
   if(MeasureDepth(list)==0,list=[list]);//180530
   tmp=MeasureDepth(list);
   if(tmp>0,  // 2015.02.21
@@ -3819,11 +3838,16 @@ Pointdata(nm,listorg,options):=(
         if(isstring(#),
           tmp=#;
         ,
-          if(ispoint(#),tmp=text(#),tmp=textformat(#,6));
+          if(ispoint(#),
+            tmp=text(#);
+          ,
+            tmp=textformat(#,6);
+          );
         );
         tmp2=tmp2+tmp+",";
       );
-      tmp2=substring(tmp2,0,length(tmp2)-1)+")"; //17.10.10until
+      tmp2=substring(tmp2,0,length(tmp2)-1)+")";
+      //17.10.10until
     );
     GLIST=append(GLIST,name+"=Pointdata("+tmp2+")");
   );
@@ -3839,15 +3863,18 @@ Pointdata(nm,listorg,options):=(
       tmp1=max(tmp1,1)/8; 
       Setpen(tmp1); // 16.04.09 until
       if((Noflg==0)&(color!=KCOLOR), //181020
-        Texcom("{");Com2nd("Setcolor("+color+")");//180711
+        Texcom("{");
+        Com2nd("Setcolor("+color+")");//180711
       );
+      opstr=","+textformat(inside,2);
       Com2nd("Drwpt(list("+name+")"+opstr+")");
       if((Noflg==0)&(color!=KCOLOR), //181020
         Texcom("}");//180711
       );
       Setpen(thick); // 16.04.09
       if(length(size)>0,
-        Com2nd("Setpt("+textformat(TenSize/TenSizeInit,1)+")");
+        tmp=textformat(TenSize/TenSizeInit,1);
+        Com2nd("Setpt("+tmp+")");
       );
     );
   );

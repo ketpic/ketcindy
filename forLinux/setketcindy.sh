@@ -1,10 +1,10 @@
 #!/bin/sh
-#      20181126
+#      20181226
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
 texbinpath=/usr/bin
-ketsrc=~/Desktop/ketcindyfolder
+#ketsrc=~/Desktop/ketcindyfolder
 cindyplug=~/cinderella/Plugins
 homehead=/home
 
@@ -12,9 +12,13 @@ ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
 ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
 ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
 
+cd `dirname $0`
+if [ -e ../ketcindyfolder ]; then
+  cd ../ketcindyfolder
+fi
+
 echo texpath=${texpath}
 echo texbinpath=${texbinpath}
-echo ketcindyfolder=${ketsrc}
 echo cinderella plugin=${cindyplug}
 echo home=${homehead}
 read -p 'Are the above paths OK? (y/n) : ' ans
@@ -25,21 +29,21 @@ if [ ${ans} = "n" ]; then
 fi
 
 echo copying scripts
-sudo cp -r -p ${ketsrc}/scripts/ ${ketcindyscripts}/
+sudo cp -r -p scripts/${ketcindyscripts}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
 else
   echo "scripts copied to "${ketcindyscripts}
 fi
-sudo cp -r -p ${ketsrc}/doc/ ${ketcindydoc}/
+sudo cp -r -p doc/${ketcindydoc}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
 else
   echo "doc copied to "${ketcindydoc}
 fi
-sudo cp -r -p ${ketsrc}/style/ ${ketcindystyle}/
+sudo cp -r -p style/${ketcindystyle}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5

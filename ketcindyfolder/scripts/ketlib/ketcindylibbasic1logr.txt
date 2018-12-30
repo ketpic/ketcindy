@@ -1,3 +1,6 @@
+// 20181230
+//    Pointdata changed  ( "Inside" option added )
+//    Integrate debugged (case of funstr)
 // 20181217
 //    Drwxy debugged
 // 20181216

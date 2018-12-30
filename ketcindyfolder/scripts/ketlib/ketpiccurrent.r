@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181128)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20181230)" 
 
 print(ThisVersion)
 
+# 20181230
+#   Drwpt changed  ( Same, Incolor )
 # 20181128
 #   Objthicksurf debugged
 # 20181031
@@ -2371,18 +2373,26 @@ Drwpt<-function(...)
   else{
     N<-4
   }
-  Tmp<- varargin[[Nargs]]
-  if(mode(Tmp)=="numeric"){
-    if(length(Tmp)>1){
-      Kosa<- 1; All<- Nargs
+  All=Nargs  #181230from
+  Same="y"
+  Incolor=""
+  Tmp=varargin[[All]]
+  if(is.numeric(Tmp)){
+    if(length(Tmp)==4){
+      Incolor=paste(" ",as.character(Tmp[4]),sep="")
+    }else{
+      Same="n"
+      Incolor="{"
+      for(J in 4:6){
+        Incolor=paste(Incolor,as.character(Tmp[J]),sep="")
+        if(J<6){
+          Incolor=paste(Incolor,",",sep="")
+        }
+      }
+      Incolor=paste(Incolor,"}",sep="")
     }
-    else{
-      Kosa<- Tmp; All<- Nargs-1
-    }
-  }
-  else if(mode(Tmp)=="list"){
-      Kosa<- 1; All<- Nargs
-  }
+    All=Nargs-1 
+  }#181230to
   CL<-c()
   for (J in 0:N){
     Tmp<- TenSize*0.5*1000/2.54/MilliIn
@@ -2407,6 +2417,26 @@ Drwpt<-function(...)
       }
       PL<-matrix(PL,nrow=2)
       PL<-t(PL)
+      if(Same=="n"){ #181230from
+        Str1<- paste("{\\special{pn 0}\\color[rgb]",Incolor,"%\n",sep="")
+        cat(Str1,file=Wfile,append=TRUE)
+        Mojisu<-0
+        for (J in 1:Nrow(PL)){
+          Q<- PL[J,]
+          X<- as.character(round(MilliIn*Q[1]))
+          Y<- as.character(-round(MilliIn*Q[2]))
+          Str<- paste("\\special{pa ",X," ",Y,"}",sep="")
+          cat(Str,file=Wfile,append=TRUE)
+          Mojisu<- Mojisu+nchar(Str)
+          if(Mojisu>80){
+            cat("#\n",file=Wfile,append=TRUE)
+          }
+          Mojisu=0
+        }
+        Str1<- paste("\\special{sh}\\special{fp}}%\n",sep="")
+        cat(Str1,file=Wfile,append=TRUE)
+      }
+#      cat("{\\special{pn 4}%\n",file=Wfile,append=TRUE)
       Mojisu<-0
       for (J in 1:Nrow(PL)){
         Q<- PL[J,]
@@ -2420,10 +2450,13 @@ Drwpt<-function(...)
         }
         Mojisu=0
       }
-      Str1<- paste("\\special{sh ",as.character(Kosa),"}",sep="")
-      Str2<- "\\special{fp}%\n"
-      cat(Str1,file=Wfile,append=TRUE)
-      cat(Str2,file=Wfile,append=TRUE)
+      if(grep("-",Incolor)>0){Same="n"}
+      if(Same=="y"){
+        Str1<- paste("\\special{sh",Incolor,"}\\special{fp}%\n",sep="")
+      }else{
+        Str1<- paste("\\special{fp}%\n",sep="")
+      }
+      cat(Str1,file=Wfile,append=TRUE) #181230to
     }
   }
 }

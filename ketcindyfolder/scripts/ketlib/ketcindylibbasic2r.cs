@@ -691,13 +691,10 @@ Drwxy(optionsorg):=(
 
 ////%Drwpt start////
 ////%Drawpoint start////
-Drwpt(pstr):=Drawpoint(pstr);
+Drwpt(pstr):=Drwpt(pstr,1); //181231
 Drwpt(ptlist,nn):=(  // 16.03.05 from
 //help:Drwpt(A);
-//help:Drwpt("[1,1],0");
-//help:Drwpt(A,0);
 //help:Drwpt([1,2],0);
-//  Drawpoint(ptlist,nn);
   if(!isreal(DrwPtCtr), //181231from
     DrwPtCtr=1;
   );

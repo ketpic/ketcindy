@@ -1,6 +1,7 @@
 // 20181231
 //   Drwxy debugged  (GENTEN used, xrng/yrng changed )
 //   Drwpt debugged ( Pointdata used )
+//    Viewtex debugged  ( tikz )
 // 20181224
 //   WritetoRS changed  (Closefile("0"))
 // 20181219

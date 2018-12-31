@@ -3644,7 +3644,7 @@ Viewtex():=(
     );
   );
   if(GPACK=="tikz", 
-    println(SCEOUTPUT,"\usepackage[pgf,tikz}");//16.11.24
+    println(SCEOUTPUT,"\usepackage{pgf,tikz}");//181231
     println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
     if(indexof(PathT,"lualatex")>0, 
       println(SCEOUTPUT,"\usepackage{luatexja}");

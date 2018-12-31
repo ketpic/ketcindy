@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181224) loaded");
+println("ketcindybasic2(20181231) loaded");
 
 //help:start();
 
@@ -604,16 +604,20 @@ Setax(arglist):=(
 Drwxy():=Drwxy([]);
 Drwxy(optionsorg):=(
 //help:Drwxy();
-//help:Drwxy(options=["Origin=[0,0]","Xrng=","Yrng=","Ax=l,x,e,..."]);
+//help:Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,..."]);
   regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,
   linesty,colorax,colorla,tmp,tmp1,tmp2);
   options=optionsorg;
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
   eqL=tmp_5;
-  org=[0,0];
-  xrng=[XMIN,XMAX];
-  yrng=[YMIN,YMAX];
+  org=GENTEN; //181231from
+  tmp1=max([org_1+XMIN,XMIN]);
+  tmp2=min([org_1+XMAX,XMAX]);
+  xrng=[tmp1,tmp2];
+  tmp1=max([org_2+YMIN,YMIN]);
+  tmp2=min([org_2+YMAX,YMAX]);
+  yrng=[tmp1,tmp2]; //181231to
   ax=AXSTYLE;
   linesty=ax_8;
   if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
@@ -631,10 +635,10 @@ Drwxy(optionsorg):=(
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
-    if(tmp1=="O",
-      org=parse(tmp_2);
-      options=remove(options,[#]);
-    );
+//    if(tmp1=="O",
+//      org=parse(tmp_2);
+//      options=remove(options,[#]);
+//    );
     if(tmp1=="X",
       xrng=parse(tmp_2);
       options=remove(options,[#]);
@@ -693,7 +697,12 @@ Drwpt(ptlist,nn):=(  // 16.03.05 from
 //help:Drwpt("[1,1],0");
 //help:Drwpt(A,0);
 //help:Drwpt([1,2],0);
-  Drawpoint(ptlist,nn);
+//  Drawpoint(ptlist,nn);
+  if(!isreal(DrwPtCtr), //181231from
+    DrwPtCtr=1;
+  );
+  Pointdata(text(DrwPtCtr),ptlist,["Inside="+text(nn)]);
+  DrwPtCtr=DrwPtCtr+1; //181231to
 );
 Drawpoint(pstr):=(
   if(isstring(pstr),

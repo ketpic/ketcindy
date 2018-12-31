@@ -1,9 +1,14 @@
+// 20181231
+//   Drwxy debugged  (GENTEN used, xrng/yrng changed )
+//   Drwpt debugged ( Pointdata used )
 // 20181224
 //   WritetoRS changed  (Closefile("0"))
 // 20181219
 //   BBdata debugged  (macosx => ismacosx )
 // 20181218
 //   Letter, Expr changed  (pt,dir,str,options added )
+// 20181217
+//    Drwxy debugged
 // 20181216
 //   Drwxy changed  ( linestyle,colorax,colorla )
 // 20181215

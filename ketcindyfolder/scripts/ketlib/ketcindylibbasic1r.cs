@@ -2888,6 +2888,7 @@ Setmarklen(ratio):=(
 ////%Setorigin start////
 Setorigin(point):=(
 //help:Setorigin([1,2]);
+  GENTEN=point; //181231
   Com2nd("Setorigin("+textformat(point,5)+")");
 );
 ////%Setorigin end////

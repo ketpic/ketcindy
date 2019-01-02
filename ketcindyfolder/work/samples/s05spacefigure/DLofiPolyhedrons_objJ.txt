@@ -1,0 +1,10 @@
+１）整面凸多面体のデータフォルダ「polyhedrons_obj」は以下のサイトからダウンロードできます．
+         http://mitani.cs.tsukuba.ac.jp/polyhedron/
+
+２）ダウンロードしたフォルダを適当な場所，例えばユーザフォームのketcindyに保存して下さい．
+
+３）Cindyファイルを開き，次のようなスクリプトを書いて読み込んで下さい．
+
+        Setdirectory(Dirhead+"polyhedrons_obj"); // Dirheadはユーザフォームのketcindy
+        poly=Readobj("r02.obj",["size=-3.5"]);
+        Setdirectory(Dirwork);

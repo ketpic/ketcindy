@@ -1,4 +1,6 @@
-// 20181231
+/ 20190101
+//   Viewtex changed ( for tikz )
+// // 20181231
 //   Drwxy debugged  (GENTEN used, xrng/yrng changed )
 //   Drwpt debugged ( Pointdata used )
 //    Viewtex debugged  ( tikz )

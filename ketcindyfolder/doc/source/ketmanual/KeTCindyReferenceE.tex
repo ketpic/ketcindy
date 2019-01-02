@@ -156,19 +156,20 @@ Hide coordinate axes.
 \itemket{Description}Generic function to set the style of axis.
 \itemket{Details}Parameters are:\\
 1. Style of axis ("l" ; line(default), "a" : arrow)\\
-\hspace*{10mm}Rem)Write like \verb|"a0.5"| when setting the size.\\
-2. Name of horizontal ax  ( default  is \verb|"x"|)\\
-3. Posion of horizontal name (default is \verb|"e"|)\\
-4. Name of horizontal ax  ( default  is \verb|"y"|)\\
-5. Posion of horizontal name (default is \verb|"n"|)\\
-6. Name of origin (default is \verb|"O"|)\\
-7. Position of origin (default is \verb|"sw"|)\\
-8. Line style\\
+2. Name of horizontal ax  ( default  is x)\\
+3. Posion of horizontal name (default is "e")\\
+4. Name of horizontal ax  ( default  is y)\\
+5. Posion of horizontal name (default is "n")\\
+6. Name of origin (default is O)\\
+7. Position of origin (default is "sw")\\
+8. Linestyle\\
 9. Color of axes\\
 10. Color of labels\\
+
 \itemket{Examples}\mbox{}
 
 \verb|Setax(["a","","","","","","nw"]);|\\
+\verb|Setax(["","","","","","","","do","red"]);|\\
 \verb|Setax([7,"nw"]);|\\
 \verb|Setax(["a","\theta","","x","w"]);|
 
@@ -333,6 +334,13 @@ Size can be change as a option of ``Pointdata".
 \hspace{20mm}\input{Fig/pointsize}
 
 \end{cmd}
+%------------Setarrow--------------------------------
+\begin{cmd}{Setarrow}{setarrow}
+\itemket{Usage}Setarrow(size,angle,position,cut,segstyle)
+\itemket{Description}Generic function to set the arrow.
+\itemket{Details} Set the style of arrow.  Same as options of   \hyperlink{arrowdata}{Arrowdata()} .\\
+\end{cmd}
+
 
 %------------Setmarklen--------------------------------
 \begin{cmd}{Setmarklen}{setmarklen}
@@ -1679,7 +1687,7 @@ The option "nth" is used to set the number when plotting data has multi intersec
 
 %-----------Letter---------------------------------
 \begin{cmd}{Letter}{letter}
-\itemket{Usage}Letter([position, direction, string])
+\itemket{Usage}Letter([position, direction, string],options)
 \itemket{Description}Display the string.
 \itemket{Details}
 Write the string at the position specified by position (or coordinates) and direction. \\
@@ -1689,6 +1697,7 @@ The distance from the specified position can also be given as a numerical value.
 Multiple strings can be passed in the form of a list. \\
 \itemket{Remark}\mbox{}
 The derivative symbol $'$ uses \$ $'$ \$ (single quart) in mathematical mode (interleaved with two \$ s).
+Option is size of font. For example, ["size=32"]
 \item[Example]\mbox{}
 
 \verb|Letter([[2,1] ,"se","P"]); | // Display P in the southeast of the coordinates (2, 1). \\
@@ -4135,11 +4144,29 @@ Meanings and defaults of options are\\
 \end{cmd}
 
 \newpage
-%=== 3D =========
+%========== 3D =========
 \section{\ketcindy 3D}
+\subsection{Screen}
+The screen of KETCindy3D is structured as follows.
 
+There are two areas surrounded by a white rectangle on the drawing surface of Cinderella. The area on the left side where the NE and the SW are diagonal is referred to as the main screen, and the area on the right side is referred to as the sub screen.
 
-%====================================
+\vspace{\baselineskip}
+\begin{center}
+ \includegraphics[bb=0 0 879.05 447.02 , width=8cm]{Fig/3dstart.pdf}
+\end{center}
+As in the case of a flat surface, the main screen shows the range output to TeX and it can be changed by dragging two points of NE and SW. The viewpoint can be moved with the slider below the main screen, and the axis rotates on the main screen. You can think of the sub screen as a viewpoint placed on the xy plane.
+
+When you draw points and line segments with Cinderella's drawing tool on the main screen, points corresponding to the secondary screen are drawn. You can change the x, y coordinates by dragging the point on the main screen, and drag the point on the sub screen to change the z coordinate.
+
+\vspace{\baselineskip}
+\begin{center}
+ \includegraphics[bb=0.00 0.00 863.04 378.52 , width=10cm]{Fig/3dscreen.pdf}
+\end{center}
+KeTCindy3D performs hidden line processing on lines and surfaces. Hidden line processing speeds up processing in cooperation with C language.
+
+It is necessary to develop an environment that uses C language, but now it is standardized. If you can not use C language, you will use a function to compute with R, but in that case it will take quite a while.
+
 \subsection{Setting and Defining}
 %------------Ketinit3d--------------------------------
 \begin{cmd}{Ketinit3d}{ketinit3D}
@@ -4148,11 +4175,10 @@ Meanings and defaults of options are\\
 \itemket{Details}Euclidean view of Cinderella becomes 3D mode. Two sliders are created to indicate the viewing angle TH($\theta$), FI($\phi$). The initial values are $\mathrm{TH}=0$ and $\mathrm{FI}=0$.\\
 \textcolor{red}{Caution}
  This funcition and Ketinit() have to write on Initializaiton slot.
-\itemket{Remark}If \verb|Ketinit3d(0)| is used, the subscreen is not displayed.
+\itemket{Remark}If \verb|Ketinit3d(0)| is used, the subscreen is not displayed. Ketinit () is also placed in the Initialization Slot, unlike 2D.
 \end{cmd}
 
 %------------Start3d--------------------------------
-
 \begin{cmd}{Start3d}{start3d}
 \itemket{Usage}Start3d(option)
 \itemket{Description}3d function to initialize limited variables.
@@ -4160,12 +4186,12 @@ Meanings and defaults of options are\\
 This funcition should be written at the beginning of Draw slot.\\
 The option is a list of geometric points which are not regarded as 3D points.
 \itemket{Example}\mbox{}\\
+If option is given a list of exclusion points, that point is not a point of space. (The position does not change even if moving the viewpoint with the slider)
+
 \verb|Start3d([A,B,C]);|\\
-\verb|Slider("A-C-B");| // A,C,B should not be 3D points.
-\end{cmd}
+\verb|Slider("A-C-B");| // A,C,B should not be 3D points.\end{cmd}
 
 %--------------Startsurf------------------------------
-
 \begin{cmd}{Startsurf}{startsurf}
 \itemket{Usage}Startsurf(options)
 \itemket{Description}Defines values related to surface rendering.
@@ -4178,143 +4204,31 @@ Drawing of a curved surface with hidden line processing is performed in the foll
 %\itemket{Examples} \mbox{}
 \end{cmd}
 
-%--------------Isangle------------------------------
-\begin{cmd}{Isangle}{isangle}
+%-------------Xyzax3data-------------------------------
+\begin{cmd}{Xyzax3data}{xyzax3data}
 
-\itemket{Usage}Isangle()
-\itemket{Description}Decide the selection of the angle slider. 
-\itemket{Details}Returns ``true" if select slider, and ``false" if not.\\
-In drawing including hidden line processing, reaction is bad when recalculating while moving the viewpoint. With this function, you can write code that does not recalculate while moving the viewpoint.
+\itemket{Usage} Xyzax3data(name, range of x, range of y, range of z, options)
+\itemket{Description}Generic function to draw the coordinate axis.
+\itemket{Details}Name can be null string.\\
+Options are the followings.\\
+"an": arrowhead, n is size.\\
+"Onesw": origin and its position.
+\itemket{Examples}  \mbox{}
 
-\itemket{Examples} \mbox{}
-
-\verb| fd=[ |\\
-\verb| "z=4-(x^2+y^2)",|\\
-\verb| "x=R*cos(T)","y=R*sin(T)",|\\
-\verb| "R=[0,2]","T=[0,2*pi]","e" \verb|   ];|\\
-\verb| if(Isangle(),|\\
-\verb|  Sf3data("1",fd);|\\
-\verb|  ,|\\
-\verb|  Startsurf();|\\
-\verb|  Sfbdparadata("1",fd);|\\
-\verb|  Crvsfparadata("1","ax3d","sfbd3d1",fd);|\\
-\verb|  ExeccmdC("1");|\\
-\verb| );|
-
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]","a");|  //arrowhead\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a2"]);|  //big arrowhead\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["O"]);|\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a","Oe2n2"]);|  //set origin upper right
 
 \end{cmd}
+
+\newpage
+%================== 3D Drawing ===============
 
 \subsection{Command for Drawing}
-%-------------Bezier3d}-------------------------------
+\subsubsection{Point and line}
 
-\begin{cmd}{Bezier3d}{bezier3d}
-
-\itemket{Usage}Bezier3d(name,list1,list2)
-\itemket{Description}Draw a Cubic B\'ezier curve.
-\itemket{Details}list1 is list of anchor points, and list2 is list of handle points
-\itemket{Examples}  \mbox{}
-
-\verb|Bezier3d("1",["A","B","C"],["D","E","F","G"]);|
-
-\begin{center} \input{Fig/bezier3d1} \end{center}
-
-\end{cmd}
-%----------Changestyle3d----------------------------------
-
-\begin{cmd}{Changestyle3d}{changestyle3d}
-\itemket{Usage} Changestyle3d(PD,option)
-\itemket{Description}Change the attribute of PD.
-\itemket{Details}Change the attribute of PD to one with option specification. PD is a plotting data or a list of plotting data.
-\itemket{Examples}  \mbox{}
-
-Make a tetrahedron by four points of space.\\
-\verb|Spaceline("1",[A,B]);|\\
-\verb|Spaceline("2",[A,C]);|\\
-\verb|Spaceline("3",[B,C]);|\\
-\verb|Spaceline("4",[A,D]);|\\
-\verb|Spaceline("5",[B,D]);|\\
-\verb|Spaceline("6",[C,D]);|\\
-then\\
-\verb|Changestyle3d("sl3d1",["dr,3"]);| // one edge become thick.\\
-or\\
-\verb|edges=apply(1..6,"sl3d"+text(#));|\\
-\verb|Changestyle3d(edges,["notex"]);| // all edges become ``notex".\\
-\end{cmd}
-%------------Concatobj--------------------------------
-
-\begin{cmd}{Concatobj}{concatobj}
-\itemket{Usage}Concatobj(list,options)
-\itemket{Description}Concatenates several objects.
-%\itemket{Details}
-\itemket{Examples}  \mbox{}
-
-A tetrahedron by four vertecies A,B,C,D.\\
-The tetrahedron consists of four planes $\triangle\mathrm{ABC}$, $\triangle\mathrm{ABD}$, $\triangle\mathrm{ACD}$, $\triangle\mathrm{BCD}$.\\
-\begin{center} \input{Fig/concatobj} \end{center}
-\verb|Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);|\\
-makes [[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]]
-This data is used to drawing tetrahedron.
-For example code, see \hyperlink{vertexedgeface}{VertexEdgeFace()}.
-\end{cmd}
-
-%-------------Crvsfparadata-------------------------------
-
-\begin{cmd}{Crvsfparadata}{crvsfparadata}
-\itemket{Usage}Crvsfparadata(name,PD1,PD2,formula)
-\itemket{Description}Remove curves hidden by curved face.
-%\itemket{Details}
-\itemket{Examples}  \mbox{}
-
-For example code, see \hyperlink{execcmdc}{ExeccmdC()}.
-\end{cmd}
-
-%--------------Datalist2d------------------------------
-
-\begin{cmd}{Datalist2d}{datalist2d}
-
-\itemket{Usage}Datalist2d()
-\itemket{Description} Generic function to get a list of 2D-plotting data on the screen.
-\itemket{Examples}  \mbox{}
-
-We execute the following program then the computer will display "PD=[ax2d,AB2d]" on the console.\\
-
-\verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");  |\\
-\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
-\verb|  Spaceline("1",[A,B]); |\\
-\verb|  println("PD="+Datalist2d());|
-
-\end{cmd}
-%--------------Datalist3d------------------------------
-
-\begin{cmd}{Datalist3d}{datalist3d}
-
-\itemket{Usage}Datalist3d()
-\itemket{Details}Generic function to get a list of 3D-plotting data.
-\itemket{Examples}  \mbox{}
-
-We execute the following program then the computer will display "PD=[ax3d,AB3d]" on the console.\\
-
-\verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
-\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
-\verb|  Spaceline("1",[A,B]); |\\
-\verb|  println("PD="+Datalist3d()); |
-
-\end{cmd}
-%--------------Dist3d------------------------------
-
-\begin{cmd}{Dist3d}{dist3d}
-
-\itemket{Usage}Dist3d(a1,a2)
-\itemket{Description}Generic function to get the 3D-distance of two points.
-\itemket{Examples}  \mbox{}
-
-Following three programs return the same result.\\
-
-\verb|  Dist3d("A","B"); |\\
-\verb|  Dist3d(A,B); |\\
-\verb|  Dist3d(A3d,B3d); |
-
-\end{cmd}
 %--------------Drawpoint3d------------------------------
 
 \begin{cmd}{Drawpoint3d}{drawpoint3d}
@@ -4332,195 +4246,114 @@ To output in the \TeX file, use \hyperlink{pointdata}{Pointdata()} or \hyperlink
 \itemket{Remark} \hyperlink{mkpttable}{Comparative chart of drawing of points}
 
 \end{cmd}
-%--------------ExeccmdC------------------------------
 
-\begin{cmd}{ExeccmdC}{execcmdc}
+%--------------Pointdata3d------------------------------
+\begin{cmd}{Pointdata3d}{pointdata3d}
 
-\itemket{Usage}ExeccmdC(name,options1,options2)
-\itemket{Description}Generic function to draw 3D-surface. The return value is the list of processed plot data.
-\itemket{Details}options1=no option or " "(space) or "r" or "m" and "Wait=integer" , line type. Default value of Wait is 20.\\
-No option or " "(space) means\\
-(1) If there exist no deta then it make a new data file.\\
-(2) If there exist deta then it read the data file.\\
-"m" means that it remake the new data file.\\
-"r" means that it reread the existing data file.\\
+\itemket{Usage}Pointdata3d(name, point list, options)
+\itemket{Description}Generic function to generate data of the point list.
+\itemket{Details}Options are "Size=","Color=".
+\itemket{Examples}  \verb|Pointdata3d("1",[[0,1,0],[1,1,2]],["Size=2","Color=red"]);|
+\end{cmd}
+%---------------Putpoint3d-----------------------------
+\begin{cmd}{Putpoint3d}{putpoint3d}
 
-option2="nodisp" or line type of hidden line. Default is "do".\\
-
-If we specify only option2 then we denote that option1 is empty list:[].
+\itemket{Usage}Putpoint3d(list of 3D-points, option)
+\itemket{Description}Generic function to draw the geometric point in the space.
+\itemket{Details}Option is "free" or "fix"(default).
 \itemket{Examples}  \mbox{}
 
-left figure
+\verb|Putpoint3d(["A",[2,1,3]]);|\\
+\verb|Putpoint3d(["A",[2,1,3]],"free");| \\
+\verb|Putpoint3d(["A",[1,1,1],"C",[1,0,1]]);|\\
 
-\verb| Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
-\verb| Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
-\verb| Spaceline([A,B]); |\\
-\verb| fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"]; |\\
-\verb| Startsurf(); |\\
-\verb| Sfbdparadata("1",fd); |\\
-\verb| Crvsfparadata("1","AB3d","sfbd3d1",fd); |\\
-\verb| Crvsfparadata("2","ax3d","sfbd3d1",fd); |\\
-\verb| ExeccmdC("1"); |
+These points don't output in the \TeX file. To output in the \TeX file use the following \hyperlink{pointdata}{Pointdata()} or \hyperlink{drwpt}{Drawpoint()}
 
-right figure
+In the 3D-drawings the coordinate of the point name A is A3d.
 
-\verb|    ExeccmdC("1",[],["nodisp"]);|
-
-\hspace{20mm}\input{Fig/crvsfparadata2} \hspace{20mm}   \input{Fig/crvsfparadata1} 
-
-By using the return value, you can change the hidden line style (line style, color). 
-The same as the return value is displayed as "readoutdata from template3D1.txt:" on the console, so you can decide the operation target by looking at it. For example, in the left diagram above, the hidden line of line AB is the fourth crvsfh3d1 in the list, so you can make it a red dashed line as follows.
-
-\verb|    ret=ExeccmdC("1");|\\
-\verb|    Changestyle3d(ret_4,["da","Color=red"]);|\\
-
-\hspace{20mm} \input{Fig/execcmdc1}
-
-In addition, please refer to the next. \hyperlink{sfbdparadata}{Sfbdparadata()},\hyperlink{wireparadata}{Wireparadata()} 
+\itemket{Remark} \hyperlink{mkpttable}{Comparative chart of drawing of points}
 
 \end{cmd}
-%--------------Embed------------------------------
 
-\begin{cmd}{Embed}{embed}
-\itemket{Usage}Embed(name,PDlist,formula,varlist)
-\itemket{Description}Embed plotting data of 2D in plane of 3D.
-\itemket{Details}PDlist is list of plotting data of 2D. Plane of 3D is given by formula and varlist.
+%-----------------Putaxes3d---------------------------
+\begin{cmd}{Putaxes3d}{putaxes3d}
+
+\itemket{Usage}Putaxes3d([x,y,z])
+\itemket{Description}Generic function to make the geometric points on the coordinate axis. 
+\itemket{Details}For the argument [x,y,x] we get the four geometric points X(x,0,0), Y(0,y,0), Z(0,0,z) and O(0,0,0).
 \itemket{Examples}  \mbox{}
 
-Embed an equilateral triangle and its circumscribed circle in a plane in 3D space.
+\verb|Putaxes3d([1,2,3]);|\\
+\verb|Putaxes3d(a);|  //this equals to \verb|Putaxes3d([a,a,a]);|
 
-(1) \verb|vo|, \verb|vx|, \verb|vy| are defined with function {\tt \hyperlink{defvar}{Defvar}} that uses R.\\
-\verb|Xyzax3data("","x=[-5,4]","y=[-10,4]","z=[-5,5]",["a","O"]);|\\
-\verb|Spaceline("1",[[3,0,0],[3,6,0],[3,6,6],[3,0,6],[3,0,0]]);|\\
-\verb|Defvar("vo=[3,3,3]");| // Defined in R\\
-\verb|Defvar("vx=[0,1,0]");| // Defined in R\\
-\verb|Defvar("vy=[0,0,1]");| // Defined in R\\
-\verb|Putpoint3d(["A",[3,3,3]]);|\\
-\verb|Circledata("1",[[0,0],[2,0]],["nodisp"]);|\\
-\verb|Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);|\\
-\verb|Embed("1",["cr1","sg1"],"vo+x*vx+y*vy","[x,y]");|\\
-\verb|Ptsize(3);|\\
-\verb|Drawpoint(A);|
-
-Following view is as \verb|TH|=75,\verb|FI|=70.
- \begin{center} \input{Fig/embed01} \end{center}
-
-(2) A, B, and C are defined instead of vo, vx, vy defined by Defvar. But, in this case, points B and C are not drawn in the plane. So, the figure may be difficult to understand.\\
-\verb|Putpoint3d(["A",[3,3,3],"B",[0,1,0],"C",[0,0,1]]);|\\
-\verb|Embed("1",["cr1","sg1"],"A3d+x*B3d+y*C3d","[x,y]");|\\
-\begin{center}
-\includegraphics[bb=0.00 0.00 477.02 383.02,width=8cm]{Fig/embed03.pdf}
-\end{center}
-To draw the B and C on the embedded figure, code changes as follows.
-
-\verb|Putpoint3d(["A",[3,3,3],"B",[3,4,3],"C",[3,3,4]]);|\\
-\verb|Embed("1",["cr1","sg1"],"A3d+x*B3d+y*C3d","[x,y]");|\\
-
-(3) The function {\tt \hyperlink{perpplane}{Perpplane}} is used in next.\\
-\verb|Xyzax3data("","x=[-5,5]","y=[-8,5]","z=[-5,5]");|\\
-\verb|Putpoint3d(["O",[0,0,0],"P",[1,1,2]]);|\\
-\verb|Perpplane("E-F","P",P3d-O3d,"put");|\\
-\verb|vec1=3*(E3d-P3d);|\\
-\verb|vec2=3*(F3d-P3d);|\\
-\verb|Putpoint3d(["A",P3d+vec1+vec2]);|\\
-\verb|Putpoint3d(["B",P3d+vec1-vec2]);|\\
-\verb|Putpoint3d(["C",P3d-vec1-vec2]);|\\
-\verb|Putpoint3d(["D",P3d-vec1+vec2]);|\\
-\verb|Spaceline("1",[A,B,C,D,A]);|\\
-\verb|Circledata("1",[[0,0],[2,0]],["nodisp"]);|\\
-\verb|Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);|\\
-\verb|Embed("1",["cr1","sg1"],"P3d+x*(E3d-P3d)+y*(F3d-P3d)","[x,y]");|\\
-\verb|Ptsize(3);|\\
-\verb|Drawpoint(P);|\\
-\verb|Skeletonparadata("1");|
-         \begin{center} \input{Fig/embed02} \end{center}
 \end{cmd}
 
-%------------Intersectcrvsf--------------------------------
+%--------------PutonCurve3d------------------------------
+\begin{cmd}{PutonCurve3d}{putonCurve3d}
 
-\begin{cmd}{Intersectcrvsf}{intersectcrvsf}
-\itemket{Usage}Intersectcrvsf(name,PD,formula)
-\itemket{Description}Returns a list of intersects of a curve and curved face.
-\itemket{Details}PD is plotting data of curve. Curved face is given by formula.
+\itemket{Usage} PutonCurve3d(name, PD)
+\itemket{Description}Generic function to make the geometric point on the 3D-curve.
+\itemket{Details}This point moves along the curve by mouse dragging.
 \itemket{Examples}  \mbox{}
 
-\verb|Putpoint3d(["A",[0,-3,0],"B",[0,3,2]]);|\\
-\verb|Spaceline("1",[A,B]);|\\
-\verb|fd=[|\\
-\verb| "z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)",|\\
-\verb| "R=[0,2]","T=[0,2*pi]","e"|\\
-\verb|];|\\
-\verb|Startsurf();|\\
-\verb|Sfbdparadata("1",fd);|\\
-\verb|Intersectcrvsf("1","sl3d1",fd);|// The result [[0,1.57,1.52],[0,-1.91,0.36]] will be shown in the console.\\
-\verb|ExeccmdC("1",[""]);|\\
-\verb|println("Intersect="+intercrvsf1);|\\
-\verb|Drawpoint3d(intercrvsf1); |\\
-\verb|Letter(Parapt(intercrvsf1_1),"ne","P1");|\\
-\verb|Letter(Parapt(intercrvsf1_2),"ne","P2");|\\
+Make reference to \hyperlink{partcrv3d}{Partcrv3d()}
+\end{cmd}
+%----------------Putonseg3d----------------------------
+\begin{cmd}{Putonseg3d}{putonseg3d}
 
-\hspace{30mm}\includegraphics[bb=0.00 0.00 325.55 292.54,width=8cm]{Fig/Intersectcurvsf.pdf}
+\itemket{Usage}Putonseg3d(name, point1, point2)
+\itemket{Description}Generic function to make the geometric point on the 3D-segment.
+\itemket{Details}We get the middle point between the two points. This point moves along the segment by mouse dragging.
+\itemket{Examples}  \mbox{}
+
+\verb|Putonseg3d("C",A,B);|  //Put C on the center of A and B.\\
+\verb|Putonseg3d("C",[A,B]);|  //same as above
+\end{cmd}
+%--------------Spaceline------------------------------
+\begin{cmd}{Spaceline}{spaceline}
+
+\itemket{Usage} Spaceline(name, list)
+\itemket{Description}Generic function to draw the space polygonal lines.
+\itemket{Details}Options are line type: "dr" or "da" or "do".
+\itemket{Examples}  \mbox{}
+
+\verb|Spaceline("1",[[2,5,1],[4,2,3]]);|  //draw the line between two points\\
+\verb|Spaceline("2",[A,B,C,A]);|  //draw the triangle ABC\\
+
+\begin{layer}{150}{0}
+\putnotese{100}{-5}{ \input{Fig/oresenex01}}
+\end{layer}
+
+\verb|pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]]; |\\
+\verb|Spaceline("1",pt); |\\
+\verb|Pointdata3d("1",pt,["Size=3"]);|
+
+\vspace{30mm}
+\end{cmd}
+%-------------Spacecurve-------------------------------
+\begin{cmd}{Spacecurve}{spacecurve}
+
+\itemket{Usage}Spacecurve(name, formula, domain, options)
+\itemket{Description}Generic function to draw the space curve.
+\itemket{Examples}  \mbox{}
+\verb|Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|\\
+option=["Num=100"]: division number of the interval "t=[0,4*pi]"
+ \begin{center} \input{Fig/rasen} \end{center}
 \end{cmd}
 
-%-------------IntersectsgpL-------------------------------
+%-------------Bezier3d}-------------------------------
 
-\begin{cmd}{IntersectsgpL}{intersectsgpL}
-\itemket{Usage}IntersectsgpL(name,segment,plane,option)
-\itemket{Description}Returns a intersection of a line segment and plane.
-\itemket{Details}Specify a line segment with two endpoints. Specify the plane as three points that it contains. Options are ``put" or ``draw", and if omitted select ``draw".\\
-Following two programs return the same result.\\
-\verb|  IntersectsgpL("P","A-B","C-D-E"); |\\
-\verb|  IntersectsgpL("P",[A3d,B3d],[C3d,D3d,E3d]); |
+\begin{cmd}{Bezier3d}{bezier3d}
 
-%  \verb|IntersectsgpL("P",[p1,p2],[p3,p4,p5],"draw");| 
+\itemket{Usage}Bezier3d(name,list1,list2)
+\itemket{Description}Draw a Cubic B\'ezier curve.
+\itemket{Details}list1 is list of anchor points, and list2 is list of handle points
 \itemket{Examples}  \mbox{}
 
-cutcube
+\verb|Bezier3d("1",["A","B","C"],["D","E","F","G"]);|
 
-\verb|  Hn=3; |\\
-\verb|  Putaxes3d(Hn); |\\
-\verb|  Putpoint3d("A",[Hn,Hn,0]); |\\
-\verb|  Putpoint3d("B",[Hn,0,Hn]); |\\
-\verb|  Putpoint3d("C",[Hn,Hn,Hn]); |\\
-\verb|  Putpoint3d("D",[0,Hn,Hn]); |\\
-\verb|  Putonseg3d("E",X,B);  |\\
-\verb|  Putonseg3d("F",Z,B);  |\\
-\verb|  Putonseg3d("G",Z,D);  |\\
-\verb|  IntersectsgpL("M","A-C","E-F-G","put");  |\\
-\verb|  IntersectsgpL("N","D-Y","E-F-G","put");  |\\
-\verb|  phd=Concatobj([[O,X,A,Y],[X,A,M,E],[A,Y,N,M],[Y,N,G,Z,O], |\\
-\verb|      [O,Z,F,E,X],[Z,F,G],[E,M,N,G,F]]); |\\
-\verb|  VertexEdgeFace("1",phd); |\\
-\verb|  Nohiddenbyfaces("1","phf3d1");  |
+\begin{center} \input{Fig/bezier3d1} \end{center}
 
-\hspace{20mm}\includegraphics[bb=0.00 0.00 713.04 327.02,width=10cm]{Fig/IntersectsgpL0.pdf}
-
-add next script (right figure)
-
-\verb|  Spaceline("1",[E,B,F],["do"]); |\\
-\verb|  Spaceline("2",[B,C,M],["do"]); |\\
-\verb|  Spaceline("3",[C,D,N],["do"]); |\\
-\verb|  Spaceline("4",[D,G],["do"]); |\\
-
-\begin{center} \input{Fig/IntersectsgpL1}    \input{Fig/IntersectsgpL2} \end{center}
-
-\end{cmd}
-%-------------Invparapt-------------------------------
-
-\begin{cmd}{Invparapt}{invparapt}
-\itemket{Usage}Invparapt(coordinate,PD)
-\itemket{Description}Returns the point on the curve that is corresponding to the coordinates on the  Euclidean view.
-\itemket{Details}Returns the 3D-coordinates of the point on the curve(\verb|PD|) from the \verb|coordinate| on the Euclidean view.
-\itemket{Examples}  \mbox{}
-
-Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|tmp_2|, $\dots$) of the spiral curve and the space line. Draw a part of the spiral whose end points (\verb|p1| and \verb|p2|) are selected from the intersection points.\\
-\verb|  Spaceline("1",[[-1,-1,-1],[1,2,3]]); |\\
-\verb|  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["do"]);|\\
-\verb|  tmp=Intersectcrvs("sl2d1","sc2d1");|\\
-\verb|  p1=Invparapt(tmp_1,"sc3d1");|\\
-\verb|  p2=Invparapt(tmp_2,"sc3d1");|\\
-\verb|  Partcrv3d("1",p1,p2,"sc3d1"); |\\
-\begin{center} \input{Fig/invparapt} \end{center}
 \end{cmd}
 
 %---------Mkbezierptcrv3d-----------------------------------
@@ -4532,6 +4365,170 @@ After that, move the nodes and the control points and correct the cubic B\'ezier
 \itemket{Examples}  \mbox{}
 
 \verb|Mkbezierptcrv3d(["A","B","C","D"]);|
+\end{cmd}
+%-------------Skeletonparadata-------------------------------
+\begin{cmd}{Skeletonparadata}{skeletonparadata}
+
+\itemket{Usage}Skeletonparadata(name, PDlist, PDlist, option)
+\itemket{Description}Generic function to draw the lines by performing hidden line processing.
+\itemket{Details}This function draw the second argument(the list of the lines) by performing hidden line processing which are hidden by the third argument(the list of the lines). If both arguments are omitted the function draw all lines by performing hidden line processing.
+
+Options:\\
+\hspace*{5mm}\verb|real number| gap of line\\
+\hspace*{5mm}\verb|"No=pointlist"| not executed when any point is selected\\
+\hspace*{5mm}\verb|"File=y/m/n(default:n)"| whether to make data file or not\\
+\hspace*{5mm}\verb|"Check=pointlist"| data file updated if any point is changed
+
+\itemket{Examples}  \mbox{}
+
+\verb|  Xyzax3data("","x=[-5,5]","y=[-5,4]","z=[-5,3]");|  //Data name is "ax3d".\\
+\verb|  Putpoint3d(["A",[0,-2,-2]]);|\\
+\verb|  Putpoint3d(["B",[-1,1,3]]);|\\
+\verb|  Spaceline([A,B]);|  //Data name is "AB3d".\\
+\verb|  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|  //Data name is "sc3d1".\\
+
+\verb|Skeletonparadata("1");|  //(left figure)\\
+\verb|Skeletonparadata("1",[2]);|  //option\verb|=[2]|: gap of lines\verb|=2| (center figure)\\
+\verb|Skeletonparadata("1",["AB3d","ax3d"],["sc3d1"]);|  //(right figure)
+\begin{center} \input{Fig/skeletonparadata01}   \input{Fig/skeletonparadata02} 
+ \input{Fig/skeletonparadata03} \end{center}
+
+\end{cmd}
+
+%================== 3D polyhedron ===============
+\subsubsection{Polyhedron}
+
+ The description of polyhedron drawing will be explained by taking the case of tetrahedron as an example.
+
+The tetrahedron is composed of four sides. Letting the vertices be A, B, C, D, the four faces are 
+
+\hspace{20mm}$\triangle\mathrm{ABC}$, $\triangle\mathrm{ABD}$, $\triangle\mathrm{ACD}$, $\triangle\mathrm{BCD}$
+
+\begin{center} \input{Fig/concatobj} \end{center}
+
+If numbers are given to the vertex list [A, B, C, D] in order from A, the vertex order of each face is [1, 2, 3], [1, 2, 4], [1, 3 , 4], [2, 3, 4].
+
+[A, B, C, D], [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2 , 3, 4]]] is called "surface data". VertexEdgeFace () draws a polyhedron using this surface data.
+
+There are two kinds of hidden line processing of polyhedron. The first method is to treat polyhedron as a line drawing, and to process only the hidden part, using Skeletonparadata ().
+
+The other is to use Phparadata () as a way to draw a part hidden in the surface with a dotted line or hide it, considering it as a surface.
+
+\vspace{\baselineskip}
+%------------Concatobj--------------------------------
+
+\begin{cmd}{Concatobj}{concatobj}
+\itemket{Usage}Concatobj(list,options)
+\itemket{Description}Concatenates several objects.
+%\itemket{Details}
+\itemket{Examples}  \mbox{}
+
+A tetrahedron by four vertecies A,B,C,D.\\
+The tetrahedron consists of four planes $\triangle\mathrm{ABC}$, $\triangle\mathrm{ABD}$, $\triangle\mathrm{ACD}$, $\triangle\mathrm{BCD}$.\\
+
+\verb|  Putpoint3d("A",2*[0,0,sqrt(3)]); |\\
+\verb|  Putpoint3d("B",2*[1,-1/sqrt(3),0]);|\\
+\verb|  Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);|\\
+\verb|  Putpoint3d("D",2*[-1,-1/sqrt(3),0]);|\\
+\verb|  phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);|\\
+\verb|  VertexEdgeFace("1",phd);|\\
+\verb|  Skeletonparadata("1");|\\
+\verb|  Letter3d([A3d,"ne","A",B3d,"sw","B",C3d,"se","C",D3d,"e","D"]);|\\
+
+\begin{center} \input{Fig/concatobj} \end{center}
+
+If you are drawing tetrahedrons without creating geometric points, you can do as follows.
+
+\verb|  a=2*[-1,-1/sqrt(3),0];|\\
+\verb|  b=2*[1,-1/sqrt(3),0];|\\
+\verb|  c=2*[0,sqrt(3)-1/sqrt(3),0];|\\
+\verb|  d=2*[0,0,sqrt(3)];|\\
+\verb|  phd=Concatobj([[a,b,c],[a,b,d],[a,c,d],[b,c,d]]);|\\
+
+In the case of a convex polygon such as a tetrahedron, we can use CindyScript 's convexhull 3 d () function as follows. You can save time and effort by simply providing a vertex list instead of a surface list.
+
+\verb|  a=2*[0,0,sqrt(3)];|\\
+\verb|  b=2*[1,-1/sqrt(3),0];|\\
+\verb|  c=2*[0,sqrt(3)-1/sqrt(3),0];|\\
+\verb|  d=2*[-1,-1/sqrt(3),0];|\\
+\verb|  phd=convexhull3d([a,b,c,d]);|\\
+
+\end{cmd}
+
+
+%-------------Vertexedgeface-------------------------------
+\begin{cmd}{Vertexedgeface}{vertexedgeface}
+
+\itemket{Usage} VertexEdgeFace(name, list, options)
+\itemket{Description}Generic function to draw the polyhedron.
+\itemket{Details}We use the faces data of the polyhedron.\\
+The second argument is the list of vertexes list and the faces list.\\
+For example, the faces data of the tetrahedron is [[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]].\\
+
+The generated data is as follows.
+
+phv3d: list of vertices
+
+phe3d: list of edges
+
+phf3d: Surface list
+
+Each name is appended to the end.
+
+\itemket{Examples}  \mbox{}
+
+\verb| Putpoint3d("A",2*[-1,-1/sqrt(3),0]); |\\
+\verb| Putpoint3d("B",2*[1,-1/sqrt(3),0]); |\\
+\verb| Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]); |\\
+\verb| Putpoint3d("D",2*[0,0,sqrt(3)]); |\\
+\verb| phd=[[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]];|\\
+\verb| VertexEdgeFace("1",phd); |\\
+  //Three data lists are made, phv3d1:vertex, phe3d1:edge and phf3d1:face.
+ \begin{center} \input{Fig/vertex01} \end{center}
+\end{cmd}
+
+%--------------Phparadata------------------------------
+\begin{cmd}{Phparadata}{phparadata}
+
+\itemket{Usage}Phparadata(name, name2, list of options)
+\itemket{Description}Generic function to draw the polyhedron by performing hidden line processing.
+\itemket{Details}Make polyhedral plot data with VertexEdgeFace (). For this plot data, hidden surfaces (sides) are hidden-line processed and displayed. The second argument name2 is the same as the name given by VertexEdgeFace (). The hidden line type is specified by the option "Hidden = line type". Hidden lines are not displayed by default setting.
+\itemket{Examples}  \mbox{}
+
+\begin{layer}{150}{0}
+\putnotese{100}{0}{ \input{Fig/phparadata04}}
+\end{layer}
+
+Draw a tetrahedron.
+
+\verb| Putpoint3d("A",2*[-1,-1/sqrt(3),0]);|\\
+\verb| Putpoint3d("B",2*[1,-1/sqrt(3),0]);|\\
+\verb| Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);|\\
+\verb| Putpoint3d("D",2*[0,0,sqrt(3)]);|\\
+\verb| phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);|\\
+\verb| VertexEdgeFace("1",phd);|\\
+\verb| Phparadata("1","1",["Hidden=do"]);|\\
+
+A tetrahedron is drawn by VertexEdgeFace (), but it is hidden by Phparadata (). Since it is correctly output if it is drawn with the figure button, it is good to execute Phparadata () after confirming it by displaying it on the screen before executing Phparadata ().
+
+\vspace{\baselineskip}
+Draw a truncated icosahedron of s06 (soccer ball type) using polyhedron data \verb|polyhedrons_obj| by Kobayashi, Suzuki, Mitani.
+
+\verb|Setdirectory( Dirhead+"/data/polyhedrons_obj");|  //Many polyhedron data exist in this directory.\\
+\verb|phd=Readobj("s06.obj",["size=3"]);|  //"s06" is the name of truncated icosahedron data.\\
+\verb|Setdirectory(Dirwork);|  //Chage work space.\\
+\verb|VertexEdgeFace("s06",phd);|\\
+\verb|Phparadata("1","s06");|  //default usage, left figure\\
+
+The last two lines we can write the following.\\
+\verb|VertexEdgeFace("1",phd);|\\
+\verb|Phparadata("1","1");|
+\begin{center}
+ \includegraphics[bb=0 0 726.04 365.02 , width=10cm]{Fig/phparadata01.pdf}
+\end{center}
+
+\verb|Phparadata("1","s06",["dr,2","Hidden=do"]);|  //right figure
+ \begin{center} \input{Fig/phparadata02}   \input{Fig/phparadata03} \end{center}
 \end{cmd}
 
 %--------------Nohiddenbyfaces------------------------------
@@ -4567,84 +4564,515 @@ We draw hidden axes with broken line in the following example.\\
 \verb|Nohiddenbyfaces("1","ax3d","phf3d1",[],["da"]);|
 
 \end{cmd}
-%-------------Parapt-------------------------------
-\begin{cmd}{Parapt}{parapt(coordinate)}
+%================== 3D  Surface ===============
+\subsubsection{Surface}
 
-\itemket{Usage}Parapt(3D-coordinate)
-\itemket{Description}Generic function to return the 2D-coordinate on the plane of projection for the 3D-point.
+There are wire frame models and surface models for drawing curved surfaces. The wire frame model represents a curved surface with stitches, and the surface model draws its contour as a stitch-free surface.
+
+In KeTCindy, each drawing is done using the following function.
+\begin{tabbing}
+1234567890123456789012345678901234567890\=\kill
+Wire frame model without hidden wire \>Sf3data(name,form,options)\\
+Surface model\>Sfbdparadata(name,form,options)\\
+Hidden-line wireframe model \>Wireparadata(name,PD,form,n1,n2,options)
+\end{tabbing}
+
+However, in order to do hidden line processing, surface data is necessary, so after drawing with Sfbdparadata (), draw hidden lines with ireparadata ().
+
+Also, in the drawing of the surface model, it takes time to process the hidden line, so it is assumed to use the C language. Therefore, ExeccmdC () which draws using C language is used together.
+
+ \begin{center} \input{Fig/surfacemodel} \end{center}
+
+The form of the argument is an equation and a list of character strings for the domain of the variable. There are three patterns of equations as follows.
+
+\vspace{\baselineskip}
+(1) $z=f(x,y)$
+
+ \hspace{5mm} 【Example】formula : $z=x^2-y^2$
+
+ \hspace{15mm} range : $x=(-2,2) , y=(-2,2)$
+
+(2) $z=f(x,y),x=g(r,t),y=h(r,t)$
+
+ \hspace{5mm} 【Example】formula : $z=4-(x^2+y^2) , x=r\cos t , y=r\sin t$ 
+
+\hspace{15mm} range : $r=(0,2) , t=(0,2\pi)$
+
+(3) $x=f(u,v),y=g(u,v),z=h(u,v),$
+
+\hspace{5mm} 【Example】formula : $x=2\sin u \cos v , y=2\sin u \sin v  , z=2\cos u $ 
+
+\hspace{15mm} range : $u=(0,\pi) , v=(0,2\pi)$
+
+\vspace{\baselineskip}
+
+Here, (2) and (3) are parametric types, each consisting of expressions of $ x, y, z $ and two domain of parametric variables. Since it is indistinguishable as it is, when giving it as an argument, "p" is added to the type of (3) as the identification character at the beginning.
+
+Regarding the domain of definition, there are cases where it is taken in the open section and in the closed section. The distinction is indicated by "ewsn" as boundary designation (both are closed segments). I think the meaning of "ewsn" as follows.
+
+\vspace{\baselineskip}
+For variable $u,v$ , $a \leq u \leq b,c \leq v \leq d$
+
+ \begin{center} \input{Fig/ewsn} \end{center}
+
+This boundary designation is added at the end, but it can be omitted, and if omitted, it is the initial value "ewsn" (closed interval).
+
+To make both open segments, add "". However, do not perform hidden line processing
+Sf3data () draws a line also on the boundary, so you can omit this specification.
+
+\vspace{\baselineskip}
+\verb|fd=["p","x=r*cos(t)","y=r*sin(t)","z=2*(2-r)","r=[1,2]","t=[0,2*pi]","ew"]|
+
+\vspace{\baselineskip}
+If this is "e", $ 1 <r \leq 2 $ is obtained, and the top face is not displayed.
+
+Also, if this is set to "w", $ 1 \leq r <2 $ and the bottom is not displayed.
+
+Furthermore, if you specify "ewn" or "ews" or abbreviate the initial value "ewsn", it will contain either the left or right value of $ t = (0, 2 \ pi) $, A border appears.
+
+\vspace{\baselineskip}
+\hspace{12mm}"ew" \hspace{25mm}"e" \hspace{25mm}"w" \hspace{25mm}"ewn"
+
+\input{Fig/frustumew} \input{Fig/frustume} \input{Fig/frustumw} \input{Fig/frustumewn}
+
+%--------------Sf3data------------------------------
+\begin{cmd}{Sf3data}{sf3data}
+
+\itemket{Usage}Sf3data(name, list, list of options)
+\itemket{Description}Generic function to draw the wire frame model of the surface.
+\itemket{Details}Second argument is the list of equations and ranges. \\
+Options are the followings.\\
+"Num=[a,b]": x- and y-division number, default(or initial values) are a=b=25.\\
+"Wire=[a,b]": x- and y-wire number, default(or initial values) are a=b=20.\\
+"ewsn": From east to south, this indicates the boundary.
 \itemket{Examples}  \mbox{}
 
-\verb|println(Parapt([2,1,5]));| 
+\verb|Sf3data("1",["z=x^2-y^2","x=[-2,2]","y=[-2,2]"]);|\\
+\ \ //This is the first expression of the equation for the surface. Second argument is the list of equation, x-range and y-range. 
+\begin{center} \input{Fig/saddle1} \end{center}
+
+\verb|fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]"];|\\
+\verb|Sf3data("1",fd);|  //fd is the second argument.\\
+(left figure)\\
+
+\verb|fd=["z=sin(sqrt(abs(x^2+y^2)))","x=r*cos(t)","y=r*sin(t)",|\\
+\verb|"r=[0,3]","t=[0,2*pi]"];|\\
+\verb|Sf3data("1",fd);|\\
+(right figure)
+\begin{center} \input{Fig/parabola}   \input{Fig/sf3ddata3} \end{center}
+
+\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)",|\\
+\verb|"u=[0,pi]","v=[0,2*pi]"];|  //"p" indicates the 3D-parameter expression.\\
+\verb|Sf3data("1",fd);|
+\begin{center} \input{Fig/sf3ddata4} \end{center}
+
 \end{cmd}
-%--------------Perpplane------------------------------
-\begin{cmd}{Perpplane}{perpplane}
 
-\itemket{Usage}Perpplane(name, point, vector, option)
-\itemket{Description}Generic function to return the two points on the plane which is passing through the point and orthogonal to the vector.
-\itemket{Details}The name is the two points name such as the form "A-B".\\
-Point is the name or the coordinate of the point through which the plane is passing.\\
-The vector is the normal of the plane.\\
-If option is "put" then the function draw two geometric points.
+%-------------Sfbdparadata-------------------------------
+\begin{cmd}{Sfbdparadata}{sfbdparadata}
+
+\itemket{Usage}Sfbdparadata(name, list, list of options)
+\itemket{Description}Generic function to make the surface by performing hidden line processing.
+\itemket{Details}Second argument is the list of equations and ranges same as the function "Sf3data". \\
+options1=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 20.\\
+No option or " "(space) means\\
+(1) If there exist no deta then it make a new data file.\\
+(2) If there exist deta then it read the data file.\\
+"m" means that it remake the new data file.\\
+"r" means that it reread the existing data file.\\
+
+option2="nodisp" or line type of hidden line. Default is "nodisp".
+
+If we specify only option2 then we denote that option1 is empty list:[].
+
+\end{cmd}
+
+%--------------ExeccmdC------------------------------
+\begin{cmd}{ExeccmdC}{execcmdc}
+
+\itemket{Usage}ExeccmdC(name,options1,options2)
+\itemket{Description}Generic function to draw 3D-surface. The return value is the list of processed plot data.
+\itemket{Details}options1=no option or " "(space) or "r" or "m" and "Wait=integer" , line type. Default value of Wait is 20.\\
+No option or " "(space) means\\
+(1) If there exist no deta then it make a new data file.\\
+(2) If there exist deta then it read the data file.\\
+"m" means that it remake the new data file.\\
+"r" means that it reread the existing data file.\\
+
+option2="nodisp" or line type of hidden line. Default is "do".\\
+
+If we specify only option2 then we denote that option1 is empty list:[].
 \itemket{Examples}  \mbox{}
 
-Return the points A,B on the plane which is passing through the point P and orthogonal to the vector [1,1,1]\\.
-\verb|Perpplane("A-B","P",[1,1,1],"put");|\\
-
-Return the points A,B on the plane which is passing through the point P and orthogonal to the line segment OP. In this situation PA and PB is orthogonal and length of PA and PB are 1.\\.
-\verb|Perpplane("A-B","P",P3d-O3d);|\\
-
-Draw point A,B,C,D by draw tool of Cinderella.
-
-\begin{layer}{120}{0}
-\putnotese{100}{20}{ \input{Fig/perpplane}}
+\begin{layer}{150}{0}
+\putnotese{95}{0}{ \input{Fig/sfbdpara01}}
+\putnotese{95}{45}{ \input{Fig/sfbdpara02}}
 \end{layer}
 
-\verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
-\verb|  Putpoint3d(["O",[0,0,0]]); |\\
-\verb|  Putpoint3d(["P",[1,1,1]]); |\\
-\verb|  Perpplane("E-F","P",P3d-O3d,"put"); |\\
-\verb|  vec1=2*(E3d-P3d); |\\
-\verb|  vec2=2*(F3d-P3d); |\\
-\verb|  Putpoint3d(["A",P3d+vec1+vec2]); |\\
-\verb|  Putpoint3d(["B",P3d+vec1-vec2]); |\\
-\verb|  Putpoint3d(["C",P3d-vec1-vec2]); |\\
-\verb|  Putpoint3d(["D",P3d-vec1+vec2]); |\\
-\verb|  Spaceline("1",[A,B,C,D,A]); |\\
-\verb|  Arrowdata([O,P],["dr,2"]); |\\
-\verb|  Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]); |\\
-\verb|  Skeletonparadata("1"); |\\
+Delete hidden lines and display
+
+\verb|    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];|\\
+\verb|    if(Isangle(),|\\
+\verb|      Sf3data("1",fd);|\\
+\verb|      ,|\\
+\verb|      Startsurf();|\\
+\verb|      Sfbdparadata("1",fd);|\\
+\verb|      ExeccmdC("1",[],["nodisp"]);|\\
+\verb|   );|\\
+
+Make the whole thick with a solid line and
+
+ display the hidden line with a dotted line.
+
+\verb|      ExeccmdC("1",["dr,2"]);|
+
+\vspace{10mm}
+
+Paraboloid 
+
+\verb|  fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];|\\
+
+Delete hidden line ( left figure)：\verb|ExeccmdC("1",[],["nodisp"]);|
+ 
+Hidden lines are indicated by broken lines ( right figure )：\verb|ExeccmdC("1",[],["da"]);|
+
+      \begin{center} \input{Fig/sfbdpara03}  \input{Fig/sfbdpara04} \end{center}
+      
+When displaying two curved surfaces, name of Sfbdparadata () is set to "1" and "2", but it can be displayed together as \verb | ExeccmdC ("1") |.
+
+\verb| fd=[|\\
+\verb|  "p",|\\
+\verb|  "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",|\\
+\verb|  "r=[1,2]","t=[0,2*pi]","ew"|\\
+\verb| ];|\\
+\verb| fd2=[|\\
+\verb|  "p",|\\
+\verb|  "x=r*cos(t)-3","y=r*sin(t)+3","z=2*(2-r)",|\\
+\verb|  "r=[0,2]","t=[0,2*pi]","ew"|\\
+\verb| ];|\\
+\verb| if(!ptselected(),|\\
+\verb|  Startsurf(); |\\
+\verb|  Sfbdparadata("1",fd);|\\
+\verb|  Sfbdparadata("2",fd2);|\\
+\verb|  ExeccmdC("1");|\\
+\verb| );|\\
+
+\begin{center} \input{Fig/sfbdpara05}  \end{center}
 
 \end{cmd}
-%-------------Perppt-------------------------------
-\begin{cmd}{Perppt}{perppt}
+%-------------Wireparadata-------------------------------
+\begin{cmd}{Wireparadata}{wireparadata}
 
-\itemket{Usage}Perppt(name, point, list of points, option)
-\itemket{Description}Generic function to get the foot of a perpendicular for the plane from the point.
-\itemket{Details}We specify the plane by the list of points.\\
-Option is the following.\\
-"draw": draw the point, don't make the geometric point(default).\\
-"put" : make the geometric point.\\
-"none": only make the data and don't draw.
+\itemket{Usage} Wireparadata(name, PD, formula, integer, integer, options)
+\itemket{Description}Generic function to draw the surface by wire frame data with performing hidden line processing.
+\itemket{Details}The second argument PD is the surface data made by Sfbdparadata function.\\
+options=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 30.\\
+No option or " "(space) means\\
+(1) If there exist no deta then it make a new data file.\\
+(2) If there exist deta then it read the data file.\\
+"m" means that it remake the new data file.\\
+"r" means that it reread the existing data file.\\
+
 \itemket{Examples}  \mbox{}
 
-We get the coordinate of the point H in the variable H3d for the following examples.\\
-\verb|Perppt("H","O","A-B-C","none");|\\
-\verb|Perppt("H","O","A-B-C");|\\
-\verb|Perppt("H","O","A-B-C","put");|\\
+\verb|fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"]; |\\
+\verb|if(Isangle(), |\\
+\verb|  Sf3data("1",fd); |\\
+\verb|  , |\\
+\verb|  Startsurf(); |\\
+\verb|  Sfbdparadata("1",fd); |  //We get the data named as "sfbd3d1".\\
+\verb|  Wireparadata("1","sfbd3d1",fd,4,5,[""]); |  //number of wires are 4 and 5.\\
+\verb|  ExeccmdC("1"); |  //draw the wires\\
+\verb|); |
 
-Example
+\begin{center}
+\input{Fig/wirepara1}
+\end{center}
 
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
-\verb|Putpoint3d("O",[0,0,0]); |\\
-\verb|Putpoint3d("A",[3,0,0]); |\\
-\verb|Putpoint3d("B",[0,3,0]); |\\
-\verb|Putpoint3d("C",[0,0,3]); |\\
-\verb|Perppt("H","O","A-B-C","put"); |\\
-\verb|Spaceline("1",[A,B,C,A]); |\\
-\verb|Spaceline("2",[O,H]); |\\
-\verb|Letter([A,"nw","A",B,"ne","B",C,"ne","C",O,"nw","O",H,"ne","H"]); |\\
+Change the following code.
 
-\begin{center} \input{Fig/perppt} \end{center}
+\verb|fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];|\\
+\verb|Wireparadata("1","sfbd3d1",fd,5,7,[""]);|
+
+\begin{center}
+\input{Fig/wirepara2}
+\end{center}
+
+\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]", |\\
+\verb| "v=[0,2*pi]","s"]; |\\
+\verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
+
+\begin{center}
+\input{Fig/wirepara3}
+\end{center}
+
+\begin{layer}{150}{0}
+\putnotese{90}{15}{ \input{Fig/wirepara4}}
+\end{layer}
+
+\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]",|\\
+\verb|         "v=[0,2*pi]","s"];|\\
+\verb|if(Isangle(),|\\
+\verb|   Sf3data("1",fd);|\\
+\verb|  ,|\\
+\verb|   Startsurf();|\\
+\verb|   Sfbdparadata("1",fd);|\\
+\verb|   Wireparadata("1","sfbd3d1",fd,12,12,[""]);|\\
+\verb|   Crvsfparadata("1","ax3d","sfbd3d1",fd);|\\
+\verb|    ret=ExeccmdC("1");|\\
+\verb|    forall(1..length(ret),|\\
+\verb|      if(indexof(ret_#,"wireh")>0,|\\
+\verb|        Changestyle3d([ret_#],["nodisp"]);|\\
+\verb|      );|\\
+\verb|    );|\\
+\verb|);|
+
+\vspace{\baselineskip}
+\verb|fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",|\\
+\verb|      "u=[0,2*pi]","v=[0,2*pi]","s"];|\\
+\verb|Sfbdparadata("1",fd);|\\
+\verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
+
+\begin{center} \input{Fig/wirepara5} \end{center}
+
+\end{cmd}
+%-------------Crvsfparadata-------------------------------
+
+\begin{cmd}{Crvsfparadata}{crvsfparadata}
+\itemket{Usage}Crvsfparadata(name,PD1,PD2,formula)
+\itemket{Description}Remove curves hidden by curved face.
+%\itemket{Details}
+\itemket{Examples}  \mbox{}
+
+left figure
+
+\verb| Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
+\verb| Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
+\verb| Spaceline([A,B]); |\\
+\verb| fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"]; |\\
+\verb| Startsurf(); |\\
+\verb| Sfbdparadata("1",fd); |\\
+\verb| Crvsfparadata("1","AB3d","sfbd3d1",fd); |\\
+\verb| Crvsfparadata("2","ax3d","sfbd3d1",fd); |\\
+\verb| ExeccmdC("1"); |
+
+right figure
+
+\verb|    ExeccmdC("1",[],["nodisp"]);|
+
+\hspace{20mm}\input{Fig/crvsfparadata2} \hspace{20mm}   \input{Fig/crvsfparadata1} 
+
+By using the return value, you can change the hidden line style (line style, color). 
+The same as the return value is displayed as "readoutdata from template3D1.txt:" on the console, so you can decide the operation target by looking at it. For example, in the left diagram above, the hidden line of line AB is the fourth crvsfh3d1 in the list, so you can make it a red dashed line as follows.
+
+\verb|    ret=ExeccmdC("1");|\\
+\verb|    Changestyle3d(ret_4,["da","Color=red"]);|\\
+
+\hspace{20mm} \input{Fig/execcmdc1}
+
+\end{cmd}
+
+%================== 3D Using Plot data ===============
+\subsection{Using Plot data}
+
+%--------------Datalist2d------------------------------
+
+\begin{cmd}{Datalist2d}{datalist2d}
+
+\itemket{Usage}Datalist2d()
+\itemket{Description} Generic function to get a list of 2D-plotting data on the screen.
+\itemket{Examples}  \mbox{}
+
+We execute the following program then the computer will display "PD=[ax2d,AB2d]" on the console.\\
+
+\verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");  |\\
+\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
+\verb|  Spaceline("1",[A,B]); |\\
+\verb|  println("PD="+Datalist2d());|
+
+\end{cmd}
+%--------------Datalist3d------------------------------
+
+\begin{cmd}{Datalist3d}{datalist3d}
+
+\itemket{Usage}Datalist3d()
+\itemket{Details}Generic function to get a list of 3D-plotting data.
+\itemket{Examples}  \mbox{}
+
+We execute the following program then the computer will display "PD=[ax3d,AB3d]" on the console.\\
+
+\verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
+\verb|  Putpoint3d(["A",[0,-3,0],"B",[0,3,3]]); |\\
+\verb|  Spaceline("1",[A,B]); |\\
+\verb|  println("PD="+Datalist3d()); |
+
+\end{cmd}
+
+
+%----------Changestyle3d----------------------------------
+
+\begin{cmd}{Changestyle3d}{changestyle3d}
+\itemket{Usage} Changestyle3d(PD,option)
+\itemket{Description}Change the attribute of PD.
+\itemket{Details}Change the attribute of PD to one with option specification. PD is a plotting data or a list of plotting data.
+\itemket{Examples}  \mbox{}
+
+Make a tetrahedron by four points of space.\\
+\verb|Spaceline("1",[A,B]);|\\
+\verb|Spaceline("2",[A,C]);|\\
+\verb|Spaceline("3",[B,C]);|\\
+\verb|Spaceline("4",[A,D]);|\\
+\verb|Spaceline("5",[B,D]);|\\
+\verb|Spaceline("6",[C,D]);|\\
+then\\
+\verb|Changestyle3d("sl3d1",["dr,3"]);| // one edge become thick.\\
+or\\
+\verb|edges=apply(1..6,"sl3d"+text(#));|\\
+\verb|Changestyle3d(edges,["notex"]);| // all edges become ``notex".\\
+\end{cmd}
+
+%------------Intersectcrvsf--------------------------------
+
+\begin{cmd}{Intersectcrvsf}{intersectcrvsf}
+\itemket{Usage}Intersectcrvsf(name,PD,formula)
+\itemket{Description}Returns a list of intersects of a curve and curved face.
+\itemket{Details}PD is plotting data of curve. Curved face is given by formula.
+\itemket{Examples}  \mbox{}
+
+\verb|Putpoint3d(["A",[0,-3,0],"B",[0,3,2]]);|\\
+\verb|Spaceline("1",[A,B]);|\\
+\verb|fd=[|\\
+\verb| "z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)",|\\
+\verb| "R=[0,2]","T=[0,2*pi]","e"|\\
+\verb|];|\\
+\verb|Startsurf();|\\
+\verb|Sfbdparadata("1",fd);|\\
+\verb|Intersectcrvsf("1","sl3d1",fd);|// The result [[0,1.57,1.52],[0,-1.91,0.36]] will be shown in the console.\\
+\verb|ExeccmdC("1",[""]);|\\
+\verb|println("Intersect="+intercrvsf1);|\\
+\verb|Drawpoint3d(intercrvsf1); |\\
+\verb|Letter(Parapt(intercrvsf1_1),"ne","P1");|\\
+\verb|Letter(Parapt(intercrvsf1_2),"ne","P2");|\\
+
+\hspace{30mm}\includegraphics[bb=0.00 0.00 325.55 292.54,width=8cm]{Fig/Intersectcurvsf.pdf}
+\end{cmd}
+
+%-------------IntersectsgpL-------------------------------
+
+\begin{cmd}{IntersectsgpL}{intersectsgpL}
+\itemket{Usage}IntersectsgpL(name,segment,plane,option)
+\itemket{Description}Returns a intersection of a line segment and plane.
+\itemket{Details}Specify a line segment with two endpoints. Specify the plane as three points that it contains. Options are "put" or "I" or "e" .\\
+ 
+\hspace{10mm} put  : Create geometric points
+
+\hspace{10mm} i : Draw a point if it is within a line segment
+
+\hspace{10mm} e :  Draw a point if you meet on the plane
+
+\vspace{\baselineskip}
+Following two programs return the same result.\\
+\verb|  IntersectsgpL("P","A-B","C-D-E"); |\\
+\verb|  IntersectsgpL("P",[A3d,B3d],[C3d,D3d,E3d]); |
+
+\vspace{\baselineskip}
+Return value is [pt,flag1,flag2,val1,val2]
+  
+pt : The coordinates of the intersection of the straight line and the plane. If the straight line and the plane are parallel and the intersection does not exist, the empty list [].
+  
+flag1  :  True if the intersection is within the line segment, false otherwise
+  
+flag2  :  True if intersection is in plane, false otherwise
+  
+val1,val2  :Parameter values for line segments, parameter values for planes
+
+%  \verb|IntersectsgpL("P",[p1,p2],[p3,p4,p5],"draw");| 
+\itemket{Examples}  \mbox{}
+
+Presence or absence of intersection and return value.
+
+The return value of \verb | flag 1, flag 2 | when changing \verb | p2 | with the following script
+
+\verb|  p1=[1,-1,0];|\\
+\verb|  p2=[0,0,1/2];|\\
+\verb|  p3=[0,1,0];|\\
+\verb|  p4=[-1,0,0];|\\
+\verb|  p5=[0,0,1];|\\
+\verb|  Spaceline("1",[p1,p2]);|\\
+\verb|  Spaceline("2",[p3,p4,p5,p3]);|\\
+\verb|  ret=IntersectsgpL("P",[p1,p2],[p3,p4,p5],"put");|\\
+\verb|  println("flag1="+ret_2+": flag2="+ret_3);|\\
+
+\begin{layer}{150}{0}
+\putnotese{10}{20}{ \input{Fig/wire01}}
+\putnotese{80}{20}{ \input{Fig/wire02}}
+\end{layer}
+
+\verb|    p2=[0,0,1/2];                  p2=[-1,1,1];|\\
+\verb|    flag1=false : flag2=true        flag1=true : flag2=true |\\
+
+\vspace{40mm}
+\begin{layer}{150}{0}
+\putnotese{10}{10}{ \input{Fig/wire03}}
+\putnotese{80}{10}{ \input{Fig/wire04}}
+\end{layer}
+\verb|   p2=[1,2,1];                       p2=[1,0,1/2];|\\
+\verb|   flag1=true : flag2=false　　    flag1=false : flag2=false |\\
+
+\vspace{30mm}
+
+cutcube
+
+\verb|  Hn=3; |\\
+\verb|  Putaxes3d(Hn); |\\
+\verb|  Putpoint3d("A",[Hn,Hn,0]); |\\
+\verb|  Putpoint3d("B",[Hn,0,Hn]); |\\
+\verb|  Putpoint3d("C",[Hn,Hn,Hn]); |\\
+\verb|  Putpoint3d("D",[0,Hn,Hn]); |\\
+\verb|  Putonseg3d("E",X,B);  |\\
+\verb|  Putonseg3d("F",Z,B);  |\\
+\verb|  Putonseg3d("G",Z,D);  |\\
+\verb|  IntersectsgpL("M","A-C","E-F-G","put");  |\\
+\verb|  IntersectsgpL("N","D-Y","E-F-G","put");  |\\
+\verb|  phd=Concatobj([[O,X,A,Y],[X,A,M,E],[A,Y,N,M],[Y,N,G,Z,O], |\\
+\verb|      [O,Z,F,E,X],[Z,F,G],[E,M,N,G,F]]); |\\
+\verb|  VertexEdgeFace("1",phd); |\\
+\verb|  Nohiddenbyfaces("1","phf3d1");  |
+
+\hspace{20mm}\includegraphics[bb=0.00 0.00 713.04 327.02,width=10cm]{Fig/IntersectsgpL0.pdf}
+
+add next script (right figure)
+
+\verb|  Spaceline("1",[E,B,F],["do"]); |\\
+\verb|  Spaceline("2",[B,C,M],["do"]); |\\
+\verb|  Spaceline("3",[C,D,N],["do"]); |\\
+\verb|  Spaceline("4",[D,G],["do"]); |\\
+
+\begin{center} \input{Fig/IntersectsgpL1}    \input{Fig/IntersectsgpL2} \end{center}
+
+\end{cmd}
+%-------------Sfcutparadatacdy-------------------------------
+
+\begin{cmd}{Sfcutparadatacdy}{sfcutparadatacdy}
+\itemket{Usage}Sfcutparadatacdy(name,string,list,options)
+\itemket{Description}Obtain a line of intersection between a plane and a curved surface.
+\itemket{Details}string is equation of plane, list is equation of a surface.
+\itemket{Examples}  \mbox{}
+Cross section of cone.
+
+\vspace{\baselineskip}
+\begin{layer}{150}{0}
+\putnotese{70}{0}{\input{Fig/sfcut}}
+\end{layer}
+\verb|fd=[|\\
+\verb| "p",|\\
+\verb| "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",|\\
+\verb| "r=[0,2]","t=[0,2*pi]","e"|\\
+\verb|];|\\
+\verb|Startsurf(); |\\
+\verb|Sfbdparadata("1",fd);|\\
+\verb|Sfcutparadatacdy("1","y+2*z=3",fd);|\\
+\verb|ExeccmdC("1");|\\
 
 \end{cmd}
 %--------------Partcrv3d------------------------------
@@ -4666,130 +5094,6 @@ Example
 \verb|Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=10","do"]);|\\
 \verb|Partcrv3d("1",3.3,8.5,"sc3d1");|  // 3.3 and 8.5 are plotting data number of the points.
 \begin{center} \input{Fig/partcrv3d2} \end{center}
-
-\end{cmd}
-
-%--------------Phparadata------------------------------
-\begin{cmd}{Phparadata}{phparadata}
-
-\itemket{Usage}Phparadata(name, name2, list of options)
-\itemket{Description}Generic function to draw the polyhedron by performing hidden line processing.
-\itemket{Details}Name2 is the plotting data of polyhedron which we get form the function VertexEdgeFace().
-\itemket{Examples}  \mbox{}
-
-\verb|Setdirectory( Dirhead+"/data/polyhedrons_obj");|  //Many polyhedron data exist in this directory.\\
-\verb|phd=Readobj("s06.obj",["size=3"]);|  //"s06" is the name of truncated icosahedron data.\\
-\verb|Setdirectory(Dirwork);|  //Chage work space.\\
-\verb|VertexEdgeFace("s06",phd);|\\
-\verb|Phparadata("1","s06");|  //default usage, left figure\\
-
-The last two lines we can write the following.\\
-\verb|VertexEdgeFace("1",phd);|\\
-\verb|Phparadata("1","1");|
-\begin{center}
- \includegraphics[bb=0 0 1452 730 , width=10cm]{Fig/phparadata01.pdf}
-\end{center}
-
-\verb|Phparadata("1","s06",["dr,2","Hidden=do"]);|  //right figure
- \begin{center} \input{Fig/phparadata02}   \input{Fig/phparadata03} \end{center}
-\end{cmd}
-
-%--------------Phparadata------------------------------
-\begin{cmd}{Pointdata3d}{pointdata3d}
-
-\itemket{Usage}Pointdata3d(name, point list, options)
-\itemket{Description}Generic function to generate data of the point list.
-\itemket{Details}Options are "Size=","Color=".
-\itemket{Examples}  \verb|Pointdata3d("1",[[0,1,0],[1,1,2]],["Size=2","Color=red"]);|
-\end{cmd}
-
-%---------------Projcoordpara-----------------------------
-\begin{cmd}{Projcoordpara}{projcoordpara}
-
-\itemket{Usage}Projcoordpara(3D-coordinate)
-\itemket{Description}Generic function to get the projection coordinate on the Euclidean view coordinate system.
-\itemket{Examples}  \mbox{}
-
-\verb|println(Projcoordpara([3,1,2]));|  //printed value is such as [-0.65, 1.7, 3.27] where the third element means the (signed) distance from the projection plane.
-\end{cmd}
-%-----------------Putaxes3d---------------------------
-\begin{cmd}{Putaxes3d}{putaxes3d}
-
-\itemket{Usage}Putaxes3d([x,y,z])
-\itemket{Description}Generic function to make the geometric points on the coordinate axis. 
-\itemket{Details}For the argument [x,y,x] we get the four geometric points X(x,0,0), Y(0,y,0), Z(0,0,z) and O(0,0,0).
-\itemket{Examples}  \mbox{}
-
-\verb|Putaxes3d([1,2,3]);|\\
-\verb|Putaxes3d(a);|  //this equals to \verb|Putaxes3d([a,a,a]);|
-
-\end{cmd}
-%--------------PutonCurve3d------------------------------
-\begin{cmd}{PutonCurve3d}{putonCurve3d}
-
-\itemket{Usage} PutonCurve3d(name, PD)
-\itemket{Description}Generic function to make the geometric point on the 3D-curve.
-\itemket{Details}This point moves along the curve by mouse dragging.
-\itemket{Examples}  \mbox{}
-
-Make reference to \hyperlink{partcrv3d}{Partcrv3d()}
-\end{cmd}
-%----------------Putonseg3d----------------------------
-\begin{cmd}{Putonseg3d}{putonseg3d}
-
-\itemket{Usage}Putonseg3d(name, point1, point2)
-\itemket{Description}Generic function to make the geometric point on the 3D-segment.
-\itemket{Details}We get the middle point between the two points. This point moves along the segment by mouse dragging.
-\itemket{Examples}  \mbox{}
-
-\verb|Putonseg3d("C",A,B);|  //Put C on the center of A and B.\\
-\verb|Putonseg3d("C",[A,B]);|  //same as above
-\end{cmd}
-%---------------Putpoint3d-----------------------------
-\begin{cmd}{Putpoint3d}{putpoint3d}
-
-\itemket{Usage}Putpoint3d(list of 3D-points, option)
-\itemket{Description}Generic function to draw the geometric point in the space.
-\itemket{Details}Option is "free" or "fix"(default).
-\itemket{Examples}  \mbox{}
-
-\verb|Putpoint3d(["A",[2,1,3]]);|\\
-\verb|Putpoint3d(["A",[2,1,3]],"free");| \\
-\verb|Putpoint3d(["A",[1,1,1],"C",[1,0,1]]);|\\
-
-These points don't output in the \TeX file. To output in the \TeX file use the following \hyperlink{pointdata}{Pointdata()} or \hyperlink{drwpt}{Drawpoint()}
-
-In the 3D-drawings the coordinate of the point name A is A3d.
-
-\itemket{Remark} \hyperlink{mkpttable}{Comparative chart of drawing of points}
-
-\end{cmd}
-%-------------Readobj-------------------------------
-\begin{cmd}{Readobj}{readobj}
-
-\itemket{Usage}Readobj(filename, option)
-\itemket{Description}Read in the polyhedron data in the folder name \verb|polyhedrons_obj|
-\itemket{Details}\mbox{}
-
-Data of all \verb|Johnson solid| can be downloaded from\\
-\hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
-Store the folder into the work folder of \ketcindy\ for example, and execute\\
-\verb|    Setdirectory(gethome+"/ketcindy/polyhedrons_obj");|\\
-\verb|    polydt=Readobj("r02.obj",["size=2"]);|\\
-\verb|    Setdirectory(Dirwork);|\\
-Then the data of \verb|r02.obj| are assigned to the variable \verb|polydt|.
-
-Option is ["size=n"] then we get the magnification of n times. If n is negative value then we have the image of vertical inversion.
-\itemket{Examples}  \mbox{}
-
-\verb|VertexEdgeFace("1",polydt);|  //output data name is phf3d1\\
-\verb|Nohiddenbyfaces("1","phf3d1");|
-
-\begin{center} \input{Fig/readobj} \end{center}
-
-The main polyhedral data is as follows.
-
- \input{Fig/kobayashiE}
 
 \end{cmd}
 
@@ -4911,137 +5215,6 @@ Reflection on the plane BDE
 
 \end{cmd}
 
-%--------------Sf3data------------------------------
-\begin{cmd}{Sf3data}{sf3data}
-
-\itemket{Usage}Sf3data(name, list, list of options)
-\itemket{Description}Generic function to draw the wire frame model of the surface.
-\itemket{Details}Second argument is the list of equations and ranges. \\
-Options are the followings.\\
-"Num=[a,b]": x- and y-division number, default(or initial values) are a=b=25.\\
-"Wire=[a,b]": x- and y-wire number, default(or initial values) are a=b=20.\\
-"ewsn": From east to south, this indicates the boundary.
-\itemket{Examples}  \mbox{}
-
-\verb|Sf3data("1",["z=x^2-y^2","x=[-2,2]","y=[-2,2]"]);|\\
-\ \ //This is the first expression of the equation for the surface. Second argument is the list of equation, x-range and y-range. 
-\begin{center} \input{Fig/saddle1} \end{center}
-
-\verb|fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]"];|\\
-\verb|Sf3data("1",fd);|  //fd is the second argument.\\
-(left figure)\\
-
-\verb|fd=["z=sin(sqrt(abs(x^2+y^2)))","x=r*cos(t)","y=r*sin(t)",|\\
-\verb|"r=[0,3]","t=[0,2*pi]"];|\\
-\verb|Sf3data("1",fd);|\\
-(right figure)
-\begin{center} \input{Fig/parabola}   \input{Fig/sf3ddata3} \end{center}
-
-\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)",|\\
-\verb|"u=[0,pi]","v=[0,2*pi]"];|  //"p" indicates the 3D-parameter expression.\\
-\verb|Sf3data("1",fd);|
-\begin{center} \input{Fig/sf3ddata4} \end{center}
-
-\end{cmd}
-
-%-------------Sfbdparadata-------------------------------
-\begin{cmd}{Sfbdparadata}{sfbdparadata}
-
-\itemket{Usage}Sfbdparadata(name, list, list of options)
-\itemket{Description}Generic function to make the surface by performing hidden line processing.
-\itemket{Details}Second argument is the list of equations and ranges same as the function "Sf3data". \\
-options1=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 20.\\
-No option or " "(space) means\\
-(1) If there exist no deta then it make a new data file.\\
-(2) If there exist deta then it read the data file.\\
-"m" means that it remake the new data file.\\
-"r" means that it reread the existing data file.\\
-
-option2="nodisp" or line type of hidden line. Default is "nodisp".\\
-
-If we specify only option2 then we denote that option1 is empty list:[].
-\itemket{Examples}  \mbox{}
-
-\verb|fd=["x=x^2-y^2","x=[-2,2]","y=[-2,2]"];|\\
-\verb|if(Isangle(),|  //selecting the slider point, draw wire frame surfaces.\\
-\verb|  Sf3data("1",fd);|\\
-\verb|  ,|\\
-\verb|  Startsurf();|\\
-\verb|  Sfbdparadata("1",fd);|\\
-\verb|  ExeccmdC("1",[],["nodisp"]);|  //draw the surface\\
-\verb|);|\\
-(left figure)\\
-
-\verb|ExeccmdC("1",["dr,2"],["do"]);|  //the surface with thick line, hidden line with dotted line.\\
-(right figure)
-\begin{center} \input{Fig/sfbdpara01}    \input{Fig/sfbdpara02}\end{center}
-
-\verb|fd=["z=4-(x^2+y^2)","x=R*cos(T)","y=R*sin(T)","R=[0,2]","T=[0,2*pi]","e"];|\\
-\ \ //"e"=east indicate the boundary line $R=2$, $0 < T < 2\pi$.\\
-
-\begin{center} \input{Fig/sfbdpara03}  \input{Fig/sfbdpara04} \end{center}
-
-\end{cmd}
-%-------------Skeletonparadata-------------------------------
-\begin{cmd}{Skeletonparadata}{skeletonparadata}
-
-\itemket{Usage}Skeletonparadata(name, PDlist, PDlist, option)
-\itemket{Description}Generic function to draw the lines by performing hidden line processing.
-\itemket{Details}This function draw the second argument(the list of the lines) by performing hidden line processing which are hidden by the third argument(the list of the lines). If both arguments are omitted the function draw all lines by performing hidden line processing.
-
-Options:\\
-\hspace*{5mm}\verb|real number| gap of line\\
-\hspace*{5mm}\verb|"No=pointlist"| not executed when any point is selected\\
-\hspace*{5mm}\verb|"File=y/m/n(default:n)"| whether to make data file or not\\
-\hspace*{5mm}\verb|"Check=pointlist"| data file updated if any point is changed
-
-\itemket{Examples}  \mbox{}
-
-\verb|  Xyzax3data("","x=[-5,5]","y=[-5,4]","z=[-5,3]");|  //Data name is "ax3d".\\
-\verb|  Putpoint3d(["A",[0,-2,-2]]);|\\
-\verb|  Putpoint3d(["B",[-1,1,3]]);|\\
-\verb|  Spaceline([A,B]);|  //Data name is "AB3d".\\
-\verb|  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|  //Data name is "sc3d1".\\
-
-\verb|Skeletonparadata("1");|  //(left figure)\\
-\verb|Skeletonparadata("1",[2]);|  //option\verb|=[2]|: gap of lines\verb|=2| (center figure)\\
-\verb|Skeletonparadata("1",["AB3d","ax3d"],["sc3d1"]);|  //(right figure)
-\begin{center} \input{Fig/skeletonparadata01}   \input{Fig/skeletonparadata02} 
- \input{Fig/skeletonparadata03} \end{center}
-
-\end{cmd}
-%-------------Spacecurve-------------------------------
-\begin{cmd}{Spacecurve}{spacecurve}
-
-\itemket{Usage}Spacecurve(name, formula, domain, options)
-\itemket{Description}Generic function to draw the space curve.
-\itemket{Examples}  \mbox{}
-\verb|Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);|\\
-option=["Num=100"]: division number of the interval "t=[0,4*pi]"
- \begin{center} \input{Fig/rasen} \end{center}
-\end{cmd}
-%--------------Spaceline------------------------------
-\begin{cmd}{Spaceline}{spaceline}
-
-\itemket{Usage} Spaceline(name, list)
-\itemket{Description}Generic function to draw the space polygonal lines.
-\itemket{Details}Options are line type: "dr" or "da" or "do".
-\itemket{Examples}  \mbox{}
-
-\verb|Spaceline("1",[[2,5,1],[4,2,3]]);|  //draw the line between two points\\
-\verb|Spaceline("2",[A,B,C,A]);|  //draw the triangle ABC\\
-
-\begin{layer}{150}{0}
-\putnotese{100}{-5}{ \input{Fig/oresenex01}}
-\end{layer}
-
-\verb|pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]]; |\\
-\verb|Spaceline("1",pt); |\\
-\verb|Pointdata3d("1",pt,["Size=3"]);|
-
-\vspace{30mm}
-\end{cmd}
-
 %---------------Translatedata3d-----------------------------
 \begin{cmd}{Translatedata3d}{translatedata3d}
 
@@ -5082,122 +5255,117 @@ Since polygons drawn with VertexEdgeFace() can not be translated by this functio
 \verb|Putpoint3d(["B",pt]); |
 
 \end{cmd}
+%  Others  ==================================
+\subsection{Others}
+%--------------Perpplane------------------------------
+\begin{cmd}{Perpplane}{perpplane}
 
-%-------------Vertexedgeface-------------------------------
-\begin{cmd}{Vertexedgeface}{vertexedgeface}
-
-\itemket{Usage} VertexEdgeFace(name, list, options)
-\itemket{Description}Generic function to draw the polyhedron.
-\itemket{Details}We use the faces data of the polyhedron.\\
-The second argument is the list of vertexes list and the faces list.\\
-For example, the faces data of the tetrahedron is [[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]].\\
-%Option is the following.\\
-
+\itemket{Usage}Perpplane(name, point, vector, option)
+\itemket{Description}Generic function to return the two points on the plane which is passing through the point and orthogonal to the vector.
+\itemket{Details}The name is the two points name such as the form "A-B".\\
+Point is the name or the coordinate of the point through which the plane is passing.\\
+The vector is the normal of the plane.\\
+If option is "put" then the function draw two geometric points.
 \itemket{Examples}  \mbox{}
 
-\verb| Putpoint3d("A",2*[-1,-1/sqrt(3),0]); |\\
-\verb| Putpoint3d("B",2*[1,-1/sqrt(3),0]); |\\
-\verb| Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]); |\\
-\verb| Putpoint3d("D",2*[0,0,sqrt(3)]); |\\
-\verb| phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]); |\\
-\verb| VertexEdgeFace("1",phd); |\\
-  //Three data lists are made, phv3d1:vertex, phe3d1:edge and phf3d1:face.
- \begin{center} \input{Fig/vertex01} \end{center}
-\end{cmd}
-%-------------Wireparadata-------------------------------
-\begin{cmd}{Wireparadata}{wireparadata}
+Return the points A,B on the plane which is passing through the point P and orthogonal to the vector [1,1,1]\\.
+\verb|Perpplane("A-B","P",[1,1,1],"put");|\\
 
-\itemket{Usage} Wireparadata(name, PD, formula, integer, integer, options)
-\itemket{Description}Generic function to draw the surface by wire frame data with performing hidden line processing.
-\itemket{Details}The second argument PD is the surface data made by Sfbdparadata function.\\
-options=no option or " "(space) or "r" or "m" and "Wait=integer". Default value of Wait is 30.\\
-No option or " "(space) means\\
-(1) If there exist no deta then it make a new data file.\\
-(2) If there exist deta then it read the data file.\\
-"m" means that it remake the new data file.\\
-"r" means that it reread the existing data file.\\
+Return the points A,B on the plane which is passing through the point P and orthogonal to the line segment OP. In this situation PA and PB is orthogonal and length of PA and PB are 1.\\.
+\verb|Perpplane("A-B","P",P3d-O3d);|\\
 
-\itemket{Examples}  \mbox{}
+Draw point A,B,C,D by draw tool of Cinderella.
 
-\verb|fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"]; |\\
-\verb|if(Isangle(), |\\
-\verb|  Sf3data("1",fd); |\\
-\verb|  , |\\
-\verb|  Startsurf(); |\\
-\verb|  Sfbdparadata("1",fd); |  //We get the data named as "sfbd3d1".\\
-\verb|  Wireparadata("1","sfbd3d1",fd,4,5,[""]); |  //number of wires are 4 and 5.\\
-\verb|  ExeccmdC("1"); |  //draw the wires\\
-\verb|); |
-
-\begin{center}
-\input{Fig/wirepara1}
-\end{center}
-
-Change the following code.
-
-\verb|fd=["z=4-(x^2+y^2)","x=r*cos(t)","y=r*sin(t)","r=[0,2]","t=[0,2*pi]","e"];|\\
-\verb|Wireparadata("1","sfbd3d1",fd,5,7,[""]);|
-
-\begin{center}
-\input{Fig/wirepara2}
-\end{center}
-
-\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]", |\\
-\verb| "v=[0,2*pi]","s"]; |\\
-\verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
-
-\begin{center}
-\input{Fig/wirepara3}
-\end{center}
-
-\begin{layer}{150}{0}
-\putnotese{90}{15}{ \input{Fig/wirepara4}}
+\begin{layer}{120}{0}
+\putnotese{100}{20}{ \input{Fig/perpplane}}
 \end{layer}
 
-\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]",|\\
-\verb|         "v=[0,2*pi]","s"];|\\
-\verb|if(Isangle(),|\\
-\verb|   Sf3data("1",fd);|\\
-\verb|  ,|\\
-\verb|   Startsurf();|\\
-\verb|   Sfbdparadata("1",fd);|\\
-\verb|   Wireparadata("1","sfbd3d1",fd,12,12,[""]);|\\
-\verb|   Crvsfparadata("1","ax3d","sfbd3d1",fd);|\\
-\verb|    ret=ExeccmdC("1");|\\
-\verb|    forall(1..length(ret),|\\
-\verb|      if(indexof(ret_#,"wireh")>0,|\\
-\verb|        Changestyle3d([ret_#],["nodisp"]);|\\
-\verb|      );|\\
-\verb|    );|\\
-\verb|);|
-
-\vspace{\baselineskip}
-\verb|fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",|\\
-\verb|      "u=[0,2*pi]","v=[0,2*pi]","s"];|\\
-\verb|Sfbdparadata("1",fd);|\\
-\verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
-
-\begin{center} \input{Fig/wirepara5} \end{center}
+\verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
+\verb|  Putpoint3d(["O",[0,0,0]]); |\\
+\verb|  Putpoint3d(["P",[1,1,1]]); |\\
+\verb|  Perpplane("E-F","P",P3d-O3d,"put"); |\\
+\verb|  vec1=2*(E3d-P3d); |\\
+\verb|  vec2=2*(F3d-P3d); |\\
+\verb|  Putpoint3d(["A",P3d+vec1+vec2]); |\\
+\verb|  Putpoint3d(["B",P3d+vec1-vec2]); |\\
+\verb|  Putpoint3d(["C",P3d-vec1-vec2]); |\\
+\verb|  Putpoint3d(["D",P3d-vec1+vec2]); |\\
+\verb|  Spaceline("1",[A,B,C,D,A]); |\\
+\verb|  Arrowdata([O,P],["dr,2"]); |\\
+\verb|  Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]); |\\
+\verb|  Skeletonparadata("1"); |\\
 
 \end{cmd}
-%-------------Xyzax3data-------------------------------
-\begin{cmd}{Xyzax3data}{xyzax3data}
+%-------------Perppt-------------------------------
+\begin{cmd}{Perppt}{perppt}
 
-\itemket{Usage} Xyzax3data(name, range of x, range of y, range of z, options)
-\itemket{Description}Generic function to draw the coordinate axis.
-\itemket{Details}Name can be null string.\\
-Options are the followings.\\
-"an": arrowhead, n is size.\\
-"Onesw": origin and its position.
+\itemket{Usage}Perppt(name, point, list of points, option)
+\itemket{Description}Generic function to get the foot of a perpendicular for the plane from the point.
+\itemket{Details}We specify the plane by the list of points.\\
+Option is the following.\\
+"draw": draw the point, don't make the geometric point(default).\\
+"put" : make the geometric point.\\
+"none": only make the data and don't draw.
 \itemket{Examples}  \mbox{}
 
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");|\\
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]","a");|  //arrowhead\\
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a2"]);|  //big arrowhead\\
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["O"]);|\\
-\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a","Oe2n2"]);|  //set origin upper right
+We get the coordinate of the point H in the variable H3d for the following examples.\\
+\verb|Perppt("H","O","A-B-C","none");|\\
+\verb|Perppt("H","O","A-B-C");|\\
+\verb|Perppt("H","O","A-B-C","put");|\\
+
+Example
+
+\verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
+\verb|Putpoint3d("O",[0,0,0]); |\\
+\verb|Putpoint3d("A",[3,0,0]); |\\
+\verb|Putpoint3d("B",[0,3,0]); |\\
+\verb|Putpoint3d("C",[0,0,3]); |\\
+\verb|Perppt("H","O","A-B-C","put"); |\\
+\verb|Spaceline("1",[A,B,C,A]); |\\
+\verb|Spaceline("2",[O,H]); |\\
+\verb|Letter([A,"nw","A",B,"ne","B",C,"ne","C",O,"nw","O",H,"ne","H"]); |\\
+
+\begin{center} \input{Fig/perppt} \end{center}
 
 \end{cmd}
+%---------------Projcoordpara-----------------------------
+\begin{cmd}{Projcoordpara}{projcoordpara}
+
+\itemket{Usage}Projcoordpara(3D-coordinate)
+\itemket{Description}Generic function to get the projection coordinate on the Euclidean view coordinate system.
+\itemket{Examples}  \mbox{}
+
+\verb|println(Projcoordpara([3,1,2]));|  //printed value is such as [-0.65, 1.7, 3.27] where the third element means the (signed) distance from the projection plane.
+\end{cmd}
+%-------------Readobj-------------------------------
+\begin{cmd}{Readobj}{readobj}
+
+\itemket{Usage}Readobj(filename, option)
+\itemket{Description}Read in the polyhedron data in the folder name \verb|polyhedrons_obj|
+\itemket{Details}\mbox{}
+
+Data of all \verb|Johnson solid| can be downloaded from\\
+\hspace*{20mm}\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/}\\
+Store the folder into the work folder of \ketcindy\ for example, and execute\\
+\verb|    Setdirectory(gethome+"/ketcindy/polyhedrons_obj");|\\
+\verb|    polydt=Readobj("r02.obj",["size=2"]);|\\
+\verb|    Setdirectory(Dirwork);|\\
+Then the data of \verb|r02.obj| are assigned to the variable \verb|polydt|.
+
+Option is ["size=n"] then we get the magnification of n times. If n is negative value then we have the image of vertical inversion.
+\itemket{Examples}  \mbox{}
+
+\verb|VertexEdgeFace("1",polydt);|  //output data name is phf3d1\\
+\verb|Nohiddenbyfaces("1","phf3d1");|
+
+\begin{center} \input{Fig/readobj} \end{center}
+
+The main polyhedral data is as follows.
+
+ \input{Fig/kobayashiE}
+
+\end{cmd}
+
 %------------Xyzcoord--------------------------------
 \begin{cmd}{Xyzcoord}{xyzcoord}
 
@@ -5209,6 +5377,164 @@ Options are the followings.\\
 \verb|println(Xyzcoord(A.x,A.y,Az.y));|  //print the 3D-coordinate of point A on the console.
 \end{cmd}
 
+%--------------Isangle------------------------------
+\begin{cmd}{Isangle}{isangle}
+
+\itemket{Usage}Isangle()
+\itemket{Description}Decide the selection of the angle slider. 
+\itemket{Details}Returns ``true" if select slider, and ``false" if not.\\
+In drawing including hidden line processing, reaction is bad when recalculating while moving the viewpoint. With this function, you can write code that does not recalculate while moving the viewpoint.
+
+\itemket{Examples} \mbox{}
+
+\verb| fd=[ |\\
+\verb| "z=4-(x^2+y^2)",|\\
+\verb| "x=R*cos(T)","y=R*sin(T)",|\\
+\verb| "R=[0,2]","T=[0,2*pi]","e" \verb|   ];|\\
+\verb| if(Isangle(),|\\
+\verb|  Sf3data("1",fd);|\\
+\verb|  ,|\\
+\verb|  Startsurf();|\\
+\verb|  Sfbdparadata("1",fd);|\\
+\verb|  Crvsfparadata("1","ax3d","sfbd3d1",fd);|\\
+\verb|  ExeccmdC("1");|\\
+\verb| );|
+
+
+\end{cmd}
+
+%--------------Dist3d------------------------------
+
+\begin{cmd}{Dist3d}{dist3d}
+
+\itemket{Usage}Dist3d(a1,a2)
+\itemket{Description}Generic function to get the 3D-distance of two points.
+\itemket{Examples}  \mbox{}
+
+Following three programs return the same result.\\
+
+\verb|  Dist3d("A","B"); |\\
+\verb|  Dist3d(A,B); |\\
+\verb|  Dist3d(A3d,B3d); |
+
+\end{cmd}
+%--------------Embed------------------------------
+
+\begin{cmd}{Embed}{embed}
+\itemket{Usage}Embed(name,PDlist,formula,varlist)
+\itemket{Description}Embed plotting data of 2D in plane of 3D.
+\itemket{Details}PDlist is list of plotting data of 2D. Plane of 3D is given by formula and varlist.
+\itemket{Examples}  \mbox{}
+
+Embed an equilateral triangle and its circumscribed circle in a plane in 3D space.
+
+(1) \verb|vo|, \verb|vx|, \verb|vy| are defined with function {\tt \hyperlink{defvar}{Defvar}} that uses R.\\
+\verb|Xyzax3data("","x=[-5,4]","y=[-10,4]","z=[-5,5]",["a","O"]);|\\
+\verb|Spaceline("1",[[3,0,0],[3,6,0],[3,6,6],[3,0,6],[3,0,0]]);|\\
+\verb|Defvar("vo=[3,3,3]");| // Defined in R\\
+\verb|Defvar("vx=[0,1,0]");| // Defined in R\\
+\verb|Defvar("vy=[0,0,1]");| // Defined in R\\
+\verb|Putpoint3d(["A",[3,3,3]]);|\\
+\verb|Circledata("1",[[0,0],[2,0]],["nodisp"]);|\\
+\verb|Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);|\\
+\verb|Embed("1",["cr1","sg1"],"vo+x*vx+y*vy","[x,y]");|\\
+\verb|Ptsize(3);|\\
+\verb|Drawpoint(A);|
+
+Following view is as \verb|TH|=75,\verb|FI|=70.
+ \begin{center} \input{Fig/embed01} \end{center}
+
+(2) A, B, and C are defined instead of vo, vx, vy defined by Defvar. But, in this case, points B and C are not drawn in the plane. So, the figure may be difficult to understand.\\
+\verb|Putpoint3d(["A",[3,3,3],"B",[0,1,0],"C",[0,0,1]]);|\\
+\verb|Embed("1",["cr1","sg1"],"A3d+x*B3d+y*C3d","[x,y]");|\\
+\begin{center}
+\includegraphics[bb=0.00 0.00 477.02 383.02,width=8cm]{Fig/embed03.pdf}
+\end{center}
+To draw the B and C on the embedded figure, code changes as follows.
+
+\verb|Putpoint3d(["A",[3,3,3],"B",[3,4,3],"C",[3,3,4]]);|\\
+\verb|Embed("1",["cr1","sg1"],"A3d+x*B3d+y*C3d","[x,y]");|\\
+
+(3) The function {\tt \hyperlink{perpplane}{Perpplane}} is used in next.\\
+\verb|Xyzax3data("","x=[-5,5]","y=[-8,5]","z=[-5,5]");|\\
+\verb|Putpoint3d(["O",[0,0,0],"P",[1,1,2]]);|\\
+\verb|Perpplane("E-F","P",P3d-O3d,"put");|\\
+\verb|vec1=3*(E3d-P3d);|\\
+\verb|vec2=3*(F3d-P3d);|\\
+\verb|Putpoint3d(["A",P3d+vec1+vec2]);|\\
+\verb|Putpoint3d(["B",P3d+vec1-vec2]);|\\
+\verb|Putpoint3d(["C",P3d-vec1-vec2]);|\\
+\verb|Putpoint3d(["D",P3d-vec1+vec2]);|\\
+\verb|Spaceline("1",[A,B,C,D,A]);|\\
+\verb|Circledata("1",[[0,0],[2,0]],["nodisp"]);|\\
+\verb|Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);|\\
+\verb|Embed("1",["cr1","sg1"],"P3d+x*(E3d-P3d)+y*(F3d-P3d)","[x,y]");|\\
+\verb|Ptsize(3);|\\
+\verb|Drawpoint(P);|\\
+\verb|Skeletonparadata("1");|
+         \begin{center} \input{Fig/embed02} \end{center}
+\end{cmd}
+
+
+%-------------Parapt-------------------------------
+\begin{cmd}{Parapt}{parapt(coordinate)}
+
+\itemket{Usage}Parapt(3D-coordinate)
+\itemket{Description}Generic function to return the 2D-coordinate on the plane of projection for the 3D-point.
+\itemket{Examples}  \mbox{}
+
+\verb|println(Parapt([2,1,5]));| 
+\end{cmd}
+%-------------Invparapt-------------------------------
+
+\begin{cmd}{Invparapt}{invparapt}
+\itemket{Usage}Invparapt(coordinate,PD)
+\itemket{Description}Returns the point on the curve that is corresponding to the coordinates on the  Euclidean view.
+\itemket{Details}Returns the 3D-coordinates of the point on the curve(\verb|PD|) from the \verb|coordinate| on the Euclidean view.
+\itemket{Examples}  \mbox{}
+
+Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|tmp_2|, $\dots$) of the spiral curve and the space line. Draw a part of the spiral whose end points (\verb|p1| and \verb|p2|) are selected from the intersection points.\\
+\verb|  Spaceline("1",[[-1,-1,-1],[1,2,3]]); |\\
+\verb|  Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["do"]);|\\
+\verb|  tmp=Intersectcrvs("sl2d1","sc2d1");|\\
+\verb|  p1=Invparapt(tmp_1,"sc3d1");|\\
+\verb|  p2=Invparapt(tmp_2,"sc3d1");|\\
+\verb|  Partcrv3d("1",p1,p2,"sc3d1"); |\\
+\begin{center} \input{Fig/invparapt} \end{center}
+\end{cmd}
+
+%-----------Expr3d---------------------------------
+\begin{cmd}{Expr3D}{expr3d}
+\itemket{Usage}Expr([position, direction, string],options)
+\itemket{Description}Display the string.
+\itemket{Details} The position is the space coordinate.  Other than that it is the same as Expr().
+\end{cmd}
+
+%-----------Letter3d---------------------------------
+\begin{cmd}{Letter3D}{letter3d}
+\itemket{Usage}Letter([position, direction, string],options)
+\itemket{Description}Display the string.
+\itemket{Details} The position is the space coordinate.  Other than that it is the same as Letter().
+\itemket{Examples}  \mbox{}
+
+\begin{layer}{150}{0}
+\putnotese{110}{10}{ \input{Fig/letter3d}}
+\end{layer}
+
+\verb|Putpoint3d("A",2*[0,0,2*sqrt(6)/3]);|\\
+\verb|Putpoint3d("B",2*[1,-1/sqrt(3),0]);|\\
+\verb|Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);|\\
+\verb|Putpoint3d("D",2*[-1,-1/sqrt(3),0]);|\\
+\verb|Putpoint3d("M",(B3d+C3d)/2);|\\
+\verb|phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);|\\
+\verb|VertexEdgeFace("1",phd);|\\
+\verb|Spaceline("1",[A,M,D]);|\\
+\verb|Nohiddenbyfaces("1","phf3d1");|\\
+\verb|Letter3d([A3d,"ne","A",B3d,"w","B",C3d,"se","C",D3d,"e","D"]);|\\
+\verb|Letter3d(M3d,"sw","M",["Color=blue"]);|\\
+
+
+\end{cmd}
 
 \newpage
 %-==Appendix ========================
@@ -5259,6 +5585,7 @@ Options are the followings.\\
 \hyperlink{fontsize}{Fontsize} \> define the font size in the \TeX\ figure.\\
 \hyperlink{ketinit}{Ketinit} \> initialize \ketcindy.\\
 \hyperlink{ptsize}{Ptsize}  \> set the size of points.\\
+\hyperlink{setarrow}{Setarrow} \> set the style of arrow.\\
 \hyperlink{setax}{Setax} \> set the style of axis.\\
 \hyperlink{setcolor}{Setcolor} \> set the color of figures and characters in the \TeX\ figure.\\
 \hyperlink{setfiles}{Setfiles} \> set the name of texfile.\\
@@ -5452,16 +5779,17 @@ Options are the followings.\\
 \hyperlink{drawpoint3d}{Drawpoint3d} \> draw 3D-points.\\
 \hyperlink{embed}{Embed} \> embed plotting data of 2D in plane of 3D.\\
 \hyperlink{execcmdc}{ExeccmdC} \> draw 3D-surface.\\
+\hyperlink{expr3d}{Expr3d} \> display the string.\\
 \hyperlink{intersectcrvsf}{Intersectcrvsf} \> return a list of intersects of a curve and curved face.\\
 \hyperlink{intersectsgpL}{IntersectsgpL} \>return a intersection of a line segment and plane.\\
 \hyperlink{invparapt}{Invparapt} \> return the point on the curve.\\
 \hyperlink{ketinit3d}{Ketinit3d} \> declare the use of KeTCindy3D\\
+\hyperlink{letter3d}{Letter3d} \> display the string.\\
 \hyperlink{mkbezierptcrv3d}{Mkbezierptcrv3d} \> draw a cubic Bezier curve from nodes.\\
 \hyperlink{nohiddenbyfaces}{Nohiddenbyfaces} \>  draw hidden lines by the surfaces.\\
 \hyperlink{parapt}{Parapt} \> return the 2D-coodinate on the plane.\\
 \hyperlink{partcrv3d}{Partcrv3d} \> draw the part curve of the curve PD.\\
-\hyperlink{perpplane}{Perpplane} \> return the two points  which is passing through the point and\\
-\>orthogonal to the vector.\\
+\hyperlink{perpplane}{Perpplane} \> create a basic vector on a vertical plane\\
 \hyperlink{perppt}{Perppt} \> get the foot of a perpendicular for the plane from the point.\\
 \hyperlink{phparadata}{Phparadata} \> draw the polyhedron by performing hidden line processing.\\
 \hyperlink{pointdata3d}{Pointdata3d} \> generate data of point list.\\
@@ -5479,6 +5807,7 @@ Options are the followings.\\
 \hyperlink{scalepoint3d}{Scalepoint3d} \> execute scale transformation for the coordinate of the point.\\
 \hyperlink{sf3data}{Sf3data} \> draw the wire frame model of the surface.\\
 \hyperlink{sfbdparadata}{Sfbdparadata} \> draw the surface by performing hidden line processing.\\
+\hyperlink{sfcutparadatacdy}{Sfcutparadatacdy} \> Display intersection line of surface and surface.\\
 \hyperlink{skeletonparadata}{Skeletonparadata} \> draw the lines by performing hidden line processing.\\
 \hyperlink{spacecurve}{Spacecurve} \> draw the space curve.\\
 \hyperlink{spaceline}{Spaceline} \> draw the space polygonal lines.\\

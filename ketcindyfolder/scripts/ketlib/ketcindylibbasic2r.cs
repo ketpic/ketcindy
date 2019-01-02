@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20181231) loaded");
+println("ketcindybasic2(20190101) loaded");
 
 //help:start();
 
@@ -3605,7 +3605,7 @@ Usegraphics(gpack):=( //180817
 //help:Usegraphics("pict2e");
   if(!contains(ADDPACK,gpack),
     if(gpack =="tikz", //181213from
-      Addpackage(["pgf","tikz"]);
+      Addpackage(["pgf","tikz"]); //190101
     ,
       Addpackage([gpack]);
     ); //181213to
@@ -3623,11 +3623,15 @@ Viewtex():=(
   SCEOUTPUT=openfile(texfile+".tex");
   tmp="\documentclass{article}"; // 16.06.09from
   if(indexof(PathT,"platex")>0,
-    tmp=replace(tmp,"article","jarticle");
-    if(indexof(PathT,"uplatex")>0, //17.08.13from
-      tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13until
-  ); // 16.06.09until
+    if(GPACK=="tikz",
+      tmp="\documentclass[dvipdfmx]{article}"; // 190101
+    ,
+      tmp=replace(tmp,"article","jarticle");
+      if(indexof(PathT,"uplatex")>0, //17.08.13from
+        tmp=replace(tmp,"jarticle","ujarticle");
+      );//17.08.13to
+    );
+  ); // 16.06.09to
   println(SCEOUTPUT,tmp);
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0), //181213from
     if(GPACK=="tpic", GPACK="pict2e");
@@ -3644,7 +3648,7 @@ Viewtex():=(
     );
   );
   if(GPACK=="tikz", 
-    println(SCEOUTPUT,"\usepackage{pgf,tikz}");//181231
+//    println(SCEOUTPUT,"\usepackage{pgf,tikz}");//190101
     println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
     if(indexof(PathT,"lualatex")>0, 
       println(SCEOUTPUT,"\usepackage{luatexja}");

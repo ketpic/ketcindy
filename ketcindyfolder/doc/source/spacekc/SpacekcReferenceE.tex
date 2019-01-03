@@ -1,0 +1,619 @@
+\documentclass[papersize,a4paper,12pt]{article}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath}
+\usepackage{graphicx,color}
+\usepackage{wrapfig}
+\usepackage[bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\setmargin{20}{20}{15}{25}
+\usepackage{setspace}
+\usepackage{comment}
+\usepackage{bm,enumerate}
+\begin{document}
+\title{Spacekc Reference}
+\author{CinderellaJapan}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+% Section 1 Introduction =======================================
+\section{Introduction }
+Spacekc is a function library on Ketcindy. To KeTCindy's 3D graphics, color with simple raytracing
+be able to. In addition, several functions for calculating relating to space are prepared.
+
+%Section 2 ==========================================
+\section{Constant}
+
+\begin{description}
+
+\hypertarget{lightpoint}{}
+\item[Direction vector of light source] Lightpoint
+\item[Description] Direction vector of light source for simplified ray tracing.  Default is [-1,1,1].
+
+\vspace{\baselineskip}
+\hypertarget{contrast}{}
+\item[Contrast] Contrast
+\item[Description] Contrast in the direction of light when performing simple ray tracing. Standard is a real number between 0 and 1.
+
+\end{description}
+
+%Section 3 Value ==========================================
+\section{Value}
+\begin{description}
+
+\hypertarget{angle3pt}{}
+\item[Function] angle3pt(coordinate1,coordinate2,coordinate3)
+\item[Description] Find an angle on a 2D plane.
+\item[Return value] This function is return ∠p1p2p3 for point p1,p2,p3.
+
+\vspace{\baselineskip}
+
+\hypertarget{pointindomain}{}
+\item[Function] pointindomain(coordinate1,list of point)
+\item[Description] Judgment whether or not there is a point in the closed curve.
+\item[Return value] The judgment that this function has a point of coordinate1 in the closed curve of the list of points on a plane.  The case in the domain return 1 ,  out of domain return 0,  on a boundary line return 2.
+
+\vspace{\baselineskip}
+
+\hypertarget{crosssd}{}
+\item[Function] crosssd(coordinate1,coordinate2,coordinate3,coordinate4)
+\item[Description] determine whether two segments cross in 2D plane 
+\item[Description]  judge it whether a segment of links coordinate 3, coordinate 4 to the segment of linking coordinate 1, coordinate 2 has a common point.
+\item[Return value] When there is a common point, true is returned, and false is returned when there is not it.
+
+\vspace{\baselineskip}
+
+\hypertarget{interll}{}
+\item[Function] interll(coordinate1,coordinate2,coordinate3,coordinate4)
+\item[Description] Demand the point of intersection of the two straight lines
+\item[Return value]  Demand the coordinate of the point of intersection with the straight line via coordinate 1, coordinate 2 and coordinate 3, coordinate 4.  When there is not a point of intersection, It return [i,i,i].
+
+\vspace{\baselineskip}
+
+\hypertarget{interss}{}
+\item[Function] interss(coordinate1,coordinate2,coordinate3,coordinate4)
+\item[Description] Demand the point of intersection of the two segments.
+\item[Return value]Demand the coordinate of the point of intersection with the segment via coordinate 1, coordinate 2 and coordinate 3, coordinate 4.
+
+ When there is not a point of intersection, It return [i,i,i].
+
+\vspace{\baselineskip}
+\hypertarget{interpl}{}
+\item[Function]interpl(list of coefficients ,coordinate1,coordinate2)
+\item[Description] Demand a plane and the point of intersection of the straight line.
+\item[Return value] Demand the coordinate of the point of intersection with the plane via coordinate 1, coordinate 2, coordinate 3  and line via coordinate 4 , coordinate 5.
+
+ When there is not a point of intersection, It return [i,i,i].
+ 
+\vspace{\baselineskip}
+\hypertarget{interps}{}
+\item[Function] interps(list of coefficients ,coordinate1,coordinate2)
+\item[Description] Demand a plane and the point of intersection of the segment
+\item[Return value]  Demand the coordinate of the point of intersection with the plane via coordinate 1, coordinate 2, coordinate 3  and segment to link coordinate 4 to coordinate 5.
+
+ When there is not a point of intersection, It return [i,i,i].
+
+\hypertarget{distlp}{}
+\item[Function] distlp(coordinate1,coordinate2,coordinate3)
+\item[Description] Distance of a line to a point .
+\item[Return value] It find a straight line via coordinate1 and coordinate2 and the distance with the point of coordinate3. The return value is distance. When coordinate 1 and coordinate 2 is equal, return imaginary unit i and display warning "Warning:p1 is same to p2" to a console.
+
+Example　println(distlp([1,0],[0,1],[0,0]));  \\
+In addition, 0.71 is displayed to a console by plintln(), but is displayed with 1/2*sqrt(2)  by \\
+　　　println(guess(distlp([1,0],[0,1],[0,0])));\\
+
+Example　println(distlp([1,1,0],[0,0,1],[0,0,0]));  
+In addition, 0.82 is displayed to a console by plintln(), but is displayed with 1/3*sqrt(6)   by \\
+　　　println(guess(distlp([1,1,0],[0,0,1],[0,0,0])));\\
+
+
+\vspace{\baselineskip}
+\hypertarget{distpp}{}
+\item[Function] distpp(coordinate1,coordinate2,coordinate3,coordinate4)
+\item[Description] Distance of a plene and a point in 3D space
+\item[Return value] It find a plane via coordinate1 ,coordinate2 and coordinate2 and the distance with the point of coordinate4. The return value is distance.
+
+Example　distpp([2,0,0],[0,2,0],[0,0,2],[0,0,0]);\\
+　　　　　return value is $\cfrac{2\sqrt{3}}{3}$ \\
+
+\vspace{\baselineskip}
+\hypertarget{map2d}{}
+\item[Function] Coordinate of the point that projection of space
+\item[Description] In a current screen set with a circular slider, It find the coordinate which performed a projection of a point on the space on a plane.
+\item[Return value] coordinate
+
+Example :  pt=map2d([1,2,3]);
+
+It is exactly the same as KeTindy's Parapt ().
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{normalvec}{}
+\item[Function] normalvec(coordinate1,coordinate2,coordinate3)
+\item[Description] It demand a plane unit normal vector via coordinate 1, coordinate 2, coordinate 3.
+\item[Return value] normal vector.
+
+　The direction of the vector is decided in order of a point.\\
+Exsample　normalvec([2,0,0],[0,2,0],[0,0,2]);\\
+ 　Result is  $\left(\cfrac{\sqrt{3}}{3},\cfrac{\sqrt{3}}{3},\cfrac{\sqrt{3}}{3}\right)$\\
+　　normalvec([2,0,0],[0,0,2],[0,2,0]); \\
+　Result is  $\left(-\cfrac{\sqrt{3}}{3},-\cfrac{\sqrt{3}}{3},-\cfrac{\sqrt{3}}{3}\right)$\\
+
+The vector of the perpendicular line which you gave to a plane is provided when you use distpp()\\
+
+　　nv=normalvec([2,0,0],[0,2,0],[0,0,2]);\\
+　　dd=distpp([2,0,0],[0,2,0],[0,0,2],[0,0,0]);\\
+　　poly3d([[2,0,0],[0,2,0],[0,0,2]]);\\
+　　arrow3d([[0,0,0],dd*nv]);\\
+　　Letter3d([dd*nv,"e","H"]);\\
+
+　　\input{3Dfig/nomalvec01}\\
+
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+
+\hypertarget{planecoeff}{}
+\item[Function] planecoeff(coordinate1,coordinate2,coordinate3)
+\item[Description] It demands coefficient $a,b,c$ of plane equation $ax+by+cz=1$ going along three points of coordinate 1 and coordinate 2 and coordinate 3.
+\item[Return value] List [a,b,c]. When coefficiets not exist, "Warning! Cannot decide a coefficient." is displayed and return [i,i,i].\\
+
+
+\vspace{\baselineskip}
+\hypertarget{reflect3d}{}
+\item[Function] reflect3d(dlist,mirror) 
+\item[Description] Reflection of dlist.  dlist is point or plot data or face data.
+\item[Return value]  Data of the same type as the first argument.
+
+\vspace{\baselineskip}
+
+\hypertarget{rotate3d}{}
+\item[Function] rotate3d(dlist,vec,angle,center)
+\item[Description] Rotaate of dlist.  dlist is point or plot data or face data.
+\item[Return value]  Data of the same type as the first argument.
+
+
+\hypertarget{translate3d}{}
+\item[Function] rotate3d(dlist,vec,angle,center)
+\item[Description] Translate of dlist.  dlist is point or plot data or face data.
+\item[Return value]  Data of the same type as the first argument.
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\vspace{\baselineskip}
+\hypertarget{rotmatrix}{}
+\item[Function] rotmatrix(vec)
+\item[Description] Make rotation matrix from normal vectors.
+\item[Return value] List.
+
+\vspace{\baselineskip}
+
+\hypertarget{vertexrpolyhedron}{}
+\item[Function] vertexrpolyhedron(n)
+\item[Description] Acquire a list of tops of the regular polyhedron
+\item[Description] The value of n is one of 4,6,8,12,20. 
+\item[Return value]  list of vertexs of the regular polyhedron that touches the spherical surface of radius 1 internally. The turn of the vertexs are as follows.  It is alphabetical order each.
+
+\input{3Dfig/vertex4}   \input{3Dfig/vertex6} 
+
+\input{3Dfig/vertex8}   \input{3Dfig/vertex12} 
+
+\input{3Dfig/vertex20} 
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{val2tex}{}\item[Function] val2tex(x)
+\item[Description] Analyze numerical values with guess ()
+\item[Return value] TeX character string.
+
+Example
+\begin{verbatim}
+  pa=[2,0,0];
+  pb=[0,2,0];
+  pc=[0,0,2];
+  nv=normalvec(pa,pb,pc);
+  hv=distpp(pa,pb,pc,[0,0,0])*nv;
+  hvstr=apply(hv,val2tex(#));
+  plate3d("1",[pa,pb,pc],["Color=skyblue","Rayoff"]);
+  poly3d("1",[pa,pb,pc]);
+  arrow3d("1",[[0,0,0],hv],["size=2"]);
+  letter3d([pa,"s2",text(pa_1),pb,"s2",text(pb_2),pc,"w2",text(pc_3),
+     hv,"ne2","H$\left( "+hvstr_1+","+hvstr_2+","+hvstr_3+" \right)$"]);
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\end{description}
+\newpage
+
+%Section 4 Drawing  =========================================
+\section{Drawing}
+
+\textbf{options}
+ 
+＜Density of the mesh＞　The curved surface is described in mesh. This options appoints the number of process lines of this time.
+
+The density of the mesh is appointed like "Mesh=[10,15]".
+
+＜Concentration＞The concentration is appointed with real numbers from 0 to 1. 
+
+\textbf{＜Ray tracing＞} 
+
+Specify whether to add shadows in ray tracing. When shadowing "Rayon", do not shade when "Rayoff". The default setting is "Rayon"
+
+%\newpage
+\begin{description}
+
+\hypertarget{grid}{}
+\item[Function] grid(range1,range2,ne,option)
+\item[Description] Display grid on $ xy $ plane.
+\item[Description]  Range 1 is the range of the $ x $ axis, and range 2 is the range of the $ y $ axis.
+\item[Return value] none.
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{line3d}{}
+\item[Function] line3d(name,list ,option）
+\item[Description] This function draws a lint linking two points in list of the argument.
+\item[Return value]  list of 2nd argument.
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{arrow3d}{}
+\item[Function] arrow3d(name,list,option）
+\item[Description] This function draws an arrowed line by list of two points of coordinates.
+ \item[Return value] list of 2nd argument.
+ 
+\vspace{\baselineskip}
+ Example The next script draws an arrowed line linking two points of $(1,3,2), (-2,-1,-2)$.
+ 
+\hspace{10mm}    \verb|arrow3d("1",[[1,3,2],[-2,-1,-2]])| 
+
+ Example The next script draw a straight line via two points of $(1,3,2), (-2,-1,-2)$ with 2 thickness red.
+ 
+\hspace{10mm}   \verb|arrow3d("1",[[2,0,0],[-1,4,1]],[2,1,1,"dr,2","Color=red"])|
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{poly3d}{}
+\item[Function] poly3d(name,list,option)
+\item[Description] This function draws a polygon to link the point that I gave in list.
+　The point to give in list does not need to be closed. It is closed automatically and is drawn.
+\item[Return value] Plot data of the drawn polygon.
+
+ Example The next script draws a triangle to assume three points of $(1,1,1), (2,2,1),(0,1,-1)$ a top.
+\begin{verbatim}
+   pd=[[1,1,1],[2,2,1],[0,1,-1]];
+   poly3d("1",pd);
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{plate3d}{}
+\item[Function] plate3d(name,list,option)
+\item[Description] This function applies a polygon to link the point that I gave in list.
+\item[Return value] Plot data of the drawn polygon.
+
+With the Rayoff option, ray tracing is not performed.
+
+ Example : The next script applies a triangle to assume three points of $(1,1,1), (2,2,1),(0,1,-1)$ a top with red.
+\begin{verbatim}
+   pd=[[1,1,1],[2,2,1],[0,1,-1]]; 
+   plate3d("1",pd,["Color=Red"]);
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{circle3d}{}
+\item[Function] circle3d(name,center,normal vector,radius,option)
+\item[Description] This function gives the center, a radius and a normal vector and draws the circle.
+\item[Return value] Plotdata of circle.
+
+ Example : The next script describes the circle that central $(1,1,1)$, radius 2, a normal vector are (1,1,1) in thickness 2, red.\\
+  
+\verb|  circle3d("1",[1,1,1],[1,1,1],2,["dr,2","Color=Red"]); |
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{drawarc3d}{}
+\item[Function] drawarc3d(name,center,normal vector,radius,range,option)
+\item[Description] Draw an arc as a part of the circle drawn by giving the center, radius and normal vector.
+\item[Return value] Plotdata of arc.
+
+ Example : Draw arc with center $ (1,1,1) $, radius 2, normal vector (-1, 1, 1).
+  
+\verb|  drawarc3d("1",[1,1,1],[-1,1,1],2,[0,2*pi/3]); |
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{disc3d}{}
+\item[Function] disc3d(center,nomal vector,radius,options)
+\item[Description] This function gives the center, a radius and a normal vector and draws a disk. 
+\item[Return value] Plotdata of circle.
+
+With the Rayoff option, ray tracing is not performed.
+
+ Example : The next script draws the disk that central $(1,1,1)$, radius 2, a normal vector are (1,1,1) at red\\ 
+ 
+ \verb| disc3d("1",[1,1,1],[1,1,1],2,["Color=Red"]); |
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{drawsphere}{}
+\item[Function] drawsphere(name,center,radius,opton)
+\item[Description] This function describes the origin center, draw spherical surface of radius r.
+
+Draw a spherical surface with gradation by using simple ray tracing. The spheres are divided into meshes and coloring is done.
+
+The radius can also be specified as a list for the x axis, y axis, z axis direction.
+
+Drawing takes time. If it takes too much time, try drawing with "Mesh = [10, 10]" as an option. If you can draw it, make the mesh finer. The initial value is "Mesh = [30, 20]".
+
+\item[Return value] none
+
+\vspace{\baselineskip}
+Example : Origin center, spherical surface with radius 2 (left figure)
+
+\verb|drawsphere("1",[0,0,0],2) |
+
+Draw a sphere with an ellipse shape in green (0, 0, 2) and a radius [1, 1, 2] in green ( right figure)
+
+\verb|drawsphere("1",[0,0,2],[1,1,2],["Color=green","Mesh=[20,20]"])|
+
+ \input{3Dfig/sphere01} \hspace{10mm} \input{3Dfig/sphere02} 
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{quasisphere}{}
+\item[Function] quasisphere(name,center,radius,fill,opton)
+\item[Description] This function describes the origin center, draw a quasi spherical surface of radius r.
+
+fill is a flag indicating whether or not to color.  If it is 1, it paints. If 0 it does not paint. This argument can be omitted. The default is 1.
+
+\item[Return value] Plotdata of circle.
+
+\vspace{\baselineskip}
+Example \verb|quasisphere("1",[0,0,1],1]);|
+
+ \input{3Dfig/sphere03} 
+
+It is faster than drawing with Sfbdparadata () and ExeccmdC () because it does not handle hidden lines. By using this, if you make a script like the following, you can see that pseudo sphere is sufficient.
+
+\begin{verbatim}
+pd1=quasisphere("1",[0,0,0],2,["nodisp"]);
+pd2=circle3d("1",[0,0,0],[0,1,sqrt(3)],2,["nodisp"]);
+pd3=circle3d("2",[0,0,-1],[0,0,1],sqrt(3),["nodisp"]);
+sp=apply(pd1,map2d(#));
+su1=apply(pd2,map2d(#));
+su2=apply(pd3,map2d(#));
+Listplot("1",sp,["nodisp"]);
+Listplot("2",su1);
+Listplot("3",su2,["Color=blue"]);
+int1=Intersectcrvs("sg1","sg2");
+int2=Intersectcrvs("sg1","sg3");
+println(int1);
+println(int2);
+p1=int1_1;
+p2=int1_2;
+p3=int2_1;
+p4=int2_2;
+Partcrv("1", p2, p1, "sg1");
+Partcrv("2", p3, p4, "sg3",["nodisp"]);
+Partcrv("3", p4, p3, "sg1",["nodisp"]);
+Joincrvs("1",["part2","part3"],["nodisp"]);
+Shade(["join1"],["Color=[0.2,0,0,0]"]);
+\end{verbatim}
+
+ \input{3Dfig/sphere04} \hspace{10mm} \input{3Dfig/sphere05} 
+ 
+When this script is executed, the number of intersection points int 1 and int 2 changes according to the viewpoint, so it is necessary to look at what is displayed on the console and set \verb | p1, p2, p3, p4 |.
+ 
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{polyhedron}{}
+\item[Function] polyhedron(name,face data,option)
+\item[Description] Drawing a polyhedron with colored surfaces.
+\item[Return value] face data.
+
+With the Rayoff option, ray tracing is not performed.
+ 
+\vspace{\baselineskip}
+ Example : Cube ABCD - EFGH is drawn in green with the plane cut through B, D and G.
+
+\hspace{30mm}\input{3Dfig/polyhedron01} 
+
+For the vertices B, C, D, G, make a surface list as follows.
+   
+First, add numbers 1, 2, 3, 4 to vertices B, C, D and G.
+   
+The plane BCG is B, C, G counterclockwise as seen from the outside, so [1, 2, 4]
+   
+Since surface CDG is similarly C, D, G, [2, 3, 4]
+   
+Since the planes DGB are similarly D, B, G, [3, 1, 4]
+   
+Bottom BCD is B, D, C counterclockwise as seen from the outside [1, 3, 2]
+   
+  Therefore, with the coordinates of B, C, D, G as p1, p2, p3, p4, make surface data \verb | fd | as follows.
+
+\begin{verbatim}
+    p1=[2,0,0]; 
+    p2=[2,2,0]; 
+    p3=[0,2,0]; 
+    p4=[2,2,2]; 
+    fd=[[p1,p2,p3,p4],[[1,2,4],[2,3,4],[3,1,4],[1,3,2]]];
+\end{verbatim}
+
+Using this surface data, the cone is drawn as follows
+
+ \verb|  polyhedron("1",fd,["Color=Green"])|
+    
+\hspace{30mm}\input{3Dfig/polyhedron02} 
+
+Example : Draw polyhedron using polyhedrons obj polyhedron data by Kobayashi, Suzuki, Mitani.
+  Data is a regular polyhedron, semi-regular polyhedron, Johnson's solid,
+ 
+\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/index.html }
+ 
+Specify the path to the folder polyhedrons obj storing this data with \verb| Setdirectory () |, and read it with \verb | Readobj () |. For example, when placed in a work directory (fig folder)
+ 
+\begin{layer}{150}{0}
+\putnotese{90}{0}{\input{3Dfig/polyhedron03}}
+\end{layer}
+
+\begin{verbatim}
+  Setdirectory(Dirwork+"/polyhedrons_obj");
+  polydt=Readobj("s06.obj");
+  Setdirectory(Dirwork);
+  fd=[2*polydt_1,polydt_2];
+  polyhedron("1",fd);
+\end{verbatim}
+
+Note that \verb| fd = [2 * polydt - 1, polydt - 2] | doubles the vertex coordinates.
+
+If you are drawing an edge, add the following.
+
+\begin{verbatim}
+VertexEdgeFace("1",fd);
+Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{convexhedron}{}
+\item[Function] convexhedron(name,list ,magnification,option)
+\item[Description] Draw a convex polyhedron with a vertex list and a surface painted. Magnification is the magnification to the size actually drawn for the vertex list. If it is 1 it can be omitted.
+\item[Return value] face data
+
+\vspace{\baselineskip}
+Example : A convex polyhedron whose bottom is a pentagon
+\begin{verbatim}
+  th=2*pi/5;
+  pd=apply(1..5,[cos(#*th),sin(#*th),0]);
+  pd=pd++apply(1..5,[2*cos(#*th),2*sin(#*th),1]);
+  pd=append(pd,[0,0,2]);
+  println(pd);
+  fd=convexhedron("1",pd)
+\end{verbatim}
+\hspace{20mm}\input{3Dfig/convexhedron}
+
+If you are drawing an edge, use the return value as follows.
+
+\begin{verbatim}
+  fd=convexhedron("1",pd);
+  VertexEdgeFace("1",fd);
+  Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{rpolyhedron}{}
+\item[Function] rpolyhedron(name, number of face ,radius,option)
+\item[Description] Draw a regular polyhedron with a color-painted face.
+There are five kinds of regular polyhedrons, and data is incorporated in Spacekc. \hyperlink {rpolydata} {vertex coordinates of regular polyhedron}. Using this, you can draw a regular polyhedron by specifying the number of faces and the radius of the circumscribed sphere.
+\item[Return value] face data.
+
+\vspace{\baselineskip}
+ Example : Draw a regular dodecahedron painted with yellow face
+
+\verb|  rpolyhedron("1",6,2,["Color=yellow"]);| 
+
+\hspace{20mm}\input{3Dfig/rpolyhedron}
+
+If you are drawing an edge, use the return value as follows.
+\begin{verbatim}
+fd=rpolyhedron("1",12,2,["Color=yellow"]);
+VertexEdgeFace("1",fd);
+Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+
+
+\vspace{\baselineskip}
+Reference : Size of regular polyhedron
+
+In rpolyhedron (), draw with the size inscribed in the sphere of the specified radius. Here, the relationship between the radius and the side length is mentioned. $\phi=\cfrac{1+\sqrt{5}}{2}$ 
+
+    \input{3Dfig/rpolytable} 
+
+Example : Draw a regular hexahedron with a side length of 2
+\begin{verbatim}
+   rpolyhedron(6,sqrt(3),["dr,2"]); 
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+
+\hypertarget{rfrustum}{}
+\item[Function] frustum(name,n,r1,r2,h,option)
+\item[Description] Put the face of a regular pyramid.
+n : Number of corners
+
+r1,r2 : Radius of the circumscribed circle of the upper base and the lower base
+
+h : height
+
+\vspace{\baselineskip}
+ ExampleDraw a regular hexagonal pyramid
+
+\verb|  frustum("1",6,1,2,3,["Color=yellow"]);| 
+
+\hspace{20mm}\input{3Dfig/frustum01}
+
+If you are drawing an edge, use the return value as follows.
+
+\begin{verbatim}
+  fd=frustum("1",6,1,2,3,["Color=yellow"]);
+  VertexEdgeFace("1",fd);
+  Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+
+ Example :
+
+\begin{verbatim}
+  fd=frustum("1",6,0,2,3,["Color=yellow"]);
+  VertexEdgeFace("1",fd);
+  Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+
+\hspace{20mm}\input{3Dfig/frustum02}
+
+ Example :  It becomes almost a cone when increasing the number of corners. The contour line is drawn as a curved surface with Sfbdparadata.
+
+\begin{layer}{150}{0}
+\putnotese{90}{0}{\input{3Dfig/frustum03}}
+\end{layer}
+
+\begin{verbatim}
+  frustum("1",108,0,2,4,["Color=yellow"]);
+  fd=[
+   "p",
+   "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",
+   "r=[0,2]","t=[0,2*pi]","e"
+  ];
+  Startsurf(); 
+  Sfbdparadata("1",fd);
+  ExeccmdC("1");
+\end{verbatim}
+
+If it is the same size of the upper base and the lower base, it becomes a cylinder.
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$Function] list}\end{flushright}
+
+\hypertarget{hatch3d}{}\item[Function] hatch3d(name,方向,PD,option)
+\item[Description] Hatch the closed curve. The closed curve is such as poly3d (), circle3d ();
+Unlike KeTCindy 's Hatchdata (), only the closed curve is the target, so the direction is not in the argument. A color designation can be put in option, and if there is a color designation, hatch is applied with that color. You can not hatch multiple areas.
+\item[Return value] none
+
+Example : Hatch the circle.
+\begin{verbatim}
+  pd=circle3d("1",[1,1,1],[1,1,1],2,["dr,2"]); 
+  hatch3d("1",pd,["Color=red"]); 
+\end{verbatim}
+
+  \input{3Dfig/hatch1}
+
+\newpage
+\end{description}
+
+\end{document}

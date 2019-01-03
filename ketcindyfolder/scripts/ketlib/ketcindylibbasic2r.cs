@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20190101) loaded");
+println("ketcindybasic2(20190103) loaded");
 
 //help:start();
 
@@ -685,7 +685,7 @@ Drwxy(optionsorg):=(
   Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216(3lines)
   Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
   Letter([org,ax_7,ax_6],[colorla]);
- // Addax(0);  // 16.01.21
+  Addax(0); 
 );
 ////%Drwxy end////
 

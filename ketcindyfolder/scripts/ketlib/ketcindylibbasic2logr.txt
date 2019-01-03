@@ -1,4 +1,6 @@
-/ 20190101
+// 20190103
+//   Drwxy changed  (Addax(0) added )
+// 20190101
 //   Viewtex changed ( for tikz )
 // // 20181231
 //   Drwxy debugged  (GENTEN used, xrng/yrng changed )

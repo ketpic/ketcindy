@@ -1,0 +1,831 @@
+\documentclass[papersize,a4paper,12pt,uplatex]{jsarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,newtxmath}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage{wrapfig}
+\usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\setmargin{20}{20}{15}{25}
+
+\begin{document}
+\title{Spacekc リファレンスマニュアル}
+\author{CinderellaJapan}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+%第１節 序 =======================================
+\section{はじめに}
+Spacekc は，KeTCindyのためのSpaceCindyである。KeTCindyの３Ｄグラフィクスに，簡易レイトレーシングで色付けをすることができる。また，KeTCindyで提供していない，空間に関する計算のためのいくつかの関数を用意している。配布はライブラリではなく，スクリプトを記述したテキストファイルあるいはCinderellaのファイルで行っている。
+
+なお，SpaceCindykcを用いた作図【例】と配布は，KeTCindy のページに掲載している。アドレスは以下の通り。
+
+\hspace{10mm} \url{https://sites.google.com/site/KETCindy/home/cindy3d2}
+
+%第２節 定数 ==========================================
+\section{定数}
+
+\begin{description}
+\hypertarget{rpolydata}{}
+\item[正多面体の頂点座標]  Rpolydata
+\item[説明]  正多面体の頂点のリスト。内容は，φ=$\cfrac{1+\sqrt{5}}{2}$ を黄金比として次のようになっている。
+
+正四面体：$(0,0,1),\left(\cfrac{2\sqrt{2}}{3},0,-\cfrac{1}{3} \right),\left(-\cfrac{\sqrt{2}}{3},\cfrac{\sqrt{6}}{3},-\cfrac{1}{3} \right),\left(-\cfrac{\sqrt{2}}{3},\cfrac{\sqrt{6}}{3},-\cfrac{1}{3}\right)$ 
+
+正六面体：$(-1,-1,1),(1,-1,1),(1,1,1),(-1,1,1),(-1,-1,-1),(1,-1,-1),(1,1,-1),(-1,1,-1)$ 
+
+正八面体：$(0,0,1),(0,-1,0),(1,0,0),(0,1,0),(-1,0,0),(0,0,-1)$ 
+
+正十二面体：$(0,-1,-φ^2),(0,1,-φ^2),(0,-1,φ^2),(0,1,φ^2),(-1,-φ^2,0),(1,-φ^2,0) $
+
+\hspace{15mm}   $ (-1,φ^2,0),(1,φ^2,0),(-φ^2,0,-1),(-φ^2,0,1),(φ^2,0,-1),(φ^2,0,1), $
+     
+\hspace{15mm} $ (-φ,-φ,-φ),(-φ,-φ,φ),(-φ,φ,-φ),(-φ,φ,φ), $
+
+\hspace{15mm} $ (φ,-φ,-φ),(φ,-φ,φ),(φ,φ,-φ),(φ,φ,φ)$ 
+
+正二十面体：$(0,-1,-φ),(0,1,-φ),(0,-1,φ),(0,1,φ),(-φ,0,-1),(-φ,0,1) $
+
+\hspace{15mm}$ (φ,0,-1),(φ,0,1),(-1,-φ,0),(1,-φ,0),(-1,φ,0),(1,φ,0)$ 
+      
+\vspace{\baselineskip}
+\hypertarget{lightpoint}{}
+\item[光源の方向ベクトル] Lightpoint
+\item[説明] 簡易レイトレーシングを行う場合の光源の方向ベクトル。初期設定は[-1,1,1]
+
+\vspace{\baselineskip}
+\hypertarget{contrast}{}
+\item[コントラスト] Contrast
+\item[説明] 簡易レイトレーシングを行う場合の，光のあたり方のコントラスト。標準は0以上１以下の実数。１を超えてもよいが，黒い部分が多くなる。描画関数の option で設定することもできる。
+
+
+\end{description}
+\newpage
+%第３節 値の取得 ==========================================
+\section{値の取得}
+\begin{description}
+
+\hypertarget{angle3pt}{}
+\item[関数] angle3pt(座標１,座標２, 座標３)
+\item[機能] 平面上で角を求める
+\item[戻り値] 点 p1,p2,p3 に対し，∠p1p2p3を返す
+
+\vspace{\baselineskip}
+
+\hypertarget{pointindomain}{}
+\item[関数] pointindomain(座標１,点リスト)
+\item[機能] 平面上で点リストの閉曲線内に座標１の点があるかどうかの判定
+\item[戻り値] 領域内なら１，領域外なら０，境界線上なら２を返す。
+
+\vspace{\baselineskip}
+
+\hypertarget{crosssd}{}
+\item[関数] crosssd(座標１,座標２,座標３,座標４)
+\item[機能] 座標平面において２本の線分か交わるかどうかを判断する
+\item[説明] 座標１,座標２を結ぶ線分と，座標３，座標４を結ぶ線分が交わるかどうか（共有点を持つかどうか）を判定する。
+\item[戻り値] 交点がある場合は true ，ない場合は false を返す。 
+
+\vspace{\baselineskip}
+
+\hypertarget{interll}{}
+\item[関数] interll(座標１,座標２,座標３,座標４)
+\item[機能] 座標空間において２本の直線の交点の座標を求める
+\item[戻り値]  座標１,座標２を通る直線と，座標３，座標４を通る直線との交点の座標を返す。
+交点がない場合は [i,i,i] を返す。 
+
+\vspace{\baselineskip}
+
+\hypertarget{interss}{}
+\item[関数] interss(座標１,座標２,座標３,座標４)
+\item[機能] 座標空間において２本の線分の交点の座標を求める
+\item[戻り値] 座標１,座標２を結ぶ線分と，座標３，座標４を結ぶ線分との交点の座標を返す。
+ 交点がない場合は [i,i,i] を返す。 
+
+\vspace{\baselineskip}
+\hypertarget{interpl}{}
+\item[関数] interpl(座標１,座標２,座標３,座標４,座標５)
+\item[機能] 座標空間において平面と直線の交点の座標を求める
+\item[戻り値] 座標１,座標２,座標３で決まる平面と，座標４，座標５を通る直線との交点の座標を返す。
+ 交点がない場合は [i,i,i] を返す。 
+ 
+\vspace{\baselineskip}
+\hypertarget{interps}{}
+\item[関数] interps(座標１,座標２,座標３,座標４,座標５)
+\item[機能] 座標空間において平面と線分の交点の座標を求める
+\item[戻り値]  座標１,座標２,座標３で決まる平面と，座標４，座標５を通る線分との交点の座標を返す。 
+交点がない場合は [i,i,i] を返す。
+
+
+\hypertarget{distlp}{}
+\item[関数] distlp(座標１,座標２, 座標３)
+\item[機能] 直線と点の距離を求める。(distance of line to point)
+\item[説明] 座標１，座標２を通る直線と，座標３の点との距離を求める。
+\item[戻り値] 距離。
+
+ 平面上の点でも空間の点でもよい。座標１と座標２が等しいときは虚数単位 i を返すとともに，コンソールに警告「Warning:p1 is same to p2」を表示する。 
+２点を結ぶ直線のベクトル方程式 $x=x_1+t(x_2-x_1) , y=y_1+t(y_2-y_1)$ を用い，
+内積=０から t を求め距離を計算している。 
+  垂線の足の位置ベクトルを$h(x,y)$ とすると， 
+  
+      $(\vec{h}-\vec{p3})・(\vec{p2}-\vec{p1})=0$ 
+  
+  から 
+  
+      $t=\dfrac{(\vec{p2}-\vec{p1})・(\vec{p3}-\vec{p1})}{|\vec{p2}-\vec{p1}|^2}$ 
+  
+  を得る。 
+
+【例】 println(distlp([1,0],[0,1],[0,0])); 
+
+で$\cfrac{\sqrt{2}}{2}$ が表示される。なお，plintln() により，コンソールには 0.71 が表示されるが，内部的には四捨五入した値ではないので 
+
+   println(guess(distlp([1,0],[0,1],[0,0]))); 
+
+とすると，1/2*sqrt(2) と表示される。 
+
+【例】 println(distlp([1,1,0],[0,0,1],[0,0,0]));  で$\cfrac{\sqrt{6}}{3}$ が表示される。なお，plintln() により，コンソールには 0.82 が表示されるが，内部的には四捨五入した値ではないので 
+   println(guess(distlp([1,1,0],[0,0,1],[0,0,0]))); 
+とすると，1/3*sqrt(6) と表示される。 
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+\hypertarget{distpp}{}
+\item[関数] distpp(座標１,座標２, 座標３, 座標４)
+\item[機能] 座標空間で３点を通る平面と点の距離を求める。
+\item[説明] 座標１，座標２，座標３を通る平面と，座標４の点との距離を求める。
+\item[戻り値] 距離
+
+【例】 ３点 (2,0,0),(0,2,0),(0,0,2) を通る平面と，原点との距離 
+
+    distpp([2,0,0],[0,2,0],[0,0,2],[0,0,0]);  戻り値は $\cfrac{2\sqrt{3}}{3}$ 
+
+\vspace{\baselineskip}
+\hypertarget{map2d}{}
+\item[関数] map2d(座標)
+\item[機能] 座標空間の点を現在の座標平面に射影した点の座標を求める。
+\item[説明] 「現在の」とは，スライダで設定された軸設定（視点）による画面のことを指す。
+
+【例】 pt=map2d([1,2,3]);
+
+なお，KeTCindyの Parapt() と全く同じ。
+
+\item[戻り値] 平面座標
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{normalvec}{}
+\item[関数] normalvec(座標１,座標２, 座標３)
+\item[機能] ３点を通る平面の単位法線ベクトルを求める。
+\item[説明] 座標１，座標２，座標３を通る平面の単位法線ベクトルを求める。
+\item[戻り値] 法線ベクトルを表すリスト。
+
+ ベクトルの向きは，点の順序による。 
+
+【例】 normalvec([2,0,0],[0,2,0],[0,0,2]);  の結果は $\left(\cfrac{\sqrt{3}}{3},\cfrac{\sqrt{3}}{3},\cfrac{\sqrt{3}}{3}\right)$ 
+
+ normalvec([2,0,0],[0,0,2],[0,2,0]);  の結果は  $\left(-\cfrac{\sqrt{3}}{3},-\cfrac{\sqrt{3}}{3},-\cfrac{\sqrt{3}}{3}\right)$ 
+
+平面と点の距離を求める distpp() を組み合わせると，平面に下した垂線のベクトルを表示できる。 
+\begin{verbatim}
+  nv=normalvec([2,0,0],[0,2,0],[0,0,2]); 
+  dd=distpp([2,0,0],[0,2,0],[0,0,2],[0,0,0]); 
+  poly3d("1",[[2,0,0],[0,2,0],[0,0,2]]); 
+  arrow3d("1",[[0,0,0],dd*nv]); 
+  Letter3d([dd*nv,"e","H"]); 
+\end{verbatim}
+
+  \input{3Dfig/nomalvec01} 
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{onsameplane}{}
+\item[関数] onsameplane(pa,pb,pc,pd)
+\item[機能] ４点が同一平面上にあるかどうかの判定
+\item[説明] 引数は判定する４点の座標。外積と内積を用いた判定法による 。
+\item[戻り値] true / false
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+\hypertarget{perp}{}
+\item[関数] perp(座標１,座標２, 座標３)
+\item[機能] ２点を通る直線への垂線の足の座標を求める。
+\item[戻り値]  座標１，座標２の２点を通る直線に，座標３の点から下した垂線の足の座標を返す。
+
+\hypertarget{perpvec}{}
+\item[関数] perpvec(ベクトル,flag)
+\item[機能] ベクトルに垂直な平面の基本ベクトルを作る。
+\item[説明] 第1引数のベクトルに垂直な平面上に２つの直交するベクトルを作り，リストにして返す。ひとつは，z成分を１として計算する。flag はオプションで，0にすると単位ベクトルにしない。デフォルトは単位ベクトル。
+\item[戻り値] ベクトル。 
+
+【例】perpvec([1,1,1]) の結果は [[-0.8165,0.4082,0.4082],[0,-0.7071,0.7071]]  
+
+   perpvec([1,1,1],0) の結果は [[-2,1,1],[0,-1,1]]  
+
+\vspace{\baselineskip}
+
+\hypertarget{planecoeff}{}
+\item[関数] planecoeff(座標１,座標２, 座標３)
+\item[機能] ３点を通る平面の方程式の係数を求める。
+\item[説明] 座標１，座標２，座標３の３点を通る平面の方程式 $ax+by+cz=1$ の係数 $a,b,c$ を求める。
+\item[戻り値] リスト [a,b,c]。係数$a,b,c$が存在しない場合はコンソールに「Warning! Cannot decide a coefficient.」を表示し，[i,i,i] を返す。
+ 
+
+\vspace{\baselineskip}
+
+\hypertarget{reflect3d}{}
+\item[関数] reflect3d(dlist,mirror) 
+\item[機能] dlistの鏡像を得る
+\item[説明] 第１引数は，点，プロットデータ，面データのいずれか。第2引数の座標リストが，1つの点だけなら，点対称，2つの点なら，その 2点を結ぶ直線に関する対称点，3つの点なら，その3点で決まる平面に関する対称点となる。
+\item[戻り値] 第1引数と同じタイプのデータ
+
+KeTCindyのRefrectdata3d() との違いは，描画をしないこと，引数が，点，プロットデータ，面データのいずれでもよいことである。第2引数の形は同じ。
+
+\vspace{\baselineskip}
+
+\hypertarget{rotate3d}{}
+\item[関数] rotate3d(dlist,vec,angle,center)
+\item[機能] dlistを指定した角だけcenterを始点とするベクトル周りに回転する。
+\item[説明] dlistは点，プロットデータ，面データのいずれか。
+\item[戻り値] dlistと同じ形式のデータ。
+
+KeTCindyのRotatedata3d() との違いは，描画をしないこと，引数が，点，プロットデータ，面データのいずれでもよいことである。その他の引数の形式は同じ。
+
+【例】 angle=[0,0,pi/4]; 
+  p=[1,0,0]; 
+  drawpt3d(rotate3d(p,angle)); 
+
+  により，点(1,0,0)をz軸回りに $\frac{\pi}{4}$ だけ回転した位置に点を打つ。 
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{translate3d}{}
+\item[関数] translate3d(dlist,ベクトル)
+\item[機能] dlistを指定したベクトルだけ平行移動。
+\item[説明]  dlistは点，プロットデータ，面データのいずれか。
+\item[戻り値] dlistと同じ形式のデータ
+
+KeTCindyのTranslatedata3d() との違いは，描画をしないこと，引数が，点，プロットデータ，面データのいずれでもよいことである。その他の引数の形式は同じ。
+
+\vspace{\baselineskip}
+\hypertarget{rotmatrix}{}
+\item[関数] rotmatrix(vec)
+\item[機能] 法線ベクトルから回転行列を作る
+\item[説明] 引数は法線ベクトル。 初め，法線ベクトルは[0,0,1]であるとする。これを回転して，引数の vec になるような回転行列を求める。y軸周り，z軸周りの順に回転する行列。 
+\item[戻り値] 行列
+
+\vspace{\baselineskip}
+
+\hypertarget{vertexrpolyhedron}{}
+\item[関数] vertexrpolyhedron(n)
+\item[機能] 正n面体の頂点リストを取得する
+\item[説明] nの値は4,6,8,12,20 のいずれか。
+\item[戻り値] 半径１の球面に内接する正多面体の頂点リスト。
+頂点の順番は次のようになっている。それぞれアルファベット順。
+
+\input{3Dfig/vertex4}   \input{3Dfig/vertex6} 
+\input{3Dfig/vertex8}   \input{3Dfig/vertex12} 
+\input{3Dfig/vertex20} 
+
+なお，スクリプト内では，次のように定義されている。これを，半径１の球面に内接するように変換して戻り値としている。
+
+φ=$\cfrac{1+\sqrt{5}}{2}$ は黄金比。 
+
+正四面体：$(0,0,1),\left(\cfrac{2\sqrt{2}}{3},0,-\cfrac{1}{3} \right),\left(-\cfrac{\sqrt{2}}{3},\cfrac{\sqrt{6}}{3},-\cfrac{1}{3} \right),\left(-\cfrac{\sqrt{2}}{3},\cfrac{\sqrt{6}}{3},-\cfrac{1}{3}\right)$ 
+
+正六面体：$(-1,-1,1),(1,-1,1),(1,1,1),(-1,1,1),(-1,-1,-1),(1,-1,-1),(1,1,-1),(-1,1,-1)$ 
+
+正八面体：$(0,0,1),(0,-1,0),(1,0,0),(0,1,0),(-1,0,0),(0,0,-1)$ 
+
+正十二面体：$(0,-1,-φ^2),(0,1,-φ^2),(0,-1,φ^2),(0,1,φ^2),(-1,-φ^2,0),(1,-φ^2,0) $
+
+\hspace{15mm}$  (-1,φ^2,0),(1,φ^2,0),(-φ^2,0,-1),(-φ^2,0,1),(φ^2,0,-1),(φ^2,0,1), $
+    
+\hspace{15mm}     $ (-φ,-φ,-φ),(-φ,-φ,φ),(-φ,φ,-φ),(-φ,φ,φ), $
+
+\hspace{15mm}     $((φ,-φ,-φ),(φ,-φ,φ),φ,φ,-φ),(φ,φ,φ)$ 
+
+正二十面体：$(0,-1,-φ),(0,1,-φ),(0,-1,φ),(0,1,φ),(-φ,0,-1),(-φ,0,1) $
+
+\hspace{15mm}    $  (φ,0,-1),(φ,0,1),(-1,-φ,0),(1,-φ,0),(-1,φ,0),(1,φ,0)$  
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{val2tex}{}\item[関数] val2tex(x)
+\item[機能] 数値をguess()で解析して，分数，平方根のTeXの文字列にして返す
+\item[説明] 分数，平方根でない場合はguess()の結果をそのまま返す。 
+ 計算結果が分数や平方根になる場合に，この関数を適用し，戻り値の前後にドルマークをつけて drawtext()で表示すれば分数や平方根の形で表示される。letter3d() でも利用できる。ただし，精度によっては変換できない場合もある。
+ 
+\item[戻り値] TeXの文字列
+
+【例】：原点から平面に下した垂線の足の座標を計算して表示する。 
+\begin{verbatim}
+  pa=[2,0,0];
+  pb=[0,2,0];
+  pc=[0,0,2];
+  nv=normalvec(pa,pb,pc);
+  hv=distpp(pa,pb,pc,[0,0,0])*nv;
+  hvstr=apply(hv,val2tex(#));
+  plate3d("1",[pa,pb,pc],["Color=skyblue","Rayoff"]);
+  poly3d("1",[pa,pb,pc]);
+  arrow3d("1",[[0,0,0],hv],["size=2"]);
+  letter3d([pa,"s2",text(pa_1),pb,"s2",text(pb_2),pc,"w2",text(pc_3),
+     hv,"ne2","H$\left( "+hvstr_1+","+hvstr_2+","+hvstr_3+" \right)$"]);
+\end{verbatim}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\end{description}
+\newpage
+%第４節 描画  =========================================
+\section{描画関数}
+
+\textbf{options}
+ 
+直線・曲線を描く関数の引数には座標の他，オプションがある。KeTCindyのオプションの他，メッシュ密度，濃度，コントラスト，レイトレーシングの有無が指定できる。
+
+\textbf{＜メッシュ密度＞} 
+
+曲面を描くとき，網目状にして描く。このときの経緯線の数。
+
+メッシュ密度指定は，"Mesh=[10,15]" のように与える。
+
+\textbf{＜濃度＞} 
+
+濃度は０から１までの実数。"Alpha=n" で，nは０以上１以下。たとえば，"Alpha=0.4"。初期設定は 0.3。
+
+なお，「Alpha」は，CindyScriptの「透明度」と同じ語であるが，ここでは，濃淡を表し，１のときが指定した色で，０に近いと白に近くなる。向こう側が透けて見えるようになるわけではない。
+
+\textbf{＜レイトレーシング＞} 
+
+レイトレーシングで陰影をつけるかどうかの指定。"Rayon" のとき陰をつけ，"Rayoff" のときは陰影をつけない。初期設定は "Rayon" 
+
+\textbf{＜非表示＞} 
+
+戻り値がプロットデータの描画関数で，プロットデータだけを取得したい場合に，KeTCindyと同様，"nodisp" オプションをつける。
+
+\vspace{\baselineskip}
+\textbf{描画関数の戻り値}
+
+ 描画関数の幾つかには戻り値がある。それぞれの関数の説明を参照のこと。 
+
+%\newpage
+\begin{description}
+
+\hypertarget{grid}{}
+\item[関数] grid(範囲１，範囲２，本数，option)
+\item[機能] $xy$平面に方眼を表示する。
+\item[説明]  範囲１は$x$軸の範囲，範囲２は$y$軸の範囲。
+\item[戻り値] なし
+
+本数は，単位(１目盛)あたりの本数。
+
+色，太さなど，通常のoptionが有効。
+
+引数，optionともなしで，grid() とすることも可能で，その場合は，範囲をsetaxis() で指定した範囲とし，単位あたり1本と10本の方眼を描く。
+
+方眼は描画面だけで，TeXには出力されない。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{line3d}{}
+\item[関数] line3d(name,座標リスト ,option）
+\item[機能] ２点を結ぶ直線を描く
+\item[説明] ２点の座標をリストで与えて，３次元空間に直線を表示する。
+\item[戻り値] 2点の座標リストをそのまま返す。
+
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{arrow3d}{}
+\item[関数] arrow3d(name,座標リスト ,option）
+\item[機能] ２点を結ぶ矢線を描く
+\item[説明] ２点の座標のリストを与えて，３次元空間に矢線を表示する 。
+ option は，color指定以外は２次元の  KeTCindy  の Arrowdataと同様。 
+ ただし，矢じりについては，Cinderellaの画面上では大きさ以外のオプションは反映されない。 
+ また，矢じりについてのオプションは初めに書く必要がある。 
+ \item[戻り値] 2点の座標リストをそのまま返す。
+ 
+\vspace{\baselineskip}
+ 【例】 ２点$(1,3,2) , (-2,-1,-2)$ を結ぶ矢線を表示する。 
+ 
+\hspace{10mm}    \verb|arrow3d("1",[[1,3,2],[-2,-1,-2]])| 
+
+ 【例】 矢じりの大きさを２にして，全体を赤で描く。 
+ 
+\hspace{10mm}   \verb|arrow3d("1",[[2,0,0],[-1,4,1]],[2,1,1,"dr,2","Color=red"])|
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{poly3d}{}
+\item[関数] poly3d(name,座標リスト,option)
+\item[機能] 多角形を描く
+\item[説明] リストで与えた点を結ぶ多角形を描く。リストで与えた点が同一平面上になくてもそれらの点を結んだ図形を描く。リストで与える点は閉じていなくてもよい。自動的に閉じて描く。
+\item[戻り値] 描画した多角形のプロットデータ。
+
+
+ 【例】 ３点$(1,1,1) , (2,2,1),(0,1,-1)$ を頂点とする三角形を描く。
+\begin{verbatim}
+   pd=[[1,1,1],[2,2,1],[0,1,-1]];
+   poly3d("1",pd);
+\end{verbatim}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{plate3d}{}
+\item[関数] plate3d(name,座標リスト,option)
+\item[機能] 多角形を色塗りする
+\item[説明] リストで与えた点を結ぶ多角形を色塗りする。縁取りはしない。
+\item[戻り値] 引数に与えた座標リストをそのまま返す
+
+ Rayoff オプションをつけると，レイトレーシングを行わない。
+
+ 【例】：３点$(1,1,1) , (2,2,1),(0,1,-1)$ を頂点とする三角形を赤で塗る 
+\begin{verbatim}
+   pd=[[1,1,1],[2,2,1],[0,1,-1]]; 
+   plate3d("1",pd,["Color=Red"]);
+\end{verbatim}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{circle3d}{}
+\item[関数] circle3d(name,中心,法線ベクトル,半径,option)
+\item[機能] 円を描く
+\item[説明] 中心,半径と法線ベクトルを与えて円を描く。
+\item[戻り値] 円のプロットデータ
+
+ 【例】：中心 $(1,1,1)$,半径2，法線ベクトルが(1,1,1)である円を太さ２，赤で描く。
+  
+\verb|  circle3d("1",[1,1,1],[1,1,1],2,["dr,2","Color=Red"]); |
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{drawarc3d}{}
+\item[関数] drawarc3d(name,中心,法線ベクトル,半径,範囲,option)
+\item[機能] 弧を描く
+\item[説明] 中心,半径と法線ベクトルを与えて描く円の一部として弧を描く。
+
+円は，$x=r \cos \theta,y=r \sin \theta$ で描き，法線ベクトルで決まる回転行列で回転している。
+
+\item[戻り値] 弧のプロットデータ
+
+ 【例】：中心 $(1,1,1)$,半径2，法線ベクトルが(-1,1,1)である弧を描く。
+  
+\verb|  drawarc3d("1",[1,1,1],[-1,1,1],2,[0,2*pi/3]); |
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{disc3d}{}
+\item[関数] disc3d(name,中心,法線ベクトル,半径,option)
+\item[機能] 中を色塗りした円盤を描く
+\item[説明] 中心,半径と法線ベクトルを与えて円盤を描く。縁取りはしない。
+\item[戻り値] 円のプロットデータ
+
+ Rayoff オプションをつけると，レイトレーシングを行わない。
+
+ 【例】：中心 $(1,1,1)$,半径2，法線ベクトルが(1,1,1)である円盤を赤，透明度0.4で描く。 
+ 
+ \verb| disc3d("1",[1,1,1],[1,1,1],2,["Color=Red","Alpha=0.4"]); |
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{drawsphere}{}
+\item[関数] drawsphere(name,中心,半径,opton)
+\item[機能] 球面を描く
+\item[説明] 中心と半径を指定して球面を描く。
+球面を簡易レイトレーシングを用いてグラデーションをかけて描く。 球面を網目状に分けて色塗りをしている。
+
+引数は，中心の座標，半径，option。 
+
+半径は，x軸，y軸，z軸方向についてリストにして指定することもできる。
+
+描画には時間がかかる。あまりにも時間がかかりすぎる場合は， "Mesh=[10,10]" をオプションにつけて描画してみる。これで描ければ編み目を細かくする。初期値は"Mesh=[30,20]"。
+\item[戻り値] なし
+
+\vspace{\baselineskip}
+【例】原点中心，半径２の球面（下図左）
+
+\verb|drawsphere("1",[0,0,0],2) |
+
+   中心が(0,0,2)，半径が [1,1,2]  ：楕円形の球を緑で描く（下図右）
+
+\verb|drawsphere("1",[0,0,2],[1,1,2],["Color=green","Mesh=[20,20]"])|
+
+ \input{3Dfig/sphere01} \hspace{10mm} \input{3Dfig/sphere02} 
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{quasisphere}{}
+\item[関数] quasisphere(name,中心,半径,fill,option)
+\item[機能] 疑似球面を描く
+\item[説明] 中心と半径を指定して疑似球面を描く。
+座標軸を動かしても常に法線ベクトルが視点を向いた円を描くので，球面同様に見える。しかし実際には面ではない。 したがって，陰線処理はしない。
+
+引数は，中心の座標，半径，fill , option。
+
+fill は塗りつぶすかどうかで，1なら塗りつぶす（初期値），0 なら塗らない。
+
+fill は省略可能。
+
+\item[戻り値] 円のプロットデータ
+
+\vspace{\baselineskip}
+【例】 \verb|quasisphere("1",[0,0,1],1,0]);|
+
+ \input{3Dfig/sphere03} 
+
+陰線処理をしない分，Sfbdparadata() と ExeccmdC() で描くより速い。これを用いて，次のようなスクリプトを作ると，疑似球面で十分であることがわかる。
+
+\begin{verbatim}
+pd1=quasisphere("1",[0,0,0],2,0,["nodisp"]);
+pd2=circle3d("1",[0,0,0],[0,1,sqrt(3)],2,["nodisp"]);
+pd3=circle3d("2",[0,0,-1],[0,0,1],sqrt(3),["nodisp"]);
+sp=apply(pd1,map2d(#));
+su1=apply(pd2,map2d(#));
+su2=apply(pd3,map2d(#));
+Listplot("1",sp,["nodisp"]);
+Listplot("2",su1);
+Listplot("3",su2,["Color=blue"]);
+int1=Intersectcrvs("sg1","sg2");
+int2=Intersectcrvs("sg1","sg3");
+println(int1);
+println(int2);
+p1=int1_1;
+p2=int1_2;
+p3=int2_1;
+p4=int2_2;
+Partcrv("1", p2, p1, "sg1");
+Partcrv("2", p3, p4, "sg3",["nodisp"]);
+Partcrv("3", p4, p3, "sg1",["nodisp"]);
+Joincrvs("1",["part2","part3"],["nodisp"]);
+Shade(["join1"],["Color=[0.2,0,0,0]"]);
+\end{verbatim}
+
+スライダを動かして視点を変えたとき，次のようになる。
+
+ \input{3Dfig/sphere04} \hspace{10mm} \input{3Dfig/sphere05} 
+ 
+ なお，このスクリプトを実行したとき，視点によって交点 int1 , int2 の数が変わるので，コンソールに表示されたものを見て，\verb|p1,p2,p3,p4| を設定する必要がある。
+ 
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{polyhedron}{}
+\item[関数] polyhedron(name,面データ,option)
+\item[機能] 面を色塗りした多面体を描く
+\item[説明] 縁取りはしない。
+\item[戻り値] 引数の面データをそのまま返す
+
+ Rayoff オプションをつけると，レイトレーシングを行わない。
+ 
+\vspace{\baselineskip}
+ 【例】 立方体ABCD-EFGHを，B,D,Gを通る平面で切ってできる錐体を緑で描く。 
+
+\hspace{30mm}\input{3Dfig/polyhedron01} 
+
+   頂点B,C,D,Gに対し，面リストを次のように作る。 
+   
+   まず，頂点 B,C,D,G  に番号1,2,3,4 をつける。 
+   
+   面BCGは外側から見て反時計回りに B,C,G なので [1,2,4] 
+   
+   面CDGは同様に C,D,G なので [2,3,4] 
+   
+   面DGBは同様に D,B,G なので [3,1,4] 
+   
+   底面BCDは外側から見て反時計回りに B,D,C なので [1,3,2] 
+   
+   そこで，B,C,D,G の座標をp1,p2,p3,p4として，次のようにして面データ \verb|fd| を作る。 
+\begin{verbatim}
+    p1=[2,0,0]; 
+    p2=[2,2,0]; 
+    p3=[0,2,0]; 
+    p4=[2,2,2]; 
+    fd=[[p1,p2,p3,p4],[[1,2,4],[2,3,4],[3,1,4],[1,3,2]]];
+\end{verbatim}
+
+この面データを使って
+
+ \verb|  polyhedron("1",fd,["Color=Green"])|
+
+とすれば，錐体が描かれる。
+    
+\hspace{30mm}\input{3Dfig/polyhedron02} 
+
+【例】小林・鈴木・三谷による 多面体データ polyhedrons\_obj を用いた多面体を描く。 
+ データは，正多面体，半正多面体，ジョンソンの立体で，
+ 
+\url{http://mitani.cs.tsukuba.ac.jp/polyhedron/index.html }
+ 
+ にある。このデータを格納したフォルダ polyhedrons\_obj へのパスを \verb|Setdirectory()| で指定し，\verb|Readobj()| で読み込む。たとえば，ワークディレクトリ（figフォルダ）に置いた場合は， 
+ 
+\begin{layer}{150}{0}
+\putnotese{80}{0}{\input{3Dfig/polyhedron03}}
+\end{layer}
+
+\begin{verbatim}
+  Setdirectory(Dirwork+"/polyhedrons_obj");
+  polydt=Readobj("s06.obj");
+  Setdirectory(Dirwork);
+  fd=[2*polydt_1,polydt_2];
+  polyhedron("1",fd);
+\end{verbatim}
+で右のような図ができる。
+
+なお，\verb|fd=[2*polydt_1,polydt_2]| で，頂点の座標を2倍にしている。
+
+稜線を描くのであれば 
+
+\begin{verbatim}
+VertexEdgeFace("1",fd);
+Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+を追加すればよい。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{convexhedron}{}
+\item[関数] convexhedron(name,頂点リスト,倍率,option)
+\item[機能] 凸型多面体を描く
+\item[説明] 頂点リストを与えて面を塗った凸型多面体を描く。倍率は，頂点リストに対して実際に描画するサイズへの倍率。1のときは省略できる。
+\item[戻り値] 描画した面データ。
+
+\vspace{\baselineskip}
+【例】底面が五角形の凸型多面体
+\begin{verbatim}
+  th=2*pi/5;
+  pd=apply(1..5,[cos(#*th),sin(#*th),0]);
+  pd=pd++apply(1..5,[2*cos(#*th),2*sin(#*th),1]);
+  pd=append(pd,[0,0,2]);
+  println(pd);
+  fd=convexhedron("1",pd)
+\end{verbatim}
+\hspace{20mm}\input{3Dfig/convexhedron}
+
+稜線を描くのであれば，戻り値を利用して
+
+\begin{verbatim}
+  fd=convexhedron("1",pd);
+  VertexEdgeFace("1",fd);
+  Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+とすればよい。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{rpolyhedron}{}
+\item[関数] rpolyhedron(name，面数,半径,option)
+\item[機能] 面を色塗りした正多面体を描く
+\item[説明] 正多面体は５種類あり，Spacekcにはデータが組み込まれている。\hyperlink{rpolydata}{正多面体の頂点座標}を参照のこと。これを用いて，面の数と外接球の半径を指定すれば正多面体を描くことができる。 
+\item[戻り値] 描画した面データ
+
+\vspace{\baselineskip}
+ 【例】 面を黄色で塗った正十二面体を描く 
+
+\verb|  rpolyhedron("1",6,2,["Color=yellow"]);| 
+
+\hspace{20mm}\input{3Dfig/rpolyhedron}
+
+稜線を描くのであれば，戻り値を利用して
+\begin{verbatim}
+fd=rpolyhedron("1",12,2,["Color=yellow"]);
+VertexEdgeFace("1",fd);
+Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+とすればよい。
+
+\vspace{\baselineskip}
+＜参考＞正多面体のサイズ 
+
+rpolyhedron() では，指定した半径の球面に内接するサイズで描画する。ここで，その半径と辺の長さの関係をあげておく。ここで，$\phi=\cfrac{1+\sqrt{5}}{2}$ 
+
+    \input{3Dfig/rpolytable} 
+
+【例】 一辺の長さが２の正六面体を描く 
+\begin{verbatim}
+   rpolyhedron(6,sqrt(3),["dr,2"]); 
+\end{verbatim}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+
+\hypertarget{rfrustum}{}
+\item[関数] frustum(name,n,r1,r2,h,option)
+\item[機能] 正角錐（台）の面を塗る
+n：角の数
+
+r1,r2：上底，下底の外接円の半径
+
+h：高さ
+
+\vspace{\baselineskip}
+ 【例】 正六角錐台を描く 
+
+\verb|  frustum("1",6,1,2,3,["Color=yellow"]);| 
+
+\hspace{20mm}\input{3Dfig/frustum01}
+
+稜線を描くのであれば，戻り値を利用して
+\begin{verbatim}
+  fd=frustum("1",6,1,2,3,["Color=yellow"]);
+  VertexEdgeFace("1",fd);
+  Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+とすればよい。
+
+ 【例】 上底の外接円の半径を０にすれば正六角錐になる。 （座標軸非表示）
+
+\begin{verbatim}
+  fd=frustum("1",6,0,2,3,["Color=yellow"]);
+  VertexEdgeFace("1",fd);
+  Nohiddenbyfaces("1","phe3d1","phf3d1");
+\end{verbatim}
+
+\hspace{20mm}\input{3Dfig/frustum02}
+
+ 【例】 角数を多くするとほとんど円錐になる。輪郭線はSfbdparadataで曲面として描く。
+ 
+\begin{verbatim}
+  frustum("1",108,0,2,4,["Color=yellow"]);
+  fd=[
+   "p",
+   "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",
+   "r=[0,2]","t=[0,2*pi]","e"
+  ];
+  Startsurf(); 
+  Sfbdparadata("1",fd);
+  ExeccmdC("1");
+\end{verbatim}
+
+\hspace{20mm}\input{3Dfig/frustum03}
+
+上底と下底を同じサイズにすれば円柱になる。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{hatch3d}{}\item[関数] hatch3d(name,方向,PD,option)
+\item[機能] 閉曲線にハッチをかける。
+\item[説明] 閉曲線は，poly3d() , circle3d(); で描いたものなど。 
+KeTCindy のHatchdata() と異なり，閉曲線だけが対象なので，方向は引数にない。optionには色指定を入れることができ，色指定があればその色でハッチをかける。 複数の領域にハッチをかけることはできない。
+\item[戻り値] なし
+
+【例】 円にハッチをかける。 
+\begin{verbatim}
+  pd=circle3d("1",[1,1,1],[1,1,1],2,["dr,2"]); 
+  hatch3d("1",pd,["Color=red"]); 
+\end{verbatim}
+
+  \input{3Dfig/hatch1}
+
+\newpage
+\end{description}
+
+
+% 関数一覧 ================================
+\hypertarget{functionlist}{}
+\section{関数一覧}
+KeTCindy の関数名が大文字で始まるのに対し，Spacekcの関数名は小文字で始まる。ただし，若干例外がある。\\
+
+\begin{tabbing}
+123456789012345678901234567890123456789\=\kill
+【定数】\\
+\hyperlink{lightpoint}{Lightpoint}       \> 光源の方向ベクトル\\
+\hyperlink{contrast}{Contrast}       \> コントラスト\\
+\hyperlink{rpolydata}{Rpolydata}       \> 正多面体の頂点リスト\\
+
+【値の取得】\\
+\hyperlink{angle3pt}{angle3pt}(座標,座標,座標) \>平面上の３点p1,p2,p3 に対し角p1p2p3を返す\\
+\hyperlink{pointindomain}{pointindomain}(座標,点リスト) \> 平面上で点が閉曲線内にあるかどうかの判定\\
+\hyperlink{distlp}{distlp}(座標,座標,座標)  \>２点を通る直線と点の距離を取得する\\
+\hyperlink{distpp3d}{distpp3d}(座標,座標,座標,座標)  \>座標空間で３点を通る平面と点の距離を取得する\\
+\hyperlink{map2d}{map2d}(座標) \>空間座標を座標平面に射影した点の座標を取得する\\
+\hyperlink{nomalvec}{nomalvec}(座標,座標,座標) \>３点を通る平面の法線単位ベクトルを取得する\\
+\hyperlink{perp}{perp}(座標,座標,座標)  \>座標空間で２点を通る直線への垂線の足の座標を取得する\\
+\hyperlink{perpvec}{perpvec}(ベクトル,flag)  \>ベクトルに垂直な平面上に直交する基本ベクトルをとる\\
+\hyperlink{planecoeff}{planecoeff}(座標,座標,座標)  \>座標空間で３点を通る平面の方程式の係数を取得する\\
+\hyperlink{crosssd}{crosssd}(座標,座標,座標,座標) \>座標平面で２つの線分が交わるかどうかの判断\\
+\hyperlink{interpl}{interpl}(座標,座標,座標,座標,座標) \>平面と直線の交点の座標を求める\\
+\hyperlink{interps}{interps}(座標,座標,座標,座標,座標) \>平面と線分の交点の座標を求める\\
+\hyperlink{reflect3d}{reflect3d}(リスト,リスト) \>データの鏡像を得る\\
+\hyperlink{rotate3d}{rotate3d}(座標,角リスト) \>データを回転する\\
+\hyperlink{translate3d}{translate3d}(リスト,ベクトル) \>データを平行移動する\\
+\hyperlink{vertexrpolyhedron}{vertexrpolyhedron}(数) \>正多面体の頂点リストを取得する\\
+
+【描画】\\
+\hyperlink{grid}{grid}()   \>$xy$平面の方眼の描画\\
+\hyperlink{line3d}{line3d}(name,list,option）\>２点を結ぶ直線を描く\\
+\hyperlink{arrow3d}{arrow3d}(name,list,option） \>２点を結ぶ矢線を描く\\
+\hyperlink{poly3d}{poly3d}(name,list,option) \>多角形を描く\\\hyperlink{circle3d}{circle3d}(name,center, r,vec,option) \>円を描く\\
+\hyperlink{drawarc3d}{circle3d}(name,center, r,vec,range,option) \>弧を描く\\
+\hyperlink{plate3d}{plate3d}(name,list,option) \>多角形を色塗りする\\
+\hyperlink{disc3d}{disc3d}(name,center, r, vec,option) \>中を塗った円盤を描く\\
+\hyperlink{drawsphere}{drawsphere}(name,center,r,option) \>球面を描く\\
+\hyperlink{quasisphere}{quasisphere}(name,center,r,option) \>球面のようなものを描く\\
+\hyperlink{frustum}{frustum}(name,fn,r1,r2,h, option) \>角錐台を描く\\
+\hyperlink{polyhedron}{polyhedron}(name,fd,option)   \>面を色塗りした多面体を描く\\
+\hyperlink{rpolyhedron}{rpolyhedron}(name,fn,r,option)   \>面を色塗りした正多面体を描く\\
+\hyperlink{convexhedron}{convexhedron}(name,pd,size,option) \>面を色ぬりした凸型多面体を描く\\
+\hyperlink{hatch3d}{hatch3d}(name,direc,PD,option) \> 閉曲線にハッチをかける\\
+
+\end{tabbing}
+
+\end{document}

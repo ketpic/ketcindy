@@ -1,3 +1,5 @@
+// 20190103
+//    Paramplot debugged  ( "pt" localized )
 // 20181231
 //    Pointdata changed  ( "Inside=(cmyk list)" option added )
 //    Setorigin debugged  (GENTEN used)

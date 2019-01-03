@@ -601,9 +601,15 @@ Setax(arglist):=(
 ////%Setax end////
 
 ////%Drwxy start////
-Drwxy():=Drwxy([]);
-Drwxy(optionsorg):=(
+Drwxy():=Drwxy(0,[]); //190103from
+Drwxy(Arg):=(
+  if(islist(Arg),Drwxy(0,Arg); Drwxy(Arg,[]));
+);
+Drwxy(add):=Drwxy(add,[]);
+Drwxy(add,optionsorg):=( //190103to
 //help:Drwxy();
+//help:Drwxy(1[the last axis will be drawn],oprions);
+//help:Drwxy(options);
 //help:Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,..."]);
   regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,
   linesty,colorax,colorla,tmp,tmp1,tmp2);
@@ -611,13 +617,13 @@ Drwxy(optionsorg):=(
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
   eqL=tmp_5;
-  org=GENTEN; //181231from
-  tmp1=max([org_1+XMIN,XMIN]);
-  tmp2=min([org_1+XMAX,XMAX]);
-  xrng=[tmp1,tmp2];
-  tmp1=max([org_2+YMIN,YMIN]);
-  tmp2=min([org_2+YMAX,YMAX]);
-  yrng=[tmp1,tmp2]; //181231to
+  org=GENTEN; 
+  //tmp1=max([org_1+XMIN,XMIN]);
+  //tmp2=min([org_1+XMAX,XMAX]);
+  xrng=[XMIN,XMAX];  //190103
+  //tmp1=max([org_2+YMIN,YMIN]);
+  //tmp2=min([org_2+YMAX,YMAX]);
+  yrng=[YMIN,YMAX];  //190103
   ax=AXSTYLE;
   linesty=ax_8;
   if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
@@ -635,10 +641,10 @@ Drwxy(optionsorg):=(
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
-//    if(tmp1=="O",
-//      org=parse(tmp_2);
-//      options=remove(options,[#]);
-//    );
+    if(tmp1=="O", //190103from
+      org=parse(tmp_2);
+      options=remove(options,[#]);
+    );  //190103to
     if(tmp1=="X",
       xrng=parse(tmp_2);
       options=remove(options,[#]);
@@ -685,7 +691,9 @@ Drwxy(optionsorg):=(
   Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216(3lines)
   Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
   Letter([org,ax_7,ax_6],[colorla]);
-  Addax(0); 
+  if(add==0, //190103
+    Addax(0);
+  );
 );
 ////%Drwxy end////
 

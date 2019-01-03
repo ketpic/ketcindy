@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.4");
 println(ketjavaversion());
-println("ketcindylibbasic1(20181231) loaded");
+println("ketcindylibbasic1(20190103) loaded");
 
 //help:start();
 
@@ -4249,7 +4249,7 @@ Paramplot(nm,funstr,variable):=Paramplot(nm,funstr,variable,[]);
 Paramplot(nm,funstr,variable,options):=(
 //help:Paramplot("1","[2*cos(t),sin(t)]","t=[0,2*pi]");
   regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,
-        Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke,
+        Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke, pt, //190103
         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
   if(substring(nm,0,1)=="-",  // 180928from
     name=substring(nm,1,length(nm));

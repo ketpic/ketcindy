@@ -1,5 +1,6 @@
 // 20190103
-//   Drwxy changed  (Addax(0) added )
+//   Drwxy changed  (Addax(0) added in the case of add=0 )
+//   Drwxy changed  ( "O=" option added )
 // 20190101
 //   Viewtex changed ( for tikz )
 // // 20181231

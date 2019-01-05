@@ -29,21 +29,21 @@ if [ ${ans} = "n" ]; then
 fi
 
 echo copying scripts
-sudo cp -r -p scripts/${ketcindyscripts}/
+sudo cp -r -p scripts/ ${ketcindyscripts}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
 else
   echo "scripts copied to "${ketcindyscripts}
 fi
-sudo cp -r -p doc/${ketcindydoc}/
+sudo cp -r -p doc/ ${ketcindydoc}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
 else
   echo "doc copied to "${ketcindydoc}
 fi
-sudo cp -r -p style/${ketcindystyle}/
+sudo cp -r -p style/ ${ketcindystyle}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20181218 loaded");
+println("ketcindylibout(20190109 loaded");
 
 //help:start();
 
@@ -783,6 +783,7 @@ CalcbyR(name,path,cmd,optionorg):=(
   strL=tmp_7;
   dig=5;
   tmp=cmd_(length(cmd)-1); //181130from
+  if(!isstring(tmp),tmp=text(tmp)); //190109
   if(indexof(tmp,"=")+indexof(tmp,"::")>0,
     cat="Y";
   ,
@@ -1132,7 +1133,8 @@ Rfun(name,fun,argL,optionorg):=(
   cmdL=concat(cmdL,[
     nm+"="+fun,argL,
   ]);
-  options=concat(options,["Wait=2"]);
+//  options=concat(options,["Wait=2"]); 
+  options=concat(options,["Wait=2","Cat=y"]); //190109
   CalcbyR(nm,cmdL,options);
   if(ErrFlag==0,
     if(disp==1, // 15.11.24

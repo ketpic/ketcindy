@@ -1,3 +1,6 @@
+// 20181219
+//   Rfun debugged  ( Out=y )
+//   CalcbyR debugged  ( argment list changed to string)
 // 20181218
 //   Help (Sfbdparadata ,,,, )
 // 20181217

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2(20190103) loaded");
+println("ketcindybasic2[20190111] loaded");
 
 //help:start();
 
@@ -164,12 +164,12 @@ Rotatedata(nm,plist,angle,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
     tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Rotatedata("+tmp1+","
-	  +textformat(angle,5)+","+RSform(textformat(Pt,5))+")"; //17.12.23
+	  +Textformat(angle,5)+","+RSform(Textformat(Pt,5))+")"; //17.12.23
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -234,11 +234,11 @@ Translatedata(nm,plist,mov,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist);
     tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Translatedata("+tmp1+","+RSform(textformat(mov,5))+")";
+    tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,5))+")";
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -272,7 +272,7 @@ Scaledata(nm,plist,Arg1,Arg2):=(
 //help:Scaledata("1",["crAB","pt1"],2,[[0,0]]);
   regional(tmp,options);
   if(islist(Arg2),
-    tmp=Arg1;//180603(2lines)
+    tmp=Arg1;//180603[2lines]
     if(!islist(tmp),tmp=[tmp,tmp]);
     tmp=Lcrd(tmp);
 	options=Arg2;
@@ -326,12 +326,12 @@ Scaledata(nm,plist,rx,ry,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
     tmp1=RSform(tmp1,1); // 180602
     tmp=name+"=Scaledata("+tmp1+","
-	  +textformat(rx,5)+","+textformat(ry,5)+","+RSform(textformat(Pt,5))+")";
+	  +Textformat(rx,5)+","+Textformat(ry,5)+","+RSform(Textformat(Pt,5))+")";
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -412,11 +412,11 @@ Reflectdata(nm,plist,symL,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-	tmp=name+"="+textformat(tmp1,5);
+	tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
     tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Reflectdata("+tmp1+","+RSform(textformat(symL,5))+")";//17.12.23
+    tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,5))+")";//17.12.23
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -490,7 +490,7 @@ MakeRarg(arglist):=(
     if(isstring(#),
       tmpstr=Dq+RSslash(#)+Dq;
     ,
-      tmpstr=textformat(#,6);
+      tmpstr=Textformat(#,6);
     );
     str=str+tmpstr+",";
   );
@@ -673,7 +673,7 @@ Drwxy(add,optionsorg):=( //190103to
     strL=select(options,isstring(#)); //181216
     tmp=select(strL,contains(["dr","da","do","id"],substring(#,0,2)));
     if(length(tmp)==0,options=append(options,YasenStyle));
-    tmp=substring(ax_1,1,length(ax_1)); //181216(2lines)
+    tmp=substring(ax_1,1,length(ax_1)); //181216[2lines]
     if(length(tmp)>0,size=parse(tmp),size=YaSize);
     tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//181216
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
@@ -688,7 +688,7 @@ Drwxy(add,optionsorg):=( //190103to
     Listplot("axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
-  Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216(3lines)
+  Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216[3lines]
   Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
   Letter([org,ax_7,ax_6],[colorla]);
   if(add==0, //190103
@@ -698,7 +698,6 @@ Drwxy(add,optionsorg):=( //190103to
 ////%Drwxy end////
 
 ////%Drwpt start////
-////%Drawpoint start////
 Drwpt(pstr):=Drwpt(pstr,1); //181231
 Drwpt(ptlist,nn):=(  // 16.03.05 from
 //help:Drwpt(A);
@@ -709,6 +708,8 @@ Drwpt(ptlist,nn):=(  // 16.03.05 from
   Pointdata(text(DrwPtCtr),ptlist,["Inside="+text(nn)]);
   DrwPtCtr=DrwPtCtr+1; //181231to
 );
+////%Drwpt end////
+////%Drawpoint start////
 Drawpoint(pstr):=(
   if(isstring(pstr),
     println("Drwpt : "+pstr);
@@ -733,13 +734,12 @@ Drawpoint(ptlistorg,nn):=(
   tmp1=max(TenSize/TenSizeInit,1)/8; 
   Setpen(tmp1); // 16.04.09 until
   forall(ptlist,
-    tmp=textformat(#,5)+","+text(nn);
+    tmp=Textformat(#,5)+","+text(nn);
     Com2nd("Drwpt("+tmp+")"); // 16.04.09
   );
   Setpen(thick); // 16.04.09
 );// 16.03.05 until
 ////%Drawpoint end////
-////%Drwpt end////
 
 ////%Addax start////
 Addax(param):=(
@@ -786,7 +786,7 @@ Letter(list,options):=(
   aln="left";
   forall(opL,
     tmp=indexof(#,"->");
-    tmp1=removespace(substring(#,0,tmp-1));
+    tmp1=Removespace(substring(#,0,tmp-1));
     tmp2=substring(#,tmp+1,length(#));
     if(tmp1=="size",sz=parse(tmp2));
     if(tmp1=="color",clr=parse(tmp2));
@@ -797,7 +797,7 @@ Letter(list,options):=(
   Dmv=8;
   Nj=1;
   while(Nj+2<=length(list),
-//    Pos=textformat(list_Nj,5);
+//    Pos=Textformat(list_Nj,5);
     Pos=list_Nj;
     Dir=list_(Nj+1);
     tmp=indexof(Dir,"s")+indexof(Dir,"n");//16.10.19from
@@ -956,7 +956,7 @@ Putslider(ptstr,p1,p2):=Slider(ptstr,p1,p2);
 Slider(ptstr,p1,p2):=( //17.04.11
 //help:Slider("A-C-B",[-3,0],[3,0]);
   regional(pA,pB,pC,seg,sname,Alpha,tmp,tmp1);
-  tmp=indexall(ptstr,"-");
+  tmp=Indexall(ptstr,"-");
   pA=substring(ptstr,0,tmp_1-1);
   pC=substring(ptstr,tmp_1,tmp_2-1);
   pB=substring(ptstr,tmp_2,length(ptstr));
@@ -991,7 +991,7 @@ Putpoint(name,Ptinit,Pt):=(
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
     ,
-    ptstr=name+".xy="+textformat(Pcrd(Pt),5);
+    ptstr=name+".xy="+Textformat(Pcrd(Pt),5);
     parse(ptstr);
   );
 );
@@ -1086,11 +1086,11 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   if(Noflg<3,
     println("generate Bezier "+name);
     out=apply(list,Pcrd(#));
-    tmp=name+"="+textformat(out,5);
+    tmp=name+"="+Textformat(out,5);
     parse(tmp);
-    tmp1=textformat(ptlist,5);
+    tmp1=Textformat(ptlist,5);
     tmp1=RSform(tmp1,2); //17.12.23
-    tmp2=textformat(ctrlist,5);
+    tmp2=Textformat(ctrlist,5);
     tmp2=RSform(tmp2,3); //17.12.23
     GLIST=append(GLIST,name+"=Bezier("+tmp1+","+tmp2+opstr+")");
   );
@@ -1310,7 +1310,7 @@ Writebezier(head,seL):=(
       tmp1=bz_#;
     );
     tmp1=replace(tmp1,"Bezier(","[");
-    tmp1=replace(tmp1,"list(","[");
+    tmp1=replace(tmp1,"list"+PaO(),"[");
     tmp1=replace(tmp1,")","]");
     tmp1=replace(tmp1,",",".xy,");
     tmp1=replace(tmp1,"]",".xy]");
@@ -1523,7 +1523,7 @@ Bzspline(nm,ptLorg,options):=(
       pt1=parse("C"+text(#-1)+"q");
       create([lstr],"Join",[pt1,pt]);
       tmp2="C"+text(#)+"p";
-      tmp=Append((2*pt.xy-pt1.xy),1);
+      tmp=append((2*pt.xy-pt1.xy),1);
       create([tmp2],"PointOnLine",[parse(lstr),tmp]);
     );
   );
@@ -1539,7 +1539,7 @@ Bzspline(nm,ptLorg,options):=(
     pt1=parse("C"+text(length(ptL)-1)+"q");
     create([lstr],"Join",[pt1,pt]);
     tmp1="C1p";
-    tmp=Append((2*pt.xy-pt1.xy),1);
+    tmp=append((2*pt.xy-pt1.xy),1);
     create([tmp1],"PointOnLine",[parse(lstr),tmp]);
   );
   ctrlist=[];
@@ -1809,18 +1809,18 @@ PutonCurve(pn,crv,options):=(
     );
   );
   Pmt=MeetCurve(crv,leftlim,0);
-  pstr=apply(allpoints(),textformat(#,5)); // 15.04.07
+  pstr=apply(allpoints(),Textformat(#,5)); // 15.04.07
   if(!contains(pstr,pn),
     createpoint(pn,Pcrd(Pmt));
   ,
     tmp1=parse(pn+".x");
     if(tmp1< leftlim % tmp1>rightlim,
       if(tmp1< leftlim,tmp= leftlim, tmp=rightlim);
-      Pmt=MeetCurve(crv,textformat(tmp,5),pn+".y");
+      Pmt=MeetCurve(crv,Textformat(tmp,5),pn+".y");
     ,
       Pmt=MeetCurve(crv,pn+".x",pn+".y");
     );
-    ptstr=pn+".xy="+textformat(Pcrd(Pmt),5)+";";
+    ptstr=pn+".xy="+Textformat(Pcrd(Pmt),5)+";";
     parse(ptstr);
   );
   if(Msg=="y",
@@ -1888,16 +1888,16 @@ Periodfun(defL,reporg,optionorg):=(  // 16.11.24
   forall(1..(length(defL)/3),nn,
     fun=defL_(3*nn-2);
     range=defL_(3*nn-1);
-    tmp1=if(isstring(range_1),parse(range_1),range_1); //17.06.11(2lines)
+    tmp1=if(isstring(range_1),parse(range_1),range_1); //17.06.11[2lines]
     tmp2=if(isstring(range_2),parse(range_2),range_2);
     minx=min(minx,tmp1);
     maxx=max(maxx,tmp2);
     num=defL_(3*nn);
     options=append(options,"Num="+text(num));
     Plotdata("pe"+text(nn),fun,
-      "x="+textformat([tmp1,tmp2],5),options);
+      "x="+Textformat([tmp1,tmp2],5),options);
     pdata=append(pdata,"grpe"+text(nn));
-    tmp1=range_1; //17.06.11(4lines)
+    tmp1=range_1; //17.06.11[4lines]
     if(isstring(tmp1),tmp1=replace(tmp1,"pi","%pi"),tmp1=format(tmp1,5));
     tmp2=range_2;
     if(isstring(tmp2),tmp2=replace(tmp2,"pi","%pi"),tmp2=format(tmp2,5));
@@ -2495,9 +2495,9 @@ RSform(str,listfrom):=(
 //help:RSform(string,listfrom);
   regional(posL,mxlv,rep1,rep2,rep3,prev,out,
     tmp,tmp1,tmp2);
-  rep1="c("; rep2="c("; rep3="list(";
-  if(listfrom<3,rep2="list(");
-  if(listfrom==1,rep1="list(");
+  rep1="c"+PaO(); rep2="c"+PaO(); rep3="list"+PaO();
+  if(listfrom<3,rep2="list"+PaO());
+  if(listfrom==1,rep1="list"+PaO());
   posL=Bracket(str,"[]");
   tmp=apply(posL,#_2);
   mxlv=max(tmp);
@@ -2521,8 +2521,8 @@ RSform(str,listfrom):=(
   out=replace(out,".xy","");
   out=replace(out,".x","[1]");
   out=replace(out,".y","[2]");
-  out=replace(out,"c(1)","[1]");//17.10.06(2lines)
-  out=replace(out,"c(2)","[2]");
+  out=replace(out,"c"+PPa("1"),"[1]");//17.10.06[2lines]
+  out=replace(out,"c"+PPa("2"),"[2]");
   out;
 );
 ////%RSform end////
@@ -2540,8 +2540,8 @@ RSslash(str):=(  //17.09.24
 Rform(list):=(
   regional(plotlist,comp,pos,out,strL,tmp,tmp1,tmp2,tmp3,Nj);
   out=list;
-  out=replace(out,"[[[","list([[");
-  out=replace(out,"[","c(");
+  out=replace(out,"[[[","list"+PaO()+"[[");
+  out=replace(out,"[","c"+PaO());
   out=replace(out,"]",")");
   out=replace(out,".xy","");
   out=replace(out,".x","[1]");
@@ -2603,7 +2603,7 @@ IftoR(strorg):=( //180802
   regional(str,ifL,ppL,cpL,kk,sL,out,
     tmp,tmp1,tmp2,tmp3,tmp4);
   str=replace(strorg,LFmark,"");
-  ifL=Indexall(str,"if(");
+  ifL=Indexall(str,"if"+PaO());
   ppL=Bracket(str,"()");
   cpL=Indexall(str,",");
   tmp1=Bracket(str,"[]");
@@ -2649,7 +2649,7 @@ FortoR(strorg):=(
   if(forstr==0,
     out=str;
   ,
-    pre=substring(str,0,forstr-1)+"for(";
+    pre=substring(str,0,forstr-1)+"for"+PaO();
     ppL=Bracket(str,"()");
     tmp1=forstr+6;
     tmp=select(ppL,#_1==tmp1);
@@ -2685,7 +2685,7 @@ Deffun(name,bodylist):=(
   funstr=funstr+");";
   parse(funstr);
   tmp=indexof(name,"("); 
-  str=substring(name,0,tmp-1)+"<-function(";
+  str=substring(name,0,tmp-1)+"<-function"+PaO();
   str=str+substring(name,tmp,length(name))+"{";
   forall(1..(length(bodylist)-1),nbody,
     bdy=bodylist_nbody;
@@ -2720,7 +2720,7 @@ Deffun(name,bodylist):=(
       str=str+bdy+";";
     );
   );
-  str=str+"return("+bodylist_(length(bodylist))+")}";
+  str=str+"return"+PaO()+bodylist_(length(bodylist))+")}";
   FUNLIST=append(FUNLIST,str);
 );
 ////%Deffun end////
@@ -2761,7 +2761,7 @@ Windispg():=(
         forall(Dt,Nk,
           tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
-            tmp="connect("+textformat(tmp2,5)+
+            tmp="connect("+Textformat(tmp2,5)+
              ",dashtype->"+text(tmp1)+",linecolor->"+KCOLOR+opcindy+")";
             parse(tmp);
           ,
@@ -2794,7 +2794,7 @@ Windispg(pltdata):=(
         forall(Dt,Nk,
           tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
-            tmp="connect("+textformat(tmp2,5)+ // 15.05.11
+            tmp="connect("+Textformat(tmp2,5)+ // 15.05.11
              ",dashtype->"+text(tmp1)+
              ",linecolor->"+KCOLOR+opcindy+")";
             parse(tmp);
@@ -2866,26 +2866,26 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,"");
   );
   if(iswindows(),
-    println(SCEOUTPUT,"options(encoding='UTF-8')"); //180513
+    println(SCEOUTPUT,"options"+PaO()+"encoding='UTF-8')");  //190111
   );
   tmp1=replace(Dirwork,"\","/");
   if((iswindows())&(indexof(tmp1,"Users")>0),
     tmp=Indexall(tmp1,"/");
     tmp2=substring(tmp1,tmp_3-1,length(tmp1));
     tmp1=substring(tmp1,0,tmp_3-1);
-    println(SCEOUTPUT,"Drv=shell('echo %HOMEDRIVE%',intern=TRUE)");
-    println(SCEOUTPUT,"Drv=Drv[length(Drv)]");
-    println(SCEOUTPUT,"Hpath=shell('echo %HOMEPATH%',intern=TRUE)");
-    println(SCEOUTPUT,"Hpath=Hpath[length(Hpath)]");
+    println(SCEOUTPUT,"Drv=shell"+PaO()+"'echo %HOMEDRIVE%',intern=TRUE)"); //190111
+    println(SCEOUTPUT,"Drv=Drv[length"+PaO()+"Drv)]");
+    println(SCEOUTPUT,"Hpath=shell"+PaO()+"'echo %HOMEPATH%',intern=TRUE)");
+    println(SCEOUTPUT,"Hpath=Hpath[length"+PaO()+"Hpath)]");
     println(SCEOUTPUT,"Rest="+Dqq(tmp2));
-    println(SCEOUTPUT,"Path=paste(Drv,Hpath,Rest,sep='')");
-    println(SCEOUTPUT,"Path=gsub('\\','/',Path,fixed=TRUE)"); //180610
-    println(SCEOUTPUT,"setwd(Path)"); 
+    println(SCEOUTPUT,"Path=paste"+PaO()+"Drv,Hpath,Rest,sep='')");
+    println(SCEOUTPUT,"Path=gsub"+PaO()+"'\\','/',Path,fixed=TRUE)"); //180610
+    println(SCEOUTPUT,"setwd"+PaO()+"Path)"); 
   ,
-    println(SCEOUTPUT,"setwd('"+tmp1+"')"); 
+    println(SCEOUTPUT,"setwd"+PaO()+"'"+tmp1+"')"); 
   );//180409to
   tmp=replace(Libname,"\","/"); //17.09.24from
-  println(SCEOUTPUT,"source('"+tmp+".r')"); //181213
+  println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')"); //181213
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
     if(GPACK=="tpic",GPACK="pict2e");
   );
@@ -2895,20 +2895,20 @@ WritetoRS(filename,shchoice):=(
   ); 
   if(GPACK=="tikz", //181213from
     tmp=replace(tmp+"_reptikz","\","/");
-    println(SCEOUTPUT,"source('"+tmp+".r')");
+    println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')");
   ); //181213to
-  println(SCEOUTPUT,"Ketinit()");
-  println(SCEOUTPUT,"cat(ThisVersion,'\n')"); 
+  println(SCEOUTPUT,"Ketinit"+PPa(""));
+  println(SCEOUTPUT,"cat"+PaO()+"ThisVersion,'\n')"); 
   println(SCEOUTPUT,"Fnametex='"+Fnametex+"'");
   println(SCEOUTPUT,"FnameR='"+FnameR+"'");
   println(SCEOUTPUT,"Fnameout='"+Fnameout+"'");
   println(SCEOUTPUT,"arccos=acos; arcsin=asin; arctan=atan");
-  println(SCEOUTPUT,"Acos<- function(x){acos(max(-1,min(1,x)))}");
-  println(SCEOUTPUT,"Asin<- function(x){asin(max(-1,min(1,x)))}");
+  println(SCEOUTPUT,"Acos<- function"+PPa("x")+"{acos"+PaO()+"max"+PaO()+"-1,min"+PaO()+"1,x)))}");
+  println(SCEOUTPUT,"Asin<- function"+PPa("x")+"{asin"+PaO()+"max"+PaO()+"-1,min"+PaO()+"1,x)))}");
   println(SCEOUTPUT,"Atan=atan");
-  println(SCEOUTPUT,"Sqr<- function(x){if(x>=0){sqrt(x)}else{0}}");
+  println(SCEOUTPUT,"Sqr<- function"+PPa("x")+"{if"+PaO()+"x>=0){sqrt"+PaO()+"x)}else{0}}");
   println(SCEOUTPUT,"Factorial=factorial");
-  println(SCEOUTPUT,"Norm<- function(x){norm(matrix(x,nrow=1),"+Dqq("2")+")}");
+  println(SCEOUTPUT,"Norm<- function"+PPa("x")+"{norm"+PaO()+"matrix"+PaO()+"x,nrow=1),"+Dqq("2")+")}");
   println(SCEOUTPUT,"");
   forall(COM0thlist,
     if(indexof(#,"Texcom")==0, //17.09.22
@@ -2918,7 +2918,7 @@ WritetoRS(filename,shchoice):=(
     );
   );
   println(SCEOUTPUT,
-     "Setwindow(c("+XMIN+","+XMAX+"), c("+YMIN+","+YMAX+"))");
+     "Setwindow(c"+PaO()+XMIN+","+XMAX+"), c"+PaO()+YMIN+","+YMAX+"))");
   forall(Plist,
     println(SCEOUTPUT,#);
   );
@@ -2930,7 +2930,7 @@ WritetoRS(filename,shchoice):=(
       if(islist(tmp1),
         tmp2="[";
         forall(tmp1,
-          tmp2=tmp2+textformat(#,6)+",";
+          tmp2=tmp2+Textformat(#,6)+",";
         );
         tmp1=substring(tmp2,0,length(tmp2)-1)+"]";
       ,
@@ -2940,7 +2940,7 @@ WritetoRS(filename,shchoice):=(
     tmp1=RSform(tmp1);
     print(SCEOUTPUT,tmp+"="+tmp1+";"); //17.09.22
 //    tmp=substring(tmp,0,length(tmp)-1);
-    println(SCEOUTPUT,"Assignadd('"+tmp+"',"+tmp+")");
+    println(SCEOUTPUT,"Assignadd"+PaO()+"'"+tmp+"',"+tmp+")");
   );
  forall(FUNLIST,
     println(SCEOUTPUT,#);
@@ -2949,18 +2949,18 @@ WritetoRS(filename,shchoice):=(
     println(SCEOUTPUT,RSform(#));
   );
   tmp=text(Pnamelist);
-  tmp=replace(tmp,"[","list(");
+  tmp=replace(tmp,"[","list"+PaO());
   Pnamelist=replace(tmp,"]",")");
   println(SCEOUTPUT,"PtL="+Pnamelist);
   tmp=select(GCLIST,#_2==-1);
   GrL=apply(tmp,#_1);
   tmp=text(GrL);
-  tmp=replace(tmp,"[","list(");
+  tmp=replace(tmp,"[","list"+PaO());
   tmp=replace(tmp,"]",")");
   println(SCEOUTPUT,"GrL="+tmp);
   tmp1="";
   if(length(tmp1)>0,
-    tmp1="WriteOutData(Fnameout"+tmp1+");";
+    tmp1="WriteOutData"+PaO()+"Fnameout"+tmp1+");";
     println(SCEOUTPUT,tmp1);
   );
   forall(COM1stlist,
@@ -2971,13 +2971,13 @@ WritetoRS(filename,shchoice):=(
     );
   );
   println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"# Windisp(GrL)");
+  println(SCEOUTPUT,"# Windisp"+PPa("GrL"));
   println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"if(1==1){");
+  println(SCEOUTPUT,"if"+PaO()+"1==1){");
   println(SCEOUTPUT,"");
   tmp1=replace(Dirwork,"\","/"); //180408to
   if((iswindows())&(indexof(tmp1,"Users")>0),
-    println(SCEOUTPUT,"Path=paste(Path,"+Dqq("/"+Fnametex)+",sep='')");
+    println(SCEOUTPUT,"Path=paste"+PaO()+"Path,"+Dqq("/"+Fnametex)+",sep='')");
     tmp="Openfile(Path,'"+ULEN+"'";
   ,
     tmp="Openfile('"+tmp1+"/"+Fnametex+"','"+ULEN+"'";
@@ -3015,18 +3015,18 @@ WritetoRS(filename,shchoice):=(
     ); //180721to
   );
   if(length(GrL)>0,
-    println(SCEOUTPUT,"  Drwline(GrL)");
+    println(SCEOUTPUT,"  Drwline"+PPa("GrL"));
   );
- // println(SCEOUTPUT,"Closefile('"+ADDAXES+"')"); //181224(2line)
-  println(SCEOUTPUT,"Closefile("+Dqq("0")+")");
+ // println(SCEOUTPUT,"Closefile"+PaO()+"'"+ADDAXES+"')"); //181224(2line)
+  println(SCEOUTPUT,"Closefile"+PaO()+""+Dqq("0")+")");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"}");
   if(shchoice=="sh",
     println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"quit()");
+    println(SCEOUTPUT,"quit"+PPa(""));
   ,
     println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"#quit()");
+    println(SCEOUTPUT,"#quit"+PPa(""));
   );
   closefile(SCEOUTPUT);
   if(iswindows(), //180513from
@@ -3036,14 +3036,14 @@ WritetoRS(filename,shchoice):=(
       tmp=Indexall(tmp1,"/");
       tmp2=substring(tmp1,tmp_3-1,length(tmp1));
       tmp1=substring(tmp1,0,tmp_3-1);
-      println(SCEOUTPUT,"Drv=shell('echo %HOMEDRIVE%',intern=TRUE)");
-      println(SCEOUTPUT,"Drv=Drv[length(Drv)]");
-      println(SCEOUTPUT,"Hpath=shell('echo %HOMEPATH%',intern=TRUE)");
-      println(SCEOUTPUT,"Hpath=Hpath[length(Hpath)]");
+      println(SCEOUTPUT,"Drv=shell"+PaO()+"'echo %HOMEDRIVE%',intern=TRUE)");
+      println(SCEOUTPUT,"Drv=Drv[length"+PaO()+"Drv)]");
+      println(SCEOUTPUT,"Hpath=shell"+PaO()+"'echo %HOMEPATH%',intern=TRUE)");
+      println(SCEOUTPUT,"Hpath=Hpath[length"+PaO()+"Hpath)]");
       println(SCEOUTPUT,"Rest="+Dqq(tmp2));
-      println(SCEOUTPUT,"Path=paste(Drv,Hpath,Rest,sep='')");
-      println(SCEOUTPUT,"setwd(Path)"); 
-      println(SCEOUTPUT,"source('"+filename+"',encoding='UTF-8')");
+      println(SCEOUTPUT,"Path=paste"+PaO()+"Drv,Hpath,Rest,sep='')");
+      println(SCEOUTPUT,"setwd"+PaO()+"Path)"); 
+      println(SCEOUTPUT,"source"+PaO()+"'"+filename+"',encoding='UTF-8')");
     );
     closefile(SCEOUTPUT);
   ); //180513to
@@ -3191,11 +3191,11 @@ ReadOutData(pathorg,filenameorg,optionsorg):=(
         if(length(ptL)>0,
           if(length(ptL)==1,
             ptL=ptL_1;
-            tmp=apply(ptL,textformat(#,6));
+            tmp=apply(ptL,Textformat(#,6));
           ,
             tmp="[";
             forall(ptL,tmp1,
-              tmp=tmp+apply(tmp1,textformat(#,6))+",";
+              tmp=tmp+apply(tmp1,Textformat(#,6))+",";
             );
             tmp=substring(tmp,0,length(tmp)-1)+"]";
           );
@@ -3213,11 +3213,11 @@ ReadOutData(pathorg,filenameorg,optionsorg):=(
   if(length(ptL)>0,
     if(length(ptL)==1,
       ptL=ptL_1;
-      tmp=apply(ptL,textformat(#,6));
+      tmp=apply(ptL,Textformat(#,6));
     ,
       tmp="[";
       forall(ptL,tmp1,
-        tmp=tmp+apply(tmp1,textformat(#,6))+",";
+        tmp=tmp+apply(tmp1,Textformat(#,6))+",";
       );
       tmp=substring(tmp,0,length(tmp)-1)+"]";
     );
@@ -3360,7 +3360,7 @@ Makeshell(texmainfile,flow):=(
       );
     );
   );
-  if(flg==0,  // 17.10.13(Norbert)
+  if(flg==0,  // 17.10.13[Norbert]
     tex=PathT;
     path="";
   );
@@ -3527,7 +3527,7 @@ Makebat(texmainfile,flow):=(
       );
     );
   );
-  if(flg==0,  // 17.10.13(Norbert)
+  if(flg==0,  // 17.10.13[Norbert]
     tex=PathT;
     path="";
   );
@@ -3950,7 +3950,7 @@ Makehelplist(libname):=(
   flg=0;
   forall(1..3,
     if(flg==0,
-      if(substring(cmdall_#,0,7)=="start()",
+      if(substring(cmdall_#,0,7)=="start"+PPa(""),
         cmdall=cmdall_((#+1)..length(cmdall));
         flg=1;
       );
@@ -3960,7 +3960,7 @@ Makehelplist(libname):=(
   tmp=length(cmdall);
   forall(0..2,
     if(flg==0,
-      if(substring(cmdall_(tmp-#),0,5)=="end()",
+      if(substring(cmdall_(tmp-#),0,5)=="end"+PPa(""),
         cmdall=cmdall_(1..(tmp-#-1));
         flg=1;
       );
@@ -4487,11 +4487,11 @@ Maketitle(name):=(
     println(SCEOUTPUT,"title::"+name+"//");
     println(SCEOUTPUT,"");
     println(SCEOUTPUT,"%%%%%%%%%%%%%%%%//");
-    println(SCEOUTPUT,"main::(title)//");
+    println(SCEOUTPUT,"main::"+PaO()+"title)//");
     println(SCEOUTPUT,"\slidepage[m]//");
     println(SCEOUTPUT,"");
     println(SCEOUTPUT,"%%%%%%%%%%%%%%%%//");
-    println(SCEOUTPUT,"new::(title)//");
+    println(SCEOUTPUT,"new::"+PaO()+"title)//");
     println(SCEOUTPUT,"%repeat=1,para//");
     println(SCEOUTPUT,"\slidepage//");
     println(SCEOUTPUT,"");
@@ -4911,7 +4911,7 @@ Presentation(texfile,txtfile):=(
     tmp1="";
     tmp2="";
     tmp3="";
-    sld=removespace(slideL_ns); // 16.06.28
+    sld=Removespace(slideL_ns); // 16.06.28
     sestr="";
     if((substring(sld,0,1)=="%") & (substring(sld,0,2)!="%%"), // 17.06.23
       Repeatsameslide(repeatflg,"",[slideL_ns]);
@@ -5054,7 +5054,7 @@ Presentation(texfile,txtfile):=(
                   +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
                   +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
             );
-            tmp="{"+text(LinkPosV)+"}{\hyperlink{para";  //180529(2lines)
+            tmp="{"+text(LinkPosV)+"}{\hyperlink{para";  //180529[2lines]
             tmp=tmp+text(paractr+1)+"pg"+text(1);
             tmp3=append(tmp3,
                text(LinkPosH)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
@@ -5064,7 +5064,7 @@ Presentation(texfile,txtfile):=(
           tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
           tmp4=concat(tmp4,tmp3);// 17.01.12to
           tmp="\putnotee{"+text(LinkPosH+1)+"}{"+text(LinkPosV)+"}";//180524
-          tmp=tmp+"{\scriptsize\color{blue} "+text(#)+"/"+text(nrep)+"}"; //180524(blue)
+          tmp=tmp+"{\scriptsize\color{blue} "+text(#)+"/"+text(nrep)+"}"; //180524[blue]
           tmp4=append(tmp4,tmp);
           tmp4=concat(tmp4,["\end{layer}",""]);//16.12.31until
           Repeatsameslide(repeatflg,text([#]),tmp4);
@@ -5349,7 +5349,7 @@ Mkslides():=(
     Dirwork=replace(Dirwork,"/",pathsep());
     parent=replace(Dirwork+Batparent,"/",pathsep());// 16.05.29
   );
-  tmp=replace(Dirwork,pathsep()+"fig","");//180604(2lines)
+  tmp=replace(Dirwork,pathsep()+"fig","");//180604[2lines]
   Changework(tmp);
   Setdirectory(Dirwork);
   if(!iswindows(), //180604from
@@ -5431,32 +5431,32 @@ Mkslidesummary(inputfile,outputfile,options):=(
   fout=outputfile;
   if(indexof(fout,".")==0,fout=fout+".tex");
   cmdL=[
-   "Dt=readLines('"+fin+"',encoding='UTF-8')",[],
-   "num=grep('hypertarget',Dt,fixed=TRUE)",[], //180412
-   "Dt=Dt[setdiff(1:length(Dt),num)]",[],
-   "Smain=c();Snew=c();Ssame=c()",[],
-   "for(J in 1:length(Dt)){",[],
-   "  Tmp=length(grep('mainslide{',Dt[J],fixed=TRUE))",[], //180412
-   "  if(Tmp>0){Smain=c(Smain,1)}else{Smain=c(Smain,0)}",[],
-   "  Tmp=length(grep('newslide{',Dt[J],fixed=TRUE))",[], //180412
-   "  if(Tmp>0){Snew=c(Snew,1)}else{Snew=c(Snew,0)}",[],
-   "  Tmp=length(grep('sameslide',Dt[J],fixed=TRUE))",[], //180412
-   "  if(Tmp>0){Ssame=c(Ssame,1)}else{Ssame=c(Ssame,0)}",[],
+   "Dt=readLines"+PaO()+"'"+fin+"',encoding='UTF-8')",[],
+   "num=grep"+PaO()+"'hypertarget',Dt,fixed=TRUE)",[], //180412
+   "Dt=Dt[setdiff"+PaO()+"1:length"+PaO()+"Dt),num)]",[],
+   "Smain=c"+PPa("")+";Snew=c"+PPa("")+";Ssame=c"+PPa(""),[],
+   "for"+PaO()+"J in 1:length"+PaO()+"Dt)){",[],
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'mainslide{',Dt[J],fixed=TRUE))",[], //180412
+   "  if"+PaO()+"Tmp>0){Smain=c"+PaO()+"Smain,1)}else{Smain=c"+PaO()+"Smain,0)}",[],
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'newslide{',Dt[J],fixed=TRUE))",[], //180412
+   "  if"+PaO()+"Tmp>0){Snew=c"+PaO()+"Snew,1)}else{Snew=c"+PaO()+"Snew,0)}",[],
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'sameslide',Dt[J],fixed=TRUE))",[], //180412
+   "  if"+PaO()+"Tmp>0){Ssame=c"+PaO()+"Ssame,1)}else{Ssame=c"+PaO()+"Ssame,0)}",[],
    "}",[],
-   "Nnew=c();Nsame=c()",[],
-   "for(J in 1:length(Dt)){",[],
-   "  if((Snew[J]==1)|(Smain[J]==1)){Nnew=c(Nnew,J)}",[],
-   "  if(Ssame[J]==1){Nsame=c(Nsame,J)}",[],
+  "Nnew=c"+PPa("")+";Nsame=c"+PPa(""),[],
+   "for"+PaO()+"J in 1:length"+PaO()+"Dt)){",[],
+   "  if"+PaO(2)+"Snew[J]==1)|"+PaO()+"Smain[J]==1)){Nnew=c"+PaO()+"Nnew,J)}",[],
+   "  if"+PaO()+"Ssame[J]==1){Nsame=c"+PaO()+"Nsame,J)}",[],
    "}",[],
    "Out=Dt[1:Nnew[1]]",[],
-   "for(J in Looprange(2,length(Nnew))){",[],
-    "  Tmp=max(c(1,Nsame[Nsame<Nnew[J]]))",[],
-    "  Tmp=max(c(Tmp,Nnew[J-1]))+1",[],
-    "  Out=c(Out,Dt[Tmp:Nnew[J]])",[],
+   "for"+PaO()+"J in Looprange"+PaO()+"2,length"+PaO()+"Nnew))){",[],
+    "  Tmp=max"+PaO()+"c"+PaO()+"1,Nsame[Nsame<Nnew[J]]))",[],
+    "  Tmp=max"+PaO()+"c"+PaO()+"Tmp,Nnew[J-1]))+1",[],
+    "  Out=c"+PaO()+"Out,Dt[Tmp:Nnew[J]])",[],
    "}",[],
-   "Tmp=max(c(Nsame[-1],Nnew[-1]))+1",[],
-   "Out=c(Out,Dt[Tmp:length(Dt)])",[],
-   "writeLines(Out,'"+fout+"',sep='\n')",[] //180412(2lines removed)
+   "Tmp=max"+PaO()+"c"+PaO()+"Nsame[-1],Nnew[-1]))+1",[],
+   "Out=c"+PaO()+"Out,Dt[Tmp:length"+PaO()+"Dt)])",[],
+   "writeLines"+PaO()+"Out,'"+fout+"',sep='\n')",[] //180412[2lines removed] 
   ];
   CalcbyR("",cmdL,append(options,"Cat=n"));//180412
   wait(1000);
@@ -5502,8 +5502,8 @@ Example(exorg,suborg):=(
 ////%Example end////
 
 ////%BBdata start////
-BBdata():=Bbdata(BBTarget,0);
-BBdata(fname):=Bbdata(fname,0); // 16.04.09
+BBdata():=BBdata(BBTarget,0);
+BBdata(fname):=BBdata(fname,0); // 16.04.09
 BBdata(fname,optionorg):=(
 //help:BBdata(filename);
 //help:BBdata(options=0(automatic),1(make),"w=","h=");
@@ -5526,7 +5526,7 @@ BBdata(fname,optionorg):=(
   if(path=="",path=Dirwork);//16.10.05
   if(indexof(file,".")==0,file=file+".pdf");
   if(islist(optionorg),options=optionorg,options=[optionorg]);
-  tmp=divoptions(options);
+  tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
   stL=tmp_7;
@@ -5632,13 +5632,13 @@ BBdata(fname,optionorg):=(
       tmp=tmp_2; //
       tmp1=indexof(tmp,":");
       tmp=substring(tmp,tmp1,length(tmp));
-      tmp=removespace(tmp);
+      tmp=Removespace(tmp);
       tmp=tokenize(tmp," ");
       tmp1="";
       forall(tmp,
         tmp1=tmp1+Sprintf(#,2)+" ";
       );
-      tmp1=removespace(tmp1)+addop;
+      tmp1=Removespace(tmp1)+addop;
       tmp2="\includegraphics[bb="+tmp1+"]{"+file+"}";
       println(tmp2);
     );

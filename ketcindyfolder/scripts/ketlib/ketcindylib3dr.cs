@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20181218) loaded");
+println("ketcindylib3d(20190114) loaded");
 
 //help:start();
 
@@ -2422,12 +2422,12 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     tmp2=(ss>-Eps)&(ss<1+Eps)&(tt>-Eps)&(tt<1+Eps)&(ss+tt<1+Eps);//181029
     out=[pR,tmp1,tmp2,tseg,ss,tt]; //181027to
     tmp=ptflg_2;
-    tmp1=(tmp1)%(substring(tmp,0,1)=="e"); //181025from
+    tmp1=(tmp1)%(substring(tmp,0,1)=="i"); //190114
     tmp2=(tmp2)%(substring(tmp,1,2)=="e");
     if(tmp1&tmp2&(scrflg=="Y"), //181031
       if(ptflg_1=="P", //181025
-        Putpoint3d([name,pR]);
-        Fixpoint3d([name,pR]);
+        Putpoint3d([name,pR],"fix");
+//        Fixpoint3d([name,pR]); //190114
       ,
         Drawpoint3d(pR,options);
       ); 

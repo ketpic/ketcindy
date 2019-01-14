@@ -13,6 +13,8 @@
 %* You should have received a copy of the GNU General Public License
 %* along with this program.  If not, see <http://www.gnu.org/licenses/>
 %%% ketpic.sty
+%   2018.09.20
+%       setmargintrue added
 %   2016.12.08
 %       NEarrow, ..., SELarrow,...  added
 %       argument ( option ) = size
@@ -92,6 +94,23 @@
 \setlength{\textheight}{\paperheight}%
 \addtolength{\textheight}{-#3 mm}%
 \addtolength{\textheight}{-#4 mm}%
+%
+}%
+\newcommand{\setmargintrue}[4]{
+\setlength{\oddsidemargin}{-25.4truemm}%
+\addtolength{\oddsidemargin}{#1 truemm}%
+\setlength{\textwidth}{\paperwidth}%
+\addtolength{\textwidth}{-#1 truemm}%
+\addtolength{\textwidth}{-#2 truemm}%
+\setlength{\topmargin}{-25.4truemm}% 1in=25.4mm
+\addtolength{\topmargin}{#3 truemm}%
+\addtolength{\topmargin}{-\headheight}%
+\addtolength{\topmargin}{-\headsep}%
+\addtolength{\topmargin}{-\topskip}%
+\setlength{\textheight}{\paperheight}%
+\addtolength{\textheight}{-#3 truemm}%
+\addtolength{\textheight}{-#4 truemm}%
+\addtolength{\textheight}{\topskip}%
 %
 }%
 \newcommand{\ketcalcwidth}[2][0]{%

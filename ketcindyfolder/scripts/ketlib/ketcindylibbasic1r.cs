@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190115] loaded");
+println("ketcindylibbasic1[20190116] loaded");
 
 //help:start();
 
@@ -139,6 +139,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
       Shellparent="/kc.command"; 
     ,
       Shellparent="/kc.sh"; 
+      Mackc="sh"; //190116
     );  //181125to
     if(!isexists(Dirwork,""),
       println(Dirwork+" not exists");

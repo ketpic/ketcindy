@@ -169,4 +169,3 @@ Windispg():=(
   grestore(); 
   layer(0);
 );
-

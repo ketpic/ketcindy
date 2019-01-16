@@ -174,25 +174,15 @@ Parent ボタンで出力するファイル名は 初期設定がないので，
 
 7. 原点名の位置   初期設定は \verb|"sw"|
 
-<<<<<<< HEAD
 8. 線種
 
-9. 色
+9. 線の色
 
-10. 文字の色
+10. ラベルの色
 
 それぞれダブルクウォートでくくる。色は，色名が使える。"red" など。
 
 10の引数のうちn番目だけを指定する場合は，[n,"内容"]で指定できる。
-=======
-8. 線スタイル
-
-9. 線の色
->>>>>>> 8640fc8c8ce40892b14715d7a28d85d1079ee61b
-
-10.ラベルの色
-
-n番目以降を指定する場合は，[n,"内容"]で指定できる。
 
 また，後方は省略できる。
 
@@ -230,13 +220,13 @@ options は次のリストである。\\
 \begin{verbatim}
     Setax([7,"se"]);
     Setpt(5);
-    Drwpt([-pi,0],0);
+    Pointdata("1",[[-pi,0]],["Inside=0"]);
     Drwxy();
     Plotdata("1","sin(x)","x",["dr","Num=200"]);
-    Drwpt([pi,0],0);
+    Pointdata("2",[[pi,0]],["Inside=0"]);
 \end{verbatim}
 
-  このスクリプトでは，Drwpt([-pi,0],0); を実行したのち座標軸を描き，次に，$y=\sin x$ のグラフを描いてから Drwpt([pi,0],0);を実行するので，点($-\pi$,0) の上を座標軸が通り，点($\pi$,0)は座標軸とグラフの上を通るので白抜きになる。\\
+  このスクリプトでは，\verb| Pointdata("1",[[-pi,0]],["Inside=0"]);| を実行したのち座標軸を描き，次に，$y=\sin x$ のグラフを描いてから，再び \verb| ["Inside=0"]);|にして実行するので，点($-\pi$,0) の上を座標軸が通り，点($\pi$,0)は座標軸とグラフの上を通るので白抜きになる。\\
 
 \begin{center} \input{Fig/drwxy}\end{center}
 
@@ -352,8 +342,7 @@ Plotdata("1","f(x)","x");
 
 【例】作図ツールの「点を加える」で，A〜Gの点をとっておく。小さい方からいくつか表示する。
 \begin{verbatim}
-    Ptsize(2);
-    Drawpoint([A,B,C,D,E,F,G]);
+    Pointdata("1",[A,B,C,D,E,F,G],["Size=2"]);
     Fontsize("t"); Letter([A,"s2","A"]);
     Fontsize("ss"); Letter([B,"s2","B"]);
     Fontsize("s"); Letter([C,"s2","C"]);
@@ -418,13 +407,12 @@ Plotdata("1","f(x)","x");
 \begin{verbatim}
       Setorigin([3,2]);
       Listplot([A,B,C,A]);
-      Ptsize(3);
-      Drawpoint([1,1]);
+      Pointdata("1",[1,1],["Size=3"]);
       Letter([[1,1],"s2","P"]);
 \end{verbatim}
   左が実行時のCinderellaの画面，右が\TeX の結果。\\
 
-\hspace{10mm} \includegraphics[bb=0 0 227 205 , width=4cm]{Fig/setorigin.pdf}     \input{Fig/setorigin} 
+\hspace{10mm} \includegraphics[bb=0 0 299.02 250.01, width=4cm]{Fig/setorigin.pdf}     \input{Fig/setorigin} 
 
 \vspace{\baselineskip}
 \hypertarget{setpen}{}
@@ -509,7 +497,7 @@ Plotdata("1","f(x)","x");
 
 である。
 
-nameは，プロットデータの名称で，関数ごとに決められた頭部のあとに付けられる。たとえば，線分を描く Listplot() でできるプロットデータは，頭部が"sg"であり，nameを"1"とすれば，"sg1" という名称のプロットデータができる。name指定は不要の場合もあり，その場合は \ketcindy が自動的に名称を作成する。
+nameは，プロットデータの名称で，関数ごとに決められた頭部のあとに付けられる。たとえば，線分を描く Listplot() でできるプロットデータは，頭部が"sg"であり，nameを"1"とすれば，"sg1" という名称のプロットデータができる。name指定は不要の場合もあり，その場合は \ketcindy が自動的に名称を作成する。なお，name に演算記号は使えないので，番号として負の数は使えない。
 
 点リストなどには，点の座標，点の識別名，複数の点のリスト，複数の点を示す文字列などがあり，関数によって異なる。点はCinderellaで作図した幾何要素の点を利用できる。
 
@@ -560,7 +548,17 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 \hypertarget{pointdata}{}
 \item[関数]  Pointdata(name , 点リスト , options)
 \item[機能]  点のデータを作成する。
-\item[説明]  与えられた座標の点データを作成する。オプションは"Size=","Color="。
+\item[説明]  与えられた座標の点データを作成する。オプションは"Size=","Color=","Inside"。
+
+Inside オプションは，点の内部についての指定。ただし，Cinderellaの描画面には反映されない。
+
+0 : 白抜き
+
+0から１まで : 濃度
+
+-1 : 塗らない
+
+カラーコードまたは色名 : その色で塗る
 
 \vspace{\baselineskip}
 【例】
@@ -583,7 +581,7 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
       
 (4) 点データを作り，TeXにオプション0（白抜き）で描く
 
-\hspace{10mm}  \verb|Pointdata("1",[A,B],[0]);|
+\hspace{10mm}  \verb|Pointdata("1",[A,B],["Inside=0"]);|
       
 (5) 点データを作るが，TeXには出力しない
 
@@ -608,50 +606,47 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 
 %\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\vspace{\baselineskip}
-\hypertarget{drwpt}{}
-\item[関数]  Drwpt(点,option）, Drawpoint(点,options)
-\item[機能]  点を表示する
-\item[説明]  座標または幾何点の識別名を与えて点を表示する。これだけではCinderellaの描画面には描かれないので，描画面にも表示するにはCinderellaの作図ツールで作図するか，Pointdata() または Putpoint() を用いる。
+%\vspace{\baselineskip}
+%\hypertarget{drwpt}{}
+%\item[関数]  Drwpt(点,option）, Drawpoint(点,options)
+%\item[機能]  点を表示する
+%\item[説明]  座標または幾何点の識別名を与えて点を表示する。これだけではCinderellaの描画面には描かれないので，描画面にも表示するにはCinderellaの作図ツールで作図するか，Pointdata() または Putpoint() を用いる。
 
-複数の点の場合は座標または識別名はリストで与える。
+%複数の点の場合は座標または識別名はリストで与える。
 
-optionに数字 0 を入れると，白抜きで表示する。なお白抜きの場合は，Ptsize()で点の大きさを少し大きめにとるとよい。
+%optionに数字 0 を入れると，白抜きで表示する。なお白抜きの場合は，Ptsize()で点の大きさを少し大きめにとるとよい。
 
-可読性を高めるときはDrawpointを推奨する。
+%可読性を高めるときはDrawpointを推奨する。
 
-\vspace{\baselineskip}
-【例】座標(1,1)と(4,3)に点を表示する。Cinderellaの描画面には描かれない。
+%\vspace{\baselineskip}
+%【例】座標(1,1)と(4,3)に点を表示する。Cinderellaの描画面には描かれない。
 
-\hspace{10mm} \verb|Drwpt([[1,1],[4,3]]);|
+%\hspace{10mm} \verb|Drwpt([[1,1],[4,3]]);|
 
-\vspace{\baselineskip}
-【例】Cinderellaで点A,B,Cを作図しておき，\TeX で表示する。
+%\vspace{\baselineskip}
+%【例】Cinderellaで点A,B,Cを作図しておき，\TeX で表示する。
 
-\hspace{10mm} \verb|Drwpt([A,B,C]); |
+%\hspace{10mm} \verb|Drwpt([A,B,C]); |
 
-\vspace{\baselineskip}
-【例】線分ABの右端（B）を白抜きで表示する
+%\vspace{\baselineskip}
+%【例】線分ABの右端（B）を白抜きで表示する
 
-\begin{layer}{150}{0}
-\putnotese{50}{8}{  \input{Fig/drawpoint}}
-\end{layer}
-\begin{verbatim}
-      Ptsize(5);
-      Listplot([A,B]);
-      Drawpoint(B,0);
-\end{verbatim}
+%\begin{layer}{150}{0}
+%\putnotese{50}{8}{  \input{Fig/drawpoint}}
+%\end{layer}
+%\begin{verbatim}
+ %     Ptsize(5);
+%      Listplot([A,B]);
+%      Drawpoint(B,0);
+%\end{verbatim}
 
-※  Drawpoint([A,B],0);  とすれば，両端が白抜きになる。
+%※  Drawpoint([A,B],0);  とすれば，両端が白抜きになる。
 
-\vspace{\baselineskip}
-{\bf 点の表示方法}
+%\vspace{\baselineskip}
+%{\bf 点の表示方法}
 
-点を表示する関数はいくつかある。Cinderellaの描画面上に単に点を表示するもの，幾何点を作るもの，TeXに出力するためのもの，と少しずつ意味が異なる。
 
-付録の「\hyperlink{mkpttable}{点の作図についての比較表}」を参照のこと。
-
-\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{putpoint}{}
@@ -1861,14 +1856,14 @@ Dis オプションにより，値がジャンプする不連続点を線で結�
 【例】ガウス記号 [$x$] で表される関数（床関数 : floor()）のグラフ。
 \begin{verbatim}
     Plotdata("1","floor(x)","x",["Num=100","Dis=0.9"]);
-    Ptsize(3);
     Drwxy();
     repeat(7,s,start -> -2,
-      Drwpt([s+1,s],0);
+      Pointdata(text(s+3),[s+1,s],["Inside=0","Size=3"]);
     );
 \end{verbatim}
 
 \hspace{40mm}\input{Fig/plotdata5} 
+なお，ここで，Pointdata() のname を text(s+3) としているのは，sが -2 から始まるので，name は1から始まるようにするためである。name に負の数は使えないので。
 
 \vspace{\baselineskip}
   関数に文字係数がついており，文字係数の値を変化させながらグラフを描くには，Assign を使うか，Defvar で変数を定義する。
@@ -3001,8 +2996,7 @@ Intersectcrvs() との違いは，パラメータがあるかどうかである�
   A.xy=plist_1;
   B.xy=plist_3;
   Listplot([A,B],["do"]);
-  Ptsize(2);
-  Drwpt([A,B]);
+  Pointdata("1",[A,B],["Size=2"]);
   Letter([A,"n2w","A",B,"s2e","B",(A+B)/2,"e",text(plist_5)]);
 \end{verbatim}
 
@@ -3312,6 +3306,9 @@ end////
     plotdata("1","x^3-2*x^2+2","x");
     println(Integrate("gr1",[0,3]));
 \end{verbatim}
+
+数値積分ではなく，数式処理として定積分の値を求める場合は，Maxima を利用する。\hyperlink{calcbyM}{CalcbyM}  
+を参照。
 
 \vspace{\baselineskip}
 \hypertarget{inversefun}{}
@@ -4574,7 +4571,7 @@ Maximaは数式処理ソフトで，\ketcindy においては微積分の計算�
 \vspace{\baselineskip}
   $f(x)=\dfrac{e^x+e^{-x}}{2}$ の，$x=a$における接線の方程式を作る。
   
-Maximaでその処理を行うコマンドを定義し，CalbyMで実行する。
+Maximaでその処理を行うコマンドを定義し，CalcbyMで実行する。
 \begin{verbatim}
     fx="(exp(x)+exp(-x))/2";
     cmdL=[
@@ -4592,7 +4589,7 @@ Maximaでその処理を行うコマンドを定義し，CalbyMで実行する�
     (%e^a-%e^-a)*(x-a))/2+(%e^a+%e^-a)/2 
 \end{verbatim}
 が表示される。\\
-  この，CalbyMの戻り値 tn1 を用いて，曲線上の１点Aにおける接線のグラフを描く。以下のスクリプトを追加する。なお，点AをCinderellaの作図ツールで適当なところにとっておく。
+  この，CalcbyMの戻り値 tn1 を用いて，曲線上の１点Aにおける接線のグラフを描く。以下のスクリプトを追加する。なお，点AをCinderellaの作図ツールで適当なところにとっておく。
 \begin{verbatim}
     tn1=Assign(tn1,["%e^a","exp(a)","%e^-a","exp(-a)"]);
     Plotdata("1",fx,"x");
@@ -4633,12 +4630,22 @@ Maximaでその処理を行うコマンドを定義し，CalbyMで実行する�
 
 cmdLで定義しているMaximaのコマンド（trigsimp など）については，Maximaの解説書などを参照されたい。
   
-%\begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-%\vspace{\baselineskip}
-%\hypertarget{example}{}
-%\item[関数]  Example("Mxfun",文字)
-%\item[機能]  Mxfunの使用例を表示。文字は "a"，"b"，など。
-%\item[説明]  たとえば，\verb|Example("Mxfun","a")| とすると，Mxfunの使用例がコンソールに表示される。
+\vspace{\baselineskip}
+【例】定積分の値を求める。
+
+\vspace{\baselineskip}
+$\displaystyle \int _{-1} ^2 (-x^3+3x+2)dx$ の値を求める。結果は val で受け取り，Mxtex() に渡して，TeX書式にして表示する。
+
+\begin{verbatim}
+  cmdL=[
+    "val:integrate",["-x^3+3*x+2,x,-1,2"],
+    "val",[]
+  ];
+  CalcbyM("val",cmdL);
+  Mxtex("1",val);
+  Expr([[2,2],"e","S="+tx1]);
+\end{verbatim}
+
 
 \vspace{\baselineskip}
 \hypertarget{mxbatch}{}
@@ -6035,21 +6042,21 @@ optionsがないときは，以下の 初期設定を用いる。
 
 \begin{description}
  %----------------  Drawpoint3d --------------------------------------------
-\hypertarget{drawpoint3d}{}
-\item[関数]  Drawpoint3d(座標)
-\item[機能]  空間点を描く
-\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} を用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
+%\hypertarget{drawpoint3d}{}
+%\item[関数]  Drawpoint3d(座標)
+%\item[機能]  空間点を描く
+%\item[説明]  引数で与えた空間座標の点を描く。この点は幾何点ではない。また，TeX にも出力されない。幾何点にするには \hyperlink{putpoint3d}{Putpoint3d()} を用いる。TeXに点を出力するには，\hyperlink{pointdata3d}{Pointdata3d()} を用いる。
 
-引数は，座標のリストにすることもできる。
+%引数は，座標のリストにすることもできる。
 
-\vspace{\baselineskip}
-【例】
-\begin{verbatim}
-  Drawpoint3d([1,1,1]);
-  Drawpoint3d([[1,1,1],[0,1,0]]);
-\end{verbatim}
+%\vspace{\baselineskip}
+%【例】
+%\begin{verbatim}
+%  Drawpoint3d([1,1,1]);
+%  Drawpoint3d([[1,1,1],[0,1,0]]);
+%\end{verbatim}
 
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 
  %----------------  Pointdata3d --------------------------------------------
 \hypertarget{pointdata3d}{}
@@ -6088,7 +6095,7 @@ optionは，"fix"( 初期設定) または "free"。リスト ["free"] にして
     \verb|Putpoint3d(["A",[2,1,3]],"free");|
     
 \vspace{\baselineskip}
-  なお，この関数は幾何点を作るものであり，TeXには出力されない。TeXに点を出力するには，\hyperlink{pointdata}{Pointdata()} または \hyperlink{drwpt}{Drawpoint()}を併用する。
+  なお，この関数は幾何点を作るものであり，TeXには出力されない。TeXに点を出力するには，\hyperlink{pointdata}{Pointdata()} を併用する。
   
   空間における点の座標は，点名に"3d"を付加した名前の変数に代入される。たとえば，点Aの座標はA3dである。これにより，点の座標を取得できる。
 
@@ -6971,13 +6978,13 @@ ExeccmdC()の options2を ["nodisp"] にすると，陰線は非表示になる�
     Intersectcrvsf("1","sl3d1",fd);
     ExeccmdC("1",[""]);
     println("Intersect="+intercrvsf1);
-    Drawpoint3d(intercrvsf1); 
+    Pointdata3d("1",intercrvsf1); 
 \end{verbatim}
 実行すると，コンソールに
 
 \verb|   Intersect=[[0,1.57,1.52],[0,-1.91,0.36]] |
     
-のように表示され，画面には緑で交点が表示される。
+のように表示され，画面には交点が表示される。
 
 %------------------- IntersectsgpL -----------------------------------------------
 \vspace{\baselineskip}
@@ -7563,12 +7570,11 @@ none：計算だけ行い，点は作図しない。
   Defvar("vo=[3,3,3]");
   Defvar("vx=[0,1,0]");
   Defvar("vy=[0,0,1]");
-  Putpoint3d(["A",[3,3,3]]);
+  Putpoint3d(["A",[3,3,3]],["fix"]);
   Circledata("1",[[0,0],[2,0]],["nodisp"]);
   Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);
   Embed("1",["cr1","sg1"],"vo+x*vx+y*vy","[x,y]");
-  Ptsize(3);
-  Drawpoint(A);
+  Pointdata("1",[A],["Size=3"]);
 \end{verbatim}
          \begin{center} \input{Fig/embed01} \end{center}
 
@@ -7605,8 +7611,7 @@ none：計算だけ行い，点は作図しない。
   Circledata("1",[[0,0],[2,0]],["nodisp"]);
   Listplot("1",[[0,2],[-sqrt(3),-1],[sqrt(3),-1],[0,2]],["nodisp"]);
   Embed("1",["cr1","sg1"],"P3d+x*(E3d-P3d)+y*(F3d-P3d)","[x,y]");
-  Ptsize(3);
-  Drawpoint(P);
+  Pointdata("1",[P],["Size=3"]);
   Skeletonparadata("1");
 \end{verbatim}
          \begin{center} \input{Fig/embed02} \end{center}
@@ -7804,8 +7809,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{deqplot}{Deqplot(name,式,変数名,初期値,options])}  \>微分方程式の解曲線を描く\\
 \hyperlink{dotfilldata}{Dotfilldata(name , 方向, PD , options)}    \>領域に点を敷き詰める\\
 \hyperlink{drawsegmark}{Drawsegmark(name,list,options)}  \>線分に印をつける\\
-\hyperlink{drwpt}{Drawpoint([点,options])}  \>点を表示する\\
-\hyperlink{drwpt}{Drwpt([点,options])}      \>点を表示する\\
+%\hyperlink{drwpt}{Drawpoint([点,options])}  \>点を表示する\\
+%\hyperlink{drwpt}{Drwpt([点,options])}      \>点を表示する\\
 \hyperlink{ellipseplot}{Ellipseplot(name,list,str,options)}  \>楕円を描く\\
 \hyperlink{enclosing}{Enclosing(name , [位置，方向，数式])}  \>複数の曲線から閉曲線を描く\\
 \hyperlink{expr}{Expr([座標,位置,文字列],options)}        \>\TeX 数式を書く\\
@@ -7980,7 +7985,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{datalist}{Datalist2d()}  \>画面に描かれているすべてのプロットデータ\\
 \hyperlink{datalist}{Datalist3d()}  \>画面に描かれているすべてのプロットデータ\\
 \hyperlink{dist3d}{Dist3d(点名,点名)}  \>空間の2点の距離\\
-\hyperlink{drawpoint3d}{Drawpoint3d(座標)}  \>空間点を描く\\
+%\hyperlink{drawpoint3d}{Drawpoint3d(座標)}  \>空間点を描く\\
 \hyperlink{embed}{Embed(name,PD,式)}  \>埋め込みデータ作成\\
 \hyperlink{execcmdc}{ExeccmdC(name,options1,options2)}  \>C言語で命令実行\\
 \hyperlink{expr3d}{Expr3D([座標,位置,文字列],options)}      \>文字列を表示する\\

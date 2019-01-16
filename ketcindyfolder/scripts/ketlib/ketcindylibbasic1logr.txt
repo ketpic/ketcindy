@@ -1,3 +1,6 @@
+// 20190115
+//    Plotdata debugged( ( => [ )
+//    Pointdata change( colorcode => colorcmyk2rgb)
 // 20190103
 //    Paramplot debugged  ( "pt" localized )
 // 20181231

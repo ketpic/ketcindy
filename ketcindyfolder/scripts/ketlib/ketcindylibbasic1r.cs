@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.4");
+println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190111] loaded");
+println("ketcindylibbasic1[20190115] loaded");
 
 //help:start();
 
@@ -3852,7 +3852,7 @@ Pointdata(nm,listorg,options):=(
         tmp2=substring(tmp_2,0,1);
         if(contains(["-","0","1",".","["],tmp2),
           tmp=parse(tmp_2);
-          if(length(tmp)==4,tmp=Colorcode("cmyk","rgb",tmp)); //181231
+          if(length(tmp)==4,tmp=Colorcmyk2rgb(tmp)); //190115
           if(!isstring(tmp),tmp=[tmp]);
         ,
           tmp=Colorname2rgb(tmp_2);
@@ -4169,7 +4169,7 @@ Plotdata(name1,func,variable,options):=(
     PdL=[];
     Ke=1;
     forall(0..Num, 
-      xx=x1+#*(x2-x1)/Num; // differs from Scilab ( / Num-1)
+      xx=x1+#*(x2-x1)/Num; // differs from Scilab [ / Num-1]
       if(length(Exfun)>0,
         tmp=parse(Exfun);
         if(abs(tmp)<Eps,

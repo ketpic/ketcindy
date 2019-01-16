@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190111] loaded");
+println("ketcindybasic2[20190116] loaded");
 
 //help:start();
 
@@ -5647,6 +5647,288 @@ BBdata(fname,optionorg):=(
   tmp2; // 16.04.25
 );
 ////%BBdata end////
+
+////%Findfun start////
+Findfun(name,lineorg):=(
+  regional(line,sep,pL,jj,kk,flg,rmv,out,tmp,tmp1,tmp2);
+  line=Removespace(lineorg);
+  rmv=[name,"regional","forall","if","text","curkernel","append","concat"];
+  rmv=concat(rmv,["append","apply","allelements","indexof"]);
+  rmv=concat(rmv,["substring","select","isstring","length"]);
+  rmv=concat(rmv,["round","unicode","openfile","closefile","println","replace"]);
+  rmv=concat(rmv,["setdirectory","parse","tokenize","import","load","ispoint"]);
+  rmv=concat(rmv,["isreal","layer","autoclearlayer","drawpoly","allcircles"]);
+  rmv=concat(rmv,["floor","flatten","prepend","islist","print","mod","abs","sum"]);
+  rmv=concat(rmv,["cos","sin","tan","arccos","arcsin","arctan","sqrt","reverse","re"]);
+  rmv=concat(rmv,["sort","contains","max","min","allpoints","isselected","common"]);
+  rmv=concat(rmv,["inspect","iscircle","alllines","repeat","remove","format"]);
+  rmv=concat(rmv,["ceil","while","dist","det","exp","err","arctan2","fillpoly"]);
+  rmv=concat(rmv,["drawtext","mouse","allsegments","createpoint","create"]);
+  rmv=concat(rmv,["gsave","connect","draw","grestore","wait"]);
+  
+//  rmv=concat(rmv,["d","list","c","funN","funP","function","for","return"]);  // in string (for R)
+//  rmv=concat(rmv,["gsub","cat"]);  // in string (for R)
+//  rmv=concat(rmv,["options"]); // written for Windows
+//  rmv=concat(rmv,["isexists"]); // java functions
+  
+  sep=[""," ",",","=","(","+","-","*","/","^","_","[",".","!","&","%",Dq,";",">","<",unicode("0009")];
+  out=[];
+  if(substring(line,0,2)!="//",
+    pL=Indexall(line,"(");
+    forall(pL,jj,
+      flg=0;
+      if(contains(pL,jj-1), flg=1);
+      forall(reverse(1..(jj-1)),
+        if(flg==0,
+          if(#==1,
+            tmp=substring(line,0,1);
+            if(contains(sep,tmp),
+             tmp=substring(line,1,jj-1);
+            ,
+             tmp=substring(line,0,jj-1);
+            );
+            flg=1;
+          );
+        );
+        if(flg==0,
+          tmp=substring(line,#-1,#);
+          if(contains(sep,tmp),
+            tmp=substring(line,#,jj-1);
+            if(indexof(substring(line,0,#-1),"//")==0,
+              flg=1;
+            );
+          );
+        );
+      );
+      if((flg==1)&(length(tmp)>0),
+        out=append(out,tmp);
+      );
+    );
+  );
+  out=remove(out,rmv);
+  tmp=out;
+  out=[];
+  forall(tmp,
+    if(!contains(out,#),out=append(out,#));
+  );
+  out;
+);
+////%Findfun end////
+
+////%Extractfun start////
+Extractfun(strL):=(
+  regional(nL,str,str2,start,sep,out,tmp,tmp1,tmp2);
+  out=[];
+  forall(strL,str,
+    nL=Indexall(str,Dq);
+    str2="";
+    start=0;
+    forall(1..(length(nL)/2),
+      tmp1=nL_(2*#-1);
+      str2=str2+substring(str,start,tmp1-1);
+      start=nL_(2*#);
+    );
+    str2=str2+substring(str,start,length(str));
+    fL=Findfun("csdraw",str2);
+    out=remove(out,fL);
+    out=concat(out,fL);
+  );
+);
+////%Extractfun end////
+
+//DL1=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
+//DL2=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
+//DL=concat(DL1,DL2);
+//Out=[];
+
+////%Extractall start////
+Extractall(name):=(
+  regional(fL,jj,tmp,tmp1,tmp2,tmp3);
+  fL=apply(Out,#_1);
+  tmp1=select(DL,#_1==name);
+  if(length(tmp1)>0,
+    tmp1=tmp1_1;
+    if(!contains(fL,tmp1),
+      Out=append(Out,tmp1);
+      fL=append(fL,tmp1_1);
+      if(length(tmp1)>=5,
+        forall(5..(length(tmp1)),jj,
+          tmp=tmp1_jj;
+          if(!contains(fL,tmp),
+            Extractall(tmp);
+          );
+        );
+      );
+    );
+  );
+  tmp1=Out;
+  Out=[];
+  forall(1..(length(tmp1)),
+    if(!contains(Out,tmp1_#),
+      Out=append(Out,tmp1_#);
+    );
+  );
+  Out;
+);
+////%Extractall end////
+
+////%Mkketcindyjs start//// 190115
+Mkketcindyjs():=Mkketcindyjs(options); 
+Mkketcindyjs(options):=( //17.11.18
+//help:Mkketcindyjs();
+//help:Mkketcindyjs(options=["Tex=y","Net=y","Path=Dircdy"]);
+  regional(texflg,netflg,htm,htmorg,from,upto,flg,fL,fun,tmp,tmp1,tmp2,tmp3,
+      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,
+      DL,Out);
+  texflg="Y";
+  netflg="Y";
+  path=Dircdy;
+  forall(options,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(indexof(tmp1,"T")>0,
+      texflg=Toupper(tmp2);
+    );
+    if(indexof(tmp1,"N")>0,
+      netflg=Toupper(tmp2);
+    );
+    if(indexof(tmp1,"P")>0,
+      if(!tmp2="Dircdy",
+        path=tmp2;
+      );
+    );
+  );
+  if(!isexists(Dircdy,Fhead+".html"),
+    drawtext(mouse().xy-[0,1],"'Write/Rewrite to CindyJS' at first",size->24,color->[1,0,0]);
+    wait(3000);
+  ,
+    htmorg=Readlines(Dircdy,Fhead+".html");
+    tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csdraw"))>0);
+    from=tmp_1+1;
+    flg=0;
+    forall(from..(length(htmorg)),
+      if(flg==0,
+        if(indexof(htmorg_#,"</script>")>0,
+         upto=#-1;
+         flg=1;
+        );
+      );
+    );
+    fL=Extractfun(htmorg_(from..upto));
+    DL=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
+    tmp=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
+    DL=concat(DL,tmp);
+    Out=[];
+    forall(fL,fun,
+      Extractall(fun);
+    );
+    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","ignoredfun.txt");
+    tmp=select(tmp,substring(#,0,2)!="//");
+    tmp1=select(Out,contains(tmp,#_1));
+    Out=remove(Out,tmp1);
+    tmp1=select(1..(length(htmorg)),indexof(htmorg_#,"script id=")>0);
+    partL=[];
+    forall(tmp1,nn,
+      from=nn;
+      tmp2=htmorg_from;
+      tmp=Indexall(tmp2,Dq);
+      name=substring(tmp2,tmp_1,tmp_2-1);
+      tmp=select((from+1)..(length(htmorg)),indexof(htmorg_#,"</script>")>0);
+      upto=tmp_1;
+      partL=append(partL,[name,from,upto]);
+    );
+    tmp=apply(partL,#_2);
+    tmp=min(tmp)-1;
+    toppart=[1,tmp];
+    tmp=apply(partL,#_3);
+    tmp=max(tmp)+1;
+    lastpart=[tmp,length(htmorg)];
+    if(netflg=="Y",
+      tmp1=Fhead+"json.html";
+    ,
+      tmp1=Fhead+"jsoff.html";
+    );
+    setdirectory(path);
+    SCEOUTPUT = openfile(tmp1);
+    tmp1=htmorg_((toppart_1)..(toppart_2));
+    if(netflg=="N",
+      tmp3=replace(Dirhead+"/ketcindyjs/",pathsep(),"/");
+      tmp= "    <link rel="+Dqq("stylesheet")+" href=";
+      tmp=tmp+Dq+"file:///"+tmp3+"CindyJS.css"+Dq+">";
+      tmp1_(length(tmp1)-2)=tmp;
+      tmp= "    <script type="+Dqq("text/javascript")+" src=";
+      tmp=tmp+Dq+"file:///"+tmp3+"Cindy.js"+Dq+"></script>";
+      tmp1_(length(tmp1)-1)=tmp;
+      tmp1_(length(tmp1))="";
+    );
+    forall(tmp1,
+      println(SCEOUTPUT,#);
+    );
+    tmp="<script id="+Dqq("csinit")+" type=";
+    tmp=tmp+Dqq("text/x-cindyscript")+">";
+    println(SCEOUTPUT,tmp);
+    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","commonused.txt");
+    forall(tmp,
+     println(SCEOUTPUT,#);
+    );
+    lib1=Readlines(Dirhead+"/ketlib","ketcindylibbasic1r.cs");
+    lib2=Readlines(Dirhead+"/ketlib","ketcindylibbasic2r.cs");
+    forall(Out,fun,
+      libf=fun_2;from=fun_3;upto=fun_4;
+      if(indexof(libf,"basic1")>0,
+        tmp1=lib1_(from..upto);
+      ,
+        tmp1=lib2_(from..upto);
+      );
+      forall(tmp1,
+        println(SCEOUTPUT,#);
+      );
+    );
+    println(SCEOUTPUT,"</script>");
+    tmp=select(partL,#_1=="csdraw");
+    tmp=tmp_1;
+    from=tmp_2;
+    upto=tmp_3;
+    tmp1=htmorg_(from..upto);
+    forall(tmp1,
+      println(SCEOUTPUT,#);
+    );
+    tmp1=htmorg_((lastpart_1)..(lastpart_2));
+    tmp=select(1..(length(tmp1)),indexof(tmp1_#,Dqq("cs*"))>0);
+    from=tmp_1;
+    forall(1..(from-1),
+      println(SCEOUTPUT,tmp1_#);
+    );
+    if(texflg=="Y",
+      if(netflg=="Y",
+        tmp="  use: ["+Dqq("katex")+"],";
+      ,
+      );
+      println(SCEOUTPUT,tmp);
+    );
+    tmp2=["Figure","Parent","KeTJS","KeTJSoff"];
+    forall(from..(length(tmp1)),
+      if(indexof(tmp1_#,"type: "+Dqq("Button"))==0,
+        println(SCEOUTPUT,tmp1_#);
+      ,
+        nn=indexof(tmp1_#,"text: ");
+        tmp=substring(tmp1_#,nn-1,length(tmp1_#));
+        nn=Indexall(tmp,Dq);
+        tmp=substring(tmp,nn_1,nn_2-1);
+        if(!contains(tmp2,tmp),
+          println(SCEOUTPUT,tmp1_#);
+        );
+      );
+    );
+    closefile(SCEOUTPUT);
+    setdirectory(Dirwork);
+    if(netflg=="Y",tmp="json",tmp="jsoff");
+    drawtext(mouse().xy-[0,1],"Generate "+tmp+"in "+path,size->20,color->[1,0,0]);
+    wait(2000);
+  );
+);
+////%Mkketcindyjs end////
 
 //help:end();
 

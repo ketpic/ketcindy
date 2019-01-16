@@ -1,0 +1,172 @@
+Ketinit():=Ketinit("fig",1,[-5,5],[-5,5]); //181001
+Ketinit(Arg):=(//181001from
+  if(isstring(Arg),
+     Ketinit(Arg,1,[-5,5],[-5,5]);
+  ,
+    Ketinit("fig",Arg,[-5,5],[-5,5]);
+  );
+);
+Ketinit(work,sy,rangex,rangey):=(//181001to
+ //help:Ketinit();
+ //help:Ketinit("");
+ regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
+  PenThickInit=8;
+  ULEN="1cm";
+  MEMORI=0.05;//18.01.15from
+  MEMORIInit=MEMORI;
+  MEMORINow=MEMORI;
+  MARKLEN=0.05;
+  MARKLENInit=MARKLEN; //180504
+  MARKLENNow= MARKLEN;
+  GENTEN=[0,0];//18.01.15until
+  KETPICLAYER=20;
+  MilliIn=1/2.54*1000;
+  PenThick=round(MilliIn*0.02);
+  PenThickInit=PenThick;
+  TenSizeInit=0.02;
+  TenSize=TenSizeInit;
+  YaSize=1; YaAngle=18; YaPosition=1;
+  YaCut=0; YasenStyle="dr,1"; Yajiristyle="tf";
+  KETPICCOUNT=1;
+  KCOLOR=[0,0,0];
+  GLIST=[];
+  GCLIST=[];
+//  GDATALIST=[];
+  GOUTLIST=[];
+  POUTLIST=[];
+  VLIST=[];
+  FUNLIST=[];
+  LETTERlist=[];
+  COM0thlist=[];
+  COM1stlist=[];
+  COM2ndlist=[];
+  COM2ndlistb=[]; //180612
+  ADDAXES="1";
+  AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
+  AXCOUNT=1; //181215
+  LFmark=unicode("000a");
+  CRmark=unicode("000d");//16.12.13
+  Dq=unicode("0022");
+  CommonMake=0;//180610
+  WaitUnit=10;
+  CONTINUED=0;
+  OutComList=[];
+  OutFileLIst=[];   // 15.10.22
+  FigPdfList=[];  // 16.04.08
+  Fillstore(); //181212
+  ADDPACK=[]; // 16.05.16
+  GPACK="tpic"; //180817
+  ErrFlag=0;
+  setdirectory(Dirwork);
+  if(!isstring(Fhead),  // 17.10.13from, 17.11.12
+    Fhead=text(curkernel());
+    Fhead=replace(Fhead,".cdy","");
+    Slidename=Fhead; //17.10.24
+  );//17.11.12
+  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405
+  Namecdy=Cindyname();//180608
+  tmp1=Indexall(Dircdy,"%"); //180329from
+  if(length(tmp1)>0,
+    tmp1=append(tmp1,length(Dircdy));
+    tmp2=substring(Dircdy,0,tmp1_1-1);
+    forall(1..(length(tmp1)-1),
+      tmp=substring(Dircdy,tmp1_#,tmp1_#+2);
+      tmp2=tmp2+unicode(tmp);
+      tmp2=tmp2+substring(Dircdy,tmp1_#+2,tmp1_(#+1)-1);
+    );
+    Dircdy=tmp2;
+  ); //180329to
+  if(iswindows(),  //17.12.01
+    Dircdy=replace(Dircdy,"/",pathsep());
+    if(substring(Dircdy,0,1)==pathsep(),
+      Dircdy=substring(Dircdy,1,length(Dircdy));
+    );
+  );
+  Changesetting(Homehead+pathsep()+getname()); //180913
+  Changesetting(Dircdy); //181017
+  Changework(Dircdy+pathsep()+work); //180329to,181001
+  Fnametex=Fhead+".tex";
+  FnameR=Fhead+".r";
+  FnamebodyR=Fhead+"body.r";
+  Fnameout=Fhead+".txt";  // 17.10.13until
+  if(!isstring(Mackc),// 16.06.07
+    Mackc="sh"; 
+  );
+  if(iswindows(),
+    Batparent="\kc.bat";
+  ,
+    if(ismacosx(), //181125from
+      Shellparent="/kc.command"; 
+    ,
+      Shellparent="/kc.sh"; 
+    );  //181125to
+    if(!isexists(Dirwork,""),
+      println(Dirwork+" not exists");
+    ,
+      if(!iskcexists(Dirwork),
+        setdirectory(Dirwork);
+        SCEOUTPUT = openfile(Shellparent);
+        closefile(SCEOUTPUT);
+        println(Shellparent+" generated");
+      );
+      println(setexec(Dirwork,Shellparent));
+    );
+  );
+  ArrowlineNumber=1;  // 15.01.05
+  ArrowheadNumber=1;
+  BezierNumber=1; //15.01.03
+  SCALEX=1;
+  SCALEY=sy;
+//  Setscaling(sy);
+  XMIN=rangex_1/SCALEX;
+  XMAX=rangex_2/SCALEX;
+  YMIN=rangey_1/SCALEY;
+  YMAX=rangey_2/SCALEY;
+  Setwindow("Msg=n"); // 16.05.31
+  // for Presentation
+  letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
+  shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
+  SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
+                letterc,mboxc,mboxc,mboxc,62,2,letterc];
+  SlideMargin=[0,0]; //180908
+  ThinDense=0.1;//17.01.08
+  if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0,
+    LibnameS=replace(LibnameS,"ketpic","ketpic2e");
+  );//17.12.03until
+);
+Windispg():=(
+  regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,opcindy);
+  if(ADDAXES=="1", //181215from
+    Drwxy();
+//    ADDAXES="0";
+  ); //181215to
+  gsave();
+  layer(KETPIClayer);
+  forall(GCLIST,Nj,
+    if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
+    if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
+      tmp=MeasureDepth(Dt);
+      if(tmp==1,Dt=[Dt]);
+      opcindy=Nj_3;
+      if(Nj_2<0,tmp1=0,tmp1=Nj_2);
+      if(tmp1<10,
+        forall(Dt,Nk,
+          tmp2=Nk;    // 14.12.04
+          if(length(Nk)>1,
+            tmp="connect("+Textformat(tmp2,5)+
+             ",dashtype->"+text(tmp1)+",linecolor->"+KCOLOR+opcindy+")";
+            parse(tmp);
+          ,
+            if(length(Nk)==1,
+              tmp="draw("+text(tmp2_1)+opcindy+")"; // 14.12.31
+              parse(tmp);
+            );
+          );
+        );
+      );
+    );
+  );
+  grestore(); 
+  layer(0);
+);
+

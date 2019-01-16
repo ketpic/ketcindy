@@ -1,0 +1,9 @@
+Drwline
+Dottedline
+Dashline
+Invdashline
+Texcom
+Com2nd
+//GetLinestyle
+Ketinit
+Windispg

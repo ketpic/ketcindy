@@ -1,3 +1,5 @@
+/ 20190116
+//   Findfun, Extractfun, Extractall, Mkketcindyjs added (for new ketcindyjs)
 // 20190103
 //   Drwxy changed  (Addax(0) added in the case of add=0 )
 //   Drwxy changed  ( "O=" option added )

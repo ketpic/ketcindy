@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190116] loaded");
+println("ketcindybasic2[20190118] loaded");
 
 //help:start();
 
@@ -2743,7 +2743,7 @@ Inwindow(point,xrng,yrng):=(
 
 ////%Windispg start////
 Windispg():=(
-  regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,opcindy);
+  regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,opcindy);
   if(ADDAXES=="1", //181215from
     Drwxy();
 //    ADDAXES="0";
@@ -2761,8 +2761,14 @@ Windispg():=(
         forall(Dt,Nk,
           tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
-            tmp="connect("+Textformat(tmp2,5)+
-             ",dashtype->"+text(tmp1)+",linecolor->"+KCOLOR+opcindy+")";
+            tmp="connect("+Textformat(tmp2,5);
+            if(indexof(opcindy,"dashtype")==0, //190118from
+              tmp=tmp+",dashtype->"+text(tmp1);
+            );
+            if(indexof(opcindy,"color")==0,
+              tmp=tmp+",linecolor->"+KCOLOR;
+            );
+            tmp=tmp+opcindy+")"; //190118to
             parse(tmp);
           ,
             if(length(Nk)==1,
@@ -5860,7 +5866,11 @@ Mkketcindyjs(options):=( //17.11.18
       tmp= "    <script type="+Dqq("text/javascript")+" src=";
       tmp=tmp+Dq+"file:///"+tmp3+"Cindy.js"+Dq+"></script>";
       tmp1_(length(tmp1)-1)=tmp;
-      tmp1_(length(tmp1))="";
+      tmp="    <script type="+Dqq("text/javascript")+" src="; //190117from
+      tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
+      tmp1_(length(tmp1))=tmp;
+    ,
+      tmp1_(length(tmp1))=""; //190117to
     );
     forall(tmp1,
       println(SCEOUTPUT,#);
@@ -5885,6 +5895,18 @@ Mkketcindyjs(options):=( //17.11.18
         println(SCEOUTPUT,#);
       );
     );
+    tmp=select(partL,#_1=="csinit");
+    if(length(tmp)>0,
+      tmp=tmp_1;
+      from=tmp_2;
+      upto=tmp_3;
+      tmp1=htmorg_(from+1)..(upto-10);
+      forall(tmp1,
+        if((indexof(#,"import(")==0)&(indexof(#,"use(")==0),
+          println(SCEOUTPUT,#);
+        );
+      );
+    );
     println(SCEOUTPUT,"</script>");
     tmp=select(partL,#_1=="csdraw");
     tmp=tmp_1;
@@ -5896,14 +5918,16 @@ Mkketcindyjs(options):=( //17.11.18
     );
     tmp1=htmorg_((lastpart_1)..(lastpart_2));
     tmp=select(1..(length(tmp1)),indexof(tmp1_#,Dqq("cs*"))>0);
-    from=tmp_1;
-    forall(1..(from-1),
+    tmp=tmp_1;
+    forall(1..tmp, //190117from
       println(SCEOUTPUT,tmp1_#);
     );
+    from=tmp+1; //190117to
     if(texflg=="Y",
       if(netflg=="Y",
         tmp="  use: ["+Dqq("katex")+"],";
       ,
+        tmp="  use: ["+Dqq("katex")+"],";
       );
       println(SCEOUTPUT,tmp);
     );
@@ -5924,7 +5948,7 @@ Mkketcindyjs(options):=( //17.11.18
     closefile(SCEOUTPUT);
     setdirectory(Dirwork);
     if(netflg=="Y",tmp="json",tmp="jsoff");
-    drawtext(mouse().xy-[0,1],"Generate "+tmp+"in "+path,size->20,color->[1,0,0]);
+    drawtext(mouse().xy-[0,1],tmp+"in "+path,size->20,color->[1,0,0]);
     wait(2000);
   );
 );

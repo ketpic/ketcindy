@@ -1,4 +1,7 @@
-/ 20190116
+// 20190118
+//   Mkketcindyjs changed  ( position of "katex", ketlib slot addede to csinit ) 
+//   Windispg debugged  ( dashtype,linecolor v.s. opcindy )
+// 20190116
 //   Findfun, Extractfun, Extractall, Mkketcindyjs added (for new ketcindyjs)
 // 20190103
 //   Drwxy changed  (Addax(0) added in the case of add=0 )

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190118] loaded");
+println("ketcindybasic2[20190119] loaded");
 
 //help:start();
 
@@ -581,7 +581,7 @@ Htick(px,lenorg,options):=(
 
 ////%Setax start////
 Setax(arglist):=(
-//help:Setax(["l","x","e","y","n","O","sw",]);
+//help:Setax(["l","x","e","y","n","O","sw"]);
 //help:Setax([7,"nw"]);
 //help:Setax([8,linestyle,colorax,colorlabel]);
   regional(st,nn,tmp); //181215from
@@ -2756,23 +2756,27 @@ Windispg():=(
       tmp=MeasureDepth(Dt);
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
-      if(Nj_2<0,tmp1=0,tmp1=Nj_2);
+      tmp=Nj_2; //190119from
+      if(tmp_1<0,tmp1=0,tmp1=tmp_1); //190119from
       if(tmp1<10,
         forall(Dt,Nk,
           tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
             tmp="connect("+Textformat(tmp2,5);
-            if(indexof(opcindy,"dashtype")==0, //190118from
-              tmp=tmp+",dashtype->"+text(tmp1);
-            );
+//            if(indexof(opcindy,"dashtype")==0,
+//              tmp=tmp+",dashtype->"+text(tmp1);
+//            );
             if(indexof(opcindy,"color")==0,
               tmp=tmp+",linecolor->"+KCOLOR;
             );
-            tmp=tmp+opcindy+")"; //190118to
+            if((length(Nj_2_2)>0)&(indexof(opcindy,"size")==0), //190119from
+              tmp=tmp+",size->"+Nj_2_2;
+            ); 
+            tmp=tmp+opcindy+");"; //190119to
             parse(tmp);
           ,
             if(length(Nk)==1,
-              tmp="draw("+text(tmp2_1)+opcindy+")"; // 14.12.31
+              tmp="draw("+text(tmp2_1)+opcindy+");"; // 14.12.31
               parse(tmp);
             );
           );
@@ -5867,8 +5871,10 @@ Mkketcindyjs(options):=( //17.11.18
       tmp=tmp+Dq+"file:///"+tmp3+"Cindy.js"+Dq+"></script>";
       tmp1_(length(tmp1)-1)=tmp;
       tmp="    <script type="+Dqq("text/javascript")+" src="; //190117from
-      tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
-      tmp1_(length(tmp1))=tmp;
+      if(texflg=="Y", //190119from
+        tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
+        tmp1_(length(tmp1))=tmp;
+      ); //190119to
     ,
       tmp1_(length(tmp1))=""; //190117to
     );
@@ -5900,7 +5906,7 @@ Mkketcindyjs(options):=( //17.11.18
       tmp=tmp_1;
       from=tmp_2;
       upto=tmp_3;
-      tmp1=htmorg_(from+1)..(upto-10);
+      tmp1=htmorg_((from+1)..(upto-1)); //190119
       forall(tmp1,
         if((indexof(#,"import(")==0)&(indexof(#,"use(")==0),
           println(SCEOUTPUT,#);

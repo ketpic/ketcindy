@@ -2423,7 +2423,6 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     out=[pR,tmp1,tmp2,tseg,ss,tt]; //181027to
     tmp=ptflg_2;
     tmp1=(tmp1)%(substring(tmp,0,1)=="i"); //190114
-    println([2426,tmp,tmp1,tmp2]);
     tmp2=(tmp2)%(substring(tmp,1,2)=="e");
     if(tmp1&tmp2&(scrflg=="Y"), //181031
       if(ptflg_1=="P", //181025

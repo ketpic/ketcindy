@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190116] loaded");
+println("ketcindylibbasic1[20190119] loaded");
 
 //help:start();
 
@@ -3423,32 +3423,42 @@ GetLinestyle(str,name):=(
   noflg=parse(substring(str,0,1));
   if(substring(name,0,3)=="sub",subflg=1,subflg=0);  // 16.02.29
   tmp1=substring(str,1,3);
+  tmp2=""; //190119from
+  tmp=indexof(str,",");
+  if(tmp>0,
+    tmp2=substring(str,tmp,length(str));
+  ); //190119to
   if(tmp1=="dr" % tmp1=="Dr",
-    Ltype=0;
+//    Ltype=0;
+    Ltype=[0,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Drwline(name+Dop);
     );
   );
   if(tmp1=="da" % tmp1=="Da",
-    Ltype=1;
+//    Ltype=1;
+    Ltype=[1,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Dashline(name+Dop);
     );
   );
   if(tmp1=="id" % tmp1=="Id",
-    Ltype=2;  // 15.11.09
+//    Ltype=2;  // 15.11.09
+    Ltype=[2,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Invdashline(name+Dop);
     );
   );
   if(tmp1=="do" % tmp1=="Do",
-    Ltype=3;
+//    Ltype=3;
+    Ltype=[3,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Dottedline(name+Dop);
     );
   );
   if(tmp1=="dp" % tmp1=="Dp",
-    Ltype=0;
+//    Ltype=0;
+    Ltype=[0,tmp2];  //190119
     tmp1=parse(name);
     tmp2="";
     forall(tmp1,
@@ -3952,7 +3962,7 @@ Listplot(nm,list,options):=(
     name=substring(nm,1,length(nm));
   ,
     name="sg"+nm;
-  ); // until
+  ); // upto
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -5544,7 +5554,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
     if((Noflg==0)&(color!=KCOLOR), //180904
       Texcom("}");//180722
     );
-);
+  );
 );
 ////%Arrowhead end////
 

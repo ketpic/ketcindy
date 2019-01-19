@@ -1,3 +1,7 @@
+// 20190119
+//    Getlinestyle changed/debugged  (Ltype changed )
+// 20190118
+//    Divoptions  changed  ("dr,thickness" )
 // 20190116
 //    Ketinit() debuggded ( Mackc for Linux)
 // 20190115

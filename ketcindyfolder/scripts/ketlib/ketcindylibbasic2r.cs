@@ -952,10 +952,23 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 ////%Exprrot end////
 
 ////%Slider start////
-Putslider(ptstr,p1,p2):=Slider(ptstr,p1,p2);
-Slider(ptstr,p1,p2):=( //17.04.11
+Slider(ptstr,p1,p2):=Slider(ptstr,p1,p2,[]);
+Slider(ptstr,p1,p2,options):=(//190120
 //help:Slider("A-C-B",[-3,0],[3,0]);
-  regional(pA,pB,pC,seg,sname,Alpha,tmp,tmp1);
+//help:Slider(options=["Color=0.6*[0,0,1]","Size=2"]);
+  regional(pA,pB,pC,seg,sname,Alpha,color,size,tmp,tmp1);
+  color="Color=0.6*[0,0,1]"; //190120from
+  size="size->2";
+  forall(options,
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="C",
+      color=#;
+    );
+    if(tmp=="S",
+      tmp=Strsplit(#,"=");
+      size="size->"+tmp_2;
+    );
+  ); //190120to
   tmp=Indexall(ptstr,"-");
   pA=substring(ptstr,0,tmp_1-1);
   pC=substring(ptstr,tmp_1,tmp_2-1);
@@ -974,13 +987,28 @@ Slider(ptstr,p1,p2):=( //17.04.11
   );
   Putpoint(pA,p1);
   Putpoint(pB,p2);
-  Listplot([parse(pA),parse(pB)],["notex","color->[0,0.4,0.4]","size->2"]);
+  Listplot([parse(pA),parse(pB)],["notex",color,size]);
 //  create([sname],"Segment",[parse(pA),parse(pB)]);
 //  tmp2=Listplot("",[p1,p2],["nodata"]);
   Putonseg(pC,parse("sg"+pA+pB));
 //  create([pC],"PointOn",[parse(sname),0.5]);
 );
 ////%Slider end////
+
+////%Putpoint start////
+Putpoint(name,Pt):=Putpoint(name,Pt,Pt);
+Putpoint(name,Ptinit,Pt):=(
+//help:Putpoint("A",[1,2],[1,A.y]);
+  regional(ptstr);
+  ptstr=apply(allpoints(),#.name);//16.10.06
+  if(!contains(ptstr,name),
+    createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
+    ,
+    ptstr=name+".xy="+Textformat(Pcrd(Pt),5);
+    parse(ptstr);
+  );
+);
+////%Putpoint end////
 
 ////%Putpoint start////
 Putpoint(name,Pt):=Putpoint(name,Pt,Pt);
@@ -1710,11 +1738,11 @@ MeetCurve(Crv,Xorg,Yorg):=(
 );
 ////%MeetCurve end////
 
-////%PutonLine start////
-PutonLine(name,p1,p2):=PutonLine(name,p1,p2,[]);
-PutonLine(name,p1org,p2org,options):=(
-//help:PutonLine("C","sgAB");
-//help:PutonLine("C",pA,pB);
+////%Putonline start////
+Putonline(name,p1,p2):=PutonLine(name,p1,p2,[]);
+Putonline(name,p1org,p2org,options):=(
+//help:Putonline("C","sgAB");
+//help:Putonline("C",pA,pB);
   regional(par,p1,p2,dx,dy,tmp,tmp1,tmp2);
   par=0.5;
   tmp=Divoptions(options);
@@ -1741,19 +1769,20 @@ PutonLine(name,p1org,p2org,options):=(
     );
   );
 );
-////%PutonLine end////
+////%Putonline end////
 
-////%PutonSeg start////
-PutonSeg(name,sgstr):=(
+////%Putonseg start////
+Putonseg(name,sgstr):=(
   regional(seg,p1,p2);
   if(isstring(sgstr),seg=parse(sgstr),seg=sgstr);
-  PutonSeg(name,LLcrd(seg_1),LLcrd(seg_2));
+  Putonseg(name,LLcrd(seg_1),LLcrd(seg_2));
 );
-PutonSeg(name,p1,p2):=PutonSeg(name,p1,p2,[]);
-PutonSeg(name,p1org,p2org,options):=(
-//help:PutonSeg("C","sgAB");
-//help:PutonSeg("C",pA,pB);
-  regional(par,dx,dy,p,tmp,tmp1,tmp2);
+Putonseg(name,p1,p2):=Putonseg(name,p1,p2,[]);
+Putonseg(name,p1org,p2org,options):=(
+//help:Putonseg("C","sgAB");
+//help:Putonseg("C",pA,pB);
+  regional(Eps,par,dx,dy,p,tmp,tmp1,tmp2);
+  Eps=10^(-5);
   par=0.5;
   tmp=Divoptions(options);
   if(length(tmp_6)>0,
@@ -1761,31 +1790,31 @@ PutonSeg(name,p1org,p2org,options):=(
   );
   p1=Lcrd(p1org);//16.10.11from
   p2=Lcrd(p2org);
-  PutonLine(name,p1,p2,[par]);
+  Putonline(name,p1,p2,[par]);
+  p1=Pcrd(p1); p2=Pcrd(p2); //190120
   dx=p2_1-p1_1;
   dy=p2_2-p1_2;
   p=parse(name+".xy");
-  p=LLcrd(p);
-  if(abs(dx)>abs(dy) & (p_1-p1_1)*(p_1-p2_1)>0,
-    if(|p-p1|<|p-p2|,
-      parse(name+".xy=Pcrd(p1)");
-    ,
-      parse(name+".xy=Pcrd(p2)");
-    );
-  );
-  if(abs(dx)<abs(dy) & (p_2-p1_2)*(p_2-p2_2)>0,
-    if(|p-p1|<|p-p2|,
-      parse(name+".xy=Pcrd(p1)");
-    ,
-      parse(name+".xy=Pcrd(p2)");//16.10.11until
-    );
-  );
+//  p=LLcrd(p);
+  if(abs(dx)>abs(dy), //190120from
+    if(p1_1>p2_1,tmp=p1;p1=p2;p2=tmp);
+    if(p_1<p1_1,parse(name+".xy="+Textformat(p1,5));p=p1);
+    if(p_1>p2_1,parse(name+".xy="+Textformat(p2,5));p=p2);
+    tmp=(p2_2-p1_2)/(p2_1-p1_1)*(p_1-p1_1)+p1_2;
+    parse(name+".y="+tmp);
+  ,
+    if(p1_2>p2_2,tmp=p1;p1=p2;p2=tmp);
+    if(p_2<p1_2,parse(name+".xy="+Textformat(p1,5));p=p1);
+    if(p_2>p2_2,parse(name+".xy="+Textformat(p2,5));p=p2);
+    tmp=(p2_1-p1_1)/(p2_2-p1_2)*(p_2-p1_2)+p1_1;
+    parse(name+".x="+tmp);
+  ); //190120to
 );
-////%PutonSeg end////
+////%Putonseg end////
 
-////%PutonCurve start////
-PutonCurve(pn,crv):=PutonCurve(pn,crv,[]);
-PutonCurve(pn,crv,options):=(
+////%Putoncurve start////
+Putoncurve(pn,crv):=Putoncurve(pn,crv,[]);
+Putoncurve(pn,crv,options):=(
 //help:Putoncurve("A","gr1");
 //help:Putoncurve("A","gr1",[0,XMAX]);
   regional(Pmt,pstr,optionL,leftlim,rightlim,tmp,tmp1,Flg,Msg);
@@ -1827,7 +1856,7 @@ PutonCurve(pn,crv,options):=(
     println("Put "+pn+" on Curve "+text(crv));
   );
 );
-////%PutonCurve end////
+////%Putoncurve end////
 
 ////%CrossPoint start////
 CrossPoint(name,Crv1,Crv2,range):=(
@@ -5871,6 +5900,7 @@ Mkketcindyjs(options):=( //17.11.18
       tmp=tmp+Dq+"file:///"+tmp3+"Cindy.js"+Dq+"></script>";
       tmp1_(length(tmp1)-1)=tmp;
       tmp="    <script type="+Dqq("text/javascript")+" src="; //190117from
+      tmp1_(length(tmp1))="";  //190120
       if(texflg=="Y", //190119from
         tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
         tmp1_(length(tmp1))=tmp;

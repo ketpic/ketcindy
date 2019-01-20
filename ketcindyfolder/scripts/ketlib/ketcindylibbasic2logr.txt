@@ -1,3 +1,5 @@
+// 20190120
+//   Slider changed  (color,size options )
 // 20190119
 //   Mkketcindyjs debugge  ( ketlib slot addede to csinit ) 
 //   Windispg changed  ( size of "dr" supported);

@@ -100,7 +100,7 @@ Windispg():=(
             parse(tmp);
           ,
             if(tmp1==1,
-              tmp4=Dashlinedata(tmp2,2.5,2.5);
+              tmp4=Dashlinedata(tmp2,2.5,2.5,0);
               forall(tmp4,
                 tmp="connect("+Textformat(#,5)+tmp3;
                 parse(tmp);

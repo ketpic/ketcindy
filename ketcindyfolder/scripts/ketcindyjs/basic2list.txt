@@ -72,7 +72,7 @@ IftoR,basic2,2631,2670,PaO,Indexall,Bracket
 FortoR,basic2,2674,2703,PaO,Bracket
 Deffun,basic2,2707,2754,Bracket,Indexall,FortoR,IftoR,RSform,PaO
 Inwindow,basic2,2758,2770
-Dashlinedata,basic2,2774,2847,Norm
+Dashlinedata,basic2,2774,2847
 Windispg,basic2,2851,2946,Drwxy,Dashlinedata,MeasureDepth,Textformat
 WritetoRS,basic2,2950,3183,WritetoSci,Lcrd,c,Assignadd,Datetime,source,Setwindow,Textformat,Openfile,Cindyname,RSform,PPa,iswindows,Indexall,Dqq,PaO
 Extractdata,basic2,3187,3243,Divoptions,ReadOutData,Com2nd,Setcolor,GetLinestyle,Texcom

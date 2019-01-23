@@ -1,3 +1,6 @@
+// 20190123
+//   Dashlinedata debugged/changed  (ptn )
+//   Windispg changed  (ptn=0)
 // 20190122
 //   Windispg changed  ("connect"=>"drawall" for do,da )
 //   no ketjs added (Windispg,Mkketcindyjs)

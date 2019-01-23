@@ -2771,44 +2771,44 @@ Inwindow(point,xrng,yrng):=(
 ////%Inwindow end////
 
 ////%Dashlinedata start////
-Dashlinedata(dataorg,sen,gap):=(
+Dashlinedata(dataorg,sen,gap,ptn):=(
   regional(data,eps,dtall,len,lenlist,ii,lenall,kari,
-      ptn,naga,tobi,nsen,seglist,segunit,hajime,owari,jj,
+      naga,tobi,nsen,seglist,segunit,hajime,owari,jj,
       flg,tt,ptL,out,tmp,tmp1,tmp2);
   eps=10.0^(-6);
   if(isstring(dataorg),data=parse(dataorg),data=dataorg);
   dtall=length(data);
-  if(Norm(data_dtall-data_1)<eps,
-    ptn=0;
-  ,
-    ptn=1;
-  );
   out=[];
-  len=0;
-  lenlist=[0];
+  len=0; lenlist=[0];
   forall(2..dtall,ii,
-    len=len+Norm(data_ii-data_(ii-1));
+    len=len+|data_ii-data_(ii-1)|;
     lenlist=append(lenlist,len);
   );
   lenall=lenlist_dtall;
   if(lenall>0,
-    kari=(sen+gap)*0.1;
-    naga=sen*0.1;
-    tobi=gap*0.1;
-    if(ptn==0,
+    kari=(sen+gap)*0.1;naga=sen*0.1;tobi=gap*0.1;
+    if(|data_1-data_dtall|<eps,
       nsen=max([re(ceil(lenall/kari)),3]);
       segunit=lenall/nsen;
       naga=segunit*sen/(sen+gap);
       tobi=segunit*gap/(sen+gap);
       seglist=apply(0..(nsen-1),#*segunit);
     ,
-      nsen=max([re(ceil((lenall+naga)/kari)),3]);
-      segunit=lenall*(sen+gap)/((nsen-1)*sen+nsen*gap);
-      naga=segunit*sen/(sen+gap);
-      tobi=segunit*gap/(sen+gap);
-      seglist=apply(0..(nsen-2),tobi+#*segunit);
+      if(ptn==0,
+        nsen=max([re(ceil((lenall+tobi)/kari)),3]);
+        segunit=lenall*(sen+gap)/(nsen*sen+(nsen-1)*gap);
+        naga=segunit*sen/(sen+gap);
+        tobi=segunit*gap/(sen+gap);
+        seglist=apply(0..(nsen-1),#*segunit);
+      ,
+        nsen=max([re(ceil((lenall+naga)/kari)),3]);
+        segunit=lenall*(sen+gap)/((nsen-1)*sen+nsen*gap);
+        naga=segunit*sen/(sen+gap);
+        tobi=segunit*gap/(sen+gap);
+        seglist=apply(0..(nsen-2),tobi+#*segunit);
+      );
     );
-    hajime=1; owari=1;
+    hajime=1;owari=1;
     forall(1..(length(seglist)),ii,
       len=seglist_ii;
       flg=0;
@@ -2819,7 +2819,7 @@ Dashlinedata(dataorg,sen,gap):=(
           );
         );
       );
-      hajime=flg-1;
+      if(flg>0,hajime=flg-1);
       flg=0;
       forall(hajime..dtall,jj,
         if(flg==0,
@@ -2828,7 +2828,7 @@ Dashlinedata(dataorg,sen,gap):=(
           );
         );
       );
-      owari=flg-1;
+      if(flg>0,owari=flg-1);
       tt=len-lenlist_hajime;
       tt=tt/(lenlist_(hajime+1)-lenlist_hajime);
       tmp=data_hajime+tt*(data_(hajime+1)-data_hajime);
@@ -2884,7 +2884,7 @@ Windispg():=(
             parse(tmp);
           ,
             if(tmp1==1,
-              tmp4=Dashlinedata(tmp2,2.5,2.5);
+              tmp4=Dashlinedata(tmp2,2.5,2.5,0);
               forall(tmp4,
                 tmp="connect("+Textformat(#,5)+tmp3;
                 parse(tmp);

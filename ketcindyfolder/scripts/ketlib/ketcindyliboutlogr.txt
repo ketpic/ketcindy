@@ -1,5 +1,6 @@
 // 20190123
 //   Sfbdparadata,... debugged  (in case of emply options,optionsh )
+//   kcC chnage   ( positon "-lm" changed for Mac/Linux )
 // 20181219
 //   Rfun debugged  ( Out=y )
 //   CalcbyR debugged  ( argment list changed to string)

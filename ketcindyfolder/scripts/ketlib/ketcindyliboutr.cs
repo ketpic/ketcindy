@@ -5068,7 +5068,7 @@ kcC(cname):=(
     ); //181125to
     println(SCEOUTPUT,"#!/bin/sh");
     println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
-    tmp=PathC+" -lm "+cname+".c -o main.out"; //180612
+    tmp=PathC+" "+cname+".c -o main.out -lm"; //190123
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"./main.out");
     println(SCEOUTPUT,"echo ////>"+rfile);

@@ -1356,16 +1356,24 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
   if(strlen(fnameh)>0){
     allflg=0;
   }
-  char var[20]="wire3d";
-  char varh[20]="wireh3d";
-  char varnow[20]={'\0'};
-  char varhnow[20]={'\0'};
-  sprintf(var,"%s%d",var,ch);
-  sprintf(varh,"%s%d",varh,ch);
-  char dirfname[256] = {'\0'};
-  char dirfnameh[256] = {'\0'};
-  char varname[256] = {'\0'};
-  char varnameh[256] = {'\0'};
+  char var0[]="wire3d";
+  char varh0[]="wireh3d";
+  char var[20];
+  char varh[20];
+  char varnow[20];
+  char varhnow[20];
+  varnow[0]='\0';
+  varhnow[0]='\0';
+  sprintf(var,"%s%d",var0,ch);
+  sprintf(varh,"%s%d",varh0,ch);
+  char dirfname[256];
+  char dirfnameh[256];
+  char varname[256];
+  char varnameh[256];
+  dirfname[0]='\0';
+  dirfnameh[0]='\0';
+  varname[0]='\0';
+  varnameh[0]='\0';
   sprintf(varname,"%s%d",var,ch);
   sprintf(varnameh,"%s%d",varh,ch);
   sprintf(dirfname,"%s%s",Dirname,fname);
@@ -1440,9 +1448,11 @@ void intersectcrvsf(const char *wa, short chfd,double crv[][3],const char *fname
   char chc[10];
   sprintf(chc,"%d",chfd);
   char var[]="intercrvsf";
-  char dirfname[256] = {'\0'};
+  char dirfname[256];
+  dirfname[0] = '\0';
   sprintf(dirfname,"%s%s",Dirname,fname);
-  char varname[256] = {'\0'};
+  char varname[256];
+  varname[0] = '\0';
   sprintf(varname,"%s%s",var,chc);
   ptL[0][0]=0;
   for(i=1;i<length3(crv);i++){
@@ -1471,16 +1481,24 @@ void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,c
   if(strlen(fnameh)==0){
     allflg=1;
   }
-  char var[20]="sfcut3d";
-  char varh[20]="sfcuth3d";
-  sprintf(var,"%s%d",var,chfd);
-  sprintf(varh,"%s%d",varh,chfd);
-  char varnow[20]={'\0'};
-  char varhnow[20]={'\0'};
-  char dirfname[256] = {'\0'};
-  char dirfnameh[256] = {'\0'};
-  char varname[256] = {'\0'};
-  char varnameh[256] = {'\0'};
+  char var0[]="sfcut3d";
+  char varh0[]="sfcuth3d";
+  char var[20];
+  char varh[20];
+  sprintf(var,"%s%d",var0,chfd);
+  sprintf(varh,"%s%d",varh0,chfd);
+  char varnow[20];
+  char varhnow[20];
+  char dirfname[256];
+  char dirfnameh[256];
+  char varname[256];
+  char varnameh[256];
+  varnow[0]='\0';
+  varhnow[0]='\0';
+  dirfname[0]='\0';
+  dirfnameh[0]='\0';
+  varname[0]='\0';
+  varnameh[0]='\0';
   sprintf(varname,"%s%d",var,chfd);
   sprintf(varnameh,"%s%d",varh,chfd);
   sprintf(dirfname,"%s%s",Dirname,fname);
@@ -1959,9 +1977,14 @@ int skeletondata3(double data[][3], double r00,
 void readoutdata3(const char *fname, const char *var, double data[][3]){
   double x,y,z;
   float xx;
-  char dstrorg[256] = {'\0'};
-  char dstr[256] = {'\0'};
-  char str[10] = {'\0'},tmp[2]={'\0'};
+  char dstrorg[256];
+  dstrorg[0]='\0';
+  char dstr[256];
+  dstr[0]='\0';
+  char str[10];
+  str[0]='\0';
+  char tmp[10];
+  tmp[0]='\0';
   int linectr=0, start=0, jj,nn,nctr;
   FILE *fp;
   fp=fopen(fname,"r");

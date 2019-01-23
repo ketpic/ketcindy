@@ -1,3 +1,5 @@
+190123
+   Use of sprintf 
 181105
    output3h debugged  ( ctr=0 added in varh )
    readoutdata3 debugged  (//,etc )

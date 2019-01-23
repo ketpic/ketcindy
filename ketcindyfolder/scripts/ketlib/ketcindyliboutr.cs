@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20190109 loaded");
+println("ketcindylibout(20190123 loaded");
 
 //help:start();
 
@@ -5662,8 +5662,12 @@ SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
   name2h="sfbdh2d"+nm;
   name3h="sfbdh3d"+nm;
   fname=Fhead+"sfbd"+nm+".txt";
-  options=optionorg;
-  optionsh=select(optionshorg,length(#)>0); //181107
+  options=select(optionorg,length(#)>0); //190123from
+  tmp=Divoptions(options);
+  if(length(tmp_7)==0,options=append(options,"dr"));
+  optionsh=select(optionshorg,length(#)>0);
+  tmp=Divoptions(optionsh);
+  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
@@ -5786,8 +5790,12 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
   name2h="crvsfh2d"+nm;
   name3h="crvsfh3d"+nm;
   fname=Fhead+"crvsf"+nm+".txt";
-  options=optionorg;
-  optionsh=select(optionshorg,length(#)>0); //181107
+   options=select(optionorg,length(#)>0); //190123from
+  tmp=Divoptions(options);
+  if(length(tmp_7)==0,options=append(options,"dr"));
+  optionsh=select(optionshorg,length(#)>0);
+  tmp=Divoptions(optionsh);
+  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
@@ -6148,8 +6156,12 @@ WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionshorg):=(
   name3h="wireh3d"+nm;
   fname=Fhead+"wire"+nm+".txt";
   fnameh=replace(fname,".txt","h.txt");
-  options=optionorg;
-  optionsh=select(optionshorg,length(#)>0); //181107
+  options=select(optionorg,length(#)>0); //190123from
+  tmp=Divoptions(options);
+  if(length(tmp_7)==0,options=append(options,"dr"));
+  optionsh=select(optionshorg,length(#)>0);
+  tmp=Divoptions(optionsh);
+  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;

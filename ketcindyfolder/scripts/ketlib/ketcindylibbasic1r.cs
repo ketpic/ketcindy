@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190119] loaded");
+println("ketcindylibbasic1[20190122] loaded");
 
 //help:start();
 
@@ -71,7 +71,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   KCOLOR=[0,0,0];
   GLIST=[];
   GCLIST=[];
-//  GDATALIST=[];
+//  GDATALIST=[]; //no ketjs
   GOUTLIST=[];
   POUTLIST=[];
   VLIST=[];
@@ -97,13 +97,14 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ADDPACK=[]; // 16.05.16
   GPACK="tpic"; //180817
   ErrFlag=0;
+  // no ketjs on 190122
   setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12
     Fhead=text(curkernel());
     Fhead=replace(Fhead,".cdy","");
     Slidename=Fhead; //17.10.24
   );//17.11.12
-  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405
+  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405 //no ketjs on
   Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
@@ -153,6 +154,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
       println(setexec(Dirwork,Shellparent));
     );
   );
+// no ketjs off 190122
   ArrowlineNumber=1;  // 15.01.05
   ArrowheadNumber=1;
   BezierNumber=1; //15.01.03
@@ -164,6 +166,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   YMIN=rangey_1/SCALEY;
   YMAX=rangey_2/SCALEY;
   Setwindow("Msg=n"); // 16.05.31
+// no ketjs on 190122
   // for Presentation
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
@@ -174,6 +177,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0,
     LibnameS=replace(LibnameS,"ketpic","ketpic2e");
   );//17.12.03until
+// no ketjs off 190122
 );
 ////%Ketinit end////
 

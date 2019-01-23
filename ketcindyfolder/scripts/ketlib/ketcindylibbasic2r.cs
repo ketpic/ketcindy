@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190119] loaded");
+println("ketcindybasic2[20190122] loaded");
 
 //help:start();
 
@@ -2770,9 +2770,86 @@ Inwindow(point,xrng,yrng):=(
 );
 ////%Inwindow end////
 
+////%Dashlinedata start////
+Dashlinedata(dataorg,sen,gap):=(
+  regional(data,eps,dtall,len,lenlist,ii,lenall,kari,
+      ptn,naga,tobi,nsen,seglist,segunit,hajime,owari,jj,
+      flg,tt,ptL,out,tmp,tmp1,tmp2);
+  eps=10.0^(-6);
+  if(isstring(dataorg),data=parse(dataorg),data=dataorg);
+  dtall=length(data);
+  if(Norm(data_dtall-data_1)<eps,
+    ptn=0;
+  ,
+    ptn=1;
+  );
+  out=[];
+  len=0;
+  lenlist=[0];
+  forall(2..dtall,ii,
+    len=len+Norm(data_ii-data_(ii-1));
+    lenlist=append(lenlist,len);
+  );
+  lenall=lenlist_dtall;
+  if(lenall>0,
+    kari=(sen+gap)*0.1;
+    naga=sen*0.1;
+    tobi=gap*0.1;
+    if(ptn==0,
+      nsen=max([re(ceil(lenall/kari)),3]);
+      segunit=lenall/nsen;
+      naga=segunit*sen/(sen+gap);
+      tobi=segunit*gap/(sen+gap);
+      seglist=apply(0..(nsen-1),#*segunit);
+    ,
+      nsen=max([re(ceil((lenall+naga)/kari)),3]);
+      segunit=lenall*(sen+gap)/((nsen-1)*sen+nsen*gap);
+      naga=segunit*sen/(sen+gap);
+      tobi=segunit*gap/(sen+gap);
+      seglist=apply(0..(nsen-2),tobi+#*segunit);
+    );
+    hajime=1; owari=1;
+    forall(1..(length(seglist)),ii,
+      len=seglist_ii;
+      flg=0;
+      forall(owari..dtall,jj,
+        if(flg==0,
+          if(len<lenlist_jj-eps,
+            flg=jj;
+          );
+        );
+      );
+      hajime=flg-1;
+      flg=0;
+      forall(hajime..dtall,jj,
+        if(flg==0,
+          if(len+naga<lenlist_jj-eps,
+            flg=jj;
+          );
+        );
+      );
+      owari=flg-1;
+      tt=len-lenlist_hajime;
+      tt=tt/(lenlist_(hajime+1)-lenlist_hajime);
+      tmp=data_hajime+tt*(data_(hajime+1)-data_hajime);
+      ptL=[tmp];
+      forall((hajime+1)..owari,jj,
+        ptL=append(ptL,data_jj);
+      );
+      tt=(len+naga-lenlist_owari);
+      tt=tt/(lenlist_(owari+1)-lenlist_owari);
+      tmp=data_owari+tt*(data_(owari+1)-data_owari);
+      ptL=append(ptL,tmp);
+      out=append(out,ptL);
+    );
+  );
+  out;
+);
+////%Dashlinedata end////
+
 ////%Windispg start////
 Windispg():=(
-  regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,opcindy);
+  regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
   if(ADDAXES=="1", //181215from
     Drwxy();
 //    ADDAXES="0";
@@ -2786,29 +2863,44 @@ Windispg():=(
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
       tmp=Nj_2; //190119from
+      if(!islist(tmp),tmp=[tmp,]); //190123
       if(tmp_1<0,tmp1=0,tmp1=tmp_1); //190119from
       if(tmp1<10,
         forall(Dt,Nk,
           tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
-            tmp="connect("+Textformat(tmp2,5);
-//            if(indexof(opcindy,"dashtype")==0,
-//              tmp=tmp+",dashtype->"+text(tmp1);
-//            );
-            if(indexof(opcindy,"color")==0,
-              tmp=tmp+",linecolor->"+KCOLOR;
+            tmp3="";
+            if(indexof(opcindy,"color")==0, //190122from
+              tmp3=tmp3+",linecolor->"+KCOLOR;
             );
-            if((length(Nj_2_2)>0)&(indexof(opcindy,"size")==0), //190119from
-              tmp=tmp+",size->"+Nj_2_2;
+            if(length(Nj_2)>1,tmp=Nj_2_2,tmp=""); //190123
+            if((length(tmp)>0)&(indexof(opcindy,"size")==0), 
+              tmp3=tmp3+",size->"+tmp;
             ); 
-            tmp=tmp+opcindy+");"; //190119to
+            tmp3=tmp3+opcindy+");"; 
+          ); 
+          if(tmp1==0,
+            tmp="connect("+Textformat(tmp2,5)+tmp3;
             parse(tmp);
           ,
-            if(length(Nk)==1,
-              tmp="draw("+text(tmp2_1)+opcindy+");"; // 14.12.31
-              parse(tmp);
+            if(tmp1==1,
+              tmp4=Dashlinedata(tmp2,2.5,2.5);
+              forall(tmp4,
+                tmp="connect("+Textformat(#,5)+tmp3;
+                parse(tmp);
+              );
+            ,
+              tmp3=",dashtype->"+text(tmp1)+tmp3;
+              forall(1..(length(tmp2)-1),
+                tmp="draw("+Textformat([tmp2_#,tmp2_(#+1)],5)+tmp3;
+                parse(tmp);
+              );
             );
           );
+        );
+        if(length(Nk)==1,
+          tmp="draw("+text(tmp2_1)+opcindy+");"; // 14.12.31
+          parse(tmp);
         );
       );
     );
@@ -2816,6 +2908,7 @@ Windispg():=(
   grestore(); 
   layer(0);
 );
+// no ketjs on 190122
 Windispg(pltdata):=(
   regional(pdata,Nj,Nk,Dt,tmp,tmp1,tmp2,opcindy);
   gsave();
@@ -2850,6 +2943,7 @@ Windispg(pltdata):=(
   grestore(); 
   layer(0);
 );
+// no ketjs off 190122
 ////%Windispg end////
 
 ////%WritetoRS start////
@@ -5817,7 +5911,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
 //help:Mkketcindyjs(options=["Tex=y","Net=y","Path=Dircdy"]);
   regional(texflg,netflg,htm,htmorg,from,upto,flg,fL,fun,tmp,tmp1,tmp2,tmp3,
-      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,
+      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,
       DL,Out);
   texflg="Y";
   netflg="Y";
@@ -5927,8 +6021,23 @@ Mkketcindyjs(options):=( //17.11.18
       ,
         tmp1=lib2_(from..upto);
       );
+      ketflg="off"; //190122from
       forall(tmp1,
-        println(SCEOUTPUT,#);
+        if(indexof(#,"no ketjs")>0,
+          if(indexof(#,"no ketjs on")>0,
+            ketflg="on";
+          );
+          if(indexof(#,"no ketjs off")>0,
+            ketflg="off";
+          );
+        ,
+          if(ketflg=="off",
+            tmp=Removespace(#);
+            if(substring(tmp,0,2)!="//",
+              println(SCEOUTPUT,#);
+            );
+          ); //190122to
+        );
       );
     );
     tmp=select(partL,#_1=="csinit");
@@ -5985,7 +6094,7 @@ Mkketcindyjs(options):=( //17.11.18
     setdirectory(Dirwork);
     if(netflg=="Y",tmp="json",tmp="jsoff");
     drawtext(mouse().xy-[0,1],tmp+"in "+path,size->20,color->[1,0,0]);
-    wait(2000);
+    wait(1000);
   );
 );
 ////%Mkketcindyjs end////

@@ -1,3 +1,5 @@
+// 20190123
+//   Sfbdparadata,... debugged  (in case of emply options,optionsh )
 // 20181219
 //   Rfun debugged  ( Out=y )
 //   CalcbyR debugged  ( argment list changed to string)

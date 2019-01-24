@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190122] loaded");
+println("ketcindybasic2[20190124] loaded");
 
 //help:start();
 
@@ -2873,13 +2873,15 @@ Windispg():=(
             if(indexof(opcindy,"color")==0, //190122from
               tmp3=tmp3+",linecolor->"+KCOLOR;
             );
-            if(length(Nj_2)>1,tmp=Nj_2_2,tmp=""); //190123
-            if((length(tmp)>0)&(indexof(opcindy,"size")==0), 
-              tmp3=tmp3+",size->"+tmp;
+            if(tmp1==0,  //190124
             ); 
             tmp3=tmp3+opcindy+");"; 
           ); 
           if(tmp1==0,
+            if(length(Nj_2)>1,tmp=Nj_2_2,tmp="1"); //190124from
+            if((length(tmp)>0)&(indexof(opcindy,"size")==0), 
+              tmp3=tmp3+",size->"+tmp;
+            ); //190124to
             tmp="connect("+Textformat(tmp2,5)+tmp3;
             parse(tmp);
           ,

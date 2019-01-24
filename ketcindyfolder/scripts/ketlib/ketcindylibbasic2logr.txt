@@ -1,4 +1,6 @@
 // 20190123
+//   Windispg debugged ("size")
+// 20190123
 //   Dashlinedata debugged/changed  (ptn )
 //   Windispg changed  (ptn=0)
 // 20190122

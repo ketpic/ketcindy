@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20190123 loaded");
+println("ketcindylibout(20190124 loaded");
 
 //help:start();
 
@@ -5500,6 +5500,16 @@ CalcbyC(name,path,cmd,optionorg):=(
 );
 ////%CalcbyC end////
 
+////%Gccexists start////
+Gccexists():=( //190124
+ regional(out);
+ if(ismacosx(),out=isexists("/usr/bin",PathC));
+ if(iswindows(),out=isexists("",PathC));
+ if(islinux(),out=isexists("/usr/bin",PathC));
+ out;
+);
+////%Gccexists end////
+
 ////%ExeccmdC start////
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
 ExeccmdC(nm,options):=ExeccmdC(nm,options,["do"]);
@@ -6459,7 +6469,7 @@ SfcutparadataC(nm,cutfunL,sfbd,fd):=(//180505
   SfcutparadataC(nm,cutfunL,sfbd,fd,[],["do"]);
 );
 SfcutparadataC(nm,cutfunL,sfbd,fd,options):=
-   SfcutparadataC(nm,cutfunL,sfbd,fd,options,["nodisp"]);
+   SfcutparadataC(nm,cutfunL,sfbd,fd,options,[]);
 SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
 //help:Sfcutparadata("1","2*x+3*y+z=1","sfbd3d",fd,nohiddenoptions,hiddenoptions);
   regional(funnm,cutfunL,fd,options,optionsh,name2,name3,name2h,name3h,
@@ -6512,8 +6522,12 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
       options=remove(options,[#]);
     );
   );
-  options=remove(options,reL);
-  options=select(options,length(#)>0);
+  options=select(optionorg,length(#)>0); //190123from
+  tmp=Divoptions(options);
+  if(length(tmp_7)==0,options=append(options,"dr"));
+  optionsh=select(optionshorg,length(#)>0);
+  tmp=Divoptions(optionsh);
+  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
   tmp1=select(options,
       (indexof(#,"=")>0)&(Toupper(substring(#,0,1))=="C")); //181114from
   if(length(tmp1)>0,

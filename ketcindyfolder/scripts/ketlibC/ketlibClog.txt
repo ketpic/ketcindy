@@ -1,3 +1,5 @@
+190124
+   readoutdata3 changed (tmp,strtmp)
 190123
    Use of sprintf 
 181105

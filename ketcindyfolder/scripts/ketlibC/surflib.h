@@ -1360,8 +1360,8 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
   char varh0[]="wireh3d";
   char var[20];
   char varh[20];
-  char varnow[20];
-  char varhnow[20];
+  char varnow[40];
+  char varhnow[40];
   varnow[0]='\0';
   varhnow[0]='\0';
   sprintf(var,"%s%d",var0,ch);
@@ -1487,8 +1487,8 @@ void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,c
   char varh[20];
   sprintf(var,"%s%d",var0,chfd);
   sprintf(varh,"%s%d",varh0,chfd);
-  char varnow[20];
-  char varhnow[20];
+  char varnow[40];
+  char varhnow[40];
   char dirfname[256];
   char dirfnameh[256];
   char varname[256];
@@ -1983,9 +1983,10 @@ void readoutdata3(const char *fname, const char *var, double data[][3]){
   dstr[0]='\0';
   char str[10];
   str[0]='\0';
+  char strtmp[30];
   char tmp[10];
   tmp[0]='\0';
-  int linectr=0, start=0, jj,nn,nctr;
+  int linectr=0, start=0,ii,jj,nn,nctr;
   FILE *fp;
   fp=fopen(fname,"r");
   if(fp==NULL){
@@ -2028,7 +2029,7 @@ void readoutdata3(const char *fname, const char *var, double data[][3]){
     str[0]='\0';
     nctr=0;
     for(jj=2;jj<250;jj++){
-      tmp[0]='\0'; sprintf(tmp,"%s%c",tmp,dstr[jj]);
+      tmp[0]='\0'; sprintf(tmp,"%c",dstr[jj]);
       if(strncmp(tmp,"/",1)==0){
         break;
       }
@@ -2051,13 +2052,21 @@ void readoutdata3(const char *fname, const char *var, double data[][3]){
         add3(data,x,y,z);
         nctr=0;
         jj++;
-        tmp[0]='\0'; sprintf(tmp,"%s%c",tmp,dstr[jj]);
+        tmp[0]='\0'; sprintf(tmp,"%c",dstr[jj]);
         if(strncmp(tmp,",",1)==0){
           jj++;
         }
         continue;
       }
-      sprintf(str,"%s%s",str,tmp);
+      strtmp[0]='\0';
+      sprintf(strtmp,"%s%s",str,tmp);
+      str[0]='\0';
+      for(ii=0;ii<20;ii++){
+        str[ii]=strtmp[ii];
+        if(strtmp[ii]=='\0'){
+          break;
+        }
+      }
     }
   }
   fclose(fp);

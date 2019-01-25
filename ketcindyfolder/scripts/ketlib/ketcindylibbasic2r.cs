@@ -5879,7 +5879,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
 //help:Mkketcindyjs(options=["Tex=y","Net=y","Path=Dircdy"]);
   regional(texflg,netflg,htm,htmorg,from,upto,flg,fL,fun,tmp,tmp1,tmp2,tmp3,
-      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,
+      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,
       DL,Out);
   texflg="Y";
   netflg="Y";
@@ -6046,9 +6046,8 @@ Mkketcindyjs(options):=( //17.11.18
     );
     tmp2=["Figure","Parent","KeTJS","KeTJSoff"];
     forall(from..(length(tmp1)),
-      if(indexof(tmp1_#,"type: "+Dqq("Button"))==0,
-        println(SCEOUTPUT,tmp1_#);
-      ,
+      flg=0; //190126from
+      if(indexof(tmp1_#,"type: "+Dqq("Button"))>0,
         nn=indexof(tmp1_#,"text: ");
         tmp=substring(tmp1_#,nn-1,length(tmp1_#));
         nn=Indexall(tmp,Dq);
@@ -6056,7 +6055,23 @@ Mkketcindyjs(options):=( //17.11.18
         if(!contains(tmp2,tmp),
           println(SCEOUTPUT,tmp1_#);
         );
+        flg=1;
       );
+      if(flg==0,
+        tmp=indexof(tmp1_#,"type: "+Dq+"Free")+indexof(tmp1_#,"type: "+Dq+"Point");
+        if(tmp>0,
+          if(indexof(tmp1_#,"size:")==0,
+            tmp=replace(tmp1_#,"}",", size: 3.0}");
+            println(SCEOUTPUT,tmp);
+          ,
+            println(SCEOUTPUT,tmp1_#);
+          );
+          flg=1;
+        );
+      );
+      if(flg==0,
+        println(SCEOUTPUT,tmp1_#);
+      ); //190126to
     );
     closefile(SCEOUTPUT);
     setdirectory(Dirwork);

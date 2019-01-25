@@ -3885,7 +3885,9 @@ Pointdata(nm,listorg,options):=(
     list=listorg
   ); //17.10.23
   if(MeasureDepth(list)==0,list=[list]);//180530
-  tmp=apply(list,Textformat(Pcrd(#),5)); //190126from
+  tmp=MeasureDepth(list);
+  if(tmp==1,ptlist=list,ptlist=list_1); //190126from
+  tmp=apply(ptlist,[Textformat(Pcrd(#),5)]);
   tmp1=text(tmp);
   tmp2=substring(tmp1,1,length(tmp1)-1);
   tmp3=tmp1;

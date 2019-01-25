@@ -1,5 +1,6 @@
 // 20190125
-//   Readcsv changed  ( option "Head=" added. For 1 line data ) 
+//   Readcsv changed/debugged  ( option "Head=" added. For 1 line data ) 
+//   HIstplot, Boxplot changed  (wait=5)
 // 20190124
 //   Gccexists added
 //   Sfcutparadata debugged  (optionh)

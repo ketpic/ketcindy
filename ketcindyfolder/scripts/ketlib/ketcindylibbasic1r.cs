@@ -3429,6 +3429,7 @@ GetLinestyle(str,name):=(
   ); //190119to
   if(tmp1=="dr" % tmp1=="Dr",
 //    Ltype=0;
+    if(length(tmp2)==0,tmp2="1"); //190125
     Ltype=[0,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Drwline(name+Dop);
@@ -3436,6 +3437,7 @@ GetLinestyle(str,name):=(
   );
   if(tmp1=="da" % tmp1=="Da",
 //    Ltype=1;
+    if(length(tmp2)==0,tmp2="1,1"); //190125
     Ltype=[1,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Dashline(name+Dop);
@@ -3443,13 +3445,15 @@ GetLinestyle(str,name):=(
   );
   if(tmp1=="id" % tmp1=="Id",
 //    Ltype=2;  // 15.11.09
-    Ltype=[2,tmp2];  //190119
+     if(length(tmp2)==0,tmp2="1,1"); //190125
+   Ltype=[2,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Invdashline(name+Dop);
     );
   );
   if(tmp1=="do" % tmp1=="Do",
 //    Ltype=3;
+    if(length(tmp2)==0,tmp2="1,1"); //190125
     Ltype=[3,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Dottedline(name+Dop);
@@ -3457,6 +3461,7 @@ GetLinestyle(str,name):=(
   );
   if(tmp1=="dp" % tmp1=="Dp",
 //    Ltype=0;
+    if(length(tmp2)==0,tmp2="1"); //190125
     Ltype=[0,tmp2];  //190119
     tmp1=parse(name);
     tmp2="";
@@ -3951,6 +3956,23 @@ Pointdata(nm,listorg,options):=(
 ////%Pointdata end////
 
 ////%Listplot start////
+Listplot(list):=Listplot(list,[]);
+Listplot(Arg1,Arg2):=(
+  regional(name,list,options,str);
+  if(isstring(Arg1),
+    name=Arg1;
+    list=Arg2;
+    Listplot(name,list,[]);
+  ,
+    list=Arg1;
+    options=Arg2;
+    name="";
+    forall(list, // 16.10.07from
+       name=name+#.name;
+    );// 16.10.07until
+    Listplot(name,list,options);
+  );
+);
 Listplot(nm,list,options):=(
 //help:Listplot([A,B]);
 // help:Listplot(["A","B"]);
@@ -4020,23 +4042,6 @@ Listplot(nm,list,options):=(
   tmp1=apply(list,Lcrd(#));
   tmp1;
 );
-Listplot(Arg1,Arg2):=(
-  regional(name,list,options,str);
-  if(isstring(Arg1),
-    name=Arg1;
-    list=Arg2;
-    Listplot(name,list,[]);
-  ,
-    list=Arg1;
-    options=Arg2;
-    name="";
-    forall(list, // 16.10.07from
-       name=name+#.name;
-    );// 16.10.07until
-    Listplot(name,list,options);
-  );
-);
-Listplot(list):=Listplot(list,[]);
 ////%Listplot end////
 
 ////%Lineplot start////

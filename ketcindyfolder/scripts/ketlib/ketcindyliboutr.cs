@@ -1290,13 +1290,13 @@ Readcsv(path,file,options):=(
 //help:Readcsv("ex.csv");
 //help:Readcsv(directory,"ex.csv");
 //help:Readcsv(options=["Head=no"]);
-  regional(dt,eqL,head,from,tmp);
+  regional(dt,eqL,head,from,end,tmp);
   tmp=Divoptions(options);
   eqL=tmp_5;
   head="n"; from=1; //190125from
   forall(eqL,
     tmp=Strsplit(#,"=");
-    if(Toupper(substring(tmp_1,0,1))=="Y",
+    if(Toupper(substring(tmp_1,0,1))=="H",
       head=substring(tmp_2,0,1);
     );
   );
@@ -1305,8 +1305,10 @@ Readcsv(path,file,options):=(
   ); //190125to
   dt=readfile2str(path,file);
   dt=tokenize(dt,"/LF/");
+  end=length(dt);
   if(dt_(length(dt))=="",
-    dt=dt_(from..(length(dt)-1)); //190125
+    end=end-1;
+    dt=dt_(from..end); //190125
   );
   dt=apply(dt,tokenize(#,","));
   if(length(dt)==1, dt=dt_1);  //190125
@@ -1579,7 +1581,7 @@ Boxplot(nm,dataorg,ypos,dy,optionorg):=(
   tmp=divoptions(options);
   eqL=tmp_5;
   strL=tmp_7;
-  waiting=3;
+  waiting=10;
   wrflg=0;
   forall(eqL,
     tmp=indexof(#,"=");
@@ -1744,7 +1746,7 @@ Histplot(nm,dataorg,optionorg):=(
   breaks = "breaks="+Dq+"Sturges"+Dq;
   density=0;
   relative=0;
-  waiting=3;
+  waiting=10; //190125
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));

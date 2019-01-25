@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190124] loaded");
+println("ketcindybasic2[20190125] loaded");
 
 //help:start();
 
@@ -2849,21 +2849,28 @@ Dashlinedata(dataorg,sen,gap,ptn):=(
 
 ////%Windispg start////
 Windispg():=(
-  regional(Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
   if(ADDAXES=="1", //181215from
     Drwxy();
-//    ADDAXES="0";
+    ADDAXES="0";
   ); //181215to
+  Windispg(GCLIST); //190125
+);
+Windispg(gcLorg):=( //190125
+  regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
+  gcL=gcLorg; //190125from
+  if(length(gcL)>0,
+    if(!islist(gcL_1),gcL=[gcL]);
+  ); //190125to
   gsave();
   layer(KETPIClayer);
-  forall(GCLIST,Nj,
+  forall(gcL,Nj,
     if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
     if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
       tmp=MeasureDepth(Dt);
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
       tmp=Nj_2; //190119from
-      if(!islist(tmp),tmp=[tmp,]); //190123
+      if(!islist(tmp),tmp=[tmp,""]); //190123
       if(tmp_1<0,tmp1=0,tmp1=tmp_1); //190119from
       if(tmp1<10,
         forall(Dt,Nk,
@@ -2873,28 +2880,26 @@ Windispg():=(
             if(indexof(opcindy,"color")==0, //190122from
               tmp3=tmp3+",linecolor->"+KCOLOR;
             );
-            if(tmp1==0,  //190124
-            ); 
-            tmp3=tmp3+opcindy+");"; 
+            tmp3=tmp3+opcindy; 
           ); 
-          if(tmp1==0,
-            if(length(Nj_2)>1,tmp=Nj_2_2,tmp="1"); //190124from
-            if((length(tmp)>0)&(indexof(opcindy,"size")==0), 
-              tmp3=tmp3+",size->"+tmp;
+         if(tmp1==0,
+            if((length(tmp_2)>0)&(indexof(opcindy,"size")==0), 
+              tmp3=tmp3+",size->"+tmp_2;
             ); //190124to
-            tmp="connect("+Textformat(tmp2,5)+tmp3;
+            tmp="connect("+Textformat(tmp2,5)+tmp3+");";//190125
             parse(tmp);
           ,
             if(tmp1==1,
               tmp4=Dashlinedata(tmp2,2.5,2.5,0);
               forall(tmp4,
-                tmp="connect("+Textformat(#,5)+tmp3;
+                tmp="connect("+Textformat(#,5)+tmp3+");";
                 parse(tmp);
               );
             ,
               tmp3=",dashtype->"+text(tmp1)+tmp3;
+
               forall(1..(length(tmp2)-1),
-                tmp="draw("+Textformat([tmp2_#,tmp2_(#+1)],5)+tmp3;
+                tmp="draw("+Textformat([tmp2_#,tmp2_(#+1)],5)+tmp3+");";
                 parse(tmp);
               );
             );
@@ -2910,42 +2915,6 @@ Windispg():=(
   grestore(); 
   layer(0);
 );
-// no ketjs on 190122
-Windispg(pltdata):=(
-  regional(pdata,Nj,Nk,Dt,tmp,tmp1,tmp2,opcindy);
-  gsave();
-  layer(KETPIClayer);
-  if(!islist(pltdata),tmp=[pltdata],tmp=pltdata);
-  pdata=select(GCLIST,contains(tmp,#_1));
-  forall(pdata,Nj,
-    if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
-    if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
-      tmp=MeasureDepth(Dt);
-      if(tmp==1,Dt=[Dt]);
-      opcindy=Nj_3;
-      if(Nj_2<0,tmp1=0,tmp1=Nj_2);
-      if(tmp1<10,
-        forall(Dt,Nk,
-          tmp2=Nk;    // 14.12.04
-          if(length(Nk)>1,
-            tmp="connect("+Textformat(tmp2,5)+ // 15.05.11
-             ",dashtype->"+text(tmp1)+
-             ",linecolor->"+KCOLOR+opcindy+")";
-            parse(tmp);
-          ,
-            if(length(Nk)==1,
-              tmp="draw("+text(tmp2_1)+opcindy+")"; // 14.12.31
-              parse(tmp);
-            );
-          );
-        );
-      );
-    );
-  );
-  grestore(); 
-  layer(0);
-);
-// no ketjs off 190122
 ////%Windispg end////
 
 ////%WritetoRS start////

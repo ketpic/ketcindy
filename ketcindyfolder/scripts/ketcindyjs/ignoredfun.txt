@@ -7,5 +7,10 @@ Com2nd
 Cindyname
 Changesetting
 Changework
+Setslidebody
+Setslidehyper
+Texcom
+Fontsize
+
 Ketinit
 Windispg

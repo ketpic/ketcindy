@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190125] loaded");
+println("ketcindybasic2[20190126] loaded");
 
 //help:start();
 
@@ -2874,40 +2874,37 @@ Windispg(gcLorg):=( //190125
       if(tmp_1<0,tmp1=0,tmp1=tmp_1); //190119from
       if(tmp1<10,
         forall(Dt,Nk,
-          tmp2=Nk;    // 14.12.04
           if(length(Nk)>1,
             tmp3="";
             if(indexof(opcindy,"color")==0, //190122from
               tmp3=tmp3+",linecolor->"+KCOLOR;
             );
             tmp3=tmp3+opcindy; 
-          ); 
-         if(tmp1==0,
-            if((length(tmp_2)>0)&(indexof(opcindy,"size")==0), 
-              tmp3=tmp3+",size->"+tmp_2;
-            ); //190124to
-            tmp="connect("+Textformat(tmp2,5)+tmp3+");";//190125
-            parse(tmp);
-          ,
-            if(tmp1==1,
-              tmp4=Dashlinedata(tmp2,2.5,2.5,0);
-              forall(tmp4,
-                tmp="connect("+Textformat(#,5)+tmp3+");";
-                parse(tmp);
-              );
+            if(tmp1==0,  //190126from
+              if((length(tmp_2)>0)&(indexof(opcindy,"size")==0), 
+                tmp3=tmp3+",size->"+tmp_2;
+              ); //190124to
+              tmp="connect("+Textformat(Nk,5)+tmp3+");";//190125
+              parse(tmp);
             ,
-              tmp3=",dashtype->"+text(tmp1)+tmp3;
-
-              forall(1..(length(tmp2)-1),
-                tmp="draw("+Textformat([tmp2_#,tmp2_(#+1)],5)+tmp3+");";
-                parse(tmp);
+              if(tmp1==1,
+                tmp4=Dashlinedata(Nk,2.5,2.5,0);
+                forall(tmp4,
+                  tmp="connect("+Textformat(#,5)+tmp3+");";
+                  parse(tmp);
+                );
+              ,
+                tmp3=",dashtype->"+text(tmp1)+tmp3;
+                forall(1..(length(Nk)-1),
+                  tmp="draw("+Textformat([Nk_#,Nk_(#+1)],5)+tmp3+");";
+                  parse(tmp);
+                );
               );
             );
-          );
-        );
-        if(length(Nk)==1,
-          tmp="draw("+text(tmp2_1)+opcindy+");"; // 14.12.31
-          parse(tmp);
+           ,
+            tmp="draw("+text(Nk_1)+opcindy+");"; // 14.12.31
+             parse(tmp);
+           ); //190126to
         );
       );
     );

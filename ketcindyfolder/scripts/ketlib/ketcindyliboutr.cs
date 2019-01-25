@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20190125 loaded");
+println("ketcindylibout(20190126 loaded");
 
 //help:start();
 
@@ -1721,7 +1721,7 @@ Boxplot(nm,dataorg,ypos,dy,optionorg):=(
     out=bp_(6..length(bp));
     if(length(out)>0,
       out=apply(out,[#,ypos]);
-      Pointdata(name+text(1),out,concat(options,[0,"Size=4"]));
+      Pointdata(name+text(1),out,concat(options,[0,"Size=2","Inside=white"])); //190125
     );
     pstr=substring(pstr,0,length(pstr)-1)+"]";
     println("generate totally "+name);

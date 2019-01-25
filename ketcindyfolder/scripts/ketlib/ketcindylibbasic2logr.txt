@@ -1,3 +1,5 @@
+// 20190126
+//   Windispg debugged (for Pointdata)
 // 20190125
 //   Windispg redebugged ("size")
 // 20190123

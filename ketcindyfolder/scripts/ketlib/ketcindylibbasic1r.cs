@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190125] loaded");
+println("ketcindylibbasic1[20190126] loaded");
 
 //help:start();
 
@@ -3885,23 +3885,14 @@ Pointdata(nm,listorg,options):=(
     list=listorg
   ); //17.10.23
   if(MeasureDepth(list)==0,list=[list]);//180530
-  tmp=MeasureDepth(list);
-  if(tmp>0,  // 2015.02.21
-    if(tmp==1,ptlist=list,ptlist=list_1);
-    tmp=apply(ptlist,[Textformat(Pcrd(#),5)]);
-    tmp1=text(tmp);
-    tmp2=substring(tmp1,1,length(tmp1)-1);
-    tmp3=tmp1;
-  ,
-    ptlist=list;
-    tmp1=Textformat(Pcrd(ptlist),5);
-    tmp2=tmp1;
-    tmp3="["+tmp1+"]";
-  );
+  tmp=apply(list,Textformat(Pcrd(#),5)); //190126from
+  tmp1=text(tmp);
+  tmp2=substring(tmp1,1,length(tmp1)-1);
+  tmp3=tmp1;
   tmp=name+"="+tmp1;
   parse(tmp);
   tmp=nameL+"="+tmp3;
-  parse(tmp);
+  parse(tmp); //190126to
   if(Noflg<3,
     if(isstring(listorg), //17.10.23
       tmp2=listorg;
@@ -3925,7 +3916,7 @@ Pointdata(nm,listorg,options):=(
     GLIST=append(GLIST,name+"=Pointdata("+tmp2+")");
   );
   if(Noflg<2,
-    tmp=[nameL,0,opcindy];
+    tmp=[nameL,[0,1],opcindy];  //190126
     GCLIST=append(GCLIST,tmp);
     if(Noflg==0,
       if(length(size)>0,

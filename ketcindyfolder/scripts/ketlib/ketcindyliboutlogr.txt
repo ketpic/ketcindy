@@ -1,3 +1,5 @@
+// 20190126
+//   Boxplot changed  ( Pointdata[size] )
 // 20190125
 //   Readcsv changed/debugged  ( option "Head=" added. For 1 line data ) 
 //   HIstplot, Boxplot changed  (wait=5)

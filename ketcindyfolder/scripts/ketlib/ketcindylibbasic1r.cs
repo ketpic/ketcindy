@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190122] loaded");
+println("ketcindylibbasic1[20190125] loaded");
 
 //help:start();
 
@@ -1163,19 +1163,15 @@ Sprintf(value,dig):=(
 );
 ////%Sprintf end////
 
-Assign(str):=(  //  old
-  regional(out);
-  out=str;
-  forall(VLIST,
-    tmp=substring(#_1,0,length(#_1)-1);
-    out=replace(out,tmp,"("+#_2+")");
-  );
-  out;
-);
-
 ////%Assign start////
+Assign(str):=( //190125from
+  regional(tmp);
+  tmp=[];
+  forall(VLIST,tmp=concat(tmp,[#_1,#_2]));
+  Assign(str,tmp);
+); //190125to
 Assign(funstr,vrL):=(
-  regional(nn,out,tmp,tmp1);
+  regional(nn,out);
   nn=length(vrL)/2;
   out=funstr;
   forall(1..nn,
@@ -1183,7 +1179,6 @@ Assign(funstr,vrL):=(
   );
   out;
 );
-
 Assign(funstr,varname,rep):=(
 //help:Assign("x^2+a*x","a",1.3);
 //help:Assign("a*x^2+b*x",["a",1,"b",2]);

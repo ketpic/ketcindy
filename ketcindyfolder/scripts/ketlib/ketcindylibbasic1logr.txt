@@ -1,3 +1,5 @@
+// 2019025
+//    Assign debugged  ( for 1 argument)
 // 2019022
 //    no ketjs added (Ketinit)
 // 20190119

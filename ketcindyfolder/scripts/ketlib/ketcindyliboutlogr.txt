@@ -1,3 +1,5 @@
+// 20190125
+//   Readcsv changed  ( option "Head=" added. For 1 line data ) 
 // 20190124
 //   Gccexists added
 //   Sfcutparadata debugged  (optionh)

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20190124 loaded");
+println("ketcindylibout(20190125 loaded");
 
 //help:start();
 
@@ -1181,10 +1181,6 @@ Readcsv(pathorg,file,optionorg):=(
         options=remove(options,[#]);
       );
     );
-//    if(tmp=="W",  // removed:17.02.19
-//      waiting=parse(tmp2);
-//      options=remove(options,[#]);
-//    );
     if(tmp=="S",
       sep=tmp2;
       options=remove(options,[#]);
@@ -1287,19 +1283,33 @@ Readcsv(pathorg,file,optionorg):=(
     );
   );
 );
-// New readcsv (181125) 
+// New readcsv [181125] 
 Readcsv(file):=Readcsv(Dirwork,file);
-Readcsv(path,file):=(
+Readcsv(path,file):=Readcsv(path,file,[]);
+Readcsv(path,file,options):=(
 //help:Readcsv("ex.csv");
 //help:Readcsv(directory,"ex.csv");
-//help:Readcsv(options=["Head=yes","Sep=-999","Flat=no","Use=R"]);
-  regional(dt);
+//help:Readcsv(options=["Head=no"]);
+  regional(dt,eqL,head,from,tmp);
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  head="n"; from=1; //190125from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    if(Toupper(substring(tmp_1,0,1))=="Y",
+      head=substring(tmp_2,0,1);
+    );
+  );
+  if(Toupper(head)=="Y",
+    from=2;
+  ); //190125to
   dt=readfile2str(path,file);
   dt=tokenize(dt,"/LF/");
   if(dt_(length(dt))=="",
-    dt=dt_(1..(length(dt)-1));
+    dt=dt_(from..(length(dt)-1)); //190125
   );
   dt=apply(dt,tokenize(#,","));
+  if(length(dt)==1, dt=dt_1);  //190125
   dt;
 );
 ////%Readcsv end////

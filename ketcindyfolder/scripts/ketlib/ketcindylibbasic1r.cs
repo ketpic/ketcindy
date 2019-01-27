@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190127] loaded");
+println("ketcindylibbasic1[20190128] loaded");
 
 //help:start();
 
@@ -123,8 +123,8 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
       Dircdy=substring(Dircdy,1,length(Dircdy));
     );
   );
-  Changesetting(Homehead+pathsep()+getname()); //180913
-  Changesetting(Dircdy); //181017
+  Userhome=Homehead+pathsep()+getname(); //190128
+  Changesetting(); //190128
   Changework(Dircdy+pathsep()+work); //180329to,181001
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
@@ -265,22 +265,22 @@ Readlines(path,file):=(
 ////%Readlines end////
 
 ////%Changesetting start////
-Changesetting(dir):=( //181017
-  regional(fname);
-  fname="ketcindychange.txt";
-  if(!isexists(dir,fname),
-    if(dir==Dircdy,
-      fname="ketcindy.conf"; 
-    ,
-      fname=".ketcindy.conf"; 
-    );
-  );
+Changesetting():=( //190128
+  regional(dir,fname);
+  dir=Homehead+pathsep()+getname();
+  fname=".ketcindy.conf"; 
   if(isexists(dir,fname),
     println("read "+fname+" in "+dir);
     setdirectory(dir);
     import(fname);
   );
-); //181017to
+  dir=Dircdy; fname="ketcindy.conf"; 
+  if(isexists(dir,fname),
+    println("read "+fname+" in "+dir);
+    setdirectory(dir);
+    import(fname);
+  );
+);
 ////%Changesetting end////
 
 ////%Cindyname start////

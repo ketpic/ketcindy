@@ -9,7 +9,6 @@ Changesetting
 Changework
 Setslidebody
 Setslidehyper
-Texcom
 Fontsize
 
 Ketinit

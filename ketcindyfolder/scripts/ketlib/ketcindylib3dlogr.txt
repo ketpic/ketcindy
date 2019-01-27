@@ -1,3 +1,5 @@
+// 20190128
+//   Vertexedgeface changed  ( size of point name, drawpoint )
 // 20190127
 //   Nohiddenseg debugged  ( for changing Ltype )
 // 20181218

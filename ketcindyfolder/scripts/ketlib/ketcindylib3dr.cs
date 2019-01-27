@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20190127) loaded");
+println("ketcindylib3d(20190128) loaded");
 
 //help:start();
 
@@ -2936,7 +2936,8 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
         parse(tmp);
         Defvar(vname+"2d",parse(vname+"2d"));
         if(dispflg==1, //181106
-          drawtext(parse(vname+"2d"),vname);
+          drawtext(parse(vname+"2d"),vname,size->8); //190128
+          draw(parse(vname+"2d"),pointsize->3,color->[0,1,0]); //190128
         );
       ); //180905to
     );

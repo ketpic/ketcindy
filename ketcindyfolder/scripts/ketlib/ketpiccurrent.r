@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20181231)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190127)" 
 
 print(ThisVersion)
 
+# 20190127
+#   Mvprod added
 # 20181231
 #   Drwpt debugged/changed  ( grep removed, N=8 set )
 # 20181230
@@ -621,6 +623,29 @@ Dotprod<-function(a,b){ # 18.02.05
   out=0
   for(jj in Looprange(1,nn)){
     out=out+a[jj]*b[jj]
+  }
+  return(out)
+}
+
+Mvprod<- function(...){ # 190127
+  varargin<- list(...)
+  mat=varargin[[1]]
+  vec=varargin[[2]]
+  if(length(varargin)>2){
+    nn=varargin[[3]]
+  }else{
+    nn=1
+  }
+  mm=round(length(vec)/nn)
+  mat=matrix(mat,ncol=mm,byrow=TRUE)
+  vec=matrix(vec,nrow=nn,byrow=TRUE)
+  out=c()
+  for(jj in 1:nn){
+    tmp=mat%*%Op(jj,vec)
+    out=c(out,tmp)
+  }
+  if(nn>1){
+    out=matrix(out,nrow=nn,byrow=TRUE)
   }
   return(out)
 }

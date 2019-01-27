@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190126] loaded");
+println("ketcindylibbasic1[20190127] loaded");
 
 //help:start();
 
@@ -104,7 +104,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
     Fhead=replace(Fhead,".cdy","");
     Slidename=Fhead; //17.10.24
   );//17.11.12
-  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405 //no ketjs on
+  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405
   Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
@@ -1409,6 +1409,28 @@ Crossprod(a,b):=(
   Out;
 );
 ////%Crossprod end////
+
+////%Mvprod start////
+Mvprod(mat,vec):=( //190127
+  regional(vecL);
+  if(MeasureDepth(vec)==0,vecL=[vec],vecL=vec);
+  Mvprod(mat,vecL,length(vecL));
+);
+Mvprod(mat,vecL,nn):=(
+//help:Mvprod(mat,vec(list));
+  regional(tmp,out);
+  if(nn==1,
+    out=mat*vecL_1;
+  ,
+    out=[];
+    forall(1..nn,
+      tmp=mat*vecL_#;
+      out=append(out,tmp);
+    );
+  );
+  out;
+);
+////%Mvprod end////
 
 ////%Ptstart start////
 Ptstart(Fig):=(

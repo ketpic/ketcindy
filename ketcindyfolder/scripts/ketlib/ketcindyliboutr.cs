@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout(20190126 loaded");
+println("ketcindylibout(20190127 loaded");
 
 //help:start();
 
@@ -5514,11 +5514,17 @@ CalcbyC(name,path,cmd,optionorg):=(
 
 ////%Gccexists start////
 Gccexists():=( //190124
- regional(out);
- if(ismacosx(),out=isexists("/usr/bin",PathC));
- if(iswindows(),out=isexists("",PathC));
- if(islinux(),out=isexists("/usr/bin",PathC));
- out;
+  regional(out);
+  if(iswindows(),
+    out=isexists("",PathC);
+  ,
+    if(indexof(PathC,"/")==0, //190127from
+      out=isexists("/usr/bin",PathC);
+    ,
+      out=isexists("",PathC);
+    );
+  ); //190127to
+  out;
 );
 ////%Gccexists end////
 

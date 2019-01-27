@@ -1,3 +1,5 @@
+// 20190127
+     Gccexists changed  (in case that PathC is full path in Mac/Windws)
 // 20190126
 //   Boxplot changed  ( Pointdata[size] )
 // 20190125

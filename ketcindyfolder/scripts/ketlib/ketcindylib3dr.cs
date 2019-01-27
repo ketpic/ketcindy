@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20190114) loaded");
+println("ketcindylib3d(20190127) loaded");
 
 //help:start();
 
@@ -625,7 +625,7 @@ Subgraph(name3,opcindy):=( //181029
   );
   tmp=name+"="+Textformat(sub2d,5);
   parse(tmp);
-  GCLIST=append(GCLIST,[name,0,opcindy]);
+  GCLIST=append(GCLIST,[name,[0,1],opcindy]); //190127
   sub2d;
 );
 ////%Subgraph end////
@@ -1189,6 +1189,7 @@ Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
 );
 ////%Xyzax3paraname end////
 
+////%Datalist3d start////
 Datalist3d():=(
 //help:Datalist3d();
   regional(out,tmp,tmp2,tmp3);
@@ -1198,7 +1199,9 @@ Datalist3d():=(
   tmp3=apply(tmp2,replace(#,"2d","3d"));
   out=tmp3;
 );
+////%Datalist3d end////
 
+////%Datalist2d start////
 Datalist2d():=(
 //help:Datalist2d();
   regional(out,tmp,tmp2,tmp3);
@@ -1208,7 +1211,9 @@ Datalist2d():=(
 //  tmp3=apply(tmp2,replace(#,"2d","3d"));
   out=tmp2;
 );
+////%Datalist2d end////
 
+////%Embed start////
 Embed(nm,Pd2str,funstr,varstr):=
     Embed(nm,Pd2str,funstr,varstr,[]);
 Embed(nm,Pd2str,funstr,varstr,options):=(
@@ -1298,6 +1303,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   );
   Out;
 );
+////%Embed end////
 
 ////%Rotatepoint3d start////
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
@@ -3382,7 +3388,7 @@ Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
     tmp=replace(seg,"3d","2d");
     tmp1=select(GCLIST,#_1==tmp);
     tmp1=tmp1_1;
-    if(tmp1_2==0,
+    if(tmp1_2_1==0, //190127
       tmp2=append(tmp2,seg);
     );
   );

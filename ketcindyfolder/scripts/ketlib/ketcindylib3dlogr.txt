@@ -1,5 +1,5 @@
-// 20190114
-//   IntersectsgpL debugged 
+// 20190127
+//   Nohiddenseg debugged  ( for changing Ltype )
 // 20181218
 //   Letter3d,Expr3d added
 // 20181212

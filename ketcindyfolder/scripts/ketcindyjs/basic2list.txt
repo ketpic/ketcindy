@@ -112,4 +112,4 @@ BBdata,basic2,5610,5753,Divoptions,Toupper,ismacosx,iswindows,kc,Sprintf,Removes
 Findfun,basic2,5757,5820,Removespace,Indexall
 Extractfun,basic2,5824,5841,Indexall,Findfun
 Extractall,basic2,5850,5877
-Mkketcindyjs,basic2,5881,6086,Strsplit,Toupper,isexists,Extractfun,Readcsv,Extractall,pathsep,Readlines,Removespace,use,Dqq,Indexall
+Mkketcindyjs,basic2,5881,6082,Strsplit,Toupper,isexists,Extractfun,Readcsv,Extractall,pathsep,Readlines,Removespace,use,Dqq,Indexall

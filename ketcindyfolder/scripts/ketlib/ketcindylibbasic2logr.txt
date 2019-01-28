@@ -1,3 +1,5 @@
+// 20190128
+//   Mkketcindyjs changed  ( texflg removed , katex is OK )
 // 20190126
 //   Windispg debugged (for Pointdata)
 //   Mkketcindyjs change  ( point size )

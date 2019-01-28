@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190126] loaded");
+println("ketcindybasic2[20190128] loaded");
 
 //help:start();
 
@@ -5877,20 +5877,16 @@ Extractall(name):=(
 Mkketcindyjs():=Mkketcindyjs(options); 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Tex=y","Net=y","Path=Dircdy"]);
-  regional(texflg,netflg,htm,htmorg,from,upto,flg,fL,fun,tmp,tmp1,tmp2,tmp3,
+//help:Mkketcindyjs(options=["Net=y","Path=Dircdy"]);
+  regional(netflg,htm,htmorg,from,upto,flg,fL,fun,tmp,tmp1,tmp2,tmp3,
       lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,
       DL,Out);
-  texflg="Y";
-  netflg="Y";
+  netflg="Y";  //190128 texflg removed
   path=Dircdy;
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     tmp2=tmp_2;
-    if(indexof(tmp1,"T")>0,
-      texflg=Toupper(tmp2);
-    );
     if(indexof(tmp1,"N")>0,
       netflg=Toupper(tmp2);
     );
@@ -5964,8 +5960,8 @@ Mkketcindyjs(options):=( //17.11.18
       tmp="    <script type="+Dqq("text/javascript")+" src="; //190117from
       tmp1_(length(tmp1))="";  //190120
       if(texflg=="Y", //190119from
-        tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
-        tmp1_(length(tmp1))=tmp;
+//        tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
+//        tmp1_(length(tmp1))=tmp;
       ); //190119to
     ,
       tmp1_(length(tmp1))=""; //190117to
@@ -6036,14 +6032,14 @@ Mkketcindyjs(options):=( //17.11.18
       println(SCEOUTPUT,tmp1_#);
     );
     from=tmp+1; //190117to
-    if(texflg=="Y",
-      if(netflg=="Y",
+//    if(texflg=="Y",
+//      if(netflg=="Y",
         tmp="  use: ["+Dqq("katex")+"],";
-      ,
-        tmp="  use: ["+Dqq("katex")+"],";
-      );
+//      ,
+//        tmp="  use: ["+Dqq("katex")+"],";
+//      );
       println(SCEOUTPUT,tmp);
-    );
+//    );
     tmp2=["Figure","Parent","KeTJS","KeTJSoff"];
     forall(from..(length(tmp1)),
       flg=0; //190126from

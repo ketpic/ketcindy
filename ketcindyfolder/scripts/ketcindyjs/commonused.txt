@@ -54,6 +54,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ADDPACK=[]; // 16.05.16
   GPACK="tpic"; //180817
   ErrFlag=0;
+  KETJSOP=[]; //190129
   ArrowlineNumber=1;  // 15.01.05
   ArrowheadNumber=1;
   BezierNumber=1; //15.01.03

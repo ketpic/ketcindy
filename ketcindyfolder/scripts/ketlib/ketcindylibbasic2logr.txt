@@ -1,5 +1,12 @@
+// 20190129
+//   "/LF/"  => "/L"+"F/"
+//   Ketjsoption added
+//   Mkketcindyjs changed  ( option "Web","Local","Scale","Nolabel")
+//   Copyketcindyjs debugged  ( for Windows )
+//   Mkketcindyjs changed  ( option "Color" added)
 // 20190128
 //   Mkketcindyjs changed  ( texflg removed , katex is OK )
+//   Copyketcindyjs added
 // 20190126
 //   Windispg debugged (for Pointdata)
 //   Mkketcindyjs change  ( point size )

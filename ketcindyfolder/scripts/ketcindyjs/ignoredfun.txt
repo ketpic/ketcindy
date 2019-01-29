@@ -9,7 +9,15 @@ Changesetting
 Changework
 Setslidebody
 Setslidehyper
+Presentation
 Fontsize
+Inwindow
+Mkketcindyjs
+Copyketcindyjs
+Ketjsoption
+Help
+Helplist
+Example
 
 Ketinit
 Windispg

@@ -1,8 +1,8 @@
-Ketinit,basic1,41,181,Fillstore,Cindyname,Indexall,getname,Changesetting,Changework,pathsep,iswindows,ismacosx,isexists,iskcexists,setexec,Setwindow
-Fillstore,basic1,185,215
-Fillblack,basic1,219,233,Fillstore
-Fillrestore,basic1,237,249
-Readlines,basic1,253,265,readfile2str
+Ketinit,basic1,41,182,Fillstore,Cindyname,Indexall,getname,Changesetting,Changework,pathsep,iswindows,ismacosx,isexists,iskcexists,setexec,Setwindow
+Fillstore,basic1,186,216
+Fillblack,basic1,220,234,Fillstore
+Fillrestore,basic1,238,250
+Readlines,basic1,254,265,readfile2str
 Changesetting,basic1,269,284,pathsep,getname,isexists
 Cindyname,basic1,288,295,Cdyname,Getcdyname
 Setwindow,basic1,299,336,Toupper,Lcrd,Pcrd,Putpoint

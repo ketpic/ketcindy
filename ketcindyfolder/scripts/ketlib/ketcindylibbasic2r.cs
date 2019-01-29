@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190128] loaded");
+println("ketcindybasic2[20190129] loaded");
 
 //help:start();
 
@@ -169,7 +169,7 @@ Rotatedata(nm,plist,angle,options):=(
     tmp1=text(plist); 
     tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Rotatedata("+tmp1+","
-	  +Textformat(angle,5)+","+RSform(Textformat(Pt,5))+")"; //17.12.23
+    +Textformat(angle,5)+","+RSform(Textformat(Pt,5))+")"; //17.12.23
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -177,11 +177,11 @@ Rotatedata(nm,plist,angle,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+    Ltype=GetLinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	,
+    ,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -246,11 +246,11 @@ Translatedata(nm,plist,mov,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	,
+    ,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -275,7 +275,7 @@ Scaledata(nm,plist,Arg1,Arg2):=(
     tmp=Arg1;//180603[2lines]
     if(!islist(tmp),tmp=[tmp,tmp]);
     tmp=Lcrd(tmp);
-	options=Arg2;
+    options=Arg2;
     Scaledata(nm,plist,tmp_1,tmp_2,options);
   ,
     Scaledata(nm,plist,Arg1,Arg2,[]);
@@ -331,7 +331,7 @@ Scaledata(nm,plist,rx,ry,options):=(
     tmp1=text(plist); 
     tmp1=RSform(tmp1,1); // 180602
     tmp=name+"=Scaledata("+tmp1+","
-	  +Textformat(rx,5)+","+Textformat(ry,5)+","+RSform(Textformat(Pt,5))+")";
+      +Textformat(rx,5)+","+Textformat(ry,5)+","+RSform(Textformat(Pt,5))+")";
     GLIST=append(GLIST,tmp);
   );
   if(Noflg<2,
@@ -339,11 +339,11 @@ Scaledata(nm,plist,rx,ry,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	,
+    ,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -412,7 +412,7 @@ Reflectdata(nm,plist,symL,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-	tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
     tmp1=text(plist); 
     tmp1=RSform(tmp1,1);// 180602
@@ -424,11 +424,11 @@ Reflectdata(nm,plist,symL,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	,
+    ,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -507,7 +507,7 @@ Htickmark(arglist):=(
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
     Listplot("ht"+text(nn),
-	    [[arglist_nn,mark],[arglist_nn,-mark]],["Msg=n"]);//181017
+        [[arglist_nn,mark],[arglist_nn,-mark]],["Msg=n"]);//181017
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
@@ -533,7 +533,7 @@ Vtickmark(arglist):=(
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
     Listplot("vt"+text(nn),
-	     [[mark,arglist_nn],[-mark,arglist_nn]],["Msg=n"]); //181021
+         [[mark,arglist_nn],[-mark,arglist_nn]],["Msg=n"]); //181021
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
@@ -819,11 +819,11 @@ Letter(list,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
+      Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	);
+    );
     if(Noflg<2,
       Xmv=0;//16.10.13
       Ymv=-4;
@@ -1127,11 +1127,11 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	,
+    ,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -1232,14 +1232,14 @@ Putbezierdata(name,ptL,options):=(
         tmp1=name+"p"+text(#-1);
         Putpoint(tmp1,tmp,Lcrd(parse(tmp1))); // 16.08.16
         inspect(parse(tmp1),"labeled",false);  //15.01.22
-		Letter([parse(tmp1),"ne",tmp1],["notex"]);  //15.01.22
+        Letter([parse(tmp1),"ne",tmp1],["notex"]);  //15.01.22
         inspect(parse(tmp1),"ptsize",psize);
         inspect(parse(tmp1),"color",3);
         tmp=(p1+2*p2)/3;
         tmp2=name+"q"+text(#-1);
-		Putpoint(tmp2,tmp,Lcrd(parse(tmp2))); // 16.08.16
+        Putpoint(tmp2,tmp,Lcrd(parse(tmp2))); // 16.08.16
         inspect(parse(tmp2),"labeled",false);  //15.01.22
-  	    Letter([parse(tmp2),"ne",tmp2],["notex"]);  //15.01.22
+        Letter([parse(tmp2),"ne",tmp2],["notex"]);  //15.01.22
         inspect(parse(tmp2),"ptsize",psize);
         inspect(parse(tmp2),"color",3);
         ctrs=append(ctrs,[parse(tmp1),parse(tmp2)]);
@@ -1248,7 +1248,7 @@ Putbezierdata(name,ptL,options):=(
         tmp1=name+"p"+text(#-1);
         Putpoint(tmp1,tmp,Lcrd(parse(tmp1))); // 16.08.16
         inspect(parse(tmp1),"labeled",false);  //15.01.22
-		Letter([parse(tmp1),"ne",tmp1],["notex"]);  //15.01.22
+        Letter([parse(tmp1),"ne",tmp1],["notex"]);  //15.01.22
         inspect(parse(tmp1),"ptsize",psize);
         inspect(parse(tmp1),"color",3);
         ctrs=append(ctrs,[parse(tmp1)]);
@@ -1380,7 +1380,7 @@ Readbezier(file,optionorg):=(
     tmp1=parse(tmp+"k");
     tmp2=parse(tmp+"c");
     if(MeasureDepth(tmp2)==1,tmp2=[tmp2]); // 16.04.22from
-	if(geo==1,
+    if(geo==1,
       alpha="abcdefghijklmnopqrstuvwxyz";
       forall(1..length(tmp1),
         tmp="k"+BezierNumber+"n"+text(nc)+substring(alpha,#-1,#);
@@ -1703,7 +1703,7 @@ MeetCurve(Crv,Xorg,Yorg):=(
   Ban=concat(tmp1,tmp2);
   Tate=select(Ban,
     abs(Cv_#_1-Cv_(#+1)_1)<=
-	   10^(-2)*abs(Cv_#_2-Cv_(#+1)_2)
+       10^(-2)*abs(Cv_#_2-Cv_(#+1)_2)
   );
   Ban=remove(Ban,Tate);
   Ylist=[];
@@ -1945,7 +1945,7 @@ Periodfun(defL,reporg,optionorg):=(  // 16.11.24
   forall(1..(rep_2),nr,
     forall(1..(length(pdata)),np,
       Translatedata("p"+np+text(nr),pdata_np,[per*nr,0],options);
-	  tmp2=concat(tmp2,["trp"+np+text(nr)]);
+      tmp2=concat(tmp2,["trp"+np+text(nr)]);
     );
   );//180724to
   pdata=concat(tmp1,pdata);
@@ -2403,7 +2403,7 @@ Findcell(Tbdata,pos1,pos2):=(
   regional(tmp1,tmp2,posnw,posse,ctr,dx,dy);
   if(isstring(pos1),
     posnw=Tgrid(pos1); // 15.05.20
-    posse=Tgrid(pos2);	
+    posse=Tgrid(pos2);
     //posnw=parse(pos1);
     //posse=parse(pos2);
   ,
@@ -2947,7 +2947,7 @@ WritetoRS(filename,shchoice):=(
       tmp1=format(re(tmp_1),6);// 15.02.05
       tmp2=format(re(tmp_2),6);
       tmp=#.name+"="+"c("+tmp1+","+tmp2+");";
-	  tmp=tmp+"Assignadd('"+#.name+"',"+#.name+")";
+      tmp=tmp+"Assignadd('"+#.name+"',"+#.name+")";
       Plist=append(Plist,tmp);
     ,
       println("Remove the abnormal poiint "+#.name); //181106
@@ -3189,7 +3189,7 @@ Extractdata(number,name,options):=(
     println("extract outdata  "+name);
     tmp1=parse(name);
     tmp3=[ //17.09.18
-	  "Tmpout=ReadOutData("+Dq+File+Dq+")"
+      "Tmpout=ReadOutData("+Dq+File+Dq+")"
     ];
     GLIST=concat(GLIST,tmp3);
   );
@@ -3198,11 +3198,11 @@ Extractdata(number,name,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("}");//180722
       );
-	,
+    ,
       if(Noflg==1,Ltype=0);
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
@@ -3306,7 +3306,7 @@ ReadOutData(pathorg,filenameorg,optionsorg):=(
         parse(varname+"="+tmp);
         outdt=append(outdt,ptL);
         ptL=[];
-        varname=cmd;	
+        varname=cmd;
         varL=append(varL,varname);
       );
     );
@@ -4625,7 +4625,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
         if(sestr=="",
           RepeatList_nn=append(RepeatList_nn,ss);
         );
-	  );
+      );
       if(sestr=="",
         seL=[1];
       ,
@@ -4634,7 +4634,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
         tmp1=replace(tmp1,"-,","1..");
         tmp1="["+tmp1+"]"; //17.01.03
         seL=flatten(parse(tmp1)); //17.01.03
-	  );
+      );
       if(contains(seL,1),
         if(substring(ss,0,1)!="%", //16.01.04
           println(SCEOUTPUT,ss);
@@ -4669,7 +4669,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
           if(substring(str,0,1)!="%", 
             if(NonThinFlg==0,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//17.01.15
-			    if(MiniFlg==0, //180526from
+                if(MiniFlg==0, //180526from
                   println(SCEOUTPUT,"{\color[cmyk]{\thin,\thin,\thin,\thin}%");//180701
                   println(SCEOUTPUT,str);
                   println(SCEOUTPUT,"}%");
@@ -4719,7 +4719,7 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
             tmp=seL_nn;
             if(NonThinFlg==0,
               if(!contains(["\begi","\end{"],substring(str,0,5)),//180526from
-			    if(MiniFlg==0, 
+                if(MiniFlg==0, 
                   tmp1="{\color[cmyk]{\thin,\thin,\thin,\thin}%";//180701
                   tmp1=[tmp1,str,"}%"];
                 ,
@@ -4792,9 +4792,9 @@ Presentation(texfile,txtfile):=(
 //  tmp=load(tmp1); //181125from
   tmp=readfile2str(Dirwork,tmp1);
   tmp=replace(tmp,"////","||||");
-  tmp=replace(tmp,"/LF/::","::");
-  tmp=replace(tmp,"///LF/","/LF/");
-  slideL=tokenize(tmp,"/LF/"); //181125to
+  tmp=replace(tmp,"/L"+"F/::","::");
+  tmp=replace(tmp,"///L"+"F/","/L"+"F/");
+  slideL=tokenize(tmp,"/L"+"F/"); //181125to
   slideorgL=slideL; // 16.07.11
   slideL=apply(slideL,Removespace(#));
   tmp=select(1..length(slideL),length(slideL_#)>0); // 16.07.11from
@@ -5177,7 +5177,7 @@ Presentation(texfile,txtfile):=(
       flg=1;
     ); //17.06.23to
     if(flg==0,  
-	  if(indexof(sld,"\begin{verbatim}")==1, // 16.06.28from
+      if(indexof(sld,"\begin{verbatim}")==1, // 16.06.28from
         Repeatsameslide(repeatflg,sestr,[slideL_ns]);
         verbflg=1;
         flg=1;
@@ -5366,7 +5366,7 @@ Presentation(texfile,txtfile):=(
       );
       if(flg==0&tmp1=="end"&(length(flgL)>0), //180526 
         tmp=flgL_(length(flgL));
-		if(tmp=="i",
+        if(tmp=="i",
           Repeatsameslide(repeatflg,sestr,["\end{itemize}"]);
         );
         if(tmp=="e",
@@ -5873,27 +5873,128 @@ Extractall(name):=(
 );
 ////%Extractall end////
 
+////%Copyketcindyjs start//// 190128
+Copyketcindyjs():=(
+  regional(tmp,tmp1,tmp2,drive,fname);
+  if(iswindows(),
+    drive="C:";
+    fname=Dirhead;
+    tmp=indexof(fname,":");
+    if(tmp>0,
+      drive=substring(Dirwork,0,tmp);
+      fname=substring(fname,tmp,length(fname));
+    );
+    kc():=(
+      println("kc : "+kc(Dirwork+Batparent,Dirlib,Fnametex)); // 16.06.04
+    );
+    SCEOUTPUT = openfile(Batparent);
+    println(SCEOUTPUT,drive);
+    println(SCEOUTPUT,"cd "+Dqq(fname));
+    println(SCEOUTPUT,"set xcp="+Dqq("\Windows\System32\xcopy"));
+    tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\");
+    tmp2=" "+Dqq(Dircdy+"ketcindyjs\");
+    println(SCEOUTPUT,tmp1+"Cindy.js.map"+tmp2);
+    println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"katex-plugin.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"Cindy.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
+    tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\katex\");
+    tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\");
+    println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
+    println(SCEOUTPUT,tmp1+"katex.min.css"+tmp2);
+    println(SCEOUTPUT,tmp1+"katex.min.js"+tmp2);
+    tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\katex\fonts\");
+    tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\fonts\");
+    println(SCEOUTPUT,tmp1+"KaTeX_Main-Regular.ttf"+tmp2);
+    println(SCEOUTPUT,tmp1+"KaTeX_Main-Regular.woff"+tmp2);
+    println(SCEOUTPUT,tmp1+"KaTeX_Main-Regular.woff2"+tmp2);
+    println(SCEOUTPUT,tmp1+"KaTeX_Math-Italic.ttf"+tmp2);
+    println(SCEOUTPUT,tmp1+"KaTeX_Math-Italic.woff"+tmp2);
+    println(SCEOUTPUT,tmp1+"KaTeX_Math-Italic.woff2"+tmp2);
+    println(SCEOUTPUT,"exit 0");
+    closefile(SCEOUTPUT);
+  ,
+    kc():=(
+      println("kc : "+kc(Dirwork+Shellparent,Mackc+Dirlib,Fnametex));
+    );
+    SCEOUTPUT = openfile(Shellparent);
+    println(SCEOUTPUT,"#!/bin/sh");
+    println(SCEOUTPUT,"cd "+Dqq(Dirhead));
+    println(SCEOUTPUT,"cp -r -p ketcindyjs  "+Dircdy+"/");
+    println(SCEOUTPUT,"exit 0");
+    closefile(SCEOUTPUT);
+  );
+  kc();
+); 
+////%Coptketcindyjs end//// 
+
+////%Ketjsoption start//// 190129
+Ketjsoption():=(
+  KETJSOP;
+);
+Ketjsoption(list):=(
+//help:Ketjsoption();
+//help:Ketjsoptions(["Local=(n)","Scale=(1)","Nolabel=[]"]);
+  regional(eqL,color,tmp);
+  tmp=Divoptions(list);
+  eqL=tmp_5;
+  color=tmp_(length(tmp)-2);
+  tmp=round(255*color);
+  if(color!=[0,0,0],eqL=append(eqL,"Color="+text(tmp)));
+  KETJSOP=eqL;
+  KETJSOP;
+);
+////%Ketjsoption end////
+
 ////%Mkketcindyjs start//// 190115
-Mkketcindyjs():=Mkketcindyjs(options); 
+Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Net=y","Path=Dircdy"]);
-  regional(netflg,htm,htmorg,from,upto,flg,fL,fun,tmp,tmp1,tmp2,tmp3,
-      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,
-      DL,Out);
-  netflg="Y";  //190128 texflg removed
+//help:Mkketcindyjs(options=["Local=(n)","Scale=(1)","Nolabel=[]","Color="]);
+//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy"]);
+  regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
+      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,nolabel,
+      color,DL,Out);
+  webflg="Y";  //190128 texflg removed
+  localflg="N"; //190128
+  scale=1; //190129
+  nolabel=["SW","NE"]; //190129
+  color="";
   path=Dircdy;
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     tmp2=tmp_2;
-    if(indexof(tmp1,"N")>0,
-      netflg=Toupper(tmp2);
+    if(tmp1=="W",
+      webflg=Toupper(substring(tmp2,0,1));
     );
-    if(indexof(tmp1,"P")>0,
+    if(tmp1=="L",
+      localflg=Toupper(substring(tmp2,0,1));
+    );
+    if(tmp1=="S",
+      scale=parse(tmp2);
+    );
+    if(tmp1=="N",
+      tmp=tmp2;
+      if(indexof(tmp2,"[")>0,
+        tmp=substring(tmp2,1,length(tmp2)-1);
+      );
+      tmp=tokenize(tmp,",");
+      nolabel=concat(nolabe,tmp);
+    );
+    if(tmp1=="C",
+      color=tmp2;
+    );
+    if(tmp1=="P",
       if(!tmp2="Dircdy",
         path=tmp2;
       );
+    );
+  );
+  if((webflg=="N")&(localflg=="Y"),
+    if(!isexists(Dircdy,"ketcindyjs"),
+      Copyketcindyjs();
+      println("ketcindyjs has been copied");
     );
   );
   if(!isexists(Dircdy,Fhead+".html"),
@@ -5941,7 +6042,7 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=apply(partL,#_3);
     tmp=max(tmp)+1;
     lastpart=[tmp,length(htmorg)];
-    if(netflg=="Y",
+    if(webflg=="Y",
       tmp1=Fhead+"json.html";
     ,
       tmp1=Fhead+"jsoff.html";
@@ -5949,20 +6050,24 @@ Mkketcindyjs(options):=( //17.11.18
     setdirectory(path);
     SCEOUTPUT = openfile(tmp1);
     tmp1=htmorg_((toppart_1)..(toppart_2));
-    if(netflg=="N",
-      tmp3=replace(Dirhead+"/ketcindyjs/",pathsep(),"/");
-      tmp= "    <link rel="+Dqq("stylesheet")+" href=";
-      tmp=tmp+Dq+"file:///"+tmp3+"CindyJS.css"+Dq+">";
-      tmp1_(length(tmp1)-2)=tmp;
-      tmp= "    <script type="+Dqq("text/javascript")+" src=";
-      tmp=tmp+Dq+"file:///"+tmp3+"Cindy.js"+Dq+"></script>";
-      tmp1_(length(tmp1)-1)=tmp;
-      tmp="    <script type="+Dqq("text/javascript")+" src="; //190117from
-      tmp1_(length(tmp1))="";  //190120
-      if(texflg=="Y", //190119from
-//        tmp=tmp+Dq+"file:///"+tmp3+"katex-plugin.js"+Dq+"></script>";
-//        tmp1_(length(tmp1))=tmp;
-      ); //190119to
+    if(webflg=="N",
+      if(localflg=="N", //190128
+        tmp3=replace(Dirhead+"/ketcindyjs/",pathsep(),"/");
+        tmp= "    <link rel="+Dqq("stylesheet")+" href=";
+        tmp=tmp+Dq+"file:///"+tmp3+"CindyJS.css"+Dq+">";
+        tmp1_(length(tmp1)-2)=tmp;
+        tmp= "    <script type="+Dqq("text/javascript")+" src=";
+        tmp=tmp+Dq+"file:///"+tmp3+"Cindy.js"+Dq+"></script>";
+        tmp1_(length(tmp1)-1)=tmp;
+        tmp="    <script type="+Dqq("text/javascript")+" src="; //190117from
+        tmp1_(length(tmp1))="";  //190120
+      ,
+        tmp1_(length(tmp1)-2)=    //190128from
+         "    <link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/Cindy.js.css")+">";
+        tmp1_(length(tmp1)-1)=
+         "   <script type="+Dqq("text/javascript")+" src="+Dqq("ketcindyjs/Cindy.js")+"></script>";
+        tmp1_(length(tmp1))=""; //190128to
+      );
     ,
       tmp1_(length(tmp1))=""; //190117to
     );
@@ -6032,46 +6137,91 @@ Mkketcindyjs(options):=( //17.11.18
       println(SCEOUTPUT,tmp1_#);
     );
     from=tmp+1; //190117to
-//    if(texflg=="Y",
-//      if(netflg=="Y",
-        tmp="  use: ["+Dqq("katex")+"],";
-//      ,
-//        tmp="  use: ["+Dqq("katex")+"],";
-//      );
-      println(SCEOUTPUT,tmp);
-//    );
-    tmp2=["Figure","Parent","KeTJS","KeTJSoff"];
-    forall(from..(length(tmp1)),
+    tmp="  use: ["+Dqq("katex")+"],";
+    println(SCEOUTPUT,tmp);
+    Out=[];  //190129
+    forall(from..(length(tmp1)),jj,
       flg=0; //190126from
-      if(indexof(tmp1_#,"type: "+Dqq("Button"))>0,
-        nn=indexof(tmp1_#,"text: ");
-        tmp=substring(tmp1_#,nn-1,length(tmp1_#));
+      tmp2=["Figure","Parent","KeTJS","KeTJSoff"];
+      if(indexof(tmp1_jj,"type: "+Dqq("Button"))>0,
+        nn=indexof(tmp1_jj,"text: ");
+        tmp=substring(tmp1_jj,nn-1,length(tmp1_jj));
         nn=Indexall(tmp,Dq);
         tmp=substring(tmp,nn_1,nn_2-1);
         if(!contains(tmp2,tmp),
-          println(SCEOUTPUT,tmp1_#);
+          Out=append(Out,tmp1_jj); //190129
         );
         flg=1;
       );
       if(flg==0,
-        tmp=indexof(tmp1_#,"type: "+Dq+"Free")+indexof(tmp1_#,"type: "+Dq+"Point");
+        tmp=indexof(tmp1_jj,"type: "+Dq+"Free")+indexof(tmp1_jj,"type: "+Dq+"Point");
         if(tmp>0,
-          if(indexof(tmp1_#,"size:")==0,
-            tmp=replace(tmp1_#,"}",", size: 3.0}");
-            println(SCEOUTPUT,tmp);
-          ,
-            println(SCEOUTPUT,tmp1_#);
+          tmp2=tmp1_jj;
+          tmp=Indexall(tmp2,Dq); //190129from
+          tmp=substring(tmp2,tmp_1,tmp_2-1);
+          if(contains(nolabel,tmp),
+            if(indexof(tmp2,"labeled: true")>0,
+              tmp2=replace(tmp2,"labeled: true","labeled: false");
+            );
           );
+          if(indexof(tmp2,"size:")==0,
+            tmp2=replace(tmp2,"}",", size: 3.0}");
+            Out=append(Out,tmp2); //190129
+          ,
+            Out=append(Out,tmp2); //190129
+          );  //190129to
           flg=1;
         );
       );
       if(flg==0,
-        println(SCEOUTPUT,tmp1_#);
+        Out=append(Out,tmp1_jj); //190129
       ); //190126to
     );
+    tmp=select(1..(length(Out)),indexof(Out_#," ],")>0); //190129from
+    tmp=tmp_1;
+    tmp1=Out_(tmp-1);
+    Out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
+    tmp=select(1..(length(Out)),indexof(Out_#,"width:")>0);
+    jj=tmp_1;
+    tmp1=Out_jj;
+    flg=0;
+    forall(1..(length(tmp1)-1),
+      if(flg==0,
+        tmp=substring(tmp1,#-1,#);
+        if(tmp==":",
+          tmp2=substring(tmp1,#+1,length(tmp1)-1);
+          flg=1;
+        );
+      );
+    );
+    tmp=round(scale*parse(tmp2));
+    Out_jj="    width: "+text(tmp)+",";
+    tmp=select(1..(length(Out)),indexof(Out_#,"height:")>0);
+    jj=tmp_1;
+    tmp1=Out_jj;
+    flg=0;
+    forall(1..(length(tmp1)-1),
+      if(flg==0,
+        tmp=substring(tmp1,#-1,#);
+        if(tmp==":",
+          tmp2=substring(tmp1,#+1,length(tmp1)-1);
+          flg=1;
+        );
+      );
+    );
+    tmp=round(scale*parse(tmp2));
+    Out_jj="    height: "+text(tmp)+",";
+    if(length(color)>0,
+      tmp=select(1..(length(Out)),indexof(Out_#,"background: ")>0);
+      jj=tmp_1;
+      Out_jj="    background: "+Dqq("rgb("+color+")");
+    );
+    forall(Out,
+      println(SCEOUTPUT,#);
+    ); //190129to
     closefile(SCEOUTPUT);
     setdirectory(Dirwork);
-    if(netflg=="Y",tmp="json",tmp="jsoff");
+    if(webflg=="Y",tmp="json",tmp="jsoff");
     drawtext(mouse().xy-[0,1],tmp+"in "+path,size->20,color->[1,0,0]);
     wait(1000);
   );

@@ -1,3 +1,6 @@
+// 20190130
+//   Mkketcindyjs changed (USEDFUN (global) added)
+//   Ketjsoption changed  (color)
 // 20190129
 //   "/LF/"  => "/L"+"F/"
 //   Ketjsoption added

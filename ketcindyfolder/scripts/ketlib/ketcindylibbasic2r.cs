@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190129] loaded");
+println("ketcindybasic2[20190130] loaded");
 
 //help:start();
 
@@ -166,21 +166,21 @@ Rotatedata(nm,plist,angle,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp1=text(plist); 
+    tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Rotatedata("+tmp1+","
     +Textformat(angle,5)+","+RSform(Textformat(Pt,5))+")"; //17.12.23
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
-    Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      ); //no ketjs off
+      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -236,20 +236,20 @@ Translatedata(nm,plist,mov,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp1=text(plist);
+    tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,5))+")";
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -328,21 +328,21 @@ Scaledata(nm,plist,rx,ry,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp1=text(plist); 
+    tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1); // 180602
     tmp=name+"=Scaledata("+tmp1+","
       +Textformat(rx,5)+","+Textformat(ry,5)+","+RSform(Textformat(Pt,5))+")";
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -414,20 +414,20 @@ Reflectdata(nm,plist,symL,options):=(
     if(length(tmp1)==1,tmp1=tmp1_1);
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp1=text(plist); 
+    tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,5))+")";//17.12.23
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -1116,21 +1116,21 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
     out=apply(list,Pcrd(#));
     tmp=name+"="+Textformat(out,5);
     parse(tmp);
-    tmp1=Textformat(ptlist,5);
+    tmp1=Textformat(ptlist,5); //no ketjs on
     tmp1=RSform(tmp1,2); //17.12.23
     tmp2=Textformat(ctrlist,5);
     tmp2=RSform(tmp2,3); //17.12.23
-    GLIST=append(GLIST,name+"=Bezier("+tmp1+","+tmp2+opstr+")");
+    GLIST=append(GLIST,name+"=Bezier("+tmp1+","+tmp2+opstr+")"); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3046,9 +3046,9 @@ WritetoRS(filename,shchoice):=(
  forall(FUNLIST,
     println(SCEOUTPUT,#);
   );
-  forall(GLIST,
+  forall(GLIST, //no ketjs on
     println(SCEOUTPUT,RSform(#));
-  );
+  ); //no ketjs off
   tmp=text(Pnamelist);
   tmp=replace(tmp,"[","list"+PaO());
   Pnamelist=replace(tmp,"]",")");
@@ -3188,20 +3188,20 @@ Extractdata(number,name,options):=(
   if(Noflg<3,
     println("extract outdata  "+name);
     tmp1=parse(name);
-    tmp3=[ //17.09.18
+    tmp3=[ //17.09.18 //no ketjs on
       "Tmpout=ReadOutData("+Dq+File+Dq+")"
     ];
-    GLIST=concat(GLIST,tmp3);
+    GLIST=concat(GLIST,tmp3); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5938,7 +5938,10 @@ Ketjsoption(list):=(
   regional(eqL,color,tmp);
   tmp=Divoptions(list);
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  tmp=tmp_(length(tmp));
+  tmp=substring(tmp,1,length(tmp));
+  tmp=replace(tmp,"->","=");
+  parse(tmp);
   tmp=round(255*color);
   if(color!=[0,0,0],eqL=append(eqL,"Color="+text(tmp)));
   KETJSOP=eqL;
@@ -5984,6 +5987,9 @@ Mkketcindyjs(options):=( //17.11.18
     );
     if(tmp1=="C",
       color=tmp2;
+      if(substring(color,0,1)=="[", //190130from
+        color=substring(color,1,length(color)-1);
+      ); //190130to
     );
     if(tmp1=="P",
       if(!tmp2="Dircdy",
@@ -6016,7 +6022,7 @@ Mkketcindyjs(options):=( //17.11.18
     fL=Extractfun(htmorg_(from..upto));
     DL=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
     tmp=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
-    DL=concat(DL,tmp);
+    DL=concat(DL,tmp); //DL and Out arenecessary for Extractall
     Out=[];
     forall(fL,fun,
       Extractall(fun);
@@ -6024,7 +6030,7 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","ignoredfun.txt");
     tmp=select(tmp,substring(#,0,2)!="//");
     tmp1=select(Out,contains(tmp,#_1));
-    Out=remove(Out,tmp1);
+    Out=remove(Out,tmp1); USEDFUN=apply(Out,#_1); //190130
     tmp1=select(1..(length(htmorg)),indexof(htmorg_#,"script id=")>0);
     partL=[];
     forall(tmp1,nn,
@@ -6214,7 +6220,9 @@ Mkketcindyjs(options):=( //17.11.18
     if(length(color)>0,
       tmp=select(1..(length(Out)),indexof(Out_#,"background: ")>0);
       jj=tmp_1;
-      Out_jj="    background: "+Dqq("rgb("+color+")");
+      tmp=indexof(Out_jj,")"); //190130from
+      tmp=substring(Out_jj,tmp-1,length(Out_jj));
+      Out_jj="    background: "+Dq+"rgb("+color+tmp; //190130to
     );
     forall(Out,
       println(SCEOUTPUT,#);

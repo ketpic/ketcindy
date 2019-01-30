@@ -3,10 +3,14 @@ Dottedline
 Dashline
 Invdashline
 Texcom
+Com0th
+Com1st
 Com2nd
+Com2ndpre
 Cindyname
 Changesetting
 Changework
+Definecolor
 Setslidebody
 Setslidehyper
 Presentation
@@ -18,6 +22,8 @@ Ketjsoption
 Help
 Helplist
 Example
+RSform
+RSslash
 
 Ketinit
 Windispg

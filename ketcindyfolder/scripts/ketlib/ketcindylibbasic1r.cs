@@ -873,17 +873,17 @@ Changestyle(nameL,style):=(
     if(length(tmp)>0,
       Ltype=Ltypeorg;
       GCLIST=select(GCLIST,#_1!=name);
-      COM2ndlist=select(COM2ndlist,
-        (indexof(#,"("+name)==0)%(indexof(#,"Shade")>0)); // 15.05.23,16.12.13
+      COM2ndlist=select(COM2ndlist, //no ketjs
+        (indexof(#,"("+name)==0)%(indexof(#,"Shade")>0)); // 15.05.23,16.12.13 //no ketjs
       if(Noflg<2,
         if(isstring(Ltype),
-          if((Noflg==0)&(color!=KCOLOR), //180904
+          if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
             Texcom("{");Com2nd("Setcolor("+color+")");//180722
-          );
+          ); //no ketjs off
           Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-          if((Noflg==0)&(color!=KCOLOR), //180904
+          if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
             Texcom("}");//180722
-          );
+          ); //no ketjs off
         ,
           if(Noflg==1,Ltype=0);
         );
@@ -2915,7 +2915,7 @@ Setunitlen(UI):=(
   OL="+-*/";
   if(length(UI)>0,
     ULEN=UI;
-    GLIST=append(GLIST,"Setunitlen("+Dq+UI+Dq+")");//180513
+    GLIST=append(GLIST,"Setunitlen("+Dq+UI+Dq+")");//180513 //no ketjs
   );
   Is=1;
   VL="";
@@ -3145,15 +3145,15 @@ Setcolor(parorg):=(  //180603renew
   cstr=text(par);
   cstr=substring(cstr,1,length(cstr)-1);
   if(length(par)==3,
-    cstr="Texcom('\\color[rgb]{"+cstr+"}')"; 
+    cstr="Texcom('\\color[rgb]{"+cstr+"}')"; //no ketjs
     KCOLOR=par;  
   );
   if(length(par)==4,
-    cstr="Texcom('\\color[cmyk]{"+cstr+"}')"; 
+    cstr="Texcom('\\color[cmyk]{"+cstr+"}')"; //no ketjs
     tmp=Colorcmyk2rgb(par);
     KCOLOR=tmp;
   );
-  Com2nd(cstr);
+  Com2nd(cstr); //no ketjs
 );
 ////%Setcolor end////
 
@@ -3608,7 +3608,7 @@ AddGraph(nm,pltdata,options):=(
       if(indexof(pltdata,"[")>0,
         tmp1=tmp1+")";
       );
-      GLIST=append(GLIST,name+"="+tmp1);
+      GLIST=append(GLIST,name+"="+tmp1); //no ketjs
     ,
       if(MeasureDepth(pdata)==1,
         tmp1=name+"=Listplot("+Textformat(pdata,5)+")";
@@ -3621,23 +3621,23 @@ AddGraph(nm,pltdata,options):=(
           ,
             tmp=tmp+"Pointdata("+Textformat(pdata_#_1,5)+")";
           );
-          GLIST=append(GLIST,tmp);
+          GLIST=append(GLIST,tmp); //no ketjs
           tmp1=tmp1+name+"p"+Textformat(#,5)+",";
         );
         tmp1=name+"="+substring(tmp1,0,length(tmp1)-1)+")";
       );
-      GLIST=append(GLIST,tmp1);
+      GLIST=append(GLIST,tmp1); //no ketjs
     );
   );  // 16.04.04 until
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3726,17 +3726,17 @@ Joincrvs(nm,plotstrL,options):=(
         tmp1=tmp1+#+",";
     );
     tmp1=substring(tmp1,0,length(tmp1)-1);
-    GLIST=append(GLIST,name+"=Joincrvs("+tmp1+")");
+    GLIST=append(GLIST,name+"=Joincrvs("+tmp1+")"); //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3819,17 +3819,17 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
     );
     tmp1=name+"=Partcrv("+Textformat(Lcrd(pA),5)
          +","+Textformat(Lcrd(pB),5)+","+tmp+")"; // 16.04.03
-    GLIST=append(GLIST,tmp1);
+    GLIST=append(GLIST,tmp1); //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -3938,7 +3938,7 @@ Pointdata(nm,listorg,options):=(
       tmp2=substring(tmp2,0,length(tmp2)-1)+")";
       //17.10.10until
     );
-    GLIST=append(GLIST,name+"=Pointdata("+tmp2+")");
+    GLIST=append(GLIST,name+"=Pointdata("+tmp2+")"); //no ketjs
   );
   if(Noflg<2,
     tmp=[nameL,[0,1],opcindy];  //190126
@@ -3951,20 +3951,20 @@ Pointdata(nm,listorg,options):=(
       if(length(size)>0,tmp1=parse(size),tmp1=1);
       tmp1=max(tmp1,1)/8; 
       Setpen(tmp1); // 16.04.09 until
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");
         Com2nd("Setcolor("+color+")");//180711
-      );
+      ); //no ketjs off
       opstr=","+Textformat(inside,2);
       Com2nd("Drwpt"+PaO()+"list"+PaO()+name+")"+opstr+")");
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180711
-      );
+      ); //no ketjs off
       Setpen(thick); // 16.04.09
-      if(length(size)>0,
+      if(length(size)>0, //no ketjs on
         tmp=Textformat(TenSize/TenSizeInit,1);
         Com2nd("Setpt("+tmp+")");
-      );
+      ); //no ketjs off
     );
   );
   ptlist;
@@ -4039,17 +4039,17 @@ Listplot(nm,list,options):=(
     );//180719to
     tmp=name+"="+Textformat(ptlist,5);
     parse(tmp);
-    GLIST=append(GLIST,name+"=Listplot("+Textformat(ptlist,5)+")"); // 180719
+    GLIST=append(GLIST,name+"=Listplot("+Textformat(ptlist,5)+")"); // 180719 //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180711
-     );
+     ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180711
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4095,17 +4095,17 @@ Lineplot(nm,list,options):=(
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    GLIST=append(GLIST,name+"=Lineplot("+Textformat(list,5)+opstr+")");
+    GLIST=append(GLIST,name+"=Lineplot("+Textformat(list,5)+opstr+")"); //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4290,20 +4290,20 @@ Plotdata(name1,func,variable,options):=(
       );
       tmp=name+"="+Textformat(tmp1,5);
       parse(tmp);
-      tmp1=replace(func,LFmark,"");
+      tmp1=replace(func,LFmark,""); //no ketjs on
       tmp2=replace(variable,LFmark,"");
       tmp=name+"=Plotdata('"+tmp1+"','"+tmp2+"'"+opstr+")";
-      GLIST=append(GLIST,tmp);
+      GLIST=append(GLIST,tmp); //no ketjs off
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
+        ); //no ketjs off
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
-        );
+        ); //no ketjs off
      ,
         if(Noflg==1,Ltype=0);
       );
@@ -4313,13 +4313,13 @@ Plotdata(name1,func,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
+        ); //no ketjs off
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
-        );
+        ); //no ketjs off
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4460,20 +4460,20 @@ Paramplot(nm,funstr,variable,options):=(
       );
       tmp=name+"="+Textformat(tmp1,5);
       parse(tmp);
-      tmp1=replace(funstr,LFmark,"");  // 15.11.13
+      tmp1=replace(funstr,LFmark,"");  // 15.11.13 //no ketjs on
       tmp2=replace(variable,LFmark,"");
       tmp=name+"=Paramplot('"+tmp1+"','"+tmp2+"'"+opstr+")";
-      GLIST=append(GLIST,tmp);
+      GLIST=append(GLIST,tmp); //no ketjs off
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
+        ); //no ketjs off
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
-        );
+        ); //no ketjs off
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4483,13 +4483,13 @@ Paramplot(nm,funstr,variable,options):=(
   , 
     if(Noflg<2,
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
+        ); //no ketjs off
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
-        );
+        ); //no ketjs off
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4701,18 +4701,18 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
     );
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")";
-    GLIST=append(GLIST,tmp);
+    tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")"; //no ketjs
+    GLIST=append(GLIST,tmp); //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-     if((Noflg==0)&(color!=KCOLOR), //181020
+     if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4806,7 +4806,7 @@ Circledata(nm,cenrad,options):=(
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    if(length(cenrad)==2,
+    if(length(cenrad)==2, //no ketjs on
       tmp=name+"=Circledata("+cenrad+opstr+")";
     ,
       if(ra>0,
@@ -4815,17 +4815,17 @@ Circledata(nm,cenrad,options):=(
         tmp=name+"=Lineplot("+cenrad_1+","+cenrad_2+")";
       );
     );
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp);  //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020
+      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -4908,17 +4908,17 @@ Framedata(nm,list,optionsorg):=(
       tmp1=apply(Out,Pcrd(#));
       tmp=name+"="+Textformat(tmp1,5);
       parse(tmp);
-      GLIST=append(GLIST,name+"=Framedata("+pA+","+dx+","+dy+")");
+      GLIST=append(GLIST,name+"=Framedata("+pA+","+dx+","+dy+")"); //no ketjs
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
+        ); //no ketjs off
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020
+        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
-        );
+        ); //no ketjs off
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -4944,17 +4944,17 @@ Framedata(nm,cent,dx,dy,options):=(
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    GLIST=append(GLIST,name+"=Framedata("+cent.xy+","+dx+","+dy+")");
+    GLIST=append(GLIST,name+"=Framedata("+cent.xy+","+dx+","+dy+")"); //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5024,18 +5024,18 @@ Ovaldata(nm,Pdata,options):=(
     tmp1=apply(Graph,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    GLIST=append(GLIST,
-      name+"=Ovaldata("+Ctr+","+Dx+","+Dy+opstr+")");//16.01.30
+    GLIST=append(GLIST, //no ketjs
+      name+"=Ovaldata("+Ctr+","+Dx+","+Dy+opstr+")");//16.01.30 //no ketjs
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -5567,13 +5567,13 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
         hostr=format(apply(Houkou,LLcrd(#)),5);
       );
     );
-    if((Noflg==0)&(color!=KCOLOR), //180904
+    if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
       Texcom("{");Com2nd("Setcolor("+color+")");//180722
-    );
+    ); //no ketjs off
     Com2nd("Arrowhead("+ptstr+","+hostr+opstr+")");
-    if((Noflg==0)&(color!=KCOLOR), //180904
+    if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
       Texcom("}");//180722
-    );
+    ); //no ketjs off
   );
 );
 ////%Arrowhead end////
@@ -5771,20 +5771,20 @@ Anglemark(nm,plist,options):=(
       tmp1=apply(Out,Pcrd(#));
       tmp=name+"="+Textformat(tmp1,5);
       parse(tmp);
-      tmp=Textformat(plist,5);
+      tmp=Textformat(plist,5); //no ketjs on
       tmp1=substring(tmp,1,length(tmp)-1);
       tmp=name+"=Anglemark("+tmp1+opstr+")";
-      GLIST=append(GLIST,tmp);
+      GLIST=append(GLIST,tmp); //no ketjs off
     );
     if(Noflg<2,
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //180904
+        if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
-        );
+        ); //no ketjs off
         Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //180904
+        if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
           Texcom("}");//180722
-        );
+        ); //no ketjs off
       ,
         if(Noflg==1,Ltype=0);
       );
@@ -5863,19 +5863,19 @@ Paramark(nm,plist,options):=(
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1);
+    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1); //no ketjs on
     tmp=name+"=Paramark("+tmp1+opstr+")";
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6050,19 +6050,19 @@ Bowdata(nm,plist,options):=(
     );
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1);
+    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1); //no ketjs on
     tmp=name+"=Bowdata("+tmp1+opstr+")";
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
-        Texcom("}");//180722
-      );
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+        Texcom("}");//180722 
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6261,7 +6261,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
   );
-  if(Noflg<1,
+  if(Noflg<1, //no ketjs on
     tmp=Assign(deq);
     tmp=replace(deq,"'","`");
     tmp=name+"=Deqplot('"+tmp+"','"+rng+"',";
@@ -6269,16 +6269,16 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     tmp=tmp+","+text(sel)+",'Num="+text(Num)+"')";
     tmp=RSform(tmp);
     GLIST=append(GLIST,tmp);
-  );
+  ); //no ketjs off
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6423,23 +6423,23 @@ EnclosingS(nm,plist,options):=(
     println("generate Enclosing "+name);
     tmp=name+"="+Textformat(AnsL,5);
     parse(tmp);
-    tmp=name+"=Enclosing(";//16.11.07from
+    tmp=name+"=Enclosing(";//16.11.07from //no ketjs on
     tmp1="list"+PaO();
     forall(plist,
       tmp1=tmp1+#+",";
     );
     tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
-    GLIST=append(GLIST,tmp);//16.11.07until
+    GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6597,20 +6597,20 @@ Enclosing2(nm,plistorg,options):=(
     forall(plistorg, //18.02.02
       tmp1=tmp1+#+",";
     );
-    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from
+    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from //no ketjs on
     if(length(Start)>0,tmp=tmp+","+Textformat(Start,6));
     tmp=tmp+","+text(epspara)+")";//18.0706to,180707
-    GLIST=append(GLIST,tmp);//16.11.07until
+    GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -6993,7 +6993,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
       println("generate Hatchdata "+name);
       tmp=name+"="+Textformat(AnsL,5);
       parse(tmp);
-      if(!islist(iostr),tmp1=[iostr],tmp1=iostr);
+      if(!islist(iostr),tmp1=[iostr],tmp1=iostr); //no ketjs on
       tmp="c"+PaO();
       forall(tmp1,
         tmp=tmp+Dq+#+Dq+",";
@@ -7004,20 +7004,20 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
         tmp2=tmp2+",list"+PaO()+#+")";
       );
       tmp2=tmp2+opstr+")";
-      GLIST=append(GLIST,tmp2);
+      GLIST=append(GLIST,tmp2); //no ketjs off
     ,
-      GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
+      GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102 //no ketjs
     );
   );
   if((Noflg<2)&(mkflg>-1),
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      );
+      ); //no ketjs off
       Ltype=GetLinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
-      );
+      ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);
     );
@@ -7151,9 +7151,9 @@ Shade(nm,plistorg,options):=( //180613to
     ); //16.01.24to
   );
   Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929
-  Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722
+  Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722 //no ketjs on
   Com2nd(Str,["before"]);
-  Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722
+  Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722 //no ketjs off
 );
 ////%Shade end////
 

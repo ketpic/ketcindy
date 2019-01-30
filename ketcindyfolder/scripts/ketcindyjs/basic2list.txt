@@ -112,6 +112,6 @@ BBdata,basic2,5606,5749,Divoptions,Toupper,ismacosx,iswindows,kc,Sprintf,Removes
 Findfun,basic2,5753,5816,Removespace,Indexall
 Extractfun,basic2,5820,5837,Indexall,Findfun
 Extractall,basic2,5846,5873
-Copyketcindyjs,basic2,5877,5928,iswindows,Dqq,kc
-Ketjsoption,basic2,5932,5949,Divoptions
-Mkketcindyjs,basic2,5953,6236,Strsplit,Toupper,Copyketcindyjs,isexists,Extractfun,Readcsv,Extractall,pathsep,Readlines,Removespace,use,Dqq,Indexall,rgb
+Copyketcindyjs,basic2,5877,5927,iswindows,Dqq,kc
+Ketjsoption,basic2,5931,5948,Divoptions
+Mkketcindyjs,basic2,5952,6237,Strsplit,Toupper,Copyketcindyjs,isexists,Extractfun,Readcsv,Extractall,pathsep,Readlines,Removespace,use,Dqq,Indexall,rgb

@@ -66,6 +66,275 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   YMAX=rangey_2/SCALEY;
   Setwindow("Msg=n"); // 16.05.31
 );
+Fillstore():=(
+  regional(tmp,tmp1,out,dtL,txtL,clrL,txt,clr,nn,jj);
+  dtL=[  //181209from
+    ["Figure",[1,0.29,0.29]],["Parent",[1,1,0]],
+    ["ParaF",[0,1,1]],["Flip",[0,0,1]],["Anime",[0.51,0.95,1]],
+    ["Title",[0,1,0]],["Slide",[0.47,0,0.72]],["Digest",[1,0.74,0.47]],
+    ["KeTJS",[0,1,1]],["KeTJSoff",[0,1,1]],
+    ["Objview",[0,1,0]]
+  ];
+  txtL=apply(dtL,#_1);
+  clrL=apply(dtL,#_2);
+  tmp1=allelements();
+  tmp1=select(tmp1,indexof(#.name,"Text")>0);
+  out=[];
+  forall(1..(length(tmp1)),nn,
+    tmp=tmp1_nn;
+    txt=tmp.text;
+    tmp=select(1..(length(txtL)),txtL_#==txt);
+    if(length(tmp)>0,
+      jj=tmp_1;
+      clr=clrL_jj;
+      tmp=tmp1_nn;
+      tmp.fillcolor=clr;
+    ,
+      tmp=tmp1_nn;
+      clr=tmp.fillcolor;
+    );
+    out=append(out,[tmp.name,clr,tmp.text]);
+  ); //181209to
+  out;
+);
+Setwindow():=Setwindow("Msg=yes");
+Setwindow(str):=(
+  regional(tmp,tmp1,tmp2,msg);
+  msg="y";
+  tmp=indexof(str,"="); // 16.02.10
+  tmp1=Toupper(substring(str,tmp,tmp+1));
+  if(tmp1=="N",msg="n");
+  if((ispoint(SW) & ispoint(NE)),
+    tmp1=Lcrd(SW);
+    tmp2=Lcrd(NE);
+    XMIN=tmp1_1; XMAX=tmp2_1;
+    YMIN=tmp1_2; YMAX=tmp2_2;
+  ,
+    Putpoint("SW",Pcrd([XMIN,YMIN]));
+    Putpoint("NE", Pcrd([XMAX,YMAX]));
+  );
+  if(msg=="y",
+    println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");
+  );
+  layer(KETPICLAYER);
+  autoclearlayer(KETPICLAYER,true);
+  drawpoly([Pcrd([XMIN,YMIN]), Pcrd([XMAX,YMIN]),
+        Pcrd([XMAX,YMAX]),Pcrd([XMIN,YMAX])],color->[1,1,1]);
+);
+Setwindow(xrange,yrange):=(
+  XMIN=xrange_1;
+  XMAX=xrange_2;
+  YMIN=yrange_1;
+  YMAX=yrange_2;
+  Putpoint("SW",[XMIN,YMIN]);//181016
+  Putpoint("NE",[XMAX,YMAX]);//181016
+);
+Textformat(value,dig):=(
+  regional(vv,tmp,tmp1);
+  if(islist(value),
+    tmp1="[";
+    forall(value,
+      tmp1=tmp1+Textformat(#,dig)+",";
+    );
+    if(length(tmp1)>1, //18.01.29from
+      tmp1=substring(tmp1,0,length(tmp1)-1);
+    );
+    tmp1=tmp1+"]"; //18.01.29until
+  ,
+    if(ispoint(value) % isstring(value),
+      if(isstring(value),tmp1=Dq+value+Dq,tmp1=text(value)); // 15.10.02
+    ,
+      tmp1=format(value,dig);
+    );
+  );
+  tmp1;
+);
+MeasureDepth(list):=(
+  regional(tmp,tmp1,Depth,Flg);
+  Flg=0;
+  Depth=0;
+  if(length(list)>0, //180501
+    if(ispoint(list), 
+      Depth=0;
+      Flg=1;
+    ,
+      tmp1=select(1..(length(list)),length(list_#)>0);//17.05.21from
+      tmp=list_(tmp1_1);//17.05.21until
+    );
+    repeat(4,
+      if(Flg==0,
+        if(islist(tmp),
+          tmp=tmp_1;
+          Depth=Depth+1;
+        ,
+          if(ispoint(tmp),Depth=Depth+1);
+          Flg=1;
+        );
+      );
+    );
+  );//180501
+  Depth;
+);
+Drwxy():=Drwxy(0,[]); //190103from
+Drwxy(Arg):=(
+  if(islist(Arg),Drwxy(0,Arg); Drwxy(Arg,[]));
+);
+Drwxy(add):=Drwxy(add,[]);
+Drwxy(add,optionsorg):=( //190103to
+  regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,
+  linesty,colorax,colorla,tmp,tmp1,tmp2);
+  options=optionsorg;
+  tmp=Divoptions(options);
+  color=tmp_(length(tmp)-2);
+  eqL=tmp_5;
+  org=GENTEN; 
+  xrng=[XMIN,XMAX];  //190103
+  yrng=[YMIN,YMAX];  //190103
+  ax=AXSTYLE;
+  linesty=ax_8;
+  if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
+  if(length(colorax)>0,
+    colorax="Color="+colorax;
+  );
+  if(isstring(ax_10),colorla=ax_10,colorla=text(ax_10));
+  if(length(colorla)>0, //181217from
+    colorla="Color="+colorla;
+  ,
+    if(length(colorax)>0,
+      colorla=colorax;
+    );
+  ); //181217to
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="O", //190103from
+      org=parse(tmp_2);
+      options=remove(options,[#]);
+    );  //190103to
+    if(tmp1=="X",
+      xrng=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="Y",
+      yrng=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="A",
+      tmp2=tokenize(tmp_2,",");
+      st=1; nn=1;
+      if(isreal(tmp2_1),
+        st=2;
+        nn=tmp2_1;
+      );
+      forall(st..(length(tmp2)),
+        tmp=tmp2_#;
+        if(length(tmp)>0,ax_nn=tmp);
+        nn=nn+1;
+      );
+      options=remove(options,[#]);
+    );
+  );
+  options=append(options,linesty); //181216
+  if(substring(ax_1,0,1)=="a",
+    strL=select(options,isstring(#)); //181216
+    tmp=select(strL,contains(["dr","da","do","id"],substring(#,0,2)));
+    if(length(tmp)==0,options=append(options,YasenStyle));
+    tmp=substring(ax_1,1,length(ax_1)); //181216[2lines]
+    if(length(tmp)>0,size=parse(tmp),size=YaSize);
+    tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//181216
+    tmp=[[xrng_1,org_2],[xrng_2,org_2]];
+    Arrowdata("axx"+text(AXCOUNT),tmp,tmp1);
+    tmp=[[org_1,yrng_1],[org_1,yrng_2]];
+    Arrowdata("axy"+text(AXCOUNT),tmp,tmp1);
+  ,
+    tmp=[[xrng_1,org_2],[xrng_2,org_2]];
+    tmp1=append(options,colorax);//181216
+    Listplot("axx"+text(AXCOUNT),tmp,tmp1); 
+    tmp=[[org_1,yrng_1],[org_1,yrng_2]];
+    Listplot("axy"+text(AXCOUNT),tmp,tmp1); 
+  );
+  AXCOUNT=AXCOUNT+1;
+  Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216[3lines]
+  Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
+  Letter([org,ax_7,ax_6],[colorla]);
+  if(add==0, //190103
+    Addax(0);
+  );
+);
+Dashlinedata(dataorg,sen,gap,ptn):=(
+  regional(data,eps,dtall,len,lenlist,ii,lenall,kari,
+      naga,tobi,nsen,seglist,segunit,hajime,owari,jj,
+      flg,tt,ptL,out,tmp,tmp1,tmp2);
+  eps=10.0^(-6);
+  if(isstring(dataorg),data=parse(dataorg),data=dataorg);
+  dtall=length(data);
+  out=[];
+  len=0; lenlist=[0];
+  forall(2..dtall,ii,
+    len=len+|data_ii-data_(ii-1)|;
+    lenlist=append(lenlist,len);
+  );
+  lenall=lenlist_dtall;
+  if(lenall>0,
+    kari=(sen+gap)*0.1;naga=sen*0.1;tobi=gap*0.1;
+    if(|data_1-data_dtall|<eps,
+      nsen=max([re(ceil(lenall/kari)),3]);
+      segunit=lenall/nsen;
+      naga=segunit*sen/(sen+gap);
+      tobi=segunit*gap/(sen+gap);
+      seglist=apply(0..(nsen-1),#*segunit);
+    ,
+      if(ptn==0,
+        nsen=max([re(ceil((lenall+tobi)/kari)),3]);
+        segunit=lenall*(sen+gap)/(nsen*sen+(nsen-1)*gap);
+        naga=segunit*sen/(sen+gap);
+        tobi=segunit*gap/(sen+gap);
+        seglist=apply(0..(nsen-1),#*segunit);
+      ,
+        nsen=max([re(ceil((lenall+naga)/kari)),3]);
+        segunit=lenall*(sen+gap)/((nsen-1)*sen+nsen*gap);
+        naga=segunit*sen/(sen+gap);
+        tobi=segunit*gap/(sen+gap);
+        seglist=apply(0..(nsen-2),tobi+#*segunit);
+      );
+    );
+    hajime=1;owari=1;
+    forall(1..(length(seglist)),ii,
+      len=seglist_ii;
+      flg=0;
+      forall(owari..dtall,jj,
+        if(flg==0,
+          if(len<lenlist_jj-eps,
+            flg=jj;
+          );
+        );
+      );
+      if(flg>0,hajime=flg-1);
+      flg=0;
+      forall(hajime..dtall,jj,
+        if(flg==0,
+          if(len+naga<lenlist_jj-eps,
+            flg=jj;
+          );
+        );
+      );
+      if(flg>0,owari=flg-1);
+      tt=len-lenlist_hajime;
+      tt=tt/(lenlist_(hajime+1)-lenlist_hajime);
+      tmp=data_hajime+tt*(data_(hajime+1)-data_hajime);
+      ptL=[tmp];
+      forall((hajime+1)..owari,jj,
+        ptL=append(ptL,data_jj);
+      );
+      tt=(len+naga-lenlist_owari);
+      tt=tt/(lenlist_(owari+1)-lenlist_owari);
+      tmp=data_owari+tt*(data_(owari+1)-data_owari);
+      ptL=append(ptL,tmp);
+      out=append(out,ptL);
+    );
+  );
+  out;
+);
 Windispg():=(
   if(ADDAXES=="1", //181215from
     Drwxy();

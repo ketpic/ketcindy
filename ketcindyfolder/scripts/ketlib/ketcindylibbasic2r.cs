@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190130] loaded");
+println("ketcindybasic2[20190131] loaded");
 
 //help:start();
 
@@ -5900,7 +5900,6 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
     tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\katex\");
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\");
-    println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex.min.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex.min.js"+tmp2);
     tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\katex\fonts\");
@@ -5957,7 +5956,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,nolabel,
-      color,DL,Out);
+      color,out,igL,DL,Out);
   webflg="Y";  //190128 texflg removed
   localflg="N"; //190128
   scale=1; //190129
@@ -6028,8 +6027,9 @@ Mkketcindyjs(options):=( //17.11.18
       Extractall(fun);
     );
     tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","ignoredfun.txt");
-    tmp=select(tmp,substring(#,0,2)!="//");
-    tmp1=select(Out,contains(tmp,#_1));
+    tmp=apply(tmp,Removespace(#)); //190131
+    igL=select(tmp,(length(#)>0)&(substring(#,0,2)!="//")); //190131
+    tmp1=select(Out,contains(igL,#_1));
     Out=remove(Out,tmp1); USEDFUN=apply(Out,#_1); //190130
     tmp1=select(1..(length(htmorg)),indexof(htmorg_#,"script id=")>0);
     partL=[];
@@ -6145,17 +6145,18 @@ Mkketcindyjs(options):=( //17.11.18
     from=tmp+1; //190117to
     tmp="  use: ["+Dqq("katex")+"],";
     println(SCEOUTPUT,tmp);
-    Out=[];  //190129
+    out=[];  //190129
     forall(from..(length(tmp1)),jj,
       flg=0; //190126from
-      tmp2=["Figure","Parent","KeTJS","KeTJSoff"];
+      tmp2=["Figure","Parent","ParaF","Anime","Flip","Title","Slide","Digest",
+                 "KeTJS","KeTJSoff","Objview"];
       if(indexof(tmp1_jj,"type: "+Dqq("Button"))>0,
         nn=indexof(tmp1_jj,"text: ");
         tmp=substring(tmp1_jj,nn-1,length(tmp1_jj));
         nn=Indexall(tmp,Dq);
         tmp=substring(tmp,nn_1,nn_2-1);
         if(!contains(tmp2,tmp),
-          Out=append(Out,tmp1_jj); //190129
+          out=append(out,tmp1_jj); //190129
         );
         flg=1;
       );
@@ -6172,24 +6173,24 @@ Mkketcindyjs(options):=( //17.11.18
           );
           if(indexof(tmp2,"size:")==0,
             tmp2=replace(tmp2,"}",", size: 3.0}");
-            Out=append(Out,tmp2); //190129
+            out=append(out,tmp2); //190129
           ,
-            Out=append(Out,tmp2); //190129
+            out=append(out,tmp2); //190129
           );  //190129to
           flg=1;
         );
       );
       if(flg==0,
-        Out=append(Out,tmp1_jj); //190129
+        out=append(out,tmp1_jj); //190129
       ); //190126to
     );
-    tmp=select(1..(length(Out)),indexof(Out_#," ],")>0); //190129from
+    tmp=select(1..(length(out)),indexof(out_#," ],")>0); //190129from
     tmp=tmp_1;
-    tmp1=Out_(tmp-1);
-    Out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
-    tmp=select(1..(length(Out)),indexof(Out_#,"width:")>0);
+    tmp1=out_(tmp-1);
+    out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
+    tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
     jj=tmp_1;
-    tmp1=Out_jj;
+    tmp1=out_jj;
     flg=0;
     forall(1..(length(tmp1)-1),
       if(flg==0,
@@ -6201,10 +6202,10 @@ Mkketcindyjs(options):=( //17.11.18
       );
     );
     tmp=round(scale*parse(tmp2));
-    Out_jj="    width: "+text(tmp)+",";
-    tmp=select(1..(length(Out)),indexof(Out_#,"height:")>0);
+    out_jj="    width: "+text(tmp)+",";
+    tmp=select(1..(length(out)),indexof(out_#,"height:")>0);
     jj=tmp_1;
-    tmp1=Out_jj;
+    tmp1=out_jj;
     flg=0;
     forall(1..(length(tmp1)-1),
       if(flg==0,
@@ -6216,15 +6217,15 @@ Mkketcindyjs(options):=( //17.11.18
       );
     );
     tmp=round(scale*parse(tmp2));
-    Out_jj="    height: "+text(tmp)+",";
+    out_jj="    height: "+text(tmp)+",";
     if(length(color)>0,
-      tmp=select(1..(length(Out)),indexof(Out_#,"background: ")>0);
+      tmp=select(1..(length(out)),indexof(out_#,"background: ")>0);
       jj=tmp_1;
-      tmp=indexof(Out_jj,")"); //190130from
-      tmp=substring(Out_jj,tmp-1,length(Out_jj));
-      Out_jj="    background: "+Dq+"rgb("+color+tmp; //190130to
+      tmp=indexof(out_jj,")"); //190130from
+      tmp=substring(out_jj,tmp-1,length(out_jj));
+      out_jj="    background: "+Dq+"rgb("+color+tmp; //190130to
     );
-    forall(Out,
+    forall(out,
       println(SCEOUTPUT,#);
     ); //190129to
     closefile(SCEOUTPUT);

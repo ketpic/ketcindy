@@ -1,3 +1,5 @@
+// 20190131
+//   Mkketcindyjs changed (removespace of ignoretun,buttons to be removed)
 // 20190130
 //   Mkketcindyjs changed (USEDFUN (global) added)
 //   Ketjsoption changed  (color)

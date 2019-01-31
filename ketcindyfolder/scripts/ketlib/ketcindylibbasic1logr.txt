@@ -1,14 +1,14 @@
-// 2019028
+/ 20190128
 //    Ketinit changed  (Userhome added)
 //    Changesetting majorly changed 
-// 2019027
+// 20190127
 //    Mvprod added
-// 2019026
+// 20190126
 //    Pointdata changed ( list of list removed, Ltype)
-// 2019025
+// 20190125
 //    Assign debugged  ( for 1 argument)
 //    Getlinestyle changed  ( Ltype)
-// 2019022
+// 20190122
 //    no ketjs added (Ketinit)
 // 20190119
 //    Getlinestyle changed/debugged  (Ltype changed )

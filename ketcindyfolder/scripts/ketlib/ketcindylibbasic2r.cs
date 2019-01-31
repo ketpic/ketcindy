@@ -815,15 +815,15 @@ Letter(list,options):=(
     Str=RSslash(Str); // 17.09.24
     Str=replace(Str,"`","'");//180303
     tmp=Dq+","+Dq+Str+Dq+")";
-    if(Noflg==0,
+    if(Noflg==0, //no ketjs on
       if((Noflg==0)&(color!=KCOLOR), //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
       Com2nd("Letter("+Lcrd(Pos)+","+Dq+Dir+tmp);//16.10.10
-      if((Noflg==0)&(color!=KCOLOR), //180904
+      if((Noflg==0)&(color!=KCOLOR), //180904 
         Texcom("}");//180722
       );
-    );
+    ); //no ketjs off
     if(Noflg<2,
       Xmv=0;//16.10.13
       Ymv=-4;

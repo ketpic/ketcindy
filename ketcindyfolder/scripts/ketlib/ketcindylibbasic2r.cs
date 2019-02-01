@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190131] loaded");
+println("ketcindybasic2[20190201] loaded");
 
 //help:start();
 
@@ -5933,7 +5933,7 @@ Ketjsoption():=(
 );
 Ketjsoption(list):=(
 //help:Ketjsoption();
-//help:Ketjsoptions(["Local=(n)","Scale=(1)","Nolabel=[]"]);
+//help:Ketjsoption(["Local=(n)","Scale=(1)","Nolabel=[]"]);
   regional(eqL,color,tmp);
   tmp=Divoptions(list);
   eqL=tmp_5;
@@ -6187,7 +6187,9 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=select(1..(length(out)),indexof(out_#," ],")>0); //190129from
     tmp=tmp_1;
     tmp1=out_(tmp-1);
-    out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
+    if(substring(tmp1,length(tmp1)-1,length(tmp1))==",", //190201from
+      out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
+    ); //190201to
     tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
     jj=tmp_1;
     tmp1=out_jj;

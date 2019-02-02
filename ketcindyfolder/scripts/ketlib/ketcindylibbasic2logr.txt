@@ -1,5 +1,9 @@
+// 20190202
+//   Bezier changed  ( (nm, ptlist(2)) supported)
 // 20190201
 //   Mkketcindyjs debugged  ( for removing button case the last is not "," )
+//   Ketjsoption  renamed to Setketcindyjs
+//   Mkketcindyjs changed  ( "grid" option added )
 // 20190131
 //   Mkketcindyjs changed (removespace of ignoretun,buttons to be removed)
 // 20190130

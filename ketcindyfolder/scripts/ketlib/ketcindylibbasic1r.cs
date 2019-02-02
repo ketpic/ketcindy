@@ -314,7 +314,7 @@ Setwindow(str):=(
 //    createpoint("SW",Pcrd([XMIN,YMIN]));
 //    createpoint("NE", Pcrd([XMAX,YMAX]));
     Putpoint("SW",Pcrd([XMIN,YMIN]));
-    Putpoint("NE", Pcrd([XMAX,YMAX]));
+    Putpoint("NE", Pcrd([XMAX,YMAX])); 
   );
   if(msg=="y",
     println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");

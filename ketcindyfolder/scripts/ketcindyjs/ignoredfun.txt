@@ -19,8 +19,12 @@ Inwindow
 Ketjsoption
 Mkketcindyjs
 Presentation
+Putbezierdata
+Putpoint
+Readcsvsla
 RSform
 RSslash
+Setketcindyjs
 Setslidebody
 Setslidehyper
 Texcom

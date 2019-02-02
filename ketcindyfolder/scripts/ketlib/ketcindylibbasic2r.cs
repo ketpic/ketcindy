@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190201] loaded");
+println("ketcindybasic2[20190202] loaded");
 
 //help:start();
 
@@ -987,7 +987,7 @@ Slider(ptstr,p1,p2,options):=(//190120
   );
   Putpoint(pA,p1);
   Putpoint(pB,p2);
-  Listplot([parse(pA),parse(pB)],["notex",color,size]);
+  Listplot([parse(pA),parse(pB)],["Msg=n","notex",color,size]);
 //  create([sname],"Segment",[parse(pA),parse(pB)]);
 //  tmp2=Listplot("",[p1,p2],["nodata"]);
   Putonseg(pC,parse("sg"+pA+pB));
@@ -1056,7 +1056,16 @@ Bezierpt(t,ptlist,ctrlist):=(
 
 ////%Bezier start////
 Bezier(ptctrlist):=BezierCurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,[]);
-Bezier(ptctrlist,options):=BezierCurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,options);
+Bezier(Arg1,Arg2):=( //190202from
+  regional(nm,ptctrlist,options);
+  if(islist(Arg1),
+    ptctrlist=Arg1; options=Arg2;
+    BezierCurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,options);
+  ,
+    nm=Arg1; ptctrlist=Arg2;
+    BezierCurve(nm,ptctrlist_1,ptctrlist_2,[]);
+  );
+); //190202to
 Bezier(nm,ptlist,ctrlist):=BezierCurve(nm,ptlist,ctrlist,[]);
 Bezier(nm,ptlist,ctrlist,options):=BezierCurve(nm,ptlist,ctrlist,options);
 ////%Bezier end////
@@ -1086,9 +1095,9 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   ptlist=apply(ptlistorg,Lcrd(#)); // 16.08.16
   ctrlist=[];  // 14.12.31
   if(length(ctrlistorg)==length(ptlist)-1,
-    forall(ctrlistorg,tmp1,
+    forall(1..(length(ctrlistorg)),ii, //190202
+      tmp1=apply(ctrlistorg_ii,Lcrd(#));  //190202
       if(MeasureDepth(tmp1)==0,tmp=[tmp1],tmp=tmp1);
-      tmp=apply(tmp,Lcrd(#)); // 16.08.16
       ctrlist=append(ctrlist,tmp);
     );
   ,
@@ -1619,14 +1628,14 @@ Bzsspline(nm,ptLorg,options):=(
   if(cflg==0,
     pt=ptL_1;
     pt1=ptL_2;
-    Putpoint("C1p",(4*pt+pt1)/5,Lcrd(C1p)); // 16.08.16   
+    Putpoint("C1p",(4*pt+pt1)/5,Lcrd(C1p)); // 16.08.16
     inspect(C1p,"ptsize",3);
     inspect(C1p,"color",3);
   );
   if(cflg==1,
     pt=ptL_1;
     pt1=Lcrd(parse("C"+text(length(ptL)-1)+"q")); // 16.08.16   
-    tmp1="Putpoint("+Dq+"C1p"+Dq+",2*pt-pt1)"; // 16.08.16   
+    tmp1="Putpoint("+Dq+"C1p"+Dq+",2*pt-pt1)"; // 16.08.16
     parse(tmp1);
   );
   ctrlist=[];
@@ -2170,9 +2179,9 @@ Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
       Putpoint(tmp,Tgrid(tmp1));
     ,
       Putpoint(tmp,Tgrid(tmp1),[R0.x,parse(tmp+".y")]);
-      rlist_(#+1)=parse(tmp+".xy");
+      rlist_(#+1)=parse(tmp+".xy"); //no ketjs
     );
-    Putpoint(tmp,Tgrid(tmp1),[R0.x,parse(tmp+".y")]);
+    Putpoint(tmp,Tgrid(tmp1),[R0.x,parse(tmp+".y")]); 
     inspect(parse(tmp),"ptsize",3);
     inspect(parse(tmp),"labeled",false);
     if(mod(#,tick)==0 % #==n,
@@ -5927,13 +5936,18 @@ Copyketcindyjs():=(
 ); 
 ////%Coptketcindyjs end//// 
 
-////%Ketjsoption start//// 190129
-Ketjsoption():=(
+////%Ketjsoption start//// 190201
+Ketjsoption():=Setketcindyjs();
+Ketjsoption(list):=Setketcindyjs(list);
+////%Ketjsoption end////
+
+////%Setketcindyjs start//// 190201
+Setketcindyjs():=(
   KETJSOP;
 );
-Ketjsoption(list):=(
-//help:Ketjsoption();
-//help:Ketjsoption(["Local=(n)","Scale=(1)","Nolabel=[]"]);
+Setketcindyjs(list):=(
+//help:Setketcindyjs();
+//help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[]"]);
   regional(eqL,color,tmp);
   tmp=Divoptions(list);
   eqL=tmp_5;
@@ -5946,22 +5960,23 @@ Ketjsoption(list):=(
   KETJSOP=eqL;
   KETJSOP;
 );
-////%Ketjsoption end////
+////%Setketcindyjs end////
 
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Local=(n)","Scale=(1)","Nolabel=[]","Color="]);
+//help:Mkketcindyjs(options=["Local=(n)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,nolabel,
-      color,out,igL,DL,Out);
+      color,grid,out,igL,DL,Out);
   webflg="Y";  //190128 texflg removed
   localflg="N"; //190128
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
   color="";
+  grid="";
   path=Dircdy;
   forall(options,
     tmp=Strsplit(#,"=");
@@ -5989,6 +6004,9 @@ Mkketcindyjs(options):=( //17.11.18
       if(substring(color,0,1)=="[", //190130from
         color=substring(color,1,length(color)-1);
       ); //190130to
+    );
+    if(tmp1=="G",
+      grid=tmp2;
     );
     if(tmp1=="P",
       if(!tmp2="Dircdy",
@@ -6133,8 +6151,23 @@ Mkketcindyjs(options):=( //17.11.18
     from=tmp_2;
     upto=tmp_3;
     tmp1=htmorg_(from..upto);
+    ketflg="off"; //190202from
     forall(tmp1,
-      println(SCEOUTPUT,#);
+      if(indexof(#,"no ketjs")>0,
+        if(indexof(#,"no ketjs on")>0,
+          ketflg="on";
+        );
+        if(indexof(#,"no ketjs off")>0,
+          ketflg="off";
+        );
+      ,
+        if(ketflg=="off",
+          tmp=Removespace(#);
+          if(substring(tmp,0,2)!="//",
+            println(SCEOUTPUT,#);
+          );
+        );
+      );
     );
     tmp1=htmorg_((lastpart_1)..(lastpart_2));
     tmp=select(1..(length(tmp1)),indexof(tmp1_#,Dqq("cs*"))>0);
@@ -6226,6 +6259,15 @@ Mkketcindyjs(options):=( //17.11.18
       tmp=indexof(out_jj,")"); //190130from
       tmp=substring(out_jj,tmp-1,length(out_jj));
       out_jj="    background: "+Dq+"rgb("+color+tmp; //190130to
+    );
+    if(length(grid)>0,
+      tmp=select(1..(length(out)),indexof(out_#,"grid:")>0);
+      jj=tmp_1;
+      tmp1="    grid: "+grid;
+      if(indexof(out_jj,",")>0,
+        tmp1=tmp1+",";
+      );
+      out_jj=tmp1;
     );
     forall(out,
       println(SCEOUTPUT,#);

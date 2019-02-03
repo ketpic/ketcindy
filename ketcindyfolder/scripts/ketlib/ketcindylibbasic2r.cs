@@ -500,7 +500,8 @@ MakeRarg(arglist):=(
 ////%MakeRarg end////
 
 ////%Htickmark start////
-Htickmark(arglist):=(
+Htickmark(arglist):=Htickmark(arglist,[]); //190203
+Htickmark(arglist,options):=( //190203
 //help:Htickmark([1,"1",2,"sw","2"]);
   regional(nn,tmp,tmp1,tmp2,mark);
   mark=MARKLEN/SCALEY;
@@ -511,12 +512,12 @@ Htickmark(arglist):=(
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
-        Expr([[arglist_nn,0],"s1",arglist_(nn+1)]);
+        Expr([[arglist_nn,0],"s1",arglist_(nn+1)],options); //190203
       ,
-        Expr([[arglist_nn,0],arglist_(nn+1),arglist_(nn+2)]);
+        Expr([[arglist_nn,0],arglist_(nn+1),arglist_(nn+2)],options); //190203
       );
     ,
-      Expr([[arglist_nn,0],"s1",arglist_(nn+1)]);
+      Expr([[arglist_nn,0],"s1",arglist_(nn+1)],options); //190203
     );
   );//180710to
 //  tmp="";
@@ -526,7 +527,8 @@ Htickmark(arglist):=(
 ////%Htickmark end////
 
 ////%Vtickmark start////
-Vtickmark(arglist):=(
+Vtickmark(arglist):=Vtickmark(arglist,[]); //190203
+Vtickmark(arglist,options):=( //190203
 //help:Vtickmark([1,"1",2,"sw","2"]);
   regional(nn,tmp,tmp1,tmp2,mark);
   mark=MARKLEN/SCALEX;
@@ -537,12 +539,12 @@ Vtickmark(arglist):=(
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
-        Expr([[0,arglist_nn],"w1",arglist_(nn+1)]);
+        Expr([[0,arglist_nn],"w1",arglist_(nn+1)],options); //190203
       ,
-        Expr([[0,arglist_nn],arglist_(nn+1),arglist_(nn+2)]);
+        Expr([[0,arglist_nn],arglist_(nn+1),arglist_(nn+2)],options); //190203
       );
     ,
-      Expr([[0,arglist_nn],"w1",arglist_(nn+1)]);
+      Expr([[0,arglist_nn],"w1",arglist_(nn+1)],options); //190203
     );
   );//180710to//  tmp=MakeRarg(arglist);
 //  Com2nd("Vtickmark("+tmp+")");

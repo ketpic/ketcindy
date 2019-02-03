@@ -193,10 +193,10 @@ To draw a point in the void mode.
 
 \verb|Setax([7,"se"]);|\\
 \verb|Setpt(8);|\\
-\verb|Drwpt([-pi,0],0);|\\
+\verb|Pointdata("1",[[-pi,0]],["Inside=0"]);|\\
 \verb|Drwxy();|\\
 \verb|Plotdata("1","sin(x)","x",["dr","Num=300"]);|\\
-\verb|Drwpt([pi,0],0);|
+\verb|Pointdata("2",[[pi,0]],["Inside=0"]);|
 
 \begin{center}
 \input{Fig/drwxy}
@@ -323,7 +323,7 @@ $f(x)=\left\{\begin{array}{l}1  (x\geq 0)\\ -1   (x<0)\\ \end{array}\right.$
 \itemket{Usage}Setpt(ratio);
 \itemket{Description}Generic funtion to set the size of points.
 \itemket{Details}"ratio" is the ratio from the standard size.\\
-Size can be change as a option of ``Pointdata".
+Size can be change as a option of "Pointdata".
 \itemket{Examples}\mbox{}
 
 \verb|Pointdata("1",A,["Size=1"]);|\\
@@ -371,7 +371,7 @@ The coordinate of apparent origin is $(3,2)$ but we use the original coordinate 
  Left figure is Euclidean view, right figure is the result of \TeX.
 
 \begin{center}
-\includegraphics[bb=0 0 227 205 , width=4cm]{Fig/setorigin.pdf}\hspace{10mm}%
+\includegraphics[bb=0 0 299.02 250.01 , width=4cm]{Fig/setorigin.pdf}\hspace{10mm}%
 \input{Fig/setorigin}
 \end{center}
 
@@ -488,13 +488,13 @@ In addition, there are options specific to each function.
 \begin{cmd}{Pointdata}{pointdata}
 \itemket{Usage}Pointdata(name, point list, options)
 \itemket{Description}Generic function to make a point data.
-\itemket{Detailse}Options are "Size=", "Color=", "notex/nodisp".
+\itemket{Detailse}Options are "Size=", "Color=", "Inside=","notex/nodisp".
 \itemket{Examples}\mbox{}
 
 \verb|Pointdata("1",[[1,2],[-2,3]]); |  // make 2 points (1,2),(-2,3)\\
 \verb|Pointdata("2",[A,B]);          | // A and B are draw by drawing tool.\\
 \verb|Pointdata("3",A,["size=4"]);   | // size of point A is 4.\\
-\verb|Pointdata("4",[A,B],[0]);      |  // white circles\\
+\verb|Pointdata("4",[A,B],["Inside=0"]);      |  // white circles\\
 \verb|Pointdata("5",[[3,4],[5,6]],["notex"]); | //not draw in the \TeX  file.\\
 \verb|Pointdata("6",[[3,4],[5,6]],["nodisp"]);| //not draw \TeX  file and Euclidean view.\\
 
@@ -513,38 +513,38 @@ Draw node of tree.
 \end{cmd}
 
 %---------Drwpt -----------------------------------
-\begin{cmd}{Drwpt}{drwpt}
-\itemket{Usage}Drwpt(point, option) or Drawpoint(point, options)
-\itemket{Description}Draw a point.
-\itemket{Details}
-The position of point is specified via its coordinate or the name of geometric object. 
-When the point is to be displayed not only on \TeX\ final output but also on the Euclidean view, you should generate geometric point on the screen. 
-Also \verb|Pointdata()| or \verb|Putpoint()| can be used. 
-When several points are to be generated, 
-the list of them should be given as the argument. 
-When 0 is input as the option, the point is displayed in a solid-white manner.
-\itemket{Examples}\mbox{}
+%\begin{cmd}{Drwpt}{drwpt}
+%\itemket{Usage}Drwpt(point, option) or Drawpoint(point, options)
+%\itemket{Description}Draw a point.
+%\itemket{Details}
+%The position of point is specified via its coordinate or the name of geometric object. 
+%When the point is to be displayed not only on \TeX\ final output but also on the Euclidean view, you should generate geometric point on the screen. 
+%Also \verb|Pointdata()| or \verb|Putpoint()| can be used. 
+%When several points are to be generated, 
+%the list of them should be given as the argument. 
+%When 0 is input as the option, the point is displayed in a solid-white manner.
+%\itemket{Examples}\mbox{}
 
-Draw the points $(1,1)$ and $(4,3)$.
+%Draw the points $(1,1)$ and $(4,3)$.
 
-\verb|  Drwpt([[1,1],[4,3]]);|\\
+%\verb|  Drwpt([[1,1],[4,3]]);|\\
 
-After generating points A, B, and C on the Euclidean view, display their image on \TeX\ document.
+%After generating points A, B, and C on the Euclidean view, display their image on \TeX\ document.
 
-\verb|  Drwpt([A,B,C]);|\\
+%\verb|  Drwpt([A,B,C]);|\\
 
-The endpoint B of segment AB in a solid-white manner.
+%The endpoint B of segment AB in a solid-white manner.
 
-\verb|  Ptsize(5);|\\
-\verb|  Listplot([A,B]);|\\
-\verb|  Drawpoint(B,0);|
-\begin{center}
-\input{Fig/drawpoint}
-\end{center}
+%\verb|  Ptsize(5);|\\
+%\verb|  Listplot([A,B]);|\\
+%\verb|  Drawpoint(B,0);|
+%\begin{center}
+%\input{Fig/drawpoint}
+%\end{center}
 
-\itemket{Remark} \hyperlink{mkpttable}{Comparative chart of drawing of points}
+%\itemket{Remark} \hyperlink{mkpttable}{Comparative chart of drawing of points}
 
-\end{cmd}
+%\end{cmd}
 
 %--------------Putpoint------------------------------
 \begin{cmd}{Putpoint}{putpoint}
@@ -1488,10 +1488,9 @@ Draw discontinuity accurately by "Dis" option.
 Draw floor function.
 
 \verb|  Plotdata("1","floor(x)","x",["Num=100","Dis=0.9"]); |\\
-\verb|  Ptsize(3); |\\
 \verb|  Drwxy(); |\\
 \verb|  repeat(7,s,start -> -2, |\\
-\verb|    Drwpt([s+1,s],0); |\\
+\verb|    Pointdata(text(s+3),[s+1,s],["Inside=0","Size=3"]);|\\
 \verb|  ); |
 
 \vspace{\baselineskip}
@@ -2624,6 +2623,28 @@ Gets the points at both ends of the graph with limited domain and draw the line 
 \begin{center} \input{Fig/ptstart} \end{center}
 \end{cmd}
 
+%------------Readcsv--------------------------------
+\begin{cmd}{Readcsv}{readcsv}
+
+\itemket{Usage}Readcsv(path,filename,option)
+\itemket{Description}read an external data file in csv format. The return value is a list of the data.
+\itemket{Details}The first argument sets a path to the current working folder where the data file is  (the default  is fig).
+If you put the data file in fig folder, the pathname can be omitted. Otherwise a full pathname is required.\\
+option: By the argument "Flat=y", you can flatten a list of the data (the default is "Flat=n" ).
+\itemket{Examples}  \mbox{}
+Examples can be found in the command Boxplot().
+\end{cmd}
+
+%------------Readlines--------------------------------
+\begin{cmd}{Readlines}{readlines}
+
+\itemket{Usage}Readlines(path,filename,option)
+\itemket{Description}read a text file line by line. The return value is a list of strings.
+\itemket{Details}The first argument sets a path to the current working folder where the data file is  (the default  is fig).
+If you put the data file in fig folder, the pathname can be omitted. Otherwise a full pathname is required.\\
+option: By the argument "Flat=y", you can flatten a list of the data (the default is "Flat=n" ).
+\end{cmd}
+
 %----------ReadOutData----------------------------------
 \begin{cmd}{ReadOutData}{readoutdata}
 \itemket{Usage}ReadOutdata(filename);
@@ -3540,27 +3561,6 @@ Example2
 
 \end{cmd}
 
-%------------Readcsv--------------------------------
-\begin{cmd}{Readcsv}{readcsv}
-
-\itemket{Usage}Readcsv(path,filename,option)
-\itemket{Description}read an external data file in csv format. The return value is a list of the data.
-\itemket{Details}The first argument sets a path to the current working folder where the data file is  (the default  is fig).
-If you put the data file in fig folder, the pathname can be omitted. Otherwise a full pathname is required.\\
-option: By the argument "Flat=y", you can flatten a list of the data (the default is "Flat=n" ).
-\itemket{Examples}  \mbox{}
-Examples can be found in the command Boxplot().
-\end{cmd}
-
-%------------Readlines--------------------------------
-\begin{cmd}{Readlines}{readlines}
-
-\itemket{Usage}Readlines(path,filename,option)
-\itemket{Description}read a text file line by line. The return value is a list of strings.
-\itemket{Details}The first argument sets a path to the current working folder where the data file is  (the default  is fig).
-If you put the data file in fig folder, the pathname can be omitted. Otherwise a full pathname is required.\\
-option: By the argument "Flat=y", you can flatten a list of the data (the default is "Flat=n" ).
-\end{cmd}
 
 %------------Scatterplot--------------------------------
 \begin{cmd}{Scatterplot}{scatterplot}
@@ -5616,7 +5616,7 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{deqplot}{Deqplot} \> draw the solution curve of a differential equation.\\
 \hyperlink{dotfilldata}{Dotfilldata} \> fill a domain with dots.\\
 \hyperlink{drwpt}{Drawppoint} \> draw a point. \\
-\hyperlink{drwpt}{Drwpt} \> draw a point. \\
+%\hyperlink{drwpt}{Drwpt} \> draw a point. \\
 \hyperlink{drawsegmark}{Drawsegmark} \> Add a mark to a segment. \\
 \hyperlink{ellipseplot}{Ellipseplot} \> draw ellipse.\\
 \hyperlink{enclosing}{Enclosing} \> make a closed curve form the list of plotting data.\\
@@ -5654,8 +5654,6 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{putonline}{PutonLine} \> put a point on the line.\\
 \hyperlink{putonSeg}{Putonseg} \> put a point on the segment.\\
 \hyperlink{putpoint}{Putpoint} \> put a point.\\
-\hyperlink{readcsv}{Readcsv} \> read a file in csv format.\\
-\hyperlink{readlines}{Readlines} \> read a text file line by line.\\
 \hyperlink{reflectdata}{Reflectdata} \> draw a reflective curve.\\
 \hyperlink{reflectpoint}{Reflectpoint} \> return the reflect point.\\
 \hyperlink{rotatedata}{Rotatedata} \> rotate plotting data.\\
@@ -5689,6 +5687,8 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{pointoncurve}{Pointoncurve} \> point which has the parameter value\\
 \hyperlink{ptstart, ptend}{Ptstart, Ptend} \> returns start point and end point of PD.\\
 \hyperlink{ptcrv}{Ptcrv} \> Returns n-th point from PD.\\
+\hyperlink{readcsv}{Readcsv} \> read a file in csv format.\\
+\hyperlink{readlines}{Readlines} \> read a text file line by line.\\
 \hyperlink{readoutdata}{ReadOutData} \> read external data.\\
 \hyperlink{sqr}{Sqr} \> return square root.\\
 \hyperlink{writeoutdata}{WriteOutData} \> write out data in \ketcindy\ format.\\

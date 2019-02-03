@@ -1,5 +1,6 @@
 // 20190202
 //   Bezier changed  ( (nm, ptlist(2)) supported)
+//   Htickmark,Vtickmark changed  ( option added)
 // 20190201
 //   Mkketcindyjs debugged  ( for removing button case the last is not "," )
 //   Ketjsoption  renamed to Setketcindyjs

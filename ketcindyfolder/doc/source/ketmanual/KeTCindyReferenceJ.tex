@@ -3190,6 +3190,50 @@ KeTCindy形式のデータとは
 
 の形式のテキストファイル。
 
+\hypertarget{readcsv}{}
+\item[関数]  Readcsv(path,filename,option)
+\item[機能]  csvファイルを読む。
+\item[説明]  csvファイルを読みこむ。戻り値は読み込んだデータのリスト。
+
+第１引数の path は，ファイルを作業フォルダ（ 初期設定は fig ）に置いた場合は省略することができる。そうでない場合は，フルパスで指定する。たとえば，"/Users/Hoge/Desktop"
+
+option は，"Flat=" で，"Flat=y" の場合は，読み込んだデータをリスト化したときに平滑化（１次元のリスト）にする。 初期設定は "Flat=n"
+
+【例】次のようなCSVファイル sample.csvを読み込むとする。
+
+\begin{verbatim}
+  12,14,15,18,13
+  9,13,17,21
+\end{verbatim}
+
+つまり，２行分のデータである。
+
+\begin{verbatim}
+  data=Readcsv("sample.csv");
+\end{verbatim}
+
+とすると，
+\begin{verbatim}
+  data=[[12,14,15,18,13],[9,13,17,21]]
+\end{verbatim}
+
+となる。
+
+したがって，１行目のデータだけ取り出したい場合は
+
+\begin{verbatim}
+  dt1=data_1;
+\end{verbatim}
+
+とする。
+
+\hypertarget{readlines}{}
+\item[関数]  Readlines(path,filename,option)
+\item[機能]  テキストファイルを1行ずつ読む。
+\item[説明]  テキストファイルを1行ずつ読みこむ。戻り値は読み込んだ文字列のリスト。
+
+第１引数の path は，ファイルを作業フォルダ（ 初期設定は fig ）に置いた場合は省略することができる。そうでない場合は，フルパスで指定する。たとえば，"/Users/Hoge/Desktop"
+
 \vspace{\baselineskip}
 \hypertarget{writeoutdata}{}
 \item[関数]  WriteOutData(ファイル名,PDリスト）
@@ -4402,50 +4446,6 @@ PlotdiscR("3","dgeom(k,0.3)","k=[0,10]");
 \end{verbatim}
 %\vspace{\baselineskip}
 \begin{flushright}  \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\hypertarget{readcsv}{}
-\item[関数]  Readcsv(path,filename,option)
-\item[機能]  csvファイルを読む。
-\item[説明]  csvファイルを読みこむ。戻り値は読み込んだデータのリスト。
-
-第１引数の path は，ファイルを作業フォルダ（ 初期設定は fig ）に置いた場合は省略することができる。そうでない場合は，フルパスで指定する。たとえば，"/Users/Hoge/Desktop"
-
-option は，"Flat=" で，"Flat=y" の場合は，読み込んだデータをリスト化したときに平滑化（１次元のリスト）にする。 初期設定は "Flat=n"
-
-【例】次のようなCSVファイル sample.csvを読み込むとする。
-
-\begin{verbatim}
-  12,14,15,18,13
-  9,13,17,21
-\end{verbatim}
-
-つまり，２行分のデータである。
-
-\begin{verbatim}
-  data=Readcsv("sample.csv");
-\end{verbatim}
-
-とすると，
-\begin{verbatim}
-  data=[[12,14,15,18,13],[9,13,17,21]]
-\end{verbatim}
-
-となる。
-
-したがって，１行目のデータだけ取り出したい場合は
-
-\begin{verbatim}
-  dt1=data_1;
-\end{verbatim}
-
-とする。
-
-\hypertarget{readlines}{}
-\item[関数]  Readlines(path,filename,option)
-\item[機能]  テキストファイルを1行ずつ読む。
-\item[説明]  テキストファイルを1行ずつ読みこむ。戻り値は読み込んだ文字列のリスト。
-
-第１引数の path は，ファイルを作業フォルダ（ 初期設定は fig ）に置いた場合は省略することができる。そうでない場合は，フルパスで指定する。たとえば，"/Users/Hoge/Desktop"
 
 \vspace{\baselineskip}
 \hypertarget{scatterplot}{}
@@ -7894,6 +7894,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ptcrv}{Ptcrv(n,PD)}  \>曲線PD のn 番目の節点を取得する\\
 \hyperlink{ptstart}{Ptstart(PD)}      \>プロットデータの始点・終点を取得する\\
 \hyperlink{readoutdata}{ReadOutData(ファイル名)}  \>外部データをPDとして読み込む\\
+\hyperlink{readcsv}{Readcsv(name,filename,option)}  \>csvファイルを読む\\
+\hyperlink{readlines}{Readlines(name,filename,option)}  \>テキストファイルを1行ずつ読む\\
 \hyperlink{sqr}{Sqr(real)}  \>平方根を返す\\
 \hyperlink{viewtex}{Viewtex()}  \>\TeX のソースファイルを書き出す。引数なし\\
 \hyperlink{workprocess}{Workprocess()}  \>作図の経過を取得する\\
@@ -7932,8 +7934,6 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{histplot}{Histplot(name,data)}  \>ヒストグラムを描く\\
 \hyperlink{plotdatar}{PlotdataR(name,式,変数)}  \>Rの関数のグラフを描く\\
 \hyperlink{plotdiscr}{PlotdiscR(name,式,変数)}  \>離散型のグラフを描く\\
-\hyperlink{readcsv}{Readcsv(name,filename,option)}  \>csvファイルを読む\\
-\hyperlink{readlines}{Readlines(name,filename,option)}  \>テキストファイルを1行ずつ読む\\
 \hyperlink{scatterplot}{Scatterplot(name,filename,option)}  \>2次元データを読み込み，散布図を描く\\
 \vspace{\baselineskip}
 【Maximaとの連携】\\

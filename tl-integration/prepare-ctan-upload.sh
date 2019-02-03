@@ -40,7 +40,7 @@ if [ "$yn" != "y" ] ; then
 fi
 mv README.new README
 git add README
-git commit -m "update README"
+git commit -m "update README" || true
 
 # we export the stuff two times, once for the normal
 # upload and once for reshuffling in the TDS tree
@@ -155,7 +155,7 @@ rmdir ketcindy/ketcindyfolder/doc
 mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
 mv ketcindy/ketcindyfolder/work/template0.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template2slide.cdy scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/template2allbuttons.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template3Dfigure.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/ketcindy.conf scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/Scriptkelib.txt doc/support/ketcindy/

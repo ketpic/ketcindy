@@ -1,3 +1,5 @@
+// 20190203
+//   Mkketcindyjs debugged  ( in case of local=y )
 // 20190202
 //   Bezier changed  ( (nm, ptlist(2)) supported)
 //   Htickmark,Vtickmark changed  ( option added)

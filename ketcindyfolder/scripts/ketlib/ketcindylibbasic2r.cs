@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190202] loaded");
+println("ketcindybasic2[20190203] loaded");
 
 //help:start();
 
@@ -6089,9 +6089,9 @@ Mkketcindyjs(options):=( //17.11.18
         tmp1_(length(tmp1))="";  //190120
       ,
         tmp1_(length(tmp1)-2)=    //190128from
-         "    <link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/Cindy.js.css")+">";
+         "    <link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/CindyJS.css")+">"; //190203
         tmp1_(length(tmp1)-1)=
-         "   <script type="+Dqq("text/javascript")+" src="+Dqq("ketcindyjs/Cindy.js")+"></script>";
+         "   <script type="+Dqq("text/javascript")+" src="+Dqq("ketcindyjs/Cindy.js")+"></script>"; //190203
         tmp1_(length(tmp1))=""; //190128to
       );
     ,

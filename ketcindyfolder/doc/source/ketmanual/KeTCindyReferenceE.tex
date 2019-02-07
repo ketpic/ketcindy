@@ -4722,7 +4722,7 @@ Delete hidden lines and display
 
 Make the whole thick with a solid line and
 
- display the hidden line with a dotted line.
+ display the hidden line with a dotted line (Default).
 
 \verb|      ExeccmdC("1",["dr,2"]);|
 
@@ -4758,6 +4758,20 @@ When displaying two curved surfaces, name of Sfbdparadata () is set to "1" and "
 \verb| );|\\
 
 \begin{center} \input{Fig/sfbdpara05}  \end{center}
+
+\vspace{\baselineskip}
+\verb|fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",|\\
+\verb|      "u=[0,2*pi]","v=[0,2*pi]","s"];|\\
+\verb|   if(Ptselected(),|\\
+\verb|     Sf3data("1",fd);|\\
+\verb|    ,|\\
+\verb|     Startsurf();|\\
+\verb|     Sfbdparadata("1",fd);|\\
+\verb|     Wireparadata("1","sfbd3d1",fd,12,12,[],["nodisp"]);|\\
+\verb|     ExeccmdC("1",[],["nodisp"]);|\\
+\verb|   );|\\
+
+\begin{center} \input{Fig/wirepara5} \end{center}
 
 \end{cmd}
 %-------------Wireparadata-------------------------------
@@ -4798,9 +4812,16 @@ Change the following code.
 \input{Fig/wirepara2}
 \end{center}
 
-\verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]", |\\
-\verb| "v=[0,2*pi]","s"]; |\\
-\verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
+\verb|   fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]", |\\
+\verb|    "v=[0,2*pi]","s"]; |\\
+\verb|   if(Ptselected(),|\\
+\verb|     Sf3data("1",fd);|\\
+\verb|     ,|\\
+\verb|     Startsurf();|\\
+\verb|     Sfbdparadata("1",fd);|\\
+\verb|     Wireparadata("1","sfbd3d1",fd,12,12);|\\
+\verb|     ExeccmdC("1");|\\
+\verb|   );|\\
 
 \begin{center}
 \input{Fig/wirepara3}
@@ -4826,14 +4847,6 @@ Change the following code.
 \verb|      );|\\
 \verb|    );|\\
 \verb|);|
-
-\vspace{\baselineskip}
-\verb|fd=["p","x=(2+cos(u))*cos(v)","y=(2+cos(u))*sin(v)","z=sin(u)",|\\
-\verb|      "u=[0,2*pi]","v=[0,2*pi]","s"];|\\
-\verb|Sfbdparadata("1",fd);|\\
-\verb|Wireparadata("1","sfbd3d1",fd,12,12,[""]); |
-
-\begin{center} \input{Fig/wirepara5} \end{center}
 
 \end{cmd}
 %-------------Crvsfparadata-------------------------------

@@ -1,5 +1,7 @@
 // 20190206
-//    Deqplot changed  ( ‘ => ` )
+//    Deqplot changed  ( ‘ replace to  ` )
+//    Lineplot,Plotdata,Paramplot,Circledata,Bowdata,Anglemark changed ("Msg" option)
+//    Pointdata changed ("Msg" option)
 // 20190128
 //    Ketinit changed  (Userhome added)
 //    Changesetting majorly changed 

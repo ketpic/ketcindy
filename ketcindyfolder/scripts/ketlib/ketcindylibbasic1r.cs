@@ -834,9 +834,6 @@ Changework(dirorg,options):=( //16.10.21
     ,
       println("Directory "+dir+" not exist, so "+Dqq(Dirwork)+" not changed"); 
     ); //180618to
-//    println("Directory "+dir+" not exist, so set to "+Dircdy);//180604[2lines]
-//    Dirwork=Dircdy; 
-//    ErrFlag=-1;
   ,
     if(length(subdir)>0,  //180605
       if(makesub==1,//180606from
@@ -3858,7 +3855,7 @@ Pointdata(nm,listorg,options):=(
 //help:Pointdata("2",[[2,3],[4,1]]);
 //help:Pointdata(options=["Size=(1)","Disp=(y)","Inside="]);
 //help:Pointdata("Inside=1(def)/ratio/rgblist/colorname/-1"]);
-  regional(list,name,nameL,ptlist,opstr,opcindy,
+  regional(list,name,nameL,ptlist,opstr,opcindy,Msg,
       eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
       Ltype,Noflg,color,inside);
   name="pt"+nm;
@@ -3873,6 +3870,7 @@ Pointdata(nm,listorg,options):=(
   size="";
   dispflg="Y";
   inside=color;
+  Msg="Y";
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -3898,9 +3896,14 @@ Pointdata(nm,listorg,options):=(
         inside=concat(inside,tmp);
       );
     ); //181229to
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   if(dispflg=="Y", 
-    println("generate pointdata "+name);
+    if(Msg=="Y", //190206
+      println("generate pointdata "+name);
+    );
   ); //181030to
   if(isstring(listorg),
     list=parse(listorg)
@@ -4006,27 +4009,23 @@ Listplot(nm,list,options):=(
   eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
-  Msg=1;  // 15.09.17
+  Msg="Y";  //190206
   cutend=[0,0];//180719
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
-    tmp2=tmp_2;
     if(tmp1=="M",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="N", // 16.06.28
-        Msg=0;
-      );
+      Msg=Toupper(substring(tmp_2,0,1));
     );
     if(tmp1=="C",//180719from
-      tmp2=replace(tmp2,"[","");
+      tmp2=replace(tmp_2,"[","");
       tmp2=replace(tmp2,"]","");
       cutend=tokenize(tmp2,",");
       if(length(cutend)==1,cutend=[cutend_1,cutend_1]);     
     );//180719to
   );
   if(Noflg<3,
-    if(Msg==1,
+    if(Msg=="Y", //190206
       println("generate Listplot "+name);
     );
     if(isstring(list_1),tmp=apply(list,parse(#)),tmp=list); // 15.03.24
@@ -4064,17 +4063,26 @@ Listplot(nm,list,options):=(
 Lineplot(nm,list,options):=(
 //help:Lineplot([A,B]);
 //help:Lineplot("1",[[2,1],[3,3]]);
-  regional(name,Out,tmp,tmp1,opstr,opcindy,Mag,Semi,
-      Vec,pA,pB,Ltype,Noflg,color);
+  regional(name,Out,tmp,tmp1,tmp2,opstr,opcindy,Mag,Semi,
+      Vec,pA,pB,Ltype,Noflg,color,Msg,eqL);
   name="ln"+nm;
   Mag=100;
   Semi="";
+  Msg="Y";
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1);
+  eqL=tmp_5;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
+  );
   tmp1=tmp_6;
   if(length(tmp1)>0,Mag=tmp1_1);
   tmp1=tmp_7;
@@ -4091,7 +4099,9 @@ Lineplot(nm,list,options):=(
     );
   );
   if(Noflg<3,
-    println("generate Lineplot "+name);
+    if(Msg=="Y", //190206
+      println("generate Lineplot "+name);
+    );
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
@@ -4139,7 +4149,7 @@ Plotdata(name1,func,variable,options):=(
 //help:Plotdata("2","x^2","x=[-1,1]");
 //help:Plotdata("3","Fout(x)","x",["out"]);
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
-         PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,
+         PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,Msg,
          Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
   name="gr"+name1;
   tmp=Divoptions(options);
@@ -4155,17 +4165,18 @@ Plotdata(name1,func,variable,options):=(
   Ec=[];
   Exfun="";
   Dc=1000;
+  Msg="Y";
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,tmp,length(#));
-    if(substring(#,0,1)=="N",
-      Num=parse(tmp1);
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(#,0,1));
+    if(tmp1=="N",
+      Num=parse(tmp_2);
       opstr=opstr+","+Dqq(#);
     );
-    if(substring(#,0,1)=="E",
-      if(substring(tmp1,0,1)=="[", //180817from
-        Ec=parse(tmp1);
-        tmp1=replace(tmp1,"[","c"+PaO());
+    if(tmp1=="E",
+      if(substring(tmp_2,0,1)=="[", //180817from
+        Ec=parse(tmp_2);
+        tmp1=replace(tmp_2,"[","c"+PaO());
         tmp1=replace(tmp1,",",".0,");
         tmp1=replace(tmp1,"]",".0)");
         opstr=opstr+","+Dqq("Exc="+tmp1); //180817to
@@ -4175,9 +4186,12 @@ Plotdata(name1,func,variable,options):=(
       );
     );
     if(substring(#,0,1)=="D",
-      Dc=parse(tmp1);
+      Dc=parse(tmp_2);
       opstr=opstr+","+Dqq(#);
     );
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   if(Inflg==0 & Outflg==0,
     Eps=10^(-3);
@@ -4279,7 +4293,9 @@ Plotdata(name1,func,variable,options):=(
       PdL=PdL_1;
     );
     if(Noflg<3,
-      println("generate Plotdata "+name);
+      if(Msg=="Y", //190206
+        println("generate Plotdata "+name);
+      );
       if(MeasureDepth(PdL)==1,
         tmp1=apply(PdL,Pcrd(#));
       ,
@@ -4335,7 +4351,7 @@ Plotdata(name1,func,variable,options):=(
 Paramplot(nm,funstr,variable):=Paramplot(nm,funstr,variable,[]);
 Paramplot(nm,funstr,variable,options):=(
 //help:Paramplot("1","[2*cos(t),sin(t)]","t=[0,2*pi]");
-  regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,
+  regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,Msg,
         Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke, pt, //190103
         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
   if(substring(nm,0,1)=="-",  // 180928from
@@ -4358,16 +4374,16 @@ Paramplot(nm,funstr,variable,options):=(
   Exfun="";
   Dc=1000;
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,tmp,length(#));
-    if(substring(#,0,1)=="N",
-      Num=parse(tmp1);
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="N",
+      Num=parse(tmp_2);
       opstr=opstr+","+Dqq(#);
     );
-    if(substring(#,0,1)=="E",
-      if(substring(tmp1,0,1)=="[", //180817from
-        Ec=parse(tmp1);
-        tmp1=replace(tmp1,"[","c"+PaO());
+    if(tmp1=="E",
+      if(substring(tmp_2,0,1)=="[", //180817from
+        Ec=parse(tmp_2);
+        tmp1=replace(tmp_2,"[","c"+PaO());
         tmp1=replace(tmp1,",",".0,");
         tmp1=replace(tmp1,"]",".0)");
         opstr=opstr+","+Dqq("Exc="+tmp1); //180817to
@@ -4377,9 +4393,12 @@ Paramplot(nm,funstr,variable,options):=(
       );
     );
     if(substring(#,0,1)=="D",
-      Dc=parse(tmp1);
+      Dc=parse(tmp_2);
       opstr=opstr+","+Dqq(#);
     );
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   if(Inflg==0 & Outflg==0,
     tmp=indexof(variable,"=");
@@ -4449,7 +4468,9 @@ Paramplot(nm,funstr,variable,options):=(
       Out=Out_1;
     );
     if(Noflg<3,
-      println("generate Paramplot "+name);
+      if(Msg=="Y", //190206
+        println("generate Paramplot "+name);
+      );
       if(MeasureDepth(Out)==1,
         tmp1=apply(Out,Pcrd(#));
       ,
@@ -4743,8 +4764,8 @@ Circledata(para1,para2):=(
   Circledata(name,cenrad,options);
 );
 Circledata(nm,cenrad,options):=(
-  regional(name,Out,Ctr,Ptcir,ra,Num,Rg,opstr,opcindy,color,
-      tmp,tmp1,tmp1,Th,Ltype,Noflg,eqL,pA,pB,pC,d1,d2,Eps);  
+  regional(name,Out,Ctr,Ptcir,ra,Num,Rg,opstr,opcindy,color,Msg,
+      tmp,tmp1,tmp2,Th,Ltype,Noflg,eqL,pA,pB,pC,d1,d2,Eps);  
   name="cr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -4755,16 +4776,20 @@ Circledata(nm,cenrad,options):=(
   opcindy=tmp_(length(tmp));
   Num=50;
   Rg=[0,2*pi];
+  Msg="Y";
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,tmp,length(#));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
     opstr=opstr+",'"+#+"'";
     if(substring(#,0,1)=="N",
-      Num=parse(tmp1);
+      Num=parse(tmp_2);
     );
     if(substring(#,0,1)=="R",
-      Rg=parse(tmp1);
+      Rg=parse(tmp_2);
     );
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   if(length(cenrad)==2,
     Ctr=Lcrd(cenrad_1);
@@ -4802,7 +4827,9 @@ Circledata(nm,cenrad,options):=(
     Out=Lineplot("1",[pA,pB],["nodata"]);
   );
   if(Noflg<3,
-    println("generate Circledata "+name);
+    if(Msg=="Y", //190206
+      println("generate Circledata "+name);
+    );
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
@@ -5687,7 +5714,7 @@ Arrowdata(nm,ptlist,optionsorg):=(
 
 ////%Anglemark start////
 Anglemark(plist):=Anglemark(plist,[]);
-Anglemark(Arg1,Arg2):=(           // 2015.04.28 from
+Anglemark(Arg1,Arg2):=( // 2015.04.28 from
   regional(nm,plist,options,tmp);
   if(isstring(Arg1),
     nm=Arg1;
@@ -5708,14 +5735,13 @@ Anglemark(nm,plist,options):=(
 //help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=[size,"E/L=(sep,)letter"]);
   regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,color,
-       Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg);
+       Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg);
   name="ag"+nm;
   Bpos="md"+name;
   ra=0.5;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-//  opstr=tmp_(length(tmp)-1);//180530
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
@@ -5723,21 +5749,28 @@ Anglemark(nm,plist,options):=(
   Bname="";
   Brat=1.2; //180530
   Num=20;
+  Msg="Y";
   opstr="";
   if(length(realL)>0,
     ra=realL_1*ra;
     opstr=","+text(realL_1);//180530
   );
   forall(eqL,
-    if(substring(#,0,1)=="L",Bname="Letter(");
-    if(substring(#,0,1)=="E",Bname="Expr(");
-    Bname=Bname+Bpos+","+Dq+"c"+Dq+","+Dq;//16.10.29
-    tmp=substring(#,indexof(#,"="),length(#));
-    tmp1=indexof(tmp,",");
-    Bname=Bname+substring(tmp,tmp1,length(tmp))+Dq+")";
-    if(tmp1>0,
-      Brat=parse(substring(tmp,0,tmp1-1));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if((tmp1=="L")%(tmp1=="E"),
+      if(tmp1=="L",Bname="Letter(");
+      if(tmp1=="E",Bname="Expr(");
+      Bname=Bname+Bpos+","+Dq+"c"+Dq+","+Dq;//16.10.29
+      tmp1=indexof(tmp_2,",");
+      Bname=Bname+substring(tmp_2,tmp1,length(tmp))+Dq+")";
+      if(tmp1>0,
+        Brat=parse(substring(tmp_2,0,tmp1-1));
+      );
     );
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   pB=Lcrd(plist_1); pA=Lcrd(plist_2); sab=pB-pA;
   Ctr=pA;
@@ -5767,7 +5800,9 @@ Anglemark(nm,plist,options):=(
       parse(Bname);
     );
     if(Noflg<3,
-      println("generate anglemark "+name+" and "+Bpos);
+      if(Msg=="Y", //190206
+        println("generate anglemark "+name+" and "+Bpos);
+      );
       tmp1=apply(Out,Pcrd(#));
       tmp=name+"="+Textformat(tmp1,5);
       parse(tmp);
@@ -5922,7 +5957,7 @@ Bowdata(nm,plist,options):=(
 //help:Bowdata([A,B],["Expr=t0n3,a"]);
 //help:Bowdata([A,B],["Exprrot=t0n2r,a"]);
   regional(name,Out,pB,pA,pC,ra,tmp,tmp1,tmp2,Ltype,eqL,realL,
-    Bname,Bpos,Th,Cut,Num,Hgt,opstr,opcindy,Ydata,pC,
+    Bname,Bpos,Th,Cut,Num,Hgt,opstr,opcindy,Ydata,pC,Msg,
     Th1,Th2,Noflg,Bops,Bmov,Tmov,Nmov,rev,color);
   name="bw"+nm;
   tmp=Divoptions(options);
@@ -5938,6 +5973,7 @@ Bowdata(nm,plist,options):=(
   Cut=0;
   Num=24;
   Bname="";
+  Msg="Y";  //190206
   Tmov=0;//16.11.01from
   Nmov=0;
   Bmov="";
@@ -5947,23 +5983,27 @@ Bowdata(nm,plist,options):=(
     if(length(realL)>1,Cut=realL_2);
   );
   forall(eqL,
-    tmp=substring(#,0,1);
-    if(tmp=="L" % tmp=="l",
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="L",
       if(indexof(#,"rot")>0,
         Bname="Letterrot(";
       ,
         Bname="Letter(";
       );
+      Bops=tmp_2;
     );
-    if(tmp=="E" % tmp=="e",
+    if(tmp1=="E",
       if(indexof(#,"rot")>0,
         Bname="Exprrot(";
       ,
         Bname="Expr(";
       );
+      Bops=tmp_2;
     );
-    tmp=indexof(#,"=");
-    Bops=substring(#,tmp,length(#)); // 16.11.01
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   Ydata=MakeBowdata(pA,pB,Hgt); 
   pC=Ydata_1;
@@ -6041,7 +6081,9 @@ Bowdata(nm,plist,options):=(
     Out=[tmp1,tmp2];
   );
   if(Noflg<3,
-    println("generate bowdata "+name+" and "+Bpos);//16.10.31
+    if(Msg=="Y", //190206
+      println("generate bowdata "+name+" and "+Bpos);//16.10.31
+    );
     if(MeasureDepth(Out)==1,Out=[Out]);
     tmp1=[];
     forall(Out,tmp2,

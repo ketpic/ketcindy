@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190203] loaded");
+println("ketcindybasic2[20190206] loaded");
 
 //help:start();
 
@@ -6027,6 +6027,36 @@ Mkketcindyjs(options):=( //17.11.18
     wait(3000);
   ,
     htmorg=Readlines(Dircdy,Fhead+".html");
+    tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csinit"))>0); //190206from
+    from=tmp_1+5;
+    flg=0;
+    forall(from..(length(htmorg)),
+      if(flg==0,
+        if(indexof(htmorg_#,"</script>")>0,
+         upto=#-1;
+         flg=1;
+        );
+      );
+    );
+    tmp2=[];
+    ketflg="off"; 
+    forall(htmorg_(from..upto),
+      if(indexof(#,"no ketjs")>0,
+        if(indexof(#,"no ketjs on")>0,
+          ketflg="on";
+        );
+        if(indexof(#,"no ketjs off")>0,
+          ketflg="off";
+        );
+      ,
+        if(ketflg=="off",
+          tmp=Removespace(#);
+          if(substring(tmp,0,2)!="//",
+            tmp2=append(tmp2,#);
+          );
+        );
+      );
+    );
     tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csdraw"))>0);
     from=tmp_1+1;
     flg=0;
@@ -6038,7 +6068,25 @@ Mkketcindyjs(options):=( //17.11.18
         );
       );
     );
-    fL=Extractfun(htmorg_(from..upto));
+    ketflg="off"; 
+    forall(htmorg_(from..upto),
+      if(indexof(#,"no ketjs")>0,
+        if(indexof(#,"no ketjs on")>0,
+          ketflg="on";
+        );
+        if(indexof(#,"no ketjs off")>0,
+          ketflg="off";
+        );
+      ,
+        if(ketflg=="off",
+          tmp=Removespace(#);
+          if(substring(tmp,0,2)!="//",
+            tmp2=append(tmp2,#);
+          );
+        );
+      );
+    );
+    fL=Extractfun(tmp2); //190206to
     DL=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
     tmp=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
     DL=concat(DL,tmp); //DL and Out arenecessary for Extractall
@@ -6138,14 +6186,32 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=select(partL,#_1=="csinit");
     if(length(tmp)>0,
       tmp=tmp_1;
-      from=tmp_2;
+      from=tmp_2+5; //190206
       upto=tmp_3;
       tmp1=htmorg_((from+1)..(upto-1)); //190119
+      kettef="off"; //190206from
       forall(tmp1,
-        if((indexof(#,"import(")==0)&(indexof(#,"use(")==0),
-          println(SCEOUTPUT,#);
+        if(indexof(#,"no ketjs")>0,
+          if(indexof(#,"no ketjs on")>0,
+            ketflg="on";
+          );
+          if(indexof(#,"no ketjs off")>0,
+            ketflg="off";
+          );
+        ,
+          if(ketflg=="off",
+            tmp=Removespace(#);
+            if(substring(tmp,0,2)!="//",
+              println(SCEOUTPUT,#);
+            ,
+              tmp1=indexof(tmp,"only ketjs"); //19020l6from
+              if(tmp1>0,
+                println(SCEOUTPUT,substring(tmp,2,tmp1-1));
+              ); //190206to
+            );
+          );
         );
-      );
+      ); 
     );
     println(SCEOUTPUT,"</script>");
     tmp=select(partL,#_1=="csdraw");
@@ -6167,10 +6233,15 @@ Mkketcindyjs(options):=( //17.11.18
           tmp=Removespace(#);
           if(substring(tmp,0,2)!="//",
             println(SCEOUTPUT,#);
+          ,
+            tmp1=indexof(tmp,"only ketjs"); //19020l6from
+            if(tmp1>0,
+              println(SCEOUTPUT,substring(tmp,2,tmp1-1));
+            ); //190206to
           );
         );
       );
-    );
+    ); //190206to 
     tmp1=htmorg_((lastpart_1)..(lastpart_2));
     tmp=select(1..(length(tmp1)),indexof(tmp1_#,Dqq("cs*"))>0);
     tmp=tmp_1;

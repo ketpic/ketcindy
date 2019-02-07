@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190131] loaded");
+println("ketcindylibbasic1[20190206] loaded");
 
 //help:start();
 
@@ -6200,7 +6200,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   if(indexof(rng,"=")==0,
     rng=rng+"="+Textformat([XMIN,XMAX],6);
   );
-  deq=deqorg;
+  deq=replace(deqorg,"‘","`"); //190206
   deq=replace(deq,"'","`"); //180527
   tmp=indexof(deq,"=");
   tmp1=substring(deq,0,tmp-1);

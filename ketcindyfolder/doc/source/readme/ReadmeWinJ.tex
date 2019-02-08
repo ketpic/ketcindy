@@ -59,6 +59,8 @@ KETCindyのインストール (Windows)
     \end{itemize}
   \item ketcindy(-master)/forWindowsを開く．
     \begin{itemize}
+    \item[注)]Windows10の場合，セキュリティブロックを解除する．\\
+\hspace*{5mm}右クリックして「プロパティ」＞「セキュリティ」＞「許可」
     \item[注)]他のTeX（TeXLive,W32tex以外）を使っている場合
       \begin{itemize}
       \item setketcindy.bat をテキストエディタで開く．
@@ -76,12 +78,13 @@ KETCindyのインストール (Windows)
     \item CinderellaのPluginsにKetcindyPlugin.jarをコピー，ketcindy.iniが作成される．
     \end{itemize}
   \item setwork.batをダブルクリック
-    \begin{itemize}
+    \begin{itemize} 
     \item 作業ディレクトリketcindyがユーザホームに作成される．
     \item タイプセットの方法（TeXの種類）\\
     \hspace*{10mm}通常は，platex (p)またはuplatex(u)を選ぶ．
+    \item R,\ Maximaでは，バージョン番号（3.4.2,\ 5.37.3など）を入れる．
     \item ketcindyフォルダにworkフォルダの中身がコピーされる．
-    \item \verb|.ketcindy.conf|（不可視ファイルだが編集可能）がユーザホームに作成される．\\
+    \item \verb|.ketcindy.conf|（編集可能）がユーザホームに作成される．\\
     \hspace*{10mm}注）TeXを切り替えるときなどはこのファイルを修正する．
     \item マニュアルもコピーされる．
     \item 作業ディレクトリにketincy.confの雛形がコピーされる．
@@ -118,9 +121,9 @@ KETCindyのインストール (Windows)
   \begin{itemize}
   \item \url{https://github.com/TeXworks/texworks/releases/} からダウンロードできる．
   \item TeXworksを立ち上げる
-  \item TeXworks \verb|>| 環境設定 \verb|>| タイプセット
+  \item TeXworks \verb|>| ファイル \verb|>| 設定 \verb|>| タイプセット
   \item 上の欄（パス）に以下を追加\\
-  \hspace*{5mm}\verb|/Applications/kettex/texlive/bin/x86_64-darwin|\\
+  \hspace*{5mm}\verb|C:\kettex\texlive\bin\win32|\\
   \hspace*{10mm}注) 上の行を上の欄の先頭になるように移動する．
   \item 下の欄の横にある + をクリック
     \begin{itemize}

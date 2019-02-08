@@ -1,3 +1,5 @@
+// 20190208
+//   Mkketcindyjs changed ( Local="y" as default)
 // 20190206
 //   Mkketcindyjs changed ( kettex added to init slot, "only ketjs" added)
 // 20190203

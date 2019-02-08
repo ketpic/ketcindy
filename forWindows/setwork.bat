@@ -23,8 +23,8 @@ if exist "%dist%\." (
 %xcp% /Y /Q /S /E /R "work\*.*" "%dist%\"
 echo Workfolder has been generated as %dist%
 echo This folder can be moved to any place
-echo platex(p) uplatex(u) latex(l) xelatex(x) pdflatex(pd) lualatex(lu)
-set /P STR_INPUT="Choose LaTeX from the above :"
+echo p=platex u=uplatex l=latex x=xelatex pd=pdflatex lu=lualatex
+set /P STR_INPUT="---- Choose TeX from above with 1st(+2nd) character :"
 if "%STR_INPUT%" == "p" (
   set tex=platex
   copy /Y "doc\ketmanual\KeTCindyReferenceJ.pdf" "%dist%\"
@@ -70,12 +70,10 @@ if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
 echo Pathpdf="%prgSm%"; >> "%dist%%change%"
-echo "Version of R : d:%verR%"
-set /P STR_INPUT="Input version of R d(efault)=%verR% :"
+set /P STR_INPUT="Input version of R (ex)%verR% :"
 if not "%STR_INPUT:~0,1%" == "d" (
   set verR=%STR_INPUT%
 )
-echo %verR%
 set prg=C:\Program Files
 if exist "%prg%\R\R-%verR%\bin\" (
   echo PathR="%prg%\R\R-%verR%\bin"; >> "%dist%%change%"
@@ -86,7 +84,7 @@ if exist "%prg%\R\R-%verR%\bin\" (
     echo "R-%verR% not found"
   )
 )
-set /P STR_INPUT="Input version of Maxima d(efault)=%verM% :"
+set /P STR_INPUT="Input version of Maxima (ex)%verM% :"
 if not "%STR_INPUT:~0,1%" == "d" (
   set verM=%STR_INPUT%
 )

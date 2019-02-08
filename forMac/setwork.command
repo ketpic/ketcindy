@@ -16,7 +16,8 @@ else
   echo Workfolder has been generated as ${dist}
   echo "    "This folder can be moved to any place ##180913
 fi
-read -p 'Choose platex(p),uplatex(u),latex(l),xelatex(x),pdflatex(pd),lualatex(lu):' tex
+echo "Choose TeX with the 1st(+2nd) character"
+read -p 'p=platex, u=uplatex, l=latex, x=xelatex, pd=pdflatex, lu=lualatex:' tex
 if [ ${tex} = "p" ]; then
   tex="platex"
   cd doc/ketmanual

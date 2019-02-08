@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190206] loaded");
+println("ketcindybasic2[20190208] loaded");
 
 //help:start();
 
@@ -5968,13 +5968,13 @@ Setketcindyjs(list):=(
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Local=(n)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
+//help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,nolabel,
       color,grid,out,igL,DL,Out);
   webflg="Y";  //190128 texflg removed
-  localflg="N"; //190128
+  localflg="Y"; //190208
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
   color="";

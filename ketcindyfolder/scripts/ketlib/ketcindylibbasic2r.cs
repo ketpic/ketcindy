@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190208] loaded");
+println("ketcindybasic2[20190209] loaded");
 
 //help:start();
 
@@ -776,13 +776,14 @@ Letter(list,options):=(
 //help:Letter([C,"c","Graph of $f(x)$"]);
 //help:Letter([C,"c","xy"],["size->30"]);
   regional(Nj,Pos,Dir,Str,Off,Dmv,Xmv,Ymv,Noflg,opcindy,
-      opL,aln,sz,clr,bld,ita,tmp,tmp1,tmp2,color);
+      opL,aln,sz,clr,bld,ita,tmp,tmp1,tmp2,color,eqL);
   tmp=Divoptions(options);
+  eqL=tmp_5; //190209
   Noflg=tmp_2;
   color=tmp_(length(tmp)-2);
   opL=select(options,indexof(#,"->")>0); //16.10.09from
   tmp=select(opL,indexof(#,"color"));
-  size=12;
+  sz=12;
   bld=false;
   ita=false;
   aln="left";
@@ -794,12 +795,18 @@ Letter(list,options):=(
     if(tmp1=="color",clr=parse(tmp2));
     if(tmp1=="bold",bld=parse(tmp2));
     if(tmp1=="ita",ita=parse(tmp2));
-  );//16.10.09until
+  );//16.10.09to
+  forall(eqL, //190209from
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="S",
+      sz=round(parse(tmp_2)*12);
+    );
+  ); //190209to
   Off=-4;
   Dmv=8;
   Nj=1;
   while(Nj+2<=length(list),
-//    Pos=Textformat(list_Nj,5);
     Pos=list_Nj;
     Dir=list_(Nj+1);
     tmp=indexof(Dir,"s")+indexof(Dir,"n");//16.10.19from
@@ -5971,8 +5978,9 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
-      lib1,lib2,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,nolabel,
-      color,grid,out,igL,DL,Out);
+      libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
+      nolabel,color,grid,out,igL,DL,Out);
+  libnameL=["basic1","basic2","3d"];
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190208
   scale=1; //190129
@@ -5985,30 +5993,42 @@ Mkketcindyjs(options):=( //17.11.18
     tmp1=Toupper(substring(tmp_1,0,1));
     tmp2=tmp_2;
     if(tmp1=="W",
-      webflg=Toupper(substring(tmp2,0,1));
+      if(length(tmp2)>0, //190209
+        webflg=Toupper(substring(tmp2,0,1));
+      );
     );
     if(tmp1=="L",
-      localflg=Toupper(substring(tmp2,0,1));
+      if(length(tmp2)>0, //190209
+        localflg=Toupper(substring(tmp2,0,1));
+      );
     );
     if(tmp1=="S",
-      scale=parse(tmp2);
+      if(length(tmp2)>0, //190209
+        scale=parse(tmp2);
+      );
     );
     if(tmp1=="N",
-      tmp=tmp2;
-      if(indexof(tmp2,"[")>0,
-        tmp=substring(tmp2,1,length(tmp2)-1);
+      if(length(tmp2)>0, //190209
+        tmp=tmp2;
+        if(indexof(tmp2,"[")>0,
+          tmp=substring(tmp2,1,length(tmp2)-1);
+        );
+        tmp=tokenize(tmp,",");
+        nolabel=concat(nolabe,tmp);
       );
-      tmp=tokenize(tmp,",");
-      nolabel=concat(nolabe,tmp);
     );
-    if(tmp1=="C",
-      color=tmp2;
-      if(substring(color,0,1)=="[", //190130from
-        color=substring(color,1,length(color)-1);
-      ); //190130to
+    if(tmp1=="C", //190209
+      if(length(tmp2)>0,
+        color=tmp2;
+        if(substring(color,0,1)=="[", //190130from
+          color=substring(color,1,length(color)-1);
+        ); //190130to
+      );
     );
     if(tmp1=="G",
-      grid=tmp2;
+      if(length(tmp2)>0,
+        grid=tmp2;
+      );
     );
     if(tmp1=="P",
       if(!tmp2="Dircdy",
@@ -6087,9 +6107,23 @@ Mkketcindyjs(options):=( //17.11.18
       );
     );
     fL=Extractfun(tmp2); //190206to
-    DL=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
-    tmp=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
-    DL=concat(DL,tmp); //DL and Out arenecessary for Extractall
+    DL=[];
+    forall(libnameL,name, //190209from
+      tmp2=Readlines(Dirhead+pathsep()+"ketcindyjs",name+"list.txt");
+      tmp1=[];
+      forall(1..(length(tmp2)),nn,
+        tmp=Indexall(tmp2_nn,",");
+        from=0;
+        tmp3=[];
+        forall(tmp,
+          tmp3=append(tmp3,substring(tmp2_nn,from,#-1));
+          from=#;
+        );
+        tmp3=append(tmp3,substring(tmp2_nn,from,length(tmp2_nn)));
+        tmp1=append(tmp1,tmp3);
+      );      
+      DL=concat(DL,tmp1); //DL and Out are necessary for Extractall
+    ); //190209to
     Out=[];
     forall(fL,fun,
       Extractall(fun);
@@ -6120,6 +6154,7 @@ Mkketcindyjs(options):=( //17.11.18
       tmp1=Fhead+"json.html";
     ,
       tmp1=Fhead+"jsoff.html";
+      if(localflg=="Y",tmp1=replace(tmp1,"off.","offL.")); //190209
     );
     setdirectory(path);
     SCEOUTPUT = openfile(tmp1);
@@ -6155,15 +6190,17 @@ Mkketcindyjs(options):=( //17.11.18
     forall(tmp,
      println(SCEOUTPUT,#);
     );
-    lib1=Readlines(Dirhead+"/ketlib","ketcindylibbasic1r.cs");
-    lib2=Readlines(Dirhead+"/ketlib","ketcindylibbasic2r.cs");
+    libL=[]; //190209from
+    forall(libnameL,
+      tmp=Readlines(Dirhead+"/ketlib","ketcindylib"+#+"r.cs");
+      libL=append(libL,tmp);
+    ); //190209to
     forall(Out,fun,
-      libf=fun_2;from=fun_3;upto=fun_4;
-      if(indexof(libf,"basic1")>0,
-        tmp1=lib1_(from..upto);
-      ,
-        tmp1=lib2_(from..upto);
-      );
+      libf=fun_2;from=parse(fun_3);upto=parse(fun_4);
+      tmp=select(1..(length(libnameL)),indexof(libf,libnameL_#)>0); //190209from
+      tmp=tmp_1;
+      lib=libL_tmp;
+      tmp1=lib_(from..upto); //190209from
       ketflg="off"; //190122from
       forall(tmp1,
         if(indexof(#,"no ketjs")>0,

@@ -4178,6 +4178,30 @@ It is necessary to develop an environment that uses C language, but now it is st
 \itemket{Remark}If \verb|Ketinit3d(0)| is used, the subscreen is not displayed. Ketinit () is also placed in the Initialization Slot, unlike 2D.
 \end{cmd}
 
+%------------ Setangle --------------------------------
+\begin{cmd}{Setangle}{setangle}
+\itemket{Usage}Setanlge(TH,FI)
+\itemket{Description}Specify rotation angle
+\itemket{Details}Specify the TH and FI values of the slider that determines the rotation angle (position of the viewpoint).\\
+For example, if you set \verb| Setangle (70,40) |, then TH and FI are in that position. Since the slider is fixed, if you want to activate the slider again, comment it and re-execute it.\\
+If you want to decide only the initial state\\
+\verb| if (!Ptselected (), Setangle (70, 40))|;\\
+or\\
+\verb| if (!Isangle (), Setangle (70, 40));|\\
+ The slider becomes effective.
+
+If any point on the slider is selected, the figure button is also valid. Click anywhere on the screen and return to the original if you deselect the point selection state.
+
+\end{cmd}
+
+%------------ Getangle --------------------------------
+\begin{cmd}{Getangle}{getangle}
+\itemket{Usage}Getanlge()
+\itemket{Description}Acquire rotation angle
+\itemket{Details}Acquires the rotation angle (viewpoint position) TH and FI that can be set with the slider. This is the value displayed on the left side of the slider. The return value is the list [TH, FI], and the angle is expressed by the Degree measure. In addition, the internal variables are THETA and PHI, expressed in circular measure.
+\end{cmd}
+
+
 %------------Start3d--------------------------------
 \begin{cmd}{Start3d}{start3d}
 \itemket{Usage}Start3d(option)
@@ -5831,7 +5855,8 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{wireparadata}{Wireparadata} \> draw the surface by wire frame data with performing hidden line processing.\\
 \hyperlink{xyzax3data}{Xyzax3data} \> draw the coordinate axis.\\
 \hyperlink{xyzcoord}{Xyzcoord} \> return the 3D-coordinate of the point P.\\
-
+\hyperlink{setangle}{Setangle} \>Set TH and FI\\
+\hyperlink{getangle}{Getangle}\>Get TH and FI\\
 \end{tabbing}
 
 \end{document}

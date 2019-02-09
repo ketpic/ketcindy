@@ -5963,6 +5963,26 @@ Cinderellaの描画面に，視点移動のための2つのスライダを作る
 
   この関数は Initialization スロットに置く。Ketinit() も，平面の場合と異なり Initialization スロットに置く。KeTCindy3Dにおける変数の初期化などを行う，Start3d()はDrawスロットに書く。
   
+%----------------  Setangle --------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{setangle}{}
+\item[関数]  Setangle(TH,FI)
+\item[機能]  回転角の指定
+\item[説明]  スライダで設定できる回転角（視点の位置）TH と FI を度数法で指定する。
+たとえば，\verb|Setangle(70,40)| とすると，TH,FIがその位置になる。スライダは固定されるので，再度スライダを有効にしたい場合は，コメント化して再実行する。
+
+初期状態だけを決めたい場合は
+
+\verb|   if(!Ptselected(),Setangle(70,40)); | 
+
+または
+
+\verb|   if(!Isangle(),Setangle(70,40)); | 
+
+とすると，スライダは有効となり，スライダのいずれかの点を選択した状態であれば Figure ボタンも有効である。画面上のなにもないところをクリックして，点の選択状態を解除するともとに戻る。
+
+回転角の取得については，\hyperlink{getangle}{回転角の取得}を参照のこと。
+
 %----------------  Start3d --------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{start3d}{}
@@ -7706,6 +7726,16 @@ Letter3d(M3d,"sw","M",["Color=blue"]);
 \end{verbatim}
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
+
+%----------------  Getangle --------------------------------------------
+\vspace{\baselineskip}
+\hypertarget{getangle}{}
+\item[関数]  Getangle()
+\item[機能]  回転角の取得
+\item[説明]  スライダで設定できる回転角（視点の位置）TH と FI を取得する。これは，スライダの左側に表示されている値である。戻り値は，リスト [TH,FI] で，角は度数法で表される。なお，内部変数は，THETAとPHIで，弧度法で表されている。
+
+回転角の設定については，\hyperlink{setangle}{回転角の設定}を参照のこと。
+
 \end{description}
 
 \newpage
@@ -7995,6 +8025,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ketinit3d}{Ketinit3d()}  \>KeTCindy3Dの使用宣言\\
 \hyperlink{isangle}{Isangle}  \>角度スライダが選択されているか\\
 \hyperlink{start3d}{Start3d()}  \>3Dの開始\\
+\hyperlink{setangle}{Setangle} \>回転角の設定\\
+\hyperlink{getangle}{Getangle}\>回転角の取得\\
 \hyperlink{startsurf}{Startsurf}  \>曲面描画の初期化\\
 \vspace{\baselineskip}
 【KeTCindy3D  描画】\\

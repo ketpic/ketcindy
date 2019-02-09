@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20190128) loaded");
+println("ketcindylib3d(20190209) loaded");
 
 //help:start();
 
@@ -269,9 +269,9 @@ Getangle(option):=(
 Angleselected():=IsAngle(); //180713
 //isAngle():=Isangle(); //180517
 ////%Angleselected end////
+
 ////%Isangle start////
 Isangle():=isselected(TH)%isselected(FI); //180517
-////%Angleselected end////
 ////%Isangle end////
 
 ////%Changestyle3d start////
@@ -320,6 +320,7 @@ Dist3d(pt1,pt2):=(
 );
 ////%Dist3d end////
 
+////%Findangle start////
 Findangle(vec):=(
 //help:Findangle([2,1,4]);
 //help:Findangle([0,0,1,0]);
@@ -338,7 +339,9 @@ Findangle(vec):=(
   );
   [th,ph];
 );
+////%Findangle end////
 
+////%Cancoordpara start////
 Cancoordpara(pc):=(
 //help:Cancoordpara([1,2,0]);
   regional(Xz,Yz,Zz,tmp1,tmp2,tmp3);
@@ -348,6 +351,7 @@ Cancoordpara(pc):=(
   tmp3=Yz*sin(THETA)+Zz*cos(THETA);
   [tmp1,tmp2,tmp3];
 );
+////%Cancoordpara end////
 
 ////%Zparapt start////
 Zparapt(cc):=(
@@ -376,7 +380,7 @@ Parapt(pt):=(
 );
 ////%Parapt end////
 
-///%Parasubpt start////
+////%Parasubpt start////
 Parasubpt(pt):=( //181027
   regional(mv,dp,xs);
   mv=NE.x-SW.x;
@@ -544,6 +548,7 @@ Projpara(ptdata,optionsorg):=(
 );
 ////%Projpara end////
 
+////%InvparaptPp start////
 InvparaptPp(pt,pd):=(
   regional(Eps,fk,nfk,ph,fh,ah,bh,ak,bk,v1,v2,
     nn,s0,t2,out,tmp,tmp1,tmp2,flg);
@@ -600,6 +605,7 @@ InvparaptPp(pt,pd):=(
   );
   out;
 );
+////%InvparaptPp end////
 
 ////%Invparapt start////
 Invparapt(pt,pd):=(
@@ -1033,7 +1039,7 @@ Joincrvs3d(nm,plotstrL,options):=(
   );
   PtL;
 );
-////%Joincrvs3d( end////
+////%Joincrvs3d end////
 
 ////%Xyzax3data start////
 Xyzax3data(nm,Xrange,Yrange,Zrange):=
@@ -1769,6 +1775,7 @@ Xyzcoord(X,Y,ps):=(
 );
 ////%Xyzcoord end////
 
+////%PutonCurve3d start////
 PutonCurve3d(name,pdstr):=(
 //help:PutonCurve3d("T","sc3d1");
   regional(pt,pd2str,tmp,tmp1,tmp2);
@@ -1786,6 +1793,7 @@ PutonCurve3d(name,pdstr):=(
  // VLIST=select(VLIST,#_1!=name+"3d");
   Defvar(name+"3d",pt);
 );
+////%PutonCurve3d end////
 
 ////%Mkpointlist start////
 Mkpointlist():=Mkpointlist([]); //16.11.12
@@ -1908,6 +1916,7 @@ Mkpointlist(options):=( //181030
 );
 ////%Mkpointlist end////
 
+////%Mkseg3d start////
 Mkseg3d():=Mkseg3d([]);
 Mkseg3d(options):=(
   regional(seg,nmseg,def,ptA,ptB,segL,opstr,opcindy,
@@ -1951,6 +1960,7 @@ Mkseg3d(options):=(
   );
   segL;
 );
+////%Mkseg3d end////
 
 ////%Ptseg3data start////
 Ptseg3data():=Ptseg3data([]);
@@ -2446,6 +2456,7 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
 );
 ////%IntersectsgpL end////
 
+////%Bezier3d start////
 Bezier3d(nm,ptctrlist):=Bezier3(nm,ptctrlist);
 Bezier3d(nm,Ag1,Ag2):=Bezier3(nm,Ag1,Ag2);
 Bezier3d(nm,ptlistorg,ctrlistorg,options):=
@@ -2544,7 +2555,9 @@ Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
   );
   out;
 );
+////%Bezier3d end////
 
+////%Putbezier3data start////
 Putbezier3data(name,pt3Lorg):=Putbezier3data(name,pt3Lorg,[]);
 Putbezier3data(name,pt3Lorg,options):=( // 17.10.08 greatly changed
   regional(pt3L,psize,Deg,nn,numstr,
@@ -2584,7 +2597,9 @@ Putbezier3data(name,pt3Lorg,options):=( // 17.10.08 greatly changed
   );
   ctrpts;
 );
+////%Putbezier3data end////
 
+////%Mkbezierptcrv3d start////
 Mkbezierptcrv3d(ptdata):=Mkbezierptcrv3(ptdata);
 Mkbezierptcrv3d(ptdata,options):=Mkbezierptcrv3(ptdata,options);
 //help:Mkbezierptcrv3d(["A","B","C","D"]);
@@ -2606,6 +2621,7 @@ Mkbezierptcrv3(ptdata,options):=(  //17.10.08 greatly changed
   BezierNumber3=BezierNumber3+1;
   Out;
 );
+////%Mkbezierptcrv3d end////
 
 //////////old version ///////////////////////////////
 
@@ -2747,6 +2763,7 @@ Readobj(filename,options):=(
 );
 ////%Readobj end////
 
+////%Concatobj start////
 Concatobj(objL):=Concatobj(objL,[]);
 Concatobj(objL,options):=(
 //help:Concatobj([polyhed,triangle]);
@@ -2818,6 +2835,7 @@ Concatobj(objL,options):=(
   );
   [vL,fL];
 );
+////%Concatobj end////
 
 if(1==0,
 
@@ -2850,7 +2868,7 @@ Mkobjfile(path,fnameorg,objL):=(
   setdirectory(Dirwork);
 );
 
-);
+); //end of skip
 
 ////%VertexEdgeFace start////
 VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
@@ -3654,6 +3672,7 @@ Fullformfunc(FdL):=(
 );
 ////%Fullformfunc end////
 
+////%Surffun start////
 Surffun(nm,Fd):=(
   regional(name,coord,var1,var2,rng1,rng2,bdy,tmp,tmp1,tmp2);
   tmp=Fullformfunc(Fd);
@@ -3671,7 +3690,9 @@ Surffun(nm,Fd):=(
   Deffun(name,["regional(tmp)","tmp="+coord,"tmp"]);
   [name,var1,rng1,var2,rng2,bdy];
 );
+////%Surffun end////
 
+////%Sf3data start////
 Sf3data(nm,fdata):=Sf3data(nm,fdata,[]);
 Sf3data(nm,fdata,optionorg):=(
   regional(tmp,tmp1,tmp2);
@@ -3757,7 +3778,9 @@ Sf3data(nm,funstr,var1org,var2org,optionorg):=(
   );
   [sfdtuL,sfdtvL];
 );
+////%Sf3data end////
 
+////%SfbdparadataR start////
 SfbdparadataR(nm,fd):=
    SfbdparadataR(nm,fd,[],["nodisp"]);
 SfbdparadataR(nm,fd,options):=
@@ -3845,7 +3868,9 @@ SfbdparadataR(nm,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%SfbdparadataR end////
 
+////%Addpoints start////
 Addpoints():=(//18.02.20
   if(isstring(ADDPOINT),
     ADDPOINT;
@@ -3862,7 +3887,9 @@ Addpoints(ptlist):=(
   );
   ADDPOINT;
 );
+////%Addpoints end////
 
+////%CrvsfparadataR start////
 CrvsfparadataR(nm,crv,sf,fd):=
   CrvsfparadataR(nm,crv,sf,fd,[],["nodisp"]);
 CrvsfparadataR(nm,crv,sf,fd,options):=
@@ -3966,7 +3993,9 @@ CrvsfparadataR(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%CrvsfparadataR end////
 
+////%Crv3onsfparadataR start////
 Crv3onsfparadataR(nm,crv3d,sf,fd):=
   Crvs3onfparadataR(nm,crv3d,sf,fd,[],["nodisp"]);
 Crv3onsfparadataR(nm,crv3d,sf,fd,options):=
@@ -4068,7 +4097,9 @@ Crv3onsfparadataR(nm,crv3dstr,sfstr,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%Crv3onsfparadataR end////
 
+////%Crv2onsfparadataR start////
 Crv2onsfparadataR(nm,crv2d,sf,fd):=
   Crvs2onfparadataR(nm,crv2d,sf,fd,[],["nodisp"]);
 Crv2onsfparadataR(nm,crv2d,sf,fd,options):=
@@ -4171,7 +4202,9 @@ Crv2onsfparadataR(nm,crv2dstr,sfstr,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%Crv2onsfparadataR end////
 
+////%WireparadataR start////
 WireparadataR(nm,sf,wr1,wr2,fd):=
   WireparadataR(nm,sf,fd,wr1,wr2,[],["nodisp"]);
 WireparadataR(nm,sf,fd,wr1,wr2,options):=
@@ -4274,7 +4307,9 @@ WireparadataR(nm,sfstr,fdorg,wr1,wr2,optionorg,optionsh):=(
     );
   );
 );
+////%WireparadataR end////
 
+////%IntersectcrvsfR start////
 IntersectcrvsfR(nm,crv,fd):=Intersectcrvsf(nm,crv,fd,"",[]);
 IntersectcrvsfR(nm,crv,fd,Arg):=(
   if(isstring(Arg),
@@ -4364,7 +4399,9 @@ IntersectcrvsfR(nm,crvstr,fdorg,bdyeq,optionorg):=(
   println("generate "+name);
   parse(name);
 );
+////%IntersectcrvsfR end////
 
+////%SfcutparadataR start////
 SfcutparadataR(nm,eqstr,sf,fd):=
   SfcutparadataR(nm,eqstr,sf,fd,[]);
 SfcutparadataR(nm,eqstr,sf,fd,options):=
@@ -4463,12 +4500,15 @@ SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
     );
   );
 );
+////%SfcutparadataR end////
 
+////%Skeletonparadata start////
 Skeletonparadata(nm):=Skeletondatacindy(nm,[]);
 Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
 Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
 Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
     Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
+////%Skeletonparadata end////
 
 ////////////// new skeleton  2018.01.04 not completed and slow////////////////
 
@@ -5124,6 +5164,7 @@ Kukannozoku(Jokyo,KukanL):=(
 
 ////////////////// end of current skeleton//////////////
 
+////%ProjcoordCurve start////
 ProjcoordCurve(Curve):=(
   regional(SP,CP,ST,CT,Out,jj,pt,x,y,z,xz,yz,zz);
   SP=sin(PHI); CP=cos(PHI);
@@ -5139,7 +5180,9 @@ ProjcoordCurve(Curve):=(
   );
   Out;
 );
+////%ProjcoordCurve end////
 
+////%Divnohidhid start////
 Divnohidhid(nm,dt3dorg,nvec):=Divnohidhid(nm,dt3dorg,nvec,[],["do"]);
 Divnohidhid(nm,dt3dorg,nvec,optionorg,options2):=(
 //help:Divnohidhid("1","sc3d1",nvec,["Num=100"],["Num=100","do"]);
@@ -5204,7 +5247,9 @@ Divnohidhid(nm,dt3dorg,nvec,optionorg,options2):=(
   parse(name+"h="+tmp1);
   [nohid,hid];
 );
+////%Divnohidhid end////
 
+////%Beziersurf start////
 Beziersurf(nm,m,n,pL):=(
 //help:Beziersurf("pt",2,2,pL);
   regional(p3dL,ptlistx,ptlilsty,ptlistz);
@@ -5261,5 +5306,6 @@ Beziersurf(nm,m,n,pL):=(
   ];
   tmp;
 );
+////%Beziersurf end////
 
 //help:end();

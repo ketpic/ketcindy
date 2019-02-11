@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.5");
+println("KeTCindy V.3.2.11");
 println(ketjavaversion());
 println("ketcindylibbasic1[20190206] loaded");
 
@@ -4060,12 +4060,13 @@ Listplot(nm,list,options):=(
 ////%Listplot end////
 
 ////%Lineplot start////
-Lineplot(nm,list,options):=(
+Lineplot(nm,list,optionorg):=(
 //help:Lineplot([A,B]);
 //help:Lineplot("1",[[2,1],[3,3]]);
   regional(name,Out,tmp,tmp1,tmp2,opstr,opcindy,Mag,Semi,
-      Vec,pA,pB,Ltype,Noflg,color,Msg,eqL);
+      Vec,pA,pB,options,Ltype,Noflg,color,Msg,eqL);
   name="ln"+nm;
+  options=optionorg;
   Mag=100;
   Semi="";
   Msg="Y";
@@ -4081,8 +4082,11 @@ Lineplot(nm,list,options):=(
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
     ); //190206to
   );
+  tmp=Divoptions(options);
+  opstr=tmp_(length(tmp)-1);
   tmp1=tmp_6;
   if(length(tmp1)>0,Mag=tmp1_1);
   tmp1=tmp_7;
@@ -4617,7 +4621,6 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
   Noflg=tmp_2;
   eqL=tmp_5;
   color=tmp_(length(tmp)-2);
-  opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Mdv=50;Ndv=50;
   msg="Y";
@@ -4625,7 +4628,6 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     tmp2=tmp_2;
-    opstr=opstr+",'"+#+"'";
     if(substring(#,0,1)=="N",
       Mdv=parse(tmp2);
       if(!islist(Mdv),
@@ -4634,6 +4636,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
         Ndv=Mdv_2;
         Mdv=Mdv_1;
       );
+      opstr=",'"+#+"'";
     );
     if(substring(#,0,1)=="M", //181112from
       msg=Toupper(substring(tmp2,0,1));
@@ -4780,12 +4783,13 @@ Circledata(nm,cenrad,options):=(
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
-    opstr=opstr+",'"+#+"'";
     if(substring(#,0,1)=="N",
       Num=parse(tmp_2);
+     opstr=opstr+",'"+#+"'";
     );
     if(substring(#,0,1)=="R",
       Rg=parse(tmp_2);
+      opstr=opstr+",'"+#+"'";
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
@@ -6220,7 +6224,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
 //help:Deqplot("1","y''=-y","x",0, [1,0]);
 //help:Deqplot("3","[x,y]'=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",0,[1,0.5]);
   regional(deq,rng,Ltype,Noflg,eqL,opcindy,Num,name,nn,pdL,phase,
-                  sel,tmp,tmp1,tmp2,color);
+                  sel,tmp,tmp1,tmp2,tmp3,color);
   name="de"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -6244,8 +6248,9 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
   deq=replace(deqorg,"‘","`"); //190206
   deq=replace(deq,"'","`"); //180527
-  tmp=indexof(deq,"=");
-  tmp1=substring(deq,0,tmp-1);
+  tmp3=indexof(deq,"=");
+  tmp1=substring(deq,0,tmp3-1);
+  tmp2=substring(deq,tmp3,length(deq));
   if(indexof(tmp1,"[")==0,
     phase=0;
     sel=[1,2];
@@ -6253,14 +6258,32 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     phase=1;
     sel=[2,3];
   );
-  tmp2=substring(deq,tmp,length(deq));
   nn=length(Indexall(tmp1,"`"));
+  if(nn==0, //190211from
+    println("    Lhs of equation has no single/back quotation "+tmp1);
+  );
+  if(nn>0,
+    tmp=Indexall(tmp1,"`");
+    if(tmp_(length(tmp))!=tmp3-1,
+      nn=0;
+    ,
+      forall(reverse(2..(length(tmp))),
+        if((nn>0)&(!contains(tmp,tmp_#-1)),
+          nn=0;
+        );
+      );
+    ); 
+    if(nn==0,
+      println("    Lhs of equation is not correct");
+    );
+  ); //190211to
   if(nn==1,
     if(indexof(tmp1,"[")==0,
       tmp1="["+replace(tmp1,"`","]`");
       deq=tmp1+"="+tmp2;
     );
-  ,
+  );
+  if(nn>1,
     tmp=indexof(tmp1,"`");
     tmp1=substring(tmp1,0,tmp-1);
     deq="[";
@@ -6294,7 +6317,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     );
     deq=deq+"]";
   );
-  if(Noflg<3,
+  if((nn>0)&(Noflg<3), //190211
     pdL=Deqdata(deq,rng,initt,initf,Num);
     if(phase==1,
       pdL=apply(pdL,#_(2..3));
@@ -6303,7 +6326,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
   );
-  if(Noflg<1, //no ketjs on
+  if((nn>0)&(Noflg<1), //190211 //no ketjs on
     tmp=Assign(deq);
     tmp=replace(deq,"'","`");
     tmp=name+"=Deqplot('"+tmp+"','"+rng+"',";
@@ -6312,7 +6335,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     tmp=RSform(tmp);
     GLIST=append(GLIST,tmp);
   ); //no ketjs off
-  if(Noflg<2,
+  if((nn>0)&(Noflg<2), //190211
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722

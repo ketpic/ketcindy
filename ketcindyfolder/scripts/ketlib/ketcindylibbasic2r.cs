@@ -964,6 +964,7 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 Slider(ptstr,p1,p2):=Slider(ptstr,p1,p2,[]);
 Slider(ptstr,p1,p2,options):=(//190120
 //help:Slider("A-C-B",[-3,0],[3,0]);
+//help:Slider("C",[-3,0],[3,0]);
 //help:Slider(options=["Color=0.6*[0,0,1]","Size=2"]);
   regional(pA,pB,pC,seg,sname,Alpha,color,size,tmp,tmp1);
   color="Color=0.6*[0,0,1]"; //190120from
@@ -979,28 +980,34 @@ Slider(ptstr,p1,p2,options):=(//190120
     );
   ); //190120to
   tmp=Indexall(ptstr,"-");
-  pA=substring(ptstr,0,tmp_1-1);
-  pC=substring(ptstr,tmp_1,tmp_2-1);
-  pB=substring(ptstr,tmp_2,length(ptstr));
-  seg=pA+pB;
-  Alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  sname="";
-  forall(1..(length(seg)),
-    tmp=substring(seg,#-1,#);
-    tmp1=indexof(Alpha,tmp);
-    if(tmp1>0,
-      sname=sname+unicode(text(tmp1+96),base->10);
-    ,
-      sname=sname+tmp;
-    );
-  );
-  Putpoint(pA,p1);
-  Putpoint(pB,p2);
-  Listplot([parse(pA),parse(pB)],["Msg=n","notex",color,size]);
-//  create([sname],"Segment",[parse(pA),parse(pB)]);
-//  tmp2=Listplot("",[p1,p2],["nodata"]);
-  Putonseg(pC,parse("sg"+pA+pB));
-//  create([pC],"PointOn",[parse(sname),0.5]);
+  if(length(tmp)>0, //190209from
+    pA=substring(ptstr,0,tmp_1-1);
+    pC=substring(ptstr,tmp_1,tmp_2-1);
+    pB=substring(ptstr,tmp_2,length(ptstr));
+    seg=pA+pB;
+    Alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    sname="";
+    forall(1..(length(seg)),
+      tmp=substring(seg,#-1,#);
+      tmp1=indexof(Alpha,tmp);
+      if(tmp1>0,
+        sname=sname+unicode(text(tmp1+96),base->10);
+      ,
+        sname=sname+tmp;
+      );
+    ); 
+    Putpoint(pA,p1);
+    Putpoint(pB,p2);
+    Listplot([parse(pA),parse(pB)],["Msg=n","notex",color,size]);
+    Putonseg(pC,parse("sg"+pA+pB));
+    PTEXCEPTION=concat(TEXCEPTION,[pA,pC,pB]);
+  ,
+    pA=""; pB=""; pC=ptstr;
+    tmp=pC+"l"+pC+pC+"r";
+    Listplot(tmp,[p1,p2],["Msg=n","notex",color,size]);
+    Putonseg(pC,parse("sg"+tmp));
+    PTEXCEPTION=concat(TEXCEPTION,[pC]);
+  ); //190209to
 );
 ////%Slider end////
 
@@ -5982,7 +5989,7 @@ Mkketcindyjs(options):=( //17.11.18
       nolabel,color,grid,out,igL,DL,Out);
   libnameL=["basic1","basic2","3d"];
   webflg="Y";  //190128 texflg removed
-  localflg="Y"; //190208
+  localflg="N"; //190209
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
   color="";

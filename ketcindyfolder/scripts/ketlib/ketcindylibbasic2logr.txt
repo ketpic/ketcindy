@@ -2,6 +2,8 @@
 //   Mkketcindyjs changed (fliename when Local="y", Case of rhs of option is blank)
 //   Mkketcindyjs changed ( "3d" added )
 //   Letter changed  ("Size=ratio" added )
+//   Mkketcindyjs changed ( Local="n" as default)
+//   Slider changed  ( for no end points )
 // 20190208
 //   Mkketcindyjs changed ( Local="y" as default)
 // 20190206

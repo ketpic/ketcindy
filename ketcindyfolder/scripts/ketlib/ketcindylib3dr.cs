@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d(20190209) loaded");
+println("ketcindylib3d[20190209] loaded");
 
 //help:start();
 
@@ -30,7 +30,6 @@ Ketinit3d(subflg,position):=(
 //help:Ketinit3d();
 //help:Ketinit3d(0);
   regional(ctr,tmp,tmp1,tmp2,tmp3,tmp4,xPos,yTh,yPh);
-//  println("KETCindy3d V.2.3.5(2016.02.03)");
   BezierNumber3=1;   //15.02.28
   if(!islist(BZLIST3),
     BZLIST3=[]; //15.02.28
@@ -89,6 +88,7 @@ Start3d(ptexception):=(
 //help:Start3d(["A","B"](exceptionptlist));
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+  PTEXCEPTION=[];
   Setfiles(Namecdy); //180608
   ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
   FuncListC=[];
@@ -117,23 +117,17 @@ Start3d(ptexception):=(
   FnameR=Fhead+".r";
   FnameRbody=Fhead+"body.r";
   Fnameout=Fhead+".txt";
-//  Ketinit3d(SUBSCR); // 16.06.20
   Setwindow("Msg=no"); // 16.06.20from
   tmp=round(4*SW.y)/4;
-  xPos=-5;yTh=tmp-0.5;yPh=tmp-1;
-  Listplot("th",[[xPos,yTh],[xPos+9,yTh]],
-    ["notex","linecolor->[0,1,0]","Msg=no"]);
-  Listplot("ph",[[xPos,yPh],[xPos+9,yPh]],
-    ["notex","linecolor->[0,1,0]","Msg=no"]);
-     //16.02.10
-  PutonCurve("TH",sgth,[xPos,xPos+9,"Msg=no"]);
-  PutonCurve("FI",sgph,[xPos,xPos+9,"Msg=no"]);
+  xPos=-5; yTh=tmp-0.5; yPh=tmp-1;
+  Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]); //190209
+  Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); //190209
   drawtext([xPos-0.8,yTh-0.1],Sprintf((TH.x-xPos)*20,2),align->"right"); //17.05.02
   drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right"); //17.05.02
-  tmp="Setangle("
+  tmp="Setangle("  //no ketjs on
     +format((TH.x-xPos)*20,5)+","
     +format((FI.x-xPos)*40,5)+")";
-  GLIST=append(GLIST,tmp);
+  GLIST=append(GLIST,tmp); //no ketjs off
   THETA=(TH.x-xPos)*20*pi/180;
   PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until
   if(isselected(TH) % isselected(FI), // 17.05.18from
@@ -155,16 +149,18 @@ Start3d(ptexception):=(
     connect([[NE.x-SW.x,yMx],[NE.x-SW.x,ymn]],
       color->[0.5,0.5,0.5]);
   );
- // for Presentation //17.07.01from
+ // for Presentation //17.07.01from //no ketjs on
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
-  ThinDense=0.1; //17.07.01to
-  tmp=ptexception; //181106(3lines)
-  if(!islist(tmp),PTEXCEPTION=[tmp],PTEXCEPTION=tmp);
+  ThinDense=0.1; //17.07.01to //no ketjs off
+  tmp=ptexception; //181106
+  if(!islist(tmp),tmp=[tmp]);  //190209
+  PTEXCEPTION=concat(PTEXCEPTION,tmp); //190209
+//  if(!islist(tmp),PTEXCEPTION=[tmp],PTEXCEPTION=tmp);
   Ptseg3data(PTEXCEPTION);  //16.08.23
-  PTEXCEPTION=ptexception; //180916
+//  PTEXCEPTION=ptexception; //180916 //190209[del]
 );
 ////%Start3d end////
 
@@ -194,7 +190,7 @@ Setangle(theta,phi):=( //16.12.24
       tmp1=text(pt);
       tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
       if(tmp!="z",
-        tmp=parse(tmp1+"z.xy"); //181028(2lines);
+        tmp=parse(tmp1+"z.xy"); //181028[2lines];
         pt3=Xyzcoord(pt.xy,tmp);
         Defvar(tmp1+"3d",pt3);
         pt2=Parapt(pt3);  // 16.05.28from
@@ -225,7 +221,7 @@ Setangle(theta,phi):=( //16.12.24
           tmp2=parse(tmp1+"z");
           if(isselected(pt) % isselected(tmp2),
             Defvar(tmp1+"2d",pt.xy);
-            tmp=parse(tmp1+"z.xy"); //181028(2lines)
+            tmp=parse(tmp1+"z.xy"); //181028[2lines]
             tmp=Xyzcoord(pt.xy,tmp);
             Defvar(tmp1+"3d",tmp);
           );
@@ -1174,7 +1170,7 @@ Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
   Zname=tmp1_1;
   tmp=parse(tmp1_2);
   pz=[0,0,tmp_1]; qz=[0,0,tmp_2];
-  COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Xname+"$"))==0);//180608(3lines)
+  COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Xname+"$"))==0);//180608[3lines]
   COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Yname+"$"))==0);
   COM2ndlist=select(COM2ndlist,indexof(#,Dqq("$"+Zname+"$"))==0);
   ph=Parapt(px); qh=Parapt(qx); rr=|ph-qh|;
@@ -1786,7 +1782,7 @@ PutonCurve3d(name,pdstr):=(
   tmp1=ParamonCurve(tmp_1,tmp_2,pd2str);
   tmp="sub"+pd2str;
   tmp2=PointonCurve(tmp1,tmp);
-//  pt=append(pt,tmp2_2); //181028(2lines)
+//  pt=append(pt,tmp2_2); //181028[2lines]
   pt=Xyzcoord(pt,tmp2); // 15.03.13
   tmp=name+"z.xy="+textformat(tmp2,5);
   parse(tmp);
@@ -1897,7 +1893,7 @@ Mkpointlist(options):=( //181030
       if(length(tmp)>0, //17.10.07
         tmp1=Parapt(tmp_1_2);
         Putpoint(text(pt),tmp1); //181029
-        tmp2=Parasubpt(tmp_1_2);//181027(2lines)
+        tmp2=Parasubpt(tmp_1_2);//181027[2lines]
         Putpoint(text(ptz),tmp2); //181029
         flg=3;
       ); //17.10.07
@@ -1985,7 +1981,7 @@ Ptseg3data(options):=(
           parse(tmp);
         );
       ,
-        tmp=Mainsubpt3d(parse(pt+".xy"),parse(tmp1+"z.xy")); //181107(2lines)
+        tmp=Mainsubpt3d(parse(pt+".xy"),parse(tmp1+"z.xy")); //181107[2lines]
         Defvar(tmp1+"3d",tmp);
       );
     );
@@ -2049,7 +2045,7 @@ Putonseg3d(name,pt1,pt2,options):=(
     tmp1=replace(tmp1,"PBs",pn2);
     parse(tmp1);
   );
-  tmp1=parse(name+".xy"); //181028(3lines)
+  tmp1=parse(name+".xy"); //181028[3lines]
   tmp2=parse(name+"z.xy"); 
   tmp=Xyzcoord(tmp1,tmp2);
   Defvar(name+"3d",tmp);
@@ -2281,7 +2277,7 @@ Perpplane(name,ptstr,nstr,option):=(
   if(tmp=="P",
     Putpoint3d([tmp1,pA,tmp2,pB],["fix"]);
   ,
-    Defvar(tmp1+"3d",pA); //181107(2lines)
+    Defvar(tmp1+"3d",pA); //181107[2lines]
     Defvar(tmp2+"3d",pB);
   );
   if(tmp=="D",
@@ -2418,7 +2414,7 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
   );
   nvec=Crossprod(pB-pA,pC-pA);
   if(abs(Dotprod(nvec,pQ-pP))>Eps,
-    pH=(Reflectpoint3d(pP,[pA,pB,pC])+pP)/2; //180811(2lines)
+    pH=(Reflectpoint3d(pP,[pA,pB,pC])+pP)/2; //180811[2lines]
     pK=(Reflectpoint3d(pQ,[pA,pB,pC])+pQ)/2;
     tmp1=pP-pH;
     tmp2=tmp1+pK-pQ;
@@ -2913,7 +2909,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       options=remove(options,[#]);
     ); //180905to
     if(tmp1=="E",
-      if((tmp2=="Y")%(tmp2=="G"),//181107(2lines)
+      if((tmp2=="Y")%(tmp2=="G"),//181107[2lines]
         if(vtxflg==1,edgflg=1);
       );
       options=remove(options,[#]);
@@ -3790,7 +3786,7 @@ SfbdparadataR(nm,fdorg,optionorg,optionsh):=(
 // help:SfbdparadataR(options2=["Wait=60",division(c(50,50)),Eps1(0.01), Eps2(0.05)]);
   regional(fd,options,name3,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg);
-  tmp=ConvertFdtoC(fdorg);//180430(2lines)
+  tmp=ConvertFdtoC(fdorg);//180430[2lines]
   FuncListC=append(FuncListC,tmp);
   name3="sfbd3d"+nm;
   name3h="sfbdh3d"+nm;
@@ -3858,7 +3854,7 @@ SfbdparadataR(nm,fdorg,optionorg,optionsh):=(
     err("Sfbdparadata not completed");
   ,
     ReadOutData(fname);
-    if(islist(parse(name3)), //180508(2lines)
+    if(islist(parse(name3)), //180508[2lines]
       Extractdata(name3,["nodisp"]);
       Projpara(name3,options); 
       if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);
@@ -3983,7 +3979,7 @@ CrvsfparadataR(nm,crvstr,sfstr,fdorg,optionorg,optionsh):=(
     err("Crvsfparadata not completed");
   ,
     ReadOutData(fname);
-    if(islist(parse(name3)), //180507(2lines)
+    if(islist(parse(name3)), //180507[2lines]
       Extractdata(name3,["nodisp"]);
       Projpara(name3,options);
       if(length(optionsh)>0,tmp=optionsh,tmp=["nodisp"]);

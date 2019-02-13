@@ -569,16 +569,20 @@ Draw node of tree.
 
 In the following example We have three intersection points for a cubic curve and a line.
 
-\begin{layer}{150}{0}
-\putnotese{90}{5}{\input{Fig/putintersect}}
-\end{layer}
-
+\begin{minipage}{80mm}
 \verb|Plotdata("1","x^3-4*x","x",["Num=200"]);|\\
 \verb|Plotdata("2","1/2*x+1","x");|\\
 \verb|Putintersect("P","gr1","gr2",1);|\\
 \verb|Putintersect("Q","gr1","gr2",2);|\\
 \verb|Putintersect("R","gr1","gr2",3);|\\
 \verb|Pointdata("1",[P,Q,R],["size=4"]);|
+\end{minipage}\hspace{5mm}
+\begin{minipage}{30mm}
+
+\vspace{3mm}
+
+\input{Fig/putintersect}
+\end{minipage}
 
 If there exist no such points, we have the message:"No intersect point" on the console.
 
@@ -719,15 +723,16 @@ All options do not always reflect on Euclidean view.
 \input{Fig/arrowdata}
 \end{center}
 
-\begin{layer}{150}{0}
-\putnotese{75}{0}{  \input{Fig/trimarrow}}
-\end{layer}
-\hspace{20mm}
-
+\begin{minipage}{80mm}
 \verb| Circledata("1",[A,A.xy+[0.5,0]]);|\\
 \verb| Circledata("2",[B,B.xy+[0.7,0]]);|\\
 \verb| Arrowdata([A,B],["Cutend=[0.5,0.7]"]);|\\
 \verb| Letter([A,"c","A",B,"c","B"]);|\\
+\end{minipage}
+\hspace{5mm}
+\begin{minipage}{40mm}
+\input{Fig/trimarrow}
+\end{minipage}
 
 \end{cmd}
 
@@ -738,59 +743,39 @@ All options do not always reflect on Euclidean view.
 Options are: arrowhead size, arrowhead angle,position,shape,position.\\
 \itemket{Examples}\mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{0}{2}{When A is in the position}
-\putnotese{0}{9}{as shown below.}
-\putnotese{10}{18}{\input{Fig/ForRef-Arrowhead-1}}
-\putnotese{60}{9}{(a) \tt Arrowhead(A,[-1,1]);}
-\putnotese{60}{16}{(b) \tt Arrowhead([1,1],[-1,1],[2,60]);}
-\putnotese{60}{23}{(c) \tt Arrowhead(A,[-1,1],[2,30,"b"]);}
-\putnotese{60}{30}{(d) \tt Arrowhead([1,1],[-1,1],[2,20,"lc"]);}
-\end{layer}
+Let A=[1,1].
+\begin{enumerate}[(a)]
+\item \verb|Arrowhead(A,[-1,1]);|
+\item \verb|Arrowhead([1,1],[-1,1],[2,60]);|
+\item \verb|Arrowhead(A,[-1,1],[2,30,"b"]);|
+\item \verb|Arrowhead([1,1],[-1,1],[2,20,"lc"]);|
+\end{enumerate}
 
-\vspace{7mm}
+\hspace*{17mm}%
+\Ltab{30mm}{(a)}\Ltab{30mm}{(b)}\Ltab{30mm}{(c)}\Ltab{30mm}{(d)}\\
+\hspace*{20mm}%
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-2}}%
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-3}}
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-4}}
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-5}}
 
-%\hspace{6mm}
-\begin{layer}{150}{0}
-\putnotese{17}{32}{(a)}
-\putnotese{47}{32}{(b)}
-\putnotese{77}{32}{(c)}
-\putnotese{107}{32}{(d)}
-\putnotese{15}{40}{\input{Fig/ForRef-Arrowhead-2}}
-\putnotese{45}{40}{\input{Fig/ForRef-Arrowhead-3}}
-\putnotese{75}{40}{\input{Fig/ForRef-Arrowhead-4}}
-\putnotese{105}{40}{\input{Fig/ForRef-Arrowhead-5}}
-\end{layer}
+Let D be on the curve crBC.
+\begin{enumerate}[(a)]%
+\setcounter{enumi}{4}%
+\item \verb|Arrowhead(D,"crBC");|
+\item \verb|Arrowhead(D,"crBC",[2]);|
+\item \verb|Arrowhead(D,"crBC",[2,30,"l"]);|
+\item \verb|Arrowhead(D,"Invert(crBC)");|
+\end{enumerate}
 
-\vspace{70mm}
+\hspace*{17mm}%
+\Ltab{30mm}{(e)}\Ltab{30mm}{f)}\Ltab{30mm}{(g)}\Ltab{30mm}{(h)}\\
+\hspace*{20mm}%
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-7}}
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-8}}
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-9}}
+\Ltab{30mm}{\input{Fig/ForRef-Arrowhead-10}}
 
-\vspace{50mm}
-
-\hspace{7mm}
-\begin{layer}{150}{0}
-\putnotese{-10}{0}{When D is on the curve crBC }
-\putnotese{-10}{5}{as shown below.}
-\putnotese{0}{7}{\input{Fig/ForRef-Arrowhead-6}}
-\putnotese{16}{22}{crBC}
-\putnotese{50}{0}{(e) \tt Arrowhead(D,"crBC");}
-\putnotese{50}{7}{(f) \tt Arrowhead(D,"crBC",[2]);}
-\putnotese{50}{14}{(g) \tt Arrowhead(D,"crBC",[2,30,"l"]);}
-\putnotese{50}{21}{(h) \tt Arrowhead(D,"Invert(crBC)");}
-\end{layer}
-
-\vspace{3mm}
-\hspace{6mm}
-\begin{layer}{150}{0}
-\putnotese{12}{27}{(e)}
-\putnotese{42}{27}{(f)}
-\putnotese{72}{27}{(g)}
-\putnotese{102}{27}{(h)}
-\putnotese{10}{28}{\input{Fig/ForRef-Arrowhead-7}}
-\putnotese{40}{28}{\input{Fig/ForRef-Arrowhead-8}}
-\putnotese{70}{28}{\input{Fig/ForRef-Arrowhead-9}}
-\putnotese{100}{28}{\input{Fig/ForRef-Arrowhead-10}}
-\end{layer}
-\vspace*{6cm}
 \end{cmd}
 
 
@@ -1006,82 +991,73 @@ You can specify the number of division among nodes (default value is 10).
 
 \itemket{Examples}\mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{50}{15}{bz1}
-\putnotese{58}{-10}{\input{Fig/checkbe1}}
-\end{layer}
-
+\begin{minipage}[t]{70mm}
 2nd-order Bezier curve\\
-\verb|Bezier("1",[A,B],[C]);|\\
+\verb|Bezier("1",[A,B],[C]);|
+\end{minipage}%
+\hspace{5mm}bz1%
+\begin{minipage}[t]{60mm}
+\mbox{}\vspace{-15mm}\\
+\input{Fig/checkbe1}
+\end{minipage}%
 
-\vspace{15mm}
-
-\begin{layer}{150}{0}
-\putnotese{63}{17}{bzc}
-\putnotese{70}{-5}{\input{Fig/checkbe2}}
-\end{layer}
-
+\begin{minipage}[t]{70mm}
 3rd-order Bezier curve\\
-\verb|Bezier("c",[A,B],[C,D]);|\\
+\verb|Bezier("c",[A,B],[C,D]);|
+\end{minipage}%
+\hspace{5mm}bzc%
+\begin{minipage}[t]{60mm}
+\mbox{}\vspace{-15mm}\\
+\input{Fig/checkbe2}
+\end{minipage}%
 
-\vspace{15mm}
-
-\begin{layer}{150}{0}
-\putnotese{65}{20}{bz3}
-\putnotese{75}{-5}{\input{Fig/checkbe3}}
-\end{layer}
-
+\begin{minipage}[t]{70mm}
 Connecting two curves,\\
-\verb|Bezier("3",[A,B,C],[[D],[E,F]]);|\\
+\verb|Bezier("3",[A,B,C],[[D],[E,F]]);|
+\end{minipage}%
+\hspace{5mm}bz3%
+\begin{minipage}[t]{60mm}
+\mbox{}\vspace{-15mm}\\
+\input{Fig/checkbe3}
+\end{minipage}%
 
-\vspace{20mm}
+\begin{minipage}[t]{70mm}
+If D,B,E are on the straight line,\\ the curve becomes smoothly.\\
+\verb|Bezier("S",[A,B,C],[[D],[E,F]]);|
+\end{minipage}%
+\hspace{5mm}bzS%
+\begin{minipage}[t]{60mm}
+\mbox{}\vspace{-15mm}\\
+\input{Fig/checkbe4}
+\end{minipage}%
 
-\begin{layer}{150}{0}
-\putnotese{70}{20}{bzS}
-\putnotese{80}{10}{\input{Fig/checkbe4}}
-\end{layer}
+\noindent
+\verb|Bezier("name",[A,B,C,D],[E,F,G,H,K,L] );|
 
-Taking D,B,E on a straight line, it connects smoothly.\\
-\verb|Bezier("S",[A,B,C],[[D],[E,F]]);|\\
+\begin{center}
+\input{Fig/checkbe7}
+\end{center}
 
-\vspace{25mm}
+\noindent
+\verb|Bezier("1a",[A,B,C],[[D],[E,F]],["Num=3"]);|
 
-\vspace{50mm}
+\begin{center}
+\input{Fig/checkbe5}
+\end{center}
 
-\begin{layer}{150}{0}
-\putnotese{20}{27}{bzname}
-\putnotese{25}{10}{\input{Fig/checkbe7}}
-\end{layer}
+\noindent
+\verb|Bezier("d5e",[A,B,C],[[D],[E,F]],["Num=200","da"]);|
 
-\verb|Bezier("name",[A,B,C,D],[E,F,G,H,K,L] );|\\
+\begin{center}
+\input{Fig/checkbe6}
+\end{center}
 
-\vspace{30mm}
-
-\begin{layer}{150}{0}
-\putnotese{35}{25}{bz1a}
-\putnotese{50}{10}{\input{Fig/checkbe5}}
-\end{layer}
-
-\verb|Bezier("1a",[A,B,C],[[D],[E,F]],["Num=3"]);|\\
-
-\vspace{30mm}
-
-\begin{layer}{150}{0}
-\putnotese{35}{20}{bzd5e}
-\putnotese{50}{10}{\input{Fig/checkbe6}}
-\end{layer}
-
-\verb|Bezier("d5e",[A,B,C],[[D],[E,F]],["Num=200","da"]);|\\
-
-\vspace{40mm}
-
-\begin{layer}{150}{0}
-\putnotese{20}{30}{bz1}
-\putnotese{20}{13}{\input{Fig/checkbe8}}
-\end{layer}
-
+\noindent
 \verb|Bezier("1",[A,B,C,D],[E,F,G,H,K,L],["Num=[2,3,4]"]);|\\
-\vspace{30mm}
+
+\begin{center}
+\input{Fig/checkbe8}
+\end{center}
 \end{cmd}
 
 %------------Beziersmooth--------------------------------
@@ -3764,10 +3740,8 @@ Example1
 \vspace{\baselineskip}
 Example2
 
-\begin{layer}{150}{0}
-\putnotese{70}{50}{ \input{Fig/mxtex03}}
-\end{layer}
 
+\begin{minipage}[t]{65mm}
 \verb| fx="x^2-x-3"; |\\
 \verb| cmdL=[ |\\
 \verb|   "ans:solve",[fx,"x"], |\\
@@ -3786,7 +3760,12 @@ Example2
 \verb| Plotdata("1",fx,"x"); |\\
 \verb| Expr([-2,-0.5],"e",tx1); |\\
 \verb| Expr([2,-0.5],"e",tx2); |\\
+\end{minipage}\hspace{5mm}%
+\begin{minipage}[t]{65mm}
+\mbox{}\vspace{20mm}
 
+\input{Fig/mxtex03}
+\end{minipage}
 \end{cmd}
 
 %========= Risa/Asir =======
@@ -3885,10 +3864,6 @@ Option ``$+$" is for the left figure, and ``$-$" for the right.
 %%\itemket{Details}
 \itemket{Examples}  \mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{80}{13}{ \includegraphics[bb=0 0 287.01 228.01 , width=3cm]{Fig/meshlab03.pdf} }
-\end{layer}
-
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]"); |\\
 \verb|  p1=[2,0,0]; |\\
 \verb|  p2=[0,2,0]; |\\
@@ -3896,7 +3871,11 @@ Option ``$+$" is for the left figure, and ``$-$" for the right.
 \verb|  plane=[[p1,p2,p3],[[1,2,3]]]; |\\
 \verb|  Mkobjplatecmd("1",plane,[0.05]); |\\
 \verb|  Mkobjcrvcmd("2","ax3d"); |\\
-\verb|  Mkviewobj("plane",Concatcmd([oc1,oc2]),["m","v"]);  |
+\verb|  Mkviewobj("plane",Concatcmd([oc1,oc2]),["m","v"]);|
+
+\begin{center}
+\includegraphics[bb=0 0 287.01 228.01 , width=50mm]{Fig/meshlab03.pdf} 
+\end{center}
 
 \end{cmd}
 %-------------Mkobjpolycmd-------------------------------
@@ -3944,11 +3923,7 @@ The arguments are their siizes, angles of rotations, directions of the viewpoint
 %%\itemket{Details}
 \itemket{Examples}  \mbox{}
 
-This function use Maxima.
-
-\begin{layer}{150}{0}
-\putnotese{70}{0}{ \includegraphics[bb=0 0 287.01 189.01 , width=4cm]{Fig/meshlab06.pdf}}
-\end{layer}
+This function uses Maxima.
 
 \verb|  fd=[ |\\
 \verb|  "z=(x^2+y^2)",|\\
@@ -3958,6 +3933,9 @@ This function use Maxima.
 \verb|  Mkobjthickcmd("1",fd,[40,40,0.2,"+n+s-e-w+","assume(R>0)"]);|\\
 \verb|  Mkviewobj("pala",oc1,["m","v","Wait=5"]); |\\
 
+\begin{center}
+\includegraphics[bb=0 0 287.01 189.01 , width=5cm]{Fig/meshlab06.pdf}
+\end{center}
 
 \end{cmd}
 %---------------Mkviewobj-----------------------------
@@ -4344,16 +4322,13 @@ Make reference to \hyperlink{partcrv3d}{Partcrv3d()}
 
 \verb|Spaceline("1",[[2,5,1],[4,2,3]]);|  //draw the line between two points\\
 \verb|Spaceline("2",[A,B,C,A]);|  //draw the triangle ABC\\
-
-\begin{layer}{150}{0}
-\putnotese{100}{-5}{ \input{Fig/oresenex01}}
-\end{layer}
-
 \verb|pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]]; |\\
 \verb|Spaceline("1",pt); |\\
 \verb|Pointdata3d("1",pt,["Size=3"]);|
 
-\vspace{30mm}
+\begin{center}
+\input{Fig/oresenex01}
+\end{center}
 \end{cmd}
 %-------------Spacecurve-------------------------------
 \begin{cmd}{Spacecurve}{spacecurve}
@@ -4520,12 +4495,9 @@ Each name is appended to the end.
 \itemket{Details}Make polyhedral plot data with VertexEdgeFace (). For this plot data, hidden surfaces (sides) are hidden-line processed and displayed. The second argument name2 is the same as the name given by VertexEdgeFace (). The hidden line type is specified by the option "Hidden = line type". Hidden lines are not displayed by default setting.
 \itemket{Examples}  \mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{100}{0}{ \input{Fig/phparadata04}}
-\end{layer}
+To draw a tetrahedron,
 
-Draw a tetrahedron.
-
+\begin{minipage}[t]{100mm}
 \verb| Putpoint3d("A",2*[-1,-1/sqrt(3),0]);|\\
 \verb| Putpoint3d("B",2*[1,-1/sqrt(3),0]);|\\
 \verb| Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);|\\
@@ -4533,6 +4505,14 @@ Draw a tetrahedron.
 \verb| phd=Concatobj([[A,B,C],[A,B,D],[A,C,D],[B,C,D]]);|\\
 \verb| VertexEdgeFace("1",phd);|\\
 \verb| Phparadata("1","1",["Hidden=do"]);|\\
+\end{minipage}\hspace{5mm}%
+\begin{minipage}[t]{30mm}
+\mbox{}\vspace{-15mm}
+
+\input{Fig/phparadata04}
+\end{minipage}
+
+
 
 A tetrahedron is drawn by VertexEdgeFace (), but it is hidden by Phparadata (). Since it is correctly output if it is drawn with the figure button, it is good to execute Phparadata () after confirming it by displaying it on the screen before executing Phparadata ().
 
@@ -4606,7 +4586,7 @@ However, in order to do hidden line processing, surface data is necessary, so af
 
 Also, in the drawing of the surface model, it takes time to process the hidden line, so it is assumed to use the C language. Therefore, ExeccmdC () which draws using C language is used together.
 
- \begin{center} \input{Fig/surfacemodel} \end{center}
+ \begin{center} \input{Fig/surfacemodelE} \end{center}
 
 The form of the argument is an equation and a list of character strings for the domain of the variable. There are three patterns of equations as follows.
 
@@ -4729,21 +4709,23 @@ option2="nodisp" or line type of hidden line. Default is "do".\\
 If we specify only option2 then we denote that option1 is empty list:[].
 \itemket{Examples}  \mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{95}{0}{ \input{Fig/sfbdpara01}}
-\putnotese{95}{45}{ \input{Fig/sfbdpara02}}
-\end{layer}
 
-Delete hidden lines and display
+Hidden lines are not shown or shown.
 
 \verb|    fd=["z=x^2-y^2","x=[-2,2]","y=[-2,2]"];|\\
 \verb|    if(Isangle(),|\\
 \verb|      Sf3data("1",fd);|\\
 \verb|      ,|\\
 \verb|      Startsurf();|\\
-\verb|      Sfbdparadata("1",fd);|\\
-\verb|      ExeccmdC("1",[],["nodisp"]);|\\
-\verb|   );|\\
+\verb|      Sfbdparadata("1",fd,[],["nodisp"); // Change "nodisp" to "do"|\\
+\verb|      ExeccmdC("1"]);|\\
+\verb|   );|
+
+\begin{center}
+\input{Fig/sfbdpara01}\hspace{10mm}%
+\input{Fig/sfbdpara02}
+\end{center}
+
 
 Make the whole thick with a solid line and
 
@@ -4852,10 +4834,6 @@ Change the following code.
 \input{Fig/wirepara3}
 \end{center}
 
-\begin{layer}{150}{0}
-\putnotese{90}{15}{ \input{Fig/wirepara4}}
-\end{layer}
-
 \verb|fd=["p","x=2*sin(u)*cos(v)","y=2*sin(u)*sin(v)","z=2*cos(u)","u=[0,pi]",|\\
 \verb|         "v=[0,2*pi]","s"];|\\
 \verb|if(Isangle(),|\\
@@ -4872,6 +4850,10 @@ Change the following code.
 \verb|      );|\\
 \verb|    );|\\
 \verb|);|
+
+\begin{center}
+\input{Fig/wirepara4}
+\end{center}
 
 \end{cmd}
 %-------------Crvsfparadata-------------------------------
@@ -5039,27 +5021,32 @@ The return value of \verb | flag 1, flag 2 | when changing \verb | p2 | with the
 \verb|  Spaceline("1",[p1,p2]);|\\
 \verb|  Spaceline("2",[p3,p4,p5,p3]);|\\
 \verb|  ret=IntersectsgpL("P",[p1,p2],[p3,p4,p5],"put");|\\
-\verb|  println("flag1="+ret_2+": flag2="+ret_3);|\\
-
-\begin{layer}{150}{0}
-\putnotese{10}{20}{ \input{Fig/wire01}}
-\putnotese{80}{20}{ \input{Fig/wire02}}
-\end{layer}
+\verb|  println("flag1="+ret_2+": flag2="+ret_3);|
 
 \verb|    p2=[0,0,1/2];                  p2=[-1,1,1];|\\
 \verb|    flag1=false : flag2=true        flag1=true : flag2=true |\\
 
-\vspace{40mm}
-\begin{layer}{150}{0}
-\putnotese{10}{10}{ \input{Fig/wire03}}
-\putnotese{80}{10}{ \input{Fig/wire04}}
-\end{layer}
+
+\hspace*{20mm}
+\begin{minipage}{60mm}
+\input{Fig/wire01}
+\end{minipage}\hspace{10mm}%
+\begin{minipage}{60mm}
+\input{Fig/wire02}
+\end{minipage}
+
 \verb|   p2=[1,2,1];                       p2=[1,0,1/2];|\\
-\verb|   flag1=true : flag2=false　　    flag1=false : flag2=false |\\
+\verb|   flag1=true : flag2=false　　    flag1=false : flag2=false |
 
-\vspace{30mm}
+\hspace*{20mm}
+\begin{minipage}{60mm}
+\input{Fig/wire03}
+\end{minipage}\hspace{10mm}%
+\begin{minipage}{60mm}
+\input{Fig/wire04}
+\end{minipage}
 
-cutcube
+{\bf Cutcube}
 
 \verb|  Hn=3; |\\
 \verb|  Putaxes3d(Hn); |\\
@@ -5098,10 +5085,6 @@ add next script (right figure)
 \itemket{Examples}  \mbox{}
 Cross section of cone.
 
-\vspace{\baselineskip}
-\begin{layer}{150}{0}
-\putnotese{70}{0}{\input{Fig/sfcut}}
-\end{layer}
 \verb|fd=[|\\
 \verb| "p",|\\
 \verb| "x=r*cos(t)","y=r*sin(t)","z=2*(2-r)",|\\
@@ -5110,7 +5093,11 @@ Cross section of cone.
 \verb|Startsurf(); |\\
 \verb|Sfbdparadata("1",fd);|\\
 \verb|Sfcutparadatacdy("1","y+2*z=3",fd);|\\
-\verb|ExeccmdC("1");|\\
+\verb|ExeccmdC("1");|
+
+\begin{center}
+\input{Fig/sfcut}
+\end{center}
 
 \end{cmd}
 %--------------Partcrv3d------------------------------
@@ -5314,10 +5301,6 @@ Return the points A,B on the plane which is passing through the point P and orth
 
 Draw point A,B,C,D by draw tool of Cinderella.
 
-\begin{layer}{120}{0}
-\putnotese{100}{20}{ \input{Fig/perpplane}}
-\end{layer}
-
 \verb|  Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]"); |\\
 \verb|  Putpoint3d(["O",[0,0,0]]); |\\
 \verb|  Putpoint3d(["P",[1,1,1]]); |\\
@@ -5331,7 +5314,11 @@ Draw point A,B,C,D by draw tool of Cinderella.
 \verb|  Spaceline("1",[A,B,C,D,A]); |\\
 \verb|  Arrowdata([O,P],["dr,2"]); |\\
 \verb|  Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]); |\\
-\verb|  Skeletonparadata("1"); |\\
+\verb|  Skeletonparadata("1"); |
+
+\begin{center}
+\input{Fig/perpplane}
+\end{center}
 
 \end{cmd}
 %-------------Perppt-------------------------------
@@ -5555,10 +5542,6 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \itemket{Details} The position is the space coordinate.  Other than that it is the same as Letter().
 \itemket{Examples}  \mbox{}
 
-\begin{layer}{150}{0}
-\putnotese{110}{10}{ \input{Fig/letter3d}}
-\end{layer}
-
 \verb|Putpoint3d("A",2*[0,0,2*sqrt(6)/3]);|\\
 \verb|Putpoint3d("B",2*[1,-1/sqrt(3),0]);|\\
 \verb|Putpoint3d("C",2*[0,sqrt(3)-1/sqrt(3),0]);|\\
@@ -5571,7 +5554,9 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \verb|Letter3d([A3d,"ne","A",B3d,"w","B",C3d,"se","C",D3d,"e","D"]);|\\
 \verb|Letter3d(M3d,"sw","M",["Color=blue"]);|\\
 
-
+\begin{center}
+\input{Fig/letter3d}
+\end{center}
 \end{cmd}
 
 \newpage

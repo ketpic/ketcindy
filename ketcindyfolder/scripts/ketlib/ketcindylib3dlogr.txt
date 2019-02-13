@@ -1,5 +1,6 @@
 // 20190209
 //   ////%  added
+//   Start3d changed  ( Slider used )
 // 20190128
 //   Vertexedgeface changed  ( size of point name, drawpoint )
 // 20190127

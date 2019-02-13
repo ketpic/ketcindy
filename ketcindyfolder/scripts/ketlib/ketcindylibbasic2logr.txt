@@ -1,3 +1,5 @@
+// 20190214
+//   Copyketcindyjs changed  (for Mac,Linux)
 // 20190209
 //   Mkketcindyjs changed (fliename when Local="y", Case of rhs of option is blank)
 //   Mkketcindyjs changed ( "3d" added )

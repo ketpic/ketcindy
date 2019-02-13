@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190209] loaded");
+println("ketcindybasic2[20190214] loaded");
 
 //help:start();
 
@@ -5941,10 +5941,21 @@ Copyketcindyjs():=(
     kc():=(
       println("kc : "+kc(Dirwork+Shellparent,Mackc+Dirlib,Fnametex));
     );
+    tmp1=Dircdy; //190214from
+    if(substring(tmp1,length(tmp1)-1,length(tmp1))=="/",
+      tmp1=substring(tmp1,0,length(tmp1)-1);
+    ); //190214to
     SCEOUTPUT = openfile(Shellparent);
     println(SCEOUTPUT,"#!/bin/sh");
-    println(SCEOUTPUT,"cd "+Dqq(Dirhead));
-    println(SCEOUTPUT,"cp -r -p ketcindyjs  "+Dircdy+"/");
+    println(SCEOUTPUT,"cd "+Dqq(tmp1)); //190214from
+    println(SCEOUTPUT,"mkdir ketcindyjs");
+    println(SCEOUTPUT,"cd "+Dqq(Dirhead+"/ketcindyjs"));
+    println(SCEOUTPUT,"cp -r -p katex "+tmp1+"/ketcindyjs");
+    println(SCEOUTPUT,"cp -p Cindy.js "+tmp1+"/ketcindyjs");
+    println(SCEOUTPUT,"cp -p Cindy.js.map "+tmp1+"/ketcindyjs");
+    println(SCEOUTPUT,"cp -p CindyJS.css "+tmp1+"/ketcindyjs");
+    println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp1+"/ketcindyjs");
+    println(SCEOUTPUT,"cp -p webfont.js "+tmp1+"/ketcindyjs"); //190214to
     println(SCEOUTPUT,"exit 0");
     closefile(SCEOUTPUT);
   );

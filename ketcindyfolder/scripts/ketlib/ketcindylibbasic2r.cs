@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190214] loaded");
+println("ketcindybasic2[20190216] loaded");
 
 //help:start();
 
@@ -1764,36 +1764,27 @@ MeetCurve(Crv,Xorg,Yorg):=(
 ////%MeetCurve end////
 
 ////%Putonline start////
-Putonline(name,p1,p2):=PutonLine(name,p1,p2,[]);
-Putonline(name,p1org,p2org,options):=(
-//help:Putonline("C","sgAB");
-//help:Putonline("C",pA,pB);
-  regional(par,p1,p2,dx,dy,tmp,tmp1,tmp2);
-  par=0.5;
-  tmp=Divoptions(options);
-  if(length(tmp_6)>0,
-    par=tmp_6_1;
-  );
-  p1=Lcrd(p1org);//16.10.11from
-  p2=Lcrd(p2org);
-  dx=p2_1-p1_1;
-  dy=p2_2-p1_2;
-  tmp1=(1-par)*p1+par*p2;
-  if(abs(dx)>abs(dy),    
-    tmp=name+".x";
-    tmp2="["+tmp+",dy/dx*("+tmp+"-p1_1)+p1_2]";//16.10.11until
-    Putpoint(name,tmp1,parse(tmp2));
+Putonline(name,linestr):=Putonline(name,linestr,[]); //190216from
+Putonline(name,Arg1,Arg2):=(
+  regional(line,options);
+  if(isstring(Arg1),
+    line=parse(Arg1); options=Arg2;
+    Putonseg(name,LLcrd(line_1),LLcrd(line_2),options);
   ,
-    if(abs(dy)>0,
-      tmp=name+".y";
-      tmp2="[dx/dy*("+tmp+"-p1.y)+p1_1,"+tmp+"]";
-      Putpoint(name,tmp1,parse(tmp2));
-    ,
-      tmp2=p1;//16.10.11
-      Putpoint(name,tmp1,tmp2);
-    );
+    Putonseg(line,LLcrd(Arg1),LLcrd(Arg2),[]);
   );
 );
+Putonline(name,p1,p2,options):=(
+//help:Putonline("C","lnAB");
+//help:Putonline("C",pA,pB);
+  regional(line,tmp1,tmp2);
+  line=Lineplot("",[p1,p2],["nodata"]);
+  tmp1=name+"1";
+  tmp2=name+"2";
+  Putpoint(tmp1,line_1); // 190216 // no ketjs on
+  Putpoint(tmp22,line_2); // 190216 // no ketjs off
+  Putonseg(name,parse(tmp1),parse(tmp2),options);
+); //190216to
 ////%Putonline end////
 
 ////%Putonseg start////
@@ -1806,7 +1797,7 @@ Putonseg(name,p1,p2):=Putonseg(name,p1,p2,[]);
 Putonseg(name,p1org,p2org,options):=(
 //help:Putonseg("C","sgAB");
 //help:Putonseg("C",pA,pB);
-  regional(Eps,par,dx,dy,p,tmp,tmp1,tmp2);
+  regional(Eps,par,p1,p2,dx,dy,p,tmp,tmp1,tmp2);
   Eps=10^(-5);
   par=0.5;
   tmp=Divoptions(options);
@@ -1815,12 +1806,11 @@ Putonseg(name,p1org,p2org,options):=(
   );
   p1=Lcrd(p1org);//16.10.11from
   p2=Lcrd(p2org);
-  Putonline(name,p1,p2,[par]);
+  Putpoint(name,(p1+p2)/2,parse(name+".xy")); //190216 //no ketjs
   p1=Pcrd(p1); p2=Pcrd(p2); //190120
   dx=p2_1-p1_1;
   dy=p2_2-p1_2;
   p=parse(name+".xy");
-//  p=LLcrd(p);
   if(abs(dx)>abs(dy), //190120from
     if(p1_1>p2_1,tmp=p1;p1=p2;p2=tmp);
     if(p_1<p1_1,parse(name+".xy="+Textformat(p1,5));p=p1);
@@ -6000,7 +5990,7 @@ Mkketcindyjs(options):=( //17.11.18
       nolabel,color,grid,out,igL,DL,Out);
   libnameL=["basic1","basic2","3d"];
   webflg="Y";  //190128 texflg removed
-  localflg="N"; //190209
+  localflg="Y"; //190209,0215
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
   color="";

@@ -7738,7 +7738,154 @@ Letter3d(M3d,"sw","M",["Color=blue"]);
 
 回転角の設定については，\hyperlink{setangle}{回転角の設定}を参照のこと。
 
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \end{description}
+
+\newpage
+%KeTJS==================================
+\hypertarget{ketjs}{}
+\section{KeTJS}
+
+\subsection{CindyJSとKeTJS}
+
+CindyJS は，Cinderellaの作品をHTMLにしてWeb上で動かせるようにしたものである。Cinderellaのファイルメニューには，「CindyJSに書き出す」があり，これにより，HTML ファイルができる。できたHTMLファイルをそのままダブルクリックすると，JavaScript で記述されたプログラムが走る。
+
+現在のところはCinderellaと完全互換ではなく，Web上ではMouseスロットなどが使えなかったり，線種が指定できなかったりする。それでも，自作のボタンは有効なので，これでWeb上のアプリケーションを作ることができる。
+
+KeTJSでは，CindyScriptにはないKeTCindyの関数（コマンド）を使って，作図アプリケーションを作ることができる。CindyJSの拡張版ともいえる。
+
+ただし，CindyJSがCinderellaと完全互換でないように，KeTJSもKeTCindyと完全互換ではない。たとえば，いまのところ空間図形は描けない。それでも，KeTCindyのシステムが入っていない環境でもWebブラウザで教材が使えることのメリットは大きいだろう。なお，HTMLなので，TeXのファイルへの書き出し機能はない。
+
+KeTJSでHTMLを作成するには，いったんCinderellaのファイルメニューから「CindyJSに書き出す」を選んでHTMLを作成した後，「KeTJS」ボタンをクリックする。「CindyJSに書き出す」で書き出されたHTMLは，実行のための環境設定しか書かれていない。これに，作図プログラムを追加するのが「KeTJS」「KeTJSoff」ボタンである。この２つのボタンの違いについては，次節「動作環境」を参照のこと。
+
+また，ひな形として，template2slide.cdy または samplesフォルダの s16 に入っているものを使うとよい。「KeTJS」「KeTJSoff」ボタンが設定してある。
+
+\subsection{KeTJSの動作環境}
+
+Cinderellaのファイルメニューから「CindyJSに書き出す」を選ぶと，CSSとランタイムへのリンク，およびJavaScriptのコードが書かれたHTMLファイルが書き出される。CSSとランタイムへのリンクは
+
+\begin{verbatim}
+<link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+<script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js">
+</script>
+\end{verbatim}
+    
+となっている。つまり，Web上からランタイム Cindy.js をオンラインでダウンロードしてJavaScriptを動かすことになる。そのため，ファイルをブラウザで開いたときに少し時間がかかる。また，インターネットに接続できないと実行できない。
+
+このCSSとランタイムは，自分のコンピュータに置くことができ，KeTCindyでは，KeTCindyのライブラリとともに，ketcindyjsというフォルダ内に入っている。
+
+また，JavaScriptのコードの方は，これだけではKeTCindyのコマンドでの作図はできない。
+
+そこで，KeTJS ボタンをクリックすると，リンク先はそのままで，JavaScriptのコードを追加して，ファイル名に json を追加したHTMLファイルを作る。
+
+また，KeTJSoff ボタン（オフラインで使う）をクリックすると，ランタイムをダウンロードして，Cinderellaのファイルと同じフォルダに ketcindyjs フォルダを作る。リンク先は次のようにketcindyjsに変え，JavaScriptのコードを追加して，ファイル名に jsoffL を追加したHTMLファイルを作る。
+
+\begin{verbatim}
+<link rel="stylesheet" href="ketcindyjs/CindyJS.css">
+<script type="text/javascript" src="ketcindyjs/Cindy.js"></script>
+\end{verbatim}
+
+このとき，関数 \verb|Setketcindyjs() | で，オプションを \verb|"Local=n"| とすると，ランタイムとして，kettex の中にある ketcindyjs を使う。このときはファイル名に jsoff を追加する。
+
+このときのリンク先は，Windowsの場合は
+
+\begin{verbatim}
+<link rel="stylesheet" href="file:///C:/kettex/texlive/texmf-dist/
+scripts/ketcindy/ketcindyjs/CindyJS.css">
+<script type="text/javascript" src="file:///C:/kettex/texlive/
+texmf-dist/scripts/ketcindy/ketcindyjs/Cindy.js"></script>
+\end{verbatim}
+
+Macの場合は
+
+\begin{verbatim}
+<link rel="stylesheet" href="file:////Applications/kettex/texlive/
+texmf-dist/scripts/ketcindy/ketcindyjs/CindyJS.css">
+<script type="text/javascript" src="file:////Applications/kettex/
+texlive/texmf-dist/scripts/ketcindy/ketcindyjs/Cindy.js"></script>
+\end{verbatim}
+
+である。
+
+注）MacOS 10.14 Mojave の場合，Applicationsへのパスが通らないことがある。（2019年2月16日現在）その場合は，\verb|Setketcindyjs() | のオプションを \verb|"Local=n"| としない。
+
+\vspace{\baselineskip}
+{\bf ファイル名について}
+
+Cinderellaのファイルメニューから「CindyJSに書き出す」ときのファイル名は，初期設定では作図中のファイル名と同じ。このファイル名は書き出すときに指定できる。
+
+「KeTJS」ボタンで書き出すときのファイル名は，\verb|Setfiles()| でファイル名が指定されていなければ，作図中のファイル名と同じ。これが「CindyJSに書き出す」で書き出したときのファイル名で同じでないと，KeTJSのHTMLは作成されない。したがって，次のいずれかでファイル名を決める。
+
+(1) ファイル名は作図中のCinderellaのファイル名と同じにする。\\
+　　このときは，\verb|Setfiles()| を使わない。
+
+(2) 作図中のCinderellaのファイル名と別の名前にする。\\
+　　このときは，\verb|Setfiles("filename")| を使い，CindyJSに書き出すときに\\
+　　 \verb|"filename"| で書き出す。
+
+%======KeTJSの設定============================
+
+\subsection{KeTJSの設定}
+
+\begin{description}
+
+\hypertarget{setketcindyjs}{}
+\item[関数]Setketcindyjs(options)
+\item[機能] KeTJSの設定
+\item[説明] オプションを設定しない場合（ Setketcindyjs() ）は，初期値が使われる。
+
+オプションは次の通り。
+
+\begin{tabbing}
+012345678\=3433778901234567\=890090666612345\=\kill
+Local \> y/n \>動作環境の設定。 \>初期値は y\\
+Scale \> 実数 \> 拡大・縮小　\>初期値は 1\\
+Nolabel \> 点のリスト \> ラベルを表示しない点を指定する。"No"だけでも可。\\
+Color \>  色名またはコード\> 背景色の指定。初期値はCinderellaの画面の色。\\
+\end{tabbing}
+【例】すべて設定するとき，次のように記述する。
+
+\verb|  Setketcindyjs(["Local=n","Scale=1.5","No=[A,B]","Color=[0.2,0,0,0]"]) |
+
+\vspace{\baselineskip}
+注１）Cinderellaの画面に背景の方眼が描かれているとき，「CindyJSに書き出す」で，この方眼も表示される。方眼を消したい場合は，画面下の「グリッドを描く」ツールで非表示にしておく。
+
+注２）「CindyJSに書き出す」で書き出すときの範囲は，ウィンドウ全体である。NE,SWの範囲ではない。2点NE,SWは\verb|  Setketcindyjs(["No=[NE,SW]" | で非表示になるが，NE,SEの範囲を広くとっておき，ウィンドウサイズをこれより小さくすれば \verb|"No=[NE,SW]"| オプションを使わなくても表示されずにすむ。
+
+注３）HTMLなので，画面に説明文などを表示したい場合は，HTMLファイルを開き，下の方の \verb|<body>| と \verb|</body>| の間，\verb|<div id="CSCanvas"></div>| の前後に書けば表示される。改行などは，HTMLのタグを用いる。
+
+\vspace{\baselineskip}
+\hypertarget{setketcindy}{}
+\item[コメント化] no ketjs
+\item[機能] KeTJSへの書き出しの有無を指定
+\item[説明] コマンドの末尾に　\verb|//| に続いて書くと，その行はKeTJSに出力しない。
+ブロック単位で非出力にするには，ブロックを \verb|//no ketjs on|，\verb|//no ketjs off| ではさむ。
+
+【例】次のスクリプトは，いずれも画面上では四角形ABCDと対角線AD,BCを描いている。
+
+\begin{verbatim}
+Listplot("1",[A,B,C,D,A]);
+Listplot("2",[A,C]);
+Listplot("3",[B,D]);// no ketjs
+\end{verbatim}
+
+この場合，HTMLでは対角線BDは描かれない。
+
+\begin{verbatim}
+Listplot("1",[A,B,C,D,A]);
+// no ketjs on
+Listplot("2",[A,C]);
+Listplot("3",[B,D]);
+// no ketjs off
+\end{verbatim}
+
+この場合，対角線は2本とも描かれない。
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\end{description}
+
 
 \newpage
 %付録==================================
@@ -8077,7 +8224,10 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{vertexedgeface}{VertexEdgeFace(面データ,option)}\>頂点と面から辺を求め，辺を描く\\
 \hyperlink{wireparadata}{Wireparadata(name,PD,式,int,int,opt,opt)}\>曲面のワイヤフレームを陰線処理\\
 \hyperlink{xyzax3data}{Xyzax3data(name,文字,文字,文字,options)}\>座標軸の表示\\
-\hyperlink{xyzcoord}{Xyzcoord(P.x,P.y,Pz.y)}\>主副画面で決まる点の座標
+\hyperlink{xyzcoord}{Xyzcoord(P.x,P.y,Pz.y)}\>主副画面で決まる点の座標\\
+【KeTJS】\\
+\hyperlink{setketcindyjs}{Setketcindyjs(options)}\>KeTJSの設定\\
+
 \end{tabbing}
 
 \end{document}

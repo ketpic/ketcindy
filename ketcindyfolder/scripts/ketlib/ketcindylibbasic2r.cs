@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190216] loaded");
+println("ketcindybasic2[20190217] loaded");
 
 //help:start();
 
@@ -1771,19 +1771,19 @@ Putonline(name,Arg1,Arg2):=(
     line=parse(Arg1); options=Arg2;
     Putonseg(name,LLcrd(line_1),LLcrd(line_2),options);
   ,
-    Putonseg(line,LLcrd(Arg1),LLcrd(Arg2),[]);
+    Putonline(name,LLcrd(Arg1),LLcrd(Arg2),[]);
   );
 );
 Putonline(name,p1,p2,options):=(
 //help:Putonline("C","lnAB");
 //help:Putonline("C",pA,pB);
-  regional(line,tmp1,tmp2);
+  regional(line);
   line=Lineplot("",[p1,p2],["nodata"]);
-  tmp1=name+"1";
-  tmp2=name+"2";
-  Putpoint(tmp1,line_1); // 190216 // no ketjs on
-  Putpoint(tmp22,line_2); // 190216 // no ketjs off
-  Putonseg(name,parse(tmp1),parse(tmp2),options);
+//  tmp1=name+"1";
+//  tmp2=name+"2";
+//  Putpoint(tmp1,line_1); // 190216 
+//  Putpoint(tmp22,line_2); // 190216
+  Putonseg(name,line_1,line_2,options);
 ); //190216to
 ////%Putonline end////
 
@@ -1828,47 +1828,34 @@ Putonseg(name,p1org,p2org,options):=(
 ////%Putonseg end////
 
 ////%Putoncurve start////
-Putoncurve(pn,crv):=Putoncurve(pn,crv,[]);
-Putoncurve(pn,crv,options):=(
+Putoncurve(pn,crv):=putoncurve(pn,crv,[]);
+Putoncurve(pn,crvorg,options):=(
 //help:Putoncurve("A","gr1");
-//help:Putoncurve("A","gr1",[0,XMAX]);
-  regional(Pmt,pstr,optionL,leftlim,rightlim,tmp,tmp1,Flg,Msg);
-  if(!islist(options),optionL=[options],optionL=options);
-  leftlim=XMIN;
-  rightlim=XMAX;
-  Flg=0;
-  Msg="y";
-  forall(optionL,
-    if(isstring(#),  // 16.02.10 from
-      tmp=indexof(#,"=");
-      tmp1=Toupper(substring(#,tmp,tmp+1));
-      if(tmp1=="N", Msg="n"); // 16.02.10 until
-    ,
-      if(Flg==0,
-        leftlim=#;
-        Flg=Flg+1;
-      ,
-        rightlim=#;
-      );
-    );
+  regional(eps,crv,close,nn,p1,p2,tmp,tmp1);
+  eps=10^(-3);
+  crv=crvorg;
+  if(isstring(crv),crv=parse(crv));
+  close=false;
+  if(|crv_1-crv_(length(crv))|<eps,
+    close=true;
   );
-  Pmt=MeetCurve(crv,leftlim,0);
-  pstr=apply(allpoints(),Textformat(#,5)); // 15.04.07
-  if(!contains(pstr,pn),
-    createpoint(pn,Pcrd(Pmt));
+  tmp=parse(pn); //no ketjs on
+  if(!ispoint(tmp),
+    Putpoint(pn,[0,0],parse(pn+".xy"));
+  ); //no ketjs off
+  tmp=Paramoncurve(parse(pn),crvorg);
+  nn=floor(tmp);
+  p1=crv_nn;
+  if(nn<length(crv),
+    p2=crv_(nn+1);
+    Putonseg(pn,p1,p2);
   ,
-    tmp1=parse(pn+".x");
-    if(tmp1< leftlim % tmp1>rightlim,
-      if(tmp1< leftlim,tmp= leftlim, tmp=rightlim);
-      Pmt=MeetCurve(crv,Textformat(tmp,5),pn+".y");
+    if(close,
+      p2=crv_1;
+      Putonseg(pn,p1,p2);
     ,
-      Pmt=MeetCurve(crv,pn+".x",pn+".y");
+      parse(pn+".xy="+Textformat(Ptend(crv),5));
     );
-    ptstr=pn+".xy="+Textformat(Pcrd(Pmt),5)+";";
-    parse(ptstr);
-  );
-  if(Msg=="y",
-    println("Put "+pn+" on Curve "+text(crv));
   );
 );
 ////%Putoncurve end////

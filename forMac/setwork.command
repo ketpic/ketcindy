@@ -1,5 +1,9 @@
 #!/bin/sh
-#      20181207
+#      20190217
+# 190217from
+pathM="/Applications/Maxima.app/Contents/Resources/maxima.sh"
+pathMn="/Applications/Maxima.app/Contents/Resources/opt/bin/maxima"
+# 109217to
 cd `dirname $0`
 if [ -e ../ketcindyfolder ]; then
   cd ../ketcindyfolder
@@ -70,6 +74,12 @@ if [ ${ans} = "s" ]; then
 else
   echo  "Pathpdf=\"preview\";" >> ${dist}${changesetting}
 fi
+# 190217from
+find -f ${pathM}
+if [ $? -gt 0 ]; then
+  echo  "PathM=\"${pathMn}\";" >> ${dist}${changesetting}
+fi
+# 190217to
 echo  "Mackc=\"open\";" >>${dist}${changesetting}
 sleep 1
 exit 0

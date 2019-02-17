@@ -1486,9 +1486,9 @@ Invert(nm,Fig,options):=(
 ////%Paramoncrv start////
 Paramoncrv(pP,Gdata):=Paramoncurve(pP,Gdata);//180723
 ////%Paramoncrv end////
-////%ParamonCurve start////
-ParamonCurve(point,Gdata):=(
-//help:ParamonCurve(A,"gr1");//180723[3lines]
+////%Paramoncurve start////
+Paramoncurve(point,Gdata):=(
+//help:Paramoncurve(A,"gr1");//180723[3lines]
   regional(Tmp,PtL,pP);
   if(ispoint(point),pP=point.xy,pP=point);
 //  Eps=10^(-8);
@@ -1496,8 +1496,8 @@ ParamonCurve(point,Gdata):=(
   Tmp=Nearestpt(pP,PtL);
   Tmp_2;
 );
-ParamonCurve(pP,nN,plist):=(
-//help:ParamonCurve(A,10,"gr1");
+Paramoncurve(pP,nN,plist):=(
+//help:Paramoncurve(A,10,"gr1");
   regional(PtL,Out,Pa,Pb,vV,vW,sS);
   if(isstring(plist),PtL=parse(plist),PtL=plist);
   PtL=apply(PtL,LLcrd(#));//16.10.16
@@ -1514,14 +1514,14 @@ ParamonCurve(pP,nN,plist):=(
   );
   Out;
 );
-////%ParamonCurve end////
+////%Paramoncurve end////
 
 ////%Pointoncrv start////
-Pointoncrv(tT,PtL):=PointonCurve(tT,PtL);
+Pointoncrv(tT,PtL):=Pointoncurve(tT,PtL);
 ////%Pointoncrv end////
-////%PointonCurve start////
-PointonCurve(tTorg,Gdata):=(
-//help:PointonCurve(20.5,"gr1");
+////%Pointoncurve start////
+Pointoncurve(tTorg,Gdata):=(
+//help:Pointoncurve(20.5,"gr1");
   regional(tT,Out,Eps,nN,sS,Pa,Pb,PtL);
   if(isstring(Gdata),PtL=parse(Gdata),PtL=Gdata);
   if(length(PtL)==1,PtL=PtL_1);
@@ -1539,7 +1539,7 @@ PointonCurve(tTorg,Gdata):=(
   );
   Out;
 );
-////%PointonCurve end////
+////%Pointoncurve end////
 
 ////%Koutenseg start////
 Koutenseg(pA,pB,pC,pD):=Koutenseg(pA,pB,pC,pD,[]);
@@ -2303,7 +2303,7 @@ Nearestpt(point,PL2):=(
         );
         sS=|pP-pA|;
         if(sS<Sm-Eps,
-          Tmp=ParamonCurve(pP,Ni,PL);
+          Tmp=Paramoncurve(pP,Ni,PL);
           Pm=pP; Lm=Tmp; Sm=sS;
         );
       );
@@ -6464,7 +6464,7 @@ EnclosingS(nm,plist,options):=(
         forall(1..(length(KL)),ii,
           tmp1=KL_ii_1;
           tmp=KL_ii_3;
-          tmp2=ParamonCurve(tmp1,tmp,Fdata);
+          tmp2=Paramoncurve(tmp1,tmp,Fdata);
           tmp3=KL_ii_2;
           if(tmp2>t1+Eps & tmp2<t2+Eps,
             qt=tmp1;

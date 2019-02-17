@@ -1779,7 +1779,7 @@ PutonCurve3d(name,pdstr):=(
   PutonCurve(name,pd2str);
   pt=parse(name+".xy");
   tmp=Nearestpt(pt,pd2str);  // 15.03.13
-  tmp1=ParamonCurve(tmp_1,tmp_2,pd2str);
+  tmp1=Paramoncurve(tmp_1,tmp_2,pd2str);
   tmp="sub"+pd2str;
   tmp2=PointonCurve(tmp1,tmp);
 //  pt=append(pt,tmp2_2); //181028[2lines]

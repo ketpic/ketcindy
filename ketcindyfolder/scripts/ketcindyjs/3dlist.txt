@@ -37,7 +37,7 @@ Reflectdata3d,3d,1600,1665,Divoptions,Reflectpoint3d,Flattenlist,textformat,Refl
 Scalepoint3d,3d,1670,1687,Scale3pt
 Scaledata3d,3d,1692,1761,Divoptions,Scalepoint3d,Flattenlist,textformat,RSform,Scale3data,Textformat,Projpara,Com2nd,Setcolor,GetLinestyle,Texcom,Subgraph
 Xyzcoord,3d,1765,1771,Mainsubpt3d
-PutonCurve3d,3d,1775,1791,PutonCurve,Nearestpt,ParamonCurve,PointonCurve,Xyzcoord,textformat,Defvar
+PutonCurve3d,3d,1775,1791,PutonCurve,Nearestpt,Paramoncurve,PointonCurve,Xyzcoord,textformat,Defvar
 Mkpointlist,3d,1795,1912,Workprocess,Finddef,Norm,Parapt,Parasubpt,Putpoint,Mainsubpt3d,Defvar
 Mkseg3d,3d,1916,1958,list,Divoptions,Finddef,Spaceline
 Ptseg3data,3d,1962,1996,Parapt,Textformat,Parasubpt,Mainsubpt3d,Defvar,Mkpointlist,Mkseg3d

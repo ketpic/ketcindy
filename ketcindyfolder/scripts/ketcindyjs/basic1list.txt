@@ -56,9 +56,9 @@ Numptcrv,basic1,1452,1457
 Ptcrv,basic1,1461,1466
 Invert,basic1,1470,1483,Listplot
 Paramoncrv,basic1,1487,1487,Paramoncurve
-ParamonCurve,basic1,1490,1516,Nearestpt,LLcrd
-Pointoncrv,basic1,1520,1520,PointonCurve
-PointonCurve,basic1,1523,1541
+Paramoncurve,basic1,1490,1516,Nearestpt,LLcrd
+Pointoncrv,basic1,1520,1520,Pointoncurve
+Pointoncurve,basic1,1523,1541
 Koutenseg,basic1,1545,1653
 IntersectcrvsPp,basic1,1659,1802,Divoptions,MeasureDepth,LLcrd,Koutenseg
 Intersectcrvs,basic1,1806,1812,IntersectcrvsPp
@@ -71,7 +71,7 @@ IntersectcurvesPp,basic1,2123,2226,LLcrd,Intersectpartseg,Collectsameseg,Nearest
 Intersectcurves,basic1,2230,2237,IntersectcurvesPp
 NearestptcrvPhy,basic1,2243,2252,Pcrd,MeasureDepth,Nearestpt
 Nearestptcrv,basic1,2256,2262,Nearestpt
-Nearestpt,basic1,2266,2319,MeasureDepth,ParamonCurve
+Nearestpt,basic1,2266,2319,MeasureDepth,Paramoncurve
 Derivative,basic1,2323,2414,Strsplit,Lineplot,IntersectcurvesPp,Pointoncurve,Dotprod,Divoptions,Toupper,PaO,Pcrd,Assign
 Tangentplot,basic1,2418,2465,Divoptions,Strsplit,Toupper,IntersectcurvesPp,Derivative,Lineplot
 Integrate,basic1,2469,2482,Integratefn,Integratedt

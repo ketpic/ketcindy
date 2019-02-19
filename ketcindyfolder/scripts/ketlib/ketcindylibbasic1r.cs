@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.11");
+println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190206] loaded");
+println("ketcindylibbasic1[20190220] loaded");
 
 //help:start();
 
@@ -5736,7 +5736,7 @@ Anglemark(Arg1,Arg2):=( // 2015.04.28 from
 Anglemark(nm,plist,options):=(
 //help([A,B,C],["E=\theta",2]);
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
-//help:Anglemark("1",[A,B,2*pi]);
+// help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=[size,"E/L=(sep,)letter"]);
   regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,color,
        Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg);
@@ -5767,7 +5767,7 @@ Anglemark(nm,plist,options):=(
       if(tmp1=="E",Bname="Expr(");
       Bname=Bname+Bpos+","+Dq+"c"+Dq+","+Dq;//16.10.29
       tmp1=indexof(tmp_2,",");
-      Bname=Bname+substring(tmp_2,tmp1,length(tmp))+Dq+")";
+      Bname=Bname+substring(tmp_2,tmp1,length(tmp_2))+Dq+")"; //190219
       if(tmp1>0,
         Brat=parse(substring(tmp_2,0,tmp1-1));
       );
@@ -7108,6 +7108,96 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
 );
 ////%Hatchdata end////
 
+////%Shadein start////
+Shadein(pstrorg):=( //190220
+  regional(pstr,ptL,pL,crv,
+      tmp,tmp1,tmp2,pm1,pm2,p1,p2,flg);
+  if(islist(pstrorg),pstr=pstrorg_1,pstr=pstrorg);
+  crv=[];
+  Framedata(["nodisp"]);
+  ptL=IntersectcurvesPp(pstr,frwin);
+  if(length(ptL)>0,
+    pL=apply(ptL,#_2);
+    forall(1..(length(pL)),
+      if(#<length(pL),
+       tmp1=pL_#;
+       tmp2=pL_(#+1);
+       tmp=Pointoncrv((tmp1+tmp2)/2,pstr);
+      ,
+        tmp1=pL_#;
+        tmp2=pL_1;
+        tmp=parse(pstr);
+        if(pL_#==length(tmp),
+          tmp=tmp_1;
+        ,
+          tmp=tmp_(length(tmp));
+        );
+      );
+      if(Inwindow(tmp),
+        tmp=Partcrv("",tmp1,tmp2,pstr,["nodata"]);
+      ,
+        tmp1=Pointoncrv(tmp1,pstr);
+        tmp2=Pointoncrv(tmp2,pstr);
+        pm1=Paramoncrv(tmp1,frwin);
+        pm2=Paramoncrv(tmp2,frwin);
+        if(floor(pm1)==floor(pm2),
+          tmp=Listplot("",[tmp1,tmp2],["nodata"]);
+        ,
+          tmp=floor(pm1);
+          p1=Pointoncrv(tmp,"frwin");
+          p2=Pointoncrv(mod(tmp,4)+1,"frwin");
+          tmp=p1-10*(p2-p1);
+          Listplot("frwin",[p1,tmp],["nodisp"]);
+          tmp=IntersectcurvesPp("sgfrwin",pstr);
+          if(mod(length(tmp),2)==0,
+            pm1=mod(floor(pm1),4)+1;
+            tmp=[tmp1,p2];
+            flg=0;
+            forall(1..3,
+              if(flg==0,
+                if(pm1<floor(pm2),
+                  pm1=mod(pm1,4)+1;
+                  p1=Pointoncrv(pm1,"frwin");
+                  tmp=append(tmp,p1);
+                ,
+                  flg=1;
+                );
+              );
+            );
+            if(pm1<pm2,tmp=append(tmp,tmp2));
+          ,
+            pm1=floor(pm1);
+            tmp=p1;p1=p2;p2=tmp;
+            tmp=[tmp1,p2];
+            flg=0;
+            forall(1..3,
+              if(flg==0,
+                if(pm1>ceil(pm2),
+                  pm1=mod(pm1-2,4)+1;
+                  p1=Pointoncrv(pm1,"frwin");
+                  tmp=append(tmp,p1);
+                ,
+                  flg=1;
+                );
+              );
+            );
+            if(pm1>pm2,tmp=append(tmp,tmp2));
+          );
+        );
+      );
+      if(length(crv)==0,
+        crv=tmp;
+      ,
+        crv=Joincrvs("",[crv,tmp],["nodata"]);
+      );
+    );
+  ,
+    if(Inwindow(parse(pstr+"_1")),crv=pstr,crv=frwin);
+  );
+  crv;
+);
+////%Shadein end////
+
 ////%Shade start////
 Shade(plist):=Shade("",plist,[]); //180613from
 Shade(Arg1,Arg2):=(
@@ -7118,10 +7208,10 @@ Shade(Arg1,Arg2):=(
   );
 );
 Shade(nm,plistorg,options):=( //180613to
-//help:Shade(["gr"],[0.5]);
-//help:Shade(["gr"],["Color=red"]);
-//help:Shade(["gr2","sg1"],["Color=[0,0,0,0.5]"]);
-//help:Shade(["gr2","sg1"],["Color=[1,0,0]"]);
+//help:Shade(["gr1"],[0.5]);
+//help:Shade(["gr1"],["Color=red"]);
+//help:Shade(["gr1"],["Color=[0,0,0,0.5]"]);
+// help:Shade(["gr1","sg1"],["Color=[1,0,0]"]);
 // help:Shade([[A,B,C,A]]);
 //help:Shade("1",["gr2","Invert(sg1)"],["Enc=y",startpt]]);
   regional(name,plist,jj,tmp,tmp1,tmp2,
@@ -7172,6 +7262,9 @@ Shade(nm,plistorg,options):=( //180613to
     );
     plist=["en"+nm];
   ); //180929to
+  if(length(plist)==1, //190220from
+    plist=[Shadein(plist)];
+  ); //190220to
   forall(1..(length(plist)),jj, //180613from
     if(flg==0,
       tmp1=plist_jj;
@@ -7196,7 +7289,7 @@ Shade(nm,plistorg,options):=( //180613to
   );//180613to
   if(flg==1,
     println("    some data not defined properly");
-  ,
+ ,
     G2=Joincrvs("1",plist,["nodata"]);
     G2=apply(G2,Pcrd(#));
     tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";

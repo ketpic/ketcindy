@@ -15,7 +15,6 @@ Fontsize
 Help
 Helplist
 Invdashline
-Inwindow
 Ketjsoption
 Mkketcindyjs
 Presentation

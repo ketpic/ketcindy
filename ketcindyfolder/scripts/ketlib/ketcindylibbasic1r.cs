@@ -7116,6 +7116,7 @@ Shadein(pstrorg):=( //190220
   crv=[];
   Framedata(["nodisp"]);
   ptL=IntersectcurvesPp(pstr,frwin);
+  ptL=sort(ptL,[#_2]);
   if(length(ptL)>0,
     pL=apply(ptL,#_2);
     forall(1..(length(pL)),

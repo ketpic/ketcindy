@@ -1,5 +1,6 @@
 // 20190220
 //    Shadein added, Shade changed (Shadein for 1 data)
+//    Shadein debugged
 // 20190219
 //    Anglemark debugged  ( tmp => tmp_2 )
 // 20190211

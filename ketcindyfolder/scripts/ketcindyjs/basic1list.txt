@@ -160,5 +160,5 @@ Enclosing,basic1,6520,6686,Divoptions,isList,Lcrd,Listplot,IntersectcurvesPp,Pre
 Makehatch,basic1,6694,6796,Lineplot,Intersectseg,Norm,Listplot
 Anyselected,basic1,6800,6808
 Hatchdata,basic1,6812,7108,HatchdataR,Hatchdatacindy,Listplot,Joincrvs,Enclosing2,Divoptions,Strsplit,Toupper,Anyselected,Bracket,isexists,Makehatch,Textformat,PaO,ReadOutData,Com2nd,Setcolor,GetLinestyle,Texcom,WriteOutData,LLcrd
-Shadein,basic1,7112,7198,Framedata,Partcrv,Paramoncrv,Listplot,IntersectcurvesPp,Pointoncrv,Joincrvs,Inwindow
-Shade,basic1,7202,7315,Divoptions,Strsplit,Toupper,Colorcmyk2rgb,Enclosing,Shadein,Joincrvs,Pcrd,PaO,Listplot,Textformat,Setcolor,Com2nd,Texcom,Dqq
+Shadein,basic1,7112,7199,Framedata,Partcrv,Paramoncrv,Listplot,IntersectcurvesPp,Pointoncrv,Joincrvs,Inwindow
+Shade,basic1,7203,7316,Divoptions,Strsplit,Toupper,Colorcmyk2rgb,Enclosing,Shadein,Joincrvs,Pcrd,PaO,Listplot,Textformat,Setcolor,Com2nd,Texcom,Dqq

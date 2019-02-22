@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190220] loaded");
+println("ketcindylibbasic1[20190222] loaded");
 
 //help:start();
 
@@ -84,6 +84,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ADDAXES="1";
   AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
   AXCOUNT=1; //181215
+  SHADECTR=1; //190222
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
   Dq=unicode("0022");
@@ -139,9 +140,10 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ,
     if(ismacosx(), //181125from
       Shellparent="/kc.command"; 
+      Mackc="open"; //190222
     ,
       Shellparent="/kc.sh"; 
-      Mackc="sh"; //190116
+      Mackc="bash"; //190222
     );  //181125to
     if(!isexists(Dirwork,""),
       println(Dirwork+" not exists");
@@ -846,9 +848,9 @@ Changework(dirorg,options):=( //16.10.21
     setdirectory(Dirwork);
     if(!iswindows(), //17.04.11
       if(!iskcexists(Dirwork),
-        SCEOUTPUT = openfile("/kc.command"); //181125
+        SCEOUTPUT = openfile(Shellparent); //190221
         closefile(SCEOUTPUT);
-        println(setexec(Dirwork,"/kc.command")); //181125
+        println(setexec(Dirwork,Shellparent)); //190221
       );
     );
   );
@@ -2222,6 +2224,9 @@ IntersectcurvesPp(crv1org,crv2org,options):=(
       out_ii=tmp2;
     );
   );
+  if(length(out)>0,  //190221from
+    out=sort(out,[#_2]);
+  );  //190221to
   out;
 );
 ////%IntersectcurvesPp end////
@@ -7110,25 +7115,24 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
 
 ////%Shadein start////
 Shadein(pstrorg):=( //190220
-  regional(pstr,ptL,pL,crv,
+  regional(pstr,ptL,pL,crv,nn,
       tmp,tmp1,tmp2,pm1,pm2,p1,p2,flg);
   if(islist(pstrorg),pstr=pstrorg_1,pstr=pstrorg);
   crv=[];
   Framedata(["nodisp"]);
   ptL=IntersectcurvesPp(pstr,frwin);
-  ptL=sort(ptL,[#_2]);
   if(length(ptL)>0,
     pL=apply(ptL,#_2);
-    forall(1..(length(pL)),
-      if(#<length(pL),
-       tmp1=pL_#;
-       tmp2=pL_(#+1);
+    forall(1..(length(pL)),nn,
+      if(nn<length(pL),
+       tmp1=pL_nn;
+       tmp2=pL_(nn+1);
        tmp=Pointoncrv((tmp1+tmp2)/2,pstr);
       ,
-        tmp1=pL_#;
+        tmp1=pL_nn;
         tmp2=pL_1;
         tmp=parse(pstr);
-        if(pL_#==length(tmp),
+        if(pL_nn==length(tmp),
           tmp=tmp_1;
         ,
           tmp=tmp_(length(tmp));
@@ -7148,7 +7152,7 @@ Shadein(pstrorg):=( //190220
           p1=Pointoncrv(tmp,"frwin");
           p2=Pointoncrv(mod(tmp,4)+1,"frwin");
           tmp=p1-10*(p2-p1);
-          Listplot("frwin",[p1,tmp],["nodisp"]);
+          Listplot("frwin",[p1,tmp],["nodisp","Msg=n"]);
           tmp=IntersectcurvesPp("sgfrwin",pstr);
           if(mod(length(tmp),2)==0,
             pm1=mod(floor(pm1),4)+1;
@@ -7168,12 +7172,11 @@ Shadein(pstrorg):=( //190220
             if(pm1<pm2,tmp=append(tmp,tmp2));
           ,
             pm1=floor(pm1);
-            tmp=p1;p1=p2;p2=tmp;
-            tmp=[tmp1,p2];
+            tmp=[tmp1,p1];
             flg=0;
             forall(1..3,
               if(flg==0,
-                if(pm1>ceil(pm2),
+                if(pm1>mod(ceil(pm2)-1,4)+1, //190222
                   pm1=mod(pm1-2,4)+1;
                   p1=Pointoncrv(pm1,"frwin");
                   tmp=append(tmp,p1);
@@ -7200,21 +7203,21 @@ Shadein(pstrorg):=( //190220
 ////%Shadein end////
 
 ////%Shade start////
-Shade(plist):=Shade("",plist,[]); //180613from
+Shade(plist):=Shade(plist,[]); 
 Shade(Arg1,Arg2):=(
-  if(isstring(Arg1),
-    Shade(Arg1,Arg2,[]);
+  if(islist(Arg2),
+    Shade(text(SHADECTR),Arg1,Arg2); //190222
   ,
-    Shade("",Arg1,Arg2);
+    Shade(Arg1,Arg2,[]);
   );
 );
-Shade(nm,plistorg,options):=( //180613to
+Shade(nm,plistorg,options):=(
 //help:Shade(["gr1"],[0.5]);
 //help:Shade(["gr1"],["Color=red"]);
 //help:Shade(["gr1"],["Color=[0,0,0,0.5]"]);
 // help:Shade(["gr1","sg1"],["Color=[1,0,0]"]);
 // help:Shade([[A,B,C,A]]);
-//help:Shade("1",["gr2","Invert(sg1)"],["Enc=y",startpt]]);
+//help:Shade(["gr2","Invert(sg1)"],["Enc=y",startpt]]);
   regional(name,plist,jj,tmp,tmp1,tmp2,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
   name="shade"+nm;
@@ -7313,6 +7316,7 @@ Shade(nm,plistorg,options):=( //180613to
   Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722 //no ketjs on
   Com2nd(Str,["before"]);
   Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722 //no ketjs off
+  SHADECTR=SHADECTR+1;
 );
 ////%Shade end////
 

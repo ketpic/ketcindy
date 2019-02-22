@@ -41,6 +41,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ADDAXES="1";
   AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
   AXCOUNT=1; //181215
+  SHADECTR=1; //190222
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
   Dq=unicode("0022");

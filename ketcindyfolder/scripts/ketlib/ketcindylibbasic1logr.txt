@@ -1,3 +1,9 @@
+// 20190221
+//    Shadein debugged
+//    Ketinit, Shade changed  (SHADCTR added)
+// 20190221
+//    Intersectcurves changed ( "out" sorted )
+//    Changework changed ( "/kc.command" => Shellparent)
 // 20190220
 //    Shadein added, Shade changed (Shadein for 1 data)
 //    Shadein debugged

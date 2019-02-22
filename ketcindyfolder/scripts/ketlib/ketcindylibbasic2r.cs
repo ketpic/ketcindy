@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190217] loaded");
+println("ketcindybasic2[20190222] loaded");
 
 //help:start();
 
@@ -4559,7 +4559,7 @@ Maketitle(name):=(
   ,
     println(SCEOUTPUT,"\usepackage[dvipdfmx]{graphicx}");
   );
-  println(SCEOUTPUT,"\usepackage[usenames]{xcolor}");
+  println(SCEOUTPUT,"\usepackage[usenames]{color}"); //190222
   forall(ADDPACK, 
 //    if(indexof(#,"[")==0, 
 //      println(SCEOUTPUT,"\usepackage{"+#+"}");
@@ -4895,7 +4895,7 @@ Presentation(texfile,txtfile):=(
   ,
     println(SCEOUTPUT,"\usepackage[dvipdfmx]{graphicx}");
   );
-  println(SCEOUTPUT,"\usepackage{xcolor}");//17.07.31
+  println(SCEOUTPUT,"\usepackage{color}");//190222
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow";
   tmp4="abcdefghijklmno";
@@ -6299,7 +6299,7 @@ Mkketcindyjs(options):=( //17.11.18
         flg=1;
       );
       if(flg==0,
-        tmp=indexof(tmp1_jj,"type: "+Dq+"Free")+indexof(tmp1_jj,"type: "+Dq+"Point");
+        tmp=indexof(tmp1_jj,"type: "+Dq+"Free")+indexof(tmp1_jj,"type: "+Dq+"Point")+indexof(tmp1_jj,"type: "+Dq+"Mid");;
         if(tmp>0,
           tmp2=tmp1_jj;
           tmp=Indexall(tmp2,Dq); //190129from

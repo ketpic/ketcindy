@@ -100,7 +100,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ErrFlag=0;
   KETJSOP=[]; //190129
   // no ketjs on 190122
-  setdirectory(Dirwork);
+//  setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12
     Fhead=text(curkernel());
     Fhead=replace(Fhead,".cdy","");
@@ -126,15 +126,6 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
     );
   );
   Userhome=Homehead+pathsep()+getname(); //190128
-  Changesetting(); //190128
-  Changework(Dircdy+pathsep()+work); //180329to,181001
-  Fnametex=Fhead+".tex";
-  FnameR=Fhead+".r";
-  FnamebodyR=Fhead+"body.r";
-  Fnameout=Fhead+".txt";  // 17.10.13until
-  if(!isstring(Mackc),// 16.06.07
-    Mackc="sh"; 
-  );
   if(iswindows(),
     Batparent="\kc.bat";
   ,
@@ -145,6 +136,10 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
       Shellparent="/kc.sh"; 
       Mackc="bash"; //190222
     );  //181125to
+  );
+  Changesetting(); //190128
+  Changework(Dircdy+pathsep()+work); //180329to,181001
+  if(!iswindows(),
     if(!isexists(Dirwork,""),
       println(Dirwork+" not exists");
     ,
@@ -157,6 +152,10 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
       println(setexec(Dirwork,Shellparent));
     );
   );
+  Fnametex=Fhead+".tex";
+  FnameR=Fhead+".r";
+  FnamebodyR=Fhead+"body.r";
+  Fnameout=Fhead+".txt";  // 17.10.13to
 // no ketjs off 190122
   ArrowlineNumber=1;  // 15.01.05
   ArrowheadNumber=1;

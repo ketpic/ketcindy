@@ -1,11 +1,11 @@
 #!/bin/sh
-#      20181226
+#      20180223
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
 texbinpath=/usr/bin
 #ketsrc=~/Desktop/ketcindyfolder
-cindyplug=~/cinderella/Plugins
+cindyplug=/usr/local/cinderella/Plugins
 homehead=/home
 
 ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
@@ -50,6 +50,13 @@ if [ $? -gt 0 ]; then
 else
   echo "styles copied to "${ketcindystyle}
   sudo ${texbinpath}/mktexlsr
+fi
+cd ${cindyplug}
+if [ -e KetCindyPlugin.jar ]; then
+  sudo rm ${cindyplug}/KetCindyPlugin.jar
+fi
+if [ -e ketcindy.ini ]; then
+  sudo rm ${cindyplug}/ketcindy.ini
 fi
 cd ${ketcindyscripts}
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}

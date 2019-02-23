@@ -1,6 +1,7 @@
-// 20190221
+// 20190223
 //    Shadein debugged
 //    Ketinit, Shade changed  (SHADCTR added)
+//    Ketinit debugged (positon Changework)
 // 20190221
 //    Intersectcurves changed ( "out" sorted )
 //    Changework changed ( "/kc.command" => Shellparent)

@@ -22,14 +22,27 @@ KETCindyのインストール (Linux)
 \hfill 修正日：\today
 
 \begin{enumerate}[\bf\large 1.]
-\item Cinderella, R, Maxima をインストールする．
+\item Cinderella, R, Maxima, Evince をインストールする．
  \begin{itemize}
  \item \url{https://beta.cinderella.de}  (Cinderella)
- \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+    \begin{itemize}
+    \item[注)]Unix Installをダウンロードして次を実行する．\\
+　　　\verb|sudo bash Cinderella_unix_2_8.sh|
+    \item[注)]Javaがインストールされていなかったらインストールする．\\
+　　　\verb|sudo apt install openjdk-7-jre|（または 8）
+    \end{itemize}
+    \item RとMaximaは次を実行すればインストールできる．\\
+　　　\verb|sudo apt install r-base maxima|
+    \begin{itemize}
+    \item[注)]R, MaximaのHPは\\
+ 　　\url{https://cran.r-project.org}   (R)\\
+　　 \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+    \end{itemize}
+ \item Evince が入っていなければ，インストールする．\\
+　　　\verb|sudo apt install evince|
  \end{itemize}
 
-\item TeXをインストールしていない場合はインストールする．
+\item \TeX をインストールしていない場合はインストールする．
  \begin{enumerate}[(1)]
  \item TeXLiveを推奨
     \begin{itemize}
@@ -52,22 +65,24 @@ KETCindyのインストール (Linux)
     \item[注)]この場合は，ketcindy-masterになる．
     \end{itemize}
   \item ketcindy(-master)/forLinuxを開く．
-  \item ターミナルのshコマンドでsetketcindy.shを実行．
+  \item setketcindy.shをテキストエディタで開いて，パスを確認，修正する．
     \begin{itemize}
-    \item 表示されるパスが違っている場合\\
-    \hspace*{10mm}setketcindy.shをテキストエディタで開いて，パスを修正する．
+    \item ターミナルで以下を実行する．\\
+　　　\verb|sudo bash setketcindy.sh|
     \item scriptsの中身がTeXにコピーされる
     \item ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
-    \item CinderellaのPluginsにKetcindyPlugin.jarをコピー，ketcindy.iniが作成される．
+    \item CinderellaのPluginsにKetcindyPlugin.jarがコピーされketcindy.iniが作成される．
     \end{itemize}
-  \item ターミナルのshコマンドでsetwork.shを実行．
+  \item setwork.shをテキストエディタで開いて，パスを確認，修正する．
     \begin{itemize}
+    \item ターミナルで以下を実行する．\\
+　　　\verb|bash setketwork.sh|
     \item 作業ディレクトリketcindyがユーザホームに作成される．
-    \item タイプセットの方法（TeXの種類）\\
+    \item タイプセットの方法（\TeX の種類）\\
     \hspace*{10mm}通常は，platex (p)またはuplatex(u)を選ぶ．
     \item ketcindyフォルダにworkフォルダの中身がコピーされる．
     \item \verb|.ketcindy.conf|（不可視ファイルだが編集可能）がユーザホームに作成される．\\
-    \hspace*{10mm}注）TeXを切り替えるときなどはこのファイルを修正する．
+    \hspace*{10mm}注）\TeX を切り替えるときなどはこのファイルを修正する．
     \item マニュアルもコピーされる．
     \item 作業ディレクトリにketincy.confの雛形がコピーされる．
     \item KeTCindyを立ち上げたとき，設定ファイルは次の順に読み込まれる．
@@ -78,13 +93,14 @@ KETCindyのインストール (Linux)
       \end{enumerate}
     \end{itemize}
   \end{enumerate}
+
   \item KeTCindyのテストラン
     \begin{enumerate}[(1)]
-    \item 作業ディレクトリketcindyを開く．
-    \item ketcindyの中のtemplate1basic.cdyを選び，「情報を見る」を開く．
+    \item 作業ディレクトリketcindyにあるtemplate1basic.cdyを実行してみる．
       \begin{itemize}
-      \item アプリケーションが所定のCinderella2になっていることを確かめる．
-      \item「情報」を閉じて，template1basic.cdyをダブルクリックする．
+      \item ターミナルで以下を実行\\
+　　　\verb|cd (ketcindyのパス）|\\
+　　　\verb|Cinderella2 template1basic.cdy|
       \item 画面に白い枠が出れば，ライブラリの読み込みは成功．
       \end{itemize}
     \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．

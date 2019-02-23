@@ -1,9 +1,8 @@
 #!/bin/sh
-#      20181207
+#      20190222
 
 # Edit and uncomment the following line if necessary
 pathpdf=evince
-pathpdf=preview
 
 cd `dirname $0`
 if [ -e ../ketcindyfolder ]; then
@@ -63,6 +62,6 @@ echo  generating ${dist}/${changesetting}
 echo  // Re-setting PathT,PathR,Pathpdf,PathM,PathAd >${dist}${changesetting}
 echo  "PathT=PathThead+\"${tex}\";" >>${dist}${changesetting}
 echo  "Pathpdf=\"${pathpdf}\";" >> ${dist}${changesetting}
-echo  "Mackc=\"sh\";" >>${dist}${changesetting}
+echo  "Mackc=\"bash\";" >>${dist}${changesetting}
 sleep 1
 exit 0

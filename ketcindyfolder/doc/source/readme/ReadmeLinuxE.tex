@@ -21,13 +21,21 @@ How to install KeTCindy(Linux)
 
 \begin{enumerate}[\bf\large 1.]
 
-\item Install Cinderella, R and Maxima.
- \begin{itemize}
+\item Install Cinderella, R, Maxima and Evince.
  \item \url{https://beta.cinderella.de}  (Cinderella)
- \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
- \end{itemize}
-
+    \begin{itemize}
+    \item[Rem)]Download `Unix Install' and execute on terminal.\\
+    \hspace*{10mm}\verb|sudo bash Cinderella_unix_2_8.sh|
+    \item[Rem)]if Java has not been installed, install it.\\
+     \hspace*{10mm}\verb|sudo apt install openjdk-7-jre|（or 8）
+    \end{itemize}
+   \item R and Maxima can be installed:\\
+\hspace*{10mm}\verb|sudo apt install r-base maxima|
+    \begin{itemize}
+    \item[Rem)]HPs of R and Maxima are:\\
+    \hspace*{10mm}\url{https://cran.r-project.org}\\
+    \hspace*{10mm}\url{https://sourceforge.net/projects/maxima/files}
+    \end{itemize}
 \item Install TeX if any TeX has not been installed.
   \begin{enumerate}[(1)]
   \item TeXLive is recommended.
@@ -37,7 +45,6 @@ How to install KeTCindy(Linux)
   \item KeTTeX is a light-weight version of TeXLive and downloadable from\\
   \hspace*{6mm}\url{https://www.dropbox.com/s/vg8p07832e9hzlk/KeTTeX-linux-20171022.tar.xz?dl=0}
  \end{enumerate}
-
 
 \item Install KeTCdindy
   \begin{enumerate}[(1)]
@@ -49,22 +56,20 @@ How to install KeTCindy(Linux)
         \hspace*{10mm}Clone or Download \verb|>| Download ZIP
     \end{itemize}
   \item Open ketcindy(-master)/forLinux.
-  \item Open Terminal and execute setketcindy.sh with sh command
+  \item Open setketcindy.sh with a text editor and confirm/modify the paths.
     \begin{itemize}
-    \item if some paths are wrong,\\
-    \hspace*{5mm}open setketcindy.sh with a text editor, and edit paths written in it.
+    \item Execute with terminal:\\
+    \hspace*{10mm}\verb|sudo bash setketcindy.sh|
     \item Contents of scripts will be copied into TeX.
     \item ketcindystyle files will be copied and mktexlsr will be executed.
     \item In Cinderella/PlugIns\\
     \hspace*{5mm}KetcindyPluign.jar will be copied.\\
     \hspace*{5mm}ketcindy.ini will be generated .
     \end{itemize}
-    \item Open Terminal and execute setwork.sh with sh command.
+  \item Open setwork.sh with a text editor and confirm/modify it.
     \begin{itemize}
-    \item[Rem)]Control-click and select Terminal if necessary. 
-    \end{itemize}
-    \begin{itemize}
-    \item Work directory "ketcindy" will be generated in User's home.
+    \item Execute with terminal:\\
+    \hspace*{10mm}\verb|bash setwork.sh|
     \item TeX(typeset) will be usually latex,xelatex or pdflatex.
     \item Contents of “work” will be copied into "ketcindy"
     \item \verb|.ketcindy.conf| will be also generated in User's home.\\
@@ -80,17 +85,16 @@ How to install KeTCindy(Linux)
   \end{enumerate}
 
 \item Test run of KeTCindy
- \begin{enumerate}[(1)]
-  \item Double-click "template1basic.cdy" in work directory "ketcindy".\\
-  \hspace*{10mm}Then a frame in white appear on the screen.  \end{enumerate}
-  \item Press "Figure" button at the top left, then the final PDF output is displayed. 
+\begin{enumerate}[(1)]
+  \item Test template1basic.cdy in ketcindy folder(work directory).
     \begin{itemize}
-    \item[Rem)]To close the window of Terminal when the process exits :
-      \begin{itemize}
-      \item Start \verb|Terminal|.\\
-      \hspace*{10mm}Preferences \verb|>| Shell \verb|>| "Colse if the shell exited clearly"
-      \end{itemize}
-    \end{itemize} 
+    \item Execute on terminal:
+      \hspace*{10mm}\verb|cd (to the path of ketcindy)|\\
+      \hspace*{10mm}\verb|Cinderella2 template1basic.cdy|
+    \item a frame in white will appear on the screen.
+    \end{itemize}
+  \item Press "Figure" button at the top left, then the final PDF output is displayed. 
+ \end{enumerate}
 
 \item Set Texworks if necessary. 
   \begin{itemize}

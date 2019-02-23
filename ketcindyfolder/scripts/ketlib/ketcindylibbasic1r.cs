@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190222] loaded");
+println("ketcindylibbasic1[20190223] loaded");
 
 //help:start();
 
@@ -7154,39 +7154,41 @@ Shadein(pstrorg):=( //190220
           tmp=p1-10*(p2-p1);
           Listplot("frwin",[p1,tmp],["nodisp","Msg=n"]);
           tmp=IntersectcurvesPp("sgfrwin",pstr);
-          if(mod(length(tmp),2)==0,
-            pm1=mod(floor(pm1),4)+1;
-            tmp=[tmp1,p2];
+          if(mod(length(tmp),2)==0, //190223from
+            if(pm2<pm1,pm2=pm2+4); 
+            tmp=[tmp1];
+            pm1=floor(pm1)+1;
             flg=0;
             forall(1..3,
               if(flg==0,
-                if(pm1<floor(pm2),
-                  pm1=mod(pm1,4)+1;
+                if(pm1<pm2,
                   p1=Pointoncrv(pm1,"frwin");
                   tmp=append(tmp,p1);
+                  pm1=pm1+1;
                 ,
                   flg=1;
                 );
               );
             );
-            if(pm1<pm2,tmp=append(tmp,tmp2));
+            if(pm1-1<pm2,tmp=append(tmp,tmp2));
           ,
+            if(pm2>pm1,pm2=pm2-4);
+            tmp=[tmp1];
             pm1=floor(pm1);
-            tmp=[tmp1,p1];
             flg=0;
             forall(1..3,
               if(flg==0,
-                if(pm1>mod(ceil(pm2)-1,4)+1, //190222
-                  pm1=mod(pm1-2,4)+1;
+                if(pm1>pm2, //190222
                   p1=Pointoncrv(pm1,"frwin");
                   tmp=append(tmp,p1);
+                  pm1=pm1-1;
                 ,
                   flg=1;
                 );
               );
             );
-            if(pm1>pm2,tmp=append(tmp,tmp2));
-          );
+            if(pm1+1>pm2,tmp=append(tmp,tmp2));
+          ); //190223to
         );
       );
       if(length(crv)==0,

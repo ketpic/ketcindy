@@ -6,7 +6,6 @@ pathpdf=evince
 home=~
 dist=${home}/ketcindywork # work folder of ketcindy
 
-
 cd `dirname $0`
 if [ -e ../ketcindyfolder ]; then
   cd ../ketcindyfolder

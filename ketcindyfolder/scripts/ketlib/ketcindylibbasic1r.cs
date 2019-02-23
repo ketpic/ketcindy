@@ -139,19 +139,6 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   );
   Changesetting(); //190128
   Changework(Dircdy+pathsep()+work); //180329to,181001
-  if(!iswindows(),
-    if(!isexists(Dirwork,""),
-      println(Dirwork+" not exists");
-    ,
-      if(!iskcexists(Dirwork),
-        setdirectory(Dirwork);
-        SCEOUTPUT = openfile(Shellparent);
-        closefile(SCEOUTPUT);
-        println(Shellparent+" generated");
-      );
-      println(setexec(Dirwork,Shellparent));
-    );
-  );
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
   FnamebodyR=Fhead+"body.r";

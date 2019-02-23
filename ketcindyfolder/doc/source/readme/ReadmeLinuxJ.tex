@@ -16,7 +16,7 @@
 \begin{document}
 
 \begin{center}
-KETCindyのインストール (Linux)
+\ketcindy\ のインストール (Linux)
 \end{center}
 
 \hfill 修正日：\today
@@ -26,15 +26,15 @@ KETCindyのインストール (Linux)
  \begin{itemize}
  \item \url{https://beta.cinderella.de}  (Cinderella)
     \begin{itemize}
-    \item[注)]Unix Installをダウンロードして次を実行する．\\
+    \item[*]Unix Installをダウンロードして次を実行する．\\
 　　　\verb|sudo bash Cinderella_unix_2_8.sh|
-    \item[注)]Javaがインストールされていなかったらインストールする．\\
+    \item[*]Javaがインストールされていなかったらインストールする．\\
 　　　\verb|sudo apt install openjdk-7-jre|（または 8）
     \end{itemize}
     \item RとMaximaは次を実行すればインストールできる．\\
 　　　\verb|sudo apt install r-base maxima|
     \begin{itemize}
-    \item[注)]R, MaximaのHPは\\
+    \item[*]R, MaximaのHPは\\
  　　\url{https://cran.r-project.org}   (R)\\
 　　 \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
     \end{itemize}
@@ -58,19 +58,19 @@ KETCindyのインストール (Linux)
   \item ketcindyをCTAN(\url{https://ctan.org})からダウンロードする．\\
   \hspace*{10mm}ketcindyで検索 \verb|>| Package ketcindy \verb|>| download
     \begin{itemize}
-    \item[注)]最新版は，Repositoryのサイト\\
+    \item[*]最新版は，Repositoryのサイト\\
         \hspace*{10mm}\url{https://github.com/ket­pic/ketcindy}\\
        から以下のようにダウンロードできる．\\
         \hspace*{10mm}Clone or download \verb|>| Download ZIP
-    \item[注)]この場合は，ketcindy-masterになる．
+    \item[*]この場合は，ketcindy-masterになる．
     \end{itemize}
   \item ketcindy(-master)/forLinuxを開く．
   \item setketcindy.shをテキストエディタで開いて，パスを確認，修正する．
     \begin{itemize}
     \item ターミナルで以下を実行する．\\
 　　　\verb|sudo bash setketcindy.sh|
-    \item scriptsの中身がTeXにコピーされる
-    \item ketcindyのstyleファイルがTeXにコピーされmktexlsrが実行される．
+    \item scriptsの中身が\TeX にコピーされる
+    \item ketcindyのstyleファイルが\TeX にコピーされmktexlsrが実行される．
     \item CinderellaのPluginsにKetcindyPlugin.jarがコピーされketcindy.iniが作成される．
     \end{itemize}
   \item setwork.shをテキストエディタで開いて，パスを確認，修正する．

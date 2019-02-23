@@ -7162,7 +7162,7 @@ Shadein(pstrorg):=( //190220
             forall(1..3,
               if(flg==0,
                 if(pm1<pm2,
-                  p1=Pointoncrv(pm1,"frwin");
+                  p1=Pointoncrv(mod(pm1-1,4)+1,"frwin");
                   tmp=append(tmp,p1);
                   pm1=pm1+1;
                 ,
@@ -7178,8 +7178,8 @@ Shadein(pstrorg):=( //190220
             flg=0;
             forall(1..3,
               if(flg==0,
-                if(pm1>pm2, //190222
-                  p1=Pointoncrv(pm1,"frwin");
+                if(pm1>pm2,
+                  p1=Pointoncrv(mod(pm1-1,4)+1,"frwin");
                   tmp=append(tmp,p1);
                   pm1=pm1-1;
                 ,

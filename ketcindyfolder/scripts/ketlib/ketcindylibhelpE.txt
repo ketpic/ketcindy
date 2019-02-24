@@ -61,7 +61,7 @@
 //help:Hatchdata*(add hatching into some region
 // option : slope, degree, space betwen lines));
 //help:Enclosing*(generate the plot data of closed curve connecting some curves);
-//help:Shade*(add shading into some region   option : depth);
+//help:Shade*(add shading into some region   option : color,trimming(y/n));
 //help:Rotatepoint*(rotate the point,   option : center);
 //help:Translatepoint*(pararell transport of the point);
 //help:Scalepoint*(magnify or reduce the position of point   option : center);

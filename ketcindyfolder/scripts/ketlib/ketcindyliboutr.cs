@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190127] loaded");
+println("ketcindylibout[20190224] loaded");
 
 //help:start();
 
@@ -772,7 +772,7 @@ CalcbyR(name,Arg1,Arg2):=(
 );
 CalcbyR(name,path,cmd,optionorg):=(
 //help:CalcbyR(name,cmd);
-//help:CalcbyR(options=["m/r","Wait=2","Out=y/n","Pre=PVOFG"]);
+//help:CalcbyR(options=["m/r","Wait=2","Out=y/n","Pre=PVFG"]);
 //help:CalcbyR(options2=["Pre=!G" ]);
   regional(options,tmp,tmp1,tmp2,tmp3,realL,strL,eqL,
        cat,dig,prestr,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,waiting);
@@ -795,8 +795,9 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
   ); //181130to
   wfile="";
-  prestr="PVOFG"; //180508
+  prestr="VF"; //180508,190224
   waiting=30; //180608
+  nopoint="n"; //190222
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -1105,7 +1106,7 @@ CalcbyR(name,path,cmd,optionorg):=(
 Rfun(name,fun,argL):=Rfun(name,fun,argL,[]);//16.10.22
 Rfun(name,fun,argL,optionorg):=(
 //help:Rfun("1","rnorm",[10]);
-//help:Rfun(options=["Disp=y"]);
+//help:Rfun(options=["Disp=y(n)","Pre="]);
   regional(nm,options,eqL,disp,cmdL,
      tmp,tmp1,tmp2);
   nm="R"+name;

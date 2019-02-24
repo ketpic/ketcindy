@@ -1,3 +1,5 @@
+/ 20190224
+//    Shade changed ("Trim=n" added )
 // 20190223
 //    Shadein debugged
 //    Ketinit, Shade changed  (SHADCTR added)

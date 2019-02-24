@@ -60,7 +60,7 @@
 //追加オプション : "Num=");
 //help:Hatchdata*(斜線塗り.   オプション : 傾き（度），間隔);
 //help:Enclosing*(複数曲線をつなげて閉曲線を作成);
-//help:Shade*(シェーディング.   オプション : 濃さ);
+//help:Shade*(シェーディング.   オプション : 色, トリミング(y/n));
 //help:Rotatepoint*(点を回転.   オプション : 中心);
 //help:Translatepoint*(点を平行移動);
 //help:Translatedata*(プロットデータを平行移動);

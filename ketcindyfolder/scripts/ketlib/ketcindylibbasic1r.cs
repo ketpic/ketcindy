@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190223] loaded");
+println("ketcindylibbasic1[20190224] loaded");
 
 //help:start();
 
@@ -7193,7 +7193,7 @@ Shadein(pstrorg):=( //190220
 ////%Shade start////
 Shade(plist):=Shade(plist,[]); 
 Shade(Arg1,Arg2):=(
-  if(islist(Arg2),
+  if(!isstring(Arg1),
     Shade(text(SHADECTR),Arg1,Arg2); //190222
   ,
     Shade(Arg1,Arg2,[]);
@@ -7202,11 +7202,11 @@ Shade(Arg1,Arg2):=(
 Shade(nm,plistorg,options):=(
 //help:Shade(["gr1"],[0.5]);
 //help:Shade(["gr1"],["Color=red"]);
-//help:Shade(["gr1"],["Color=[0,0,0,0.5]"]);
+//help:Shade(["gr1"],["Trim=y(n)"]); //190224
 // help:Shade(["gr1","sg1"],["Color=[1,0,0]"]);
 // help:Shade([[A,B,C,A]]);
-//help:Shade(["gr2","Invert(sg1)"],["Enc=y",startpt]]);
-  regional(name,plist,jj,tmp,tmp1,tmp2,
+//help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
+  regional(name,plist,jj,trim,tmp,tmp1,tmp2,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
   name="shade"+nm;
   plist=plistorg;
@@ -7223,6 +7223,7 @@ Shade(nm,plistorg,options):=(
   opcindy=tmp_(length(tmp));
   tmp=select(plist,indexof(#,"Invert")>0); //180929from
   if(length(tmp)>0,encflg=1,encflg=0);
+  trim="Y";
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(tmp_1);
@@ -7234,6 +7235,9 @@ Shade(nm,plistorg,options):=(
       if(substring(tmp2,0,1)=="N",
         encflg=0;
       );
+    );
+    if(substring(tmp1,0,1)=="T",
+      trim=substring(tmp2,0,1);
     );
   );
   startpt=[];
@@ -7254,7 +7258,7 @@ Shade(nm,plistorg,options):=(
     );
     plist=["en"+nm];
   ); //180929to
-  if(length(plist)==1, //190220from
+  if((length(plist)==1)&(trim=="Y"), //190220from,109224
     plist=[Shadein(plist)];
   ); //190220to
   forall(1..(length(plist)),jj, //180613from

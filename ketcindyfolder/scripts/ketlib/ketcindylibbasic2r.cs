@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190222] loaded");
+println("ketcindybasic2[20190225] loaded");
 
 //help:start();
 
@@ -6299,7 +6299,7 @@ Mkketcindyjs(options):=( //17.11.18
         flg=1;
       );
       if(flg==0,
-        tmp=indexof(tmp1_jj,"type: "+Dq+"Free")+indexof(tmp1_jj,"type: "+Dq+"Point")+indexof(tmp1_jj,"type: "+Dq+"Mid");;
+        tmp=Indexof(tmp1_jj,"labeled: "); //190225
         if(tmp>0,
           tmp2=tmp1_jj;
           tmp=Indexall(tmp2,Dq); //190129from

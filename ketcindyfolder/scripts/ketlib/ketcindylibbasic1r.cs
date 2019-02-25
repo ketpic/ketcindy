@@ -7223,7 +7223,7 @@ Shade(nm,plistorg,options):=(
   opcindy=tmp_(length(tmp));
   tmp=select(plist,indexof(#,"Invert")>0); //180929from
   if(length(tmp)>0,encflg=1,encflg=0);
-  trim="Y";
+  trim="N";
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(tmp_1);

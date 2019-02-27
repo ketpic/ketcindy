@@ -1,12 +1,12 @@
-%%タイトル::slide0::kabegami//
-タイトル::slide0//
+%%タイトル::slide0::kabegami
+タイトル::slide0
 
-%%%%%%%%%%%%%%%%//
-new::Example 1//
-%repeat=,para=sinemove:{0}:s{65}{10}:input:1.2//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::Example 1
+%repeat=,para=sinemove:{0}:s{65}{10}:input:1.2
+\slidepage
 
-%%%%%%%%%%%%%%%%//
-new::Example2//
-%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::Example2
+%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2
+\slidepage

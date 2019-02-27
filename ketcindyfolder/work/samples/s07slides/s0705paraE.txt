@@ -1,11 +1,11 @@
-title::slide0::%wallpaperi//
+title::slide0::%wallpaperi
 
-%%%%%%%%%%%%%%%%//
-new::Example1//
-%repeat=,para=sinemove:{0}:s{65}{10}:input:1.2//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::Example1
+%repeat=,para=sinemove:{0}:s{65}{10}:input:1.2
+\slidepage
 
-%%%%%%%%%%%%%%%%//
-new::Example2//
-%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::Example2
+%repeat=,para=sinemove2:{0}:s{65}{10}:input:1.2
+\slidepage

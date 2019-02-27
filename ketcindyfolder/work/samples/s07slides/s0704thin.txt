@@ -1,45 +1,45 @@
 タイトル::slide0::%wallpaper/
 
-%%%%%%%%%%%%%%%%//
-main::メインスライド１//
-\slidepage[m]//
+%%%%%%%%%%%%%%%%
+main::メインスライド１
+\slidepage[m]
 
-%%%%%%%%%%%%%%%%//
-new::enumerate環境の使い方//
-%repeat=3,para//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::enumerate環境の使い方
+%repeat=3,para
+\slidepage
 
-%[2,-]::enumerate::[(1)]//
-%[2,-]::item::番号を変えるには，例えば [(1)]//
-%[3,-]::item::表示ページはリストで与える\\//
-%[3,-]::\hspace*{10mm}[1],\ [1,-],\ [1..3],\ [1..3,6]など//
-%[2,- ]::end//
+%[2,-]::enumerate::[(1)]
+%[2,-]::item::番号を変えるには，例えば [(1)]
+%[3,-]::item::表示ページはリストで与える\\
+%[3,-]::\hspace*{10mm}[1],\ [1,-],\ [1..3],\ [1..3,6]など
+%[2,- ]::end
 
-%%%%%%%%%%%%%%%%//
-new::薄文字の使い方//
-%repeat=4,para//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::薄文字の使い方
+%repeat=4,para
+\slidepage
 
-itemize//
-%thin[2,-]::item::Setslidebodyの3番目の引数で濃さを変更\\//
-%thin[2,-]::\hspace*{10mm}\verb|Setslidebody(["","",0.2]);|//
-%thin[3,-]::item::デフォルトは$0.1$//
-%thin[4]::item::リストのページ以外が薄文字になる//
-end//
+itemize
+%thin[2,-]::item::Setslidebodyの3番目の引数で濃さを変更\\
+%thin[2,-]::\hspace*{10mm}\verb|Setslidebody(["","",0.2]);|
+%thin[3,-]::item::デフォルトは$0.1$
+%thin[4]::item::リストのページ以外が薄文字になる
+end
 
-%%%%%%%%%%%%%%%%//
-new::layerの使い方//
-%repeat=5,para//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::layerの使い方
+%repeat=5,para
+\slidepage
 
-\setthin{0}//
+\setthin{0}
 
-itemize//
-%thin[1,-]::item::layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+//
-%thin[2,-]::item::layerの終わりは\verb|end|//
-%thin[3,-]::item::図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+//
-%thin[4,-]::item::図のサイズを変えるときは\\//
-%thin[4,-]::\hspace*{10mm}{:}{:}\verb+grf,0.8+//
-%thin[5]::item::通常の\verb|\putnote|文も使える//
-end//
+itemize
+%thin[1,-]::item::layerの始まりは\verb+layer+{:}{:}\verb+{120}{0}+
+%thin[2,-]::item::layerの終わりは\verb|end|
+%thin[3,-]::item::図は\verb+putnote+{:}{:}\verb+se{80}{5}+{:}{:}\verb+grf+
+%thin[4,-]::item::図のサイズを変えるときは\\
+%thin[4,-]::\hspace*{10mm}{:}{:}\verb+grf,0.8+
+%thin[5]::item::通常の\verb|\putnote|文も使える
+end
 

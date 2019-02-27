@@ -1,3 +1,5 @@
+// 20190226
+//     Histplot changed  ( [ ] => c( ) )
 // 20190224
 //     CalcbyR changed  (defaut of Pre : PVOFG => VF )
 // 20190127

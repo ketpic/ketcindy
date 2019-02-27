@@ -1,16 +1,16 @@
 title::slide0::%wallpaper/
 
-%%%%%%%%%%%%%%%%//
-main::Main slide//
-\slidepage[m]//
+%%%%%%%%%%%%%%%%
+main::Main slide
+\slidepage[m]
 
-%%%%%%%%%%%%%%%%//
-new::How to use enumerate//
-%repeat=3,para//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::How to use enumerate
+%repeat=3,para
+\slidepage
 
-%thin[2,-]::enumerate::[(1)]//
-%thin[2,-]::item::Add :\hspace{0mm}:[(1)] to change the style of item.//
-%thin[3,-]::item::Give a list of page numbers to be displayed.\\//
-%thin[3,-]::\hspace*{10mm}[1],\ [1,-],\ [1..3],\ [1..3,6], etc//
-%thin[2,- ]::end//
+%thin[2,-]::enumerate::[(1)]
+%thin[2,-]::item::Add :\hspace{0mm}:[(1)] to change the style of item.
+%thin[3,-]::item::Give a list of page numbers to be displayed.\\
+%thin[3,-]::\hspace*{10mm}[1],\ [1,-],\ [1..3],\ [1..3,6], etc
+%thin[2,- ]::end

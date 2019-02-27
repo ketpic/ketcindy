@@ -1,28 +1,28 @@
-%タイトル::slide0::kabegami//
-タイトル::slide0//
+%タイトル::slide0::kabegami
+タイトル::slide0
 
-%%%%%%%%%%%%%%%%//
-main::メインスライド１//
-\slidepage[m]//
+%%%%%%%%%%%%%%%%
+main::メインスライド１
+\slidepage[m]
 
-%%%%%%%%%%%%%%%%//
-new::$\bm{\sin x}$のグラフとlayer//
-%repeat=2//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::$\bm{\sin x}$のグラフとlayer
+%repeat=2
+\slidepage
 
-%まず，sinecurveの図を作っておく(1)//
+%まず，sinecurveの図を作っておく(1)
 
-layer::{100}{0}//
-%[1]::putnote::se{10}{15}::sinecurve,0.8//
-%[2]::putnote::se{60}{25}::sinecurve,0.8//
-end//
+layer::{100}{0}
+%[1]::putnote::se{10}{15}::sinecurve,0.8
+%[2]::putnote::se{60}{25}::sinecurve,0.8
+end
 
-%%%%%%%%%%%%%%%%//
-new::includegrpahicsとlayer//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::includegrpahicsとlayer
+\slidepage
 
-%まず，diffeq.pdfを作っておく(2)//
+%まず，diffeq.pdfを作っておく(2)
 
-layer::{100}{0}//
-putnote::s{60}{15}::include[bb=0.00 0.00 325.98 141.73,width=100mm]::diffeq.pdf//
-end//
+layer::{100}{0}
+putnote::s{60}{15}::include[bb=0.00 0.00 325.98 141.73,width=100mm]::diffeq.pdf
+end

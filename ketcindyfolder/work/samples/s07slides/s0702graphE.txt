@@ -1,23 +1,23 @@
-title::slide0::%wallpaper//
+title::slide0::%wallpaper
 
-%%%%%%%%%%%%%%%%//
-main::Main Slide//
-\slidepage[m]//
+%%%%%%%%%%%%%%%%
+main::Main Slide
+\slidepage[m]
 
-%%%%%%%%%%%%%%%%//
-new::input and layer//
-%repeat=2//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::input and layer
+%repeat=2
+\slidepage
 
-layer::{100}{0}// Change the 2nd {0} to a nonnegative number to change the position.
-%[1]::putnote::se{10}{15}::sine,0.8//
-%[2]::putnote::se{60}{25}::sine,0.8//
-end//
+layer::{100}{0} Change the 2nd {0} to a nonnegative number to change the position.
+%[1]::putnote::se{10}{15}::sine,0.8
+%[2]::putnote::se{60}{25}::sine,0.8
+end
 
-%%%%%%%%%%%%%%%%//
-new::includegrpahics and layer//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::includegrpahics and layer
+\slidepage
 
-layer::{100}{0}//
-putnote::s{60}{15}::include[bb=0.00 0.00 325.98 141.73,width=100mm]::diffeq.pdf//
-end//
+layer::{100}{0}
+putnote::s{60}{15}::include[bb=0.00 0.00 325.98 141.73,width=100mm]::diffeq.pdf
+end

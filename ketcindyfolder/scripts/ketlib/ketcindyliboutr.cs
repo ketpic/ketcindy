@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190224] loaded");
+println("ketcindylibout[20190226] loaded");
 
 //help:start();
 
@@ -1752,9 +1752,11 @@ Histplot(nm,dataorg,optionorg):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="B",
-      if(substring(tmp_2,0,1)=="[",
-        tmp1="c("+substring(tmp_2,1,length(tmp_2)-1)+")"; //181104
-      );
+      if(substring(tmp_2,0,1)=="[", // 190226from
+        tmp1=RSform(tmp_2);
+      ,
+        tmp1=tmp_2;
+      );// 190226to
       breaks="breaks="+tmp1;
       options=remove(options,[#]);
     );

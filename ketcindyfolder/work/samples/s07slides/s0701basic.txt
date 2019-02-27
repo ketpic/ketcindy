@@ -1,24 +1,24 @@
-タイトル::slide0::%wallpaper//
+タイトル::slide0::%wallpaper
 
-%%%%%%%%%%%%%%%%//
-main::メインスライド１//
-\slidepage[m]//
+%%%%%%%%%%%%%%%%
+main::メインスライド１
+\slidepage[m]
 
-%%%%%%%%%%%%%%%%//
-new::itemize環境の使い方//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::itemize環境の使い方
+\slidepage
 
-itemize//
-item::内容//
-item::結論//
-end//
+itemize
+item::内容
+item::結論
+end
 
-%%%%%%%%%%%%%%%%//
-new::enumerate環境の使い方//
-\slidepage//
+%%%%%%%%%%%%%%%%
+new::enumerate環境の使い方
+\slidepage
 
-enumerate::[(1)]//
-item::番号を変えるには，例えば [(1)]//
-item::後は同じ//
-end//
+enumerate::[(1)]
+item::番号を変えるには，例えば [(1)]
+item::後は同じ
+end
 

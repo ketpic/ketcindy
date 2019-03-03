@@ -33,6 +33,6 @@ Windispg
 Fillstore
 Setwindow
 Drwxy
-MeasureDepth
+Measuredepth
 Dashlinedata
 Textformat

@@ -1,3 +1,7 @@
+// 20190301
+//    MeasureDepth => Measuredepth
+// 20190228
+//   Putcell,Putcellexpr,Putrow,Putrowexpr,Putcell,Putcellexpr changed ( options added )
 // 20190225
 //   Mkketcindyjs debugged  ( nolabel )
 // 20190222

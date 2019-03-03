@@ -1,3 +1,6 @@
+// 20190301
+//    MeasureDepth => Measuredepth
+//    Readcsv changed  ( for 2 arg, ".csv" can be omitted )
 // 20190226
 //     Histplot changed  ( [ ] => c( ) )
 // 20190224

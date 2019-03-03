@@ -150,7 +150,7 @@ Textformat(value,dig):=(
   );
   tmp1;
 );
-MeasureDepth(list):=(
+Measuredepth(list):=(
   regional(tmp,tmp1,Depth,Flg);
   Flg=0;
   Depth=0;
@@ -354,7 +354,7 @@ Windispg(gcLorg):=( //190125
   forall(gcL,Nj,
     if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
     if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
-      tmp=MeasureDepth(Dt);
+      tmp=Measuredepth(Dt);
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
       tmp=Nj_2; //190119from

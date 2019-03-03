@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190225] loaded");
+println("ketcindybasic2[20190301] loaded");
 
 //help:start();
 
@@ -131,7 +131,7 @@ Rotatedata(nm,plist,angle,options):=(
   if(length(tmp1)>0,Pt=Lcrd(tmp1_1));
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
-  if(!isstring(pdata_1) & MeasureDepth(pdata)==1,
+  if(!isstring(pdata_1) & Measuredepth(pdata)==1,
       pdata=[pdata];
   );
   if(isstring(angle),Theta=parse(angle),Theta=angle);
@@ -139,8 +139,8 @@ Rotatedata(nm,plist,angle,options):=(
   PdL=[];
   forall(pdata,Njj,
     if(isstring(Njj),Kj=parse(Njj),Kj=Njj);
-    if(MeasureDepth(Kj)==0,Kj=[Kj]); //17.11.24
-    if(MeasureDepth(Kj)==1,Kj=[Kj]);
+    if(Measuredepth(Kj)==0,Kj=[Kj]); //17.11.24
+    if(Measuredepth(Kj)==1,Kj=[Kj]);
     tmp2=[];
     forall(Kj,Nj,
       tmp1=[];
@@ -204,7 +204,7 @@ Translatedata(nm,plist,mov,options):=(
   opcindy=tmp_(length(tmp));
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
-  if(!isstring(pdata_1) & MeasureDepth(pdata)==1,
+  if(!isstring(pdata_1) & Measuredepth(pdata)==1,
       pdata=[pdata];
   );
   tmp=Lcrd(mov);
@@ -212,7 +212,7 @@ Translatedata(nm,plist,mov,options):=(
   PdL=[];
   forall(pdata,Njj,
     if(isstring(Njj),Kj=parse(Njj),Kj=Njj);
-    if(MeasureDepth(Kj)==1,Kj=[Kj]);
+    if(Measuredepth(Kj)==1,Kj=[Kj]);
     tmp2=[];
     forall(Kj,Nj,
       tmp1=[];
@@ -297,14 +297,14 @@ Scaledata(nm,plist,rx,ry,options):=(
   );
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
-  if(!isstring(pdata_1) & MeasureDepth(pdata)==1,
+  if(!isstring(pdata_1) & Measuredepth(pdata)==1,
       pdata=[pdata];
   );
   Cx=Pt_1; Cy=Pt_2;
   PdL=[];
   forall(pdata,Njj,
     if(isstring(Njj),Kj=parse(Njj),Kj=Njj);
-    if(MeasureDepth(Kj)==1,Kj=[Kj]);
+    if(Measuredepth(Kj)==1,Kj=[Kj]);
     tmp2=[];
     forall(Kj,Nj,
       tmp1=[];
@@ -367,7 +367,7 @@ Reflectdata(nm,plist,symL,options):=(
   opcindy=tmp_(length(tmp));
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
-  if(!isstring(pdata_1) & MeasureDepth(pdata)==1,
+  if(!isstring(pdata_1) & Measuredepth(pdata)==1,
       pdata=[pdata];
   );
   Pt1=Lcrd(symL_1);
@@ -381,7 +381,7 @@ Reflectdata(nm,plist,symL,options):=(
   PdL=[];
   forall(pdata,Njj,
     if(isstring(Njj),Kj=parse(Njj),Kj=Njj);
-    if(MeasureDepth(Kj)==1,Kj=[Kj]);
+    if(Measuredepth(Kj)==1,Kj=[Kj]);
     tmp2=[];
     forall(Kj,Nj,
       tmp1=[];
@@ -724,7 +724,7 @@ Drawpoint(ptlistorg,nn):=(
   regional(ptlist,thick,tmp,tmp1);
   println("Drwpt : "+text(ptlistorg));
   if(islist(ptlistorg),
-    if(MeasureDepth(ptlistorg)==1,
+    if(Measuredepth(ptlistorg)==1,
       ptlist=ptlistorg
     ,
       ptlist=[ptlistorg]
@@ -1113,7 +1113,7 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   if(length(ctrlistorg)==length(ptlist)-1,
     forall(1..(length(ctrlistorg)),ii, //190202
       tmp1=apply(ctrlistorg_ii,Lcrd(#));  //190202
-      if(MeasureDepth(tmp1)==0,tmp=[tmp1],tmp=tmp1);
+      if(Measuredepth(tmp1)==0,tmp=[tmp1],tmp=tmp1);
       ctrlist=append(ctrlist,tmp);
     );
   ,
@@ -1303,7 +1303,7 @@ Mkbezierptcrv(ptdata,options):=(
   ,
     ptlist=ptdata;
   );
-  if(MeasureDepth(ptlist)==1,ptlist=[ptlist]);
+  if(Measuredepth(ptlist)==1,ptlist=[ptlist]);
   Out=[];
   forall(1..length(ptlist),
     tmp=floor((BezierNumber-1)/26);// 15.02.23
@@ -1325,7 +1325,7 @@ Mkbeziercrv(nm,ptctrL):=Mkbeziercrv(nm,ptctrL,[]);
 Mkbeziercrv(nm,ptctrL,options):=(
  //help:Mkbeziercrv("1",[[A,B,C,D],[[P,Q],[R,S],T]]);
   regional(ptctrLL,name,ptlist,ctrlist,tmp,tmp1,tmp2);
-  if(MeasureDepth(ptctrL)==2,ptctrLL=[ptctrL],ptctrLL=ptctrL);
+  if(Measuredepth(ptctrL)==2,ptctrLL=[ptctrL],ptctrLL=ptctrL);
   forall(1..length(ptctrLL),
     name=nm+text(#);
     ptlist=ptctrLL_#_1;
@@ -1404,7 +1404,7 @@ Readbezier(file,optionorg):=(
     tmp=file+text(nc);
     tmp1=parse(tmp+"k");
     tmp2=parse(tmp+"c");
-    if(MeasureDepth(tmp2)==1,tmp2=[tmp2]); // 16.04.22from
+    if(Measuredepth(tmp2)==1,tmp2=[tmp2]); // 16.04.22from
     if(geo==1,
       alpha="abcdefghijklmnopqrstuvwxyz";
       forall(1..length(tmp1),
@@ -1703,7 +1703,7 @@ Bspline(nm,ctrL,options):=(
 MeetCurve(Crv,Xorg,Yorg):=(
   regional(Cv,tmp,tmp1,tmp2,X0,Y0,x1,x2,y1,y2,Ylist,Ban,Tate);
   if(isstring(Crv),Cv=parse(Crv),Cv=Crv);
-  if(MeasureDepth(Cv)==2,Cv=Cv_1);
+  if(Measuredepth(Cv)==2,Cv=Cv_1);
   Cv=apply(Cv,LLcrd(#));  // 14.12.18
   while(length(Cv)==1,
     Cv=Cv_1;
@@ -2429,10 +2429,18 @@ Findcell(Tbdata,pos1,pos2):=(
 ////%Findcell end////
 
 ////%Putcell start////
-Putcell(pos1,pos2,dir,lttr):=Putcell("",pos1,pos2,dir,lttr);
-Putcell(Tbdata,pos1,pos2,dir,lttr):=(
+Putcell(pos1,pos2,dir,lttr):=Putcell("",pos1,pos2,dir,lttr,[]); //190228from
+Putcell(Arg1,Arg2,Arg3,Arg4,Arg5):=(
+  if(islist(Arg5),
+    Putcell("",Arg1,Arg2,Arg3,Arg4,Arg5);
+  ,
+    Putcell(Arg1,Arg2,Arg3,Arg4,Arg5,[]);
+  );
+);
+Putcell(Tbdata,pos1,pos2,dir,lttr,options):=(
 //help:Putcell("c0r0","c2r1","lt","abc");
 //help:Putcell(2,3,"c","xyz");
+//help:Putcell(options=["Color="]);
   regional(tmp,tmp1,tmp2,posnw,posse,
      posdir,posstr,ctr,dx,dy);
   tmp=Findcell(Tbdata,pos1,pos2);
@@ -2455,59 +2463,96 @@ Putcell(Tbdata,pos1,pos2,dir,lttr):=(
     posdir_1=posdir_1+dx;
     posstr=replace(posstr,"r","w");
   );
-  Letter(posdir,posstr,text(lttr));
-);
-
-Putcellexpr(pos1,pos2,dir,ex):=Putcellexpr("",pos1,pos2,dir,ex);
-Putcellexpr(Tbdata,pos1,pos2,dir,ex):=(
-//help:Putcellexpr("c0r0","c2r1","lt","abc");
-//help:Putcellexpr(2,3,"c","\sin x");
-  Putcell(Tbdata,pos1,pos2,dir,"$"+text(ex)+"$");
-);
+  Letter([posdir,posstr,text(lttr)],options);
+); //190228to
 ////%Putcell end////
 
+////%Putcellexpr start////
+Putcellexpr(pos1,pos2,dir,ex):=Putcellexpr("",pos1,pos2,dir,ex,[]); //190228from
+Putcellexpr(Arg1,Arg2,Arg3,Arg4,Arg5):=(
+  if(islist(Arg5),
+    Putcellexpr("",Arg1,Arg2,Arg3,Arg4,Arg5);
+  ,
+    Putcellexpr(Arg1,Arg2,Arg3,Arg4,Arg5,[]);
+  );
+);
+Putcellexpr(Tbdata,pos1,pos2,dir,ex,options):=(
+//help:Putcellexpr("c0r0","c2r1","lt","abc");
+//help:Putcellexpr(2,3,"c","\sin x");
+  Putcell(Tbdata,pos1,pos2,dir,"$"+text(ex)+"$",options);
+); //190228to
+////%Putcellexpr end////
+
 ////%Putrow start////
-Putrow(nrow,dir,lttrL):=Putrow("",nrow,dir,lttrL);
-Putrow(Tbdata,nrow,dir,lttrL):=(
+Putrow(nrow,dir,lttrL):=Putrow("",nrow,dir,lttrL,[]); //190228from
+Putrow(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Putrow("",Arg1,Arg2,Arg3,Arg4);
+  ,
+    Putcellrow(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+Putrow(Tbdata,nrow,dir,lttrL,options):=(
 //help:Putrow(1,"c",["x","y","z"]);
   regional(tmp,tmp1,mcol);
   mcol=length(lttrL);
   forall(1..mcol,
-    Putcell(Tbdata,#,nrow,dir,lttrL_#);
+    Putcell(Tbdata,#,nrow,dir,lttrL_#,options);
   );
-);
+); //190228to
 ////%Putrow end////
 
 ////%Putrowexpr start////
-Putrowexpr(nrow,dir,exL):=Putrowexpr("",nrow,dir,exL);
-Putrowexpr(Tbdata,nrow,dir,exL):=(
+Putrowexpr(nrow,dir,exL):=Putrowexpr("",nrow,dir,exL,[]); //190228from
+Putrowexpr(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Putrowexpr("",Arg1,Arg2,Arg3,Arg4);
+  ,
+    Putrowexpr(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+Putrowexpr(Tbdata,nrow,dir,exL,options):=(
 //help:Putrowexpr(2,"r",["x","y","z"]);
   regional(lttrL);
   lttrL=apply(exL,"$"+#+"$");
-  Putrow(Tbdata,nrow,dir,lttrL);
-);
+  Putrow(Tbdata,nrow,dir,lttrL,options);
+); //190228to
 ////%Putrowexpr end////
 
 ////%PutcoL start////
-PutcoL(mcol,dir,lttrL):=PutcoL("",mcol,dir,lttrL);
-PutcoL(Tbdata,mcol,dir,lttrL):=(
+PutcoL(mcol,dir,lttrL):=PutcoL("",mcol,dir,lttrL,[]); //190228from
+Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Putcellexpr("",Arg1,Arg2,Arg3,Arg4);
+  ,
+    Putcellexpr(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+PutcoL(Tbdata,mcol,dir,lttrL,options):=(
 //help:PutcoL(1,"c",["x","y","z"]);
   regional(tmp,tmp1,nrow);
   nrow=length(lttrL);
   forall(1..nrow,
-    Putcell(Tbdata,mcol,#,dir,lttrL_#);
+    Putcell(Tbdata,mcol,#,dir,lttrL_#,options);
   );
-);
+); //190228to
 ////%PutcoL end////
 
 ////%PutcoLexpr start////
-PutcoLexpr(mcol,dir,exL):=PutcoLexpr("",mcol,dir,exL);
-PutcoLexpr(Tbdata,mcol,dir,exL):=(
+PutcoLexpr(mcol,dir,exL):=PutcoLexpr("",mcol,dir,exL,[]); //190228from
+Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Putcellexpr("",Arg1,Arg2,Arg3,Arg4);
+  ,
+    Putcellexpr(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+PutcoLexpr(Tbdata,mcol,dir,exL,options):=(
 //help:PutcoLexpr(2,"r",["x","y","z"]);
   regional(lttrL);
   lttrL=apply(exL,"$"+#+"$");
-  PutcoL(Tbdata,mcol,dir,lttrL);
-);
+  PutcoL(Tbdata,mcol,dir,lttrL,options);
+); //190228to
 ////%PutcoLexpr end////
 
 ////%Setrange start////
@@ -2868,7 +2913,7 @@ Windispg(gcLorg):=( //190125
   forall(gcL,Nj,
     if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
     if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
-      tmp=MeasureDepth(Dt);
+      tmp=Measuredepth(Dt);
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
       tmp=Nj_2; //190119from
@@ -3374,7 +3419,7 @@ WriteOutData(filename,ptlist):=(
       Gdata=parse(Gname);
     );
     Gdata=Flattenlist(Gdata);
-    if(MeasureDepth(Gdata)==1,Gdata=[Gdata]);
+    if(Measuredepth(Gdata)==1,Gdata=[Gdata]);
     forall(Gdata,Gj,
       println(SCEOUTPUT,"start//");
       Str="";

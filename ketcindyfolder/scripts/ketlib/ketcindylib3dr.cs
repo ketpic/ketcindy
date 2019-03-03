@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190209] loaded");
+println("ketcindylib3d[20190301] loaded");
 
 //help:start();
 
@@ -426,7 +426,7 @@ ProjCurve(crv):=(
   sp=sin(PHI); cp=cos(PHI);
   st=sin(THETA); ct=cos(THETA);
   if(isstring(crv),CurveL=parse(crv),CurveL=crv);
-  if(MeasureDepth(CurveL)==1,CurveL=[CurveL]);
+  if(Measuredepth(CurveL)==1,CurveL=[CurveL]);
   Out=[];
   forall(CurveL,Curve,
     AnsL=[];
@@ -616,7 +616,7 @@ Subgraph(name3,opcindy):=( //181029
   regional(name,crvL,sub2d,color,tmp,tmp1,tmp2);
   name=replace("sub"+name3,"3d","2d");
   crvL=parse(name3);
-  if(MeasureDepth(crvL)==1,crvL=[crvL]);
+  if(Measuredepth(crvL)==1,crvL=[crvL]);
   sub2d=[];
   forall(crvL,tmp1,
     tmp2=[];
@@ -1228,10 +1228,10 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   tmp1=[];   // 15.10.31
   forall(Pd2L,
     if(isstring(#),tmp=parse(#),tmp=#);
-    if(MeasureDepth(tmp)==2,
+    if(Measuredepth(tmp)==2,
       tmp1=concat(tmp1,tmp);
     );
-    if(MeasureDepth(tmp)==1,
+    if(Measuredepth(tmp)==1,
       tmp1=append(tmp1,tmp);
     );
   );
@@ -1362,7 +1362,7 @@ Rotatepoint3d(point,w1,w2,center):=(
     );
   );
   if(Retflg==0,
-    if(MeasureDepth(point)>0,
+    if(Measuredepth(point)>0,
       PtL=point;
     ,
       PtL=[point];
@@ -1421,7 +1421,7 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
   Out=[];
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
-//    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+//    if(Measuredepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
       tmp=Rotatepoint3d(#,w1,w2,center); //180729
@@ -1477,7 +1477,7 @@ Translatepoint3d(point,w1):=(
 //help:Translatepoint3d(pt3d,[1,2,3]);
   regional(Eps,Ans,PtL,pt,num,xx,yy,zz,flg);
   Eps=10^(-4);
-  if(MeasureDepth(point)>0,
+  if(Measuredepth(point)>0,
     PtL=point;
   ,
     PtL=[point];
@@ -1519,7 +1519,7 @@ Translatedata3d(nm,P3data,w1,options):=(
   Out=[];
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
-    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+    if(Measuredepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
       tmp=Translatepoint3d(#,w1);
@@ -1615,7 +1615,7 @@ Reflectdata3d(nm,P3data,vecL,options):=(
   Out=[];
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
-//    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+//    if(Measuredepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
       tmp=Reflectpoint3d(#,vecL);
@@ -1710,7 +1710,7 @@ Scaledata3d(nm,P3data,ratio,options):=(
   Out=[];
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
-//    if(MeasureDepth(Pd)==1,Pd=[Pd]);
+//    if(Measuredepth(Pd)==1,Pd=[Pd]);
     Ans=[];
     forall(Pd,
       tmp=Scalepoint3d(#,ratio,center);
@@ -2296,7 +2296,7 @@ Drawpoint3d(pt3,options):=(
   regional(ptL,tmp,tmp1,tmp2);
   tmp=Divoptions(options);
   opcindy=tmp_(length(tmp));
-  if(MeasureDepth(pt3)==0,ptL=[pt3],ptL=pt3);
+  if(Measuredepth(pt3)==0,ptL=[pt3],ptL=pt3);
   forall(ptL,
     tmp="draw("+Textformat(Parapt(#),6)+opcindy+")";
     parse(tmp);
@@ -2313,7 +2313,7 @@ Pointdata3d(nm,pt3):=Pointdata3d(nm,pt3,[]);//181017from
 Pointdata3d(nm,pt3,options):=( //181017from
 //help:Pointdata3d("1",pt3dlist,options);
   regional(pt3L,pt2L,tmp);
-  if(MeasureDepth(pt3)==0,pt3L=[pt3],pt3L=pt3);
+  if(Measuredepth(pt3)==0,pt3L=[pt3],pt3L=pt3);
   pt2L=apply(pt3L,Parapt(#));
   Pointdata("2d"+nm,pt2L,append(options,"Disp=n"));
   tmp="pt3d"+nm+"="+format(pt3L,6);
@@ -2460,10 +2460,10 @@ Bezier3d(nm,ptlistorg,ctrlistorg,options):=
 //help:Bezier3d("1",["A","B","C"],["D","E","F","G"]);
 Bezier3(nm,ptctrlist):=Bezier3(nm,ptctrlist_1,ptctrlist_2,[]);
 Bezier3(nm,Ag1,Ag2):=(
-  if(MeasureDepth(Ag1)==0,
+  if(Measuredepth(Ag1)==0,
     Bezier3(nm,Ag1,Ag2,[]);
   ,
-    if(MeasureDepth(Ag1)>1,
+    if(Measuredepth(Ag1)>1,
       Bezier3(nm,Ag1_1,Ag1_2,Ag2);
     ,
       if(isstring(Ag_1_1),
@@ -3526,7 +3526,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
   if(Noflg<3,
     if(Outflg>=1,
       println("Output Faceremovaldata "+name3);
-      if(MeasureDepth(vfdata)==1,
+      if(Measuredepth(vfdata)==1,
         tmp1=text(apply(vfdata,#_[1,3]));
      ,
         tmp1=text([vfdata_[1,3]]);
@@ -3556,7 +3556,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
       if(Noflg==1,Ltype=0);
     );
     if(Inflg==1,
-      if(MeasureDepth(vfdata)==1,
+      if(Measuredepth(vfdata)==1,
         tmp1=apply(vfdata,parse(#_2));
       ,
         tmp1=[parse(vfdata_2)];

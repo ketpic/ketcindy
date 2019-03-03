@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190226] loaded");
+println("ketcindylibout[20190301] loaded");
 
 //help:start();
 
@@ -1286,7 +1286,13 @@ Readcsv(pathorg,file,optionorg):=(
 );
 // New readcsv [181125] 
 Readcsv(file):=Readcsv(Dirwork,file);
-Readcsv(path,file):=Readcsv(path,file,[]);
+Readcsv(Arg1,Arg2):=(  //190301from
+  if(islist(Arg2),
+    Readcsv(Dirwork,Arg1,Arg2);
+  ,
+    Readcsv(path,file,[]);
+  );
+); //190301from
 Readcsv(path,file,options):=(
 //help:Readcsv("ex.csv");
 //help:Readcsv(directory,"ex.csv");
@@ -1304,7 +1310,9 @@ Readcsv(path,file,options):=(
   if(Toupper(head)=="Y",
     from=2;
   ); //190125to
-  dt=readfile2str(path,file);
+  tmp=file;
+  if(indexof(tmp,".csv")==0,tmp=tmp+".csv"); //190301
+  dt=readfile2str(path,tmp);
   dt=tokenize(dt,"/LF/");
   end=length(dt);
   if(dt_(length(dt))=="",
@@ -4125,8 +4133,8 @@ Mkobjplatecmd(nm,pdorg,optionorg):=( // 16.06.18
   regional(pd,options,cmd,out,thick1,thick2,nn,pdn,
      reL,vtx,face,nv,npttmp,tmp1,tmp2,tmp3,tmp4);
   pd=pdorg;
-  if(MeasureDepth(pd)==1,pd=[pd]);
-  if(MeasureDepth(pd)==2,pd=[pd]);//16.10.04from
+  if(Measuredepth(pd)==1,pd=[pd]);
+  if(Measuredepth(pd)==2,pd=[pd]);//16.10.04from
   forall(1..length(pd),nn, // 16.06.19from
     pdn=pd_nn;
     vtx=pdn_1;
@@ -4232,8 +4240,8 @@ Mkobjcrvcmd(nm,pstorg,options):=(
   out=[];
   tmp1=parse(pst);
   flg=0;  // 16.04.23from
-  if(MeasureDepth(tmp1)==2,flg=1);
-  if(MeasureDepth(tmp1)==0,
+  if(Measuredepth(tmp1)==2,flg=1);
+  if(Measuredepth(tmp1)==0,
     if(islist(tmp1),flg=1);
   );
   if(flg==1,  // 16.04.23until
@@ -5170,7 +5178,7 @@ WritedataC(fnameorg,dataorg):=(
   regional(tmp,fname,data,kk,nn,pt);
   data=dataorg;
   if(isstring(data),data=parse(data));
-  if(MeasureDepth(data)==1,data=[data]);
+  if(Measuredepth(data)==1,data=[data]);
   fname=fnameorg;
   if(indexof(fname,".")==0, fname=fname+".txt");
   SCEOUTPUT=openfile(fname);
@@ -6451,7 +6459,7 @@ Sfcutparadatacdy(nm,cutfun,fd,options):=(
   Implicitplot("sfc"+nm,tmp,fd_5,fd_6,["Msg=n","nodisp"]);
   out3=[]; out2=[];
   tmp1=parse("impsfc"+nm);
-  if(MeasureDepth(tmp1)==1,tmp1=[tmp1]);
+  if(Measuredepth(tmp1)==1,tmp1=[tmp1]);
   forall(1..(length(tmp1)),jj,
     pL=tmp1_jj;
     tmp2=[];

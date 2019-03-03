@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190224] loaded");
+println("ketcindylibbasic1[20190301] loaded");
 
 //help:start();
 
@@ -1210,8 +1210,8 @@ Assign(funstr,varname,rep):=(
 );
 ////%Assign end////
 
-////%MeasureDepth start////
-MeasureDepth(list):=(
+////%Measuredepth start////
+Measuredepth(list):=(
   regional(tmp,tmp1,Depth,Flg);
   Flg=0;
   Depth=0;
@@ -1237,19 +1237,19 @@ MeasureDepth(list):=(
   );//180501
   Depth;
 );
-////%MeasureDepth end////
+////%Measuredepth end////
 
 ////%Flattenlist start////
 Flattenlist(pltlist):=(
 //help:Flattenlist([[2,3],[[1,2],[5,6]]]);
   regional(Out,nn,Dt,ii,tmp,flg);
   Out=[];
-  if(MeasureDepth(pltlist)==1,
+  if(Measuredepth(pltlist)==1,
     Out=[pltlist];
   ,
     forall(1..(length(pltlist)),nn,
       Dt=pltlist_nn;
-      if(MeasureDepth(Dt)<2,
+      if(Measuredepth(Dt)<2,
         Out=append(Out,Dt);
       ,
         forall(1..(length(Dt)),ii,
@@ -1399,7 +1399,7 @@ Crossprod(a,b):=(
 ////%Mvprod start////
 Mvprod(mat,vec):=( //190127
   regional(vecL);
-  if(MeasureDepth(vec)==0,vecL=[vec],vecL=vec);
+  if(Measuredepth(vec)==0,vecL=[vec],vecL=vec);
   Mvprod(mat,vecL,length(vecL));
 );
 Mvprod(mat,vecL,nn):=(
@@ -1675,8 +1675,8 @@ IntersectcrvsPp(Gr1,Gr2,options):=(
   Flg=0;
   if(isstring(Gr1),Data1=parse(Gr1),Data1=Gr1);
   if(isstring(Gr2),Data2=parse(Gr2),Data2=Gr2);
-  if(MeasureDepth(Data1)==2,Data1=Data1_1);
-  if(MeasureDepth(Data2)==2,Data2=Data2_1);
+  if(Measuredepth(Data1)==2,Data1=Data1_1);
+  if(Measuredepth(Data2)==2,Data2=Data2_1);
   Data1=apply(Data1,LLcrd(#));
   Data2=apply(Data2,LLcrd(#));
   if(length(Data1)==length(Data2),
@@ -2235,7 +2235,7 @@ NearestptcrvPhy(point,PL):=(
   regional(tmp,pP,plist);
   pP=Pcrd(point);
   if(isstring(PL),plist=parse(PL),plist=PL);
-  if(MeasureDepth(plist)==2,plist=plist_1);
+  if(Measuredepth(plist)==2,plist=plist_1);
   plist=apply(plist,#);  // 14.12.18
   tmp=Nearestpt(pP,plist);
   tmp=tmp_1;
@@ -2259,7 +2259,7 @@ Nearestpt(point,PL2):=(
       a1,b1,a2,b2,v1,v2,x1,x2,Tmp,rT,pP,sS,Lm,Pm,Sm,Flg);
 //help:Nearestpt("gr1","gr2");
   if(isstring(point),PL1=parse(point),PL1=point);
-  if(MeasureDepth(PL1)==2,PL1=PL1_1);
+  if(Measuredepth(PL1)==2,PL1=PL1_1);
   if(!islist(PL1_1),
     PL1=[PL1];
     Flg=0;
@@ -2267,7 +2267,7 @@ Nearestpt(point,PL2):=(
     Flg=1;
   );
   if(isstring(PL2),PL=parse(PL2),PL=PL2);
-  if(MeasureDepth(PL)==2,PL=PL_1);
+  if(Measuredepth(PL)==2,PL=PL_1);
   Eps=10^(-6);
   Ans=[PL1_1,1,PL_1,1,|PL1_1-PL_1|];
   forall(1..(length(PL1)),Nn, // 16.05.04
@@ -2491,7 +2491,7 @@ Integratedt(pltdata,range,options):=(
     Sm= IntegrateO(pltdata,range);
   ,
     if(isstring(pltdata),pdata=parse(pltdata),pdata=pltdata);
-    if(MeasureDepth(pdata)==2,pdata=pdata_1);
+    if(Measuredepth(pdata)==2,pdata=pdata_1);
     va1=MeetCurve(pdata,range_1,0);
     va2=MeetCurve(pdata,range_2,0);
     list=select(pdata,(#_1>range_1 & #_1<range_2));
@@ -2604,7 +2604,7 @@ IntegrateO(pltdata,rangeorg):=(
   ,
     pdata=pltdata;
   );
-  if(MeasureDepth(pdata)==2,pdata=pdata_1);
+  if(Measuredepth(pdata)==2,pdata=pdata_1);
   range=rangeorg;
   pmflg=1;
   if(range_2<range_1,
@@ -3598,7 +3598,7 @@ AddGraph(nm,pltdata,options):=(
       );
       GLIST=append(GLIST,name+"="+tmp1); //no ketjs
     ,
-      if(MeasureDepth(pdata)==1,
+      if(Measuredepth(pdata)==1,
         tmp1=name+"=Listplot("+Textformat(pdata,5)+")";
       ,
         tmp1="list"+PaO();
@@ -3744,7 +3744,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   name="part"+nm;
   if(isstring(PkLstr),PkL=parse(PkLstr),PkL=PkLstr);
   DepthFlg=0;
-  if(MeasureDepth(PkL)==2,
+  if(Measuredepth(PkL)==2,
     PkL=PkL_1;
     DepthFlg=1;
   );
@@ -3901,13 +3901,17 @@ Pointdata(nm,listorg,options):=(
   ,
     list=listorg
   ); //17.10.23
-  if(MeasureDepth(list)==0,list=[list]);//180530
-  tmp=MeasureDepth(list);
+  if(Measuredepth(list)==0,list=[list]);//180530
+  tmp=Measuredepth(list);
   if(tmp==1,ptlist=list,ptlist=list_1); //190126from
   tmp=apply(ptlist,[Textformat(Pcrd(#),5)]);
   tmp1=text(tmp);
   tmp2=substring(tmp1,1,length(tmp1)-1);
   tmp3=tmp1;
+  tmp=parse(tmp1);
+  if(length(tmp)==1, //190301from
+    tmp1=Textformat(tmp_1,5);
+  ); //190301to
   tmp=name+"="+tmp1;
   parse(tmp);
   tmp=nameL+"="+tmp3;
@@ -4291,7 +4295,7 @@ Plotdata(name1,func,variable,options):=(
       if(Msg=="Y", //190206
         println("generate Plotdata "+name);
       );
-      if(MeasureDepth(PdL)==1,
+      if(Measuredepth(PdL)==1,
         tmp1=apply(PdL,Pcrd(#));
       ,
         tmp1=[];
@@ -4466,7 +4470,7 @@ Paramplot(nm,funstr,variable,options):=(
       if(Msg=="Y", //190206
         println("generate Paramplot "+name);
       );
-      if(MeasureDepth(Out)==1,
+      if(Measuredepth(Out)==1,
         tmp1=apply(Out,Pcrd(#));
       ,
         tmp1=[];
@@ -4706,7 +4710,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
     if(msg=="Y", //181112
       println("generate Implicitplotdata "+name);
     );
-    if(MeasureDepth(out)==1,
+    if(Measuredepth(out)==1,
       tmp1=apply(out,Pcrd(#));
     ,
       tmp1=[];
@@ -4861,7 +4865,7 @@ Circledata(nm,cenrad,options):=(
 Framedata():=Framedata(["dr"]);//16.10.29from
 Framedata(list):=(
   regional(pA,pB);
-  if(MeasureDepth(list)==0,
+  if(Measuredepth(list)==0,
     pA=LLcrd((SW+NE)/2); // 15.09.17
     pB=LLcrd(NE);
     Framedata("win",[pA,pB],list);
@@ -5448,7 +5452,7 @@ Arrowheaddata(point,direction,options):=(
   hiraki=hiraki*pi/180;
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
-  if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
+  if(Measuredepth(Houkou)==2,Houkou=Houkou_1);
   if(coord=="P",//181018from
     if(ispoint(point),pP=point.xy,pP=point);
   ,
@@ -5552,7 +5556,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   options=concat(options,tmp); //181214to
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
-  if(MeasureDepth(Houkou)==2,Houkou=Houkou_1);
+  if(Measuredepth(Houkou)==2,Houkou=Houkou_1);
   if(coord=="P",//181018from
     if(ispoint(point),pP=point.xy,pP=point);
   ,
@@ -6079,7 +6083,7 @@ Bowdata(nm,plist,options):=(
     if(Msg=="Y", //190206
       println("generate bowdata "+name+" and "+Bpos);//16.10.31
     );
-    if(MeasureDepth(Out)==1,Out=[Out]);
+    if(Measuredepth(Out)==1,Out=[Out]);
     tmp1=[];
     forall(Out,tmp2,
       tmp=apply(tmp2,Pcrd(#));
@@ -6121,7 +6125,7 @@ Bownamerot(bwdata,str,updown):=Bownamerot(bwdata,0,0,str,updown);
 Bownamerot(bwdata,tmov,nmov,str):=Bownamerot(bwdata,tmov,nmov,str,1);
 Bownamerot(bwdata,tmov,nmov,str,updown):=(
   regional(bdata,tmp);
-  tmp=MeasureDepth(bwdata);
+  tmp=Measuredepth(bwdata);
   if(tmp==1,bdata=[bwdata],bdata=bwdata);
   if(length(bdata)>1,
     tmp=Ptend(bdata_2)-Ptstart(bdata_1);

@@ -26,7 +26,8 @@ KETCindyのインストール (Windows)
  \begin{itemize}
  \item \url{https://beta.cinderella.de}  (Cinderella)
  \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)\\
+\hspace*{1zw}・v5.38.0以前の方がv5.40.0以降より軽い．
  \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} (Sumatra)\\ \hspace*{10mm}注）SumatraはWindowsだけである．
  \end{itemize}
  注) ダブルクリックして，起動するかを確認する．
@@ -147,6 +148,30 @@ KETCindyのインストール (Windows)
     をダウンロードして実行\\
     \hspace*{10mm}注) パッケージは，mingw32-base, mingw32-gcc-g++だけでよい．
   \end{itemize}
+
+\item 手動でインストールする場合（KeTTeX）\\
+\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
+\hspace*{3zw}\verb|C:\kettex\texlive| $=>$ \verb|C:\texlive\2018| など
+  \begin{enumerate}[(1)]
+  \item \verb|ketcindy(-master)\ketcindyfolder|を開いておく．
+  \item scriptsフォルダの中身を以下にコピーする．\\
+　\verb|C:\kettex\texlive\texmf-dist\scripts\ketcindy|
+  \item styleフォルダの中身を以下にコピーする．\\
+　\verb|C:\kettex\texlive\texmf-dist\tex\latex\ketcindy|
+  \item コマンドプロンプトで以下を実行する\\
+  \hspace*{1zw}\verb|C:\kettex\texlive\bin\win32\mktexlsr|
+  \item \verb|C:\Program files\Cinderella2(.exe)|をダブルクリック
+  \item メニューから　「スクリプト」＞「プラグインを開く」を選び，Pluginsフォルダを開く．
+  \item \verb|scripts\ketjava\KetCindyPlugin.jar|をPluginsにコピーする．
+  \item \verb|ketcindy(-master)\forWindows\Forsettingmanually\ketcindy.ini|をPluginsにコピーする．\\
+  \hspace*{2zw}注）他のTeX の場合は，ketcindy.iniをテキストエディタで開いて修正する．
+  \item Puginsを閉じ，Cinderella2を終了する．
+  \item workを適当な場所にコピーして，名前を変更する．\\
+\hspace*{2zw}注）標準は　パス：ユーザーホーム（の直下）　名前：ketcindy
+  \item 上の作業ディレクトリ(ketcindy) に \verb|doc\ketmanual| のマニュアルをコピーする．
+  \item forWindowsにある ketcindy.conf をテキストエディタで開き，適宜修正する．
+  \item ユーザホームにコピーして，名前を \verb|.ketcindy.conf| に変える．
+  \end{enumerate}
 \end{enumerate}
 
 \end{document}

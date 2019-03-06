@@ -24,12 +24,15 @@ KETCindyのインストール (Mac)
 \begin{enumerate}[\bf\large 1.]
 \item Cinderella, R, Maxima をインストールする．
  \begin{itemize}
- \item \url{https://beta.cinderella.de}  (Cinderella)
- \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \item \url{https://beta.cinderella.de}  (Cinderella)\\
+\hspace*{1zw}・解凍してできるCinderella2(.app)を /アプリケーションに{\bf 移動}する．\\
+\hspace*{2zw}注）ketcindy(-master)/forMacにある Applicationsにドラグドロップしてもよい．
+ \item \url{https://cran.r-project.org}   (R)\\
+\hspace*{1zw}・ダブルクリックして，起動するかを確認する．
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)\\
+\hspace*{1zw}・v5.38.0以前の方がv5.40.0以降より軽い．
  \end{itemize}
- 注) ダブルクリックして，起動するかを確認する．
-
+ 
 \item TeXをインストールしていない場合はインストールする．
  \begin{enumerate}[(1)]
  \item TeXLiveを推奨
@@ -55,6 +58,8 @@ KETCindyのインストール (Mac)
        から以下のようにダウンロードできる．\\
         \hspace*{10mm}Clone or download \verb|>| Download ZIP
     \item[注)]この場合は，ketcindy-masterになる．
+    \item[注)] フォルダ名がketcindy-master 2などになっていたら，スペースをとる．
+    \item[注)] すべて手動でインストールするときは，{\bf 7}に従って行う．
     \end{itemize}
   \item ketcindy(-master)/forMacを開く．
     \begin{itemize}
@@ -68,6 +73,8 @@ KETCindyのインストール (Mac)
     \begin{itemize}
     \item[注)]管理者権限が必要となる．
     \item[注)]開かないときはControl+クリックでターミナルを選ぶ．
+    \item[注)]ダブルクリックで「開くか」を表示させるには，ターミナルで以下を実行しておく．\\
+    \hspace*{20mm}\verb|sudo spctl --master-disable|
     \end{itemize}
     \begin{itemize}
     \item scriptsの中身がTeXにコピーされる
@@ -144,6 +151,31 @@ KETCindyのインストール (Mac)
     \hspace*{5mm}注) ターミナルで次を実行すれば，gccだけがインストールされる．\\
     \hspace*{20mm}\verb|sudo xcode-select —install|
   \end{itemize}
+
+\item 手動でインストールする場合（KeTTeX）\\
+\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
+\hspace*{3zw}\verb|/Applications/kettex/texlive| $=>$ \verb|/Library/TeX/Root| など
+  \begin{enumerate}[(1)]
+  \item ketcindy(-master)/ketcindyfolderを開いておく．
+  \item scriptsフォルダの中身を以下にコピーする．\\
+　\verb|/Applications/kettex/texlive/texmf-dist/scripts/ketcindy|
+  \item styleフォルダの中身を以下にコピーする．\\
+　\verb|/Applications/kettex/texlive/texmf-dist/tex/latex/ketcindy|
+  \item ターミナルで以下を実行する\\
+  \hspace*{1zw}\verb|sudo /Applications/kettex/texlive/bin/x86_64-darwin/mktexlsr|
+  \item /Applications/Cinderella2(.app)をダブルクリック
+  \item メニューから　「スクリプト」＞「プラグインを開く」を選び，Pluginsフォルダを開く．
+  \item scripts/ketjava/KetCindyPlugin.jarをPluginsにコピーする．
+  \item ketcindy(-master)/forMac/Forsettingmanually/ketcindy.iniをPluginsにコピーする．\\
+  \hspace*{2zw}注）他のTeX の場合は，ketcindy.iniをテキストエディタで開いて修正する．
+  \item Puginsを閉じ，Cinderella2を終了する．
+  \item workを適当な場所にコピーして，名前を変更する．\\
+\hspace*{2zw}注）標準は　パス：ユーザーホーム（の直下）　名前：ketcindy
+  \item 上の作業ディレクトリ(ketcindy)に doc/ketmanual のマニュアルをコピーする．
+  \item forMacにある ketcindy.conf をテキストエディタで開き，適宜修正する．
+  \item ターミナルで以下を実行する．\\
+  \hspace*{1zw}\verb|cp (forMacのパス)/ketcindy.conf ~/.ketcindy.conf|
+  \end{enumerate}
 \end{enumerate}
 
 \end{document}

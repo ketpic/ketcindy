@@ -1,9 +1,16 @@
 #!/bin/sh
-#      20180223
+#      20180310
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
 texbinpath=/usr/bin
+
+kettex=0
+if [ ${kettex} -eq 0 ]; then
+  texpath=/opt/kettex/texlive
+  texbinpath=/opt/kettex/texlive/bin/x86_64-linux
+fi
+
 #ketsrc=~/Desktop/ketcindyfolder
 cindyplug=/usr/local/cinderella/Plugins
 homehead=/home

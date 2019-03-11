@@ -1,5 +1,6 @@
 // 20190311
 //    Shade changed  ( order of COM2ndlist)
+//    Com2nd changed  ("before" removed )
 // 20190301
 //    Pointdata changed  ( a single point => [[ , ]])
 //    MeasureDepth => Measuredepth

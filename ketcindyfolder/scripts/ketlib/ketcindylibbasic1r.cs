@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.5");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190311] loaded");
+println("ketcindylibbasic1[20190301] loaded");
 
 //help:start();
 
@@ -157,7 +157,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   Setwindow("Msg=n"); // 16.05.31
 // no ketjs on 190122
   // for Presentation
-  letterc=[0.98,0.13,0,0.43]; boxc=[0.2,0,0,0];//190307 [0,0.32,0.52,0];
+  letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
@@ -7210,7 +7210,7 @@ Shade(nm,plistorg,options):=(
 // help:Shade(["gr1","sg1"],["Color=[1,0,0]"]);
 // help:Shade([[A,B,C,A]]);
 //help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
-  regional(name,plist,jj,nn,trim,tmp,tmp1,tmp2,
+  regional(name,plist,jj,trim,tmp,tmp1,tmp2,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
   name="shade"+nm;
   plist=plistorg;
@@ -7295,7 +7295,7 @@ Shade(nm,plistorg,options):=(
     tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";
     parse(tmp1);
   );
-  Str="Shade("; //no ketjs on
+  Str="Shade(";
   tmp1="list"+PaO();
   forall(plist,
     if(isstring(#),  // from 16.01.24
@@ -7308,23 +7308,10 @@ Shade(nm,plistorg,options):=(
        tmp1=tmp1+"Listplot("+Textformat(#,5)+"),";
     ); //16.01.24to
   );
-  Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929 
-  nn=length(COM2ndlist); //190311from
-  jj=nn;
-  forall(plist,tmp1,
-    tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
-    jj=min(append(tmp,jj));
-  );
-  tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color+")",Str,"Texcom("+Dqq("}")+")"];
-  tmp2=COM2ndlist_(1..(jj-1));
-  tmp=COM2ndlist_(jj..(length(COM2ndlist)));
-  if(!islist(tmp),tmp=[tmp]);
-  COM2ndlist=concat(tmp2,tmp1);
-  COM2ndlist=concat(COM2ndlist,tmp); //190311to
-//  Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722 
-// Com2nd(Str,["before"]);
-//  Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722 
-  //no ketjs off
+  Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929
+  Com2nd("Texcom("+Dqq("{")+")",["before"]);Com2nd("Setcolor("+color+")",["before"]);//180722 //no ketjs on
+  Com2nd(Str,["before"]);
+  Com2nd("Texcom("+Dqq("}")+")",["before"]);//180722 //no ketjs off
   SHADECTR=SHADECTR+1;
 );
 ////%Shade end////

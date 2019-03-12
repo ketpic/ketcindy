@@ -37,7 +37,6 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   COM0thlist=[];
   COM1stlist=[];
   COM2ndlist=[];
-  COM2ndlistb=[]; //180612
   ADDAXES="1";
   AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
   AXCOUNT=1; //181215

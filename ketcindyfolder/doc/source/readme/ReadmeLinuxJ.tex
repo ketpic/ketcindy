@@ -23,24 +23,14 @@
 
 \begin{enumerate}[\bf\large 1.]
 \item Cinderella, R, Maxima, Evince をインストールする．
- \begin{itemize}
- \item \url{https://beta.cinderella.de}  (Cinderella)
-    \begin{itemize}
-    \item[*]Unix Installをダウンロードして次を実行する．\\
-　　　\verb|sudo bash Cinderella_unix_2_8.sh|
-    \item[*]Javaがインストールされていなかったらインストールする．\\
-　　　\verb|sudo apt install openjdk-7-jre|（または 8）
-    \end{itemize}
-    \item RとMaximaは次を実行すればインストールできる．\\
-　　　\verb|sudo apt install r-base maxima|
-    \begin{itemize}
-    \item[*]R, MaximaのHPは\\
- 　　\url{https://cran.r-project.org}   (R)\\
-　　 \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
-    \end{itemize}
- \item Evince が入っていなければ，インストールする．\\
-　　　\verb|sudo apt install evince|
- \end{itemize}
+    \begin{enumerate}[(1)]
+    \item 次に行き，Unix Installをダウンロードして，例えばユーザホームにおく．\\
+       \hspace*{10mm}\url{https://beta.cinderella.de} 
+    \item setcindyetc.shを例えばユーザホームにおき，テキストエディタで編集する．\\
+      \hspace*{5mm}注）setcindyetc.shは\verb|ketcindyfolder/forLinux|にある．
+    \item 以下を実行する．\\
+       \hspace*{10mm}\verb|sudo bash ~/setcindyetc.sh|
+    \end{enumerate}
 
 \item \TeX をインストールしていない場合はインストールする．
  \begin{enumerate}[(1)]
@@ -49,7 +39,7 @@
     \item ２０１８以降ではketcindyが既に入っている.
     \end{itemize}
 \item KeTTeXはTeXLiveの軽量版で，以下からダウンロードできる．\\
-    \hspace*{6mm}\url{https://www.dropbox.com/sh/79ofbls9nf0ywkj/AAA4KaH6MaFsaL0e-ACqw-0Ya?dl=0}
+    \hspace*{6mm}\url{https://www.dropbox.com/s/i6g64d897xr72nj/kettex.tar.gz?dl=0}
 
     \begin{itemize}
     \item どこか（例えばホーム）に置いて解凍する．

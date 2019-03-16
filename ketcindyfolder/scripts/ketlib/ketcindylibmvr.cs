@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20181224) loaded");
+println("ketcindymv(20190317) loaded");
 
 //help:start();
 
@@ -278,7 +278,7 @@ Animatefile(path,folder):=(
   regional(FRate, Scale, OpA, pa,fname,eqL,tmp,tmp1,tmp2,texfiles);
   tmp=divoptions(ParaOpAnim); //17.11.24
   eqL=tmp_5;
-  FRate="10";
+  FRate="20"; //190317
   Scale="1";
   OpA="loop,controls,buttonsize=3mm";
   remflg=0;

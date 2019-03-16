@@ -1,3 +1,5 @@
+// 20190317
+//  Setpara debugged  (  default value of Frate changed to 20)
 // 20181224
 //  Setpara debugged  ( ADDAXES=="1")
 // 20181128

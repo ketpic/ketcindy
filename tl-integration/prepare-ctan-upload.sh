@@ -153,10 +153,12 @@ rmdir ketcindy/ketcindyfolder/doc
 
 # work stuff
 mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
+mv ketcindy/ketcindyfolder/work/allbuttons.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template0.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template2allbuttons.cdy scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/template2slide.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template3Dfigure.cdy scripts/ketcindy/
+mv ketcindy/ketcindyfolder/work/template4ketcindyjs.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/ketcindy.conf scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/Scriptkelib.txt doc/support/ketcindy/
 rmdir ketcindy/ketcindyfolder/work

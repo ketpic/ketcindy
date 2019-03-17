@@ -105,6 +105,16 @@ if [ -n "$bla" ] ; then
   error=true
 fi
 
+# check for 0 byte files
+bla="$(find . -type f -a -size 0)"
+if [ -n "$bla" ] ; then
+  echo "Found files with 0 size"
+  echo "-----------------------"
+  echo "$bla"
+  echo
+  error=true
+fi
+
 
 if $error ; then
   if $forceIt ; then

@@ -12,3 +12,5 @@
 
 .gitignore export-ignore
 .gitattributes export-ignore
+
+tl-integration/prepare-ctan-upload.sh export-ignore

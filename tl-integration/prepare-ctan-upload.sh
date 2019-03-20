@@ -186,7 +186,8 @@ rmdir ketcindy/ketcindyfolder
 mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/
 
 # the rest should be files that can be removed:
-rm ketcindy/tl-integration/*
+# there should nothing be there anymore, files are not exported!
+# rm ketcindy/tl-integration/*
 # remove if these files are available
 rm -f ketcindy/.gitignore
 rm -f ketcindy/.gitattributes

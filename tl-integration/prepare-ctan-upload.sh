@@ -161,6 +161,12 @@ mv ketcindy/HowToInstallE.pdf doc/support/ketcindy
 mv ketcindy/HowToInstallJ.pdf doc/support/ketcindy
 rmdir ketcindy/ketcindyfolder/doc
 
+# CTAN doesn't like it if files are not in TDS that are in
+# the uploaded zip, so move them somewhere into the doc hierarchy
+#rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows
+mv ketcindy/forLinux ketcindy/forMac ketcindy/forWindows doc/support/ketcindy/
+
+
 # work stuff
 mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
 mv ketcindy/ketcindyfolder/work/allbuttons.cdy scripts/ketcindy/
@@ -186,9 +192,6 @@ rm -f ketcindy/.gitignore
 rm -f ketcindy/.gitattributes
 # now the scripts dir should be empty
 rmdir ketcindy/tl-integration
-
-# dropped unpacked files
-rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows
 
 # now all should be gone
 rmdir ketcindy

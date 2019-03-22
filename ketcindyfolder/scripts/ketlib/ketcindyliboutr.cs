@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190301] loaded");
+println("ketcindylibout[20190317] loaded");
 
 //help:start();
 
@@ -1290,7 +1290,7 @@ Readcsv(Arg1,Arg2):=(  //190301from
   if(islist(Arg2),
     Readcsv(Dirwork,Arg1,Arg2);
   ,
-    Readcsv(path,file,[]);
+    Readcsv(Arg1,Arg2,[]); //190317
   );
 ); //190301from
 Readcsv(path,file,options):=(

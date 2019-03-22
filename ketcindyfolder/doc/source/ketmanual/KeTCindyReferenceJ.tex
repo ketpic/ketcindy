@@ -709,7 +709,7 @@ Pointdata("1",[P,Q,R],["size=4"]);
 
 \vspace{\baselineskip}
 \hypertarget{putoncurve}{}
-\item[関数]PutonCurve(点の名前, プロットデータ, options)
+\item[関数]Putoncurve(点の名前, プロットデータ, options)
 \item[機能]曲線上に点を乗せる。
 \item[説明]点が存在しない場合は新たに作る。すでにその点が存在する場合は，その点の$x$座標を使う。初期値の$x$座標の 初期設定は 0。
 
@@ -719,7 +719,7 @@ optionsは，$x$座標の範囲をリストで与える。
 【例】アステロイド上の動点P をとる。
 \begin{verbatim}
 Paramplot("1","[2*cos(t)^3,2*sin(t)^3]","t=[0,2*pi]");
-PutonCurve("P","gp1",[-1,1]); 
+Putoncurve("P","gp1",[-1,1]); 
 \end{verbatim}
 点Pがアステロイド上にでき，この点はドラッグするとアステロイド上を $-1 \leq x\leq 1$ の範囲で動かすことができる。ただし，-1,1の付近はy座標の判断の関係でぴったりはいかない。
 
@@ -729,18 +729,18 @@ PutonCurve("P","gp1",[-1,1]);
 
 \vspace{\baselineskip}
 \hypertarget{putonline}{}
-\item[関数]PutonLine(点名 , 座標１ ,座標2 )
+\item[関数]Putonline(点名 , 座標１ ,座標2 )
 \item[機能]直線上に点を作る
 \item[説明]座標１，座標2を通る直線上に点名の点を作る。できた点は直線に対してインシデントとなる。
 
 \vspace{\baselineskip}
 【例】点A,\ Bを通る直線上に点Pをとる。
 
-\verb|PutonLine("P",A,B);|
+\verb|Putonline("P",A,B);|
 
 \vspace{\baselineskip}
 \hypertarget{putonseg}{}
-\item[関数]PutonSeg(点名 , 座標１ ,座標2 )
+\item[関数]Putonseg(点名 , 座標１ ,座標2 )
 \item[機能]線分上に点を作る
 \item[説明]座標１，座標2を端点とする線分上に点名の点を作る。できた点は線分に対してインシデントとなる。指定した点がすでに存在する場合は動かさない。
 
@@ -749,11 +749,11 @@ PutonCurve("P","gp1",[-1,1]);
 
 線分AB上に点Cをとる。
 
- \verb|PutonSeg("C",A,B);|
+ \verb|Putonseg("C",A,B);|
 
 点(-1,0),(2,2)を通る線分上に点Cをとる。
 
- \verb|PutonSeg("C",[[-1,0],[2,2]]);|
+ \verb|Putonseg("C",[[-1,0],[2,2]]);|
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -2434,9 +2434,9 @@ Rulerscale(A,["r",0,5,1],["f",1,"d1",3,"d2"]);
 \begin{description}
 
 \hypertarget{addgraph}{}
-\item[関数]AddGraph(name ,プロットデータのリスト,option)
+\item[関数]Addgraph(name ,プロットデータのリスト,option)
 \item[機能]複数のプロットデータをまとめる
-\item[説明]複数のプロットデータをまとめて扱う。たとえば，円と，円周上の点の2つのプロットデータをまとめて扱えば，平行移動や回転で，それらのプロットデータをまとめて平行移動や回転ができる。Joincrvs()では，プロットデータをつなげて１つのプロットデータにするが，AddGraph()では，それぞれのプロットデータからなるリスト（リストのリスト）にする。（プロットデータは座標のリストである）
+\item[説明]複数のプロットデータをまとめて扱う。たとえば，円と，円周上の点の2つのプロットデータをまとめて扱えば，平行移動や回転で，それらのプロットデータをまとめて平行移動や回転ができる。Joincrvs()では，プロットデータをつなげて１つのプロットデータにするが，Addgraph()では，それぞれのプロットデータからなるリスト（リストのリスト）にする。（プロットデータは座標のリストである）
 
 引数には，プロットデータ名を文字列化して渡す。たとえば，円のプロットデータが cr1 のとき，"cr1" とする。
 
@@ -2446,7 +2446,7 @@ Rulerscale(A,["r",0,5,1],["f",1,"d1",3,"d2"]);
 Setpt(3);
 Circledata("1",[[0,1],[0,0]]);
 Pointdata("1",[0,0]);
-AddGraph("1",["[pt1]","cr1"],["nodisp"]);
+Addgraph("1",["[pt1]","cr1"],["nodisp"]);
 nn=32;
 forall(1..nn,
 t=2*pi/nn*#;
@@ -2458,7 +2458,7 @@ Translatedata(text(#),"rt"+text(#),[t,0],["dr,0.3"]);
 \vspace{\baselineskip}
 \hspace{20mm} \input{Fig/addgraph} 
 
-ここで，AddGraph()の引数に与えるプロットデータのリストで，点のプロットデータ pt1 を"[pt1]" としていることに注意。円のプロットデータが，点の座標のリストであるのに対し，点のプロットデータは一つの座標だけなので，このようにしてリスト化して渡す。
+ここで，Addgraph()の引数に与えるプロットデータのリストで，点のプロットデータ pt1 を"[pt1]" としていることに注意。円のプロットデータが，点の座標のリストであるのに対し，点のプロットデータは一つの座標だけなので，このようにしてリスト化して渡す。
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -2752,7 +2752,13 @@ Dotfilldata("2",["i"],[["en2"]],[0.1]);
 
 optionの Color は，Cinderellaの画面上での描画色をリストで与える。濃さを指定したい場合は色名やRGBではなくCMYKにする。
 
-optionsには，他に，「Enclosingを使うか（''Enc=y/n'')」，Enclosingのときの開始点，描画色　がある。
+optionsには，他に，次のものがある。
+
+・Enclosingを使うかどうか：''Enc=y/n''（初期値は y）
+
+・Enclosingのときの開始点，描画色
+
+・描画領域のトリミング：Trim=y/n （初期値は n ）
 
 複数のShadeを使うときは，名前をつける。
 
@@ -2789,7 +2795,20 @@ Shade(["gr2","Invert(gr1)"],[[-1.5,1],"Color=[1,0,0]","alpha->0.4"]);
 \vspace{\baselineskip}
 \begin{center}\scalebox{0.9}{\input{Fig/shade01}} \end{center}
 
-%\vspace{\baselineskip}
+\vspace{\baselineskip}
+【例】描画領域（NE,SWの矩形領域）からはみ出した部分は表示しないようにする。
+
+\begin{verbatim}
+Plotdata("1","x^2","x");
+Partcrv("1",[-1,1],[3,9],"gr1");
+Listplot("1",[[3,9],[-1,1]]);
+Joincrvs("1",["sg1","part1"]);
+Shade(["join1"],["Color=[0,0,0.2,0]","Trim=y"]);
+\end{verbatim}
+
+SW,NE を動かしてみると，白枠内だけが色塗りされる。
+
+\vspace{\baselineskip}
 【例】同心円をリング状に塗る。
 
 下図右のように，同心円をリング状に塗るが，円2つだけでは閉曲線はできない。そこで，左図のように，円の描き始めを線分で結んで閉曲線を作る。このとき，向きを考えて，Joincrvsで結ぶように，''Enc=n''をつける。線分は非表示にしたいので，\verb|"nodisp"|オプションをつけておく。なお，点Aを適当な位置に作図しておく。
@@ -3034,11 +3053,12 @@ Pointdata("1",[A,B]);
 Letter([A,"ne","A",B,"nw","B"]);
 \end{verbatim}
 
+\vspace{\baselineskip}
 注）第１引数は座標なので，\verb|A| ではなく \verb|A.xy| としなければならない。
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \hypertarget{numptcrv}{}
 \item[関数]Numptcrv (プロットデータ)
 \item[機能]プロットデータの個数を返す
@@ -3575,7 +3595,7 @@ Tabledatalight("",Yoko,Tate,[],[2]);
 
 \vspace{\baselineskip}
 \hypertarget{changetablestyle}{}
-\item[関数]ChangeTablestyle(罫線リスト, 変更オプション)
+\item[関数]Changetablestyle(罫線リスト, 変更オプション)
 \item[機能]Table の罫線の描画オプションを変更
 \item[説明]罫線の部分的に指定して描画オプションを変更できる。
 
@@ -3583,8 +3603,8 @@ Tabledatalight("",Yoko,Tate,[],[2]);
 【例】
 
 \verb|Tabledatalight("",[10,20,10,20],[10,10,10],[]);|\\
-\verb|ChangeTablestyle(["r1c0c4"],["da"]);|\\
-\verb|ChangeTablestyle(["r2c0c2","c1r0r3"],["nodisp"]);|
+\verb|Changetablestyle(["r1c0c4"],["da"]);|\\
+\verb|Changetablestyle(["r2c0c2","c1r0r3"],["nodisp"]);|
 
 \vspace{\baselineskip}
 \hspace{20mm}\includegraphics[bb=0.00 0.00 324.00 174.00,width=50mm]{Fig/changetable.pdf} 
@@ -3631,7 +3651,7 @@ Putcell("c3r1","c5r2","rt","H");
 
 \vspace{\baselineskip}
 \hypertarget{putcol}{}
-\item[関数]PutcoL (列番号, 文字位置，文字列リスト)
+\item[関数]Putcol (列番号, 文字位置，文字列リスト)
 \item[機能]１列に順に文字を書き入れる
 \item[説明]列番号で指定した列に，第１行から順に文字列リストの文字を書き入れる\\
 数の場合はダブルクォートでくくらなくてもよい。
@@ -3640,7 +3660,7 @@ Putcell("c3r1","c5r2","rt","H");
 
 \vspace{\baselineskip}
 \hypertarget{putcolexpr}{}
-\item[関数]PutcoLexpr (列番号, 文字位置，文字列リスト)
+\item[関数]Putcolexpr (列番号, 文字位置，文字列リスト)
 \item[機能]１列に順に文字を書き入れる
 \item[説明]文字列に\TeX 書式を使うことができる
 
@@ -3660,8 +3680,8 @@ Putcell("c3r1","c5r2","rt","H");
 文字を入れる例を示す。
 \begin{verbatim}
 Tabledata("",5,3,100,45,["c1r1r2","r1c2c3","r2c2c3"]);
-PutcoL(3,"c",["A","B","C"]);
-PutcoLexpr(4,"l",["x^2","y=\sqrt{x^3}"]);
+Putcol(3,"c",["A","B","C"]);
+Putcolexpr(4,"l",["x^2","y=\sqrt{x^3}"]);
 Putrow(1,"c",[1,"二"]);
 Putrowexpr(3,"c",["","\frac{\pi}{2}","","","\sum{x^2}"]);
 \end{verbatim}
@@ -3672,7 +3692,7 @@ Putrowexpr(3,"c",["","\frac{\pi}{2}","","","\sum{x^2}"]);
 
 グラフや文を入れた表の作成例
 
-PutcoLexpr(),Putrowexpr() では，数式だけでなく，一般の\TeX の文を入れることができる。
+Putcolexpr(),Putrowexpr() では，数式だけでなく，一般の\TeX の文を入れることができる。
 また，グラフの位置を適当に合わせて描画することにより，表のセルの中にグラフを入れることができる。
 
 \vspace{\baselineskip}
@@ -3687,8 +3707,8 @@ x軸を描くための点A〜Fは作図ツールでとっておく。
 \vspace{\baselineskip}
 \begin{verbatim}
 Tabledata("",3,3,120,60,[],["dr,2"]);
-ChangeTablestyle(["r1c0c3"],["dr"]);
-ChangeTablestyle(["r2c0c3"],["da"]);
+Changetablestyle(["r1c0c3"],["dr"]);
+Changetablestyle(["r2c0c3"],["da"]);
 Plotdata("1","(x-2)^2+0.5","x=[0.5,3.5]");
 Plotdata("2","(x-6)^2+1","x=[4.5,7.5]");
 Plotdata("3","(x-10)^2+1.5","x=[8.5,11.5]");
@@ -4388,7 +4408,7 @@ PlotdataR(“2”, ”pnorm(x,5,2)”, ”x=[0,10]”);
 点A,BはCinderellaの作図ツールで作図しておき，点Aをグラフ上のおよその位置に置いてから実行する。
 \begin{verbatim}
 PlotdataR("1","dnorm(x)","x=[-5,5]");
-PutonCurve("A","grR1",[-3,3]);
+Putoncurve("A","grR1",[-3,3]);
 Putpoint("B",[A.x,0]);
 Listplot("1",[A,B]);
 \end{verbatim}
@@ -4596,7 +4616,7 @@ println(tn1);
 \begin{verbatim}
 tn1=Assign(tn1,["%e^a","exp(a)","%e^-a","exp(-a)"]);
 Plotdata("1",fx,"x");
-PutonCurve("A","gr1");
+Putoncurve("A","gr1");
 tmp=Assign(tn1,["a",A.x]);
 plotdata("2",tmp,"x",["Num=2"]);
 \end{verbatim}
@@ -5306,7 +5326,7 @@ namelistは，CSVファイルの1行目に追加される項目名。省略す�
 
 Cinderellaの作図機能とCindyscriptを用いてアニメーションができるが，PDFにすることでCinderellaがなくてもPDFビュアーがあればアニメーションを実行できるので，プレゼンテーションや教材の受け渡しなどに便利である。
 
-次の画面は，samplesフォルダにある「s06animation」の「s0601cycloid」のものである。これをひな形として使うのがよい。
+次の画面は，samplesフォルダにある「s06animation」の「s0601cycloid」のものである。これをひな形として使うのがよい。すでにあるスライダなどが邪魔であれば，消去ボタンで消去するか，template2allbuttons.cdy をひな形として用いる。
 
 \vspace{\baselineskip}
 \includegraphics[bb=0 0 732.04 376.02 , width=12cm]{Fig/mvgaiyou01.pdf}
@@ -5314,15 +5334,15 @@ Cinderellaの作図機能とCindyscriptを用いてアニメーションがで�
 画面上方のボタンには，次のようなスクリプトが割り当てられている。
 
 \begin{tabbing}
-12345678\=1234567897890123456\=\kill
-Figure\>： Viewtex(); \>現在の画面のPDFデータを作る\\
-Parent \>：複数のスクリプト\>Figpdf() を使うときに使用する。\\
-ParaF \>： Parafolder(); \>アニメーションのデータを作る\\
-Anime\>： Mkanimation(); \>アニメーションPDFを作る\\
-Flip \>： Mkflipanime(); \>パラパラ動画PDFを作る
+1234\=12345678\=1234567897890123456\=\kill
+\>Figure\>： Viewtex(); \>現在の画面のPDFデータを作る\\
+\>Parent \>：複数のスクリプト\>Figpdf() を使うときに使用する。\\
+\>ParaF \>： Parafolder(); \>アニメーションのフレームデータを作る\\
+\>Anime\>： Mkanimation(); \>アニメーションPDFを作る\\
+\>Flip \>： Mkflipanime(); \>パラパラ動画PDFを作る
 \end{tabbing}
 
-アニメーションの作成は，フレームを定義する関数を作成し，Mkanimation() 関数を実行する(Animeボタン)。
+アニメーションPDFを作るには，フレームを定義する関数を記述し，「ParaF」ボタンでフレームデータを作り，「Anime」または「Flip」ボタンでPDFを作成する。
 %たとえば，Fhead が "hoge" の場合，TeX の文書には\\
 % \verb|\begin{center} \input{hogemoviefigs.tex}|\\
 %で動画を挿入することができる。
@@ -5334,9 +5354,11 @@ Flip \>： Mkflipanime(); \>パラパラ動画PDFを作る
 %パッケージは animate に dvipdfmx オプションをつける。\\
 %\verb|\usepackage[dvipdfmx]{animate}|
 
-なお，アニメーションPDFでアニメーションを行うにはAdobe Acrobat Reader など，アニメーションに対応したPDFリーダーが必要である。WindowsのSumatraPDF，Macの プレビューでは動かない。
+Anime ボタンを押すと，\verb|\usepackage[dvipdfmx]{animate}| でパッケージを読み込み，animateinline 環境のアニメーションを作る。
 
-Flipボタンを押すと，フレームに分割したPDFが生成されて表示される。
+Flip ボタンを押すと，animateinline 環境ではなく，フレームに分割したPDFが生成される。
+
+なお，アニメーションPDFでアニメーションを行うにはAdobe Acrobat Reader など，アニメーションに対応したPDFリーダーが必要である。WindowsのSumatraPDF，Macの プレビューではアニメーションができない。
 
 \subsection{関数}
 \begin{description}
@@ -5344,7 +5366,11 @@ Flipボタンを押すと，フレームに分割したPDFが生成されて表�
 \hypertarget{setpara}{}
 \item[関数]Setpara(fname,funcstr,range,options1,options2)
 \item[機能]アニメーションの設定をする
-\item[説明]fname は出力するファイル名，funcstrは動画関数名，rangeは範囲
+\item[説明]fname は出力するファイル名，funcstrは定義した動画関数名，rangeは範囲
+
+「Anime」ボタンを押すと，animate+fname.pdf が作られる。再生はコントローラか，画面クリックで行う。
+
+「Flip」ボタンを押すと，flipanime+filename.pdf が作られる。再生（コマ送り）は，Acrobat Reader のページ送りボタンで行う。
 
 options1 はアニメーションのデータを作るための設定。
 \begin{tabbing}
@@ -5356,14 +5382,24 @@ options2 はアニメーションについての設定で，次の通り。
 \begin{tabbing}
 1234567890123\=90123456789012345678\=\kill
 Frate=n\>１秒間のフレーム数。初期値は20。 \\
-Title=str\> タイトル。\\
+Title=str\> タイトル。指定しない場合は fname と同じ。\\
 Scale=n\> 図の大きさの拡大率 \\
-opA\> animate.sty のためのオプション。 \\
-\> loop：loopする，controls：ボタンを表示，buttonsize：ボタンのサイズ\\
-\> step：コマ送りモード\\
-\>初期設定はloop,controls,buttonsize=3mm\\
-\> +をつけるとモードが追加される。たとえば \verb|"OpA=+step"| で\\
-\>\verb|"OpA=[loop,controls,buttonsize=3mm,step]"| となる。
+opA=[option]\>  animateinline 環境のためのオプション \\
+\>初期設定は\verb|[loop,controls,buttonsize=3mm]|。\\
+\> loop：繰り返し再生する。\\
+\> controls：コントローラを表示する\\
+\> buttonsize：コントローラのサイズ\\
+\> palindrome：反転して繰り返し再生する\\
+\> step：コマ送りモードにする。コントローラもコマ送り仕様。\\
+\>\verb|"OpA=[controls,buttonsize=5mm]" |のように記述する。\\
+\> +をつけると初期設定のものに追加することができる。\\
+\>たとえば \verb|"OpA=+step"| で\\
+\>\verb|"OpA=[loop,controls,buttonsize=3mm,step]"| となる。\\
+\>\verb|"OpA=[]"| とすると，オプションなしとなり，\\
+\>画面をクリックすると繰り返しなしで再生される。\\
+記述例\\
+\verb|Setpara("cycloid","mf(t)","t=[0,60]",["Div=60"],|\\
+\verb|   ["Frate=30","Title="サイクロイド","Scale=1.5","OpA=[controls]"]);|\\
 \end{tabbing}
 
 \vspace{\baselineskip}
@@ -5396,36 +5432,38 @@ opA\> animate.sty のためのオプション。 \\
 %\begin{description}
 \vspace{\baselineskip}
 【例】定円上を動く点Pと，定点Aを結ぶ線分の中点をQとして動きを見る。
-アニメーションを定義する関数は，時間を $t$ とすれば，時刻 $t$ における図（動くものだけ）を定義する。時刻は単なる媒介変数であるので，$t$ でなく $s$ などでもよい。
+
+アニメーション（フレーム）を定義する関数は，時刻を $t$ として， $t$ における図を定義すると考える。時刻は単なる媒介変数であるので，$t$ でなく $s$ などでもよい。関数名は，たとえば mf(movie frame) とする。
 
 \begin{verbatim}
 Setax(["","","sw","","sw"]);
 Slider("A-C-B",[0,YMIN-1],[2*pi,YMIN-1]);
 Circledata("1",[[0,0],[0,2]]);
 mf(t):=(
-pt=2*[cos(t),sin(t)];
-mp=(pt+[4,0])/2;
-Listplot("1",[[4,0],pt]);
-Pointdata("1",[mp,pt],["Size=2"]);
-if(t==0,
-ptlist=[mp];
-,
-ptlist=append(ptlist,mp);
-);
-Letter([[4,0],"s","A",pt,"en","P",mp,"ne","Q"]);
-Pointdata("2",ptlist,["Size=2","Color=red"]);
+  pt=2*[cos(t),sin(t)];
+  mp=(pt+[4,0])/2;
+  Listplot("1",[[4,0],pt]);
+  Pointdata("1",[mp,pt],["Size=2"]);
+  if(t==0,
+    ptlist=[mp];
+    ,
+    ptlist=append(ptlist,mp);
+  );
+  Letter([[4,0],"s","A",pt,"en","P",mp,"ne","Q"]);
+  Pointdata("2",ptlist,["Size=2","Color=red"]);
 );
 mf(C.x);
 Setpara("middle","mf(t)","t=[0,4*pi]");
 \end{verbatim}
 
-この例の場合，\verb|mf(C.x)| を実行するとスライダを動かすことでインタラクティブに軌跡を表示できる。
+この例の場合，\verb|mf(C.x)| を実行するとスライダを動かすことでインタラクティブに軌跡を表示できる。アニメーションを作る上では \verb|mf(C.x)| やスライダはなくてもよい。
+
 Cinderellaの画面は次のようになる。
 
 \vspace{\baselineskip}
 \hspace{20mm} \includegraphics[bb=0.00 0.00 608.03 367.02,width=8cm]{Fig/moviedata01.pdf}
 
-アニメーションを作成するときは \verb|//mf(C.x)| とコメントアウトしてから Anime ボタンをクリックする。次の図は，でき上がった animatemiddle.pdf の始めの画面である。
+アニメーションを作成するときは \verb|//mf(C.x)| とコメントアウトしてから 「ParaF」「Anime」 ボタンをクリックする。次の図は，でき上がった animatemiddle.pdf の始めの画面である。
 
 \hspace{30mm}\includegraphics[bb=0.00 0.00 470.02 394.02,width=6cm]{Fig/moviedata02.pdf}
 
@@ -5444,7 +5482,7 @@ Cinderellaの画面は次のようになる。
 
 
 %==================== Slide ===============
-\section{\ketcindy スライド}
+\section{KeTスライド}
 \subsection{概要と制作手順}
 \ketcindy で作成した図とテキストを統合してプレゼンテーション用のスライドPDFを作成する。必要なファイルは，スライドの内容を記述したテキストファイル（ここではコンテンツファイルと呼ぶ）と，タイトルや図を作成し，コンテンツファイルと統合する \ketcindy のファイルである。この2つのファイルは，拡張子が txt と cdy で，ファイル名は同一とする。たとえば，コンテンツファイルを makeslide.txt ， \ketcindy ファイルを makeslide.cdy としたときの，制作イメージを次の図に示す。
 
@@ -5473,7 +5511,7 @@ Cinderellaの画面は次のようになる。
 
 (4) Slide ボタンでスライドPDFを作成する。
 
-PDFと，関連する中間ファイルは，作業フォルダではなく，makeslide.cdyのあるフォルダに作成される。また，スライドPDFはアニメーションと同様，Adobe Reader で開く必要がある。
+PDFと，関連する中間ファイルは，作業フォルダではなく，makeslide.cdyのあるフォルダに作成される。また，スライドPDFはアニメーションと同様，Windows，MacではAdobe Reader で開く必要がある。Linux(Ubuntu)では Evince でプレゼンテーションができる。
 
 \subsection{コンテンツファイル}
 
@@ -5708,6 +5746,8 @@ end//
 \vspace{\baselineskip}
 {\bf 【レイヤー】}
 
+ketlayerの\verb|\begin{layer}・・\end{layer}| として書き出す。本来の記述より簡素になっている。
+
 \hspace{10mm}\verb|layer::{範囲}{0}//|
 
 で layer環境の始まりを示す。layer環境の終わりは 
@@ -5742,6 +5782,7 @@ end//
 {\bf 【テキストと動画】}
  
 コマンド以外のテキストはそのまま \TeX\ に書き出される。行末には // をつける。
+
 テキストを途中で改行するには，\TeX\ の 強制改行マーク \textbackslash \textbackslash をつける。
 
 動画の場合は，動画の設定をして（アニメーションの節を参照）ファイルを作る。
@@ -5805,6 +5846,13 @@ mp3ファイルを追加するときは，\verb|\inputsound|または\verb|\inpu
 mp4ファイルを追加するときは，\verb|\inputmovie|を用いる。\\
 \hspace{10mm}\verb|\inputsountclik[90]{1}{0.4}{フォルダ/}{ファイル}|\\
 2番目と3番目の引数は，幅と高さの\verb|\linewidth|からの倍率である。
+
+\vspace{\baselineskip}
+{\bf 【余白などの編集】}
+
+スライドの上側余白として，初期状態で　\verb|\vspace*{18mm}| が設定される。次のページにはみ出してしまうような場合は，出力された tex ファイルで調整すればよい。
+
+その他，適宜編集して，kc.command(bat/sh) を実行すれば，細かい部分を修正したPDFを作成することができる。
 
 \subsection{関数}
 makeslide.cdy で使う，\ketcindy の関数。
@@ -6141,10 +6189,10 @@ Putaxes3d(5);原点と，$x(5,0,0),y(0,5,0),z(0,0,5)$ を作る。
 Putaxes3d([1,2,3]);原点と，$x(1,0,0),y(0,2,0),z(0,0,3)$ を作る。
 
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
- %----------------PutonCurve3d---------------------------------------------
+ %----------------Putoncurve3d---------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{putonCurve3d}{}
-\item[関数]PutonCurve3d(点名，PD)
+\item[関数]Putoncurve3d(点名，PD)
 \item[機能]空間曲線上に点をとる
 \item[説明]プロットデータPDの曲線上に，点名の点をとる。
 
@@ -7172,12 +7220,12 @@ ExeccmdC("1");
 始点と終点は，プロットデータの番号もしくは曲線上にとった点の識別名で示す。
 
 \vspace{\baselineskip}
-【例】螺旋を描き一部分を太くする。PutonCurve3d() で螺旋上に点C,Dができるので，ドラッグして適当な位置に移動する。
+【例】螺旋を描き一部分を太くする。Putoncurve3d() で螺旋上に点C,Dができるので，ドラッグして適当な位置に移動する。
 \begin{verbatim}
 Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,4]");
 Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);
-PutonCurve3d("C","sc3d1");
-PutonCurve3d("D","sc3d1");
+Putoncurve3d("C","sc3d1");
+Putoncurve3d("D","sc3d1");
 Partcrv3d("1",C,D,"sc3d1",["dr,3"]);
 Letter([C,"n2","C",D,"n2","D"]);
 \end{verbatim}
@@ -7992,7 +8040,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{setwindow}{Setwindow()}\>描画領域を設定する\\
 \hyperlink{usegraphics}{Usegraphics()} \>グラフィクスパッケージを\verb|"pict2e"| に変更する\\
 【描画】\\
-\hyperlink{addgraph}{AddGraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
+\hyperlink{addgraph}{Addgraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
 \hyperlink{anglemark}{Anglemark(点list, options)}\>角の印を入れる\\
 \hyperlink{setarrow}{Setarrow(options)}\>矢線をスタイルを設定する\\
 \hyperlink{arrowdata}{Arrowdata(name.[始点,終点],options)}\>2点間を結ぶ矢線を描く\\
@@ -8041,9 +8089,9 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{pointdata}{Pointdata(name,点list,options)}\>点データを作る\\
 \hyperlink{polygonplot}{Polygonplot(name,点list,整数,options)}\>正多角形を描く\\
 \hyperlink{putintersect}{Putintersect(点名,PD1,PD2)}\>2曲線の交点を作る\\
-\hyperlink{putoncurve}{PutonCurve(name,PD,初期値)}\>曲線上に点を作る\\
-\hyperlink{putonline}{PutonLine(点名,座標1,座標2)}\>直線上に点を作る\\
-\hyperlink{putonseg}{PutonSeg(点名,座標1,座標2)}\>線分上に点を作る\\
+\hyperlink{putoncurve}{Putoncurve(name,PD,初期値)}\>曲線上に点を作る\\
+\hyperlink{putonline}{Putonline(点名,座標1,座標2)}\>直線上に点を作る\\
+\hyperlink{putonseg}{Putonseg(点名,座標1,座標2)}\>線分上に点を作る\\
 \hyperlink{putpoint}{Putpoint(点名,座標1,座標2)}\>点を作る\\
 \hyperlink{reflectdata}{Reflectdata(name,PD,点list,options)}\>プロットデータの鏡映を作成\\
 \hyperlink{reflectpoint}{Reflectpoint(点,対称点/対称軸)}\>点の鏡映を作成\\
@@ -8059,11 +8107,11 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{translatepoint}{Translatepoint(点,ベクトル)}\>点を平行移動する\\
 \hyperlink{vtickmark}{Vtickmark([横座標 , 方向 , 文字])}\>縦軸に目盛りを描く\\
 【作表】\\
-\hyperlink{changetablestyle}{ChangeTablestyle(罫線list, options)}\>Table の罫線の描画オプションを変更する。\\
+\hyperlink{changetablestyle}{Changetablestyle(罫線list, options)}\>Table の罫線の描画オプションを変更する。\\
 \hyperlink{findcell}{Findcell(列番号, 行番号)}\>セルの情報listを返す\\
 \hyperlink{putcell}{Putcell (列番号, 行番号, 位置, 文字)} \>セルに文字列を入れる\\
-\hyperlink{putcol}{PutcoL (列番号, 位置，文字列list)} \>１列に順に文字を書き入れる\\
-\hyperlink{putcolexpr}{PutcoLexpr (列番号, 位置，文字列list)}\>１列に順に\TeX 書式の文字を書き入れる\\
+\hyperlink{putcol}{Putcol (列番号, 位置，文字列list)} \>１列に順に文字を書き入れる\\
+\hyperlink{putcolexpr}{Putcolexpr (列番号, 位置，文字列list)}\>１列に順に\TeX 書式の文字を書き入れる\\
 \hyperlink{putrow}{Putrow (行番号, 位置，文字列list)} \>１行に順に文字を書き入れる\\
 \hyperlink{putrowexpr}{Putrowexpr (行番号, 位置，文字列list)} \>１行に順に\TeX 書式の文字を書き入れる\\
 \hyperlink{tabledata}{Tabledata("" , 縦横 ,除外 , options)}\>表の枠を作成する\\
@@ -8203,7 +8251,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{phparadata}{Phparadata(name,name2,options)}\>多面体を陰線処理して描く\\
 \hyperlink{pointdata3d}{Pointdata3d(名前,点list,options)} \>空間点のデータを作成する\\
 \hyperlink{putaxes3d}{Putaxes3d([x,y,z])}\>軸上に幾何点をとる\\
-\hyperlink{putonCurve3d}{PutonCurve3d(点名,PD)}\>空間曲線上に点をとる\\
+\hyperlink{putonCurve3d}{Putoncurve3d(点名,PD)}\>空間曲線上に点をとる\\
 \hyperlink{putonseg3d}{Putonseg3d(点名,点1,点2)}\>線分上に点をとる\\
 \hyperlink{putpoint3d}{Putpoint3d(list,option)}\>空間点をとる\\
 \hyperlink{readobj}{Readobj(ファイル名)}\>objファイルを読み込む\\

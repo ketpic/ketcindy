@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190127)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190322)" 
 
 print(ThisVersion)
 
+# 20190322
+#   Plotdata debugged  (in the case fo Exc)
 # 20190127
 #   Mvprod added
 # 20181231
@@ -5547,7 +5549,6 @@ Plotdata<- function(...)
   Tmp<- sort(E)
   E<- E[length(Tmp):1]
   Ke<- 1
-#  for (x in seq(X1,X2,by=dx)){
   for (J in 0:N){ #180929
     x=X1+dx*J/N #180929
     if(nchar(Exfun)>0){
@@ -5573,7 +5574,8 @@ Plotdata<- function(...)
        Ke<-Ke+1
     }
     if(length(Pa)>0){
-      if(Pa[1]==Inf){
+      if((Pa[1]==Inf)||(Pa[2]==Inf)){ #190322
+        Pa=c(Inf,Inf) #190322
         Tmp<-Appendrow(P,Pa)
         P<-Tmp
       }

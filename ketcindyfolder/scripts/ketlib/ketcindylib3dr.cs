@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190301] loaded");
+println("ketcindylib3d[20190320] loaded");
 
 //help:start();
 
@@ -4498,14 +4498,6 @@ SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
 );
 ////%SfcutparadataR end////
 
-////%Skeletonparadata start////
-Skeletonparadata(nm):=Skeletondatacindy(nm,[]);
-Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
-Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
-Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
-    Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
-////%Skeletonparadata end////
-
 ////////////// new skeleton  2018.01.04 not completed and slow////////////////
 
 Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
@@ -4517,9 +4509,9 @@ Skeletondatacindy(nm,options):=(
 Skeletondatacindy(nm,pltdata1,pltdata2):=
      Skeletondatacindy(nm,pltdata1,pltdata2,[]);
 Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
-//help:Skeletonparadata("1");
-//help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
-//help:Skeletondata(options2=[1(width)]);
+// help:Skeletonparadata("1");
+// help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
+// help:Skeletondata(options2=[1(width)]);
   regional(Eps,Eps2,name2,name3,Ltype,Noflg,reL,opcindy,color,
      Data,Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2);
@@ -4708,6 +4700,14 @@ Makeskeletondata(ObjL,PltL,R0):=(
 ////////////// current skeleton  2018.01.04 ////////////////
 
 ////%Skeletonparadata start////
+Skeletonparadata(nm):=Skeletondatacindy(nm,[]);
+Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
+Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
+Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
+    Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
+////%Skeletonparadata end////
+
+////%Skeletondatacindy start////
 Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
 Skeletondatacindy(nm,options):=(
   regional(tmp); 
@@ -4717,9 +4717,9 @@ Skeletondatacindy(nm,options):=(
 Skeletondatacindy(nm,pltdata1,pltdata2):=
      Skeletondatacindy(nm,pltdata1,pltdata2,[]);
 Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
-//help:Skeletondatacindy("1");
-//help:Skeletondatacindy("1",[pdata1,pdata2],[pdata3]);
-//help:Skeletondatacindy(options=[1(width),"File=y(/m/n)","Not=ptlist","Check=ptlist"]);
+//help:Skeletonparadata("1");
+//help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
+//help:Skeletonparadatac(options=[1(width),"File=y(/m/n)","Not=ptlist","Check=ptlist"]);
   regional(Eps,Eps2,name2,name3,options,Ltype,Noflg,reL,eqL,opcindy,
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color,
@@ -4758,7 +4758,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   forall(eqL, //181101from
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
-    if(tmp1=="FI",
+    if(tmp1=="F", //190320
       fileflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
@@ -4896,7 +4896,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     Out;
   );
 );
-////%Skeletonparadata end////
+////%Skeletondatacindy end////
 
 ////%Makeskeletondata start////
 Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(

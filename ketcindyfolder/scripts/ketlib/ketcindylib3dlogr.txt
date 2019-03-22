@@ -1,3 +1,5 @@
+// 20190320
+//    Skeletonparadata maintained, debugged (FI => F)
 // 20190301
 //    MeasureDepth => Measuredepth
 // 20190209

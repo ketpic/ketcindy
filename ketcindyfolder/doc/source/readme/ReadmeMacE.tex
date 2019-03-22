@@ -56,6 +56,7 @@ How to install KeTCindy(Mac)
     \end{itemize}
   \item Open ketcindy(-master)/forMac.
     \begin{itemize}
+    \item[Rem)]If the folder name includes spaces, remove them.
     \item[Rem)]If you use TeX other than TeXLIve/KeTTeX,
       \begin{itemize}
       \item Open setketcindy.command with a text editor.
@@ -95,7 +96,7 @@ How to install KeTCindy(Mac)
 \item Test run of KeTCindy
  \begin{enumerate}[(1)]
   \item Double-click "template1basic.cdy" in work directory "ketcindy".\\
-  \hspace*{10mm}Then a frame in white appear on the screen.  \end{enumerate}
+  \hspace*{10mm}Then a frame in white appear on the screen.  
   \item Press "Figure" button at the top left, then the final PDF output is displayed. 
     \begin{itemize}
     \item[Rem)]To close the window of Terminal when the process exits :
@@ -103,8 +104,9 @@ How to install KeTCindy(Mac)
       \item Start \verb|Terminal|.\\
       \hspace*{10mm}Preferences \verb|>| Shell \verb|>| "Colse if the shell exited clearly"
       \end{itemize}
+    \item[Rem)]It will be better to delete installer folder "ketcindy(-master)" .
     \end{itemize} 
-
+  \end{enumerate}
 \item Set Texworks if necessary. For example, in case of KeTTeX,
   \begin{itemize}
   \item Downloadable from \url{https://github.com/TeXworks/texworks/releases/}.
@@ -121,6 +123,11 @@ How to install KeTCindy(Mac)
     \hspace*{10mm}\verb|sudo xcode-select —install|
   \end{itemize}
 
+\item Others
+ \begin{itemize}
+  \item Terminal command to allow to execute all aplications (Sierra or later)\\
+\hspace*{20mm}sudo spctl --master-disable
+ \end{itemize}
 \end{enumerate}
 
 \end{document}

@@ -16,18 +16,229 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(180930)"
+ThisVersion<- "tikzv1_1_1(190317)"
 
-# 20180930
-#   Drwpt debugged ( the last newline added)
-# 20180929
-#   Shade changed  (Kyoukai => Joincrvs)
-# 2017.10.28
-#    Drwpt debugged  ( Flattenlist )
-# 2017.10.07
-#   Dottedline,Drwline,Drwpt,Makehasen,Beginpicture,Setpen,Shade
+# 2019.03.17 from 20190207
+#   Ketinit, Beginpicture, Endpicture, Drwline, Setpen, Dottedline, Makehasen, Drwpt, Shade, Letter #from 20190317  
 
-#############################################
+########### Ketinit ############
+
+Ketinit<- function(){
+XMIN<<- -5
+XMAX<<- 5
+YMIN<<- -5 ; YMAX<<- 5
+ZIKU<<- "l"
+#ARROWSIZE<<- 1
+XNAME<<- "$x$"
+XPOS<<- "e"
+YNAME<<- "$y$"
+YPOS<<- "n"
+ONAME<<- "O"
+OPOS<<- "sw"
+ULEN<<- "1cm"
+MilliIn<<- 1/2.54*1000
+PenThick<<- round(MilliIn*0.02)*0.05 #from 20190317
+PenThickInit<<- PenThick
+TenSizeInit<<- 0.02*2 #17.10.07
+TenSize<<- TenSizeInit
+Wfile<<-""
+MEMORI<<- 0.05
+MEMORIInit<<- MEMORI
+MEMORINow<<- MEMORI
+MARKLEN<<- 0.05
+MARKLENInit<<- MARKLEN
+MARKLENNow<<- MARKLEN
+GENTEN<<- c(0,0)
+YaSize<<- 1
+YaAngle<<- 18
+YaPosition<<- 1
+YaThick<<- 1
+YaStyle<<- "tf"
+PHI<<- 30*pi/180
+THETA<<- 60*pi/180
+FocusPoint<<- c(0,0,0)
+EyePoint<<- c(5,5,5)
+ASSIGNLIST<<- list("`","'")
+
+SCALEX<<- 1
+SCALEY<<- 1
+LOGX<<- 0
+LOGY<<- 0
+
+TEXFORLEVEL<<- 0
+TEXFORLAST<<- list()
+}
+
+################### Beginpicture ######################
+
+Beginpicture<-function(ul)
+{    ## Scaling is implemented
+  Tmp<- Doscaling(c(XMIN,YMIN))
+  Xm<- Tmp[1]
+  Ym<- Tmp[2]
+  Tmp<- Doscaling(c(XMAX,YMAX))
+  XM<- Tmp[1]
+  YM<- Tmp[2]
+  Dx<- XM-Xm
+  Dy<- YM-Ym
+  Sym<-".0123456789 +-*/"
+  SL<-Sym
+  OL<-"+-*/"
+  if (ul!=""){
+    ULEN<<-ul;
+  }
+  Is<-1;
+  VL<-"";
+  Ucode<-ULEN
+  for (I in Looprange(1,nchar(Ucode))){
+    C<-substring(Ucode,I,I);
+    if (length(grep(C,SL,fixed=TRUE))>0){
+      if (length(grep(C,OL,fixed=TRUE))>0){
+        Tmp<-substring(Ucode,Is,I-1);
+        Str<-paste(VL,Tmp,C,sep="")
+        VL<-Str
+        Is<-I+1;
+      }
+    }
+    else{
+      Unit<-substring(Ucode,I,I+1);
+      Str<-substring(Ucode,Is,I-1);
+      VL<-paste(VL,Str,sep="")
+      break;
+    }
+  }
+  Valu<-eval(parse(text=VL));
+  Str<-as.character(Valu);
+  ULEN<<- paste(Str,Unit,sep="");
+  if (Unit=="cm") MilliIn<<-1000/2.54*Valu
+  if (Unit=="mm") MilliIn<<-1000/2.54*Valu/10
+  if (Unit=="in") MilliIn<<-1000*Valu
+  if (Unit=="pt") MilliIn<<-1000/72.27*Valu
+  if (Unit=="pc") MilliIn<<-1000/6.022*Valu 
+  if (Unit=="bp") MilliIn<<-1000/72*Valu
+  if (Unit=="dd2") MilliIn<<-1000/1238/1157/72.27*Valu
+  if (Unit=="cc") MilliIn<<-1000/1238/1157/72.27*12*Valu;
+  if (Unit=="sp") MilliIn<<-1000/72.27/65536*Valu/10
+  MARKLEN<<- MARKLENNow*1000/2.54/MilliIn;
+  Str<-paste("{\\unitlength=",ULEN,"%\n",sep="");
+  cat(Str,file=Wfile,append=TRUE);
+  cat("\\begin{tikzpicture}%\n",file=Wfile,append=TRUE);
+  Str<-"\\clip (";
+  Tmp<-as.character(round(Xm,digits=6));
+  Str<-paste(Str,Tmp,",",sep="");
+  Tmp<-as.character(round(Ym,digits=6));
+  Str<-paste(Str,Tmp,") rectangle (",sep="");
+  Tmp<-as.character(round(XM,digits=6)+0.5);
+  Str<-paste(Str,Tmp,",",sep="");
+  Tmp<-as.character(round(YM,digits=6)+0.5);
+  Str<-paste(Str,Tmp,");%\n",sep="");
+  cat(Str,file=Wfile,append=TRUE);
+#  Str=paste('\\linethickness{',as.character(PenThickInit/1000),'in}%',sep="") #20190207
+#  cat(Str,file=Wfile,append=TRUE)
+#  cat("%\n",file=Wfile,append=TRUE)
+}
+
+################### Endpicture #####################
+
+Endpicture<-function(...)
+{
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  if(Nargs==0)
+  {
+    Drwxy()
+  }
+  else
+  {
+  if(varargin[[1]]==1) Drwxy()
+  }
+  cat("\\end{tikzpicture}}%",file=Wfile,append=TRUE)
+  MEMORI<<-MEMORINow*1000/2.54/MilliIn
+  Setunitlen("1cm")
+}
+
+##################### Drwline ######################
+
+Drwline<-function(...)
+{
+  varargin<-list(...)
+  Nall <- length(varargin)
+  Tmp <- varargin[[Nall]]
+  Width <- PenThick/PenThickInit
+  Thick <- 1
+  if (mode(Tmp)=="numeric" && length(Tmp)==1){
+    Thick <- Tmp
+    Setpen(Width*Thick)
+    Nall <- Nall-1
+  }else{
+    Setpen(Width)
+  }
+  for (N in 1:Nall){
+    Pdata <- varargin[[N]]
+    if (length(Pdata)==0) next
+    if (mode(Pdata)!="list") Pdata<-list(Pdata)
+    while(Mixtype(Pdata)==3){ 
+      Tmp1 <- list()
+      for(II in Looprange(1,length(Pdata))){
+        Tmp1 <- Mixjoin(Tmp1,Pdata[[II]])
+      }
+      Pdata <- Tmp1
+    } 
+    for (II in Looprange(1,length(Pdata))){
+      Clist <- MakeCurves(Pdata[[II]])
+      DinM <- Dataindex(Clist)
+      for (n in Looprange(1,Nrow(DinM))){
+        Tmp <- DinM[n,]
+        Data <- Clist[Tmp[1]:Tmp[2],]
+#        Mojisu <- 0 #from 20190317
+        for (I in Looprange(1,Nrow(Data))){
+          Tmp <- Data[I,]
+          X=sprintf('%5.5f',Tmp[1])
+          Y=sprintf('%5.5f',Tmp[2])
+          Pt=paste('(',X,',',Y,')',sep="")
+          if (I==1){
+		    if (Width>1){  #from 20190317
+		      Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
+			}else{
+			  if (Thick>1){
+		    	Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
+			  }else{
+                Str=paste('\\draw ',Pt,sep="")
+			  }
+            }
+		  }else{
+            Str=paste('--',Pt,sep="")  
+          }
+          cat(Str,file=Wfile,append=TRUE)
+#          Mojisu <- Mojisu+nchar(Str)
+#          if (Mojisu>80){
+#            cat(";%\n",file=Wfile,append=TRUE)
+#            Mojisu <- 0
+#          }
+        }
+#        if (Mojisu!=0){
+#           cat(";%\n",file=Wfile,append=TRUE)
+#        }
+        cat(";%\n",file=Wfile,append=TRUE)
+      }
+    }
+  }
+  if (Thick>1){  #from 20190317
+    Setpen(Width)
+  }
+}
+
+################### Setpen ######################
+
+Setpen<-function(Width)
+{
+  PenThick <<- PenThickInit*Width  #from 20190317
+#  Str=paste('\\linethickness{',as.character(PenThick/1000),'in}%',sep="")
+#  cat(Str,file=Wfile,append=TRUE)
+#  cat("%\n",file=Wfile,append=TRUE)
+}
+
+##################### Dottedline ########################
 
 Dottedline<- function(...)
 {
@@ -143,161 +354,12 @@ Dottedline<- function(...)
   Setpen(Tmp)
 }
 
-
-###########################################
-
-Drwline<-function(...)
-{
-  varargin<-list(...)
-  Nall<-length(varargin)
-  Thick<-0
-  Tmp<-varargin[[Nall]]
-  if (mode(Tmp)=="numeric" && length(Tmp)==1){
-    Setpen(Tmp)
-    Nall<-Nall-1
-  }
-  for (N in 1:Nall){
-    Pdata<-varargin[[N]]
-    if (length(Pdata)==0) next
-    if (mode(Pdata)!="list") Pdata<-list(Pdata)
-    while(Mixtype(Pdata)==3){ 
-      Tmp1<- list()
-      for(II in Looprange(1,length(Pdata))){
-        Tmp1<- Mixjoin(Tmp1,Pdata[[II]])
-      }
-      Pdata<- Tmp1
-    } 
-    for (II in Looprange(1,length(Pdata))){
-      Clist<-MakeCurves(Pdata[[II]])
-      DinM<-Dataindex(Clist)
-      for (n in Looprange(1,Nrow(DinM))){
-        Tmp<-DinM[n,]
-        Data<-Clist[Tmp[1]:Tmp[2],]
-        Mojisu<-0
-        for (I in Looprange(1,Nrow(Data))){
-          Tmp<-Data[I,]
-          X=sprintf('%5.5f',Tmp[1])
-          Y=sprintf('%5.5f',Tmp[2])
-          Pt=paste('(',X,',',Y,')',sep="")
-          if(I==1){
-            Str=paste('\\polyline',Pt,sep="")
-          }else{
-            Str=Pt  
-          }
-          cat(Str,file=Wfile,append=TRUE)
-          Mojisu<-Mojisu+nchar(Str)
-          if (Mojisu>80){
-            cat("%\n",file=Wfile,append=TRUE)
-            Mojisu<-0
-          }
-        }
-        if (Mojisu!=0){
-           cat("%\n",file=Wfile,append=TRUE)
-        }
-        cat("%\n",file=Wfile,append=TRUE)
-      }
-    }
-  }
-  if (Thick>0){
-    Tmp<-PenThick/PenThickInit
-    Setpen(Tmp)
-  }
-}
-
-###########################################
-
-Drwpt<-function(...)
-{
-  varargin<-list(...)
-  Nargs<-length(varargin)
-  All=Nargs
-  if (TenSize>TenSizeInit){
-    N<- round(6*sqrt(TenSize/TenSizeInit))
-  }
-  else{
-    N<-4
-  }
-  Tmp<- varargin[[All]]
-  Iro=c(0,0,0,1)
-  Iroflg=0
-  if(is.character(Tmp)){
-    Iro=Ratiocmyk(Tmp)
-    Iroflg=1
-    All=All-1
-  }
-  Tmp<- varargin[[All]]
-  if (mode(Tmp)=="numeric"){
-    if (length(Tmp)>1){
-      Kosa<- 1; All<- Nargs
-    }
-    else{
-      Kosa<- Tmp; All<- All-1
-    }
-  }
-  else if (mode(Tmp)=="list"){
-      Kosa<- 1; All<- Nargs
-  }
-  Ra=TenSize*1000/2.54/MilliIn
-  if(Iroflg>0){
-    Str='{\\color[cmyk]{'
-    for(J in 1:4){
-      Str=paste(Str,as.character(Kosa*Iro[J]),sep="")
-      if(J<4){
-        Str=paste(Str,',',sep="")
-      }
-    }
-    Str=paste(Str,'}%',sep="")
-    cat(Str,file=Wfile,append=TRUE)
-  }
-
-#  CL<-c()
-#  for (J in 0:N){
-#    Tmp<- TenSize*0.5*1000/2.54/MilliIn
-#    Tmp<- Tmp*c(cos(pi/4+J*2*pi/N),sin(pi/4+J*2*pi/N))
-#    CL<- append(CL,Tmp)
-#  }
-#  CL<- matrix(CL,nrow=2)
-#  CL<- t(CL)
-  Mojisu=0
-  for (II in Looprange(1,All)){
-    MS<- varargin[[II]]
-    MS=Flattenlist(MS) #17.10.28
-    if (mode(MS)=="numeric"){
-      MS<- list(MS)
-    }
-    for (I in Looprange(1,length(MS))){
-      P<- MS[[I]]
-      if (InWindow(P)!="i") next
-      P<- Doscaling(P)
-      X=sprintf('%5.5f',P[1])
-      Y=sprintf('%5.5f',P[2])
-      Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
-      cat(Str,file=Wfile,append=TRUE)
-      Mojisu=Mojisu+nchar(Str)
-      if(Mojisu>80){
-        cat("\n",file=Wfile,append=TRUE)
-        Mojisu=0
-      }
-    }
-  }
-  Str="%"
-  if(Iroflg>0){
-    Str='}%'
-  }
-  if(Mojisu>0){
-    Str=paste('\n',Str,'\n',sep="")
-  }else{
-    Fmt=paste(Str,'\n',sep="")
-  }
-  cat(Str,file=Wfile,append=TRUE)
-  cat("\n",file=Wfile,append=TRUE) #180930
-}
-
-
-######################################
+################### Makehasen ###################
 
 Makehasen<- function(Figdata,Sen,Gap,Ptn)
 {
+  Width <- PenThick/PenThickInit #from 20190317
+  Setpen(Width) #from 20190317
   Eps<- 10.0^(-6)
   Clist<- MakeCurves(Figdata)
   DinM<- Dataindex(Clist)
@@ -341,8 +403,11 @@ Makehasen<- function(Figdata,Sen,Gap,Ptn)
         SegList<- c(seq(Tobi,Tobi+(Nsen-2)*SegUnit,by=SegUnit))
       }
     }
+	Com=paste0('%%%%% start dashline, Senlength=',Sen,', Gaplength=',Gap,' %%%%%%') #from 20190317
+    cat(Com,file=Wfile,append=TRUE)
+    cat(";%\n%\n",file=Wfile,append=TRUE);
     Hajime<- 1; Owari<- 1
-    Mojisu<- 0
+#    Mojisu<- 0
     for (I in Looprange(1,length(SegList))){
       Len<- SegList[I]
       J<- Owari
@@ -367,117 +432,124 @@ Makehasen<- function(Figdata,Sen,Gap,Ptn)
       X0=sprintf('%5.5f',P[1])
       Y0=sprintf('%5.5f',P[2])
       Pt0=paste('(',X0,',',Y0,')',sep="")
-      Str=paste('\\polyline',Pt0,sep="")
+      Str=paste('\\draw [line width=',round(PenThick,digits=6),']',Pt0,sep="") #from 20190317
       cat(Str,file=Wfile,append=TRUE)
-      Mojisu<- Mojisu+nchar(Str)
+#      Mojisu<- Mojisu+nchar(Str)
       for (J in Looprange(Hajime+1,Owari)){
         P=Data[J,]
         X=sprintf('%5.5f',P[1])
         Y=sprintf('%5.5f',P[2])
-        Pt=paste('(',X,',',Y,')',sep="")
+        Pt=paste(' -- (',X,',',Y,')',sep="")
         Str=Pt
         cat(Str,file=Wfile,append=TRUE)
-        Pt0=Pt
-        Mojisu=Mojisu+nchar(Str)
+#        Pt0=Pt
+#        Mojisu=Mojisu+nchar(Str)
       }
       T<- (Len+Naga-Lenlist[Owari])
       T<- T/(Lenlist[Owari+1]-Lenlist[Owari])
       P<- Data[Owari,]+T*(Data[Owari+1,]-Data[Owari,])
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      Pt=paste('(',X,',',Y,')',sep="")
+      Pt=paste(' -- (',X,',',Y,')',sep="")
       Str=Pt
       cat(Str,file=Wfile,append=TRUE)
-      Mojisu<- Mojisu+nchar(Str)
-      if (Mojisu>80){
-        cat("%\n",file=Wfile,append=TRUE)
-        Mojisu<- 0
-      }
+      cat(";%\n%\n",file=Wfile,append=TRUE);
+#      Mojisu<- Mojisu+nchar(Str)
+#      if (Mojisu>80){
+#        cat("%\n",file=Wfile,append=TRUE)
+#        Mojisu<- 0
+#      }
     }
+	Com=paste0('%%%%%% finish dashline, Senlength=',Sen,', Gaplength=',Gap,' %%%%%%') #from 20190317
+    cat(Com,file=Wfile,append=TRUE)
+    cat(";%\n%\n",file=Wfile,append=TRUE);
   }
-  cat("%\n%\n",file=Wfile,append=TRUE);
+#  cat("%\n%\n",file=Wfile,append=TRUE);
 }
 
-#########################################
+##################### Drwpt ######################
 
-Beginpicture<-function(ul)
-{    ## Scaling is implemented
-  Tmp<- Doscaling(c(XMIN,YMIN))
-  Xm<- Tmp[1]
-  Ym<- Tmp[2]
-  Tmp<- Doscaling(c(XMAX,YMAX))
-  XM<- Tmp[1]
-  YM<- Tmp[2]
-  Dx<- XM-Xm
-  Dy<- YM-Ym
-  Sym<-".0123456789 +-*/"
-  SL<-Sym
-  OL<-"+-*/"
-  if (ul!=""){
-    ULEN<<-ul;
-  }
-  Is<-1;
-  VL<-"";
-  Ucode<-ULEN
-  for (I in Looprange(1,nchar(Ucode))){
-    C<-substring(Ucode,I,I);
-    if (length(grep(C,SL,fixed=TRUE))>0){
-      if (length(grep(C,OL,fixed=TRUE))>0){
-        Tmp<-substring(Ucode,Is,I-1);
-        Str<-paste(VL,Tmp,C,sep="")
-        VL<-Str
-        Is<-I+1;
-      }
-    }
-    else{
-      Unit<-substring(Ucode,I,I+1);
-      Str<-substring(Ucode,Is,I-1);
-      VL<-paste(VL,Str,sep="")
-      break;
-    }
-  }
-  Valu<-eval(parse(text=VL));
-  Str<-as.character(Valu);
-  ULEN<<- paste(Str,Unit,sep="");
-  if (Unit=="cm") MilliIn<<-1000/2.54*Valu
-  if (Unit=="mm") MilliIn<<-1000/2.54*Valu/10
-  if (Unit=="in") MilliIn<<-1000*Valu
-  if (Unit=="pt") MilliIn<<-1000/72.27*Valu
-  if (Unit=="pc") MilliIn<<-1000/6.022*Valu 
-  if (Unit=="bp") MilliIn<<-1000/72*Valu
-  if (Unit=="dd2") MilliIn<<-1000/1238/1157/72.27*Valu
-  if (Unit=="cc") MilliIn<<-1000/1238/1157/72.27*12*Valu;
-  if (Unit=="sp") MilliIn<<-1000/72.27/65536*Valu/10
-  MARKLEN<<- MARKLENNow*1000/2.54/MilliIn;
-  Str<-paste("{\\unitlength=",ULEN,"%\n",sep="");
-  cat(Str,file=Wfile,append=TRUE);
-  cat("\\begin{picture}%\n",file=Wfile,append=TRUE);
-  Str<-"(";
-  Tmp<-as.character(round(Dx,digits=6));
-  Str<-paste(Str,Tmp,",",sep="");
-  Tmp<-as.character(round(Dy,digits=6));
-  Str<-paste(Str,Tmp,")(",sep="");
-  Tmp<-as.character(round(Xm,digits=6));
-  Str<-paste(Str,Tmp,",",sep="");
-  Tmp<-as.character(round(Ym,digits=6));
-  Str<-paste(Str,Tmp,")%\n",sep="");
-  cat(Str,file=Wfile,append=TRUE);
-  Str=paste('\\linethickness{',as.character(PenThickInit/1000),'in}%',sep="")
-  cat(Str,file=Wfile,append=TRUE)
-  cat("%\n",file=Wfile,append=TRUE)
-}
-
-#########################################
-
-Setpen<-function(Width)
+Drwpt<-function(...) #181230
 {
-  PenThick<<-round(PenThickInit*Width)
-  Str=paste('\\linethickness{',as.character(PenThick/1000),'in}%',sep="")
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  All=Nargs
+  Same="y"
+  Incolor=""
+  Tmp=varargin[[All]]
+  if(is.numeric(Tmp)){
+    if(length(Tmp)==3){Tmp=c(Tmp,1)}
+    if(length(Tmp)==4){
+      if(Tmp[4]<0){
+        Same="nn"
+      }else{
+        if(Tmp[4]!=1){
+          Tmp1=Tmp[4]*(c(1,1,1)-Tmp[1:3])
+          Tmp1=c(1,1,1)-Tmp1
+          Tmp=c(Tmp[1:3],Tmp1)
+        }
+      }
+    }
+    if(length(Tmp)==6){
+      Same="n"
+      Incolor="\\color[rgb]{"
+      for(J in 4:6){
+        Incolor=paste(Incolor,as.character(Tmp[J]),sep="")
+        if(J<6){
+          Incolor=paste(Incolor,",",sep="")
+        }
+      }
+      Incolor=paste(Incolor,"}",sep="")
+    }
+    All=Nargs-1 
+  }
+  Ra=TenSize*1000/2.54/MilliIn
+  Mojisu=0
+  for (II in Looprange(1,All)){
+    MS<- varargin[[II]]
+    MS=Flattenlist(MS) #17.10.28
+    if (mode(MS)=="numeric"){
+      MS<- list(MS)
+    }
+    for (I in Looprange(1,length(MS))){
+      P<- MS[[I]]
+      if (InWindow(P)!="i") next
+      P<- Doscaling(P)
+      X=sprintf('%5.5f',P[1])
+      Y=sprintf('%5.5f',P[2])
+      Str=""
+      if(Same=="n"){
+        Str=paste("{\\linethickness{0 in}",Incolor,sep="")
+      }
+      if(Same!="nn"){
+        Str=paste(Str,'\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
+        cat(Str,file=Wfile,append=TRUE)
+        Mojisu=Mojisu+nchar(Str)
+      }
+      if(Same=="n"){
+        cat("}",file=Wfile,append=TRUE)
+      }
+      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}',sep="")
+      cat(Str,file=Wfile,append=TRUE)
+      Mojisu=Mojisu+nchar(Str)
+      if(Mojisu>80){
+        cat("\n",file=Wfile,append=TRUE)
+        Mojisu=0
+        Str=""
+      }
+    }
+  }
+  if(Same=="n"){
+ #   Str='}%'
+  }
+  if(Mojisu>0){
+    Str=paste('\n',Str,'\n',sep="")
+  }
   cat(Str,file=Wfile,append=TRUE)
-  cat("%\n",file=Wfile,append=TRUE)
+  cat("\n",file=Wfile,append=TRUE) #180930
 }
 
-#########################################
+#################### Shade #####################
 
 Shade<- function(...)
 {           ##  Scaling is implemented
@@ -523,7 +595,7 @@ Shade<- function(...)
       cat(Str,file=Wfile,append=TRUE)
     }
   }
-  Mojisu=0
+#  Mojisu=0
   Tmp=varargin[[1]]
 #  Data=Kyoukai(Tmp)
   Data= Joincrvs(Tmp) #180929from
@@ -538,25 +610,118 @@ Shade<- function(...)
       Y=sprintf('%5.5f',P[2])
       Pt=paste('(',X,',',Y,')',sep="")
       if(J==1){
-        Str=paste('\\polygon*',Pt,sep="")
+        Str=paste('\\fill',Pt,sep="")
       }else{
-        Str=Pt  
+        Str=paste('--',Pt,sep="")
       }
       cat(Str,file=Wfile,append=TRUE)
-      Mojisu<- Mojisu+nchar(Str)
-      if (Mojisu>80){
-        cat("%\n",file=Wfile,append=TRUE)
-        Mojisu<- 0
-      }
+#      Mojisu<- Mojisu+nchar(Str)
+#      if (Mojisu>80){
+#        cat("%\n",file=Wfile,append=TRUE)
+#        Mojisu<- 0
+#      }
     }
+    cat(";%\n",file=Wfile,append=TRUE)
   }
-  if(Iroflg==1){
-    Str='}%'
-    if(Mojisu>0){
-      Str=paste('\n',Str,'\n',sep="")
-    }else{
-      Str=paste(Str,'\n')
+#  if(Iroflg==1){
+#    Str='}%\n'
+#    if(Mojisu>0){
+#      Str=paste('\n',Str,'\n',sep="")
+#    }else{
+#      Str=paste(Str,'\n')
+#    }
+#    cat(Str,file=Wfile,append=TRUE)
+#  }
+}
+
+################## Letter ####################
+
+Letter<-function(...)
+{     ## Scaling is implemented
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  Irng<-c(seq(from=1,to=Nargs,by=3))
+  for (I in Irng)
+  {
+    Tmp<-varargin[[I]] 
+    P<- Doscaling(Tmp)
+    X<-P[1]
+    Y<-P[2]
+    Houkou<-varargin[[I+1]]
+    Mojiretu<-varargin[[I+2]]
+	if(length(grep("\\$",Mojiretu))>0) #from 20190317
+	{
+      Mojiretu <- Mojiretu
+	}
+	else
+	{
+	  Mojiretu <- paste0("$\\mathrm{",Mojiretu,"}$")
+	}
+    Hset<-Houkou
+    Vhoko<-"c"
+    if(length(grep("n",Hset))>0)
+    {
+      Vhoko<-"n"; Y<-Y+MEMORI
     }
+    if(length(grep("s",Hset))>0)
+    {
+      Vhoko<-"s"; Y<-Y-MEMORI
+    }
+    Hhoko<-"c"
+    if(length(grep("e",Hset))>0)
+    {
+      Hhoko<-"e"; X<-X+MEMORI
+    }
+    if(length(grep("w",Hset))>0)
+    {
+      Hhoko<-"w"; X<-X-MEMORI
+    }
+    Hoko<-paste(Vhoko,Hhoko,sep="")
+    Suu<-"+-.0123456789"
+    SuuL<-Suu
+    J<-1; Dstr<-""
+    while (J<=nchar(Houkou))
+    {
+      Tmp<-substring(Houkou,J,J)
+      if(length(grep(Tmp,SuuL))>0)
+      {
+        if(Dstr=="") Hk<-substring(Houkou,J-1,J-1)
+        Dstr<-paste(Dstr,Tmp,sep="")
+      }
+      else
+      {
+        if(Dstr!="")
+        {
+          Nmbr<-as.numeric(Dstr)
+          D<-Nmbr*MEMORI
+          if(Hk=="n") Y<-Y+D
+          if(Hk=="s") Y<-Y-D
+          if(Hk=="e") X<-X+D
+          if(Hk=="w") X<-X-D
+          Dstr<-""
+        }
+      }
+      J<-J+1
+    }
+    if(Dstr!="")
+    {
+      Nmbr<-as.numeric(Dstr)
+      D<-Nmbr*MEMORI;
+      if(Hk=="n") Y<-Y+D
+      if(Hk=="s") Y<-Y-D
+      if(Hk=="e") X<-X+D
+      if(Hk=="w") X<-X-D
+    }
+    CalcWidth(Hoko,Mojiretu)
+    CalcHeight(Hoko,Mojiretu)
+    cat("\\put(",file=Wfile,append=TRUE)
+    Tmp1<- sprintf("%7.7f",X)  # 11.07.19
+    Tmp2<- sprintf("%7.7f",Y)  # 11.07.19
+    Str<-paste(Tmp1,",",Tmp2,sep="")
     cat(Str,file=Wfile,append=TRUE)
+    Tmp<-"){\\hspace*{\\Width}"
+    Str<-paste(Tmp,"\\raisebox{\\Height}{",Mojiretu,"}}%\n",sep="") 
+    cat(Str,file=Wfile,append=TRUE)
+    cat("%\n",file=Wfile,append=TRUE)
   }
 }

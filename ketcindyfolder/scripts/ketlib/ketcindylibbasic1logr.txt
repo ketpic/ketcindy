@@ -1,3 +1,6 @@
+// 20190323
+//    Circledata changed  ([Center,r] supported
+//    Colorname2rgb changed ( in the case of no color, "Assign" added )
 // 20190311
 //    Shade changed  ( order of COM2ndlist)
 //    Com2nd changed  ("before" removed )

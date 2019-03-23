@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.5");
+println("KeTCindy V.3.2.6");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190311] loaded");
+println("ketcindylibbasic1[20190323] loaded");
 
 //help:start();
 
@@ -3410,7 +3410,7 @@ Colorname2rgb(name):=( //181212
     code=Colorcmyk2rgb(code);
   ,
     println("    "+name+" not found");
-    code=[0,0,0];
+    code=Assign(name); //190323
   );
 );
 ////%Colorname2rgb end////
@@ -4362,6 +4362,7 @@ Paramplot(nm,funstr,variable,options):=(
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
+  Msg="Y"; //190322
   Num=50;
   Ec=[];
   Exfun="";
@@ -4787,6 +4788,9 @@ Circledata(nm,cenrad,options):=(
   if(length(cenrad)==2,
     Ctr=Lcrd(cenrad_1);
     Ptcir=Lcrd(cenrad_2);
+    if(!islist(Ptcir),  //190323from
+      Ptcir=Ctr+[Ptcir,0];
+    );  //190323to
     ra=dist(Ctr,Ptcir);
   ,
     Eps=10^(-1);

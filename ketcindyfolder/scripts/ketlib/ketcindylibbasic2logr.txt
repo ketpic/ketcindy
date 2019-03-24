@@ -1,3 +1,5 @@
+// 20190324
+//    Viewtex,Figpdf changed (for tikz )
 // 20190301
 //    MeasureDepth => Measuredepth
 // 20190228

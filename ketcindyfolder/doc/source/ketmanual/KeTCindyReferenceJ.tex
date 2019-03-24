@@ -1526,7 +1526,7 @@ Deg=2 とすると2次になる。
 \hypertarget{circledata}{}
 \item[関数]Circledata(name,リスト,options)
 \item[機能]円または多角形を描く。
-\item[説明]中心の点と，円周上の1点，または3点をリストで与えて円を描く。
+\item[説明]中心の点と，円周上の1点（か半径），または3点をリストで与えて円を描く。
 
 中心と円周上の点を，座標ではなく幾何要素名で指定する場合は name は省略可。
 
@@ -1541,9 +1541,9 @@ optionsは以下のものをリストで与える。省略した場合は実線�
 1234\=56789012345678901234567890\=\kill
 
 【例】いろいろな円を描く。\\
- \>原点中心，半径2の円\> \verb|Circledata("1",[[0,0],[2,0]]);|\\
+ \>原点中心，半径2の円\> \verb|Circledata("1",[[0,0],[2,0]]);|（\verb|[[0,0],2]|でもよい）\\
  \>A中心，半径ABの円\> \verb|Circledata([A,B]);|\\
- \>A中心，半径2の円\> \verb|Circledata("1",[A,A+[2,0]]);|\\
+ \>A中心，半径2の円\> \verb|Circledata("1",[A,A+[2,0]]);|（\verb|[A,2]|でもよい）\\
  \>3点A,B,Cを通る円\> \verb|Circledata([A,B,C]);|\\
  \>下図左より，オプションに "dr,2" , "da" , "do" をつけた場合。
 \end{tabbing}
@@ -4529,9 +4529,9 @@ Maximaは数式処理ソフトで，\ketcindy においては微積分の計算�
 
 \ketcindy では，kc.bat/shによってコマンドをMaximaに渡し，結果をテキストファイルで受け取る。このとき，Maximaとのやりとりで，次のようなファイルが作業ディレクトリに作成される。
 
-拡張子 max ：Maxima用のファイル
+拡張子 max ：Maximaに渡すコマンドを記述したファイル
 
-拡張子 txt：データファイル
+拡張子 txt：Maximaが出力したデータファイル
 
 このデータのやり取りに関する次のオプションがある。
 
@@ -4552,39 +4552,39 @@ ii) データファイルが既にあればそれを読み込む
 \hypertarget{calcbyM}{}
 \item[関数]CalcbyM(name，コマンド，option)
 \item[機能]Maximaのスクリプトを実行する
-\item[説明]第2引数はMaximaで実行するコマンド。
+\item[説明]第2引数はMaximaで実行するコマンドを記述したスクリプト。
 
-コマンドと引数リストの繰り返しからなるリスト（例えばcmdL）を作って，一度に実行する。
+コマンドと引数リストの繰り返しからなるスクリプトをリストとして作り，一度に実行する。
 
-戻り値はない。（未定義値）結果は，コマンドリストの最後に記述した変数（引数は空リスト）の値がname で指定された変数に代入される。複数の結果を戻すときは，:: で区切って記述するとリストにして代入される。
+戻り値はない（未定義値）。実行結果は，コマンドリストの最後に記述した変数（引数は空リスト）の値が，name で指定された変数に代入される。複数の結果を戻すときは，:: で区切って記述するとリストにしてnameに代入される。
 
 \vspace{\baselineskip}
-【例】$\sin x$ とその導関数を表示する。結果は 変数 fdf に f とdf のリストが代入される。
+【例】$\sin x$ とその導関数を表示する。
 \begin{verbatim}
 cmdL=[
-"f:sin(x)", [],
-"df:diff",["sin(x)","x"],
-"f::df",[]
+  "f:sin(x)", [],
+  "df:diff",["sin(x)","x"],
+  "f::df",[]
 ];
 CalcbyM("fdf",cmdL);
 println(fdf);
 \end{verbatim}
 \vspace{\baselineskip}
-実行すると，コンソールに，[sin(x),cos(x)]と表示される。
+実行すると，結果の f とdf のリストが変数 fdf に代入され，コンソールに，\verb|[sin(x),cos(x)]| と表示される。
 
 \vspace{\baselineskip}
 【例】2次方程式 $x^2-x-4=0$の解を求める。
 \begin{verbatim}
 cmdL=[
-"ans:solve",["x^2-x-4","x"],
-"ans",[]
+  "ans:solve",["x^2-x-4","x"],
+  "ans",[]
 ];
 CalcbyM("ans",cmdL);
 println("ans="+ans);
 \end{verbatim}
 コンソールには
 
-ans=[x = -(sqrt(17)-1)/2,x = (sqrt(17)+1)/2] 
+\verb|ans=[x = -(sqrt(17)-1)/2,x = (sqrt(17)+1)/2] |
 
 が表示される。
 
@@ -4594,15 +4594,14 @@ ans=[x = -(sqrt(17)-1)/2,x = (sqrt(17)+1)/2]
 \vspace{\baselineskip}
 $f(x)=\dfrac{e^x+e^{-x}}{2}$ の，$x=a$における接線の方程式を作る。
 
-Maximaでその処理を行うコマンドを定義し，CalcbyMで実行する。
 \begin{verbatim}
 fx="(exp(x)+exp(-x))/2";
 cmdL=[
-"df:diff",[fx,"x"],
-"c:ev",["df","x=a"],
-"b:ev",[fx,"x=a"],
-"eq:c*(x-a)+b",[],
-"eq",[]
+  "df:diff",[fx,"x"],
+  "c:ev",["df","x=a"],
+  "b:ev",[fx,"x=a"],
+  "eq:c*(x-a)+b",[],
+  "eq",[]
 ];
 CalcbyM("tn1",cmdL);
 println(tn1);
@@ -4639,11 +4638,11 @@ plotdata("2",tmp,"x",["Num=2"]);
 \begin{verbatim}
 fn="3*cos(t)^2*[cos(t),sin(t)]";
 cmdL=[
-"f:",[fn],
-"df:diff",["f","t"],
-"df:trigsimp",["df"],
-"tn:f+s*df",[],
-"tn",[]
+  "f:",[fn],
+  "df:diff",["f","t"],
+  "df:trigsimp",["df"],
+  "tn:f+s*df",[],
+  "tn",[]
 ];
 CalcbyM("tn2",cmdL);
 Paramplot("1",fn,"t=[0,2*pi]",["Num=100"]);
@@ -4661,8 +4660,8 @@ $\displaystyle \int _{-1} ^2 (-x^3+3x+2)dx$ の値を求める。結果は val �
 
 \begin{verbatim}
 cmdL=[
-"val:integrate",["-x^3+3*x+2,x,-1,2"],
-"val",[]
+  "val:integrate",["-x^3+3*x+2,x,-1,2"],
+  "val",[]
 ];
 CalcbyM("val",cmdL);
 Mxtex("1",val);
@@ -4673,10 +4672,17 @@ Expr([[2,2],"e","S="+tx1]);
 \vspace{\baselineskip}
 \hypertarget{mxbatch}{}
 \item[関数]Mxbatch(ファイル名)
-\item[機能]Maximaのファイルを実行するコマンドを作る
-\item[説明]ketcindy/ketlib/maximaL にあるファイルを実行するための，CalcbyM用のコマンドを作成する。
+\item[機能]Maximaのライブラリを使うバッチファイルを作成
+\item[説明]ketcindy/ketlib/maximaL にあるライブラリを用いるコマンドでバッチファイルを作成する。
 
-ketcindy/ketlib/maximaL には，fourier\_sec.max , matoperation.max , poincare.mac の3つのファイルが入っている。たとえば，フーリエ級数を扱うときには，fourier\_sec.max を使用する。
+ketcindy/ketlib/maximaL には，fourier\_sec.max , matoperation.max , poincare.mac の3つのファイルがあり，関数を定義したライブラリが入っている。それぞれ次のような内容である。各ファイルをテキストエディタで開いて参照されたい。
+
+fourier\_sec.max ：フーリエ級数の計算を行う。
+
+matoperation.max ： 行列の計算を行う。
+
+poincare ： ハミルトニアンシステムに関する計算を行う。
+
 
 \vspace{\baselineskip}
 【例】\verb|cmd=Mxbatch("fourier_sec")|
@@ -4700,9 +4706,9 @@ per=tmp_2;
 Htickmark([1,"n","1",2,"n","2",3,"nw","3"]);
 Htickmark([-1,"-1",-2,"-2",-3,"-3"]);
 cmdL=Concat(Mxbatch("fourier_sec"),[
-"Ffun(x):="+fun,[],
-"c:fourier_sec_coeff",["Ffun(x)","x"],
-"c[1]::c[2]::c[3]",[]
+  "Ffun(x):="+fun,[],
+  "c:fourier_sec_coeff",["Ffun(x)","x"],
+  "c[1]::c[2]::c[3]",[]
 ]);
 CalcbyM("ans",cmdL,[]);
 nterm=round(4*(C.x-A.x));
@@ -4711,66 +4717,78 @@ Mxtex("2",ans_3);
 Expr([[-5,-2],"e","s_n="+tx2,[4,-2],"e","n="+text(nterm)]);
 \end{verbatim}
 
-\hspace{20mm}\input{Fig/mxbatch}
+\hspace{10mm}\input{Fig/mxbatch}
 
 %\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\vspace{\baselineskip}
+\vspace{15mm}
 \hypertarget{mxfun}{}
 \item[関数]Mxfun(name，式，リスト，option)
 \item[機能]Maximaの関数を実行する
 \item[説明]第2引数の「式」はMaximaの関数名。第3引数のリストは関数に渡す引数のリスト。
 
 戻り値は，第１引数の式に１つでも文字があると文字列となる。すべて数字（+,-, . を含む）の場合は
-16桁以下であれば数，それ以上の場合は文字列となる。また，戻り値は，変数 mxname にも代入される。
+16桁以下であれば数，それ以上の場合は文字列となる。また，戻り値は，変数 mx+name にも代入される。
 
 オプションに "Disp=no" をつけると，結果をコンソールに表示しない。
 
 \vspace{\baselineskip}
 【例】$10!$を求める。
 
-\verb|Mxfun("1","10!",[]);|
+\verb|    Mxfun("1","10!",[]);|
 
-を実行すると，コンソールにmx1 is 362880 と表示される。この値は変数 mx1 に代入されているので，
+を実行すると，コンソールにmx1 is 3628800 と表示される。この値は変数 mx1 に代入されているので，
 
-\verb|drawtext([0,1],mx1);|
+\verb|    Letter([[0,1],"e",mx1]);|
 
-とすればCinderellaの描画面上に表示される。mx1のかわりに，戻り値を変数に代入して使うこともできる。
+とすればCinderellaの描画面上に表示される。mx1ではなく，戻り値を変数に代入して使うこともできる。
 
 \begin{verbatim}
 fact10=Mxfun("1","10!",[]);
-drawtext([0,1],fact10);
+Letter([[0,1],"e",fact10]);
+\end{verbatim}
+
+\vspace{\baselineskip}
+【例】文字列の連結
+
+文字列を引数とする場合，例えば，Maximaの文字列を連結するコマンドconcatでは，
+
+\verb|    concat("a","b")|
+
+とするが，中にダブルクォートが入っているため，全体を文字列にすることができない。
+
+このような場合は，第2引数を使って
+
+\verb|    Mxfun("1","concat",["a","b"])|
+ 
+とすればよい。
+
+\vspace{\baselineskip}
+＜参考＞ CindyScript の unicode(code)  関数を用いてダブルクォートを表し，次のようにすることもできる。
+
+\begin{verbatim}
+dq=unicode("22");
+comm="concat("+dq+"a"+dq+","+dq+"b"+dq+")";
+Mxfun("1",comm,[]);
 \end{verbatim}
 
 \vspace{\baselineskip}
 【例】$f(x)=\sin x$ を微分する
 
-\verb|Mxfun("1", "diff",["sin(x)","x"])|
+\verb|    Mxfun("1", "diff",["sin(x)","x"])|
 
 とすると
 
-diff(sin(x),x)
+\verb|    diff(sin(x),x)|
 
 というコマンドをMaximaに渡して，戻り値をCindyの変数mx1に代入する。
 
-\verb|Mxfun("1", "diff(sin(x),x)",[]])|
+\verb|    Mxfun("1", "diff(sin(x),x)",[]])|
 
 と，第１引数にまとめても同じ結果になる。ただし，この場合，第2引数は空リストとする。
 
-文字列を引数とする場合，例えば，文字列を連結するコマンドconcatでは，
-
-concat("a","b")
-
-とするが，Cindyscriptの文字列の処理の関係で，第１引数ではこの形で記述できない。
-
-したがって，このような場合は，第2引数を使って
-
-\verb|Mxfun("1","concat",["a","b"])|
- 
-とすればよい。
-
 \vspace{\baselineskip}
-{\bf Cindyscriptの微分との違い}
+{\bf ＜参考＞Cindyscriptの微分との違い}
 
 Cindyscriptでも微分はできる。たとえば，
 \begin{verbatim}
@@ -4797,17 +4815,12 @@ println(mx1);
 \end{verbatim}
 では，コンソールに \verb|cos(x)| と表示される。
 
-mx1は文字列であるので，
-\begin{verbatim}
-g(x):=parse(mx1);
-\end{verbatim}
-とすれば，g(x)を導関数とすることができ，\verb|plot(g(#))| でグラフを描くことができる。
+mx1は文字列であるので，\verb|Plotdata("1",mx1,"x")| でグラフが描ける。
 
 また，Cindyscriptの微分では，3階か4階までの導関数が計算上の限度であるのに対し，Maximaなら何階でも微分ができるので，テイラー展開などで有利である。
 
 \vspace{\baselineskip}
-\vspace{\baselineskip}
-例$\sin x$ の テイラー展開を行い，グラフを表示する。
+【例】$\sin x$ の テイラー展開による近似のグラフを表示する。
 \begin{verbatim}
 Mxfun("1","taylor",["sin(x)","x",0,7],[""]);
 Plotdata("1","sin(x)","x",["da"]);
@@ -4816,14 +4829,14 @@ Plotdata("2",mx1,"x");
 \vspace{\baselineskip}
 \begin{center} \input{Fig/taylor} \end{center}
 \vspace{\baselineskip}
-Mxtex() を用いて，Mxfun()の結果の mx1をTeX書式にして表示することもできる。
+なお，Mxtex() を用いれば，Mxfun()の結果の mx1をTeX書式にして表示できる。
 
-\verb|Expr([[1,2],"e",Mxtex("1",mx1)]);|
+\verb|    Expr([[1,2],"e",Mxtex("1",mx1)]);|
 
 を追加すれば[1,2]の位置に式が表示される。
 
 \vspace{\baselineskip}
-{\bf 応用【例】接線の方程式を作る}
+【例】接線の方程式を作る
 
 \vspace{\baselineskip}
 $f(x)=\dfrac{e^x+e^{-x}}{2}$ の，$x=a$における接線の方程式を作る。
@@ -4843,6 +4856,8 @@ println(tf);
 (%e^a-%e^-a)/2*(x-a)+((exp(a)+exp(-a))/2) 
 \end{verbatim}
 が表示される。
+
+同様の例を CalcbyM() で例示しているので参照されたい。
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}

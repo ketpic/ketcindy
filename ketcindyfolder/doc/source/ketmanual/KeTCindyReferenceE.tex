@@ -1213,7 +1213,7 @@ Extra options is :\\
 \itemket{Usage}Circledata(name, list, options)
 \itemket{Description}Draw a circle or polygon. 
 \itemket{Details}
-The list consists of the central point and some point on the circle. 
+The list consists of the central point and some point on the circle or the radius. 
 It is also permitted that three points on the circle are given in the list. 
 The name can be omitted when the central point and a point on the circle 
 are given with the names of their geometric components.\\
@@ -1228,8 +1228,8 @@ When this number is small, the corresponding polygon is drawn.
 
 The circle with center \verb|[0,0]| or A and radius 2 ( draw A by drawing tool)
 
-\verb|  Circledata("1",[[0,0],[2,0]]);|\\
-\verb|  Circledata("1",[A,A+[2,0]]);|\\
+\verb|  Circledata("1",[[0,0],[2,0]]);|(or \verb|[[0,0],2]|)\\
+\verb|  Circledata("1",[A,A+[2,0]]);|(or \verb|[A,2]|)\\
 
 The circle with center A and radius AB
 

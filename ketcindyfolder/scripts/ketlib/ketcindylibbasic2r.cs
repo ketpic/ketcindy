@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190301] loaded");
+println("ketcindybasic2[20190324] loaded");
 
 //help:start();
 
@@ -3777,17 +3777,18 @@ Viewtex():=(
 //  if(iswindows(),sep="\",sep="/"); // 17.04.07
 //  sep="/";
   SCEOUTPUT=openfile(texfile+".tex");
-  tmp="\documentclass{article}"; // 16.06.09from
+  tmp="\documentclass{article}";
+  if(GPACK=="tikz", //190324from
+    if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
+      tmp="\documentclass[dvipdfmx]{article}";
+    ); //190324to
+  );
   if(indexof(PathT,"platex")>0,
-    if(GPACK=="tikz",
-      tmp="\documentclass[dvipdfmx]{article}"; // 190101
-    ,
-      tmp=replace(tmp,"article","jarticle");
-      if(indexof(PathT,"uplatex")>0, //17.08.13from
-        tmp=replace(tmp,"jarticle","ujarticle");
-      );//17.08.13to
-    );
-  ); // 16.06.09to
+    tmp=replace(tmp,"article","jarticle");
+    if(indexof(PathT,"uplatex")>0, //17.08.13from
+      tmp=replace(tmp,"jarticle","ujarticle");
+    );//17.08.13to
+  ); 
   println(SCEOUTPUT,tmp);
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0), //181213from
     if(GPACK=="tpic", GPACK="pict2e");
@@ -4013,21 +4014,24 @@ Figpdf(fnameorg,optionorg):=(
     tmp1=Removespace(substring(ULEN,0,tmp-1));
     sc=parse(tmp1);
   );
-  tmp="\documentclass{article}"; // 16.06.09from
+  tmp="\documentclass{article}";
+  if(GPACK=="tikz", //190324from
+    if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
+      tmp="\documentclass[dvipdfmx]{article}";
+    ); //190324to
+  );
   if(indexof(PathT,"platex")>0,
     tmp=replace(tmp,"article","jarticle");
-    if(indexof(PathT,"uplatex")>0, //17.08.13from
+    if(indexof(PathT,"uplatex")>0, //170813from
       tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13until
-  );
+    );//170813to
+  ); 
   FigPdfList=append(FigPdfList,tmp); // 16.06.09until
   tmp1="\special{papersize=W mm,H mm}";
   tmp=(XMAX-XMIN)*sc+(mar_1+mar_2);
   tmp1=replace(tmp1,"W",text(tmp));
   tmp=(YMAX-YMIN)*sc+(mar_3+mar_4);
   tmp1=replace(tmp1,"H",text(tmp));
-//  if(iswindows(),sep="\",sep="/");//17.04.08
-//  sep="/";
   FigPdfList=append(FigPdfList,tmp1);
   if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0, //17.11.05from
     FigPdfList=append(FigPdfList,

@@ -1456,19 +1456,19 @@ Ptcrv(Num,Fig):=(
 
 ////%Invert start////
 Invert(Fig):=(
-//help:Invert("gr1");
+//help:Invert("gr1"); //no ketjs
   regional(tmp);
   if(isstring(Fig),tmp=parse(Fig),tmp=Fig); // 16.01.27
   reverse(tmp);
 );
-Invert(nm,Fig):=Invert(nm,Fig,["nodisp"]);  // from 16.01.27
+Invert(nm,Fig):=Invert(nm,Fig,["nodisp"]);  // from 160127
 Invert(nm,Fig,options):=(
 //help:Invert("1","gr1");
   regional(name,tmp);
   name="-inv"+nm;
   tmp=Invert(Fig);
   Listplot(name,tmp,options);
-);// until 16.01.27
+);// to 160127
 ////%Invert end////
 
 ////%Paramoncrv start////

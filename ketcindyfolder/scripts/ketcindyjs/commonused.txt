@@ -175,6 +175,11 @@ Measuredepth(list):=(
   );//180501
   Depth;
 );
+Invert(Fig):=(
+  regional(tmp);
+  if(isstring(Fig),tmp=parse(Fig),tmp=Fig); // 16.01.27
+  reverse(tmp);
+);
 Drwxy():=Drwxy(0,[]); //190103from
 Drwxy(Arg):=(
   if(islist(Arg),Drwxy(0,Arg); Drwxy(Arg,[]));
@@ -248,7 +253,7 @@ Drwxy(add,optionsorg):=( //190103to
     Arrowdata("axy"+text(AXCOUNT),tmp,tmp1);
   ,
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
-    tmp1=append(options,colorax);//181216
+    tmp1=concat(options,[colorax,"Msg=n"]);//181216,190325
     Listplot("axx"+text(AXCOUNT),tmp,tmp1); 
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
     Listplot("axy"+text(AXCOUNT),tmp,tmp1); 

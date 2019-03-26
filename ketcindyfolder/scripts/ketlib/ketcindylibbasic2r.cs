@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190324] loaded");
+println("ketcindybasic2[20190325] loaded");
 
 //help:start();
 
@@ -684,7 +684,7 @@ Drwxy(add,optionsorg):=( //190103to
     Arrowdata("axy"+text(AXCOUNT),tmp,tmp1);
   ,
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
-    tmp1=append(options,colorax);//181216
+    tmp1=concat(options,[colorax,"Msg=n"]);//181216,190325
     Listplot("axx"+text(AXCOUNT),tmp,tmp1); 
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
     Listplot("axy"+text(AXCOUNT),tmp,tmp1); 

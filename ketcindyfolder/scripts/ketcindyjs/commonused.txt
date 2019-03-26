@@ -180,6 +180,13 @@ Invert(Fig):=(
   if(isstring(Fig),tmp=parse(Fig),tmp=Fig); // 16.01.27
   reverse(tmp);
 );
+Invert(nm,Fig):=Invert(nm,Fig,["nodisp"]);  // from 160127
+Invert(nm,Fig,options):=(
+  regional(name,tmp);
+  name="-inv"+nm;
+  tmp=Invert(Fig);
+  Listplot(name,tmp,options);
+);// to 160127
 Drwxy():=Drwxy(0,[]); //190103from
 Drwxy(Arg):=(
   if(islist(Arg),Drwxy(0,Arg); Drwxy(Arg,[]));

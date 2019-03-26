@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190317] loaded");
+println("ketcindylibout[20190327] loaded");
 
 //help:start();
 
@@ -3255,29 +3255,29 @@ Mxfun(name,fun,argL,optionorg):=(
   add="";
   eqL=tmp_5;
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(tmp_1);
+    tmp2=tmp_2;
     if(tmp1=="P",
       precise=parse(tmp2);
       options=remove(options,[#]);
     );
-    if(tmp1=="DIS" ,
+    if(tmp1=="D" ,  //190327(to 1 char)
       tmp=Toupper(substring(tmp2,0,1));
       if((tmp=="F") % (tmp=="N"),
         disp=0;
       );
       options=remove(options,[#]);
     );
-    if((tmp1=="PAC") % (tmp1=="LOA"), // 16.02.08
+    if((tmp1=="P") % (tmp1=="L"),  //190327(to 1 char)
       pack=tokenize(tmp2,"::");
       options=remove(options,[#]);
     );
-    if(tmp1=="SET",
+    if(tmp1=="S",  //190327(to 1 char)
       set=tokenize(tmp2,"::");
       options=remove(options,[#]);
     );
-    if(tmp1=="ADD",
+    if(tmp1=="A",  //190327(to 1 char)
       add=","+tmp2;
       options=remove(options,[#]);
     );

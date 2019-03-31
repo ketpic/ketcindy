@@ -36,21 +36,21 @@
 \hypertarget{ketinit}{}
 \item[関数]Ketinit(options)
 \item[機能]\ketcindy を初期化する。平面図形ではDrawスロットに，空間図形ではInitialization スロットの冒頭に記述する必要がある。
-\item[説明]option 作業サブフォルダ，縦方向の倍率と描画領域を設定する。\\
+\item[説明]option 作業サブフォルダ\\%，縦方向の倍率と描画領域を設定する。\\
 \phantom{option }通常は不要で，\verb|Ketinit()| だけでよい。\\
 
 【例】
 
-\verb|Ketinit()| ：サブフォルダ\verb|"fig"|，倍率１，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$
+\verb|Ketinit()| ：作業フォルダは，サブフォルダ\verb|"fig"|
 
-\verb|Ketinit("")| ： サブフォルダはcindyファイルと同じ
+\verb|Ketinit("")| ： 作業フォルダはcindyファイルと同じ
 
-\verb|Ketinit(2)| ： 倍率2，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$
+%\verb|Ketinit(2)| ： 倍率2，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$
+%
+%\verb|Ketinit(2,[-2,3],[-2,4])| ： 倍率2，描画領域 $-2 \leq x \leq 3 , -2 \leq y \leq 4$
 
-\verb|Ketinit(2,[-2,3],[-2,4])| ： 倍率2，描画領域 $-2 \leq x \leq 3 , -2 \leq y \leq 4$
-
-\vspace{\baselineskip}
-描画領域(TeXに出力する領域)は制御点SW（左下）とNE（右上）を対角とする矩形領域。描画領域を指定すると，制御点がなければその位置に作り，すでに存在する場合は何もしない。作成された制御点はドラッグして描画領域を変更することができる。倍率は，Setscaling(倍率)を実行するのと同じ。ただし，Cinderellaで作図した幾何要素に対しては無効。(\hyperlink{setscaling}{Setscaling()}の項参照)
+%\vspace{\baselineskip}
+%描画領域(TeXに出力する領域)は制御点SW（左下）とNE（右上）を対角とする矩形領域。描画領域を指定すると，制御点がなければその位置に作り，すでに存在する場合は何もしない。作成された制御点はドラッグして描画領域を変更することができる。倍率は，Setscaling(倍率)を実行するのと同じ。ただし，Cinderellaで作図した幾何要素に対しては無効。(\hyperlink{setscaling}{Setscaling()}の項参照)
 
 \vspace{\baselineskip}
 \hypertarget{setfiles}{}
@@ -341,7 +341,7 @@ Deffun("f(x)",["regional y","if(x>1,y=1,if(x>-1,y=x,y=-1))","y"]);
 \item[関数]Fontsize(記号)
 \item[機能]フォントサイズを設定する
 \item[説明]次に Fontsize() を実行するまで有効\\
-記号は，"t" , "ss" , "f", "s" , "n" , "la","La", "LA", "h" , "H"\\
+記号は，"t" , "ss" , "f", "s" , "n" , "la","La", "LA", "h" , "H"
 
 【例】作図ツールの「点を加える」で，A〜Gの点をとっておく。小さい方からいくつか表示する。
 \begin{verbatim}
@@ -381,6 +381,9 @@ Pointdata("3",C,["Size=3"]);
 Pointdata("4",D,["Size=4"]);
 \end{verbatim}
 %\hspace{10mm}\input{Fig/pointsize}
+
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \hypertarget{setarrow}{}
 \item[関数]Setarrow(size,angle,position,cut,segstyle)
@@ -466,8 +469,6 @@ Listplot([A,B]);
 Listplot("1",[[0,0],[2,2]]);
 \end{verbatim}
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
 \vspace{\baselineskip}
 \hypertarget{setunitlen}{}
 \item[関数]Setunitlen(文字列)
@@ -479,8 +480,8 @@ Listplot("1",[[0,0],[2,2]]);
 
 \vspace{\baselineskip}
 \hypertarget{setwindow}{}
-\item[関数]Setwindow(）
-\item[機能]出力する描画領域を設定する
+\item[関数]Setwindow(xの範囲, yの範囲)
+\item[機能]出力する描画領域を設定する。
 \item[説明]出力する描画領域は，通常は2点SWとNEを対角とする矩形領域である。
 
 この2点をドラッグすることによりビジュアルに描画領域を決められる。
@@ -489,11 +490,17 @@ Listplot("1",[[0,0],[2,2]]);
 
 また，表を作成したときは，表の範囲が出力範囲として優先される（Tabledata()を実行したとき）ので，表外に図を描いた場合は，最後にこの関数で出力範囲を指定して書き出す。
 
+\vspace{\baselineskip}
+【例】\verb|Setwindow([-5,5],[-1,3]);|
+
+\vspace{\baselineskip}
+\hspace{10mm}\includegraphics[bb=0.00 0.00 415.02 199.01,width=6cm]{Fig/setwindow.pdf} 
+
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
 
-\newpage
+%\newpage
 %＝＝＝＝＝＝＝＝＝＝＝ 描画 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 \subsection{描画}
 \subsubsection{書式とオプション}
@@ -723,11 +730,11 @@ Putoncurve("P","gp1",[-1,1]);
 \end{verbatim}
 点Pがアステロイド上にでき，この点はドラッグするとアステロイド上を $-1 \leq x\leq 1$ の範囲で動かすことができる。ただし，-1,1の付近はy座標の判断の関係でぴったりはいかない。
 
- \begin{center} \input{Fig/putoncurve.tex} \end{center}
+ \begin{center} \scalebox{0.9}{\input{Fig/putoncurve.tex}} \end{center}
 
-%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \hypertarget{putonline}{}
 \item[関数]Putonline(点名 , 座標１ ,座標2 )
 \item[機能]直線上に点を作る
@@ -754,8 +761,6 @@ Putoncurve("P","gp1",[-1,1]);
 点(-1,0),(2,2)を通る線分上に点Cをとる。
 
  \verb|Putonseg("C",[[-1,0],[2,2]]);|
-
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{reflectpoint}{}
@@ -1248,7 +1253,8 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
-\newpage
+%\newpage
+
 % ====== 曲線 ==============
 \subsubsection{曲線}
 \begin{description}
@@ -1271,7 +1277,7 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 
 2次ベジェ曲線
 
-Bezier("1",[A,B],[C]);
+\verb|Bezier("1",[A,B],[C]);|
 
 \vspace{20mm}
 
@@ -1281,7 +1287,7 @@ Bezier("1",[A,B],[C]);
 
 3次ベジェ曲線
 
-Bezier("2",[A,B],[C,D]);
+\verb|Bezier("2",[A,B],[C,D]);|
 
 \vspace{20mm}
 
@@ -1302,13 +1308,14 @@ Bezier("2",[A,B],[C,D]);
 %D,B,E を１直線上にとると，滑らかにつながる
 節点を増やす。2次と3次。
 
-Bezier("3",[A,B,C],[[D],[E,F]]);
+\verb|Bezier("3",[A,B,C],[[D],[E,F]]);|
 
 \vspace{20mm}
 
-全て同じ次数の場合，次のようにしてもよい．
+全て同じ次数の場合，次のようにしてもよい。
+\newpage
 
-Bezier("4", [A,B,C,D], [E,F,G,H,K,L] ); 
+\verb|Bezier("4",[A,B,C,D],[E,F,G,H,K,L] ); |
 
 \begin{layer}{150}{0}
 \putnotese{20}{2}{\input{Fig/checkbe7}}
@@ -1318,17 +1325,17 @@ Bezier("4", [A,B,C,D], [E,F,G,H,K,L] );
 
 オプションの例
 
-Bezier("5",[A,B,C],[[D],[E,F]],["Num=3"]);
+\verb|Bezier("5",[A,B,C],[[D],[E,F]],["Num=3"]);|
 
 \hspace{20mm}\input{Fig/checkbe5}
 
-Bezier("6",[A,B,C],[[D],[E,F]],["Num=40","da"]);
+\verb|Bezier("6",[A,B,C],[[D],[E,F]],["Num=40","da"]);|
 
 \hspace{20mm}\input{Fig/checkbe6}
 
 Numを（ベクトルとして）区間ごとに与えることもできる。
 
-Bezier("1", [A,B,C,D], [E,F,G,H,K,L] , [ "Num=[2,3,4]"]);
+\verb|Bezier("1",[A,B,C,D],[E,F,G,H,K,L],["Num=[2,3,4]"]);|
 
 \hspace{10mm} \input{Fig/checkbe8}
 
@@ -1344,22 +1351,22 @@ Bezier("1", [A,B,C,D], [E,F,G,H,K,L] , [ "Num=[2,3,4]"]);
 \vspace{\baselineskip}
 【例】
 
-\begin{layer}{150}{0}
-\putnotese{70}{25}{bz1}
-\putnotese{40}{-5}{ \input{Fig/checksm1}}
-\end{layer}
-
-Beziersmooth("1",[A,B,C,D]);
-
-\vspace{20mm}
-その後，節点や制御点を動かして，描きたいものにする。ただし，C2p は C1q と B を通る直線上しか動けない。C3p は C2q と C を通る直線上しか動けない。
+\verb|Beziersmooth("1",[A,B,C,D]);|
 
 \begin{layer}{150}{0}
 \putnotese{70}{35}{bz1}
-\putnotese{40}{10}{ \input{Fig/checksm2}}
+\putnotese{40}{5}{ \input{Fig/checksm1}}
 \end{layer}
 
 \vspace{40mm}
+その後，節点や制御点を動かして，描きたいものにする。ただし，C2p は C1q と B を通る直線上しか動けない。C3p は C2q と C を通る直線上しか動けない。
+
+\begin{layer}{150}{0}
+\putnotese{70}{30}{bz1}
+\putnotese{40}{05}{ \input{Fig/checksm2}}
+\end{layer}
+
+\vspace{35mm}
 
 \vspace{\baselineskip}
 \hypertarget{beziersym}{}
@@ -1368,23 +1375,30 @@ Beziersmooth("1",[A,B,C,D]);
 \item[説明]節点をはさむ制御点は節点に関し対称（片方は表示されず，動かせない）。
 制御点は自動的に配置される。その後，節点や制御点を動かして描きたいものにする。
 
+\vspace{\baselineskip}
 【例】
 
 \begin{layer}{150}{0}
-\putnotese{70}{20}{bz1}
-\putnotese{40}{10}{ \input{Fig/checksy1}}
-\putnotese{0}{5}{Beziersym("1",[A,B,C,D]);}
-\putnotese{0}{15}{C2p と C3p は表示されない}
+\putnotese{70}{27}{bz1}
+\putnotese{40}{00}{ \input{Fig/checksy1}}
+%\putnotese{0}{0}{Beziersym("1",[A,B,C,D]);}
+%\putnotese{0}{15}{C2p と C3p は表示されない}
 \end{layer}
 
-\vspace{50mm}
+\verb|Beziersym("1",[A,B,C,D]);|
+
+C2p と C3p は表示されない
+
+\vspace{25mm}
 
 その後，節点や制御点を動かして，描きたいものにする。
 
 C2p と C3p は表示されず，動かせない。
+
 \begin{center} \input{Fig/checksy2} \end{center}
 
-\vspace{\baselineskip}
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\vspace{\baselineskip}
 \hypertarget{mkbeziercrv}{}
 \item[関数]Mkbeziercrv(名前, [節点リスト,制御点リスト] のリスト,options )
 \item[機能]複数のベジェ曲線を描く
@@ -1395,9 +1409,8 @@ C2p と C3p は表示されず，動かせない。
 
 \verb|Mkbeziercrv("5",[[[A,B,C],[[D],[E,F]]],[[G,H,K,L],[[M],[N,O],[P]]]]);|
 
- \input{Fig/checkmc1}
+ \scalebox{0.95}{\input{Fig/checkmc1}}
 
-%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{mkbezierptcrv}{}
 \item[関数]Mkbezierptcrv(節点リストptlist，[オプション] )
@@ -1410,42 +1423,41 @@ C2p と C3p は表示されず，動かせない。
 
 オプション
 
-"Deg=...”次数指定ができる。（ 初期設定は3次）
+\verb|"Deg=..."| 次数指定ができる。（初期設定は3次）
 
-"Num=..."各区間の区間数（分点数ー１）を指定できる。（ 初期設定は10）
+\verb|"Num=..."| 各区間の区間数（分点数$-1$）を指定できる。（初期設定は10）
 
-\vspace{5mm}
+\vspace{\baselineskip}
 
 【例】
 
 \begin{layer}{150}{0}
-\putnotese{50}{15}{bzA}
-\putnotese{50}{-5}{ \input{Fig/checkb8}}
+\putnotese{70}{25}{bzA}
+\putnotese{40}{-5}{ \input{Fig/checkb8}}
 \end{layer}
 
 \verb|Mkbezierptcrv([A,B,C]);|
 
-\vspace{25mm}
+\vspace{23mm}
 
-\begin{layer}{150}{0}
-\putnotese{50}{15}{bzA}
-\putnotese{60}{-10}{ \input{Fig/checkb11}}
-\end{layer}
-
-その後，節点や制御点を動かして，
-
+その後，節点や制御点を動かして，\par
 描きたいものにする。
 
-\vspace{30mm}
+\begin{layer}{150}{0}
+\putnotese{70}{25}{bzA}
+\putnotese{55}{-15}{ \input{Fig/checkb11}}
+\end{layer}
+
+\vspace{35mm}
 
 \begin{layer}{150}{0}
-\putnotese{80}{25}{bzA}
-\putnotese{50}{-5}{\input{Fig/checkb9}}
+\putnotese{70}{28}{bzA}
+\putnotese{50}{-3}{\input{Fig/checkb9}}
 \end{layer}
 
 \verb|Mkbezierptcrv([A,B,C],["Deg=2"]);|
 
-Deg=2 とすると2次になる。
+\verb|Deg=2| とすると2次になる。
 
 制御点は各区間に１個ずつできる。
 
@@ -1501,9 +1513,12 @@ Deg=2 とすると2次になる。
 
 \verb|size ->n|:画面上での線の太さを指定する。
 
+\vspace{\baselineskip}
 【例】\verb|CRspline("1",[A,B,C,D]);|
 
 \hspace{20mm} \input{Fig/checkCR}
+
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{ospline}{}
@@ -1541,14 +1556,18 @@ optionsは以下のものをリストで与える。省略した場合は実線�
 1234\=56789012345678901234567890\=\kill
 
 【例】いろいろな円を描く。\\
- \>原点中心，半径2の円\> \verb|Circledata("1",[[0,0],[2,0]]);|（\verb|[[0,0],2]|でもよい）\\
+ \>原点中心，半径2の円\> \verb|Circledata("1",[[0,0],[2,0]]);|\\
+  \hspace{50mm}（\verb|[[0,0],2]|でもよい）\\
  \>A中心，半径ABの円\> \verb|Circledata([A,B]);|\\
- \>A中心，半径2の円\> \verb|Circledata("1",[A,A+[2,0]]);|（\verb|[A,2]|でもよい）\\
+ \>A中心，半径2の円\> \verb|Circledata("1",[A,A+[2,0]]);|\\
+  \hspace{50mm}（\verb|[A,2]|でもよい）\\
  \>3点A,B,Cを通る円\> \verb|Circledata([A,B,C]);|\\
  \>下図左より，オプションに "dr,2" , "da" , "do" をつけた場合。
 \end{tabbing}
 \hspace{10mm} \input{Fig/circledata1}
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
  \verb|Circledata([A,B,C]);| で，3点A,B,Cを通る円を描いたとき，できた円の中心は \verb|Pointdata("1",[crABCcenter]);| で作図できる。
  
@@ -1604,6 +1623,8 @@ Circledata("2",[A,B],["Num=6"]);
 \item[機能]すべての幾何円のPD を作成
 \item[説明]Cinderellaの「円を加える」ツール（3種類いずれでも）で描いたすべての円をそのままプロットデータとする。たとえば，中心A，円周上の点をBとした円を作ると，プロットデータcrABが作成される。その後，インスペクタで点Bの識別名を変更（たとえばQに）すると，プロットデータ名も変更される。円はすでに描かれていてもよい。
 
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \vspace{\baselineskip}
 \hypertarget{ellipseplot}{}
 \item[関数]Ellipseplot(name,点リスト ,定義域, options)
@@ -1637,6 +1658,7 @@ Circledata("2",[A,B],["Num=6"]);
 「点を加える」ツールを用いて，接線，法線上に適当に点を取る。(D,Eとなったとする)
 
 次のスクリプトを書いて実行すると，楕円に関して入射角と反射角が等しくなるように光が反射する様子を図にすることができる。
+\newpage
 
 \vspace{\baselineskip}
 \begin{layer}{150}{0}
@@ -1867,8 +1889,9 @@ Pointdata(text(s+3),[s+1,s],["Inside=0","Size=3"]);
 );
 \end{verbatim}
 
-\hspace{40mm}\input{Fig/plotdata5} 
-なお，ここで，Pointdata() のname を text(s+3) としているのは，sが -2 から始まるので，name は1から始まるようにするためである。name に負の数は使えないので。
+\hspace{45mm}\input{Fig/plotdata5} 
+
+なお，ここで，Pointdata() のname を \verb|text(s+3)| としているのは，s が $-2$ から始まるので，負の数が使えない name を $1$ から始まるようにするためである。
 
 \vspace{\baselineskip}
 関数に文字係数がついており，文字係数の値を変化させながらグラフを描くには，Assign を使うか，Defvar で変数を定義する。
@@ -1995,7 +2018,7 @@ Paramplot("4","[2*cos(t)+10,sin(t)]","t=[0,2*pi]",["do"]);
 \vspace{\baselineskip}
 【例】カージオイド曲線を描く。
 
-\hspace{20mm}\verb|Polarplot("1","2*(1+cos(t))","t=[0,2*pi]",["Num=200"]);|
+\hspace{10mm}\verb|Polarplot("1","2*(1+cos(t))","t=[0,2*pi]",["Num=200"]);|
 
 \vspace{\baselineskip}
 \begin{center}\scalebox{0.7}{\input{Fig/cardioid1}}\end{center}
@@ -2114,7 +2137,7 @@ text(L.x*(log(L.x)-1)-G.x*(log(G.x)-1)) ]);
 \vspace{\baselineskip}
 \begin{center} \input{Fig/intlog}\end{center}
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{exprrot}{}
@@ -2137,6 +2160,8 @@ Exprrot(C,B-A,"\frac{2}{3}");
 
 \vspace{\baselineskip}
 \hspace{10mm}\includegraphics[bb=0.00 0.00 181.01 131.01,width=4cm]{Fig/exprrot.pdf} \hspace{10mm} \input{Fig/exprrot}
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{letter}{}\item[関数]Letter([位置, 方向, 文字列],option)
@@ -2300,7 +2325,7 @@ optionsは，[曲がり , 空白サイズ, 文字, 線種]
 
 \vspace{\baselineskip}
  \begin{layer}{150}{0}
-\putnotese{85}{5}{ \input{Fig/bowdata}}
+\putnotese{85}{0}{ \input{Fig/bowdata}}
  \end{layer}
 
 【例】三角形ABCの各辺に弓形マークをつけ記号を入れる。
@@ -2424,11 +2449,12 @@ Framedata("1",[A,B],["corner"]);
 Rulerscale(A,["r",0,5,1],["f",1,"d1",3,"d2"]);
 \end{verbatim}
 \begin{center}\scalebox{0.9}{ \input{Fig/ruler}} \end{center}
-\vspace{\baselineskip}
-%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\vspace{\baselineskip}
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
-\newpage
+%\newpage
+
 %＝＝プロットデータの操作＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 \subsection{プロットデータの操作}
 \begin{description}
@@ -2552,10 +2578,12 @@ Partcrv("2",tmp_2,tmp_1,"gr1",["dr,2"]);
 \end{verbatim}
 
 \vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-%\vspace{\baselineskip}
+\vspace{\baselineskip}
 \hypertarget{enclosing}{}
 \item[関数]Enclosing(name , PDリスト , [開始位置, 交点計算の許容限界1, 2])
 \item[機能]複数の曲線から閉曲線を作る。
@@ -2708,7 +2736,7 @@ Circledata([A,B],["da"]);
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-%\vspace{\baselineskip}
+\vspace{\baselineskip}
 \hypertarget{dotfilldata}{}
 \item[関数]Dotfilldata(name , 方向リスト , プロットデータ , options)
 \item[機能]領域を点で敷き詰める。
@@ -2720,6 +2748,12 @@ Circledata([A,B],["da"]);
 【例】円グラフ
 
 Partcrv() と Enclosing() で閉曲線を作って点を敷き詰める。
+
+
+%\begin{center}\scalebox{0.9}{\input{Fig/dotfill}} \end{center}
+\begin{layer}{150}{0}
+\putnotese{85}{-3}{\scalebox{0.9}{ \input{Fig/dotfill}}}
+\end{layer}
 
 \begin{verbatim}
 r=3;
@@ -2737,9 +2771,6 @@ Enclosing("2",["sg3","part2","Invert(sg2)"],[[0,0]]);
 Dotfilldata("1",["i"],[["en1"]]);
 Dotfilldata("2",["i"],[["en2"]],[0.1]);
 \end{verbatim}
-\begin{layer}{150}{0}
-\putnotese{80}{-60}{\scalebox{0.9}{ \input{Fig/dotfill}}}
-\end{layer}
 
 \vspace{\baselineskip}
 \hypertarget{shade}{}
@@ -2825,7 +2856,7 @@ Shade(["cr1","sg1","Invert(cr2)","Invert(sg1)"],["Enc=n","Color=green"]);
 
 その他，\hyperlink{joincrvs}{Joincrvs() の例}も参照のこと
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{reflectdata}{}
@@ -2852,6 +2883,7 @@ Reflectdata("1","crAB",[C]);
 Reflectdata("2","crAB",[[-1,2]],["dr,2"]);
 Reflectdata("3","crAB",[D,E],["da"]);
 \end{verbatim}
+
 \vspace{\baselineskip}
  \begin{center} \input{Fig/reflectdata} \end{center}
 
@@ -2900,17 +2932,18 @@ Reflectdata("3","crAB",[D,E],["da"]);
 
 Ｃを中心に$x$軸方向に3，$y$軸方向に2拡大し，実線で太く描く。
 
-原点中心にベクトル$\overrightarrow{OD} $だけ拡大し，破線で描く。
+原点中心にベクトル$\overrightarrow{\mathrm{OD}} $だけ拡大し，破線で描く。
 \begin{verbatim}
 Circledata([A,B]);
 Scaledata("1","crAB",3,2,[[0,0]]);
 Scaledata("2","crAB",3,2,[C,"dr,2"]);
 Scaledata("3","crAB",[D.x,D.y],[[0,0],"da"]);
 \end{verbatim}
+
+\vspace{0mm}
  \begin{center} \input{Fig/scaledata} \end{center}
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{translatedata}{}
@@ -2922,12 +2955,11 @@ Scaledata("3","crAB",[D.x,D.y],[[0,0],"da"]);
 【例】点A,B,C,Dを作図ツールでとっておく。
 
 \verb|Circledata([A,B]);| でできる円（crAB）を
+ $x$軸方向に2，$y$軸方向に3だけ平行移動して実線で描く。
+ 
+ベクトル$\overrightarrow{\mathrm{OC}} $だけ平行移動し，実線で太く描く。
 
- x軸方向に2，y軸方向に3だけ平行移動して実線で描く。
-
-ベクトル$\overrightarrow{OC} $だけ平行移動し，実線で太く描く。
-
-ベクトル$\overrightarrow{OD} $だけ平行移動し，破線で描く。
+ベクトル$\overrightarrow{\mathrm{OD}} $だけ平行移動し，破線で描く。
 
 \begin{verbatim}
 Circledata([A,B]);
@@ -2935,13 +2967,13 @@ Translatedata("1","crAB",[2,3]);
 Translatedata("2","crAB",C,["dr,2"]);
 Translatedata("3","crAB",D,["da"]);
 \end{verbatim}
-\vspace{\baselineskip}
+
+\vspace{0mm}
 \begin{center} \input{Fig/translatedata} \end{center}
 
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \hypertarget{intersectcrvs}{}
 \item[関数]Intersectcrvs(プロットデータ1, プロットデータ2)
 \item[機能]2曲線の交点リストを取得する。
@@ -2995,7 +3027,7 @@ p1=[[-1,1],[2,4]]
 p2=[[[-1,1],17.68,1],[[2,4],42.66,1]]
 \end{verbatim}
 と表示される。
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{nearestpt}{}
@@ -3041,7 +3073,7 @@ Letter([A,"n2w","A",B,"s2e","B",(A+B)/2,"e",text(plist_5)]);
 点Aは(3,0)に，点Bは適当な位置に作図しておき，次のスクリプトを実行すると点Bが求める点となる。
 
 \begin{layer}{150}{0}
-\putnotese{80}{0}{ \input{Fig/Nearestpt1}}
+\putnotese{80}{0}{\scalebox{1.0}{\input{Fig/Nearestpt1}}}
 \end{layer}
 
 \begin{verbatim}
@@ -3053,6 +3085,7 @@ Pointdata("1",[A,B]);
 Letter([A,"ne","A",B,"nw","B"]);
 \end{verbatim}
 
+\vspace{\baselineskip}
 \vspace{\baselineskip}
 注）第１引数は座標なので，\verb|A| ではなく \verb|A.xy| としなければならない。
 
@@ -3148,7 +3181,7 @@ Letter([tmp,"nw","A",[2,0],"se","P",[-2,0],"sw","Q"]);
 【例】楕円上の点で分割する。あからじめ必要な点を作図しておく。
 
 \begin{layer}{150}{0}
-\putnotese{70}{10}{ \input{Fig/ptcrv}}
+\putnotese{70}{05}{ \input{Fig/ptcrv}}
 \end{layer}
 \begin{verbatim}
 Circledata([O,P],["do","Num=100","notex"]);
@@ -3184,7 +3217,6 @@ Letter([A,"w2","A",B,"e2","B"]);
 \vspace{\baselineskip}
 \begin{center} \input{Fig/ptstart} \end{center}
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{readoutdata}{}
 \item[関数]ReadOutData(ファイル名）
@@ -3251,6 +3283,8 @@ dt1=data_1;
 
 とする。
 
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \hypertarget{readlines}{}
 \item[関数]Readlines(path,filename,option)
 \item[機能]テキストファイルを1行ずつ読む。
@@ -3289,7 +3323,6 @@ start//
 [[0.87631,-0.48175],[0.92978,-0.36812],・・,[1,0]]//
 end////
 \end{verbatim}
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{extractdata}{}
@@ -3302,6 +3335,8 @@ Extractdata("gr1",["da"]);
 \end{verbatim}
 
 \end{description}
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 %\newpage
 % ======== 計算 =======================
 \subsection{計算}
@@ -3347,7 +3382,7 @@ Letter([A,"ne","A"]);
 
 また，曲線の接線については，\hyperlink{tangentplot}{Tangentplot}も参照されたい。
 
-%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{integrate}{}
@@ -3396,7 +3431,7 @@ println(Integrate("gr1",[0,3]));
 
 \end{description}
 
-\newpage
+%\newpage
 %==========値の取得と入出力=========================
 \subsection{値の取得と入出力}
 
@@ -3432,6 +3467,7 @@ optionは，幅または高さの指定。
 \vspace{\baselineskip}
 \includegraphics[bb=0.00 0.00 562.03 124.01,width=10cm]{Fig/bbdata.pdf} 
 
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{cindyname}{}
@@ -3540,7 +3576,7 @@ Tabledata("",Yoko,Tate,[]);
 
 \hspace{25mm} 描画面 \hspace{45mm} TeX
 
-\hspace{5mm}\includegraphics[bb=0 0 403.52 249.51 , width=5cm]{Fig/table01.pdf} \hspace{10mm}\input{Fig/table02} 
+\hspace{5mm}\includegraphics[bb=0 0 403.52 249.51 , width=5cm]{Fig/table01.pdf} \hspace{10mm}\input{Fig/table02} \\
 
 
 表のサイズ・行幅・列幅は，作成後にそれぞれの制御点をドラッグすることにより任意に変えることができる。
@@ -4067,8 +4103,6 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \hspace{15mm}
 \includegraphics[bb=0.00 0.00 445.02 193.01,height=35mm]{Fig/slider.pdf} 
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
 \vspace{\baselineskip}
 \hypertarget{sprintf}{}
 \item[関数]Sprintf(実数,長さ)
@@ -4082,7 +4116,7 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 
  Sprintf(pi,7) は 3.1415927 を返す
 
-注）pi は Cindyscriptの予約変数で，円周率を表す。\vspace{\baselineskip}
+注）pi は Cindyscriptの予約変数で，円周率を表す。%\vspace{\baselineskip}
 
 \vspace{\baselineskip}
 \hypertarget{textformat}{}
@@ -4104,6 +4138,8 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \hspace{10mm} \verb|dt=[1/6,0.5];|\\
 \hspace{10mm} \verb|Textformat(dt,4); | // 戻り値は "[ 0.1667 , 0.5 ]" \\
 \hspace{10mm} \verb|format(dt,4); | // 戻り値は [ "0.1667" , "0.5" ] \\
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{texcom}{}
@@ -4521,7 +4557,10 @@ Rulerscale([0,0],["r",0,7,1],["r",1,7,1]);
  \begin{center} \input{Fig/scatter} \end{center}
 
 \end{description}
-\newpage
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+%\newpage
 
 %Maximaとの連携==================================
 \subsection{Maximaとの連携}
@@ -4630,7 +4669,7 @@ plotdata("2",tmp,"x",["Num=2"]);
 {\bf 応用例2：パラメトリックの場合の接線}
 
 \vspace{\baselineskip}
-媒介変数の値を決めるために，点AをCinderellaの描画面のx軸上にとっておき，その$x$座標を媒介変数$t$の値とする。スライダを作ってもよい。
+媒介変数の値を決めるために，点AをCinderellaの描画面のx軸上にとっておき，その$x$座標を媒介変数$t$の値とする。スライダを作ってもよい。\\
 
 \begin{layer}{150}{0}
 \putnotese{60}{10}{ \input{Fig/maxfun02}}
@@ -4859,7 +4898,7 @@ println(tf);
 
 同様の例を CalcbyM() で例示しているので参照されたい。
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{mxtex}{}
 \item[関数]Mxtex(name,式)
@@ -4916,8 +4955,9 @@ Cindyscriptの文字列の関数 replace を用いて，
 【例】2次関数のグラフを表示し，$x$軸との交点の$x$座標を表示する。
 
 \begin{layer}{150}{0}
-\putnotese{60}{20}{ \input{Fig/mxtex03}}
+\putnotese{60}{05}{ \input{Fig/mxtex03}}
 \end{layer}
+
 \begin{verbatim}
 fx="x^2-x-3";
 cmdL=[
@@ -5007,7 +5047,7 @@ Expr([2,-0.5],"e",tx2);
 \end{description}
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\newpage
+%\newpage
 %FriCASとの連携==================================
 \subsection{FriCAS(Axiom)との連携}
 
@@ -5038,7 +5078,7 @@ Expr([2,-0.5],"e",tx2);
 \end{description}
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\newpage
+%\newpage
 
 %MeshLabとの連携==================================
 \subsection{MeshLabとの連携}
@@ -5129,9 +5169,6 @@ options は，面の厚みの指定。厚みは中心線に対し，両側につ
 \vspace{\baselineskip}
 【例】三角形のプレートを描く
 
-\begin{layer}{150}{0}
-\putnotese{80}{15}{ \includegraphics[bb=0 0 287.01 228.01 , width=3cm]{Fig/meshlab03.pdf} }
-\end{layer}
 \begin{verbatim}
 Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
 p1=[2,0,0];
@@ -5142,6 +5179,11 @@ Mkobjplatecmd("1",plane,[0.05]);
 Mkobjcrvcmd("2","ax3d");
 Mkviewobj("plane",Concatcmd([oc1,oc2]),["m","v"]); 
 \end{verbatim}
+
+\begin{center} \includegraphics[bb=0 0 287.01 228.01 , width=4cm]{Fig/meshlab03.pdf} \end{center}
+%\begin{layer}{150}{0}
+%\putnotese{80}{15}{ \includegraphics[bb=0 0 287.01 228.01 , width=3cm]{Fig/meshlab03.pdf} }
+%\end{layer}
 
 \vspace{\baselineskip}
 \hypertarget{mkobjpolycmd}{}
@@ -5174,8 +5216,8 @@ PDは，平面の描画コマンドによるプロットデータが使える。
 \vspace{\baselineskip}
 【例】回転放物線
 
-\begin{layer}{150}{0}
-\putnotese{70}{0}{ \includegraphics[bb=0 0 287.01 189.01 , width=4cm]{Fig/meshlab06.pdf}}
+\begin{layer}{150}{20}
+\putnotes{58}{37}{ \includegraphics[bb=0 0 287.01 189.01 , width=5cm]{Fig/meshlab06.pdf}}
 \end{layer}
 \begin{verbatim}
 fd=[
@@ -5187,9 +5229,9 @@ Mkobjthickcmd("1",fd,[40,40,0.2,"+n+s-e-w+","assume(R>0)"]);
 Mkviewobj("pala",oc1,["m","v","Wait=5"]); 
 \end{verbatim}
 
-%\begin{center}\includegraphics[bb=0 0 574 378 , width=5cm]{Fig/meshlab06.pdf}\end{center}
+%\begin{center}\includegraphics[bb=0 0 574 378 , width=4cm]{Fig/meshlab06.pdf}\end{center}
 
-\vspace{\baselineskip}
+\vspace{37mm}
 \hypertarget{mkviewobj}{}
 \item[関数]Mkviewobj(name，PD, options)
 \item[機能]objファイルを作成。optionにより MeshLab を立ち上げて表示する。
@@ -5208,7 +5250,7 @@ Mkviewobj("pala",oc1,["m","v","Wait=5"]);
 \end{description}
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\newpage
+%\newpage
 %表計算ソフトとの連携==================================
 \subsection{表計算ソフトとの連携}
 表計算ソフトでは，複数のセルを選択してコピー（Windowsでは Crtl+ C ，Macでは Command+C）すると，セルの内容はtab区切りのテキストデータとしてクリップボードにコピーされる。これをCindyscriptエディタにペーストすることで表計算ソフトのデータを\ketcindy で利用できる。逆に，Cindyscriptのコンソールへの出力を表計算ソフトのシートにコピーすることもできる。
@@ -5987,6 +6029,9 @@ Settitle([
 例のように，タイトルリストは改行すると見やすい。
 
 \end{description}
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \newpage
 %================== 3D概要 ===============
 \section{\ketcindy 3D}
@@ -6120,7 +6165,7 @@ optionsがないときは，以下の 初期設定を用いる。
 \end{description}
 %================== 3D描画 ===============
 
-\newpage
+%\newpage
 \subsection{描画}
 
 %================== 3D点・線 ===============
@@ -6157,8 +6202,6 @@ Pointdata3d("1",[[1,1,1],[0,1,0]],["Size=2","Color=red"]);
 \end{verbatim}
 \vspace{\baselineskip}
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\vspace{\baselineskip}
  %---------------- Putpoint3d----------------------------------------------
 \hypertarget{putpoint3d}{}
 \item[関数]Putpoint3d(リスト,option)
@@ -6185,8 +6228,6 @@ optionは，"fix"( 初期設定) または "free"。リスト ["free"] にして
 
 空間における点の座標は，点名に"3d"を付加した名前の変数に代入される。たとえば，点Aの座標はA3dである。これにより，点の座標を取得できる。
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
  %----------------Putaxes3d---------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{putaxes3d}{}
@@ -6203,7 +6244,6 @@ Putaxes3d(5);原点と，$x(5,0,0),y(0,5,0),z(0,0,5)$ を作る。
 
 Putaxes3d([1,2,3]);原点と，$x(1,0,0),y(0,2,0),z(0,0,3)$ を作る。
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
  %----------------Putoncurve3d---------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{putonCurve3d}{}
@@ -6247,12 +6287,8 @@ options は線種（dr,da,do）
 
 ・Spaceline("2",[A,B,C,A]);作図されている2点A,B,Cを結んだ三角形を描く。
 
-
 ・節点を表示する場合は，Pointdata3d() で描画する。
 
-\begin{layer}{150}{0}
-\putnotese{80}{10}{ \input{Fig/oresenex01}}
-\end{layer}
 \begin{verbatim}
 pt=[[2,0,0],[2,0,2],[2,2,2],[0,2,2],[0,4,2],[0,4,4]];
 Spaceline("1",pt);
@@ -6264,7 +6300,13 @@ Pointdata3d("1",pt,["Size=3"]);
 \verb|pname=apply(1..6,"P"+text(#));|
 
 のようにして，名前リストを作ることができる。
-\vspace{\baselineskip}
+
+%\vspace{\baselineskip}
+%\begin{layer}{150}{0}
+%\putnotese{80}{10}{ \input{Fig/oresenex01}}
+%\end{layer}
+ \begin{center} \input{Fig/oresenex01} \end{center}
+
 %------------------ Spacecurve-----------------------------------------------
 \hypertarget{spacecurve}{}
 \item[関数]Spacecurve(name,式,定義域,options)
@@ -6320,10 +6362,8 @@ Pointdata3d("1",pt,["Size=3"]);
 【例】\verb|Mkbezierptcrv3d(["A","B","C","D"]);|\\
 線分AB上に2点a1p,a2p，線分BC上に2点a2p,a2q，線分CD上に2点a3p,a3qができる。
 
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
 \vspace{\baselineskip}
+
 %------------------ Skeletonparadata-----------------------------------------------
 \hypertarget{skeletonparadata}{}
 \item[関数]Skeletonparadata(name,PDリスト,PDリスト,option)
@@ -6373,21 +6413,32 @@ Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=100"]);
 
 
 \end{description}
-\newpage
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%\newpage
 %================== 3D多面体 ===============
 \subsubsection{多面体}
 
 多面体の描画について，四面体の場合を例にして説明する。
 
-四面体は4つの面からなっている。頂点をA,B,C,Dとすると，4つの面は
+\begin{layer}{130}{0}
+\putnotesw{130}{0}{\input{Fig/concatobj}}
+\end{layer}
 
-\hspace{20mm} △ABC，△ABD，△ACD，△BCD
+四面体は4つの面からなっている。
+
+頂点をA,B,C,Dとすると，4つの面は
+
+\hspace{10mm} △ABC，△ABD，△ACD，△BCD
 
 である。
 
- \begin{center} \input{Fig/concatobj} \end{center}
+% \begin{center} \input{Fig/concatobj} \end{center}
 
-頂点のリスト[A,B,C,D] に対し，Aから順に番号をつけると，各面の頂点の順番は
+頂点のリスト[A,B,C,D] に対し，Aから順に番号を
+
+つけると，各面の頂点の順番は
 
 \hspace{20mm}[1,2,3],[1,2,4],[1,3,4],[2,3,4]
 
@@ -6993,7 +7044,7 @@ ExeccmdC("1");
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
-\newpage
+%\newpage
 %================== 3Dプロットデータの操作 ===============
 \subsection{プロットデータの操作}
 
@@ -7033,8 +7084,7 @@ println("PD="+Datalist3d());
 \end{verbatim}
 とすると，コンソールにPD=[ax3d,AB3d] と表示される。
 
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
 
 %------------------- Changestyle3d -----------------------------------------------
 \hypertarget{changestyle3d}{}
@@ -7091,6 +7141,9 @@ Pointdata3d("1",intercrvsf1);
 
 のように表示され，画面には交点が表示される。
 
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 %------------------- IntersectsgpL -----------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{intersectsgpL}{}
@@ -7134,19 +7187,23 @@ Spaceline("2",[p3,p4,p5,p3]);
 ret=IntersectsgpL("P",[p1,p2],[p3,p4,p5],"put");
 println("flag1="+ret_2+": flag2="+ret_3);
 \end{verbatim}
+
 \begin{layer}{150}{0}
-\putnotese{10}{20}{ \input{Fig/wire01}}
-\putnotese{60}{20}{ \input{Fig/wire02}}
+\putnotese{10}{15}{ \input{Fig/wire01}}
+\putnotese{60}{15}{ \input{Fig/wire02}}
 \end{layer}
+
  \begin{verbatim}
 p2=[0,0,1/2]; p2=[-1,1,1];
 flag1=false : flag2=trueflag1=true : flag2=true 
 \end{verbatim}
-\vspace{30mm}
+
+\newpage%\vspace{55mm}
 \begin{layer}{150}{0}
-\putnotese{10}{20}{ \input{Fig/wire03}}
-\putnotese{60}{20}{ \input{Fig/wire04}}
+\putnotese{10}{15}{ \input{Fig/wire03}}
+\putnotese{60}{15}{ \input{Fig/wire04}}
 \end{layer}
+
  \begin{verbatim} 
  p2=[1,2,1]; p2=[1,0,1/2];
  flag1=true : flag2=false　　flag1=false : flag2=false 
@@ -7222,8 +7279,6 @@ ExeccmdC("1");
 \end{verbatim}
 %\begin{center} \input{Fig/sfcut} \end{center}
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
 
  %------------------Partcrv3d -----------------------------------------------
 \vspace{\baselineskip}
@@ -7255,6 +7310,8 @@ Spacecurve("1","[2*cos(t),2*sin(t),0.2*t]","t=[0,4*pi]",["Num=10","do"]);
 Partcrv3d("1",3.3,8.5,"sc3d1");
 \end{verbatim}
 \begin{center} \input{Fig/partcrv3d2} \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 %------------------Reflectdata3d-----------------------------------------------
 \hypertarget{reflectdata3d}{}
@@ -7307,6 +7364,8 @@ Spaceline("1",[A,B,C,A]);
 
 平面BCDに関する鏡映点\verb| Reflectpoint3d(A3d,[B3d,C3d,D3d]);|
  
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
  %------------------Rotatedata3d -----------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{rotatedata3d}{}
@@ -7389,6 +7448,8 @@ Putpoint3d(["B",pt]);
 
 点Bの位置は(4,-3,5)になる。
 
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 %------------------ Translatedata3d -----------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{translatedata3d}{}
@@ -7419,8 +7480,6 @@ VertexEdgeFace("1",phd);
 \end{verbatim}
 \begin{center} \input{Fig/translate01} \end{center}
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
 %------------------Translatepoint3d( -----------------------------------------------
 \hypertarget{translatepoint3d}{}
 \item[関数]Translatepoint3d(座標，平行移動量)
@@ -7434,10 +7493,8 @@ Putpoint3d(["A",[1,0,0]]);
 pt=Translatepoint3d(A3d,[-1,1,1]);
 Putpoint3d(["B",pt]);
 \end{verbatim}
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-
 
  \end{description}
 \newpage
@@ -7497,9 +7554,6 @@ Letter([P,"w","P",A,"ne","A",B,"e","B",C,"ws","C",D,"nw","D",]);
 Skeletonparadata("1");
 \end{verbatim}
 
-
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-\vspace{\baselineskip}
  %-----------------Perppt( -----------------------------------------------
 \hypertarget{perppt}{}
 \item[関数]Perppt(点名，点，点リスト,option)
@@ -7541,6 +7595,10 @@ Letter([A,"nw","A",B,"ne","B",C,"ne","C",O,"nw","O",H,"ne","H"]);
 
 %\vspace{\baselineskip}
 \begin{center}\scalebox{0.9}{ \input{Fig/perppt}} \end{center}
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\vspace{\baselineskip}
+
  %------------------Projcoordpara -----------------------------------------------
 \hypertarget{projcoordpara}{}
 \item[関数]Projcoordpara(座標)
@@ -7600,7 +7658,7 @@ Nohiddenbyfaces("1","phf3d1");
 
 この他にn01〜n92まで整面凸多面体がある。
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
  
 
 %-------------------Xyzcoord-----------------------------------------------
@@ -7614,6 +7672,7 @@ Nohiddenbyfaces("1","phf3d1");
 
 \vspace{\baselineskip}
 【例】点Aをドラッグして動かしたとき，Aの座標を求める。
+
 \verb|println(Xyzcoord(A.x,A.y,Az.y));|
 
 により，コンソールに座標が表示される。

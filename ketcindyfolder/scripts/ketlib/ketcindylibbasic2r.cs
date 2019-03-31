@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190325] loaded");
+println("ketcindybasic2[20190329] loaded");
 
 //help:start();
 
@@ -1006,7 +1006,7 @@ Slider(ptstr,p1,p2,options):=(//190120
     tmp=pC+"l"+pC+pC+"r";
     Listplot(tmp,[p1,p2],["Msg=n","notex",color,size]);
     Putonseg(pC,parse("sg"+tmp));
-    PTEXCEPTION=concat(TEXCEPTION,[pC]);
+    PTEXCEPTION=concat(PTEXCEPTION,[pC]); //190329
   ); //190209to
 );
 ////%Slider end////

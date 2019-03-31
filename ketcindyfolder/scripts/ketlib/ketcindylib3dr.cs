@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190320] loaded");
+println("ketcindylib3d[20190331] loaded");
 
 //help:start();
 
@@ -88,7 +88,7 @@ Start3d(ptexception):=(
 //help:Start3d(["A","B"](exceptionptlist));
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
-  PTEXCEPTION=[];
+  PTEXCEPTION=["NE","SW"];
   Setfiles(Namecdy); //180608
   ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
   FuncListC=[];
@@ -184,10 +184,10 @@ Setangle(theta,phi):=( //16.12.24
     +format(theta,5)+","+format(phi,5)+")";
   GLIST=append(GLIST,tmp);
   if(length(VLIST)==0, // 16.06.20
-    tmp=remove(allpoints(),[NE,SW,TH,FI]);
-    tmp4=remove(tmp,PTEXCEPTION); //180916
+    tmp=apply(allpoints(),text(#)); //190329
+    tmp4=remove(tmp,PTEXCEPTION);  //190329
     forall(tmp4,pt,
-      tmp1=text(pt);
+      tmp1=pt; //text(pt);
       tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
       if(tmp!="z",
         tmp=parse(tmp1+"z.xy"); //181028[2lines];
@@ -199,10 +199,10 @@ Setangle(theta,phi):=( //16.12.24
     );
   ,
     if(isselected(NE) % isselected(SW), 
-      tmp=remove(allpoints(),[NE,SW,TH,FI]);
-      tmp4=remove(tmp,PTEXCEPTION); //180916
+      tmp4=apply(allpoints(),text(#)); //190329
+      tmp4=remove(tmp4,PTEXCEPTION); 
       forall(tmp4,pt,
-        tmp1=text(pt);
+        tmp1=pt; //text(pt);
         tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
         if(tmp!="z",
           tmp=select(VLIST,#_1==tmp1+"3d");
@@ -212,10 +212,10 @@ Setangle(theta,phi):=( //16.12.24
         );
       );
     ,
-      tmp=remove(allpoints(),[NE,SW,TH,FI]);
+      tmp=apply(allpoints(),text(#)); //190329
       tmp4=remove(tmp,PTEXCEPTION); //180916
       forall(tmp4,pt,
-        tmp1=text(pt);
+        tmp1=pt; // text(pt);
         tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
         if(tmp!="z",
           tmp2=parse(tmp1+"z");
@@ -652,6 +652,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
   regional(name2,name3,options,Out,tmp,tmp1,tmp2,
         opstr,opcindy,Ltype,Noflg,eqL,ptlist, Msg,color);
   ptlist=apply(ptlistorg,if(ispoint(#),parse(text(#)+"3d"),#)); // 16.02.10
+  ptlist=apply(ptlist,if(isstring(#),parse(#),#)); //190330
   if(substring(nm,0,2)=="bz",
     name2=replace(nm,"bz","bz2d");
     name3=replace(nm,"bz","bz3d");
@@ -687,22 +688,22 @@ Spaceline(nm,ptlistorg,optionorg):=(
     if(Msg==1,
       println("generate Spaceline "+name3);
     );
-    tmp=name3+"="+ptlist;
+    tmp=name3+"="+Textformat(ptlist,6); //190330
     parse(tmp);
     tmp1=Projpara(name3,["nodata"]);
-    tmp=name2+"="+textformat(tmp1,5);
+    tmp=name2+"="+Textformat(tmp1,5);
     parse(tmp);
     tmp="[";
     forall(ptlist, //17.07.13from
       if(isstring(#),
         tmp=tmp+#+",";
       ,
-        tmp=tmp+textformat(#,5)+",";
+        tmp=tmp+Textformat(#,5)+",";
       );
     );
     tmp=substring(tmp,0,length(tmp)-1)+"]";
-    tmp=name3+"=Spaceline("+tmp+")"; //17.07.13until
-//    tmp=name3+"=Spaceline("+textformat(ptlist,5)+")"; //17.05.24
+    tmp=name3+"=Spaceline("+tmp+")"; //17.07.13to
+//    tmp=name3+"=Spaceline("+Textformat(ptlist,5)+")"; //17.05.24
     GLIST=append(GLIST,tmp);
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
@@ -1965,8 +1966,8 @@ Ptseg3data():=Ptseg3data([]);
 Ptseg3data(options):=(
   regional(pt,pt3,plist,tmp,tmp1,tmp2);
   if(isselected(TH) % isselected(FI),
-    tmp=remove(allpoints(),[NE,SW,TH,FI]);
-    tmp=remove(tmp,options); //16.11.12
+//    tmp=remove(allpoints(),[NE,SW,TH,FI]);
+    tmp=remove(allpoints(),options); //16.11.12
     tmp=apply(tmp,text(#));
     plist=select(tmp,substring(#,length(#)-1,length(#))!="z");
     forall(plist,pt,
@@ -2871,8 +2872,8 @@ VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
 VertexEdgeFace(nm,vfnLorg,optionorg):=(
 //help:VertexEdgeFace("1",[vL,fnL]);
 //help:VertexEdgeFace("1",["A","B","C"]);
-//help:VertexEdgeFace(options=["Pt=fix","Vtx=n(y)","Edg=n(y)"]);
-  regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL,
+//help:VertexEdgeFace(options=["Vtx=n(y)" ',"Pt=fix") ,"Edg=n(y)","Label=8"]);
+  regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL, Lsize,
       vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
   name3="phvef"+nm;
   namev="phv3d"+nm;
@@ -2894,6 +2895,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   vtxflg=0; //180905
   edgflg=0;
   dispflg=1; //181106
+  Lsize="8"; //190331
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -2920,6 +2922,10 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       );
       options=remove(options,[#]);
     ); //181106to
+    if(tmp1=="L", //190331from
+      Lsize=tmp_2;
+      options=remove(options,[#]);
+    ); //190331to
   );
   forall(strL,
     if(Toupper(#)=="FREE",
@@ -2950,7 +2956,8 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
         parse(tmp);
         Defvar(vname+"2d",parse(vname+"2d"));
         if(dispflg==1, //181106
-          drawtext(parse(vname+"2d"),vname,size->8); //190128
+          tmp="drawtext(parse(vname+"+Dqq("2d")+"),vname,size->"; //190331
+          parse(tmp+Lsize+");"); //190331
           draw(parse(vname+"2d"),pointsize->3,color->[0,1,0]); //190128
         );
       ); //180905to
@@ -3030,7 +3037,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
     tmp1=replace(tmp1,Dq,"");
     tmp=namev+"=list("+tmp1+")";
     GLIST=append(GLIST,tmp);
-    tmp1=text(vfnL_2);
+    tmp1=Textformat(vfnL_2,6);//text(vfnL_2);
     tmp1=substring(tmp1,1,length(tmp1)-1);
     tmp=namef+"=["+tmp1+"]";
     parse(tmp);
@@ -3281,10 +3288,8 @@ Nohiddenseg(seg,rng,triang,Eps):=(
 ////%Nohiddenseg end////
 
 ////%Nohiddensegs start////
-Nohiddensegs(seg,range,faceno,vtxL,Eps):=(
-  regional(rng,face,vtx,out,ra,rb,tmp,tmp1,tmp2);
-//  Eps=10^(-2);
-  face=apply(faceno,vtxL_#); // 16.02.10
+Nohiddensegs(seg,range,face,Eps):=( //190331
+  regional(rng,vtx,out,ra,rb,tmp,tmp1,tmp2);
   rng=range;
   out=rng;
   forall(2..(length(face)-1),vtx,
@@ -3322,128 +3327,91 @@ Nohiddensegs(seg,range,faceno,vtxL,Eps):=(
 ////%Nohiddensegs end////
 
 ////%Nohiddenbyfaces start////
-Nohiddenbyfaces(nm,facestr):=
-    Nohiddenbyfaces(nm,Datalist3d(),facestr,[],["do"]);
-Nohiddenbyfaces(nm,Arg1,Arg2):=(
-  regional(segstr,facestr,options);
-  if(islist(Arg2),
-    segstr=Datalist3d();
-    facestr=Arg1;
-    options=Arg2;
-  ,
-    segstr=Arg1;
-    facestr=Arg2;
+Nohiddenbyfaces(nm,faceL):=
+    Nohiddenbyfaces(nm,Datalist3d(),faceL,[],["do"]);
+Nohiddenbyfaces(nm,Arg1,Arg2):=( //190331
+  regional(tmp,segL,faceL,options);
+  tmp=select(Arg2,indexof(#,"3d")>0);
+  if(length(tmp)>0,
+    segL=Arg1;
+    faceL=Arg2;
     options=[];
-  );
-  Nohiddenbyfaces(nm,segstr,facestr,options,["do"]);
-);
-Nohiddenbyfaces(nm,Arg1,Arg2,Arg3):=(
-  regional(segstr,facestr,options,optionsh);
-  if(islist(Arg2),
-    segstr=Datalist3d();
-    facestr=Arg1;
-    options=Arg2;
-    optionsh=Arg3;
- ,
-    segstr=Arg1;
-    facestr=Arg2;
-    options=Arg3;
-    optionsh=["do"];
-  );
-  Nohiddenbyfaces(nm,segstr,facestr,options,optionsh); // 16.02.21
-);
-Nohiddenbyfaces(nm,segstr,Arg1,Arg2,Arg3):=( //180815from
-  regional(facestr,faceL,vtxL,options,optionsh);
-  if(isstring(Arg1),
-    facestr=Arg1;
-    options=Arg2;
-    optionsh=Arg3;
-    if(substring(facestr,0,3)=="phf",
-      faceL=parse(facestr);
-      tmp=replace(facestr,"phf","phv"); 
-      tmp=parse(tmp);
-      vtxL=apply(tmp,replace(#,"3d",""));
-      
-    ,
-      faceL=parse(facestr);
-    );
   ,
+    segL=Datalist3d();
     faceL=Arg1;
-    vtxL=Arg2;
-    options=Arg3;
-    optionsh=[];
+    options=Arg2;
   );
-  Nohiddenbyfaces(nm,segstr,faceL,vtxL,options,optionsh);
+  Nohiddenbyfaces(nm,segL,faceL,options,["do"]);
 );
-Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
-//help:Nohiddenbyfaces("1","phf3d1");
-//help:Nohiddenbyfaces("1","ax3d","phf3d1");
-//help:Nohiddenbyfaces("1","ax3d",phf3d1,phv3d1);
-//help:Nohiddenbyfaces(options1=["dr","Eps=10^(-2)"]);
-//help:Nohiddenbyfaces(options2=["do"]);
-  regional(Eps,namen,nameh,options,segL,rng,seg,face,
-     ctr,tmp,tmp1,tmp2,Ltype,Noflg,eqL,color,opstr,opcindy,frnL,frhL);
-  Eps=10^(-2);
+Nohiddenbyfaces(nm,segL,faceL,options):=( //190331
+  Nohiddenbyfaces(nm,segL,faceL,options,["do"]);
+);
+Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
+//help:Nohiddenbyfaces("1",["phf3d1"]);
+//help:Nohiddenbyfaces("1",["ax3d"],["phf3d1"]);
+//help:Nohiddenbyfaces("1",["ax3d","phe3d1"],["phv3d1"]);
+//help:Nohiddenbyfaces(options=["dr","Eps=10^(-2)"]);
+//help:Nohiddenbyfaces(optionsh=["do"]);
+  regional(Eps,namen,nameh,options,segL,faceL,rng,seg,face,vtxL,
+     ctr,tmp,tmp1,tmp2,Ltype,Noflg,eqL,color,frnL,frhL);
   namen="frn"+nm;
   nameh="frh"+nm;
-  if(isstring(segstr),
-    tmp=parse(segstr);//180714from
-    if(islist(tmp),
-      if(isstring(tmp_1),
-        segL=tmp;
-      ,
-        segL=[segstr];
-      );
-    );//180714to
-  ,
-    segL=segstr;
-  );
-  tmp2=[];  // 16.02.29 from
-  forall(segL,seg,
-    tmp=replace(seg,"3d","2d");
-    tmp1=select(GCLIST,#_1==tmp);
-    tmp1=tmp1_1;
-    if(tmp1_2_1==0, //190127
-      tmp2=append(tmp2,seg);
-    );
-  );
-  segL=tmp2;
-  Changestyle3d(segL,["nodisp"]); // 16.02.29 until
-  if(islist(segL),
-    if(isstring(segL_1),
-      segL=apply(segL,parse(#));
-    );
-  );
-  tmp1=Flattenlist(segL); //180816from
-  segL=[];
-  forall(tmp1,tmp2,
-    forall(1..(length(tmp2)-1),
-      segL=append(segL,[tmp2_#,tmp2_(#+1)]);
-    );
-  ); //180816from
   options=optionorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
   color=tmp_(length(tmp)-2);
-  opstr=tmp_(length(tmp)-1);
-  opcindy=tmp_(length(tmp));
+  Eps=10^(-2);
   forall(eqL, //180815from
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,1)); //181111
-    if(substring(tmp1,0,3)=="E",
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="E",
       Eps=parse(tmp_2);
       options=remove(options,[#]);
     );
   );//180815to
+  tmp1=segLorg; //190331from
+  if(!islist(tmp1),tmp1=[tmp1]);
+  Changestyle3d(tmp1,["nodisp"]);
+  segL=[];
+  forall(tmp1,seg,
+    if(isstring(seg),
+      tmp3=parse(seg);
+      tmp2=[];
+      forall(tmp3,
+        if(isstring(#),tmp=parse(#),tmp=#);
+        tmp2=append(tmp2,tmp);
+      );
+    ,
+      tmp2=[#];
+    );
+    segL=concat(segL,tmp2);
+  );
+  tmp1=faceLorg;
+  if(!islist(tmp1),tmp1=[tmp1]);
+  faceL=[];
+  forall(tmp1,face,
+    if(isstring(face),
+      tmp2=parse(face);
+      if(indexof(face,"phf")>0,
+        tmp=replace(face,"phf","phv");
+        vtx=parse(tmp);
+        vtx=apply(vtx,parse(#));
+        tmp2=apply(tmp2,vtx_#);
+      );
+    ,
+      tmp2=face;
+    );
+    faceL=concat(faceL,tmp2);
+  ); //190331to
   ctr=1;
   frnL=[];
   frhL=[];
   forall(segL,seg,
     rng=[0,1];
     forall(faceL,face,
-	  rng=Nohiddensegs(seg,rng,face,vtxL,Eps);
+	  rng=Nohiddensegs(seg,rng,face,Eps);
     );
     forall(1..length(rng)/2,
       tmp=rng_(2*#-1);
@@ -3486,11 +3454,10 @@ Nohiddenbyfaces(nm,segstr,faceL,vtxL,optionorg,optionsh):=(
   tmp1=apply(frnL,Dq+#+Dq);
   tmp="frn3d"+nm+"="+text(tmp1);
   parse(tmp);
-  println("   generate totally "+"frn3d"+nm);
   tmp1=apply(frhL,Dq+#+Dq);
   tmp="frh3d"+nm+"="+text(tmp1);
   parse(tmp);
-  println("   generate totally "+"frh3d"+nm);
+  println("   generate ["+"frn3d"+nm+",frh3d"+nm+"]"); //190331
   [frnL,frhL]; //181106
 );
 ////%Nohiddenbyfaces end////

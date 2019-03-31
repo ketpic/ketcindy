@@ -1,3 +1,5 @@
+// 20190329
+//    Slider debugged (PTEXCEPTION)
 // 20190325
 //    Drwxy changed ( Msg=n for Listplot )
 // 20190324

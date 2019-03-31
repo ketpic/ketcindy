@@ -37,7 +37,7 @@ ONAME<<- "O"
 OPOS<<- "sw"
 ULEN<<- "1cm"
 MilliIn<<- 1/2.54*1000
-PenThick<<- round(MilliIn*0.02)*0.05 #from 20190317
+PenThick<<- round(MilliIn*0.02)*0.075 #from 20190317
 PenThickInit<<- PenThick
 TenSizeInit<<- 0.02*2 #17.10.07
 TenSize<<- TenSizeInit
@@ -197,15 +197,15 @@ Drwline<-function(...)
           Y=sprintf('%5.5f',Tmp[2])
           Pt=paste('(',X,',',Y,')',sep="")
           if (I==1){
-		    if (Width>1){  #from 20190317
+#		    if (Width>1){  #from 20190317
 		      Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
-			}else{
-			  if (Thick>1){
-		    	Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
-			  }else{
-                Str=paste('\\draw ',Pt,sep="")
-			  }
-            }
+#			}else{
+#			  if (Thick>1){
+#		    	Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
+#			  }else{
+#                Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
+#			  }
+#            }
 		  }else{
             Str=paste('--',Pt,sep="")  
           }

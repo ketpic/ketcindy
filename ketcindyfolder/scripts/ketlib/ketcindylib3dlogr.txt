@@ -1,3 +1,10 @@
+// 20190331
+//    VertexEdgeFace changed (Labelsize option added)
+//    Nohiddensegs, Nohiddenbyfaces majorly changed (segL,faceL)
+// 20190330
+//    Spacecurve debugged (Precision, string data)
+// 20190329
+//    Start3d,Ptseg3d Setangle changed/debugged (PTEXCEPTION)
 // 20190320
 //    Skeletonparadata maintained, debugged (FI => F)
 // 20190301

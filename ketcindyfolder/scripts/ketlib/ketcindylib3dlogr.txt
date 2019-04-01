@@ -1,3 +1,8 @@
+// 20190401
+//    VertexEdgeFace changed  ( for MeasureDepth==1 )
+//    Nohiddenbyfaces debugged (for Arg1,Arg2 and making faceL)
+//    Mkseg3d changed  ( no display when "geoseg3d" is null )
+//    IntersectsgpL changed  ( varialble set when "draw" )
 // 20190331
 //    VertexEdgeFace changed (Labelsize option added)
 //    Nohiddensegs, Nohiddenbyfaces majorly changed (segL,faceL)

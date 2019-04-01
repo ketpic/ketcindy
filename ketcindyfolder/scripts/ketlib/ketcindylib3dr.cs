@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190331] loaded");
+println("ketcindylib3d[20190401] loaded");
 
 //help:start();
 
@@ -1945,7 +1945,9 @@ Mkseg3d(options):=(
       );
     );
   );
-  println("generate totally "+name);
+  if(length(parse(name))>0,  //190401
+    println("generate totally "+name);
+  );
   if(length(segL)>0,  // 15.03.06
     strg=substring(strg,0,length(strg)-1)+")";
     if(Noflg<3,
@@ -2342,8 +2344,8 @@ IntersectsgpL(name,sgstr,pLstr):=
    IntersectsgpL(name,sgstr,pLstr,["ie"]);
 IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
 //help:IntersectsgpL("R","P-Q","A-B-C");
-//help:IntersectsgpL("",[p1,p2],[p3,p4,p5]);
-//help:IntersectsgpL(options=["draw(put)","ie","Screen=n"+pointoptions]);
+//help:IntersectsgpL("pR","pP-pQ","A-B-C");
+//help:IntersectsgpL(options=["draw(put)","ie","Screen=n"+pointoptions,"Color="]);
   regional(options,eqL, strL,ptflg,out,pP,pQ,pA,pB,pC,pH,pK,pR,tseg,tt,ss,Eps,
     flg,scrflg,nvec,tmp,tmp1,tmp2,tmp3,tmp4);
   options=optionsorg; //181026from
@@ -2440,9 +2442,15 @@ IntersectsgpL(name,sgstr,pLstr,optionsorg):=(
     if(tmp1&tmp2&(scrflg=="Y"), //181031
       if(ptflg_1=="P", //181025
         Putpoint3d([name,pR],"fix");
-//        Fixpoint3d([name,pR]); //190114
       ,
+println([2446,options]);
         Drawpoint3d(pR,options);
+        tmp=name; //190401from
+        if(indexof(name,"3d")==0,
+          tmp=name+"3d";
+        );
+        tmp=tmp+"="+Textformat(pR,6); 
+        parse(tmp); //190401to
       ); 
     );
   ,
@@ -3330,9 +3338,11 @@ Nohiddensegs(seg,range,face,Eps):=( //190331
 Nohiddenbyfaces(nm,faceL):=
     Nohiddenbyfaces(nm,Datalist3d(),faceL,[],["do"]);
 Nohiddenbyfaces(nm,Arg1,Arg2):=( //190331
-  regional(tmp,segL,faceL,options);
-  tmp=select(Arg2,indexof(#,"3d")>0);
-  if(length(tmp)>0,
+  regional(tmp1,tmp2,tmp3,segL,faceL,options);
+  tmp1=select(Arg2,indexof(#,"=")>0); //190401from
+  tmp2=select(Arg2,indexof(#,",")>0);
+  tmp3=select(Arg2,length(#)<=2);
+  if(length(tmp1)+length(tmp2)+length(tmp3)==0, //190401to
     segL=Arg1;
     faceL=Arg2;
     options=[];
@@ -3352,8 +3362,8 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
 //help:Nohiddenbyfaces("1",["ax3d","phe3d1"],["phv3d1"]);
 //help:Nohiddenbyfaces(options=["dr","Eps=10^(-2)"]);
 //help:Nohiddenbyfaces(optionsh=["do"]);
-  regional(Eps,namen,nameh,options,segL,faceL,rng,seg,face,vtxL,
-     ctr,tmp,tmp1,tmp2,Ltype,Noflg,eqL,color,frnL,frhL);
+  regional(Eps,namen,nameh,options,segL,faceL,rng,vtxL,
+     ctr,tmp,tmp1,tmp2,tmp3,tmp4,Ltype,Noflg,eqL,color,frnL,frhL);
   namen="frn"+nm;
   nameh="frh"+nm;
   options=optionorg;
@@ -3375,9 +3385,10 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
   if(!islist(tmp1),tmp1=[tmp1]);
   Changestyle3d(tmp1,["nodisp"]);
   segL=[];
-  forall(tmp1,seg,
-    if(isstring(seg),
-      tmp3=parse(seg);
+  forall(tmp1,tmp4,  // 190401[seg=>tmp4]
+    if(isstring(tmp4),
+      tmp3=parse(tmp4);
+      if(MeasureDepth(tmp3)==1,tmp3=[tmp3]); //190401
       tmp2=[];
       forall(tmp3,
         if(isstring(#),tmp=parse(#),tmp=#);
@@ -3391,17 +3402,19 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
   tmp1=faceLorg;
   if(!islist(tmp1),tmp1=[tmp1]);
   faceL=[];
-  forall(tmp1,face,
-    if(isstring(face),
-      tmp2=parse(face);
-      if(indexof(face,"phf")>0,
-        tmp=replace(face,"phf","phv");
+  forall(tmp1,tmp4,    // 190401[face=>tmp4]
+    if(isstring(tmp4),
+      tmp2=parse(tmp4);
+      if(indexof(tmp4,"phf")>0,
+        tmp=replace(tmp4,"phf","phv");
         vtx=parse(tmp);
         vtx=apply(vtx,parse(#));
         tmp2=apply(tmp2,vtx_#);
+      ,
+        tmp2=[tmp2]; //190401
       );
     ,
-      tmp2=face;
+      tmp2=tmp4;
     );
     faceL=concat(faceL,tmp2);
   ); //190331to

@@ -16,8 +16,9 @@
 
 #########################################
 
-ThisVersion<- "tikzv1_1_1(190317)"
+ThisVersion<- "tikzv1_1_1(190402)"
 
+# 2019.04.02 Drwline  ( Sepen restore when finished, Takato)
 # 2019.03.17 from 20190207
 #   Ketinit, Beginpicture, Endpicture, Drwline, Setpen, Dottedline, Makehasen, Drwpt, Shade, Letter #from 20190317  
 
@@ -223,7 +224,7 @@ Drwline<-function(...)
       }
     }
   }
-  if (Thick>1){  #from 20190317
+  if (Thick!=1){  #from 20190402
     Setpen(Width)
   }
 }

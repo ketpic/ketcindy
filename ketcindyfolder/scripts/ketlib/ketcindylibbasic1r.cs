@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.6");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190405] loaded");
+println("ketcindylibbasic1[20190406] loaded");
 
 //help:start();
 
@@ -3860,8 +3860,9 @@ Pointdata(nm,listorg,options):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="S",
-      size=Toupper(substring(tmp_2,0,1));
-      opcindy=opcindy+",size->"+text(size); //190405
+      size=tmp_2; //190406from
+      tmp1=parse(size)/2;
+      opcindy=opcindy+",size->"+text(tmp1); //190409to
     );
     if(tmp1=="D", //181030from
       dispflg=Toupper(substring(tmp_2,0,1));
@@ -3927,7 +3928,7 @@ Pointdata(nm,listorg,options):=(
         tmp2=tmp2+tmp+",";
       );
       tmp2=substring(tmp2,0,length(tmp2)-1)+")";
-      //17.10.10until
+      //17.10.10to
     );
     GLIST=append(GLIST,name+"=Pointdata("+tmp2+")"); //no ketjs
   );
@@ -3935,13 +3936,12 @@ Pointdata(nm,listorg,options):=(
     tmp=[nameL,[0,1],opcindy];  //190126
     GCLIST=append(GCLIST,tmp);
     if(Noflg==0,
-      if(length(size)>0,
-        Com2nd("Setpt("+size+")");
-      );
-      thick=PenThick/PenThickInit;  // 16.04.09 from
-      if(length(size)>0,tmp1=parse(size),tmp1=1);
-      tmp1=max(tmp1,1)/8; 
-      Setpen(tmp1); // 16.04.09 until
+      thick=PenThick/PenThickInit;  // 16.04.09
+      if(length(size)>0, //190406from
+        tmp1=parse(size);
+        Texcom("{");
+        Setpen(tmp1); 
+      ); ..190405to
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");
         Com2nd("Setcolor("+color+")");//180711
@@ -3951,11 +3951,10 @@ Pointdata(nm,listorg,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180711
       ); //no ketjs off
+      if(length(size)>0, //190406from
+        Texcom("}");
+      ); //190406to
       Setpen(thick); // 16.04.09
-      if(length(size)>0, //no ketjs on
-        tmp=Textformat(TenSize/TenSizeInit,1);
-        Com2nd("Setpt("+tmp+")");
-      ); //no ketjs off
     );
   );
   ptlist;

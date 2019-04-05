@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(181230)"
+ThisVersion<- "2ev5_2_4(190405)"
 
+# 20190405
+#   Drwpt debugged/changed ( Incolor )
 # 20181230
 #   Drwpt changed ( Inside )
 # 20180930
@@ -208,7 +210,7 @@ Drwline<-function(...)
 
 ###########################################
 
-Drwpt<-function(...) #181230
+Drwpt<-function(...) #190405
 {
   varargin<-list(...)
   Nargs<-length(varargin)
@@ -216,34 +218,17 @@ Drwpt<-function(...) #181230
   Same="y"
   Incolor=""
   Tmp=varargin[[All]]
-  if(is.numeric(Tmp)){
-    if(length(Tmp)==3){Tmp=c(Tmp,1)}
-    if(length(Tmp)==4){
-      if(Tmp[4]<0){
-        Same="nn"
-      }else{
-        if(Tmp[4]!=1){
-          Tmp1=Tmp[4]*(c(1,1,1)-Tmp[1:3])
-          Tmp1=c(1,1,1)-Tmp1
-          Tmp=c(Tmp[1:3],Tmp1)
-        }
-      }
-    }
-    if(length(Tmp)==6){
+  if((is.numeric(Tmp))&&(length(Tmp)>2)){ #190405from
+    if(Tmp[1]==-1){
+      Same="no"
+    }else{
+      Tmp1=sapply(Tmp,as.character)
+      Incolor=paste("{",Tmp1[1],",",Tmp1[2],",",Tmp1[3],"}",sep="")
       Same="n"
-      Incolor="\\color[rgb]{"
-      for(J in 4:6){
-        Incolor=paste(Incolor,as.character(Tmp[J]),sep="")
-        if(J<6){
-          Incolor=paste(Incolor,",",sep="")
-        }
-      }
-      Incolor=paste(Incolor,"}",sep="")
     }
-    All=Nargs-1 
-  }
+    All=All-1
+  }#190405to
   Ra=TenSize*1000/2.54/MilliIn
-  Mojisu=0
   for (II in Looprange(1,All)){
     MS<- varargin[[II]]
     MS=Flattenlist(MS) #17.10.28
@@ -256,38 +241,25 @@ Drwpt<-function(...) #181230
       P<- Doscaling(P)
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      Str=""
-      if(Same=="n"){
-        Str=paste("{\\linethickness{0 in}",Incolor,sep="")
-      }
-      if(Same!="nn"){
-        Str=paste(Str,'\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
+      if(Same!="no"){  #190405from
+        Str=paste("{\\linethickness{0 in}%\n",sep="")
         cat(Str,file=Wfile,append=TRUE)
-        Mojisu=Mojisu+nchar(Str)
+        if(Same=="n"){ #190405
+          Str1<- paste("{\\color[rgb]",Incolor,"%\n",sep="")
+          cat(Str1,file=Wfile,append=TRUE)
+        }
+        Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}%\n',sep="")
+        cat(Str,file=Wfile,append=TRUE)
+        if(Same=="n"){
+          cat("}%\n",file=Wfile,append=TRUE)
+        }
+        cat("}%\n",file=Wfile,append=TRUE)
       }
-      if(Same=="n"){
-        cat("}",file=Wfile,append=TRUE)
-      }
-      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}',sep="")
+      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}%\n',sep="")
       cat(Str,file=Wfile,append=TRUE)
-      Mojisu=Mojisu+nchar(Str)
-      if(Mojisu>80){
-        cat("\n",file=Wfile,append=TRUE)
-        Mojisu=0
-        Str=""
-      }
     }
-  }
-  if(Same=="n"){
- #   Str='}%'
-  }
-  if(Mojisu>0){
-    Str=paste('\n',Str,'\n',sep="")
-  }else{
-    Str=paste('\n',sep="") #190405
-  }
-  cat(Str,file=Wfile,append=TRUE)
-  cat("\n",file=Wfile,append=TRUE) #180930
+  } # 190405to
+  cat("\n",file=Wfile,append=TRUE)
 }
 
 

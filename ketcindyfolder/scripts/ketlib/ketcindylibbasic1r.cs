@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.6");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190323] loaded");
+println("ketcindylibbasic1[20190405] loaded");
 
 //help:start();
 
@@ -3839,7 +3839,7 @@ Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
 //help:Pointdata(options=["Size=(1)","Disp=(y)","Inside="]);
-//help:Pointdata("Inside=1(def)/ratio/rgblist/colorname/-1"]);
+//help:Pointdata("Inside=color/ratio/no"]);
   regional(list,name,nameL,ptlist,opstr,opcindy,Msg,
       eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
       Ltype,Noflg,color,inside);
@@ -3849,9 +3849,9 @@ Pointdata(nm,listorg,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  opcindy=tmp_(length(tmp));
-//  opstr=tmp_(length(tmp)-1);
+  opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
+  opcindy=",linecolor->"+text(color); //190405
   size="";
   dispflg="Y";
   inside=color;
@@ -3860,27 +3860,26 @@ Pointdata(nm,listorg,options):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="S",
-      size=Toupper(substring(tmp_2,0,1));;
-      opcindy=opcindy+",size->"+text(size); //181013
+      size=Toupper(substring(tmp_2,0,1));
+      opcindy=opcindy+",size->"+text(size); //190405
     );
     if(tmp1=="D", //181030from
       dispflg=Toupper(substring(tmp_2,0,1));
     );
-    if(tmp1=="I", //181229from
-      if(contains(["","no"],tmp_2),
-        if(tmp_2=="no",inside=append(inside,-1));
+    if(tmp1=="I", //190405from
+      if(Toupper(tmp_2)=="NO",
+        inside=[-1,-1,-1];
       ,
-        tmp2=substring(tmp_2,0,1);
-        if(contains(["-","0","1",".","["],tmp2),
-          tmp=parse(tmp_2);
-          if(length(tmp)==4,tmp=Colorcmyk2rgb(tmp)); //190115
-          if(!isstring(tmp),tmp=[tmp]);
+        tmp3=["0","1","2","3","4","5","6","7","8","9"];
+        if(contains(tmp3,substring(tmp_2,0,1)),
+          inside=parse(tmp_2)*color;
         ,
-          tmp=Colorname2rgb(tmp_2);
+          tmp3=Divoptions(["Color="+text(tmp_2)]);
+          inside=tmp3_(length(tmp3)-2);
         );
-        inside=concat(inside,tmp);
+        opcindy=opcindy+",pointcolor->"+text(inside); 
       );
-    ); //181229to
+    ); //100405to
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
     ); //190206to

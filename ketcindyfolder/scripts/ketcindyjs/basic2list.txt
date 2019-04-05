@@ -116,4 +116,4 @@ Extractall,basic2,5897,5924
 Copyketcindyjs,basic2,5928,5989,iswindows,Dqq,kc
 Ketjsoption,basic2,5993,5994,Setketcindyjs
 Setketcindyjs,basic2,5998,6015,Divoptions
-Mkketcindyjs,basic2,6019,6435,Strsplit,Toupper,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Dqq,Indexof,Indexall,rgb
+Mkketcindyjs,basic2,6019,6443,Strsplit,Toupper,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq,rgb

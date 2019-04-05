@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20190317) loaded");
+println("ketcindymv(20190404) loaded");
 
 //help:start();
 
@@ -378,7 +378,7 @@ Mkanimation(path,folder):=(
     );
   ); //17.11.25until
   Fheadbkup=Fhead;
-  Fhead="animate"+folder; 
+  Fhead=folder+"animate"; //190404 
   Pathpdfbkup=Pathpdf;
   Pathpdf=PathAd;
   tmp1=replace(PathT,pathsep(),"/");
@@ -528,7 +528,7 @@ Mkflipanime(path,folder):=(
     );
   ); //17.11.25until
   Fheadbkup=Fhead;
-  Fhead="flipanime"+folder; 
+  Fhead=folder+"flipanime"; //190404 
   tmp1=replace(PathT,pathsep(),"/");
   tmp=indexall(tmp1,"/");//17.10.14from
   if(length(tmp)>0,

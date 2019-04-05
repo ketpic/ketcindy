@@ -1,3 +1,5 @@
+// 20190404
+//  Mkanimation, Mkflipanime changed  ( Filename )
 // 20190317
 //  Setpara debugged  (  default value of Frate changed to 20)
 // 20181224

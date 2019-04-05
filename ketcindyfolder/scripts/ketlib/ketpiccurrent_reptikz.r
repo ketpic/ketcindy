@@ -18,6 +18,7 @@
 
 ThisVersion<- "tikzv1_1_1(190402)"
 
+# 2019.04.02 Beginpicture  ( Unitlen, Takato)
 # 2019.04.02 Drwline  ( Sepen restore when finished, Takato)
 # 2019.03.17 from 20190207
 #   Ketinit, Beginpicture, Endpicture, Drwline, Setpen, Dottedline, Makehasen, Drwpt, Shade, Letter #from 20190317  
@@ -123,7 +124,7 @@ Beginpicture<-function(ul)
   MARKLEN<<- MARKLENNow*1000/2.54/MilliIn;
   Str<-paste("{\\unitlength=",ULEN,"%\n",sep="");
   cat(Str,file=Wfile,append=TRUE);
-  cat("\\begin{tikzpicture}%\n",file=Wfile,append=TRUE);
+  cat("\\begin{tikzpicture}[x=",ULEN,",y=",ULEN,"]%\n",file=Wfile,append=TRUE);#190404
   Str<-"\\clip (";
   Tmp<-as.character(round(Xm,digits=6));
   Str<-paste(Str,Tmp,",",sep="");

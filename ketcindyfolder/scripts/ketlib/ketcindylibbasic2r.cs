@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190329] loaded");
+println("ketcindybasic2[20190405] loaded");
 
 //help:start();
 
@@ -6000,7 +6000,7 @@ Setketcindyjs():=(
 );
 Setketcindyjs(list):=(
 //help:Setketcindyjs();
-//help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[]"]);
+//help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color="]);
   regional(eqL,color,tmp);
   tmp=Divoptions(list);
   eqL=tmp_5;
@@ -6053,12 +6053,16 @@ Mkketcindyjs(options):=( //17.11.18
     );
     if(tmp1=="N",
       if(length(tmp2)>0, //190209
+        if(Toupper(tmp2)=="ALL", //190405from
+          tmp2=remove(allpoints(),[SW,NE]);
+          tmp2=text(tmp2);
+        ); //190405to
         tmp=tmp2;
         if(indexof(tmp2,"[")>0,
           tmp=substring(tmp2,1,length(tmp2)-1);
         );
         tmp=tokenize(tmp,",");
-        nolabel=concat(nolabe,tmp);
+        nolabel=concat(nolabel,tmp);
       );
     );
     if(tmp1=="C", //190209
@@ -6358,6 +6362,10 @@ Mkketcindyjs(options):=( //17.11.18
               tmp2=replace(tmp2,"labeled: true","labeled: false");
             );
           );
+          tmp=indexof(tmp2,Dqq("NE"))+indexof(tmp2,Dqq("SW")); //190405from
+          if(tmp>0, 
+            tmp2=replace(tmp2,"color: [1.0, 0.0, 0.0]","color: [1.0, 1.0, 1.0], size: 1.5");
+          ); //190405to
           if(indexof(tmp2,"size:")==0,
             tmp2=replace(tmp2,"}",", size: 3.0}");
             out=append(out,tmp2); //190129

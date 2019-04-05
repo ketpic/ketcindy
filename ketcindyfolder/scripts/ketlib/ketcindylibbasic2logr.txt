@@ -1,3 +1,5 @@
+// 20190405
+//    Mkketcindyjs changed (size of NE,SW. "Nolabe=all" )
 // 20190329
 //    Slider debugged (PTEXCEPTION)
 // 20190325

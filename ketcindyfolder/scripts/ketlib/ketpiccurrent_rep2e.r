@@ -283,6 +283,8 @@ Drwpt<-function(...) #181230
   }
   if(Mojisu>0){
     Str=paste('\n',Str,'\n',sep="")
+  }else{
+    Str=paste('\n',sep="") #190405
   }
   cat(Str,file=Wfile,append=TRUE)
   cat("\n",file=Wfile,append=TRUE) #180930

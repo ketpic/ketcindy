@@ -16,10 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190322)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190405)" 
 
 print(ThisVersion)
 
+# 20190405
+#   Drwpt changed(Incolor,Same)
+#   Makecurves changed(Drwpt)
 # 20190322
 #   Plotdata debugged  (in the case fo Exc)
 # 20190127
@@ -2409,27 +2412,16 @@ Drwpt<-function(...){
   Same="y"
   Incolor=""
   Tmp=varargin[[All]]
-  if(is.numeric(Tmp)){
-    if(length(Tmp)==3){Tmp=c(Tmp,1)} #181231
-    if(length(Tmp)==4){
-      if(Tmp[4]<0){  #181231from
-        Same="nn"
-      }else{
-        Incolor=paste(" ",as.character(Tmp[4]),sep="")
-      }  #181231to
+  if((is.numeric(Tmp))&&(length(Tmp)>2)){ #190405from
+    if(Tmp[1]==-1){
+      Same="no"
     }else{
+      Tmp1=sapply(Tmp,as.character)
+      Incolor=paste("{",Tmp1[1],",",Tmp1[2],",",Tmp1[3],"}",sep="")
       Same="n"
-      Incolor="{"
-      for(J in 4:6){
-        Incolor=paste(Incolor,as.character(Tmp[J]),sep="")
-        if(J<6){
-          Incolor=paste(Incolor,",",sep="")
-        }
-      }
-      Incolor=paste(Incolor,"}",sep="")
     }
-    All=Nargs-1 
-  }#181230to
+    All=All-1
+  }#190405to
   CL<- c()
   for (J in 0:N){
     Tmp<- TenSize*0.5*1000/2.54/MilliIn
@@ -2454,9 +2446,11 @@ Drwpt<-function(...){
       }
       PL<- matrix(PL,nrow=2)
       PL<- t(PL)
-      if(Same=="n"){ #181230from
-        Str1<- paste("{\\special{pn 0}\\color[rgb]",Incolor,"%\n",sep="")
-        cat(Str1,file=Wfile,append=TRUE)
+      if(Same!="no"){  #190405
+        if(Same=="n"){ #190405
+          Str1<- paste("{\\special{pn 0}\\color[rgb]",Incolor,"%\n",sep="")
+          cat(Str1,file=Wfile,append=TRUE)
+        }
         Mojisu<-0
         for (J in 1:Nrow(PL)){
           Q<- PL[J,]
@@ -2470,7 +2464,11 @@ Drwpt<-function(...){
           }
           Mojisu=0
         }
-        Str1<- paste("\\special{sh}\\special{fp}}%\n",sep="")
+        Str1<- "\\special{sh}\\special{fp}" #190405from
+        if(Same=="n"){
+          Str1<- paste(Str1,"}",sep="")
+        }
+        Str1<- paste(Str1,"%\n",sep="") #190405to
         cat(Str1,file=Wfile,append=TRUE)
       }
       cat("\\special{pn 4}",file=Wfile,append=TRUE) #181231
@@ -4519,6 +4517,7 @@ MakeCurves<-function(...){        ## Scaling is implemented
         next
       }
       Tmp1<- as.numeric(Motos)
+      Tmp1=list(Tmp1) #190405
       if(Ptout==1){
         Drwpt(Tmp1)
       }

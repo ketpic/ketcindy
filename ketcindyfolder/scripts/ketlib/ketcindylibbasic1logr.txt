@@ -1,3 +1,5 @@
+// 20190405
+//    Pointdata changed  (color,inside )
 // 20190323
 //    Circledata changed  ([Center,r] supported
 //    Colorname2rgb changed ( in the case of no color, "Assign" added )

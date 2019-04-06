@@ -3861,7 +3861,7 @@ Pointdata(nm,listorg,options):=(
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="S",
       size=tmp_2; //190406from
-      tmp1=parse(size)/2;
+      tmp1=parse(size);
       opcindy=opcindy+",size->"+text(tmp1); //190409to
     );
     if(tmp1=="D", //181030from
@@ -3936,12 +3936,10 @@ Pointdata(nm,listorg,options):=(
     tmp=[nameL,[0,1],opcindy];  //190126
     GCLIST=append(GCLIST,tmp);
     if(Noflg==0,
+      if(length(size)>0,
+        Com2nd("Setpt("+size+")");
+      );
       thick=PenThick/PenThickInit;  // 16.04.09
-      if(length(size)>0, //190406from
-        tmp1=parse(size);
-        Texcom("{");
-        Setpen(tmp1); 
-      ); ..190405to
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");
         Com2nd("Setcolor("+color+")");//180711
@@ -3951,10 +3949,10 @@ Pointdata(nm,listorg,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180711
       ); //no ketjs off
-      if(length(size)>0, //190406from
-        Texcom("}");
-      ); //190406to
-      Setpen(thick); // 16.04.09
+      if(length(size)>0, //no ketjs on
+        tmp=Textformat(TenSize/TenSizeInit,1);
+        Com2nd("Setpt("+tmp+")");
+      ); //no ketjs off
     );
   );
   ptlist;

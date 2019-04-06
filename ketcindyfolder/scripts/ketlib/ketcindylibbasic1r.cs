@@ -4608,6 +4608,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
   eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
+  opstr=tmp_(length(tmp)-1); //190406
   Mdv=50;Ndv=50;
   msg="Y";
   forall(eqL,
@@ -4711,7 +4712,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
     );
     tmp=name+"="+Textformat(tmp1,5);
     parse(tmp);
-    tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")"; //no ketjs
+    tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs
   );
   if(Noflg<2,

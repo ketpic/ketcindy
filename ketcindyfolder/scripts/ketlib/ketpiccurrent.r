@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190405)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190408)" 
 
 print(ThisVersion)
 
+# 20190408
+#   Projpara debugged ( for a single point )
 # 20190405
 #   Drwpt changed(Incolor,Same)
 #   Makecurves changed(Drwpt)
@@ -9780,6 +9782,9 @@ Projpara<- function(...){
   for (N in Looprange(1,Nargs)){
     Crv<- varargin[[N]]
     if(is.numeric(Crv)){
+      if(!is.matrix(Crv)){ # 190408from
+        Crv=matrix(Crv,ncol=3)
+      } # 190408to
       Tmp<- ProjCurve(Crv)
       CL<- c(CL,list(Tmp))
     }

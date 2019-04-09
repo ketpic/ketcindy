@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190408)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190409)" 
 
 print(ThisVersion)
 
+# 20190409
+#   Plotdata debugged  ( Exclution at left side)
 # 20190408
 #   Projpara debugged ( for a single point )
 # 20190405
@@ -5575,7 +5577,7 @@ Plotdata<- function(...)
        Ke<-Ke+1
     }
     if(length(Pa)>0){
-      if((Pa[1]==Inf)||(Pa[2]==Inf)){ #190322
+      if((abs(Pa[1])==Inf)||(abs(Pa[2])==Inf)){ #190409
         Pa=c(Inf,Inf) #190322
         Tmp<-Appendrow(P,Pa)
         P<-Tmp

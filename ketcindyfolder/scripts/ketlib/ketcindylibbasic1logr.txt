@@ -1,3 +1,5 @@
+// 20190409
+//    Pointdata changed (color)
 // 20190406
 //    Pointdata changed (size)
 //    Implicitplot debugged (opstr )

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindybasic2[20190405] loaded");
+println("ketcindybasic2[20190409] loaded");
 
 //help:start();
 
@@ -753,6 +753,7 @@ Addax(param):=(
 ////%Expr start////
 Expr(Pt,Dr,St):=Expr([Pt,Dr,St]);
 Expr(list):=Expr(list,[]);
+Expr(Pt,Dr,St,options):=Expr([Pt,Dr,St],options); //190409
 Expr(listorg,options):=( //16.10.09
 //help:Expr([A,"e","f(x)=x^2"]);
 //help:Expr([A,"e","f(x)=x^2"],["size->24"]);
@@ -6000,7 +6001,7 @@ Setketcindyjs():=(
 );
 Setketcindyjs(list):=(
 //help:Setketcindyjs();
-//help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color="]);
+//help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
   regional(eqL,color,tmp);
   tmp=Divoptions(list);
   eqL=tmp_5;
@@ -6068,9 +6069,15 @@ Mkketcindyjs(options):=( //17.11.18
     if(tmp1=="C", //190209
       if(length(tmp2)>0,
         color=tmp2;
-        if(substring(color,0,1)=="[", //190130from
+        if(substring(color,0,1)=="[", //190409from
+          tmp=parse(color);
+          if(length(tmp)==4,
+            tmp=Colorcode("cmyk","rgb",tmp);
+            tmp=apply(tmp,round(#*255));
+            color=text(tmp);
+          );
           color=substring(color,1,length(color)-1);
-        ); //190130to
+        ); //190409to
       );
     );
     if(tmp1=="G",
@@ -6222,7 +6229,8 @@ Mkketcindyjs(options):=( //17.11.18
         tmp1_(length(tmp1)-2)=    //190128from
          "    <link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/CindyJS.css")+">"; //190203
         tmp1_(length(tmp1)-1)=
-         "   <script type="+Dqq("text/javascript")+" src="+Dqq("ketcindyjs/Cindy.js")+"></script>"; //190203
+         "   <script type="+Dqq("text/javascript")+" src="+Dqq("ketcindyjs/Cindy.js")+"></script>"; 
+             //190203
         tmp1_(length(tmp1))=""; //190128to
       );
     ,

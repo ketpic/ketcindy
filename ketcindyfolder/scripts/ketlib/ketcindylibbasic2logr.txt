@@ -1,3 +1,6 @@
+// 20190409
+//    Mkketcindyjs debugged (color option )
+//    Expr debugged  ( type of pos,dir,text,option added )
 // 20190405
 //    Mkketcindyjs changed (size of NE,SW. "Nolabe=all" )
 // 20190329

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.6");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190406] loaded");
+println("ketcindylibbasic1[20190409] loaded");
 
 //help:start();
 
@@ -3838,7 +3838,7 @@ Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
-//help:Pointdata(options=["Size=(1)","Disp=(y)","Inside="]);
+//help:Pointdata(options=["Size=(1)","Disp=(y)","Msg=(y)","Inside=","Color="]);
 //help:Pointdata("Inside=color/ratio/no"]);
   regional(list,name,nameL,ptlist,opstr,opcindy,Msg,
       eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
@@ -3851,7 +3851,7 @@ Pointdata(nm,listorg,options):=(
   eqL=tmp_5;
   opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
-  opcindy=",linecolor->"+text(color); //190405
+  opcindy=tmp_(length(tmp));
   size="";
   dispflg="Y";
   inside=color;

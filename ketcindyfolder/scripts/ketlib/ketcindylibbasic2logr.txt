@@ -1,3 +1,6 @@
+// 20190412
+//    Some functions moved from basic1, moved to basic3
+//    Arrowdata debugge  ( for Setscaling )
 // 20190409
 //    Mkketcindyjs debugged (color option )
 //    Expr debugged  ( type of pos,dir,text,option added )

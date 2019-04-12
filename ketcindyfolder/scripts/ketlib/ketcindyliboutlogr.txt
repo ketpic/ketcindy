@@ -1,3 +1,5 @@
+// 20190411
+//    CalcbyM changed  ("Errchk=" added)
 // 20190327
 //    Mxfun debugged  ( eqL to 1 char)
 // 20190317

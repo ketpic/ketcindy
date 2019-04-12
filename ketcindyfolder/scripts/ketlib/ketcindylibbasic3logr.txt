@@ -1,0 +1,4 @@
+// 20190412
+//    newly generated
+//    Some functions moved from basic2
+//    Figpdf debugged  (SCALEY)

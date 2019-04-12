@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190327] loaded");
+println("ketcindylibout[20190411] loaded");
 
 //help:start();
 
@@ -2982,28 +2982,28 @@ kcM(fname,optionorg):=(
 CalcbyM(name,cmd):=CalcbyM(name,cmd,[]);
 CalcbyM(name,cmd,optionorg):=(
 //help:CalcbyM("a",cmdL);
-//help:CalcbyM(options1= ["m/r","Wait=5","Ext=txt","Dig=6","Pow=no","All=y"]);
+//help:CalcbyM(options1= ["m/r","Wait=5","Errchk=y(/n)","Dig=6","Pow=no","All=y"]);
 //help:CalcbyM(options2= ["line=1000"]);
   regional(options,tmp,tmp0,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,allflg,indL,line,
-      dig,flg,wflg,file,nc,arg,add,powerd,cmdM,cmdlist,wfile,ext,waiting,num,st);
+      dig,flg,wflg,file,nc,arg,add,powerd,cmdM,cmdlist,wfile,errchk,waiting,num,st);
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
   realL=tmp_6;
   strL=tmp_7;
   wfile="";
-  ext=".txt";
+  errchk="Y"; //190411
   waiting=5;
   dig=6;
   allflg=1;
   powerd="false";
   line=1000; // 16.06.13
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
     if(tmp1=="E",
-      if(indexof(tmp2,".")==0,ext="."+tmp2,ext=tmp2);
+      errchk=Toupper(substring(tmp_1,0,1)); //190411
       options=remove(options,[#]);
     );
     if(tmp1=="W",
@@ -3029,7 +3029,7 @@ CalcbyM(name,cmd,optionorg):=(
       options=remove(options,[#]);
     );
   );
-  wfile=Fhead+name+ext;
+  wfile=Fhead+name+".txt"; //190411
   wflg=0;
   forall(strL,
     tmp=Toupper(substring(#,0,1));
@@ -3080,7 +3080,6 @@ CalcbyM(name,cmd,optionorg):=(
       forall(tmp2,arg,
         if(isstring(arg),
           if(substring(arg,0,1)!=",",
-//            tmp=replace(arg,"'",Dq);  // 16.03.03
             tmp=arg;   // 16.03.03
             tmp=replace(tmp,"`","'");// 2016.02.23
             tmp3=tmp3+tmp+",";
@@ -3095,7 +3094,6 @@ CalcbyM(name,cmd,optionorg):=(
             tmp4="]";
             forall(arg,
               if(isstring(#),
-//                tmp3=tmp3+Dq+#+Dq+",";
                 tmp=replace(#,"'",Dq);
                 tmp3=tmp3+tmp+",";
               ,
@@ -3161,7 +3159,7 @@ CalcbyM(name,cmd,optionorg):=(
       if(wflg==1,wait(WaitUnit)); // 2016.02.23
       if(length(tmp1)>0,
         tmp=indexof(tmp1,"error")+indexof(tmp1,"syntax"); //2016.02.23
-        if(tmp>0,
+        if((tmp>0)&(errchk=="Y"), //190411
           println("Some error(s) occurred"); //2016.02.24 from
           tmp2=tokenize(tmp1,"(%");
           forall(4..length(tmp2),println(tmp2_#)); //2016.02.24 until

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190401] loaded");
+println("ketcindylib3d[20190413] loaded");
 
 //help:start();
 
@@ -3353,9 +3353,14 @@ Nohiddenbyfaces(nm,Arg1,Arg2):=( //190331
   );
   Nohiddenbyfaces(nm,segL,faceL,options,["do"]);
 );
-Nohiddenbyfaces(nm,segL,faceL,options):=( //190331
-  Nohiddenbyfaces(nm,segL,faceL,options,["do"]);
-);
+//Nohiddenbyfaces(nm,segL,faceL,options):=( //190331
+Nohiddenbyfaces(nm,Arg1,Arg2,Arg3):=( //190413from
+  if(islist(Arg1),
+    Nohiddenbyfaces(nm,Arg1,Arg2,Arg3,["do"]);
+  ,
+    Nohiddenbyfaces(nm,Datalist3d(),Arg1,Arg2,Arg3);
+  );
+); //190413to
 Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
 //help:Nohiddenbyfaces("1",["phf3d1"]);
 //help:Nohiddenbyfaces("1",["ax3d"],["phf3d1"]);

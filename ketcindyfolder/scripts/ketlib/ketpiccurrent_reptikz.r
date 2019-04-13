@@ -456,7 +456,7 @@ Makehasen<- function(Figdata,Sen,Gap,Ptn)
       Pt=paste(' -- (',X,',',Y,')',sep="")
       Str=Pt
       cat(Str,file=Wfile,append=TRUE)
-      cat(";%\n%\n",file=Wfile,append=TRUE);
+      cat(";%\n",file=Wfile,append=TRUE); #190412
 #      Mojisu<- Mojisu+nchar(Str)
 #      if (Mojisu>80){
 #        cat("%\n",file=Wfile,append=TRUE)

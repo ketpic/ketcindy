@@ -1,3 +1,5 @@
+// 20190413
+//    Nohiddenbyfaces debugged (for Arg1,Arg2, Arg3)
 // 20190401
 //    VertexEdgeFace changed  ( for MeasureDepth==1 )
 //    Nohiddenbyfaces debugged (for Arg1,Arg2 and making faceL)

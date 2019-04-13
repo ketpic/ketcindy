@@ -1,4 +1,4 @@
-REM 20181222
+REM 20190413
 echo off
 
 rem Edit the followings if necessary
@@ -87,5 +87,61 @@ echo Dirhead="%pathT%%scripts%"; >> ketcindy.ini
 echo setdirectory(Dirhead); >> ketcindy.ini
 echo import("setketcindy.txt"); >> ketcindy.ini
 echo import("ketoutset.txt"); >> ketcindy.ini
+
+echo Setting of TeX, R, Maxima
+echo p=platex u=uplatex l=latex x=xelatex pd=pdflatex lu=lualatex
+set /P STR_INPUT="---- Choose TeX from above with 1st(+2nd) character :"
+if "%STR_INPUT%" == "p" (
+  set tex=platex
+)
+if "%STR_INPUT%" == "u" (
+  set tex=uplatex
+)
+if "%STR_INPUT%" == "l" (
+  set tex=latex
+)
+if "%STR_INPUT%" == "x" (
+  set tex=xelatex
+)
+if "%STR_INPUT%" == "pd" (
+  set tex=pdflatex
+)
+if "%STR_INPUT%" == "lu" (
+  set tex=lualatex
+)
+echo PathT=PathThead+"%tex%"; >> ketcindy.ini
+
+set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe
+if not exist "%prgSm%" (
+  set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
+)
+echo Pathpdf="%prgSm%"; >>  ketcindy.ini
+
+set /P STR_INPUT="Input version of R (ex)3.5.0 :"
+set verR=%STR_INPUT%
+set prg=C:\Program Files
+if exist "%prg%\R\R-%verR%\bin\" (
+  echo PathR="%prg%\R\R-%verR%\bin"; >>  ketcindy.ini
+) else (
+  if exist "%prg% (x86)\R\R-%verR%\bin\" (
+    echo "%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
+  ) else (
+    echo "R-%verR% not found"
+  )
+)
+
+set /P STR_INPUT="Input version of Maxima (ex)5.39.0 :"
+set verM=%STR_INPUT%
+echo %verM%
+set prg=C:\maxima-%verM%\bin\maxima.bat
+if exist "%prg%" (
+  echo PathM="%prg%"; >> ketcindy.ini
+) else (
+  echo "Maxima-%verM% not found"
+  set prg=C:\maxima-x.xx.x\bin\maxima.bat
+  echo // PathM="%prg%"; >> ketcindy.ini
+  )
+)
+
 echo "Plugins of Cindy has been set"
 pause

@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20181207
+#      20190413
 
 # Edit and uncomment the following lines if necessary
 #texpath=/Applications/kettex/texlive
@@ -88,6 +88,40 @@ echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/ketcindy.ini
 echo "setdirectory(Dirhead);"  >> ${cindyplug}/ketcindy.ini
 echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/ketcindy.ini
 echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/ketcindy.ini
+
+echo "Choose TeX with the 1st(+2nd) character"
+read -p 'p=platex, u=uplatex, l=latex, x=xelatex, pd=pdflatex, lu=lualatex:' tex
+if [ ${tex} = "p" ]; then
+  tex="platex"
+fi
+if [ ${tex} = "u" ]; then
+  tex="uplatex"
+fi
+if [ ${tex} = "l" ]; then
+  tex="latex"
+fi
+if [ ${tex} = "x" ]; then
+  tex="xelatex"
+fi
+if [ ${tex} = "pd" ]; then
+  tex="pdflatex"
+fi
+if [ ${tex} = "lu" ]; then
+  tex="lualatex"
+fi
+echo  "PathT=PathThead+\"${tex}\";" >> ${cindyplug}/ketcindy.ini
+echo  "Pathpdf=\"preview\";" >> ${cindyplug}/ketcindy.ini
+
+pathM="/Applications/Maxima.app/Contents/Resources/maxima.sh"
+pathMn="/Applications/Maxima.app/Contents/Resources/opt/bin/maxima"
+find -f ${pathM}
+if [ $? -gt 0 ]; then
+  echo  "PathM=\"${pathMn}\";" >> ${cindyplug}/ketcindy.ini
+else
+  echo  "PathM=\"${pathM}\";" >> ${cindyplug}/ketcindy.ini
+fi
+echo  "Mackc=\"open\";" >> ${cindyplug}/ketcindy.ini
+
 echo "KetCindyPlugin and others copied to Cinderella"
 sleep 1
 exit 0

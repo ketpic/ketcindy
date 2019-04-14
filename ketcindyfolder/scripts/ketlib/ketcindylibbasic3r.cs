@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190414] loaded");
+println("ketcindylibbasic3[20190415] loaded");
 
 //help:start();
 
@@ -894,31 +894,28 @@ Makeshell(texmainfile,flow):=(
   SCEOUTPUT = openfile(tmp2);
   println(SCEOUTPUT,"#!/bin/sh");
   println(SCEOUTPUT,"cd "+Dqq(Dirwork)); // 15.07.16
-  tmp1=" "+Dq+Fhead+Dq+" "+Dqq(texmainfile); // 15.12.11
-  flg=0;
-  forall(reverse(1..length(PathT)),
-    if(flg==0,
-      if(substring(PathT,#-1,#)=="/",
-        tex=substring(PathT,#,length(PathT));
-        path=substring(PathT,0,#-1);
-        flg=1;
-      );
-    );
-  );
+  tmp1=" "+Dqq(Fhead)+" "+Dqq(texmainfile); // 15.12.11 //190415from
+  tmp=Indexall(PathT,"/"); 
+  flg=length(tmp);
+  if(flg>0,
+    tmp=tmp_(length(tmp));
+    tex=substring(PathT,tmp,length(PathT));
+    path=substring(PathT,0,tmp-1);
+  ); //190415to
   if(flg==0,  // 17.10.13[Norbert]
     tex=PathT;
     path="";
-  );
+  ); 
   if(indexof(flow,"r")>0,
-    tmp=Dq+PathR+Dq+" --vanilla --slave < "+Dqq(Fhead+".r"); //190414
+    tmp=Dqq(PathR)+" --vanilla --slave < "+Dqq(Fhead+".r"); //190414
      // 17.09.14
     println(SCEOUTPUT,tmp);
   );
   if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
-    tmp=Dq(PathT)+" "+Dqq(texmainfile+".tex"); //190414
+    tmp=Dqq(PathT)+" "+Dqq(texmainfile+".tex"); //190415
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
-    tmp=replace(Dq(PathT),tex,"dvipdfmx")+" "+Dqq(texmainfile+".dvi"); //190414
+    tmp=replace(Dqq(PathT),tex,"dvipdfmx")+" "+Dqq(texmainfile+".dvi"); //190415
     println(SCEOUTPUT,tmp); 
     tmp="rm "+Dqq(texmainfile+".dvi"); //190414
     println(SCEOUTPUT,tmp);
@@ -1061,17 +1058,15 @@ Makebat(texmainfile,flow):=(
     fname="%HOMEPATH%\"+fname;
   );//180403to
   println(SCEOUTPUT,"cd "+Dqq(fname));//180409to //190414
-  flg=0;
-  tmp=replace(PathT,"\","/");
-  forall(reverse(1..length(PathT)),
-    if(flg==0,
-      if(substring(tmp,#-1,#)=="/",
-        tex=substring(PathT,#,length(PathT));
-        path=substring(PathT,0,#-1);
-        flg=1;
-      );
-    );
-  );
+  tmp1=Indexall(PathT,"/");  //190415from
+  tmp2=Indexall(PathT,"\");
+  tmp=concat(tmp1,tmp2);
+  flg=length(tmp);
+  if(flg>0,
+    tmp=tmp_(length(tmp));
+    tex=substring(PathT,tmp,length(PathT));
+    path=substring(PathT,0,tmp-1);
+  ); //190415to
   if(flg==0,  // 17.10.13[Norbert]
     tex=PathT;
     path="";

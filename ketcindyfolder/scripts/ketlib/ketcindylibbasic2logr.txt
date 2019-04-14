@@ -1,3 +1,5 @@
+// 20190414
+//    Helplist changed  ( for basic3 )
 // 20190412
 //    Some functions moved from basic1, moved to basic3
 //    Arrowdata debugge  ( for Setscaling )

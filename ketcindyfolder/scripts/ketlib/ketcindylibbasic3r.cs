@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190412] loaded");
+println("ketcindylibbasic3[20190414] loaded");
 
 //help:start();
 
@@ -893,8 +893,8 @@ Makeshell(texmainfile,flow):=(
   );
   SCEOUTPUT = openfile(tmp2);
   println(SCEOUTPUT,"#!/bin/sh");
-  println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq); // 15.07.16
-  tmp1=" "+Dq+Fhead+Dq+" "+Dq+texmainfile+Dq; // 15.12.11
+  println(SCEOUTPUT,"cd "+Dqq(Dirwork)); // 15.07.16
+  tmp1=" "+Dq+Fhead+Dq+" "+Dqq(texmainfile); // 15.12.11
   flg=0;
   forall(reverse(1..length(PathT)),
     if(flg==0,
@@ -910,35 +910,35 @@ Makeshell(texmainfile,flow):=(
     path="";
   );
   if(indexof(flow,"r")>0,
-    tmp=Dq+PathR+Dq+" --vanilla --slave < "+Fhead+".r";
+    tmp=Dq+PathR+Dq+" --vanilla --slave < "+Dqq(Fhead+".r"); //190414
      // 17.09.14
     println(SCEOUTPUT,tmp);
   );
   if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
-    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    tmp=Dq(PathT)+" "+Dqq(texmainfile+".tex"); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
-    tmp=replace(Dq+PathT+Dq,tex,"dvipdfmx")+" "+texmainfile+".dvi";
+    tmp=replace(Dq(PathT),tex,"dvipdfmx")+" "+Dqq(texmainfile+".dvi"); //190414
     println(SCEOUTPUT,tmp); 
-    tmp="rm "+texmainfile+".dvi";
+    tmp="rm "+Dqq(texmainfile+".dvi"); //190414
     println(SCEOUTPUT,tmp);
   );
   if(tex=="xelatex", 
     tmp="export PATH="+path+":${PATH}";
     println(SCEOUTPUT,tmp); 
-    tmp="xelatex"+" "+texmainfile+".tex";
+    tmp="xelatex"+" "+Dqq(texmainfile+".tex"); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
-    tmp="rm "+texmainfile+".dvi";
+    tmp="rm "+Dqq(texmainfile+".dvi"); //190414
     println(SCEOUTPUT,tmp);
   );
   if(tex=="pdflatex" % tex=="pdftex",//16.11.22from 
-    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    tmp=Dqq(PathT)+" "+Dqq(texmainfile+".tex"); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
   );//16.11.22until
   if(tex=="lualatex",//16.12.16
-    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    tmp=Dqq(PathT)+" "+Dqq(texmainfile+".tex"); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
   );//16.12.16
@@ -948,9 +948,9 @@ Makeshell(texmainfile,flow):=(
     tmp=Pathpdf;
   );
   if(tmp=="preview" % tmp=="skim", // 16.09.09from,16.10.20
-   tmp="open -a "+Dq+tmp+Dq+" "+texmainfile+".pdf";
+   tmp="open -a "+Dqq(tmp)+" "+Dqq(texmainfile+".pdf"); //190414
   ,
-    tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
+    tmp=Dqq(tmp)+" "+Dqq(texmainfile+".pdf"); //190414
   );// 16.09.09until
   println(SCEOUTPUT,tmp); // 16.07.21until
   println(SCEOUTPUT,"exit 0");
@@ -1047,7 +1047,7 @@ Makebat(texmainfile,flow):=(
     );
   );
 //  tmp=replace(tmp,"\","/"); //180408
-//  println(SCEOUTPUT,"cd "+Dq+tmp+Dq); //180408
+//  println(SCEOUTPUT,"cd "+Dqq(tmp)); //180408
   tmp1=indexof(fname,"Users");//180409from
   tmp2=indexof(fname,Homehead);
   if((tmp1>0)%(tmp2>0),
@@ -1060,7 +1060,7 @@ Makebat(texmainfile,flow):=(
     fname=substring(fname,tmp_2,length(fname));
     fname="%HOMEPATH%\"+fname;
   );//180403to
-  println(SCEOUTPUT,"cd "+Dq+fname+Dq);//180409to
+  println(SCEOUTPUT,"cd "+Dqq(fname));//180409to //190414
   flg=0;
   tmp=replace(PathT,"\","/");
   forall(reverse(1..length(PathT)),
@@ -1078,37 +1078,37 @@ Makebat(texmainfile,flow):=(
   );
   if(indexof(flow,"r")>0,
     if(indexof(Dirwork,"Users")>0, //180917from
-      tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < execsrc.r";//180514
+      tmp=Dqq(PathR+"\R")+" --vanilla --slave < execsrc.r";//180514
     ,
-      tmp=Dq+PathR+"\R"+Dq+" --vanilla --slave < "+Fhead+".r"; 
+      tmp=Dqq(PathR+"\R")+" --vanilla --slave < "+Dqq(Fhead+".r");  //190414
     );  //180917to
     println(SCEOUTPUT,tmp);
   );
   if(tex=="latex" % tex=="platex" % tex=="uplatex", //17.08.13 
-    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    tmp=Dqq(PathT)+" "+Dqq(texmainfile+".tex"); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
-    tmp=replace(Dq+PathT+Dq,tex,"dvipdfmx")+" "+texmainfile+".dvi";
+    tmp=replace(Dqq(PathT),tex,"dvipdfmx")+" "+Dqq(texmainfile+".dvi"); //190414
     println(SCEOUTPUT,tmp); 
-    tmp="del "+texmainfile+".dvi";
+    tmp="del "+Dqq(texmainfile+".dvi"); //190414
     println(SCEOUTPUT,tmp);
   );
   if(tex=="xelatex", 
-    tmp="set Path = %Path%;"+Dq+path+Dq;
+    tmp="set Path = %Path%;"+Dqq(path); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
     tmp="xelatex"+" "+texmainfile+".tex";
     println(SCEOUTPUT,tmp); 
-    tmp="del "+texmainfile+".dvi";
+    tmp="del "+Dqq(texmainfile+".dvi");
     println(SCEOUTPUT,tmp);
   );
   if(tex=="pdflatex" % tex=="pdftex",//16.11.22from 
-    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    tmp=Dqq(PathT)+" "+Dqq(texmainfile+".tex");
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
   );//16.11.22until
   if(tex=="lualatex",//16.12.16
-    tmp=Dq+PathT+Dq+" "+texmainfile+".tex";
+    tmp=Dqq(PathT)+" "+Dqq(texmainfile+".tex"); //190414
     println(SCEOUTPUT,tmp); 
     if(indexof(flow,"tt")>0,println(SCEOUTPUT,tmp)); //17.10.14
   );//16.12.16
@@ -1118,7 +1118,7 @@ Makebat(texmainfile,flow):=(
   ,
     tmp=Pathpdf;
   );
-  tmp=Dq+tmp+Dq+" "+texmainfile+".pdf";
+  tmp=Dqq(tmp)+" "+Dqq(texmainfile+".pdf"); //190414
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"exit 0");
   closefile(SCEOUTPUT);
@@ -2834,7 +2834,7 @@ BBdata(fname,optionorg):=(
     if(!iswindows(),
       println(SCEOUTPUT,"#!/bin/sh");
     );
-    println(SCEOUTPUT,"cd "+Dq+path+Dq);
+    println(SCEOUTPUT,"cd "+Dqq(path)); //190414
     tmp=replace(PathT,"pdflatex","extractbb"); //16.11.22
     tmp=replace(tmp,"pdftex","extractbb");  //16.11.22
     tmp=replace(tmp,"xelatex","extractbb"); 

@@ -30,7 +30,7 @@ Ketinit3d(subflg,position):=(
 //help:Ketinit3d();
 //help:Ketinit3d(0);
   regional(ctr,tmp,tmp1,tmp2,tmp3,tmp4,xPos,yTh,yPh);
-  BezierNumber3=1;   //15.02.28
+  BezierNumber3=1;   //15.02.28 //  no ketjs on 
   if(!islist(BZLIST3),
     BZLIST3=[]; //15.02.28
   ,
@@ -46,7 +46,8 @@ Ketinit3d(subflg,position):=(
     );
     BZLIST3=tmp2;
   );
-  SUBSCR=subflg;
+  SUBSCR=subflg;  // no ketjs off
+  // SUBSCR=0 // only ketjs
   Setwindow("Msg=no");
   if(length(position)>2,
     xPos=position_1;
@@ -59,13 +60,13 @@ Ketinit3d(subflg,position):=(
   );
 //  THETA=60*pi/180;
 //  PHI=30*pi/180;
-  FocusPoint=[0,0,0];
-  EyePoint=[5,5,5];
-  Listplot("th",[[xPos,yTh],[xPos+9,yTh]],["notex","linecolor->[0,1,0]","Msg=no"]);
-  Listplot("ph",[[xPos,yPh],[xPos+9,yPh]],["notex","linecolor->[0,1,0]","Msg=no"]);
+  FocusPoint=[0,0,0]; // no ketjs on
+  EyePoint=[5,5,5];  // no ketjs off
+//  Listplot("th",[[xPos,yTh],[xPos+9,yTh]],["notex","linecolor->[0,1,0]","Msg=no"]);
+//  Listplot("ph",[[xPos,yPh],[xPos+9,yPh]],["notex","linecolor->[0,1,0]","Msg=no"]);
      //16.02.10
-  PutonCurve("TH",sgth,[xPos,xPos+9,"Msg=no"]);
-  PutonCurve("FI",sgph,[xPos,xPos+9,"Msg=no"]);
+//  PutonCurve("TH","sgth",[xPos,xPos+9,"Msg=no"]);
+//  PutonCurve("FI","sgph",[xPos,xPos+9,"Msg=no"]);
   THETA=(TH.x-xPos)*20*pi/180;
   PHI=(FI.x-xPos)*40*pi/180;
 //  Defvar("THETA",THETA); // 16.06.20
@@ -73,7 +74,7 @@ Ketinit3d(subflg,position):=(
   drawtext([xPos-0.8,yTh-0.1],Sprintf((TH.x-xPos)*20,2),align->"right"); //17.05.02
   drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right"); //17.05.02
   tmp="Setangle("+text((TH.x-xPos)*20)+","+text((FI.x-xPos)*40)+")";
-  GLIST=append(GLIST,tmp);
+  GLIST=append(GLIST,tmp); // no ketjs
   Addax(0);
   TSIZE=10;
   TSIZEZ=10;
@@ -89,21 +90,21 @@ Start3d(ptexception):=(
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
   PTEXCEPTION=["NE","SW"];
-  Setfiles(Namecdy); //180608
-  ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]];
+  Setfiles(Namecdy); //180608 // no ketjs
+  ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]]; // no ketjs on
   FuncListC=[];
   CommandListC=[]; //180531
   CutFunList=[];//180601
   EraseList=[];//180601
-  ADDPACK=[]; //180606
+  ADDPACK=[]; //180606  // no ketjs off
   GCLIST=[];
-  GLIST=[];
+  GLIST=[];   // no ketjs on
   FUNLIST=[];
   COM0thlist=[];
   COM1stlist=[];
-  COM2ndlist=[];
+  COM2ndlist=[]; // no ketjs off
   SEG3dlist=[];
-  OutFileList=[];
+  OutFileList=[];  // no ketjs on
   FigPdfList=[];  // 16.04.08
   ErrFlag=0;
   OBJCMD=[]; // 16.11.29from
@@ -116,7 +117,7 @@ Start3d(ptexception):=(
   Fnametex=Fhead+".tex";  // 15.04.06
   FnameR=Fhead+".r";
   FnameRbody=Fhead+"body.r";
-  Fnameout=Fhead+".txt";
+  Fnameout=Fhead+".txt"; // no ketjs off
   Setwindow("Msg=no"); // 16.06.20from
   tmp=round(4*SW.y)/4;
   xPos=-5; yTh=tmp-0.5; yPh=tmp-1;
@@ -130,7 +131,7 @@ Start3d(ptexception):=(
   GLIST=append(GLIST,tmp); //no ketjs off
   THETA=(TH.x-xPos)*20*pi/180;
   PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until
-  if(isselected(TH) % isselected(FI), // 17.05.18from
+  if(isselected(TH) % isselected(FI), // 17.05.18from // no ketjs on
     if(length(Ch)>0,
       ChNum=Ch_(length(Ch));
       if(ChNum==0, ChNum=1);
@@ -148,18 +149,18 @@ Start3d(ptexception):=(
       [xmn,ymn],[xMx,ymn]],color->[1,1,1]);
     connect([[NE.x-SW.x,yMx],[NE.x-SW.x,ymn]],
       color->[0.5,0.5,0.5]);
-  );
+  ); // no ketjs off
  // for Presentation //17.07.01from //no ketjs on
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow"; //17.03.02 regional debugged
   SlideColorList=[letterc,boxc,boxc,boxc,shadowc,shadowc,6,1.3,
                 letterc,mboxc,mboxc,mboxc,62,2,letterc];
-  ThinDense=0.1; //17.07.01to //no ketjs off
+  ThinDense=0.1; //17.07.01to
   tmp=ptexception; //181106
-  if(!islist(tmp),tmp=[tmp]);  //190209
-  PTEXCEPTION=concat(PTEXCEPTION,tmp); //190209
+  if(!islist(tmp),tmp=[tmp]);  //190209 //no ketjs off
+  PTEXCEPTION=concat(PTEXCEPTION,tmp); //190209 
 //  if(!islist(tmp),PTEXCEPTION=[tmp],PTEXCEPTION=tmp);
-  Ptseg3data(PTEXCEPTION);  //16.08.23
+  Ptseg3data(PTEXCEPTION);  //16.08.23  //no ketjs
 //  PTEXCEPTION=ptexception; //180916 //190209[del]
 );
 ////%Start3d end////
@@ -180,7 +181,7 @@ Setangle(theta,phi):=( //16.12.24
   FI.x=phi/40+xPos;
 //  drawtext([xPos-0.8,yTh-0.1],text(theta)); //17.05.05
 //  drawtext([xPos-0.8,yPh-0.1],text(phi));
-  tmp="Setangle("
+  tmp="Setangle(" // no ketjs on
     +format(theta,5)+","+format(phi,5)+")";
   GLIST=append(GLIST,tmp);
   if(length(VLIST)==0, // 16.06.20
@@ -235,7 +236,7 @@ Setangle(theta,phi):=( //16.12.24
     tmp=tmp1+"="+textformat(tmp2,5);
     parse(tmp);
   );
-  Ptseg3data(PTEXCEPTION); //180916
+  Ptseg3data(PTEXCEPTION); //180916 // no ketjs off
 );
 ////%Setangle end////
 
@@ -417,8 +418,8 @@ Mainsubpt3d(pm,psv):=( //181027
 );
 ////%Mainsubpt3d end////
 
-////%ProjCurve start////
-ProjCurve(crv):=(
+////%Projcurve start////
+Projcurve(crv):=(
 //help:Projcurve("sl3d1");
   regional(CurveL,Curve,Eps,AnsL,Out,sp,cp,st,,ct,ii,pt,
        Xz,Yz,tmp,tmp1,tmp2);
@@ -469,7 +470,7 @@ ProjCurve(crv):=(
   );
   Out;
 );
-////%ProjCurve end////
+////%Projcurve end////
 
 ////%Projpara start////
 Projpara(ptdata):=Projpara(ptdata,[]);

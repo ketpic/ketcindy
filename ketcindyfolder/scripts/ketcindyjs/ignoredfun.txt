@@ -1,3 +1,4 @@
+Anyselected
 Changesetting
 Changework
 Cindyname
@@ -8,6 +9,7 @@ Com2ndpre
 Copyketcindyjs
 Dashline
 Definecolor
+Defvar
 Dottedline
 Drwline
 Example
@@ -23,10 +25,24 @@ Putpoint
 Readcsvsla
 RSform
 RSslash
+Setfiles
 Setketcindyjs
 Setslidebody
 Setslidehyper
 Texcom
+
+Datalist3d
+Ptseg3data
+Subgraph
+Setangle
+Mainsubpt3d
+Parasubpt
+Mkpointlist
+Workprocess
+Drawprocess
+Dependgeo
+Finddef
+Mkseg3d
 
 Ketinit
 Windispg

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190412] loaded");
+println("ketcindylibbasic2[20190414] loaded");
 
 //help:start();
 
@@ -4752,7 +4752,7 @@ Helplist(dir,files,help):=(
   setdirectory(dir);
   if(contains(files,"+"),
     tmp=remove(files,["+"]);
-    ketfiles=concat(["+basic1","+basic2","+out"],tmp);
+    ketfiles=concat(["+basic1","+basic2","+basic3","+out"],tmp); //190414
   ,
     ketfiles=files;
   );

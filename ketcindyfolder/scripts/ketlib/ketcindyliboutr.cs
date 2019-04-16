@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190411] loaded");
+println("ketcindylibout[20190415] loaded");
 
 //help:start();
 
@@ -1094,7 +1094,7 @@ CalcbyR(name,path,cmd,optionorg):=(
           tmp3=replace(tmp3,"[,","[");
           tmp3=replace(tmp3,",]","]");
         );
-        tmp=name+"="+tmp3;//180227
+        tmp=name+"="+tmp3+";";//180227//190415
         parse(tmp);
       );
     );
@@ -1538,7 +1538,7 @@ PlotdataR(name1,path,func,variable,optionorg):=(
     ReadOutData(wfile);
     Extractdata(name,options);
     tmp=parse(name);
-    tmp1=name+"="+textformat(tmp,5);
+    tmp1=name+"="+textformat(tmp,5)+";";
     parse(tmp1);
     tmp2=apply(tmp,Lcrd(#));
     tmp2;
@@ -1890,7 +1890,7 @@ Histplot(nm,dataorg,optionorg):=(
 //    tmp=load(file);
 //    tmp=replace(tmp,"/","");
 //    tmp=tokenize(tmp,",");
-//	tmp=name+"="+textformat(tmp,5);
+//	tmp=name+"="+textformat(tmp,5)+";";
 //  parse(tmp);
     hp=parse(name);
     tmp1=(length(hp)-1)/3+1;
@@ -1916,7 +1916,7 @@ Histplot(nm,dataorg,optionorg):=(
     );
     pstr=substring(pstr,0,length(pstr)-1)+"]";
     println("generate totally "+name); 
-    tmp=name+"="+pstr;
+    tmp=name+"="+pstr+";"; //190415
     parse(tmp);
     [bdata,cdata];
   );
@@ -1968,7 +1968,7 @@ Scatterplot(nm,file,optionorg,optionsreg):=(
   ,
     tmp=file;
   );
-  parse("rc"+nm+"="+tmp); //181013to
+  parse("rc"+nm+"="+tmp+";"); //181013to //190415
   Pointdata(name,parse("rc"+nm),options);
   tmp=parse("rc"+nm);
   dtx=apply(tmp,#_1);
@@ -2281,7 +2281,7 @@ PlotdataS(nm,fun,variable,optionorg):=(
     ReadOutData(fname);  
     Extractdata(name,options);
     tmp=parse(name);
-    tmp1=name+"="+textformat(tmp,5);
+    tmp1=name+"="+textformat(tmp,5)+";"; //190415
     parse(tmp1);
 //    Addgraph(name);  // 16.04.04
     tmp2=apply(tmp,Lcrd(#));
@@ -2682,12 +2682,12 @@ CalcbyA(name,cmd,optionorg):=(
           tmp=Indexof(tmp1,"/start/,"); // 16.05.18from
           tmp1="["+Dq+substring(tmp1,tmp+7,length(tmp1)-1)+"]";
             // 16.05.18until
-//		  tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
+//		  tmp1=substring(tmp1,0,length(tmp1)-1)+"];"; //190415
           parse(name+"="+tmp1);
           tmp=parse(name);
           if(length(tmp)==1,
             tmp1=substring(tmp1,1,length(tmp1)-1);
-            parse(name+"="+tmp1);
+            parse(name+"="+tmp1+";"); //190415
           );
           flg=1;
           tmp2=#*WaitUnit/1000;
@@ -2825,7 +2825,7 @@ Asirfun(name,fun,argL,optionorg):=(
     );
     out=out2;
     tmp=apply(out,Dq+#+Dq);
-    parse(nm+"="+tmp);
+    parse(nm+"="+tmp+";"); //190415
   );
   if(ErrFlag==0,
     if(disp==1, // 15.11.24
@@ -3197,11 +3197,11 @@ CalcbyM(name,cmd,optionorg):=(
             );
             tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
             tmp1=replace(tmp1,".d+0",""); // 15.11.23
-            parse(name+"="+tmp1);
+            parse(name+"="+tmp1+";"); //190415
             tmp=parse(name);
             if(length(tmp)==1,
               tmp1=substring(tmp1,1,length(tmp1)-1);
-              parse(name+"="+tmp1);
+              parse(name+"="+tmp1+";"); //190415
             );
             flg=1;
             tmp2=#*WaitUnit/1000;
@@ -3365,7 +3365,7 @@ Mxtex(nm,ex,optionorg):=(
     println(name+" is:");
     println(out);
   );
-  tmp=name+"="+Dq+out+Dq; //16.01.10
+  tmp=name+"="+Dq+out+Dq+";"; //16.01.10//190415
   parse(tmp);
   out;
 );
@@ -3380,7 +3380,7 @@ MxtexL(nm,exlist,options):=(
     tmp=Mxtex(nm+"n"+text(#),exlist_#,["Disp=n"]);
     out=append(out,Dq+tmp+Dq);
   );
-  tmp="tx"+nm+"="+out;
+  tmp="tx"+nm+"="+out+";"; //190415
   parse(tmp);
   println("tx"+nm+"is:");
   apply(out,println(#));
@@ -3838,7 +3838,7 @@ Mkobjcmd(nm,fd,options):=(
     );
     tmp2=append(tmp2,tmp);
   );
-  parse("oc"+nm+"="+tmp2);
+  parse("oc"+nm+"="+tmp2+";"); //190415
   println("cmd seq oc"+nm+" generated"); // 16.06.10until
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
@@ -4020,7 +4020,7 @@ Mkobjthickcmd(nm,fd,fnrm,optionorg):=(
   if(fnrm=="",
     tmp=Mkobjnrm(nm,fd,options);
     tmp1=RSform(tmp);
-    tmp="Fnrmden"+nm+"("+xst+","+yst+"):="+tmp_2;
+    tmp="Fnrmden"+nm+"("+xst+","+yst+"):="+tmp_2+";"; //190415
     parse(tmp);
   ,
     tmp1=RSform(fnrm);
@@ -4042,7 +4042,7 @@ Mkobjthickcmd(nm,fd,fnrm,optionorg):=(
     );
     tmp2=append(tmp2,tmp);
   );
-  parse("oc"+nm+"="+tmp2);
+  parse("oc"+nm+"="+tmp2+";"); //190415
   println("cmd seq oc"+nm+" generated"); // 16.06.10until
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
@@ -4115,7 +4115,7 @@ Mkobjpolycmd(nm,pd,optionorg):=(
     );
     tmp2=append(tmp2,tmp);
   );
-  parse("oc"+nm+"="+tmp2);
+  parse("oc"+nm+"="+tmp2+";"); //190415
   println("cmd seq oc"+nm+" generated"); // 16.06.10until
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
@@ -4194,7 +4194,7 @@ Mkobjplatecmd(nm,pdorg,optionorg):=( // 16.06.18
     tmp3=tmp3+tmp2;
   );
   tmp3=substring(tmp3,0,length(tmp3)-1)+"]";
-  parse("oc"+nm+"="+tmp3);
+  parse("oc"+nm+"="+tmp3+";"); //190415
   println("cmd seq oc"+nm+" generated");
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
@@ -4268,7 +4268,7 @@ Mkobjcrvcmd(nm,pstorg,options):=(
     );
     tmp2=append(tmp2,tmp);
   );
-  parse("oc"+nm+"="+tmp2);
+  parse("oc"+nm+"="+tmp2+";"); //190415
   println("cmd seq oc"+nm+" generated"); // 16.06.10until
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
@@ -4399,7 +4399,7 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
     );
     tmp2=append(tmp2,tmp);
   );
-  parse("oc"+symborg+"="+tmp2);
+  parse("oc"+symborg+"="+tmp2+";"); //190415
 //  println("cmd seq oc"+symborg+" generated"); // 16.06.10until
   OBJCMD=concat(OBJCMD,out);//16.11.29
   out;
@@ -4705,12 +4705,12 @@ CalcbyF(name,cmd,optionorg):=(
             );
           );
         );
-        tmp=name+"="+substring(tmp4,0,length(tmp4)-1)+"]";
+        tmp=name+"="+substring(tmp4,0,length(tmp4)-1)+"];"; //190415
         parse(tmp);
         tmp=parse(name);
         if(length(tmp)==1,
           tmp1=substring(tmp4,1,length(tmp3)-1);
-          parse(name+"="+tmp1);
+          parse(name+"="+tmp1+";"); //190415
         );
         flg=1;
         tmp2=#*WaitUnit/1000;
@@ -6164,7 +6164,7 @@ Crv2onsfparadataC(nm,crv2d,sfbd,fdorg,options,optionsh):=(
   forall(tmp1,
     tmp2=append(tmp2,tmpfun(#_1,#_2));
   );
-  tmp=crv3d+"="+textformat(tmp2,6);
+  tmp=crv3d+"="+textformat(tmp2,6)+";"; //190415
   parse(tmp);
   Crv3onsfparadataC(nm,crv3d,sfbd,fdorg,options,optionsh);
 );
@@ -6477,11 +6477,11 @@ Sfcutparadatacdy(nm,cutfun,fd,options):=(
     tmp=tmp+"sfc"+nm+"n"+text(#)+"3d"+",";
     tmp1=tmp1+Dqq("sfc"+nm+"n"+text(#)+"3d")+",";
   );
-  tmp=substring(tmp,0,length(tmp)-1)+"]";
+  tmp=substring(tmp,0,length(tmp)-1)+"];"; //190415
   parse(tmp);
   tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
   println("generate sfcutparadata "+tmp1);
-  tmp=name2+"="+Textformat(out2,6);
+  tmp=name2+"="+Textformat(out2,6)+";"; //190415
   parse(tmp);
   out3;
 );

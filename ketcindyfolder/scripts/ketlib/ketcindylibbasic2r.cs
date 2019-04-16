@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190414] loaded");
+println("ketcindylibbasic2[20190416] loaded");
 
 //help:start();
 
@@ -208,7 +208,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   if(!Inwindow(LLcrd(pP)),Noflg=2);//181018
   if(Noflg<3,
     tmp1=apply(list,LLcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
   );
   if(Noflg<2,
@@ -330,7 +330,7 @@ Arrowdata(nm,ptlistorg,optionsorg):=(
   );//181018to
   if(Noflg<3,
     println("generate Arrowdata "+name);
-    tmp=name+"="+Textformat([pA,pB],5);
+    tmp=name+"="+Textformat([pA,pB],5)+";";
     parse(tmp);
     if(lineflg==0, // 16.04.09 from
       tmp=pA-0.2*size/2*(pB-pA)/|pB-pA|;   // 15.06.11
@@ -444,7 +444,7 @@ Anglemark(nm,plist,options):=(
         println("generate anglemark "+name+" and "+Bpos);
       );
       tmp1=apply(Out,Pcrd(#));
-      tmp=name+"="+Textformat(tmp1,5);
+      tmp=name+"="+Textformat(tmp1,5)+";";
       parse(tmp);
       tmp=Textformat(plist,5); //no ketjs on
       tmp1=substring(tmp,1,length(tmp)-1);
@@ -531,12 +531,12 @@ Paramark(nm,plist,options):=(
     tmp1=pA+Brat*ra*(pB-pA)/|pB-pA|+Brat*ra*(pC-pA)/|pC-pA|;
     tmp="Defvar("+Dq+Bpos+"="+Textformat(tmp1,5)+Dq+");";
     parse(tmp);
-    parse(Bname);
+    parse(Bname+";") //190415;
   );
   if(Noflg<3,
     println("generate paramark "+name);
     tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1); //no ketjs on
     tmp=name+"=Paramark("+tmp1+opstr+")";
@@ -614,7 +614,7 @@ Bowdata(nm,plist,options):=(
   Num=24;
   Bname="";
   Msg="Y";  //190206
-  Tmov=0;//16.11.01from
+  Tmov=0;//161101from
   Nmov=0;
   Bmov="";
   rev=0;//16.11.01until
@@ -650,9 +650,8 @@ Bowdata(nm,plist,options):=(
   ra=Ydata_2;
   Th=(Ydata_3+Ydata_4)*0.5;
   BOWMIDDLE=[pC_1+ra*cos(Th),pC_2+ra*sin(Th)];
-  Bpos="md"+name; // 16.10.31from[moved]
-  tmp="Defvar("+Dq+Bpos+"="+Textformat(BOWMIDDLE,5)+Dq+");";
-  parse(tmp);// 16.10.31to[moved]
+  Defvar("md"+name,BOWMIDDLE); //190415
+  Bpos=Textformat(BOWMIDDLE,5); //190415
   if(length(Bname)>0,  //16.11.01from
     tmp=indexof(Bops,",");
     if(tmp>0,
@@ -676,14 +675,14 @@ Bowdata(nm,plist,options):=(
         );
       );
     );
-    Bname=Bname+Bpos;//16.11.01
+    Bname=Bname+Bpos; //190415
     if(abs(Tmov)+abs(Nmov)>0,
       tmp=Pcrd(pA)-Pcrd(pB);
       tmp1=1/Norm(tmp)*tmp;
       tmp2=[-tmp1_2,tmp1_1];
       tmp=MARKLEN*(Tmov*tmp1+Nmov*tmp2);
       tmp=LLcrd(tmp);
-      Bname=Bname+"+"+text(tmp);
+      Bname=Bname+"+"+Textformat(tmp,5);
     );
     Bname=Bname+",";
     if(indexof(Bname,"rot")>0,
@@ -692,9 +691,9 @@ Bowdata(nm,plist,options):=(
     ,
       Bname=Bname+Dq+"c"+Dq+",";
     );
-    Bname=Bname+Dq+Bops+Dq+")";
+    Bname=Bname+Dqq(Bops)+");"; //190415
     parse(Bname);
-  );//16.11.01until
+  );//161101to
   if(Cut==0,
     Th1=Ydata_3;
     Th2=Ydata_4;
@@ -730,7 +729,7 @@ Bowdata(nm,plist,options):=(
       tmp=apply(tmp2,Pcrd(#));
       tmp1=append(tmp1,tmp);
     );
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";";
     parse(tmp);
     tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1); //no ketjs on
     tmp=name+"=Bowdata("+tmp1+opstr+")";
@@ -882,7 +881,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   if(indexof(rng,"=")==0,
     rng=rng+"="+Textformat([XMIN,XMAX],6);
   );
-  deq=replace(deqorg,"‘","`"); //190206
+  deq=replace(deqorg,unicode("2018"),"`"); //190296//0416
   deq=replace(deq,"'","`"); //180527
   tmp3=indexof(deq,"=");
   tmp1=substring(deq,0,tmp3-1);
@@ -959,7 +958,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
       pdL=apply(pdL,#_(2..3));
     );
     tmp1=apply(pdL,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
   );
   if((nn>0)&(Noflg<1), //190211 //no ketjs on
@@ -1122,7 +1121,7 @@ EnclosingS(nm,plist,options):=(
   AnsL_(length(AnsL))=AnsL_1;//16.10.20
   if(Noflg<3,
     println("generate Enclosing "+name);
-    tmp=name+"="+Textformat(AnsL,5);
+    tmp=name+"="+Textformat(AnsL,5)+";";
     parse(tmp);
     tmp=name+"=Enclosing(";//16.11.07from //no ketjs on
     tmp1="list"+PaO();
@@ -1250,7 +1249,7 @@ Enclosing2(nm,plistorg,options):=(
         tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
         Gdata=replace(Gdata,"(","");
         Gdata=replace(Gdata,")","");
-        tmp=Gdata+"="+Textformat(tmp2,6);
+        tmp=Gdata+"="+Textformat(tmp2,6)+";"; //190415
         parse(tmp);
         plist_nxtno=Gdata;
         t2=Length(tmp1);
@@ -1291,7 +1290,7 @@ Enclosing2(nm,plistorg,options):=(
   );
   if(Noflg<3,
     println("generate Enclosing "+name);
-    tmp=name+"="+Textformat(AnsL,5);
+    tmp=name+"="+Textformat(AnsL,5)+";"; //190415
     parse(tmp);
     tmp=name+"=Enclosing2(";//16.11.07from
     tmp1="list"+PaO();
@@ -1656,7 +1655,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
           if(isexists(Dirwork,fname),
             mkflg=0;
             ReadOutData(fname);
-            tmp=name+"="+Textformat(parse(name),5);
+            tmp=name+"="+Textformat(parse(name),5)+";"; //190415
             parse(tmp);
           );
         );
@@ -1686,13 +1685,13 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
       );
     );
     tmp1=apply(AnsL,Textformat(#,5));
-    tmp=name+"="+tmp1;
+    tmp=name+"="+tmp1+";"; //190415
     parse(tmp);
   );
   if((Noflg<3)&(mkflg>-1),
     if(fileflg!="Y", //181102
       println("generate Hatchdata "+name);
-      tmp=name+"="+Textformat(AnsL,5);
+      tmp=name+"="+Textformat(AnsL,5)+";"; //190415
       parse(tmp);
       if(!islist(iostr),tmp1=[iostr],tmp1=iostr); //no ketjs on
       tmp="c"+PaO();
@@ -1920,7 +1919,7 @@ Shade(nm,plistorg,options):=(
           );
           tmp1=Dqq("-"+name+text(ctr));
           tmp2=Textformat(tmp2,6)+",["+Dqq("nodisp")+"]";
-          tmp=name+text(ctr)+"=Listplot("+tmp1+","+tmp2+")";
+          tmp=name+text(ctr)+"=Listplot("+tmp1+","+tmp2+");"; //190415
           parse(tmp);
           plist_jj=name+text(ctr);
           ctr=ctr+1;
@@ -2091,7 +2090,7 @@ Rotatedata(nm,plist,angle,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
@@ -2161,7 +2160,7 @@ Translatedata(nm,plist,mov,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
@@ -2253,7 +2252,7 @@ Scaledata(nm,plist,rx,ry,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1); // 180602
@@ -2339,7 +2338,7 @@ Reflectdata(nm,plist,symL,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
@@ -2948,7 +2947,7 @@ Putpoint(name,Ptinit,Pt):=(
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
     ,
-    ptstr=name+".xy="+Textformat(Pcrd(Pt),5);
+    ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
     parse(ptstr);
   );
 );
@@ -2963,7 +2962,7 @@ Putpoint(name,Ptinit,Pt):=(
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
     ,
-    ptstr=name+".xy="+Textformat(Pcrd(Pt),5);
+    ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
     parse(ptstr);
   );
 );
@@ -3067,7 +3066,7 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   if(Noflg<3,
     println("generate Bezier "+name);
     out=apply(list,Pcrd(#));
-    tmp=name+"="+Textformat(out,5);
+    tmp=name+"="+Textformat(out,5)+";"; //190415
     parse(tmp);
     tmp1=Textformat(ptlist,5); //no ketjs on
     tmp1=RSform(tmp1,2); //17.12.23
@@ -3411,7 +3410,7 @@ Bzsspline(nm,ptLorg,options):=(
     if(#<length(ptL) % cflg==1,
       pt=ptL_#;
       pt1=parse("C"+text(#-1)+"q");
-      tmp2="C"+text(#)+"p=2*pt-pt1";
+      tmp2="C"+text(#)+"p=2*pt-pt1;"; //190415
       parse(tmp2);
     );
   );
@@ -3425,7 +3424,7 @@ Bzsspline(nm,ptLorg,options):=(
   if(cflg==1,
     pt=ptL_1;
     pt1=Lcrd(parse("C"+text(length(ptL)-1)+"q")); // 16.08.16   
-    tmp1="Putpoint("+Dq+"C1p"+Dq+",2*pt-pt1)"; // 16.08.16
+    tmp1="Putpoint("+Dq+"C1p"+Dq+",2*pt-pt1);"; // 16.08.16//190415
     parse(tmp1);
   );
   ctrlist=[];
@@ -3590,13 +3589,13 @@ Putonseg(name,p1org,p2org,options):=(
     if(p_1<p1_1,parse(name+".xy="+Textformat(p1,5));p=p1);
     if(p_1>p2_1,parse(name+".xy="+Textformat(p2,5));p=p2);
     tmp=(p2_2-p1_2)/(p2_1-p1_1)*(p_1-p1_1)+p1_2;
-    parse(name+".y="+tmp);
+    parse(name+".y="+tmp+";"); //190415
   ,
     if(p1_2>p2_2,tmp=p1;p1=p2;p2=tmp);
     if(p_2<p1_2,parse(name+".xy="+Textformat(p1,5));p=p1);
     if(p_2>p2_2,parse(name+".xy="+Textformat(p2,5));p=p2);
     tmp=(p2_1-p1_1)/(p2_2-p1_2)*(p_2-p1_2)+p1_1;
-    parse(name+".x="+tmp);
+    parse(name+".x="+tmp+";"); //190415
   ); //190120to
 );
 ////%Putonseg end////
@@ -3628,7 +3627,7 @@ Putoncurve(pn,crvorg,options):=(
       p2=crv_1;
       Putonseg(pn,p1,p2);
     ,
-      parse(pn+".xy="+Textformat(Ptend(crv),5));
+      parse(pn+".xy="+Textformat(Ptend(crv),5)+";"); //190415
     );
   );
 );
@@ -3827,7 +3826,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     rlist=append(rlist,[0,tmp1]);
   );
   Tb=[clist,rlist];
-  tmp=name+"="+Tb;
+  tmp=name+"="+Tb+";"; //190415
   parse(tmp);
   forall(0..m,
     tmp1="c"+text(#)+"r0";
@@ -3921,7 +3920,7 @@ Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
     rlist=append(rlist,[0,tmp1]);
   );
   Tb=[clist,rlist];
-  tmp=name+"="+Tb;
+  tmp=name+"="+Tb+";"; //190415
   parse(tmp);
   forall(0..m,
     tmp="C"+text(#);
@@ -3957,7 +3956,7 @@ Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
     );
   );
   Tb=[clist,rlist];
-  tmp=name+"="+Tb;
+  tmp=name+"="+Tb+";"; //190415
   parse(tmp);
   forall(0..m,
     tmp1="c"+text(#)+"r0";

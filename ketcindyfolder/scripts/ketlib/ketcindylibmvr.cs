@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20190404) loaded");
+println("ketcindymv(20190415) loaded");
 
 //help:start();
 
@@ -123,7 +123,7 @@ Parafolder(fstr,sL,optionorg):=(
   tmp1=substring(fstr,tmp,length(fstr));
   tmp=indexof(tmp1,")");
   tmp1=substring(tmp1,0,tmp-1);
-  parse("Movieframe("+tmp1+"):="+fstr);
+  parse("Movieframe("+tmp1+"):="+fstr+";"); //190415
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
@@ -255,7 +255,7 @@ Parafolder(fstr,sL,optionorg):=(
       println("Parafolder finished");
     );
     if(length(after)>0,
-      parse(after);
+      parse(after+";"); //190415
     );
   );
   if(ErrFlag!=-1,//180617from

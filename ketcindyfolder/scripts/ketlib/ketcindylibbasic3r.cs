@@ -128,7 +128,7 @@ Writebezier(head,seL):=(
     tmp1=replace(tmp1,"]",".xy]");
     tmp1=replace(tmp1,".xy,[",",[");
     tmp1=replace(tmp1,"].xy","]");
-    tmp1=replace(tmp1,name,head+text(#));
+    tmp1=replace(tmp1,name,head+text(#))+";"; //190415
     parse(tmp1);
     tmp=parse(head+text(#)+"_1");
     dt=concat(dt,[head+text(#)+"k",tmp]);    
@@ -261,7 +261,7 @@ Rform(list):=(
 Defvar(varstr):=(
   regional(name,value,tmp,tmp1);
   if(isstring(varstr),
-    parse(varstr);
+    parse(varstr+";");
     tmp=indexof(varstr,"=");
     name=substring(varstr,0,tmp-1);
     value=substring(varstr,tmp,length(varstr));
@@ -298,7 +298,7 @@ Defvar(name,value):=(
   ,
     tmp1=format(value,5);
   );
-  tmp=name+"="+tmp1; // 15.02.06
+  tmp=name+"="+tmp1+";"; // 15.02.06//190415
   parse(tmp);
   VLIST=select(VLIST,#_1!=name); // 15.02.08
   VLIST=prepend([name,value],VLIST);
@@ -747,7 +747,7 @@ ReadOutData(pathorg,filenameorg,optionsorg):=(
         ,
           tmp="[]";
         );
-        parse(varname+"="+tmp);
+        parse(varname+"="+tmp+";"); //190415
         outdt=append(outdt,ptL);
         ptL=[];
         varname=cmd;
@@ -769,7 +769,7 @@ ReadOutData(pathorg,filenameorg,optionsorg):=(
   ,
     tmp="[]";
   );
-  parse(varname+"="+tmp);
+  parse(varname+"="+tmp+";"); //190415
   outdt=append(outdt,ptL);
   if(path=="",tmp=filename,tmp=path+filename); //16.03.07
   GOUTLIST=append(GOUTLIST,[tmp,varL]);
@@ -2965,7 +2965,7 @@ Setketcindyjs(list):=(
   tmp=tmp_(length(tmp));
   tmp=substring(tmp,1,length(tmp));
   tmp=replace(tmp,"->","=");
-  parse(tmp);
+  parse(tmp+";"); //190415
   tmp=round(255*color);
   if(color!=[0,0,0],eqL=append(eqL,"Color="+text(tmp)));
   KETJSOP=eqL;

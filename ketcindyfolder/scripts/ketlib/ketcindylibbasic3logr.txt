@@ -1,6 +1,7 @@
 // 20190415
 //    Makeshell debugged ( Dq -> Dqq )
 //    Makebat debugged ( tex,path  (\) )
+//    parse( ..=  ) changed ( ; added )
 // 20190414
 //    Makeshell Makebat changed  ( Dqq(fname )
 // 20190412

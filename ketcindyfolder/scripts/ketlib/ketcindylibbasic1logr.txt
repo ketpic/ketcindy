@@ -1,3 +1,7 @@
+// 20190416
+//    Ketinit changed  (zenkaku space)
+// 20190415
+//    parse( ..=  ) changed ( ; added )
 // 20190412
 //    Some functions moved to basic2
 // 20190409

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.7");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190412] loaded");
+println("ketcindylibbasic1[20190416] loaded");
 
 //help:start();
 
@@ -69,17 +69,17 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   YaCut=0; YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
   KCOLOR=[0,0,0];
-  GLIST=[];
+  GLIST=[]; // no ketjs
   GCLIST=[];
-//  GDATALIST=[]; //no ketjs
+//  GDATALIST=[]; //no ketjs on
   GOUTLIST=[];
-  POUTLIST=[];
+  POUTLIST=[]; // no ketjs off
   VLIST=[];
   FUNLIST=[];
   LETTERlist=[];
-  COM0thlist=[];
+  COM0thlist=[]; // no ketjs on
   COM1stlist=[];
-  COM2ndlist=[];
+  COM2ndlist=[]; // no ketjs off
  // COM2ndlistb=[]; //180612
   ADDAXES="1";
   AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
@@ -106,7 +106,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
     Fhead=replace(Fhead,".cdy","");
     Slidename=Fhead; //17.10.24
   );//17.11.12
-  Dircdy=replace(Dircdy,"%E3%80%80","　");//180405
+  Dircdy=replace(Dircdy,"%E3%80%80",unicode("3000"));//190416
   Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
@@ -212,7 +212,7 @@ Fillblack(str):=(
   tmp=select(tmp1,#.name=="Text0");
   if(length(tmp)==0,
     forall(store,
-      tmp=parse(#_1);
+      tmp=parse(#_1+";");
       tmp.fillcolor=[0,0,0];
     );
   ,
@@ -3557,7 +3557,7 @@ AddGraph(nm,pltdata,options):=(
   pdata=tmp1;
   if(Noflg<3,
     println("generate addgraph "+name);
-    tmp=name+"="+Textformat(pdata,5);
+    tmp=name+"="+Textformat(pdata,5)+";"; //190415
     parse(tmp);
     if(isstring(pltdata), // 16.04.04 from
       if(indexof(pltdata,"]")>0,
@@ -3701,7 +3701,7 @@ Joincrvs(nm,plotstrL,options):=(
   if(Noflg<3,
     println("generate joincurve "+name);
     tmp1=apply(PtL,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";";
     parse(tmp);
     tmp1="";
     forall(plotstrL,
@@ -3791,7 +3791,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   if(Noflg<3,
     println("generate partcrv "+name);
     tmp1=apply(Ans,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
 //    GLIST=append(GLIST,  // 16.04.03
     if(DepthFlg==0,
@@ -3906,9 +3906,9 @@ Pointdata(nm,listorg,options):=(
   if(length(tmp)==1, //190301from
     tmp1=Textformat(tmp_1,5);
   ); //190301to
-  tmp=name+"="+tmp1;
+  tmp=name+"="+tmp1+";"; //190415
   parse(tmp);
-  tmp=nameL+"="+tmp3;
+  tmp=nameL+"="+tmp3+";"; //190415
   parse(tmp); //190126to
   if(Noflg<3,
     if(isstring(listorg), //17.10.23
@@ -4021,7 +4021,7 @@ Listplot(nm,list,options):=(
       ptlist_1=ptlist_1+tmp*cutend_1;
       ptlist_(length(ptlist))=ptlist_(length(ptlist))-tmp*cutend_2;
     );//180719to
-    tmp=name+"="+Textformat(ptlist,5);
+    tmp=name+"="+Textformat(ptlist,5)+";"; //190415
     parse(tmp);
     GLIST=append(GLIST,name+"=Listplot("+Textformat(ptlist,5)+")"); // 180719 //no ketjs
   );
@@ -4092,7 +4092,7 @@ Lineplot(nm,list,optionorg):=(
       println("generate Lineplot "+name);
     );
     tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     GLIST=append(GLIST,name+"=Lineplot("+Textformat(list,5)+opstr+")"); //no ketjs
   );
@@ -4293,7 +4293,7 @@ Plotdata(name1,func,variable,options):=(
           tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
         );
       );
-      tmp=name+"="+Textformat(tmp1,5);
+      tmp=name+"="+Textformat(tmp1,5)+";";
       parse(tmp);
       tmp1=replace(func,LFmark,""); //no ketjs on
       tmp2=replace(variable,LFmark,"");
@@ -4469,7 +4469,7 @@ Paramplot(nm,funstr,variable,options):=(
           tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
         );
       );
-      tmp=name+"="+Textformat(tmp1,5);
+      tmp=name+"="+Textformat(tmp1,5)+";";
       parse(tmp);
       tmp1=replace(funstr,LFmark,"");  // 15.11.13 //no ketjs on
       tmp2=replace(variable,LFmark,"");
@@ -4644,7 +4644,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
   tmp=indexof(yrng,"=");
   vary=substring(yrng,0,tmp-1);
   rngy=parse(substring(yrng,tmp,length(yrng)));
-  tmp="Impfun("+varx+","+vary+"):="+Fn;
+  tmp="Impfun("+varx+","+vary+"):="+Fn+";";
   parse(tmp);
   dx=(rngx_2-rngx_1)/Mdv;
   dy=(rngy_2-rngy_1)/Ndv;
@@ -4710,7 +4710,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
         tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
       );
     );
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs
@@ -4806,7 +4806,7 @@ Circledata(nm,cenrad,options):=(
     ,
       Ctr=1/2*(pA+pB)+1/2*d2/d1*tmp1;
       ra=|pA-Ctr|;
-      tmp=name+"center="+Ctr;
+      tmp=name+"center="+Ctr+";";
       parse(tmp);
       Defvar(name+"center",Ctr);
     );
@@ -4825,7 +4825,7 @@ Circledata(nm,cenrad,options):=(
       println("generate Circledata "+name);
     );
     tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     if(length(cenrad)==2, //no ketjs on
       tmp=name+"=Circledata("+cenrad+opstr+")";
@@ -4927,7 +4927,7 @@ Framedata(nm,list,optionsorg):=(
     if(Noflg<3,
       println("generate Framedata "+name);
       tmp1=apply(Out,Pcrd(#));
-      tmp=name+"="+Textformat(tmp1,5);
+      tmp=name+"="+Textformat(tmp1,5)+";"; //190415
       parse(tmp);
       GLIST=append(GLIST,name+"=Framedata("+pA+","+dx+","+dy+")"); //no ketjs
     );
@@ -4963,7 +4963,7 @@ Framedata(nm,cent,dx,dy,options):=(
   if(Noflg<3,
     println("generate Framedata "+name);
     tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     GLIST=append(GLIST,name+"=Framedata("+cent.xy+","+dx+","+dy+")"); //no ketjs
   );
@@ -5043,7 +5043,7 @@ Ovaldata(nm,Pdata,options):=(
   if(Noflg<3,
     println("generate Ovaldata "+name);
     tmp1=apply(Graph,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     GLIST=append(GLIST, //no ketjs
       name+"=Ovaldata("+Ctr+","+Dx+","+Dy+opstr+")");//16.01.30 //no ketjs
@@ -5062,7 +5062,7 @@ Ovaldata(nm,Pdata,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
     tmp1=apply(Graph,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5);
+    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
     tmp=Textformat(Ctr,5)+","+Textformat(Dx,5)+","+Textformat(Dy,5);
   );

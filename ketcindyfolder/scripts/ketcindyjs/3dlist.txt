@@ -24,7 +24,7 @@ Spacecurve,3d,734,900,Divoptions,Toupper,tmpfn,textformat,Assign,Projpara,Com2nd
 Partcrv3d,3d,904,940,parapt,partcrv,Xyzcoord,Spaceline
 Joincrvs3d(,3d,944,1039,Joincrvs3d,Divoptions,Norm,textformat,Joincrvs,Projpara,Com2nd,Setcolor,GetLinestyle,Texcom,Subgraph
 Xyzax3data,3d,1043,1147,Divoptions,Toupper,Xyzaxparaname,textformat,Projpara,Com2nd,Setcolor,GetLinestyle,Texcom,Arrowhead,Letter,Parapt,Subgraph
-Xyzax3paraname,3d,1151,1193,Xyzaxparaname,Strsplit,Dqq,Parapt,Expr
+Xyzaxparaname,3d,1151,1193,Strsplit,Dqq,Parapt,Expr
 Datalist3d,3d,1197,1205
 Datalist2d,3d,1209,1217
 Embed,3d,1221,1309,Measuredepth,Divoptions,Assign,textformat,list,Projpara,Com2nd,Setcolor,GetLinestyle,Texcom,Subgraph

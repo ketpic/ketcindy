@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190416] loaded");
+println("ketcindylibbasic2[20190417] loaded");
 
 //help:start();
 
@@ -266,8 +266,13 @@ Arrowdata(nm,ptlistorg,optionsorg):=(
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,ptlist);
   name="ar"+nm;
   scaley=SCALEY; //190412
-  ptlist=apply(ptlistorg,[#_1,scaley*#_2]); //190412
-  Setscaling(1);
+  Setscaling(1); 
+  ptlist=[];
+  forall(ptlistorg,
+    if(ispoint(#),tmp=[#.x, scaley*#.y], tmp=[#_1,scaley*#_2]);
+    ptlist=append(ptlist,tmp);
+  );
+//  ptlist=apply(ptlistorg,[#_1,scaley*#_2]); //190412
   options=optionsorg;
   tmp=select(options,isstring(#)); //181214from
   tmp1=select(tmp,contains(["dr","da","do","id"],substring(#,0,2)));
@@ -4882,129 +4887,6 @@ Example(exorg,suborg):=(
 );
 ////%Example end////
 
-////%Findfun start////
-Findfun(name,lineorg):=(
-  regional(line,sep,pL,jj,kk,flg,rmv,out,tmp,tmp1,tmp2);
-  line=Removespace(lineorg);
-  rmv=[name,"regional","forall","if","text","curkernel","append","concat"];
-  rmv=concat(rmv,["append","apply","allelements","indexof"]);
-  rmv=concat(rmv,["substring","select","isstring","length"]);
-  rmv=concat(rmv,["round","unicode","openfile","closefile","println","replace"]);
-  rmv=concat(rmv,["setdirectory","parse","tokenize","import","load","ispoint"]);
-  rmv=concat(rmv,["isreal","layer","autoclearlayer","drawpoly","allcircles"]);
-  rmv=concat(rmv,["floor","flatten","prepend","islist","print","mod","abs","sum"]);
-  rmv=concat(rmv,["cos","sin","tan","arccos","arcsin","arctan","sqrt","reverse","re"]);
-  rmv=concat(rmv,["sort","contains","max","min","allpoints","isselected","common"]);
-  rmv=concat(rmv,["inspect","iscircle","alllines","repeat","remove","format"]);
-  rmv=concat(rmv,["ceil","while","dist","det","exp","err","arctan2","fillpoly"]);
-  rmv=concat(rmv,["drawtext","mouse","allsegments","createpoint","create"]);
-  rmv=concat(rmv,["gsave","connect","draw","grestore","wait"]);
-  
-//  rmv=concat(rmv,["d","list","c","funN","funP","function","for","return"]);  // in string (for R)
-//  rmv=concat(rmv,["gsub","cat"]);  // in string (for R)
-//  rmv=concat(rmv,["options"]); // written for Windows
-//  rmv=concat(rmv,["isexists"]); // java functions
-  
-  sep=[""," ",",","=","(","+","-","*","/","^","_","[",".","!","&","%",Dq,";",">","<",unicode("0009")];
-  out=[];
-  if(substring(line,0,2)!="//",
-    pL=Indexall(line,"(");
-    forall(pL,jj,
-      flg=0;
-      if(contains(pL,jj-1), flg=1);
-      forall(reverse(1..(jj-1)),
-        if(flg==0,
-          if(#==1,
-            tmp=substring(line,0,1);
-            if(contains(sep,tmp),
-             tmp=substring(line,1,jj-1);
-            ,
-             tmp=substring(line,0,jj-1);
-            );
-            flg=1;
-          );
-        );
-        if(flg==0,
-          tmp=substring(line,#-1,#);
-          if(contains(sep,tmp),
-            tmp=substring(line,#,jj-1);
-            if(indexof(substring(line,0,#-1),"//")==0,
-              flg=1;
-            );
-          );
-        );
-      );
-      if((flg==1)&(length(tmp)>0),
-        out=append(out,tmp);
-      );
-    );
-  );
-  out=remove(out,rmv);
-  tmp=out;
-  out=[];
-  forall(tmp,
-    if(!contains(out,#),out=append(out,#));
-  );
-  out;
-);
-////%Findfun end////
-
-////%Extractfun start////
-Extractfun(strL):=(
-  regional(nL,str,str2,start,sep,out,tmp,tmp1,tmp2);
-  out=[];
-  forall(strL,str,
-    nL=Indexall(str,Dq);
-    str2="";
-    start=0;
-    forall(1..(length(nL)/2),
-      tmp1=nL_(2*#-1);
-      str2=str2+substring(str,start,tmp1-1);
-      start=nL_(2*#);
-    );
-    str2=str2+substring(str,start,length(str));
-    fL=Findfun("csdraw",str2);
-    out=remove(out,fL);
-    out=concat(out,fL);
-  );
-);
-////%Extractfun end////
-
-//DL1=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
-//DL2=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
-//DL=concat(DL1,DL2);
-//Out=[];
-
-////%Extractall start////
-Extractall(name):=(
-  regional(fL,jj,tmp,tmp1,tmp2,tmp3);
-  fL=apply(Out,#_1);
-  tmp1=select(DL,#_1==name);
-  if(length(tmp1)>0,
-    tmp1=tmp1_1;
-    if(!contains(fL,tmp1),
-      Out=append(Out,tmp1);
-      fL=append(fL,tmp1_1);
-      if(length(tmp1)>=5,
-        forall(5..(length(tmp1)),jj,
-          tmp=tmp1_jj;
-          if(!contains(fL,tmp),
-            Extractall(tmp);
-          );
-        );
-      );
-    );
-  );
-  tmp1=Out;
-  Out=[];
-  forall(1..(length(tmp1)),
-    if(!contains(Out,tmp1_#),
-      Out=append(Out,tmp1_#);
-    );
-  );
-  Out;
-);
-////%Extractall end////
 
 //help:end();
 

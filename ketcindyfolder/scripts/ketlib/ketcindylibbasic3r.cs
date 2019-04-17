@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190415] loaded");
+println("ketcindylibbasic3[20190417] loaded");
 
 //help:start();
 
@@ -2973,16 +2973,157 @@ Setketcindyjs(list):=(
 );
 ////%Setketcindyjs end////
 
+////%Findfun start////
+Findfun(name,lineorg):=(
+  regional(line,sep,pL,jj,kk,flg,rmv,out,tmp,tmp1,tmp2);
+  line=Removespace(lineorg);
+  rmv=[name,"regional","forall","if","text","curkernel","append","concat"];
+  rmv=concat(rmv,["append","apply","allelements","indexof"]);
+  rmv=concat(rmv,["substring","select","isstring","length"]);
+  rmv=concat(rmv,["round","unicode","openfile","closefile","println","replace"]);
+  rmv=concat(rmv,["setdirectory","parse","tokenize","import","load","ispoint"]);
+  rmv=concat(rmv,["isreal","layer","autoclearlayer","drawpoly","allcircles"]);
+  rmv=concat(rmv,["floor","flatten","prepend","islist","print","mod","abs","sum"]);
+  rmv=concat(rmv,["cos","sin","tan","arccos","arcsin","arctan","sqrt","reverse","re"]);
+  rmv=concat(rmv,["sort","contains","max","min","allpoints","isselected","common"]);
+  rmv=concat(rmv,["inspect","iscircle","alllines","repeat","remove","format"]);
+  rmv=concat(rmv,["ceil","while","dist","det","exp","err","arctan2","fillpoly"]);
+  rmv=concat(rmv,["drawtext","mouse","allsegments","createpoint","create"]);
+  rmv=concat(rmv,["gsave","connect","draw","grestore","wait"]);
+  
+//  rmv=concat(rmv,["d","list","c","funN","funP","function","for","return"]);  // in string (for R)
+//  rmv=concat(rmv,["gsub","cat"]);  // in string (for R)
+//  rmv=concat(rmv,["options"]); // written for Windows
+//  rmv=concat(rmv,["isexists"]); // java functions
+  
+  sep=[""," ",",","=","(","+","-","*","/","^","_","[",".","!","&","%",Dq,";",">","<",unicode("0009")];
+  out=[];
+  if(substring(line,0,2)!="//",
+    pL=Indexall(line,"(");
+    forall(pL,jj,
+      flg=0;
+      if(contains(pL,jj-1), flg=1);
+      forall(reverse(1..(jj-1)),
+        if(flg==0,
+          if(#==1,
+            tmp=substring(line,0,1);
+            if(contains(sep,tmp),
+             tmp=substring(line,1,jj-1);
+            ,
+             tmp=substring(line,0,jj-1);
+            );
+            flg=1;
+          );
+        );
+        if(flg==0,
+          tmp=substring(line,#-1,#);
+          if(contains(sep,tmp),
+            tmp=substring(line,#,jj-1);
+            if(indexof(substring(line,0,#-1),"//")==0,
+              flg=1;
+            );
+          );
+        );
+      );
+      if((flg==1)&(length(tmp)>0),
+        out=append(out,tmp);
+      );
+    );
+  );
+  out=remove(out,rmv);
+  tmp=out;
+  out=[];
+  forall(tmp,
+    if(!contains(out,#),out=append(out,#));
+  );
+  out;
+);
+////%Findfun end////
+
+////%Extractfun start////
+Extractfun(strL):=(
+  regional(nL,str,str2,start,sep,out,tmp,tmp1,tmp2);
+  out=[];
+  forall(strL,str,
+    nL=Indexall(str,Dq);
+    str2="";
+    start=0;
+    forall(1..(length(nL)/2),
+      tmp1=nL_(2*#-1);
+      str2=str2+substring(str,start,tmp1-1);
+      start=nL_(2*#);
+    );
+    str2=str2+substring(str,start,length(str));
+    fL=Findfun("csdraw",str2);
+    out=remove(out,fL);
+    out=concat(out,fL);
+  );
+);
+////%Extractfun end////
+
+//DL1=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic1list.txt");
+//DL2=Readcsv(Dirhead+pathsep()+"ketcindyjs","basic2list.txt");
+//DL=concat(DL1,DL2);
+//Out=[];
+
+////%Extractall start////
+Extractall(name):=(
+  regional(fL,jj,tmp,tmp1,tmp2,tmp3,flg);
+  fL=apply(Out,#_1);
+  tmp1=select(DL,#_1==name);
+  if(length(tmp1)>0,
+    tmp1=tmp1_1;
+    flg=0; //190417from
+    forall(IgnoreList,#,
+      if(flg==0,
+        tmp2=#; tmp3=length(tmp2);
+        tmp=indexof(tmp2,"*");
+        if(tmp>0,
+          tmp2=substring(#,0,tmp-1); tmp3=tmp-1;
+        );
+        if(substring(name,0,tmp3)==tmp2,
+          flg=1;
+        );
+      );
+    );
+    if(flg==0, //190417to
+      if(!contains(fL,tmp1),
+        Out=append(Out,tmp1);
+        fL=append(fL,tmp1_1);
+        if(length(tmp1)>=5,
+          forall(5..(length(tmp1)),jj,
+            tmp=tmp1_jj;
+            if(!contains(fL,tmp),
+              tmp2=Out;
+              Extractall(tmp);
+              tmp2=remove(Out,tmp2);
+            );
+          );
+        );
+      );
+    );  //190416
+  );
+  tmp1=Out;
+  Out=[];
+  forall(1..(length(tmp1)),
+    if(!contains(Out,tmp1_#),
+      Out=append(Out,tmp1_#);
+    );
+  );
+  Out;
+);
+////%Extractall end////
+
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
 //help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
-//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy"]);
+//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore="]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,out,igL,DL,Out);
-  libnameL=["basic1","basic2","3d"];
+      nolabel,color,grid,out,Out,igno); //190416 DL globalized
+  libnameL=["basic1","basic2","basic3d","3d"]; //190416
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
   scale=1; //190129
@@ -2990,6 +3131,7 @@ Mkketcindyjs(options):=( //17.11.18
   color="";
   grid="";
   path=Dircdy;
+  igno=[];
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -3047,6 +3189,12 @@ Mkketcindyjs(options):=( //17.11.18
         path=tmp2;
       );
     );
+    if(tmp1=="I",  //190417from
+      if(substring(tmp2,0,1)=="[",
+        tmp2=substring(tmp2,1,length(tmp2)-1);
+        igno=tokenize(tmp2,",");
+      );
+    );  //190417to
   );
   if((webflg=="N")&(localflg=="Y"),
     if(!isexists(Dircdy,"ketcindyjs"),
@@ -3136,15 +3284,16 @@ Mkketcindyjs(options):=( //17.11.18
       );      
       DL=concat(DL,tmp1); //DL and Out are necessary for Extractall
     ); //190209to
-    Out=[];
+    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","ignoredfun.txt"); //190416from
+    tmp=apply(tmp,Removespace(#)); //190131
+    IgnoreList=select(tmp,(length(#)>0)&(substring(#,0,2)!="//")); //190131//190416to
+    IgnoreList=concat(IgnoreList,igno); //190417
+    Out=[]; // necessary for Extractall
     forall(fL,fun,
       Extractall(fun);
     );
-    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","ignoredfun.txt");
-    tmp=apply(tmp,Removespace(#)); //190131
-    igL=select(tmp,(length(#)>0)&(substring(#,0,2)!="//")); //190131
-    tmp1=select(Out,contains(igL,#_1));
-    Out=remove(Out,tmp1); USEDFUN=apply(Out,#_1); //190130
+//    tmp1=select(Out,contains(igL,#_1)); //190416
+//    Out=remove(Out,tmp1); USEDFUN=apply(Out,#_1); //190130 //190416
     tmp1=select(1..(length(htmorg)),indexof(htmorg_#,"script id=")>0);
     partL=[];
     forall(tmp1,nn,
@@ -3199,10 +3348,10 @@ Mkketcindyjs(options):=( //17.11.18
     tmp="<script id="+Dqq("csinit")+" type=";
     tmp=tmp+Dqq("text/x-cindyscript")+">";
     println(SCEOUTPUT,tmp);
-    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","commonused.txt");
-    forall(tmp,
-     println(SCEOUTPUT,#);
-    );
+//    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","commonused.txt");
+//    forall(tmp,
+//     println(SCEOUTPUT,#);
+//    );
     libL=[]; //190209from
     forall(libnameL,
       tmp=Readlines(Dirhead+"/ketlib","ketcindylib"+#+"r.cs");
@@ -3322,21 +3471,23 @@ Mkketcindyjs(options):=( //17.11.18
           tmp2=tmp1_jj;
           tmp=Indexall(tmp2,Dq); //190129from
           tmp=substring(tmp2,tmp_1,tmp_2-1);
-          if(contains(nolabel,tmp),
-            if(indexof(tmp2,"labeled: true")>0,
-              tmp2=replace(tmp2,"labeled: true","labeled: false");
+          if(indexof(tmp,"z")==0, //190416
+            if(contains(nolabel,tmp),
+              if(indexof(tmp2,"labeled: true")>0,
+                tmp2=replace(tmp2,"labeled: true","labeled: false");
+              );
             );
-          );
-          tmp=indexof(tmp2,Dqq("NE"))+indexof(tmp2,Dqq("SW")); //190405from
-          if(tmp>0, 
-            tmp2=replace(tmp2,"color: [1.0, 0.0, 0.0]","color: [1.0, 1.0, 1.0], size: 1.5");
-          ); //190405to
-          if(indexof(tmp2,"size:")==0,
-            tmp2=replace(tmp2,"}",", size: 3.0}");
-            out=append(out,tmp2); //190129
-          ,
-            out=append(out,tmp2); //190129
-          );  //190129to
+            tmp=indexof(tmp2,Dqq("NE"))+indexof(tmp2,Dqq("SW")); //190405from
+            if(tmp>0, 
+              tmp2=replace(tmp2,"color: [1.0, 0.0, 0.0]","color: [1.0, 1.0, 1.0], size: 1.5");
+            ); //190405to
+            if(indexof(tmp2,"size:")==0,
+              tmp2=replace(tmp2,"}",", size: 3.0}");
+              out=append(out,tmp2); //190129
+            ,
+              out=append(out,tmp2); //190129
+            );  //190129to
+          ); //190416
           flg=1;
         );
       );

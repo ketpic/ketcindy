@@ -13,7 +13,9 @@ Defvar
 Dottedline
 Drwline
 Example
+Fillstore
 Fontsize
+//GetLinestyle
 Help
 Helplist
 Invdashline
@@ -44,11 +46,11 @@ Dependgeo
 Finddef
 Mkseg3d
 
-Ketinit
-Windispg
-Fillstore
-Setwindow
-Drwxy
-Measuredepth
-Dashlinedata
-Textformat
+//Ketinit
+//Windispg
+//Fillstore
+//Setwindow
+//Drwxy
+//Measuredepth
+//Dashlinedata
+//Textformat

@@ -1,5 +1,8 @@
+// 20190417
+//    Arrowdata debugged  ( for geo-points )
 // 20190416
 //    Deqplot changed  ( "`" )
+//    Findfun, Extractun, Extractall move to basic3
 // 20190415
 //    parse( ..=  ) changed ( ; added )
 //    Bowdata changed (Bpos)

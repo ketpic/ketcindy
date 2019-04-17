@@ -37,4 +37,7 @@ BBdata,basic3,2739,2882,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,Sprintf,Rem
 Copyketcindyjs,basic3,2886,2947,iswindows,Dqq,kc
 Ketjsoption,basic3,2951,2952,Setketcindyjs
 Setketcindyjs,basic3,2956,2973,Divoptions
-Mkketcindyjs,basic3,2977,3408,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq,rgb
+Findfun,basic3,2977,3040,Removespace,Indexall
+Extractfun,basic3,3044,3061,Indexall,Findfun
+Extractall,basic3,3070,3114
+Mkketcindyjs,basic3,3118,3559,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq,rgb

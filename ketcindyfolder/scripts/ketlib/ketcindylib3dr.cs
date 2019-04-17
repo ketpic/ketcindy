@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190415] loaded");
+println("ketcindylib3d[20190416] loaded");
 
 //help:start();
 
@@ -183,7 +183,7 @@ Setangle(theta,phi):=( //16.12.24
 //  drawtext([xPos-0.8,yPh-0.1],text(phi));
   tmp="Setangle(" // no ketjs on
     +format(theta,5)+","+format(phi,5)+")";
-  GLIST=append(GLIST,tmp);
+  GLIST=append(GLIST,tmp); //no ketjs on
   if(length(VLIST)==0, // 16.06.20
     tmp=apply(allpoints(),text(#)); //190329
     tmp4=remove(tmp,PTEXCEPTION);  //190329
@@ -229,7 +229,7 @@ Setangle(theta,phi):=( //16.12.24
         );
       );
     );
-  );
+  ); //no ketjs off
   forall(Datalist3d(),#,
     tmp1=replace(#,"3d","2d");
     tmp2=Projpara(#,["nodata"]);
@@ -1147,7 +1147,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
 );
 ////%Xyzax3data end////
 
-////%Xyzax3paraname start////
+////%Xyzaxparaname start////
 Xyzaxparaname(Xrange,Yrange,Zrange):=
    Xyzaxparaname(Xrange,Yrange,Zrange,[]);
 Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
@@ -1191,7 +1191,7 @@ Xyzaxparaname(Xrange,Yrange,Zrange,options):=(
     Expr(ch,"c",Zname);
   );
 );
-////%Xyzax3paraname end////
+////%Xyzaxparaname end////
 
 ////%Datalist3d start////
 Datalist3d():=(

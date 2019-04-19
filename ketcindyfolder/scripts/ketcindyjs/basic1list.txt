@@ -31,7 +31,7 @@ Parlevel,basic1,656,656,Bracket
 Bracket,basic1,659,681,Indexall
 Pardiagram,basic1,685,781,Divoptions,Toupper,Bracket,Listplot,Letter,Expr
 Changework,basic1,785,843,Divoptions,Strsplit,Toupper,Indexall,isexists,Dqq,makedir,pathsep,iswindows,iskcexists,setexec
-Changestyle,basic1,847,879,Divoptions,Com2nd,Setcolor,GetLinestyle,Texcom
+Changestyle,basic1,847,879,Divoptions,Com2nd,GetLinestyle,Texcom
 Op,basic1,883,895
 Ptselected,basic1,899,913,Isptselected
 Finddef,basic1,917,936
@@ -88,12 +88,12 @@ Com1st,basic1,2783,2788
 Com2nd,basic1,2792,2797
 Com2ndpre,basic1,2801,2805
 Texcom,basic1,2809,2816,Com2nd
-Ketcindylogo,basic1,2820,2824,Com2nd,Texcom
+Ketcindylogo,basic1,2820,2824,Com2nd
 Drwline,basic1,2828,2831,Textformat,Com2nd
 Dashline,basic1,2836,2838,Com2nd
 Invdashline,basic1,2842,2844,Com2nd
 Dottedline,basic1,2848,2850,Com2nd
-SetEnglish,basic1,2854,2857,Com0th,setlanguage
+SetEnglish,basic1,2854,2857,Com0th
 Drawlinetype,basic1,2861,2882,Toupper,Drwline,Dashline,Invdashline,Dottedline
 Setunitlen,basic1,2886,2938
 Setmarklen,basic1,2942,2946,Com2nd,Textformat
@@ -108,7 +108,7 @@ Doscaling,basic1,3028,3055,Lcrd,LLcrd
 Unscaling,basic1,3059,3086,Lcrd,LLcrd
 Setpt,basic1,3090,3096,Ptsize,Com2nd
 Definecolor,basic1,3100,3108,Texcom
-Setcolor,basic1,3112,3139,Texcom,Colorcmyk2rgb,Com2nd
+Setcolor,basic1,3112,3139,Colorcmyk2rgb,Com2nd
 Colorrgb2cmyk,basic1,3143,3155
 Colorcmyk2rgb,basic1,3159,3166
 Colorrgbhsv,basic1,3170,3202
@@ -122,22 +122,22 @@ Colorcode,basic1,3350,3363,Colorrgb2cmyk,Colorcmyk2rgb,Colorrgbhsv,Colorrgbhsl,C
 Colorname2rgb,basic1,3367,3415,Colorcmyk2rgb,Assign
 GetLinestyle,basic1,3419,3485,Drwline,Dashline,Invdashline,Dottedline,Textformat,Drwpt
 Chunderscore,basic1,3489,3524,PaO
-AddGraph,basic1,3528,3628,Divoptions,Flattenlist,Pcrd,Measuredepth,PaO,Listplot,Pointdata,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
-Joincrvs,basic1,3632,3728,LLcrd,Divoptions,Numptcrv,Ptstart,Ptend,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
-Partcrv,basic1,3732,3821,Measuredepth,Divoptions,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Com2nd,Setcolor,GetLinestyle,Texcom
+AddGraph,basic1,3528,3628,Divoptions,Flattenlist,Pcrd,Measuredepth,PaO,Textformat,Com2nd,GetLinestyle,Texcom
+Joincrvs,basic1,3632,3728,LLcrd,Divoptions,Numptcrv,Ptstart,Ptend,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
+Partcrv,basic1,3732,3821,Measuredepth,Divoptions,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Com2nd,GetLinestyle,Texcom
 Opcrvs,basic1,3825,3833,Listplot
-Pointdata,basic1,3837,3959,Strsplit,Divoptions,Toupper,Measuredepth,Pcrd,Setcolor,PaO,Texcom,Textformat,Com2nd,Setpt
-Listplot,basic1,3963,4044,Divoptions,Strsplit,Toupper,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom,Lcrd
-Lineplot,basic1,4048,4131,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
-Plotdata,basic1,4135,4336,Divoptions,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
-Paramplot,basic1,4340,4512,Divoptions,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
+Pointdata,basic1,3837,3959,Strsplit,Divoptions,Toupper,Measuredepth,Pcrd,PaO,Texcom,Textformat,Com2nd
+Listplot,basic1,3963,4044,Divoptions,Strsplit,Toupper,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom,Lcrd
+Lineplot,basic1,4048,4131,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
+Plotdata,basic1,4135,4336,Divoptions,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
+Paramplot,basic1,4340,4512,Divoptions,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
 Polarplot,basic1,4516,4525,Strsplit,Paramplot
 Connectseg,basic1,4529,4591,Norm
-Implicitplot,basic1,4595,4733,Divoptions,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
-Circledata,basic1,4737,4856,Divoptions,Strsplit,Toupper,Lcrd,Defvar,Pcrd,Textformat,Lineplot,Com2nd,Setcolor,GetLinestyle,Texcom
-Framedata,basic1,4860,4985,Measuredepth,LLcrd,Toupper,Framedata2,Lcrd,Divoptions,Pcrd,Textformat,Com2nd,Setcolor,GetLinestyle,Texcom
+Implicitplot,basic1,4595,4733,Divoptions,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
+Circledata,basic1,4737,4856,Divoptions,Strsplit,Toupper,Lcrd,Defvar,Lineplot,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
+Framedata,basic1,4860,4985,Measuredepth,LLcrd,Toupper,Framedata2,Lcrd,Divoptions,Pcrd,Textformat,Com2nd,GetLinestyle,Texcom
 Framedata2,basic1,4989,4996,Lcrd,Framedata
-Ovaldata,basic1,5000,5070,Divoptions,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Com2nd,Setcolor,GetLinestyle,Texcom,Pcrd,Textformat
+Ovaldata,basic1,5000,5070,Divoptions,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Com2nd,GetLinestyle,Texcom,Pcrd,Textformat
 Segmark,basic1,5074,5134,Drawsegmark,Divoptions,Toupper,Circledata,Listplot
 Parabolaplot,basic1,5138,5178,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
 Ellipseplot,basic1,5182,5225,Lcrd,Rotatepoint,Paramplot,Rotatedata

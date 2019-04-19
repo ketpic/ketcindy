@@ -1,7 +1,7 @@
 Dispchoice,basic3,22,27
 Datetime,basic3,31,42,getdatetime
 Readcsvsla,basic3,46,94,Readplotdigdata,Divoptions,Translatedata
-Writebezier,basic3,98,140,Bezier,PaO,WriteOutData
+Writebezier,basic3,98,140,PaO,WriteOutData
 Readbezier,basic3,144,196,Divoptions,Toupper,ReadOutData,Measuredepth,Putpoint,Bezier
 RSform,basic3,200,234,PaO,Bracket,PPa
 RSslash,basic3,238,243
@@ -10,7 +10,7 @@ Defvar,basic3,261,305
 IftoR,basic3,309,348,PaO,Indexall,Bracket
 FortoR,basic3,352,381,PaO,Bracket
 Deffun,basic3,385,432,Bracket,Indexall,FortoR,IftoR,RSform,PaO
-WritetoRS,basic3,436,669,WritetoSci,Lcrd,c,Assignadd,Datetime,source,Setwindow,Textformat,Openfile,Cindyname,RSform,PPa,iswindows,Indexall,Dqq,PaO
+WritetoRS,basic3,436,669,WritetoSci,Lcrd,Datetime,Textformat,Cindyname,RSform,PPa,iswindows,Indexall,Dqq,PaO
 ReadOutData,basic3,673,786,Divoptions,Strsplit,Toupper,Pcrd,Textformat
 WriteOutData,basic3,790,852,Flattenlist,Measuredepth
 Makeshell,basic3,856,956,kc,Indexall,Dqq
@@ -37,7 +37,7 @@ BBdata,basic3,2739,2882,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,Sprintf,Rem
 Copyketcindyjs,basic3,2886,2947,iswindows,Dqq,kc
 Ketjsoption,basic3,2951,2952,Setketcindyjs
 Setketcindyjs,basic3,2956,2973,Divoptions
-Findfun,basic3,2977,3040,Removespace,Indexall
-Extractfun,basic3,3044,3061,Indexall,Findfun
-Extractall,basic3,3070,3114
-Mkketcindyjs,basic3,3118,3559,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq,rgb
+Findfun,basic3,2977,3044,Removespace,Indexall
+Extractfun,basic3,3048,3065,Indexall,Findfun
+Extractall,basic3,3074,3118
+Mkketcindyjs,basic3,3122,3563,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq

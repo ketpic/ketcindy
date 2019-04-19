@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190417] loaded");
+println("ketcindylibbasic3[20190419] loaded");
 
 //help:start();
 
@@ -3026,7 +3026,11 @@ Findfun(name,lineorg):=(
         );
       );
       if((flg==1)&(length(tmp)>0),
-        out=append(out,tmp);
+        tmp1=Indexall(line,Dq); //190419from
+        tmp1=select(tmp1,#<jj);
+        if(mod(length(tmp1),2)==0,
+          out=append(out,tmp);
+        ); //190419
       );
     );
   );

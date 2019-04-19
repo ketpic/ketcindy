@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190417] loaded");
+println("ketcindylibbasic2[20190419] loaded");
 
 //help:start();
 
@@ -266,7 +266,7 @@ Arrowdata(nm,ptlistorg,optionsorg):=(
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,ptlist);
   name="ar"+nm;
   scaley=SCALEY; //190412
-  Setscaling(1); 
+  Setscaling(1); //190412
   ptlist=[];
   forall(ptlistorg,
     if(ispoint(#),tmp=[#.x, scaley*#.y], tmp=[#_1,scaley*#_2]);
@@ -331,7 +331,9 @@ Arrowdata(nm,ptlistorg,optionsorg):=(
     if(ispoint(pA),pA=pA.xy);
     if(ispoint(pB),pB=pB.xy);
   ,
+    Setscaling(scaley); //190419
     pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
+    Setscaling(1); //190419
   );//181018to
   if(Noflg<3,
     println("generate Arrowdata "+name);
@@ -356,6 +358,113 @@ Arrowdata(nm,ptlistorg,optionsorg):=(
   [Lcrd(pA),Lcrd(pB)];
 );
 ////%Arrowdata end////
+
+////%Lightarrowdata start////
+Lightarrowdata(ptlist):=Lightarrowdata(ptlist,[]); //181110from
+Lightarrowdata(Arg1,Arg2):=(
+  regional(name);
+  if(isstring(Arg1),
+    Lightarrowdata(Arg1,Arg2,[]);
+  ,
+    name="";
+    forall(Arg1,
+      if(ispoint(#),
+        name=name+text(#);
+      );
+    );
+    Lightarrowdata(name,Arg1,Arg2);
+  );
+);  //181110from
+Lightarrowdata(nm,ptlist,optionsorg):=(
+//help:Lightarrowdata("1",[pt1,pt2]);
+//help:Lightarrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0"]);
+  regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,
+      flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,Ev,Nv,pP);
+  pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
+  scaley=SCALEY; //190412
+  Setscaling(1); 
+  ptlist=[];
+  forall(ptlistorg,
+    if(ispoint(#),tmp=[#.x, scaley*#.y], tmp=[#_1,scaley*#_2]);
+    ptlist=append(ptlist,tmp);
+  );
+  options=optionsorg;
+  tmp=select(options,isstring(#)); //181214from
+  tmp1=select(tmp,contains(["dr","da","do","id"],substring(#,0,2)));
+  if(length(tmp1)==0,options=append(options,YasenStyle)); //181214to
+  tmp=Divoptions(options);
+  Ltype=tmp_1;
+  Noflg=tmp_2;
+  eqL=tmp_5;
+  reL=tmp_6;
+  strL=tmp_7;
+  color=tmp_(length(tmp)-2);
+  opstr=tmp_(length(tmp)-1);
+  opcindy=tmp_(length(tmp));
+  tmp1=[YaSize,YaAngle,YaPosition,YaCut]; //181214from
+  forall(1..(length(reL)),
+    if(reL_#<0, reL_#=tmp1_#);
+  ); 
+  forall((length(reL)+1)..4,
+    reL=append(reL,tmp1_#);
+  );
+  size=reL_1;
+  angle=reL_2;
+  segpos=reL_3;
+  cut=reL_4;
+  lineflg=0;
+  if(contains(strL,"l")%contains(strL,"L"),
+    lineflg=1;
+  );//181018from
+  options=remove(options,strL);
+  cutend=[0,0];//180719
+  coord="P";//181018
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,2));
+    tmp2=tmp_2;
+    if(tmp1=="CU",//180719from
+      tmp2=replace(tmp2,"[","");
+      tmp2=replace(tmp2,"]","");
+      cutend=tokenize(tmp2,",");
+      if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
+      options=remove(options,[#]);
+    );
+  );
+  if(Noflg<3,
+    tmp="ar"+nm+"="+Textformat([pA,pB],5)+";";
+    parse(tmp);
+  );
+  if(Noflg<2,
+    if(isstring(Ltype),
+      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
+      size=0.2*size;
+      angle=angle*pi/180;
+      pP=pA+segpos*(pB-pA);
+      Ev=-1/|pB-pA|*(pB-pA);
+      Nv=[-Ev_2, Ev_1];
+      tmp1=pP+size*cos(angle)*Ev+size*sin(angle)*Nv;
+      tmp2=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
+      ArrowheadNumber=ArrowheadNumber+1;
+      Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n"));
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      ); //no ketjs off
+      Setscaling(scaley);
+      tmp1=Textformat(LLcrd(pP),5);
+      tmp2=Textformat(LLcrd(pB-pA),5);
+      Com2nd("Arrowhead("+tmp1+","+tmp2+opstr+")");
+      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+        Texcom("}");//180722
+      ); //no ketjs off
+    ,
+      if(Noflg==1,Ltype=0);
+    );
+  );
+  Setscaling(scaley); //190412
+  [Lcrd(pA),Lcrd(pB)];
+);
+////%Lightarrowdata end////
 
 ////%Anglemark start////
 Anglemark(plist):=Anglemark(plist,[]);
@@ -2610,9 +2719,9 @@ Drwxy(add,optionsorg):=( //190103to
     if(length(tmp)>0,size=parse(tmp),size=YaSize);
     tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//181216
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
-    Arrowdata("axx"+text(AXCOUNT),tmp,tmp1);
+    Lightarrowdata("axx"+text(AXCOUNT),tmp,tmp1);
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
-    Arrowdata("axy"+text(AXCOUNT),tmp,tmp1);
+    Lightarrowdata("axy"+text(AXCOUNT),tmp,tmp1); //190419
   ,
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
     tmp1=concat(options,[colorax,"Msg=n"]);//181216,190325

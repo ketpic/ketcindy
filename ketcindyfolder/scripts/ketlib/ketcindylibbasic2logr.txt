@@ -1,4 +1,6 @@
-// 20190417
+// 20190419
+//    Lightarrowdata added ( only for case of segment)
+/ 20190417
 //    Arrowdata debugged  ( for geo-points )
 // 20190416
 //    Deqplot changed  ( "`" )

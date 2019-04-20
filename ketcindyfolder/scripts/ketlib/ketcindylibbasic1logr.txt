@@ -1,3 +1,5 @@
+// 20190420
+//    Plotdata changed  (name in case of "-...")
 // 20190416
 //    Ketinit changed  (zenkaku space)
 // 20190415

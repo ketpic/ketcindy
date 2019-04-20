@@ -1,3 +1,6 @@
+// 20190420
+//    Periodfun majorly changed
+//    Fourierseries changed  ( range )
 // 20190419
 //    Lightarrowdata added ( only for case of segment)
 / 20190417

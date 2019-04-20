@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190419] loaded");
+println("ketcindylibbasic2[20190420] loaded");
 
 //help:start();
 
@@ -3771,109 +3771,154 @@ CrossPoint(name,Crv1,Crv2,range):=(
 
 ////%Periodfun start////
 Periodfun(defL,rep):=Periodfun(defL,rep,[]);
-Periodfun(defL,reporg,optionorg):=(  // 16.11.24
-//help:Periodfun(["0",[-1,0],1(Num=),"1",[0,1],1(Num)],2(repeat count),options);
-//help:Periodfun(repeat count=n or [repeatL,repeatR]);
-//help:Periodfun(options=["Con(nect)=da,Color=red"]);//180725
-//help:Periodfun(defL=[function string, range, devision number,...]);
-  regional(nn,fun,range,num,options,nr,maxfun,rep,np,
-    tmp,tmp1,tmp2,eqL,connect,minx,maxx,pdata,Eps,prept);
-  rep=reporg;
-  if(length(rep)==1,rep=[rep,rep]);//180724
+Periodfun(Arg1,Arg2,Arg3):=( //190419from
+  regional(nm,defL,rep,rng,options);
+  if(isstring(Arg1),
+    nm=Arg1; defL=Arg2; rng=Arg3;
+    Periodfun(nm,defL,rng,[]);
+  ,
+    defL=Arg1; rep=Arg2; options=Arg3;
+    Periodfun("-",defL,rep,options);
+  );
+);
+Periodfun(nm,defL,rng,optionorg):=( //190420[new]
+//help:Periodfun("1",defL,"x=range",options);
+//help:Periodfun(defL=[function string,range,devision number,...]);
+//help:Periodfun(options=["Connect)=da,Color=red"]);//180725
+  regional(name,range,nr,nn,eqL,options,connect,Eps,fun,scaley,
+           mxfun,var,left,right,period,cL,crL,sL,sdL,flg,tmp,tmp1,tmp2);
+  Eps=10^(-2);
+  name="pe"+nm;
+  var="x";
+  nr=3*floor(length(defL)/3);
+  left=defL_2_1;
+  right=defL_(nr-1)_2;
+  period=right-left;
+  if(isstring(rng),
+    tmp=Strsplit(rng,"=");
+    var=tmp_1;
+    if(length(tmp)>1,
+      range=parse(tmp_2);
+    ,
+      range=[XMIN,XMAX];
+    );
+  ,
+    range=[left,right];
+  );
   options=optionorg;
-//  tmp=Divoptions(options);
-  eqL=options;
-  connect=["da"];//180725
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  connect="da";
   forall(eqL,
-    tmp=indexof(#,"=");//180725from
-    tmp=[substring(#,0,tmp-1),substring(#,tmp,length(#))];
-    if(Toupper(substring(tmp_1,0,3))=="CON",
-      tmp1=Toupper(Op(1,tmp_2));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,3));
+    tmp2=tmp_2;
+    if(tmp1=="CON",
+      tmp1=Toupper(substring(tmp2,0,1));
       if(tmp1=="N",
-        connect=[];
+        connect="";
       ,
         if(tmp1!="Y",
-          connect=tokenize(tmp_2,",");
+          connect=tmp2;
         );
-      );//180725to
+      );
       options=remove(options,[#]);
     );
   );
-  minx=10000;
-  maxx=-10000;
+  scaley=SCALEY;
+  Setscaling(1);
   mxfun="";
-  pdata=[];
-  forall(1..(length(defL)/3),nn,
+  cL=[];
+  forall(1..(nr/3),nn,
+    nst=text(nn);
     fun=defL_(3*nn-2);
-    range=defL_(3*nn-1);
-    tmp1=if(isstring(range_1),parse(range_1),range_1); //17.06.11[2lines]
-    tmp2=if(isstring(range_2),parse(range_2),range_2);
-    minx=min(minx,tmp1);
-    maxx=max(maxx,tmp2);
-    num=defL_(3*nn);
-    options=append(options,"Num="+text(num));
-    Plotdata("pe"+text(nn),fun,
-      "x="+Textformat([tmp1,tmp2],5),options);
-    pdata=append(pdata,"grpe"+text(nn));
-    tmp1=range_1; //17.06.11[4lines]
-    if(isstring(tmp1),tmp1=replace(tmp1,"pi","%pi"),tmp1=format(tmp1,5));
-    tmp2=range_2;
-    if(isstring(tmp2),tmp2=replace(tmp2,"pi","%pi"),tmp2=format(tmp2,5));
+    tmp1=var+"="+Textformat(defL_(3*nn-1),5);
+    tmp2="Num="+text(defL_(3*nn));
+    tmp=Plotdata("",fun,tmp1,[tmp2,"nodata","Msg=n"]);
+    cL=append(cL,tmp);
+    tmp=defL_(3*nn-1);
+    tmp1=tmp_1; tmp2=tmp_2;
     mxfun=mxfun+"elseif ("+tmp1+
-      "<=x and x<"+tmp2+") then "+fun+" ";
-  );
-  per=maxx-minx;
-  tmp1=[];
-  forall(1..(rep_1),nr, //180724from
-    forall(reverse(1..(length(pdata))),np,
-      Translatedata("m"+np+text(nr),pdata_np,[-per*nr,0],options);
-      tmp1=concat(["trm"+np+text(nr)],tmp1);
-    );
-  );
-  tmp2=[];
-  forall(1..(rep_2),nr,
-    forall(1..(length(pdata)),np,
-      Translatedata("p"+np+text(nr),pdata_np,[per*nr,0],options);
-      tmp2=concat(tmp2,["trp"+np+text(nr)]);
-    );
-  );//180724to
-  pdata=concat(tmp1,pdata);
-  pdata=concat(pdata,tmp2);
-  if(length(connect)>0, //180725
-    connect=append(connect,"Msg=n"); //180725
-    Eps=10^(-5);
-    pdata=sort(pdata,[parse(#)_1_1]);
-    prept=parse(pdata_1)_1;
-    forall(1..(length(pdata)),
-      tmp=parse(pdata_#);
-      tmp1=tmp_1;
-      tmp2=tmp_(length(tmp));
-      if(|prept-tmp1|>Eps,
-        Listplot("con"+text(#),[prept,tmp1],concat([],connect));//180725
+       "<=x and x<"+tmp2+") then "+fun+" ";
+   );
+  crL=cL;
+  flg=0;
+  forall(1..10,nn,
+    if(flg==0,
+      if(crL_1_1_1<=range_1,
+        flg=1;
+      ,
+        tmp=Translatedata("",cL,[-nn*period,0],["nodata","Msg=n"]);
+        crL=concat(tmp,crL);
       );
-      prept=tmp_(length(tmp));
     );
   );
+  flg=0;
+  forall(1..10,nn,
+    if(flg==0,
+      tmp1=crL_(length(crL));
+      tmp2=tmp1_(length(tmp1));
+      if(range_2<=tmp2_1,
+        flg=1;
+      ,
+        tmp=Translatedata("",cL,[nn*period,0],["nodata","Msg=n"]);
+        crL=concat(crL,tmp);
+      );
+    );
+  );
+  Setscaling(scaley);
+  sL=[];
+  sdL=[];
+  forall(1..(length(crL)),nn,
+    tmp=concat(options,["Msg=n"]);
+    Listplot("-"+name+text(nn),crL_nn,tmp);
+    sL=append(sL,name+text(nn));
+    if(nn<length(crL),
+      tmp1=crL_nn_(length(crL_nn));
+      tmp2=crL_(nn+1)_1;
+      if(Norm(tmp2-tmp1)>Eps,
+        tmp=concat(options,[connect,"Msg=n"]);
+        Listplot("-"+name+"dc"+text(nn),[tmp1,tmp2],tmp);
+        sdL=append(sdL,name+"dc"+text(nn));
+      );
+    );
+  );
+  tmp=name+"="+Textformat(sL,5);
+  parse(tmp);
+  tmp=name+"dc="+Textformat(sdL,5);
+  parse(tmp);
+  println("   generate "+name+","+name+"dc");
   mxfun=substring(mxfun,4,length(mxfun)-1);
-  [mxfun,per];
+  println("   return [mxfun,period]");
+  [mxfun,period];
 );
 ////%Periodfun end////
 
 ////%Fourierseries start////
 Fourierseries(nm,coeff,per,nterm):=
    Fourierseries(nm,coeff,per,nterm,[]);  // 16.11.24
-Fourierseries(nm,coeff,per,nterm,options):=(
-//help:Fourierseries("1",[c0,cn,sn],period,numterm,options);
-  regional(c0,cn,sn,fs,tmp,tmp1,tmp2);
+Fourierseries(nm,coeff,per,nterm,Arg1):=( //190420from
+  if(isstring(Arg1),
+    Fourierseries(nm,coeff,per,nterm,Arg1,[]);
+  ,
+    Fourierseries(nm,coeff,per,nterm,"x=[XMIN,XMAX]",Arg1);
+  );
+);  
+Fourierseries(nm,coefforg,per,nterm,range,options):=(
+//help:Fourierseries("1",[c0,cn,sn],period,numterm,"x=range",options);
+//help:Fourierseries("1","[c0,cn,sn]",period,numterm,"x=range",options);
+  regional(coeff,c0,cn,sn,fs,tmp,tmp1,tmp2);
+  coeff=coefforg;
+  if(isstring(coeff),
+    tmp=substring(coeff,1,length(coeff)-1);
+    coeff=tokenize(tmp,",");
+  );
+  coeff=apply(coeff,
+    if(isstring(#),replace(#,"%pi","pi"),format(#,5))
+  );
   c0=coeff_1;
-  if(!isstring(c0),c0=format(c0,5));
-  c0=replace(c0,"%pi","pi");
   cn=coeff_2;
-  if(!isstring(cn),cn=format(cn,5));
-  cn=replace(cn,"%pi","pi");
   sn=coeff_3;
-  if(!isstring(sn),sn=format(sn,5));
-  sn=replace(sn,"%pi","pi");
   fs=c0;
   forall(1..nterm,
     tmp=parse(Assign(cn,["n",#]));
@@ -3884,8 +3929,8 @@ Fourierseries(nm,coeff,per,nterm,options):=(
       ["n",#,"per",per]);
     fs=fs+"+"+tmp1+"+"+tmp2;
   );
-  Plotdata("four"+nm,fs,"x",options);
-);
+  Plotdata("-four"+nm,fs,range,options);
+); //190420to
 ////%Fourierseries end////
 
 ////%Tabledatalight start////

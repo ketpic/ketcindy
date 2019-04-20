@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.7");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190416] loaded");
+println("ketcindylibbasic1[20190420] loaded");
 
 //help:start();
 
@@ -4140,7 +4140,11 @@ Plotdata(name1,func,variable,options):=(
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
          PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,Msg,
          Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
-  name="gr"+name1;
+  if(substring(name1,0,1)!="-",  //190420from
+    name="gr"+name1;
+  ,
+    name=substring(name1,1,length(name1));
+  ); //190420to
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;

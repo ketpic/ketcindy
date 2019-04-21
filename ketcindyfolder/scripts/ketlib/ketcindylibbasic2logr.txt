@@ -1,3 +1,5 @@
+// 20190421
+//    Tabledata changed  ( 0 for notick)
 // 20190420
 //    Periodfun majorly changed
 //    Fourierseries changed  ( range )

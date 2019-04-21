@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190420] loaded");
+println("ketcindylibbasic2[20190421] loaded");
 
 //help:start();
 
@@ -3936,6 +3936,7 @@ Fourierseries(nm,coefforg,per,nterm,range,options):=(
 ////%Tabledatalight start////
 Tabledatalight(nm,xLst,yLst,rmvL):=Tabledatalight(nm,xLst,yLst,rmvL,[]);
 Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
+//help:Tabledatalight("",xLst,yLst,rmvL,[0(notick)]);
 //help:Tabledatalight("",xLst,yLst,rmvL,[2,"Rng=y"]);
   regional(options,rng,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
     rlist,clist,Tb,tmp,tmp1,tmp2,tmp3,Eps);
@@ -3955,7 +3956,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       options=remove(options,[#]);
     );
   );//16.12.16until
-  tick=1;
+  =1;
   flg=0;
   forall(reL,
     if(flg==0,
@@ -3991,18 +3992,22 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     tmp1="c"+text(#)+"r0";
     tmp2="c"+text(#)+"r"+text(n);
     Tlistplot("c"+text(#)+"r0r"+text(n),[tmp1,tmp2],options);
-    if(mod(#,tick)==0 % #==m,
-      tmp=clist_(#+1);
-      drawtext(clist_(#+1)-[0.04,-0.1],"c"+text(#));
+    if(tick!=0, //190421
+      if(mod(#,tick)==0 % #==m,
+        tmp=clist_(#+1);
+        drawtext(clist_(#+1)-[0.04,-0.1],"c"+text(#));
+      );
     );
-  );
-  forall(0..n,
-    tmp1="c0r"+text(#);
-    tmp2="c"+text(m)+"r"+text(#);
-    Tlistplot("r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options);
-    if(mod(#,tick)==0 % #==n,
-      tmp=rlist_(#+1);
-      drawtext(rlist_(#+1)-[0.4,0.1],"r"+text(#));
+    forall(0..n,
+      tmp1="c0r"+text(#);
+      tmp2="c"+text(m)+"r"+text(#);
+      Tlistplot("r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options);
+      if(tick!=0, //190421
+        if(mod(#,tick)==0 % #==n,
+          tmp=rlist_(#+1);
+          drawtext(rlist_(#+1)-[0.4,0.1],"r"+text(#));
+        );
+      );
     );
   );
   Tsegrmv(rmvL,options);

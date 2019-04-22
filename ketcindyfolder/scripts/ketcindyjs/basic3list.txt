@@ -36,8 +36,9 @@ Mkslidesummary,basic3,2670,2735,Fillblack,pathsep,ismacosx,setexec,PPa,PaO,Calcb
 BBdata,basic3,2739,2882,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,Sprintf,Removespace
 Copyketcindyjs,basic3,2886,2947,iswindows,Dqq,kc
 Ketjsoption,basic3,2951,2952,Setketcindyjs
-Setketcindyjs,basic3,2956,2973,Divoptions
-Findfun,basic3,2977,3044,Removespace,Indexall
-Extractfun,basic3,3048,3065,Indexall,Findfun
-Extractall,basic3,3074,3118
-Mkketcindyjs,basic3,3122,3563,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq
+Setketcindyjs,basic3,2956,2974,Divoptions
+Ketcindyjsdata,basic3,2978,3016,Textformat,Dqq
+Findfun,basic3,3020,3087,Removespace,Indexall
+Extractfun,basic3,3091,3108,Indexall,Findfun
+Extractall,basic3,3117,3161
+Mkketcindyjs,basic3,3165,3609,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Indexof,Indexall,Dqq

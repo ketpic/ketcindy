@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190419] loaded");
+println("ketcindylibbasic3[20190423] loaded");
 
 //help:start();
 
@@ -2945,7 +2945,7 @@ Copyketcindyjs():=(
   );
   kc();
 ); 
-////%Coptketcindyjs end//// 
+////%Copyketcindyjs end//// 
 
 ////%Ketjsoption start//// 190201
 Ketjsoption():=Setketcindyjs();
@@ -2960,6 +2960,7 @@ Setketcindyjs(list):=(
 //help:Setketcindyjs();
 //help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
   regional(eqL,color,tmp);
+  KetcindyjsDataList=[]; //190422
   tmp=Divoptions(list);
   eqL=tmp_5;
   tmp=tmp_(length(tmp));
@@ -2972,6 +2973,48 @@ Setketcindyjs(list):=(
   KETJSOP;
 );
 ////%Setketcindyjs end////
+
+////%Ketcindyjsdata start////  //190421
+Ketcindyjsdata(datalistorg):=(
+//help:Ketcindyjsdata(["ans",ans,"pea[parse]",pea]);
+  regional(nn,func,tmp,tmp1,tmp2);
+  datalist=datalistorg;
+  forall(1..(length(datalist)/2), nn, //190423from
+    tmp1=datalist_(2*nn-1);
+    func="";
+    tmp=indexof(tmp1,"[");
+    if(tmp>0,
+      func=substring(tmp1,tmp,length(tmp1)-1);
+      tmp1=substring(tmp1,0,tmp-1);
+    );
+    tmp2=datalist_(2*nn);
+    if(length(func)>0,
+      forall(1..(length(tmp2)),
+        tmp=func+"("+Dqq(tmp2_#)+")";
+        tmp2_#=parse(tmp);
+      );
+    );
+    if(islist(tmp2),
+      tmp="[";
+      forall(tmp2,
+        if(isstring(#),
+          tmp=tmp+Dqq(#)+",";
+        ,
+          tmp=tmp+Textformat(#,5)+",";
+        );
+      );
+      tmp2=substring(tmp,0,length(tmp)-1)+"]";
+    ,
+      tmp2=Dqq(tmp2);
+    );
+    tmp=tmp1+"="+tmp2;
+    KetcindyjsDataList=append(KetcindyjsDataList,tmp);
+  ); //190423to
+);
+Ketcindyjsdata(name,vaL):=(
+  Ketcindyjsdata([name,vaL]);
+);
+////%Ketcindyjsdata end////
 
 ////%Findfun start////
 Findfun(name,lineorg):=(
@@ -3392,7 +3435,7 @@ Mkketcindyjs(options):=( //17.11.18
       from=tmp_2+5; //190206
       upto=tmp_3;
       tmp1=htmorg_((from+1)..(upto-1)); //190119
-      kettef="off"; //190206from
+      ketflg="off"; //190206from
       forall(tmp1,
         if(indexof(#,"no ketjs")>0,
           if(indexof(#,"no ketjs on")>0,
@@ -3416,6 +3459,9 @@ Mkketcindyjs(options):=( //17.11.18
         );
       ); 
     );
+    forall(KetcindyjsDataList,  //190422from
+      println(SCEOUTPUT,#+";");
+    ); //190422to
     println(SCEOUTPUT,"</script>");
     tmp=select(partL,#_1=="csdraw");
     tmp=tmp_1;

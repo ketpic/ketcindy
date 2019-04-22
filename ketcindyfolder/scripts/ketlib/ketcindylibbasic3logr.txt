@@ -1,3 +1,8 @@
+// 20190423
+      Ketcindyjsdata and Mkketcindyjs changed
+// 20190422
+//    Ketcindyjsdata added
+//    Setketcindyjs, Mkketcindyjs changed ( for Ketcindyjsdata )
 // 20190419
 //    Findfun debugged  ( inside of "" removed )
 // 20190417

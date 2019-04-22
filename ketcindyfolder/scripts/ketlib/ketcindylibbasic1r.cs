@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.7");
+println("KeTCindy V.3.2.8");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190420] loaded");
+println("ketcindylibbasic1[20190423] loaded");
 
 //help:start();
 
@@ -304,13 +304,13 @@ Setwindow(str):=(
     Putpoint("SW",Pcrd([XMIN,YMIN]));
     Putpoint("NE", Pcrd([XMAX,YMAX])); 
   );
-  if(msg=="y",
+  if(msg=="y", // no ketjs on
     println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");
   );
   layer(KETPICLAYER);
   autoclearlayer(KETPICLAYER,true);
   drawpoly([Pcrd([XMIN,YMIN]), Pcrd([XMAX,YMIN]),
-        Pcrd([XMAX,YMAX]),Pcrd([XMIN,YMAX])],color->[1,1,1]);
+        Pcrd([XMAX,YMAX]),Pcrd([XMIN,YMAX])],color->[1,1,1]); // no ketjs off
 );
 Setwindow(xrange,yrange):=(
 //help:Setwindow([2,3],[-1,1]);

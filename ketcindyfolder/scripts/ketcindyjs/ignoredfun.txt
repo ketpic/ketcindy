@@ -7,7 +7,6 @@ Com1st
 Com2nd
 Com2ndpre
 Copyketcindyjs
-Dashline
 Definecolor
 Defvar
 Dottedline
@@ -15,15 +14,15 @@ Drwline
 Example
 Fillstore
 Fontsize
-//GetLinestyle
 Help
 Helplist
 Invdashline
+Ketcindyjsdata
 Ketjsoption
 Mkketcindyjs
 Presentation
-Putbezierdata
-Putpoint
+//Putbezierdata
+//Putpoint
 Readcsvsla
 RSform
 RSslash

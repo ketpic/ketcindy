@@ -1,5 +1,6 @@
 // 20190423
 //    Ketinit changed  ( Frame not appeared in KeTCindyJS )
+//    MeasureDepth majorly changed
 // 20190420
 //    Plotdata changed  (name in case of "-...")
 // 20190416

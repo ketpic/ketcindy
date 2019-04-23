@@ -3057,13 +3057,13 @@ Putpoint(name,Pt):=Putpoint(name,Pt,Pt);
 Putpoint(name,Ptinit,Pt):=(
 //help:Putpoint("A",[1,2],[1,A.y]);
   regional(ptstr);
-  ptstr=apply(allpoints(),#.name);//16.10.06
+  ptstr=apply(allpoints(),#.name); //no ketjs on
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
-    ,
+    ,  //no ketjs off
     ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
     parse(ptstr);
-  );
+  ); //no ketjs
 );
 ////%Putpoint end////
 
@@ -3212,18 +3212,18 @@ Putbezierdata(name,ptL):=Putbezierdata(name,ptL,[]);
 Putbezierdata(name,ptL,options):=(
   regional(psize,Deg,tmp,tmp1,tmp2,p1,p2,pts,ctrs);
   tmp=Divoptions(options);
-  psize=3;
+  psize=3; //no ketjs
   Deg=3;
   tmp1=tmp_5;
   forall(tmp1,
-    if(substring(#,0,1)=="D",
+    if(substring(#,0,1)=="D", //no ketjs on
       tmp=indexof(#,"=");
       Deg=parse(substring(#,tmp,length(#)));
     );
     if(substring(#,0,1)=="S",
       tmp=indexof(#,"=");
       psize=parse(substring(#,tmp,length(#)));
-    );
+    ); //no ketjs off
   );
   pts=[];
   ctrs=[];
@@ -3287,11 +3287,11 @@ Mkbezierptcrv(ptdata,options):=(
  //help:Mkbezierptcrv(options=["Num=10"]);
  //  global BezierNumber
   regional(ptlist,Out,tmp,tmp1,tmp2);
-  if(isstring(ptdata),
+  if(isstring(ptdata), //no ketjs on
     ptlist=Readcsvsla(ptdata,options);
-  ,
+  ,  //no ketjs off
     ptlist=ptdata;
-  );
+  );  //no ketjs
   if(Measuredepth(ptlist)==1,ptlist=[ptlist]);
   Out=[];
   forall(1..length(ptlist),
@@ -3778,7 +3778,7 @@ Periodfun(Arg1,Arg2,Arg3):=( //190419from
     Periodfun(nm,defL,rng,[]);
   ,
     defL=Arg1; rep=Arg2; options=Arg3;
-    Periodfun("-",defL,rep,options);
+    Periodfun("",defL,rep,options); //190421
   );
 );
 Periodfun(nm,defL,rng,optionorg):=( //190420[new]
@@ -3803,7 +3803,7 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
       range=[XMIN,XMAX];
     );
   ,
-    range=[left,right];
+    range=[left-rng*period,right+rng*period]; //190421
   );
   options=optionorg;
   tmp=Divoptions(options);

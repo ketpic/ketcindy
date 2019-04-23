@@ -1210,7 +1210,6 @@ Assign(funstr,varname,rep):=(
 );
 ////%Assign end////
 
-////%Measuredepth start////
 Measuredepth(list):=(
   regional(tmp,tmp1,Depth,Flg);
   Flg=0;
@@ -1236,6 +1235,22 @@ Measuredepth(list):=(
     );
   );//180501
   Depth;
+);
+
+////%Measuredepth start////
+Measuredepth(list):=( //190423
+  regional(str,nn,tmp,tmp1,tmp2);
+  str=text(list);
+  tmp1=Indexall(str,"[");
+  tmp2=select(tmp1,!contains(tmp1,#+1));
+  nn=tmp2_1;
+  tmp1=substring(str,nn,length(str));
+  tmp=indexof(tmp1,",");
+  tmp1=substring(tmp1,0,tmp-1);
+  if(!ispoint(parse(tmp1)),
+    nn=nn-1;
+  );
+  nn;
 );
 ////%Measuredepth end////
 

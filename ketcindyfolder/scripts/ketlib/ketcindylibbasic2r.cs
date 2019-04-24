@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190421] loaded");
+println("ketcindylibbasic2[20190424] loaded");
 
 //help:start();
 
@@ -3957,7 +3957,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     );
   );//16.12.16until
   =1;
-  flg=0;
+  flg=0; tick=1; //190424
   forall(reL,
     if(flg==0,
       tick=#;

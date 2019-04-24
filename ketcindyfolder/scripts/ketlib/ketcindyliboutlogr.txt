@@ -1,3 +1,6 @@
+// 20190424
+//    PlotdiscR changed  ( "-" added to Listplot )
+//    Mxfun debugged  (options)
 // 20190415
 //    parse( ..=  ) changed ( ; added )
 // 20190411

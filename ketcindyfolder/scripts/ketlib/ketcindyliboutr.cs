@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190415] loaded");
+println("ketcindylibout[20190424] loaded");
 
 //help:start();
 
@@ -1574,7 +1574,7 @@ PlotdiscR(nm,fun,varrng,options):=(
     tmp1=replace(tmp1,"##","");
     pb=tokenize(tmp1,",");
     tmp=apply(range,[#,pb_(#+1)]);
-    Listplot(name,tmp,options);
+    Listplot("-"+name,tmp,options); //190424
   );
 );
 ////%PlotdiscR end////
@@ -3254,7 +3254,7 @@ Mxfun(name,fun,argL,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(tmp_1);
+    tmp1=Toupper(substring(tmp_1,0,1)); //190424
     tmp2=tmp_2;
     if(tmp1=="P",
       precise=parse(tmp2);

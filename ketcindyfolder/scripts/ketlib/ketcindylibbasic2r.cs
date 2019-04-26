@@ -14,9 +14,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190424] loaded");
+println("ketcindylibbasic2[20190426] loaded");
 
 //help:start();
+
+////%Drawfigures start//// 190426
+Drawfigures(nm,figlist):=Drawfigures(nm,figlist,[]);
+Drawfigures(nm,figlist,optionlist):=Drawfigures(nm,figlist,optionlist,[]);
+Drawfigures(nm,figlistorg,optionlistorg,options):=(
+//help:Drawfigures(["pt1","cr1"], ["Size=3"],["Color=red"]);
+  regional(figlist,name,figL,optionlist,nn,kk,fig,eqL,msg,tmp,tmp1,tmp2);
+  name="drf"+nm;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  msg="Y";
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
+      msg=Toupper(substring(tmp_2,0,1));
+    );
+  );
+  optionlist=optionlistorg;
+  figlist=figlistorg;
+  if(isstring(figlist),figlist=parse(figlist));
+  nn=length(figlist);
+  tmp=optionlist_(length(optionlist));
+  tmp1=apply(1..nn,tmp);
+  optionlist=concat(optionlist,tmp1);
+  figL=[];
+  forall(1..nn,kk,
+    fig=figlist_kk;
+    if(isstring(fig),fig=parse(fig));
+    if(length(fig)>0,
+      if(length(fig)==1,
+        if(Measuredepth(fig)==1,fig=fig_1);
+        Pointdata(name+text(kk),fig,optionlist_kk);
+        figL=append(figL,"pt"+name+text(kk));
+      ,
+        Listplot("-"+name+text(kk),fig,optionlist_kk);
+        figL=append(figL,name+text(kk));
+      );
+    );
+  );
+  if(msg=="Y",
+    println("generate "+text(figL));
+  );
+  figL;
+);
+////%Drawfigures end////
 
 ////%Setarrow start////
 Setarrow():=Setarrow([]);
@@ -2155,20 +2201,31 @@ Reflectpoint(point,symL):=(
 
 ////%Rotatedata start////
 Rotatedata(nm,plist,Theta):=Rotatedata(nm,plist,Theta,[]);
-Rotatedata(nm,plist,angle,options):=(
+Rotatedata(nm,plist,angle,optionorg):=(
 //help:Rotatedata("1",["crAB","pt1"],pi/3,[[1,5],"dr,2"]);
 //help:Rotatedata("1",[[A.xy],[B.xy]],pi/3,[[1,5],"dr,2"]);
-  regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdLL,PdL,
-    opcindy,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
+  regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdLL,PdL,options,
+    opcindy,eqL,msgflg,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
   name="rt"+nm;
+  options=optionorg;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Pt=Lcrd(tmp1_1));
+  msgflg="Y"; //190425from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
+      msgflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
   if(!isstring(pdata_1) & Measuredepth(pdata)==1,
@@ -2197,7 +2254,9 @@ Rotatedata(nm,plist,angle,options):=(
     PdL=concat(PdL,tmp2);
   );
   if(Noflg<3,
-    println("generate Rotatedata "+name);
+    if(msgflg=="Y",
+      println("generate Rotatedata "+name);
+    );
     tmp1=[];
     forall(PdL,tmp2,
       tmp=apply(tmp2,Pcrd(#));
@@ -2232,16 +2291,27 @@ Rotatedata(nm,plist,angle,options):=(
 
 ////%Translatedata start////
 Translatedata(nm,plist,mov):=Translatedata(nm,plist,mov,[]);
-Translatedata(nm,plist,mov,options):=(
+Translatedata(nm,plist,mov,optionorg):=(
 //help:Translatedata("1",["gr1","pt1"],[1,2]);
-  regional(tmp,tmp1,tmp2,pdata,Cx,Cy,PdL,Nj,Njj,Kj,
-           opcindy,X2,Y2,Ltype,Noflg,name,color,leveL);
+  regional(options,tmp,tmp1,tmp2,pdata,Cx,Cy,PdL,Nj,Njj,Kj,eqL,
+           opcindy,X2,Y2,Ltype,Noflg,name,color,leveL,msgflg);
   name="tr"+nm;
+  options=optionorg; //190425
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5; //190424
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
+  msgflg="Y"; //190425from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
+      msgflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
   if(!isstring(pdata_1) & Measuredepth(pdata)==1,
@@ -2267,7 +2337,9 @@ Translatedata(nm,plist,mov,options):=(
     PdL=concat(PdL,tmp2);
   );
   if(Noflg<3,
-    println("generate Translatedata "+name);
+    if(msgflg=="Y", //190425
+      println("generate Translatedata "+name);
+    );
     tmp1=[];
     forall(PdL,tmp2,
       tmp=apply(tmp2,Pcrd(#));
@@ -2321,20 +2393,31 @@ Scaledata(nm,plist,Arg1,Arg2):=(
     Scaledata(nm,plist,Arg1,Arg2,[]);
   );
 );
-Scaledata(nm,plist,rx,ry,options):=(
-  regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdL,
-      opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name,color);
+Scaledata(nm,plist,rx,ry,optionorg):=(
+  regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdL,options,eqL,
+      opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name,color,msgflg);
   name="sc"+nm;
+  options=optionorg;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,
     Pt=Lcrd(tmp1_1);
   );
+  msgflg="Y"; //190425from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
+      msgflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
   if(!isstring(pdata_1) & Measuredepth(pdata)==1,
@@ -2359,7 +2442,9 @@ Scaledata(nm,plist,rx,ry,options):=(
     PdL=concat(PdL,tmp2);
   );
   if(Noflg<3,
-    println("generate Scaledata "+name);
+    if(msgflg=="Y",
+      println("generate Scaledata "+name);
+    );
     tmp1=[];
     forall(PdL,tmp2,
       tmp=apply(tmp2,Pcrd(#));
@@ -2394,17 +2479,28 @@ Scaledata(nm,plist,rx,ry,options):=(
 
 ////%Reflectdata start////
 Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
-Reflectdata(nm,plist,symL,options):=(
+Reflectdata(nm,plist,symL,optionorg):=(
 //help:Reflectdata("1",["crAB"],[C]);
-  regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,
+  regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,options,eqL,
       opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
   name="re"+nm;
+  options=optionorg;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
+  msgflg="Y"; //190425from
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
+      msgflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
   if(!isstring(pdata_1) & Measuredepth(pdata)==1,
@@ -2445,7 +2541,9 @@ Reflectdata(nm,plist,symL,options):=(
     PdL=concat(PdL,tmp2);
   );
   if(Noflg<3,
-    println("generate Reflectdata "+name);
+    if(msgflg=="Y",
+      println("generate Reflectdata "+name);
+    );
     tmp1=[];
     forall(PdL,tmp2,
       tmp=apply(tmp2,Pcrd(#));
@@ -4649,9 +4747,12 @@ Windispg(gcLorg):=( //190125
                 );
               );
             );
-           ,
-            tmp="draw("+text(Nk_1)+opcindy+");"; // 14.12.31
-             parse(tmp);
+          ,
+            if(indexof(opcindy,"size")==0,  //190425from
+              opcindy=opciny+",size->"+text(TenSize/TenSizeInit);
+            ); //190425to
+            tmp="draw("+text(Nk_1)+opcindy+");"; 
+            parse(tmp);
            ); //190126to
         );
       );

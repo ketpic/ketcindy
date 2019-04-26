@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.8");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190424] loaded");
+println("ketcindylibbasic1[20190426] loaded");
 
 //help:start();
 
@@ -178,7 +178,9 @@ Fillstore():=(
     ["ParaF",[0,1,1]],["Flip",[0,0,1]],["Anime",[0.51,0.95,1]],
     ["Title",[0,1,0]],["Slide",[0.47,0,0.72]],["Digest",[1,0.74,0.47]],
     ["KeTJS",[0,1,1]],["KeTJSoff",[0,1,1]],
-    ["Objview",[0,1,0]]
+    ["Objview",[0,1,0]],
+    ["Start",[1.0, 0.741, 0.467]],["Pause",[1.0, 0.741, 0.467]], //190426[2lines]
+    ["Rev",[1.0, 0.741, 0.467]],["End",[1.0, 0.741, 0.467]]
   ];
   txtL=apply(dtL,#_1);
   clrL=apply(dtL,#_2);
@@ -3614,14 +3616,14 @@ AddGraph(nm,pltdata,options):=(
         forall(1..(length(pdata)),
           tmp=name+"p"+Textformat(#,5)+"=";
           if(length(pdata_#)>1,  // 15.01.22
-            tmp=tmp+"Listplot("+Textformat(pdata_#,5)+")";
+            tmp=tmp+"Listplot("+Textformat(pdata_#,5)+");"; //190425
           ,
-            tmp=tmp+"Pointdata("+Textformat(pdata_#_1,5)+")";
+            tmp=tmp+"Pointdata("+Textformat(pdata_#_1,5)+");"; //190425
           );
           GLIST=append(GLIST,tmp); //no ketjs
           tmp1=tmp1+name+"p"+Textformat(#,5)+",";
         );
-        tmp1=name+"="+substring(tmp1,0,length(tmp1)-1)+")";
+        tmp1=name+"="+substring(tmp1,0,length(tmp1)-1)+");"; //190425
       );
       GLIST=append(GLIST,tmp1); //no ketjs
     );
@@ -3906,10 +3908,11 @@ Pointdata(nm,listorg,options):=(
     );
   ); //181030to
   if(isstring(listorg),
-    list=parse(listorg)
+    list=parse(listorg);
   ,
-    list=listorg
-  ); //17.10.23
+    list=listorg;
+   ); //17.10.23
+  list=apply(list,Lcrd(#));  //190426
   if(Measuredepth(list)==0,list=[list]);//180530
   tmp=Measuredepth(list);
   if(tmp==1,ptlist=list,ptlist=list_1); //190126from

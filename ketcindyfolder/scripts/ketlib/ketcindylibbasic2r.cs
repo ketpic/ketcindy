@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190426] loaded");
+println("ketcindylibbasic2[20190427] loaded");
 
 //help:start();
 
@@ -24,7 +24,7 @@ Drawfigures(nm,figlist,optionlist):=Drawfigures(nm,figlist,optionlist,[]);
 Drawfigures(nm,figlistorg,optionlistorg,options):=(
 //help:Drawfigures(["pt1","cr1"], ["Size=3"],["Color=red"]);
   regional(figlist,name,figL,optionlist,nn,kk,fig,eqL,msg,tmp,tmp1,tmp2);
-  name="drf"+nm;
+  name="figs"+nm;
   tmp=Divoptions(options);
   eqL=tmp_5;
   msg="Y";
@@ -49,16 +49,19 @@ Drawfigures(nm,figlistorg,optionlistorg,options):=(
     if(length(fig)>0,
       if(length(fig)==1,
         if(Measuredepth(fig)==1,fig=fig_1);
-        Pointdata(name+text(kk),fig,optionlist_kk);
-        figL=append(figL,"pt"+name+text(kk));
+        Pointdata(name+"N"+text(kk),fig,optionlist_kk); //190427
+        figL=append(figL,"pt"+name+"N"+text(kk)); //190427
       ,
-        Listplot("-"+name+text(kk),fig,optionlist_kk);
-        figL=append(figL,name+text(kk));
+        Listplot("-"+name+"N"+text(kk),fig,optionlist_kk); //190427
+        figL=append(figL,name+"N"+text(kk)); //190427
       );
     );
   );
+  tmp=apply(figL,Dqq(#));
+  tmp=name+"="+text(tmp);
+  parse(tmp);
   if(msg=="Y",
-    println("generate "+text(figL));
+    println("generate "+name+"="+text(figL));
   );
   figL;
 );
@@ -2766,10 +2769,12 @@ Drwxy(add,optionsorg):=( //190103to
   yrng=[YMIN,YMAX];  //190103
   ax=AXSTYLE;
   linesty=ax_8;
-  if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
-  if(length(colorax)>0,
-    colorax="Color="+colorax;
+  if(length(ax_9)>0, //190427
+    if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
+  ,
+    colorax=KCOLOR; //190427
   );
+  colorax="Color="+colorax; //190427[if removed]
   if(isstring(ax_10),colorla=ax_10,colorla=text(ax_10));
   if(length(colorla)>0, //181217from
     colorla="Color="+colorla;
@@ -2823,9 +2828,9 @@ Drwxy(add,optionsorg):=( //190103to
   ,
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
     tmp1=concat(options,[colorax,"Msg=n"]);//181216,190325
-    Listplot("axx"+text(AXCOUNT),tmp,tmp1); 
+    Listplot("-axx"+text(AXCOUNT),tmp,tmp1); 
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
-    Listplot("axy"+text(AXCOUNT),tmp,tmp1); 
+    Listplot("-axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
   Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216[3lines]

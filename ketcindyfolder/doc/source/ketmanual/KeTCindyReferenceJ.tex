@@ -2459,32 +2459,63 @@ Rulerscale(A,["r",0,5,1],["f",1,"d1",3,"d2"]);
 \subsection{プロットデータの操作}
 \begin{description}
 
-\hypertarget{addgraph}{}
-\item[関数]Addgraph(name ,プロットデータのリスト,option)
-\item[機能]複数のプロットデータをまとめる
-\item[説明]複数のプロットデータをまとめて扱う。たとえば，円と，円周上の点の2つのプロットデータをまとめて扱えば，平行移動や回転で，それらのプロットデータをまとめて平行移動や回転ができる。Joincrvs()では，プロットデータをつなげて１つのプロットデータにするが，Addgraph()では，それぞれのプロットデータからなるリスト（リストのリスト）にする。（プロットデータは座標のリストである）
+\hypertarget{drawfigures}{}
+\item[関数]Drawfigures(name ,データリスト,オプションリスト)
+\item[機能]複数のプロットデータのスタイル（オプション）をリストで与えて描画する
+\item[説明]複数のプロットデータをまとめて扱う。たとえば，円と，円周上の点の2つのプロットデータをまとめて扱えば，平行移動や回転で，それらのプロットデータをまとめて平行移動や回転ができる。%Joincrvs()では，プロットデータをつなげて１つのプロットデータにするが，Addgraph()では，それぞれのプロットデータからなるリスト（リストのリスト）にする。（プロットデータは座標のリストである）
 
-引数には，プロットデータ名を文字列化して渡す。たとえば，円のプロットデータが cr1 のとき，"cr1" とする。
+%引数には，プロットデータ名を文字列化して渡す。たとえば，円のプロットデータが cr1 のとき，"cr1" とする。
 
 \vspace{\baselineskip}
 【例】サイクロイドの図を描く。
 \begin{verbatim}
-Setpt(3);
-Circledata("1",[[0,1],[0,0]]);
-Pointdata("1",[0,0]);
-Addgraph("1",["[pt1]","cr1"],["nodisp"]);
+opcr=["dr"];
+oppt=["Size=2","Color=red"];
+Circledata("1",[[0,1],[0,0]],opcr);
+Pointdata("1",[0,0],oppt);
+ad1=["cr1","pt1"];
+dt=2*pi/32;
+opcr=["dr,0.3"];
 nn=32;
 forall(1..nn,
-t=2*pi/nn*#;
-Rotatedata(text(#),"ad1",-t,[[0,1],"nodisp"]);
-Translatedata(text(#),"rt"+text(#),[t,0],["dr,0.3"]);
+  t=dt*#;
+  Rotatedata(2,ad1,-t,[[0,1],"nodisp"]);
+  Translatedata(2,"rt2",[t,0],["nodisp"]);
+  Drawfigures(text(#),"tr2",[opcr,oppt]);
 );
 \end{verbatim}
 
 \vspace{\baselineskip}
-\hspace{20mm} \input{Fig/addgraph} 
+\hspace{20mm} \input{Fig/drawfigures1} 
 
-ここで，Addgraph()の引数に与えるプロットデータのリストで，点のプロットデータ pt1 を"[pt1]" としていることに注意。円のプロットデータが，点の座標のリストであるのに対し，点のプロットデータは一つの座標だけなので，このようにしてリスト化して渡す。
+最初に，まとめて平行移動や回転をするデータをリスト化しておく。また，各データのオプションをリストとして与えていることに注意。こうすることで，サイズや色などのスタイルを元のスタイルに合わせることができる。
+
+%\hypertarget{addgraph}{}
+%\item[関数]Addgraph(name ,プロットデータのリスト,option)
+%\item[機能]複数のプロットデータをまとめる
+%\item[説明]複数のプロットデータをまとめて扱う。たとえば，円と，円周上の点の2つのプロットデータをまとめて扱えば，平行移動や回転で，それらのプロットデータをまとめて平行移動や回転ができる。Joincrvs()では，プロットデータをつなげて１つのプロットデータにするが，Addgraph()では，それぞれのプロットデータからなるリスト（リストのリスト）にする。（プロットデータは座標のリストである）
+%
+%引数には，プロットデータ名を文字列化して渡す。たとえば，円のプロットデータが cr1 のとき，"cr1" とする。
+%
+%\vspace{\baselineskip}
+%【例】サイクロイドの図を描く。
+%\begin{verbatim}
+%Setpt(3);
+%Circledata("1",[[0,1],[0,0]]);
+%Pointdata("1",[0,0]);
+%Addgraph("1",["[pt1]","cr1"],["nodisp"]);
+%nn=32;
+%forall(1..nn,
+%t=2*pi/nn*#;
+%Rotatedata(text(#),"ad1",-t,[[0,1],"nodisp"]);
+%Translatedata(text(#),"rt"+text(#),[t,0],["dr,0.3"]);
+%);
+%\end{verbatim}
+%
+%\vspace{\baselineskip}
+%\hspace{20mm} \input{Fig/addgraph} 
+%
+%ここで，Addgraph()の引数に与えるプロットデータのリストで，点のプロットデータ pt1 を"[pt1]" としていることに注意。円のプロットデータが，点の座標のリストであるのに対し，点のプロットデータは一つの座標だけなので，このようにしてリスト化して渡す。
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -8114,7 +8145,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{setwindow}{Setwindow()}\>描画領域を設定する\\
 \hyperlink{usegraphics}{Usegraphics()} \>グラフィクスパッケージを\verb|"pict2e"| に変更する\\
 【描画】\\
-\hyperlink{addgraph}{Addgraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
+\hyperlink{drawfigures}{Drawfigures(name ,figlist,optionlist)} \>複数のデータのスタイルをリストで与えて描画する\\
+%\hyperlink{addgraph}{Addgraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
 \hyperlink{anglemark}{Anglemark(点list, options)}\>角の印を入れる\\
 \hyperlink{setarrow}{Setarrow(options)}\>矢線をスタイルを設定する\\
 \hyperlink{arrowdata}{Arrowdata(name.[始点,終点],options)}\>2点間を結ぶ矢線を描く\\

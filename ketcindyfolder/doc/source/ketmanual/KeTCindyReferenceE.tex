@@ -1968,30 +1968,36 @@ and keep them from being drawn on \TeX\ final output.
 
 \end{cmd}
 
-%--------AddGraph ------------------------------------
-\begin{cmd}{AddGraph}{addgraph}
+%--------Drawfigures ------------------------------------
+\begin{cmd}{Drawfigures}{drawfigures}
 
-\itemket{Usage}AddGraph(name,List of PD,options)
-\itemket{Description}Manipulate more than one PD all together.
-\itemket{Remark} PD name should be passed as a character string, for example, pass "cr1"' for PD name cr1.
+\itemket{Usage}Drawfigures(name,List of PDs,List of Options)
+\itemket{Description}Manipulate a plural number of PDs together.
+\itemket{Remark} List of Options should corrensponds to that of PDs.
 
 %\itemket{Details}
 \itemket{Examples}\mbox{}
 After manipulating PDs of a circle and a point on the circle by AddGraph, you can translate or rotate them together.\\
 
-\verb|Setpt(3); |\\
-\verb|Circledata("1",[[0,1],[0,0]]); |\\
-\verb|Pointdata("1",[0,0]); |\\
-\verb|AddGraph("1",["[pt1]","cr1"],["nodisp"]); |\\
-\verb|nn=32; |\\
-\verb|forall(1..nn, |\\
-\verb|  t=2*pi/nn*#; |\\
-\verb|  Rotatedata(text(#),"ad1",-t,[[0,1],"nodisp"]); |\\
-\verb|  Translatedata(text(#),"rt"+text(#),[t,0],["dr,0.3"]); |\\
-\verb|); |
+\begin{verbatim}
+opcr=["dr"];
+oppt=["Size=2","Color=red"];
+Circledata("1",[[0,1],[0,0]],opcr);
+Pointdata("1",[0,0],oppt);
+ad1=["cr1","pt1"];
+dt=2*pi/32;
+opcr=["dr,0.3"];
+nn=32;
+forall(1..nn,
+  t=dt*#;
+  Rotatedata(2,ad1,-t,[[0,1],"nodisp"]);
+  Translatedata(2,"rt2",[t,0],["nodisp"]);
+  Drawfigures(text(#),"tr2",[opcr,oppt]);
+);
+\end{verbatim}
 
 \begin{center}
- \input{Fig/addgraph} 
+ \input{Fig/drawfigures1} 
 \end{center}
 
 \end{cmd}
@@ -5624,7 +5630,7 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{usegraphics}{Usegraphics} \> change to pict2e.\\
 
 {\bf Drawing} \> \\
-\hyperlink{addgraph}{AddGraph} \> manipulate more than one PD all together.\\
+\hyperlink{drawfigures}{Drawfigures} \> manipulate a plural number of PDs together.\\
 \hyperlink{anglemark}{Anglemark} \> draw an angle mark.\\
 \hyperlink{setarrow}{Setarrowdata}  \> set styles of arrows.\\
 \hyperlink{arrowdata}{Arrowdata}  \> draw an arrow line between two points.\\

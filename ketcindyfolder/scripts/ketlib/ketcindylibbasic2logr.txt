@@ -1,3 +1,6 @@
+// 20190427
+//    Drawfigures debugged ( N added )
+//    Drwxy debugged ( KCOLOR added )
 // 20190426
 //    Drawfigures added
 // 20190425

@@ -1,3 +1,8 @@
+// 20190428
+      Mkketcindyjs debugged  ( basic3d => basic3 )
+      Tenkeybrd, Getkey changed
+// 20190427
+      Tenkeybrd, Getkey added
 // 20190423
       Ketcindyjsdata and Mkketcindyjs changed
 // 20190422

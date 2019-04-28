@@ -1,6 +1,7 @@
 // 20190426
 //    Pointdata debugged ( case of geo-point )
-//    Fillstore  changed  (Start,Pause,Rev,End)
+// 20190428
+//    Ketinit changed (TABLECOUNT added )
 // 20190424
 //    Framedata majorly changed/debugged
 // 20190423

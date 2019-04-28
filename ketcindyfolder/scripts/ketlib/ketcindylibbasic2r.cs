@@ -4036,31 +4036,73 @@ Fourierseries(nm,coefforg,per,nterm,range,options):=(
 ); //190420to
 ////%Fourierseries end////
 
+////%Tabledata start//// //190428from
+Tabledata(xLst,yLst,rmvL):=Tabledata("",xLst,yLst,rmvL); 
+Tabledata(Arg1,Arg2,Arg3,Arg4):=(
+  if(isstring(Arg1),
+    Tabledata(Arg1,Arg2,Arg3,Arg4,[]);
+  ,
+    Tabledata("",Arg1,Arg2,Arg3,Arg4);
+  );
+); //190428to
+Tabledata(nm,xL,yL,rmvL,optionorg):=(
+//help:Tabledata(xL,yL,rmvL,["Geo=n"]);
+//help:Tabledata(options=[2(tick,0 for no tick),"Setwin=y","Move=[0,0]"]); //190428
+  regional(options,geo,tmp,tmp1,tmp2);
+  options=optionorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  tmp=select(tmp_5,indexof(Toupper(#),"GEO")>0);
+  if(length(tmp)>0,
+    options=remove(options,tmp);
+    Tabledatageo(nm,xL,yL,rmvL,options);
+  ,
+    Tabledatalight(nm,xL,yL,rmvL,options);
+  );
+);
+////% Tabledata end////
+
 ////%Tabledatalight start////
-Tabledatalight(nm,xLst,yLst,rmvL):=Tabledatalight(nm,xLst,yLst,rmvL,[]);
+Tabledatalight(xLst,yLst,rmvL):=Tabledatalight("",xLst,yLst,rmvL); //190428from
+Tabledatalight(Arg1,Arg2,Arg3,Arg4):=(
+  if(isstring(Arg1),
+    Tabledatalight(Arg1,Arg2,Arg3,Arg4,[]);
+  ,
+    Tabledatalight("",Arg1,Arg2,Arg3,Arg4);
+  );
+); //190428to
 Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
-//help:Tabledatalight("",xLst,yLst,rmvL,[0(notick)]);
-//help:Tabledatalight("",xLst,yLst,rmvL,[2,"Rng=y"]);
+//help:Tabledatalight(xLst,yLst,rmvL,[0(notick)]);
+//help:Tabledatalight(xLst,yLst,rmvL,[2,"Setwindow=y","Move=[0,0]"]); //190428
   regional(options,rng,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
     rlist,clist,Tb,tmp,tmp1,tmp2,tmp3,Eps);
-//  name="tb"+nm;
-  name="tb";
+  // TableMove is global for Table
+  TABLECOUNT=TABLECOUNT+1; //190428from
+  TableMove=GENTEN; //190428to
+  name="tb"+text(TABLECOUNT); //190428to
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5; //16.12.16from
   reL=tmp_6;
   rng="Y";
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1)); //181111
-    tmp2=Toupper(substring(#,tmp,tmp+1));
-    if(tmp1=="R",
-      rng=tmp2;
+    tmp=Strsplit(#,"="); //190428from
+    tmp1=Toupper(substring(tmp_1,0,2));
+    if(tmp1=="RN",
+      rng=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
-  );//16.12.16until
-  =1;
-  flg=0; tick=1; //190424
+    if(tmp1=="MO",
+      TableMove=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="SE",
+      rng=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  ); //190428to
+  tick=1; 
+  flg=0; //190424
   forall(reL,
     if(flg==0,
       tick=#;
@@ -4072,7 +4114,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   tmp=sum(yLst);
   upleft=[0,tmp];
   TableOptions=options; // 16.11.28
-  println("Tabledatalight "+name+" generated");
+  println("generate Tabledatalight "+name);  //190428
   ul=upleft/10;
   m=length(xLst);
   n=length(yLst);
@@ -4088,32 +4130,32 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     tmp1=rlist_(#)_2-yLst_#/10;
     rlist=append(rlist,[0,tmp1]);
   );
-  Tb=[clist,rlist];
+  Tb=[clist,rlist]; //190427
   tmp=name+"="+Tb+";"; //190415
   parse(tmp);
   forall(0..m,
     tmp1="c"+text(#)+"r0";
     tmp2="c"+text(#)+"r"+text(n);
-    Tlistplot("c"+text(#)+"r0r"+text(n),[tmp1,tmp2],options);
+    Tlistplot("-"+name+"c"+text(#)+"r0r"+text(n),[tmp1,tmp2],options); //190428
     if(tick!=0, //190421
       if(mod(#,tick)==0 % #==m,
         tmp=clist_(#+1);
-        drawtext(clist_(#+1)-[0.04,-0.1],"c"+text(#));
+        drawtext(clist_(#+1)+TableMove-[0.04,-0.1],"c"+text(#)); //190428
       );
     );
     forall(0..n,
       tmp1="c0r"+text(#);
       tmp2="c"+text(m)+"r"+text(#);
-      Tlistplot("r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options);
+      Tlistplot("-"+name+"r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options); //190428
       if(tick!=0, //190421
         if(mod(#,tick)==0 % #==n,
           tmp=rlist_(#+1);
-          drawtext(rlist_(#+1)-[0.4,0.1],"r"+text(#));
+          drawtext(rlist_(#+1)+TableMove-[0.4,0.1],"r"+text(#)); //190428
         );
       );
     );
   );
-  Tsegrmv(rmvL,options);
+  Changetablestyle(rmvL,["nodisp"]); //190428
   Addax(0);
   Eps=10^(-3);
   tmp1=clist_(length(clist));
@@ -4126,39 +4168,32 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 );
 ////%Tabledatalight end////
 
-////%Tabledata start////
-Tabledata(nm,n,m,xsize,ysize,rmvL):=
-    Tabledata(nm,n,m,xsize,ysize,rmvL,[]);
-Tabledata(nm,n,m,xsize,ysize,rmvL,options):=(
-  regional(Tb,name,tmp,xLst,yLst);
-  name="tb"+nm;
-  xLst=apply(1..n,xsize/n);
-  yLst=apply(1..m,ysize/m);
-  Tabledata(nm,xLst,yLst,rmvL,options)
-);
-Tabledata(nm,xLst,yLst,rmvL):=Tabledata(nm,xLst,yLst,rmvL,[]);
-Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
-//help:Tabledata("",xLst,yLst,rmvL,[2,"Rng=y"]);
+////%Tabledatageo start//// //190428(renamed)
+Tabledatageo(nm,xLst,yLst,rmvL,optionorg):=(
+// help:Tabledatageo("",xLst,yLst,rmvL,[2,"Setwindow=y"]);
   regional(name,options,eqL,reL,rng,upleft,ul,flg,tick,n,m,xsize,ysize,
     rlist,clist,Tb,tmp,tmp1,tmp2,tmp3,Eps);
-//  name="tb"+nm;
   name="tb";
   tmp=sum(yLst);
   upleft=[0,tmp];
   options=optionorg;
   tmp=Divoptions(options);
-  eqL=tmp_5; //16.12.16from
+  eqL=tmp_5; //161216from
   reL=tmp_6;
   rng="Y";
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1)); //181111
-    tmp2=Toupper(substring(#,tmp,tmp+1));
-    if(tmp1=="R",
+    tmp=Strsplit(#,"=");;
+    tmp1=Toupper(substring(tmp_1,0,2)); //181111
+    tmp2=Toupper(substring(tmp_2,0,1));
+    if(tmp1=="RN",
       rng=tmp2;
       options=remove(options,[#]);
     );
-  );//16.12.16until
+    if(tmp1=="SE", //190428from
+      rng=tmp2;
+      options=remove(options,[#]);
+    ); //190428to
+  );//161216to
   tick=1;
   flg=0;
   forall(reL,
@@ -4258,7 +4293,7 @@ Tabledata(nm,xLst,yLst,rmvL,optionorg):=(
   );
   Tb;
 );
-////%Tabledata end////
+////%Tabledatageo end////
 
 ////%Tseginfo start////
 Tseginfo(seg):=(
@@ -4333,7 +4368,7 @@ Tsegrmv(rmvL,options):=(
 ////%Tgrid start////
 Tgrid(ptstr):=(
 //help:Tgrid("c2r5");
-  regional(tmp,tmp1,tmp2);
+  regional(tb,tmp,tmp1,tmp2);
   tmp=parse(ptstr);
   if(islist(tmp),
     tmp;
@@ -4343,7 +4378,8 @@ Tgrid(ptstr):=(
     tmp1=parse(tmp1);
     tmp2=substring(ptstr,tmp,length(ptstr));
     tmp2=parse(tmp2);
-    [tb_1_(tmp1+1)_1,tb_2_(tmp2+1)_2];
+    tb=parse("tb"+text(TABLECOUNT)); //190428
+    [tb_1_(tmp1+1)_1,tb_2_(tmp2+1)_2]+TableMove; //190428
   );
 );
 ////%Tgrid end////
@@ -4381,11 +4417,12 @@ Tlistplot(nm,ptL,options):=(
 );
 ////%Tlistplot end////
 
-////%ChangeTablestyle start////
-ChangeTablestyle(nameL,style):=(
-////help:ChangeTablestyle(["r0c0c3"],["da"]);
-  regional(nmL,grid,head,sb,tmp,tmp1,tmp2,
-    tsg,segall,sg,str);
+////%Changetablestyle start////
+Changetablestyle(nameL,style):=(
+//help:Changetablestyle(["r0c0c3"],["da"]);
+  regional(nmL,nametb, grid,head,sb,tmp,tmp1,tmp2,
+      tsg,segall,sg,str);
+  nametb="tb"+text(TABLECOUNT); //190428
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   forall(nmL,grid,
     if(substring(grid,0,1)=="r",sb="c",sb="r");
@@ -4394,14 +4431,15 @@ ChangeTablestyle(nameL,style):=(
     tmp1=substring(grid,tmp_1,tmp_2-1);
     tmp2=substring(grid,tmp_2,length(grid));
     tsg=apply([tmp1,tmp2],parse(#));
-    tmp1=apply(GCLIST,#_1); // 16.12.06from
+    tmp1=apply(GCLIST,#_1); // 161206from
+    tmp1=select(tmp1,indexof(#,nametb)>0);
     segall=[];
     forall(tmp1,
-      tmp2=substring(#,2,length(#));
+      tmp2=substring(#,length(nametb),length(#)); //190428
       tmp=indexof(tmp2,sb);
       tmp2=substring(tmp2,0,tmp-1);
       if(head==tmp2,segall=append(segall,#));
-    );// 16.12.06until
+    );// 161206to
     sg=[];
     forall(segall,
       tmp=Indexall(#,sb);
@@ -4420,23 +4458,23 @@ ChangeTablestyle(nameL,style):=(
       if(sg_1<tsg_1,
         tmp1=replace(str,"no",text(sg_1));
         tmp2=replace(str,"no",text(tsg_1));
-        tmp=head+sb+text(sg_1)+"c"+text(tsg_1);
-        Tlistplot(tmp,[tmp1,tmp2],TableOptions);
+        tmp=nametb+head+sb+text(sg_1)+"r"+text(tsg_1); //190428[2lines]
+        Tlistplot("-"+tmp,[tmp1,tmp2],TableOptions);
       );
       tmp1=replace(str,"no",text(tsg_1));
       tmp2=replace(str,"no",text(tsg_2));
-      tmp=head+"c"+text(tsg_1)+"c"+text(tsg_2);
-      Tlistplot(tmp,[tmp1,tmp2],style);
+      tmp=nametb+head+"c"+text(tsg_1)+"c"+text(tsg_2); //190428[2lines]
+      Tlistplot("-"+tmp,[tmp1,tmp2],style);
       if(tsg_2<sg_2,
         tmp1=replace(str,"no",text(tsg_2));
         tmp2=replace(str,"no",text(sg_2));
-        tmp=head+"c"+text(tsg_2)+"c"+text(sg_2);
-        Tlistplot(tmp,[tmp1,tmp2],TableOptions);
+        tmp=nametb+head+"c"+text(tsg_2)+"c"+text(sg_2); //190428[2lines]
+        Tlistplot("-"+tmp,[tmp1,tmp2],TableOptions);
       );
     );
   );
 );
-////%ChangeTablestyle end////
+////%Changetablestyle end////
 
 ////%Findcell start////
 Findcell(pos1,pos2):=Findcell("",pos1,pos2);

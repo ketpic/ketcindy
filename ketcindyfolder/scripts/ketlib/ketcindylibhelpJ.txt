@@ -90,14 +90,11 @@
 //help:PtonSeg*(線分上に点をとる);
 //help:PutonCurve*(曲線上に点をとる);
 //help:Setscaling*(縦方向の倍率を指定);
- //help:Tabledatalight*(幾何点をもたない表データ作成
- //追加オプション : ラベルのとび，描画領域を表に合わせるか);
+ //help:Tabledata*(表データ作成
+ //追加オプション : ラベルのとび，描画領域を表に合わせるか，幾何点を用いるか);
  //help:Tgrid*(表のセルの座標を返す);
  //help:Tlistplot*(表の2格子点を結ぶ線分);
 ////help:ChangeTablestyle*(表の罫線のスタイル変更);
-//help:Tabledata*(幾何点をもつ表データを作成
- //追加オプション : ラベルのとび，描画領域を表に合わせるか);
-//help:Tabledata*(xLst=apply(1..5,10);yLst=apply(1..4,8);rmvL=[];);
 //help:Findcell*(表のセルの情報を返す);
 //help:Putcell*(表のセルに文字を書き入れる);
 //help:Putcellexpr*(表のセルに数式を書き入れる);

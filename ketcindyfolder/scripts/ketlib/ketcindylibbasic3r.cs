@@ -14,9 +14,74 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190423] loaded");
+println("ketcindylibbasic3[20190428] loaded");
 
 //help:start();
+
+////%Tenkeybrd start////
+Tenkeybrd(pLB):=Tenkeybrd(pLB,[]);
+Tenkeybrd(pLB,options):=(
+//help:Tenkeybrd([2,1],"Size=1.5");
+//help: Tenkeybrd(Buttons shoud be given)
+  regional(axes,xL,yL,size,shade,color,tmp,tmp1);
+  size="Size=1.5";
+  shade="Y";
+  color="Color=[0,0,0.2,0]";
+  forall(options,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,2));
+    if(tmp1=="SI",
+      size=#;
+    );
+    if(tmp1=="SH",
+      shade=Toupper(substring(tmp_2,0,1));
+    );
+    if(tmp1=="CO",
+      color=#;
+    );
+  );
+  axes=ADDAXES;
+  cell=8;
+  if(shade=="Y",
+    Framedata2("tenkey",[pLB,pLB+cell/10*[3,5]]);
+    Shade(["frtenkey"],[color]);
+  );
+  xL=apply(1..3,cell);
+  yL=apply(1..5,cell);
+  Tabledata(xL,yL,[],[0,"Setw=n","Move="+text(pLB)]);
+  Addax(axes);
+  [tmp1,tmp2];
+);
+////%Tenkeybrd end////
+
+////%Keyaction start////
+Keyaction(key):=(
+  regional(kL,kstr,endflg,sign);
+//help:Keyaction(key);
+//help:Getkey(Tenkeys should be given in advance)
+  endflg=0;
+  sign=1;
+  if(indexof(Tenkeys,"-")>0,
+    sign=-1;
+    Tenkeys=replace(Tenkeys,"-","");
+  );
+  kstr=Tenkeys;
+  if((key=="C")%(key=="A")%(key=="=")%(indexof(key,"-")>0),
+    if(key=="C",kstr=substring(kstr,0,length(kstr)-1));
+    if(key=="A",sign=1;kstr="");
+    if(key=="=",endflg=1);
+    if(indexof(key,"-")>0,sign=-sign);
+  ,
+    kstr=kstr+key;
+  );
+  if(substring(kstr,0,1)==".",kstr="0"+kstr);
+  if(sign==-1,
+    kstr="-"+kstr;
+  );
+  Tenkeys=kstr;
+  endflg;
+);
+////%Keyaction end////
 
 ////%Dispchoice start////
 Dispchoice():=(
@@ -3170,7 +3235,7 @@ Mkketcindyjs(options):=( //17.11.18
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
       nolabel,color,grid,out,Out,igno); //190416 DL globalized
-  libnameL=["basic1","basic2","basic3d","3d"]; //190416
+  libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
   scale=1; //190129

@@ -1,3 +1,8 @@
+// 20190428
+//    Tabledata changed to Tabledatageo
+//    Tabledata added ( Tabldetadalight if "Geo=n(defalt)", Tabledatageo if "Geo=y")
+//    Tgrid  changed  ( TableMove added )
+//    Changetablestyle changed ( for multiple tables )
 // 20190427
 //    Drawfigures debugged ( N added )
 //    Drwxy debugged ( KCOLOR added )

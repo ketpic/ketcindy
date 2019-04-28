@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.8");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190426] loaded");
+println("ketcindylibbasic1[20190428] loaded");
 
 //help:start();
 
@@ -58,7 +58,8 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   MARKLEN=0.05;
   MARKLENInit=MARKLEN; //180504
   MARKLENNow= MARKLEN;
-  GENTEN=[0,0];//18.01.15until
+  GENTEN=[0,0];//18.01.15to
+  TABLECOUNT=0; //190428
   KETPICLAYER=20;
   MilliIn=1/2.54*1000;
   PenThick=round(MilliIn*0.02);
@@ -2959,7 +2960,7 @@ Setunitlen(UI):=(
 Setmarklen(ratio):=(
 //help:Setmarklen(0.2);
   MARKLEN=ratio*0.2;//16.11.01
-  Com2nd("Setmarklen("+Textformat(ratio,5)+")");
+  Com2nd("Setmarklen("+Textformat(ratio,5)+")"); //no ketjs
 );
 ////%Setmarklen end////
 
@@ -2967,14 +2968,14 @@ Setmarklen(ratio):=(
 Setorigin(point):=(
 //help:Setorigin([1,2]);
   GENTEN=point; //181231
-  Com2nd("Setorigin("+Textformat(point,5)+")");
+  Com2nd("Setorigin("+Textformat(point,5)+")"); //no ketjs
 );
 ////%Setorigin end////
 
 ////%Fontsize start////
 Fontsize(sizestr):=(
 //help:Fontsize("s");
-  Com2nd("Fontsize('"+sizestr+"')");
+  Com2nd("Fontsize('"+sizestr+"')"); //no ketjs
 );
 ////%Fontsize end////
 
@@ -2982,7 +2983,7 @@ Fontsize(sizestr):=(
 Setpen(width):=(
 //help:Setpen(2);
   PenThick=PenThickInit*width; // 16.04.09
-  Com2nd("Setpen("+text(width)+")");
+  Com2nd("Setpen("+text(width)+")"); //no ketjs
 );
 ////%Setpen end////
 

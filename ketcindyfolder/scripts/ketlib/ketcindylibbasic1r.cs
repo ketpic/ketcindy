@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.8");
+println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190428] loaded");
+println("ketcindylibbasic1[20190429] loaded");
 
 //help:start();
 
@@ -790,7 +790,7 @@ Changework(dirorg):=Changework(dirorg,["Sub=y"]);
 Changework(dirorg,options):=( //16.10.21
 //help:Changework(directory);
 //help:Changework(Dircdy+"fig");
-//help:Changework(options=["Sub=n"(not to make folder fig]);
+//help:Changework(options=["Sub=n"<not to make folder fig>);
   regional(dir,subdir,tmp,,eqL,makesub);
   tmp=Divoptions(options);
   eqL=tmp_5;  //180605from
@@ -3419,6 +3419,7 @@ Colorname2rgb(name):=( //181212
     ["olivegreen",[0.64,0,0.95,0.4]],["rawsienna",[0,0.72,1,0.45]],
     ["sepia",[0,0.83,1,0.7]],["brown",[0,0.81,1,0.6]],
     ["tan",[0.14,0.42,0.56,0]],["gray",[0,0,0,0.5]],
+    ["lightgray",[0,0,0,0.17]], //190429
     ["black",[0,0,0,1]],["white",[0,0,0,0]]
   ];
   tmp=select(dL,#_1==name);

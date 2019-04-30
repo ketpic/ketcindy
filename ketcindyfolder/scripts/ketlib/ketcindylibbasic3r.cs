@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190428] loaded");
+println("ketcindylibbasic3[20190430] loaded");
 
 //help:start();
 
@@ -3226,6 +3226,16 @@ Extractall(name):=(
 );
 ////%Extractall end////
 
+////%Textedit start//// 190430
+Textedit(no):=(
+//help:Textparse(0);
+  regional(tmp,tmp1,tmp2);
+  tmp="Text"+text(no)+".currenttext";
+  tmp1=parse(tmp);
+  tmp1;
+);
+////%Textedit end////
+
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
@@ -3345,6 +3355,13 @@ Mkketcindyjs(options):=( //17.11.18
           tmp=Removespace(#);
           if(substring(tmp,0,2)!="//",
             tmp2=append(tmp2,#);
+          ,
+             tmp=indexof(#,"only ketjs"); //190430from
+             if(tmp>0,
+               tmp=substring(#,0,tmp-1);
+               tmp=Removespace(tmp);
+               tmp2=append(tmp2,substring(tmp,2,length(tmp)));
+             ); //190430to
           );
         );
       );
@@ -3374,6 +3391,13 @@ Mkketcindyjs(options):=( //17.11.18
           tmp=Removespace(#);
           if(substring(tmp,0,2)!="//",
             tmp2=append(tmp2,#);
+          ,
+            tmp=indexof(#,"only ketjs"); //190430from
+            if(tmp>0,
+              tmp=substring(#,0,tmp-1);
+              tmp=Removespace(tmp);
+              tmp2=append(tmp2,substring(tmp,2,length(tmp)));
+            ); //190430to
           );
         );
       );
@@ -3489,6 +3513,13 @@ Mkketcindyjs(options):=( //17.11.18
             tmp=Removespace(#);
             if(substring(tmp,0,2)!="//",
               println(SCEOUTPUT,#);
+            ,
+              tmp=indexof(#,"only ketjs"); //190430from
+              if(tmp>0,
+                tmp=substring(#,0,tmp-1);
+                tmp=Removespace(tmp);
+                println(SCEOUTPUT,subtring(tmp,2,length(tmp)));
+              ); //190430to
             );
           ); //190122to
         );
@@ -3578,6 +3609,16 @@ Mkketcindyjs(options):=( //17.11.18
         if(!contains(tmp2,tmp),
           out=append(out,tmp1_jj); //190129
         );
+        flg=1;
+      );
+      if(indexof(tmp1_jj,"Evaluate")>0,
+        tmp=replace(tmp1_jj,Dqq("Evaluate"),Dqq("EditableText"));
+        out=append(out,tmp);
+        flg=1;
+      );
+      if(indexof(tmp1_jj,"Calculation")>0,
+        tmp=replace(tmp1_jj,Dqq("Calculation"),Dqq("EditableText"));
+        out=append(out,tmp);
         flg=1;
       );
       if(flg==0,

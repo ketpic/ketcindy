@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190427] loaded");
+println("ketcindylibbasic2[20190429] loaded");
 
 //help:start();
 
@@ -4094,6 +4094,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     );
     if(tmp1=="MO",
       TableMove=parse(tmp_2);
+      rng="N"; //190429
       options=remove(options,[#]);
     );
     if(tmp1=="SE",
@@ -4597,8 +4598,8 @@ Putrowexpr(Tbdata,nrow,dir,exL,options):=(
 ); //190228to
 ////%Putrowexpr end////
 
-////%PutcoL start////
-PutcoL(mcol,dir,lttrL):=PutcoL("",mcol,dir,lttrL,[]); //190228from
+////%Putcol start////
+Putcol(mcol,dir,lttrL):=Putcol("",mcol,dir,lttrL,[]); //190228from
 Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
   if(islist(Arg4),
     Putcellexpr("",Arg1,Arg2,Arg3,Arg4);
@@ -4606,7 +4607,7 @@ Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
     Putcellexpr(Arg1,Arg2,Arg3,Arg4,[]);
   );
 );
-PutcoL(Tbdata,mcol,dir,lttrL,options):=(
+Putcol(Tbdata,mcol,dir,lttrL,options):=(
 //help:PutcoL(1,"c",["x","y","z"]);
   regional(tmp,tmp1,nrow);
   nrow=length(lttrL);
@@ -4614,10 +4615,10 @@ PutcoL(Tbdata,mcol,dir,lttrL,options):=(
     Putcell(Tbdata,mcol,#,dir,lttrL_#,options);
   );
 ); //190228to
-////%PutcoL end////
+////%Putcol end////
 
-////%PutcoLexpr start////
-PutcoLexpr(mcol,dir,exL):=PutcoLexpr("",mcol,dir,exL,[]); //190228from
+////%Putcolexpr start////
+Putcolexpr(mcol,dir,exL):=Putcolexpr("",mcol,dir,exL,[]); //190228from
 Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
   if(islist(Arg4),
     Putcellexpr("",Arg1,Arg2,Arg3,Arg4);
@@ -4625,13 +4626,13 @@ Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
     Putcellexpr(Arg1,Arg2,Arg3,Arg4,[]);
   );
 );
-PutcoLexpr(Tbdata,mcol,dir,exL,options):=(
-//help:PutcoLexpr(2,"r",["x","y","z"]);
+Putcolexpr(Tbdata,mcol,dir,exL,options):=(
+//help:Putcolexpr(2,"r",["x","y","z"]);
   regional(lttrL);
   lttrL=apply(exL,"$"+#+"$");
-  PutcoL(Tbdata,mcol,dir,lttrL,options);
+  Putcol(Tbdata,mcol,dir,lttrL,options);
 ); //190228to
-////%PutcoLexpr end////
+////%Putcolexpr end////
 
 ////%Setrange start////
 Setrange():=(

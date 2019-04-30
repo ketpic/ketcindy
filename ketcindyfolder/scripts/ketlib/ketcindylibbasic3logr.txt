@@ -1,3 +1,6 @@
+// 20190430
+//    Textedit added
+//    Mkketcindyjs debugged  ( only ketjs)
 // 20190428
       Mkketcindyjs debugged  ( basic3d => basic3 )
       Tenkeybrd, Getkey changed

@@ -3572,37 +3572,29 @@ println(Sprintf(len,6));
 \begin{description}
 
 \hypertarget{tabledata}{}
-\item[関数]Tabledata(name , 縦横データ, 除外線 , options)
+\item[関数]Tabledata(横データ，縦データ, 除外線 , options)
 \item[機能]表の枠を作成し，表のデータlist を返す
 \item[説明]Cinderellaの描画面上に左下を原点とする表を作成する。
 
-他の関数との引数の整合性，\ketpic のコマンドとの整合性などから，先頭にnameの引数をつけるが，実際にはあまり利用しないので，空文字""でもよい。
-
 除外線がない場合は空リストを指定する。（必須）
 
-optionsは線種と"notex"など，および "Rng=n"。
+optionsのうち，Tabledataに特有なものは\\
+\hspace*{3zw}ラベルのスキップ幅，''Setwindow=n''，''Geo=n''，''Move=[0,0]''\\
+である。
 
-"Rng=n" をつけると，NE,SWによる出力領域指定が有効になり，NE,SWをドラッグして出力領域を変更できる。（初期状態は，表の右上と左下）つけない場合は，表の部分だけが出力される。
+"Setwindow=n" をつけると，NE,SWによる出力領域指定が有効になり，NE,SWをドラッグして出力領域を変更できる。（初期状態は，表の右上と左下）つけない場合は，表の部分だけが出力される。
 
-縦横データには，次の2通りの書式がある。いずれも同じ表を作成する。
+縦横データは，次のように，間隔の幅で与える。ただし，幅はCinderellaの描画面の0.1を単位とする。
 
-\vspace{\baselineskip}
-(1) 横のセル数 , 縦のセル数 , 表の横幅 , 表の縦幅を指定する。除外線なし。
-
-\begin{verbatim}
-Tabledata("",4,5,80,50,[]);
-\end{verbatim}
-
-(2) 横と縦の幅を指定したリストを使う
 \begin{verbatim}
 Yoko=[20,20,20,20];
 Tate=[10,10,10,10,10];
-Tabledata("",Yoko,Tate,[]);
+Tabledata(Yoko,Tate,[]);
  \end{verbatim}
 
-幅はCinderellaの描画面の0.1を単位とする。
 
-作成された表には，行，列の制御点がつく。画面上では，横罫線の番号 r0,r1,・・・縦罫線の番号 c0,c1,・・・と見ることもできる。また，縦幅，横幅が数字で示される。ただし，これらは\TeX には出力されない。
+
+"Geo=y"とすると，作成された表には，行，列の制御点がつく。画面上では，横罫線の番号 r0,r1,・・・縦罫線の番号 c0,c1,・・・と見ることもできる。また，縦幅，横幅が数字で示される。ただし，これらは\TeX には出力されない。
 また，作表はCinderellaの描画面上では座標平面上に置かれるが，\TeX への出力は座標平面上には置かないことが多いので，座標軸は非表示としている。
 
 \hspace{25mm} 描画面 \hspace{45mm} TeX
@@ -3610,7 +3602,7 @@ Tabledata("",Yoko,Tate,[]);
 \hspace{5mm}\includegraphics[bb=0 0 403.52 249.51 , width=5cm]{Fig/table01.pdf} \hspace{10mm}\input{Fig/table02} \\
 
 
-表のサイズ・行幅・列幅は，作成後にそれぞれの制御点をドラッグすることにより任意に変えることができる。
+"Geo=y"の場合は，表のサイズ・行幅・列幅は，作成後にそれぞれの制御点をドラッグすることにより任意に変えることができる。
 
 \vspace{\baselineskip}
 除外線は，除外するセルの罫線を，rとc で位置指定する。
@@ -3621,11 +3613,18 @@ Tabledata("",Yoko,Tate,[]);
 
 とする。
 
+ラベルのスキップ値は，いくつおきにラベルをつけるかの設定である。0とするとラベルが表示されない。ただし，ラベルはCinderellaの画面上だけの問題。
+
+\vspace{\baselineskip}"Move=点の座標"とすると，指定された点が左下になるように平行移動される。
+
+
 \vspace{\baselineskip}
 【例】4つの罫線を非表示にする
 \begin{verbatim}
 Rmv=["r1c0c1","c3r0r1","c3r3r5","r4c2c4"];
-Tabledata("",4,5,80,50,Rmv);
+Yoko=[20,20,20,20];
+Tate=[10,10,10,10,10];
+Tabledata(Yoko,Tate,Rmv);
 \end{verbatim}
 
 で，次の表ができる。
@@ -3636,28 +3635,19 @@ Tabledata("",4,5,80,50,Rmv);
 \vspace{\baselineskip}
 ＜補足＞
 
-Tabledata()関数は，制御点r0,r1,・・・,c0,c1,・・・がなければ新しく作り，すでに存在する場合はそのままとする。したがって，一度表を作成したのち，行数・列数を修正して作り直す場合は，一度既存の点を消去する必要がある。そのためには，「すべての点を選択する」ツールをクリックして点を消去するのがよい。クリックすると，消去後すぐに新規作成される。(誤って「すべての要素を選択する」を選ばないこと)
+"Geo=y"の場合，制御点r0,r1,・・・,c0,c1,・・・がなければ新しく作り，すでに存在する場合はそのままとする。したがって，一度表を作成したのち，行数・列数を修正して作り直す場合は，一度既存の点を消去する必要がある。そのためには，「すべての点を選択する」ツールをクリックして点を消去するのがよい。クリックすると，消去後すぐに新規作成される。(誤って「すべての要素を選択する」を選ばないこと)
 
 他の点が描画されている場合は，表の部分だけドラッグで選択するか，表示メニューの「式による表示」で一覧表を出して，制御点を選択して消去する。
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
 \vspace{\baselineskip}
-\hypertarget{tabledatalight}{}
-\item[関数]Tabledatalight(name , 縦横データ, 除外線 , options)
-\item[機能]幾何点を持たない表の枠を作成し，表のデータlist を返す
-\item[説明]Tabledata()がCinderellaの幾何点を生成するのに対し，Tabledatalight()は幾何点を生成しない。
-
-幾何点を作成しないメリットは，スクリプトだけで全体の縦横幅を変更できること。デメリットはインタラクティブな微調整ができないこと。
-
-optionとして，ラベルのスキップ値（スキップするところは表示されない）を指定することができる。ただし，ラベルはCinderellaの画面上だけの問題。
+"Geo=n"（デフォルト）の場合，幾何点を生成しない。幾何点を作成しないメリットは，スクリプトだけで全体の縦横幅を変更できること。デメリットはインタラクティブな微調整ができないこと。
 
 \vspace{\baselineskip}
 【例】１つおきにスキップして，r1,r3,c1,c2 を非表示とする。
 \begin{verbatim}
 Yoko=[20,20,20,20];
 Tate=[10,10,10,10,10];
-Tabledatalight("",Yoko,Tate,[],[2]);
+Tabledatalight(Yoko,Tate,[],[2]);
 \end{verbatim}
 
 \vspace{\baselineskip}
@@ -3669,12 +3659,17 @@ Tabledatalight("",Yoko,Tate,[],[2]);
 \vspace{\baselineskip}
 【例】
 
-\verb|Tabledatalight("",[10,20,10,20],[10,10,10],[]);|\\
+\verb|Tabledatalight([10,20,10,20],[10,10,10],[]);|\\
 \verb|Changetablestyle(["r1c0c4"],["da"]);|\\
 \verb|Changetablestyle(["r2c0c2","c1r0r3"],["nodisp"]);|
 
 \vspace{\baselineskip}
 \hspace{20mm}\includegraphics[bb=0.00 0.00 324.00 174.00,width=50mm]{Fig/changetable.pdf} 
+
+\vspace{\baselineskip}
+複数の表を描くこともできる。
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{findcell}{}
@@ -3683,11 +3678,11 @@ Tabledatalight("",Yoko,Tate,[],[2]);
 \item[説明]列番号，行番号は左上のセルを１列１行として数える。
 
 \vspace{\baselineskip}
-【例】\verb|Tabledata(4,5,80,50,[]);|
+【例】\verb|Tabledata(Tate,Yoko,[]);|
 
-\verb|println(Findcell(tb,2,1));|
+\verb|println(Findcell(2,1));|
 
-とすると，2列１行のセルの中心の座標と横幅の半分，縦幅の半分の値がリストとしてコンソールに表示される。結果は [[3,4.5],1,0.5]
+とすると，2列１行のセルの中心の座標と横幅の半分，縦幅の半分の値がリストとしてコンソールに表示される。
 
 \vspace{\baselineskip}
 \hypertarget{putcell}{}
@@ -3699,7 +3694,9 @@ Tabledatalight("",Yoko,Tate,[],[2]);
 
 位置の例を以下に示す。
 \begin{verbatim}
-Tabledata("",5,2,100,40,["c1r1r2","c4r1r2"]);
+yoko=[20,20,20,20,20];
+tate=[20,20];
+Tabledata(yoko,tate,["c1r1r2","c4r1r2"]);
 Putcell(1,1,"c","A");
 Putcell(2,1,"r","B");
 Putcell(3,1,"l","C");
@@ -3746,7 +3743,9 @@ Putcell("c3r1","c5r2","rt","H");
 
 文字を入れる例を示す。
 \begin{verbatim}
-Tabledata("",5,3,100,45,["c1r1r2","r1c2c3","r2c2c3"]);
+Tate=[20,20,20,20,20];
+Yoko=[15,15,15];
+Tabledata(Tate,Yoko,["c1r1r2","r1c2c3","r2c2c3"]);
 Putcol(3,"c",["A","B","C"]);
 Putcolexpr(4,"l",["x^2","y=\sqrt{x^3}"]);
 Putrow(1,"c",[1,"二"]);
@@ -3773,7 +3772,9 @@ x軸を描くための点A〜Fは作図ツールでとっておく。
 
 \vspace{\baselineskip}
 \begin{verbatim}
-Tabledata("",3,3,120,60,[],["dr,2"]);
+Tate=[40,40,40];
+Yoko=[20,20,20];
+Tabledata(Tate,Yoko,[],["dr,2"]);
 Changetablestyle(["r1c0c3"],["dr"]);
 Changetablestyle(["r2c0c3"],["da"]);
 Plotdata("1","(x-2)^2+0.5","x=[0.5,3.5]");
@@ -3799,7 +3800,7 @@ Tate=[6,6,10,6,10,6,40];
 Yoko=[30,6,6,6];
 Rmv=["c1r0r1","c2r0r1","c3r0r1","c4r0r1","c5r0r1", "r1c6c7",
 "r2c6c7","r3c6c7"]; 
-Tabledata("",Tate,Yoko,Rmv,["dr"])
+Tabledata(Tate,Yoko,Rmv,["dr"])
 Tlistplot("23d",["c1r2","c2r3"]);
 Tlistplot("23u",["c1r3","c2r2"]);
 Putrowexpr(2,"c",["x",0,"\cdots","\tfrac{1}{4}","\cdots",4]);
@@ -3824,7 +3825,9 @@ Expr(Ptend(tr1),"nw-2","y=x-\sqrt{x}");
 \vspace{\baselineskip}
 【例】凹凸を含めた増減表
 \begin{verbatim}
-Tabledata("",8,4,80,40,[]);
+Tate=apply(1..8,20);
+Yoko=[apply(1..4,10);
+Tabledata(Tate,Yoko,[]);
 Putrowexpr(1,c,["x","\cdots","-1","\cdots","0","\cdots","1","\cdots"]);
 Putrowexpr(2,c,["y`","+","+","+","0","-","-","-"]);
 Putrowexpr(3,c,["y``","+","0","-","-","-","0","+"]);

@@ -2711,11 +2711,15 @@ The written data is as follows.
 
 %------------Tabledata--------------------------------
 \begin{cmd}{Tabledata}{tabledata}
-\itemket{Usage}Tabledata("",a list of widths, a list of height,a list of removals,[options]);
+\itemket{Usage}Tabledata(a list of widths, a list of height,a list of removals,[options]);
 \item[Descritption]Table function to draw rules of a table.
 \itemket{Details}
 The lower left is the origin.\\
-The options are "Rng=y/n"(if "n", command setwindow is not executed) and as usual.\\
+The options are\\
+\hspace*{10mm}''Setwindow=y/n''\ if "n", command setwindow is not executed.\\
+\hspace*{10mm}''Move=point''\ The lower left changes to the point.\\
+\hspace*{10mm}''Geo=n/y''\ if ''y'', geometric points are created.\\
+\hspace*{10mm}integer\ decides to put names par each interval.\\
 The unit of length is 1/10 of the grid of Euclidean view. The default is 1mm.\\
 Control points are put on the row and column. The names are r0,r1,... and c0,c1,....\\
 The points are movable.
@@ -2724,30 +2728,18 @@ The points are movable.
 
 \verb|xL=[20,20,20,20];|\\
 \verb|yL=[10,10,10,10,10];|\\
-\verb|Tabledata("",xL,yL,[]);|
+\verb|Tabledata(xL,yL,["Geo=y"]);|
 
 \begin{center}
 \includegraphics[bb=0.00 0.00 403.52 249.51,height=30mm]{Fig/table01.pdf}\hspace{10mm}\input{Fig/table02}
 \end{center}
 
 \verb|Rmv=["r1c0c1","c3r0r1","c3r3r5","r4c2c4"];|\\
-\verb|Tabledata("",xL,yL,Rmv);|
+\verb|Tabledata(xL,yL,Rmv);|
   
 \begin{center}
 \includegraphics[bb=0.00 0.00 392.02 251.51, height=36mm]{Fig/table03.pdf}
 \end{center}
-\end{cmd}
-
-%--------------Tabledatalight------------------------------
-\begin{cmd}{Tabledatalight}{tabledatalight}
-\itemket{Usage}Tabledata("",a list of widths, a list of height,a list of removals,[options]);
-\itemket{Description}Table function to make a table without geometric points.
-\itemket{Details}interval option decides to put names par each interval.
-\itemket{Examples}\mbox{}
-  
-\verb|xL=[20,20,20,20];|\\
-\verb|yL=[10,10,10,10,10];|\\
-\verb|Tabledatalight("",xL,yL,[],[2]);|\\
 \end{cmd}
 
 %--------Changetablestyle------------------------------------
@@ -2756,7 +2748,7 @@ The points are movable.
 \itemket{Description}Table function to change line styles of rules.
 \itemket{Examples}\mbox{}
 
-\verb|Tabledatalight("",[10,20,10,20],[10,10,10],[]);|\\
+\verb|Tabledata([10,20,10,20],[10,10,10],[]);|\\
 \verb|ChangeTablestyle(["r1c0c4"],["da"]);|\\
 \verb|ChangeTablestyle(["r2c0c2","c1r0r3"],["nodisp"]);|
 
@@ -2776,7 +2768,7 @@ The result is a list of center, half of width, half of height.
 
 \itemket{Examples}\mbox{}
 
-\verb|Tabledatalight("",[10,20,10,20],[10,10,10],[]);|\\
+\verb|Tabledata([10,20,10,20],[10,10,10],[]);|\\
 \verb|tmp=Findcell("c2r0","c3r1");| The return is [[3.5,2.5],0.5,0.5].\\
 \verb|tmp=Findcell("c0r1","c2r3");| The return is [[1.5,1],1.5,1] .
 \end{cmd}
@@ -2794,7 +2786,7 @@ Minute movements can be added.
 \verb|xL=apply(1..5,20);|\\
 \verb|yL=apply(1..2,20);|\\
 \verb|rL=["c2r2r3","c5r2r3"];|\\
-\verb|Tabledatalight("",xL,yL,rL);|\\
+\verb|Tabledata(xL,yL,rL);|\\
 \verb|Putcell("c0r0","c1r1","c","A");|\\
 \verb|Putcell("c1r0","c3r1","l2","B");|\\
 \verb|Putcell("c0r1","c2r2","rt","C");|\\
@@ -2805,9 +2797,9 @@ Minute movements can be added.
 \end{center}
 \end{cmd}
 
-%----------PutcoL----------------------------------
-\begin{cmd}{PutcoL}{putcoL}
-\itemket{Usage}PutcoL (column number, position, a list of strings);
+%----------Putcol----------------------------------
+\begin{cmd}{Putcol}{putcol}
+\itemket{Usage}Putcol (column number, position, a list of strings);
 \itemket{Description}Table function to put strings to a column.
 \itemket{Details}
 The position is as \verb|Putcell|.\\
@@ -2816,9 +2808,9 @@ Null string is available.
 \itemket{Reference}  \hyperlink{putrow}{Putrow}.
 \end{cmd}
 
-%--------------PutcoLexpr------------------------------
-\begin{cmd}{PutcoLexpr}{putcoLexpr}
-\itemket{Usage}PutcoLexpr (column number, position, a list of mathematical expressions);
+%--------------Putcolexpr------------------------------
+\begin{cmd}{Putcolexpr}{putcolexpr}
+\itemket{Usage}Putcolexpr (column number, position, a list of mathematical expressions);
 \itemket{Description}Table function to put strings to a column.
 \itemket{Reference} \hyperlink{putrowexpr}{Putrowexpr}.
 \end{cmd}
@@ -2827,7 +2819,7 @@ Null string is available.
 \begin{cmd}{Putrow}{putrow}
 \itemket{Usage}Putrow (row number, position, a list of strings);
 \itemket{Description}Table function to put strings to a row.
-\itemket{Reference} \hyperlink{putcoL}{PutcoL}. 
+\itemket{Reference} \hyperlink{putcol}{Putcol}. 
 \end{cmd}
 
 %--------------Putrowexpr------------------------------
@@ -2836,11 +2828,13 @@ Null string is available.
 \itemket{Description}Table function to put strings to a row.
 \itemket{Examples} 
 
-In PutcoLexpr (), Putrowexpr (), formulas and general \TeX  sentences can be entered.
+In Putcolexpr (), Putrowexpr (), formulas and general \TeX  sentences can be entered.
 
-\verb|Tabledata("",5,3,100,45,["c1r1r2","r1c2c3","r2c2c3"]);|\\
-\verb|PutcoL(3,"c",["A","B","C"]);|\\
-\verb|PutcoLexpr(4,"l",["x^2","y=\sqrt{x^3}"]);|\\
+\verb|xL=apply(1..5,20);|\\
+\verb|xL=apply(1..3,15);|\\
+\verb|Tabledata(xL,yL,["c1r1r2","r1c2c3","r2c2c3"]);|\\
+\verb|Putcol(3,"c",["A","B","C"]);|\\
+\verb|Putcolexpr(4,"l",["x^2","y=\sqrt{x^3}"]);|\\
 \verb|Putrow(1,"c",[1,"two"]);|\\
 \verb|Putrowexpr(3,"c",["","\frac{\pi}{2}","","","\sum{x^2}"]);|\\
 
@@ -5726,12 +5720,11 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{changetablestyle}{Changetablestyle} \> change line styles of rules.\\
 \hyperlink{findcell}{Findcell} \> return the information of a cell.\\
 \hyperlink{putcell}{Putcell} \> put a string at the cell.\\
-\hyperlink{putcoL}{PutcoL} \> put strings to a column.\\
-\hyperlink{putcoLexpr}{PutcoLexpr} \> put strings to a column.\\
+\hyperlink{putcol}{Putcol} \> put strings to a column.\\
+\hyperlink{putcolexpr}{Putcolexpr} \> put strings to a column.\\
 \hyperlink{putrow}{Putrow} \> put strings to a row.\\
 \hyperlink{putrowexpr}{Putrowexpr} \> put strings to a row.\\
 \hyperlink{tabledata}{Tabledata} \> draw rules of a table.\\
-\hyperlink{tabledatalight}{Tabledatalight} \> make a table without geometric points.\\
 \hyperlink{tgrid}{Tgrid} \> return the coordinates of the grid name.\\
 \hyperlink{tlistplot}{Tlistplot} \> connect two lattice points by line segments.\\
 

@@ -1,3 +1,5 @@
+// 20190429
+//    Colorname2rgb changed (lightgray added)
 // 20190426
 //    Pointdata debugged ( case of geo-point )
 // 20190428

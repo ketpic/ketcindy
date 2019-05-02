@@ -44,4 +44,4 @@ Findfun,basic3,3085,3152,Removespace,Indexall
 Extractfun,basic3,3156,3173,Indexall,Findfun
 Extractall,basic3,3182,3226
 Textedit,basic3,3230,3236
-Mkketcindyjs,basic3,3240,3715,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,subtring,Removespace,Indexof,Indexall,Dqq
+Mkketcindyjs,basic3,3240,3729,Strsplit,Toupper,Colorcode,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,subtring,Removespace,Indexof,Indexall,Dqq

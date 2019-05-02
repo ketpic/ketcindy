@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190430] loaded");
+println("ketcindylibbasic3[20190502] loaded");
 
 //help:start();
 
@@ -3244,7 +3244,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore="]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,out,Out,igno); //190416 DL globalized
+      nolabel,color,grid,out,Out,igno,onlyflg); //190416 DL globalized
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -3342,7 +3342,10 @@ Mkketcindyjs(options):=( //17.11.18
     );
     tmp2=[];
     ketflg="off"; 
+    onlyflg="off"; //190502
     forall(htmorg_(from..upto),
+      if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
+      if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
       if(indexof(#,"no ketjs")>0,
         if(indexof(#,"no ketjs on")>0,
           ketflg="on";
@@ -3356,10 +3359,9 @@ Mkketcindyjs(options):=( //17.11.18
           if(substring(tmp,0,2)!="//",
             tmp2=append(tmp2,#);
           ,
-             tmp=indexof(#,"only ketjs"); //190430from
-             if(tmp>0,
-               tmp=substring(#,0,tmp-1);
-               tmp=Removespace(tmp);
+             tmp1=indexof(tmp,"only ketjs"); //190430from
+             if((tmp1>0)%(onlyflg=="on"), //190502
+               if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
                tmp2=append(tmp2,substring(tmp,2,length(tmp)));
              ); //190430to
           );
@@ -3378,7 +3380,10 @@ Mkketcindyjs(options):=( //17.11.18
       );
     );
     ketflg="off"; 
+    onlyflg="off"; //190502
     forall(htmorg_(from..upto),
+      if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
+      if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
       if(indexof(#,"no ketjs")>0,
         if(indexof(#,"no ketjs on")>0,
           ketflg="on";
@@ -3392,10 +3397,9 @@ Mkketcindyjs(options):=( //17.11.18
           if(substring(tmp,0,2)!="//",
             tmp2=append(tmp2,#);
           ,
-            tmp=indexof(#,"only ketjs"); //190430from
-            if(tmp>0,
-              tmp=substring(#,0,tmp-1);
-              tmp=Removespace(tmp);
+            tmp1=indexof(tmp,"only ketjs"); //190430from
+            if((tmp1>0)%(onlyflg=="on"), //190502
+              if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
               tmp2=append(tmp2,substring(tmp,2,length(tmp)));
             ); //190430to
           );
@@ -3500,7 +3504,10 @@ Mkketcindyjs(options):=( //17.11.18
       lib=libL_tmp;
       tmp1=lib_(from..upto); //190209from
       ketflg="off"; //190122from
+      onlyflg="off"; //190502
       forall(tmp1,
+        if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
+        if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
         if(indexof(#,"no ketjs")>0,
           if(indexof(#,"no ketjs on")>0,
             ketflg="on";
@@ -3514,10 +3521,9 @@ Mkketcindyjs(options):=( //17.11.18
             if(substring(tmp,0,2)!="//",
               println(SCEOUTPUT,#);
             ,
-              tmp=indexof(#,"only ketjs"); //190430from
-              if(tmp>0,
-                tmp=substring(#,0,tmp-1);
-                tmp=Removespace(tmp);
+              tmp1=indexof(tmp,"only ketjs"); //190430from
+              if((tmp1>0)%(onlyflg=="on"), //190502
+                if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
                 println(SCEOUTPUT,subtring(tmp,2,length(tmp)));
               ); //190430to
             );
@@ -3532,7 +3538,10 @@ Mkketcindyjs(options):=( //17.11.18
       upto=tmp_3;
       tmp1=htmorg_((from+1)..(upto-1)); //190119
       ketflg="off"; //190206from
+      onlyflg="off";  //190502
       forall(tmp1,
+        if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
+        if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
         if(indexof(#,"no ketjs")>0,
           if(indexof(#,"no ketjs on")>0,
             ketflg="on";
@@ -3547,8 +3556,9 @@ Mkketcindyjs(options):=( //17.11.18
               println(SCEOUTPUT,#);
             ,
               tmp1=indexof(tmp,"only ketjs"); //19020l6from
-              if(tmp1>0,
-                println(SCEOUTPUT,substring(tmp,2,tmp1-1));
+              if((tmp1>0)%(onlyflg=="on"), //190502
+                if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
+                println(SCEOUTPUT,substring(tmp,2,length(tmp)));
               ); //190206to
             );
           );
@@ -3565,7 +3575,10 @@ Mkketcindyjs(options):=( //17.11.18
     upto=tmp_3;
     tmp1=htmorg_(from..upto);
     ketflg="off"; //190202from
-    forall(tmp1,
+    onlyflg="off"; //190502
+   forall(tmp1,
+      if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
+      if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
       if(indexof(#,"no ketjs")>0,
         if(indexof(#,"no ketjs on")>0,
           ketflg="on";
@@ -3580,8 +3593,9 @@ Mkketcindyjs(options):=( //17.11.18
             println(SCEOUTPUT,#);
           ,
             tmp1=indexof(tmp,"only ketjs"); //19020l6from
-            if(tmp1>0,
-              println(SCEOUTPUT,substring(tmp,2,tmp1-1));
+            if((tmp1>0)%(onlyflg=="on"), //190502
+               if(tmp1>0,tmp=substring(tmp,0,tmp1-1)); //190502
+               println(SCEOUTPUT,substring(tmp,2,length(tmp))); //190502
             ); //190206to
           );
         );

@@ -1,3 +1,5 @@
+// 20190502
+      Mkketcindyjs changed ( only ketjs on/off added )
 // 20190430
 //    Textedit added
 //    Mkketcindyjs debugged  ( only ketjs)

@@ -12,6 +12,7 @@ Defvar
 Dottedline
 Drwline
 Example
+Figpdf
 Fillstore
 Fontsize
 Help
@@ -28,6 +29,7 @@ RSform
 RSslash
 Setfiles
 Setketcindyjs
+Setparent
 Setslidebody
 Setslidehyper
 Texcom

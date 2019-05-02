@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190429] loaded");
+println("ketcindylibbasic2[20190502] loaded");
 
 //help:start();
 
@@ -165,7 +165,7 @@ Arrowheaddata(point,direction,options):=(
         pB=Ptcrv(rF+1-Nj,Houkou);
         tmp1=apply([pP,pB],LLcrd(#));
         tmp2=apply(gG,LLcrd(#));
-        tmp=IntersectcrvsPp([pP,pB],gG);
+        tmp=Intersectcrvspp([pP,pB],gG);
         if(length(tmp)>0,
           Houkou=pP-Pcrd(tmp_1_1);
           Flg=1;
@@ -619,7 +619,7 @@ Anglemark(nm,plist,options):=(
         if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         ); //no ketjs off
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
         if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
@@ -710,7 +710,7 @@ Paramark(nm,plist,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -723,8 +723,8 @@ Paramark(nm,plist,options):=(
 );
 ////%Paramark end////
 
-////%MakeBowdata start////
-MakeBowdata(pA,pB,Hgt):=(
+////%Makebowdata start////
+Makebowdata(pA,pB,Hgt):=(
   regional(angle,pB2,pH2,pC2,pC,tmp,Th1,Th2,ra,dMA);
   angle=arctan2(pB-pA)+0;
   pB2=Rotatepoint(pB,-angle,pA);
@@ -738,7 +738,7 @@ MakeBowdata(pA,pB,Hgt):=(
   Th2=arctan2(pB2-pC2)+angle;
   [pC,ra,Th1,Th2];
 );
-////%MakeBowdata end////
+////%Makebowdata end////
 
 ////%Bowdata start////
 Bowdata(plist):=Bowdata(plist,[]);
@@ -808,7 +808,7 @@ Bowdata(nm,plist,options):=(
       Msg=Toupper(substring(tmp_2,0,1));
     ); //190206to
   );
-  Ydata=MakeBowdata(pA,pB,Hgt); 
+  Ydata=Makebowdata(pA,pB,Hgt); 
   pC=Ydata_1;
   ra=Ydata_2;
   Th=(Ydata_3+Ydata_4)*0.5;
@@ -903,7 +903,7 @@ Bowdata(nm,plist,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722 
       ); //no ketjs off
@@ -1138,7 +1138,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -1184,7 +1184,7 @@ EnclosingS(nm,plist,options):=(
 //  tmp1=concat([Eps,EEps],eqL); // 15.04.06
   Fdata=plist_1;
   Gdata=plist_(length(plist));
-  KL=IntersectcrvsPp(Fdata,Gdata);
+  KL=Intersectcrvspp(Fdata,Gdata);
   if(length(KL)==1,
     pt=KL_1_1;
     t1=KL_1_2;
@@ -1230,7 +1230,7 @@ EnclosingS(nm,plist,options):=(
       Flg=0;
       Gdata=plist_(nn+1);
 //      tmp1=concat([Eps,EEps],eqL); // 15.04.06
-      KL=IntersectcrvsPp(Gdata,Fdata);
+      KL=Intersectcrvspp(Gdata,Fdata);
       if(length(KL)==1,
         tmp=KL_1;
         qt=KL_1_1;
@@ -1299,7 +1299,7 @@ EnclosingS(nm,plist,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -1366,7 +1366,7 @@ Enclosing2(nm,plistorg,options):=(
   if(flg==0,
     Fdata=plist_1;
     Gdata=plist_(length(plist));
-    KL=IntersectcurvesPp(Fdata,Gdata);
+    KL=Intersectcurvespp(Fdata,Gdata);
     if(length(KL)==0,
       tmp=parse(Gdata);
       tmp1=LLcrd(Op(length(tmp),tmp)); //18.02.02from
@@ -1405,7 +1405,7 @@ Enclosing2(nm,plistorg,options):=(
       Fdata=plist_nn;
       if(nn==length(plist),nxtno=1,nxtno=nn+1);
       Gdata=plist_nxtno;
-      KL=IntersectcurvesPp(Fdata,Gdata);
+      KL=Intersectcurvespp(Fdata,Gdata);
       if(length(KL)==0,
         tmp1=parse(Fdata); //18.02.02from
         tmp2=parse(Gdata); 
@@ -1470,7 +1470,7 @@ Enclosing2(nm,plistorg,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -1877,7 +1877,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -1913,7 +1913,7 @@ Shadein(pstrorg):=( //190220
   if(islist(pstrorg),pstr=pstrorg_1,pstr=pstrorg);
   crv=[];
   Framedata(["nodisp"]);
-  ptL=IntersectcurvesPp(pstr,frwin);
+  ptL=Intersectcurvespp(pstr,frwin);
   if(length(ptL)>0,
     pL=apply(ptL,#_2);
     forall(1..(length(pL)),nn,
@@ -1946,7 +1946,7 @@ Shadein(pstrorg):=( //190220
           p2=Pointoncrv(mod(tmp,4)+1,"frwin");
           tmp=p1-10*(p2-p1);
           Listplot("frwin",[p1,tmp],["nodisp","Msg=n"]);
-          tmp=IntersectcurvesPp("sgfrwin",pstr);
+          tmp=Intersectcurvespp("sgfrwin",pstr);
           if(mod(length(tmp),2)==0, //190223from
             if(pm2<pm1,pm2=pm2+4); 
             tmp=[tmp1];
@@ -2279,7 +2279,7 @@ Rotatedata(nm,plist,angle,optionorg):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -2361,7 +2361,7 @@ Translatedata(nm,plist,mov,optionorg):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -2467,7 +2467,7 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -2565,7 +2565,7 @@ Reflectdata(nm,plist,symL,optionorg):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -3215,23 +3215,24 @@ Bezierpt(t,ptlist,ctrlist):=(
 ////%Bezierpt end////
 
 ////%Bezier start////
-Bezier(ptctrlist):=BezierCurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,[]);
+Bezier(ptctrlist):=Beziercurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,[]);
 Bezier(Arg1,Arg2):=( //190202from
   regional(nm,ptctrlist,options);
   if(islist(Arg1),
     ptctrlist=Arg1; options=Arg2;
-    BezierCurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,options);
+    Beziercurve(ptctrlist_3,ptctrlist_1,ptctrlist_2,options);
   ,
     nm=Arg1; ptctrlist=Arg2;
-    BezierCurve(nm,ptctrlist_1,ptctrlist_2,[]);
+    Beziercurve(nm,ptctrlist_1,ptctrlist_2,[]);
   );
 ); //190202to
-Bezier(nm,ptlist,ctrlist):=BezierCurve(nm,ptlist,ctrlist,[]);
-Bezier(nm,ptlist,ctrlist,options):=BezierCurve(nm,ptlist,ctrlist,options);
+Bezier(nm,ptlist,ctrlist):=Beziercurve(nm,ptlist,ctrlist,[]);
+Bezier(nm,ptlist,ctrlist,options):=Beziercurve(nm,ptlist,ctrlist,options);
 ////%Bezier end////
-////%BezierCurve start////
-BezierCurve(nm,ptlist,ctrlist):=BezierCurve(nm,ptlist,ctrlist,[]);
-BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
+
+////%Beziercurve start////
+Beziercurve(nm,ptlist,ctrlist):=Beziercurve(nm,ptlist,ctrlist,[]);
+Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
 //help:Bezier("1",[A,D],[B,C]);
 //help:Bezier(options=["Num=10"]);
   regional(name,Ltype,Noflg,opstr,opcindy,Num,
@@ -3296,7 +3297,7 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -3308,7 +3309,7 @@ BezierCurve(nm,ptlistorg,ctrlistorg,options):=(
   BezierCtrL=ctrlist; //181001
   list;
 );
-////%BezierCurve end////
+////%Beziercurve end////
 
 ////%Putbezierdata start////
 Putbezierdata(name,ptL):=Putbezierdata(name,ptL,[]);
@@ -3689,8 +3690,8 @@ Bspline(nm,ctrL,options):=(
 );
 ////%Bspline end////
 
-////%MeetCurve start////
-MeetCurve(Crv,Xorg,Yorg):=(
+////%Meetcurve start////
+Meetcurve(Crv,Xorg,Yorg):=(
   regional(Cv,tmp,tmp1,tmp2,X0,Y0,x1,x2,y1,y2,Ylist,Ban,Tate);
   if(isstring(Crv),Cv=parse(Crv),Cv=Crv);
   if(Measuredepth(Cv)==2,Cv=Cv_1);
@@ -3751,7 +3752,7 @@ MeetCurve(Crv,Xorg,Yorg):=(
   tmp=sort(Ylist,abs(#_1-Y0));
   [X0,tmp_1];
 );
-////%MeetCurve end////
+////%Meetcurve end////
 
 ////%Putonline start////
 Putonline(name,linestr):=Putonline(name,linestr,[]); //190216from
@@ -3850,8 +3851,8 @@ Putoncurve(pn,crvorg,options):=(
 );
 ////%Putoncurve end////
 
-////%CrossPoint start////
-CrossPoint(name,Crv1,Crv2,range):=(
+////%Crosspoint start////
+Crosspoint(name,Crv1,Crv2,range):=(
   regional(Mx1,Mx2,Mx3,tmp,Crs1,Crs2,Crs3,Crs4,df1,df2);
   Mx1=range_1; Mx2=range_2;
   repeat(15,
@@ -3870,7 +3871,7 @@ CrossPoint(name,Crv1,Crv2,range):=(
   );
   Putpoint(name,Crs1);
 );
-////%CrossPoint end////
+////%Crosspoint end////
 
 ////%Periodfun start////
 Periodfun(defL,rep):=Periodfun(defL,rep,[]);
@@ -4854,7 +4855,7 @@ Extractdata(number,name,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -4867,8 +4868,8 @@ Extractdata(number,name,options):=(
 );
 ////%Extractdata end////
 
-////%RemoveOut start////
-RemoveOut(pltlist):=(
+////%Removeout start////
+Removeout(pltlist):=(
   regional(name,tmp,tmp1,tmp2);
   forall(pltlist,name,
     tmp1=[];
@@ -4879,7 +4880,7 @@ RemoveOut(pltlist):=(
     GOUTLIST=tmp1;
   );  
 );
-////%RemoveOut end////
+////%Removeout end////
 
 ////%Makecmdlist start////
 Makecmdlist(libname):=(

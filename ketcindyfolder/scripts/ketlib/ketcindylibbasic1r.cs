@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190429] loaded");
+println("ketcindylibbasic1[20190502] loaded");
 
 //help:start();
 
@@ -868,7 +868,7 @@ Changestyle(nameL,style):=(
           if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
             Texcom("{");Com2nd("Setcolor("+color+")");//180722
           ); //no ketjs off
-          Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+          Ltype=Getlinestyle(text(Noflg)+Ltype,name);
           if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
             Texcom("}");//180722
           ); //no ketjs off
@@ -1661,11 +1661,11 @@ Koutenseg(pA,pB,pC,pD,options):=(
 
 ///////// Start of old Intersect ////////////
 
-////%IntersectcrvsPp start////
-IntersectcrvsPp(Gr1,Gr2):=IntersectcrvsPp(Gr1,Gr2,[]);
-IntersectcrvsPp(Gr1,Gr2,options):=(
-//help:IntersectcrvsPp("gr1","pa1");
-//help:IntersectcrvsPp(options=[Eps2(0.1),"Dif=0.05"]);
+////%Intersectcrvspp start////
+Intersectcrvspp(Gr1,Gr2):=Intersectcrvspp(Gr1,Gr2,[]);
+Intersectcrvspp(Gr1,Gr2,options):=(
+//help:Intersectcrvspp("gr1","pa1");
+//help:Intersectcrvspp(options=[Eps2(0.1),"Dif=0.05"]);
   regional(Out,Eps,Eps2,Eps0,Flg,Data1,Data2,
     Tmp1,Tmp2,Tmp3,Tmp,KL1,KL2,pA,pB,Ni,Nj,
     pP,pQ,rT,Flg,eqL,realL,opstr,Dif);
@@ -1806,14 +1806,14 @@ IntersectcrvsPp(Gr1,Gr2,options):=(
   ); // 15.04.06 until
   Out;
 );
-////%IntersectcrvsPp end////
+////%Intersectcrvspp end////
 
 ////%Intersectcrvs start////
 Intersectcrvs(Gr1,Gr2):=Intersectcrvs(Gr1,Gr2,[]);
 //help:Intersectcrvs("gr1","pa1");
 Intersectcrvs(Gr1,Gr2,options):=(
   regional(tmp,tmp1,tmp2);
-  tmp1=IntersectcrvsPp(Gr1,Gr2,options);
+  tmp1=Intersectcrvspp(Gr1,Gr2,options);
   apply(tmp1,#_1);
 );
 ////%Intersectcrvs end////
@@ -2125,11 +2125,11 @@ Collectsameseg(ptdL):=(
 );
 ////%Collectsameseg end////
 
-////%IntersectcurvesPp start////
-IntersectcurvesPp(crv1org,crv2org):=IntersectcurvesPp(crv1org,crv2org,[]);
-IntersectcurvesPp(crv1org,crv2org,options):=(
-//help:IntersectcurvesPp(crv1,crv2);
-//help:IntersectcurvesPp(options=[Eps1(0.01),Eps2(0.1),Dist(2)])
+////%Intersectcurvespp start////
+Intersectcurvespp(crv1org,crv2org):=Intersectcurvespp(crv1org,crv2org,[]);
+Intersectcurvespp(crv1org,crv2org,options):=(
+//help:Intersectcurvespp(crv1,crv2);
+//help:Intersectcurvespp(options=[Eps1(0.01),Eps2(0.1),Dist(2)])
   regional(Eps,Eps1,Eps2,Dist,crv1,crv2,ii,jj,seg1,seg2,self,loopL,out,
           flg,tmp,tmp1,tmp2);
   Eps=10^(-4);
@@ -2233,7 +2233,7 @@ IntersectcurvesPp(crv1org,crv2org,options):=(
   );  //190221to
   out;
 );
-////%IntersectcurvesPp end////
+////%Intersectcurvespp end////
 
 ////%Intersectcurves start////
 Intersectcurves(crv1org,crv2org):=Intersectcurves(crv1org,crv2org,[]);
@@ -2241,15 +2241,15 @@ Intersectcurves(crv1org,crv2org,options):=(
 //help:Intersectcurves(crv1,crv2);
 //help:Intersectcurves(options=[Eps1(0.1),Dist(2)])
   regional(tmp);
-  tmp=IntersectcurvesPp(crv1org,crv2org,options);
+  tmp=Intersectcurvesop(crv1org,crv2org,options);
   tmp=apply(tmp,#_1);
 );
 ////%Intersectcurves end////
 
 ///////////End of new Intersect //////////////
 
-////%NearestptcrvPhy start////
-NearestptcrvPhy(point,PL):=(
+////%Nearestptcrvphy start////
+Nearestptcrvphy(point,PL):=(
   regional(tmp,pP,plist);
   pP=Pcrd(point);
   if(isstring(PL),plist=parse(PL),plist=PL);
@@ -2259,7 +2259,7 @@ NearestptcrvPhy(point,PL):=(
   tmp=tmp_1;
   [tmp_1/SCALEX,tmp_2/SCALEY];
 );
-////%NearestptcrvPhy end////
+////%Nearestptcrvphy end////
 
 ////%Nearestptcrv start////
 Nearestptcrv(point,plist):=(
@@ -2357,7 +2357,7 @@ Derivative(Arg1,Arg2,Arg3):=(//1807120
       ,
         tmp1=Lineplot("",[[0,v],[1,v]],["nodata"]);
       );
-      tmp=IntersectcurvesPp(pdstr,tmp1);
+      tmp=Intersectcurvespp(pdstr,tmp1);
       if(length(tmp)==0,
          println("    Derivative cannot be found");
          out="";
@@ -2450,7 +2450,7 @@ Tangentplot(nm,pdstr,ptinfo,optionsorg):=(
     ,
       tmp1=Lineplot("",[[0,v],[1,v]],["nodata"]);
     );
-    tmp=IntersectcurvesPp(pdstr,tmp1);
+    tmp=Intersectcurvespp(pdstr,tmp1);
     if(length(tmp)==0,//1807120
       println("   Derivative cannot be calculated");
       flg=1;
@@ -2629,8 +2629,8 @@ IntegrateO(pltdata,rangeorg):=(
     range=reverse(range);
     pmflg=-1;
   );
-  va1=MeetCurve(pdata,range_1,0);
-  va2=MeetCurve(pdata,range_2,0);
+  va1=Meetcurve(pdata,range_1,0);
+  va2=Meetcurve(pdata,range_2,0);
   list=select(pdata,(#_1>range_1 & #_1<range_2));
   if(length(list)>0,  // 16.09.25
     if(list_1_1>list_(length(list))_1, //16.11.03
@@ -3434,8 +3434,8 @@ Colorname2rgb(name):=( //181212
 );
 ////%Colorname2rgb end////
 
-////%GetLinestyle start////
-GetLinestyle(str,name):=(
+////%Getlinestyle start////
+Getlinestyle(str,name):=(
   regional(noflg,tmp,tmp1,tmp2,Dop,Ltype,subflg);
   Ltype=-1;
   Dop="";
@@ -3502,7 +3502,7 @@ GetLinestyle(str,name):=(
   );
   Ltype;
 );
-////%GetLinestyle end////
+////%Getlinestyle end////
 
 ////%Chunderscore start////
 Chunderscore(str):=(
@@ -3635,7 +3635,7 @@ AddGraph(nm,pltdata,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -3734,7 +3734,7 @@ Joincrvs(nm,plotstrL,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -3827,7 +3827,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -4050,7 +4050,7 @@ Listplot(nm,list,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180711
      ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180711
       ); //no ketjs off
@@ -4121,7 +4121,7 @@ Lineplot(nm,list,optionorg):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -4329,7 +4329,7 @@ Plotdata(name1,func,variable,options):=(
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         ); //no ketjs off
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
@@ -4345,7 +4345,7 @@ Plotdata(name1,func,variable,options):=(
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         ); //no ketjs off
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
@@ -4505,7 +4505,7 @@ Paramplot(nm,funstr,variable,options):=(
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         ); //no ketjs off
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
@@ -4521,7 +4521,7 @@ Paramplot(nm,funstr,variable,options):=(
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         ); //no ketjs off
-        Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
         if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
@@ -4744,7 +4744,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -4867,7 +4867,7 @@ Circledata(nm,cenrad,options):=(
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
@@ -5004,7 +5004,7 @@ Ovaldata(nm,Pdata,options):=(
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off

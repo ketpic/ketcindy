@@ -220,7 +220,7 @@ Readbezier(file,optionorg):=(
     if(tmp=="G",geo=1);
     options=remove(options,[#]);
   );
-  ReadOutData(file);
+  Readoutdata(file);
   tmp=file+"n_1_1";
   nn=parse(tmp);
   out=[];
@@ -734,21 +734,21 @@ WritetoRS(filename,shchoice):=(
 );
 ////%WritetoRS end////
 
-////%ReadOutData start////
-ReadOutData():=ReadOutData(Fnameout);
-ReadOutData(filename):=ReadOutData("",filename);  //16.03.07
-ReadOutData(Arg1,Arg2):=( //181030from
+////%Readoutdata start////
+Readoutdata():=Readoutdata(Fnameout);
+Readoutdata(filename):=Readoutdata("",filename);  //16.03.07
+Readoutdata(Arg1,Arg2):=( //181030from
   if(islist(Arg2),
-    ReadOutData("",Arg1,Arg2);
+    Readoutdata("",Arg1,Arg2);
   ,
-    ReadOutData(Arg1,Arg2,[]);
+    Readoutdata(Arg1,Arg2,[]);
   );
 ); //181030to
-ReadOutData(pathorg,filenameorg,optionsorg):=(
-//help:ReadOutData();
-//help:ReadOutData("file.txt");
-//help:ReadOutData("/datafolder","file.txt");
-//help:ReadOutdata(options=["Disp=n(/y)]");
+Readoutdata(pathorg,filenameorg,optionsorg):=(
+//help:Readoutdata();
+//help:Readoutdata("file.txt");
+//help:Readoutdata("/datafolder","file.txt");
+//help:Readoutdata(options=["Disp=n(/y)]");
   regional(options,path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
      nmbr,cmdall,cmd,cmdorg,outdt,goutdt,eqL,dispflg);
   options=optionsorg;
@@ -849,11 +849,11 @@ ReadOutData(pathorg,filenameorg,optionsorg):=(
   ); //181024to
   varL;
 );
-////%ReadOutData end////
+////%Readoutdata end////
 
-////%WriteOutData start////
-WriteOutData(filename,ptlist):=(
-//help:WriteOutData("file.txt",["g1",gr1,"sg",sgAB]);
+////%Writeoutdata start////
+Writeoutdata(filename,ptlist):=(
+//help:Writeoutdata("file.txt",["g1",gr1,"sg",sgAB]);
 //help:Writeoutdata("file.txt",["g1",gr1,"sg",sgAB]);
   regional(nn,Gname,Gdata,Str,Gstr,Gj,Pt,Flg,tmp,tmp1,loopend);
   Flg=0;
@@ -915,7 +915,7 @@ WriteOutData(filename,ptlist):=(
   Gstr=substring(Gstr,0,length(Gstr)-1)+"]";
   println("writeoutdata "+filename+":"+Gstr);
 );
-////%WriteOutData end////
+////%Writeoutdata end////
 
 ////%Makeshell start////
 Makeshell():=(
@@ -3524,7 +3524,7 @@ Mkketcindyjs(options):=( //17.11.18
               tmp1=indexof(tmp,"only ketjs"); //190430from
               if((tmp1>0)%(onlyflg=="on"), //190502
                 if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
-                println(SCEOUTPUT,subtring(tmp,2,length(tmp)));
+                println(SCEOUTPUT,substring(tmp,2,length(tmp)));
               ); //190430to
             );
           ); //190122to

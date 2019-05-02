@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190416] loaded");
+println("ketcindylib3d[20190502] loaded");
 
 //help:start();
 
@@ -524,7 +524,7 @@ Projpara(ptdata,optionsorg):=(
         if(color!=KCOLOR, //180904
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
         );
-		Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+		Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
         if(color!=KCOLOR, //180904
           Texcom("}");//180722
         );
@@ -545,8 +545,8 @@ Projpara(ptdata,optionsorg):=(
 );
 ////%Projpara end////
 
-////%InvparaptPp start////
-InvparaptPp(pt,pd):=(
+////%Invparaptpp start////
+Invparaptpp(pt,pd):=(
   regional(Eps,fk,nfk,ph,fh,ah,bh,ak,bk,v1,v2,
     nn,s0,t2,out,tmp,tmp1,tmp2,flg);
   Eps=10^(-4);
@@ -602,12 +602,12 @@ InvparaptPp(pt,pd):=(
   );
   out;
 );
-////%InvparaptPp end////
+////%Invparaptpp end////
 
 ////%Invparapt start////
 Invparapt(pt,pd):=(
   regional(tmp);
-  tmp=InvparaptPp(pt,pd);
+  tmp=Invparaptpp(pt,pd);
   tmp_1;
 );
 ////%Invparapt end////
@@ -714,7 +714,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -881,7 +881,7 @@ Spacecurve(nm,funstr,variable,optionorg):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1020,7 +1020,7 @@ Joincrvs3d(nm,plotstrL,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1118,7 +1118,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1291,7 +1291,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1457,7 +1457,7 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1554,7 +1554,7 @@ Translatedata3d(nm,P3data,w1,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-	  Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1651,7 +1651,7 @@ Reflectdata3d(nm,P3data,vecL,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1747,7 +1747,7 @@ Scaledata3d(nm,P3data,ratio,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -1773,9 +1773,9 @@ Xyzcoord(X,Y,ps):=(
 );
 ////%Xyzcoord end////
 
-////%PutonCurve3d start////
-PutonCurve3d(name,pdstr):=(
-//help:PutonCurve3d("T","sc3d1");
+////%Putoncurve3d start////
+Putoncurve3d(name,pdstr):=(
+//help:Putoncurve3d("T","sc3d1");
   regional(pt,pd2str,tmp,tmp1,tmp2);
   pd2str=replace(pdstr,"3d","2d");
   PutonCurve(name,pd2str);
@@ -1783,7 +1783,7 @@ PutonCurve3d(name,pdstr):=(
   tmp=Nearestpt(pt,pd2str);  // 15.03.13
   tmp1=Paramoncurve(tmp_1,tmp_2,pd2str);
   tmp="sub"+pd2str;
-  tmp2=PointonCurve(tmp1,tmp);
+  tmp2=Pointoncurve(tmp1,tmp);
 //  pt=append(pt,tmp2_2); //181028[2lines]
   pt=Xyzcoord(pt,tmp2); // 15.03.13
   tmp=name+"z.xy="+textformat(tmp2,5)+";"; //190415
@@ -1791,7 +1791,7 @@ PutonCurve3d(name,pdstr):=(
  // VLIST=select(VLIST,#_1!=name+"3d");
   Defvar(name+"3d",pt);
 );
-////%PutonCurve3d end////
+////%Putoncurve3d end////
 
 ////%Mkpointlist start////
 Mkpointlist():=Mkpointlist([]); //16.11.12
@@ -2548,7 +2548,7 @@ Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
   if(Noflg<2,
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
@@ -2875,12 +2875,17 @@ Mkobjfile(path,fnameorg,objL):=(
 
 ); //end of skip
 
+////%VertexEdgeFace start//// //190502
+VertexEdgeFace(nm,vfnL):=Vertexedgeface(nm,vfnL,[]); 
+VertexEdgeFace(nm,vfnLorg,optionorg):=Vertexedgeface(nm,vfnLorg,optionorg);
 ////%VertexEdgeFace start////
-VertexEdgeFace(nm,vfnL):=VertexEdgeFace(nm,vfnL,[]);  // 16.02.10
-VertexEdgeFace(nm,vfnLorg,optionorg):=(
-//help:VertexEdgeFace("1",[vL,fnL]);
-//help:VertexEdgeFace("1",["A","B","C"]);
-//help:VertexEdgeFace(options=["Vtx=n(y)" ',"Pt=fix") ,"Edg=n(y)","Label=8"]);
+
+////%Vertexedgeface start////
+Vertexedgeface(nm,vfnL):=Vertexedgeface(nm,vfnL,[]);  // 16.02.10
+Vertexedgeface(nm,vfnLorg,optionorg):=(
+//help:Vertexedgeface("1",[vL,fnL]);
+//help:Vertexedgeface("1",["A","B","C"]);
+//help:Vertexedgeface(options=["Vtx=n(y)" ',"Pt=fix") ,"Edg=n(y)","Label=8(/0)"]);
   regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL, Lsize,
       vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
   name3="phvef"+nm;
@@ -2924,14 +2929,9 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
       );
       options=remove(options,[#]);
     );
-    if(tmp1=="D", //181106from
-      if(substring(tmp2,0,1)=="N",
-        dispflg=0; vtxflg=0; edgflg=0;
-      );
-      options=remove(options,[#]);
-    ); //181106to
     if(tmp1=="L", //190331from
       Lsize=tmp_2;
+      if(Lsize=="0",dispflg=0); //190502
       options=remove(options,[#]);
     ); //190331to
   );
@@ -3054,7 +3054,7 @@ VertexEdgeFace(nm,vfnLorg,optionorg):=(
   );
   [namev,namee,namef];
 );
-////%VertexEdgeFace end////
+////%Vertexedgeface end////
 
 ////%Phparadata start////
 Phparadata(nm,nmvf):=(
@@ -3137,7 +3137,7 @@ Phparadata(nm,nmvf,vfL,options):=(
   if(Noflg<2,
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
@@ -3192,7 +3192,7 @@ Nohiddenseg(seg,rng,triang,Eps):=(
   ss1=Parapt(sg1);
   ss2=Parapt(sg2);
   if(|ss2-ss1|>Eps & abs(Crossprod(pB-pA,pC-pA))>Eps,
-    tmp=IntersectcrvsPp([ss1,ss2],[pA,pB,pC,pA]);
+    tmp=Intersectcrvspp([ss1,ss2],[pA,pB,pC,pA]);
     parL=apply(tmp,#_2-1);
     parL=sort(parL);
     if(length(parL)==0,
@@ -3236,7 +3236,7 @@ Nohiddenseg(seg,rng,triang,Eps):=(
 		sghid=[parL_(#-1),parL_#];
         tmp1=ss1+sghid_1*(ss2-ss1);
         tmp2=ss1+sghid_2*(ss2-ss1);
-        tmp=IntersectcrvsPp([tmp1,tmp2],[pA,pB,pC,pA]);
+        tmp=Intersectcrvspp([tmp1,tmp2],[pA,pB,pC,pA]);
         if(length(tmp)<2,
           veB=pB-pA;
           veC=pC-pA;
@@ -3535,7 +3535,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
   if(Noflg<2,
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
@@ -4555,7 +4555,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,options):=(
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       );
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(color!=KCOLOR, //180904
         Texcom("}");//180722
       );
@@ -4582,7 +4582,7 @@ Makeskeletondata(ObjL,PltL,R0):=(
     forall(1..(length(PltL)),nn,
 	  plt=PltL_nn;
       tmp=Projcurve(plt);
-      koc=IntersectcurvesPp(obj2,tmp);
+      koc=Intersectcurvespp(obj2,tmp);
       forall(1..(length(koc)),kk,
         ptk=koc_kk;
         tmp=PointonCurve(ptk_2,obj);
@@ -4858,7 +4858,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   if((Noflg<2)&(mkflg>-1), //181103
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=GetLinestyle(text(Noflg)+Ltype,name2);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
     ,
       if(Noflg==1,Ltype=0);
@@ -4910,7 +4910,7 @@ Makeskeletondata(Obj2L,Plt2L,R0,Eps2):=(
         tmp=Dind_ii;
         tmp=Dmat_(Dind_ii_1..Dind_ii_2);
         pt2=Columnlist(tmp,1..2);
-        koc=IntersectcrvsPp(pt1,pt2,[Eps]);
+        koc=Intersectcrvspp(pt1,pt2,[Eps]);
         if(length(koc)>0,
           breakflg=0;
           forall(1..(length(koc)),jj,
@@ -5145,8 +5145,8 @@ Kukannozoku(Jokyo,KukanL):=(
 
 ////////////////// end of current skeleton//////////////
 
-////%ProjcoordCurve start////
-ProjcoordCurve(Curve):=(
+////%Projcoordcurve start////
+Projcoordcurve(Curve):=(
   regional(SP,CP,ST,CT,Out,jj,pt,x,y,z,xz,yz,zz);
   SP=sin(PHI); CP=cos(PHI);
   ST=sin(THETA); CT=cos(THETA);
@@ -5161,7 +5161,7 @@ ProjcoordCurve(Curve):=(
   );
   Out;
 );
-////%ProjcoordCurve end////
+////%Projcoordcurve end////
 
 ////%Divnohidhid start////
 Divnohidhid(nm,dt3dorg,nvec):=Divnohidhid(nm,dt3dorg,nvec,[],["do"]);

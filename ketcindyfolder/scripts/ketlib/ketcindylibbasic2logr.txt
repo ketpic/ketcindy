@@ -1,4 +1,6 @@
 // 20190429
+//    Pp => pp, Bow => bow
+// 20190429
 //    Tabledatalight changed ( rng=n when move option used )
 // 20190428
 //    Tabledata changed to Tabledatageo

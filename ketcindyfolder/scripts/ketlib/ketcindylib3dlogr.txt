@@ -1,3 +1,6 @@
+// 20190502
+//    Vertexedgeface changed ( Label=n )
+//    VertexEdgeFace added ( for compatibility with conventional files)
 // 20190416
 //    Xyzaxparaname debugged  ( Label )
 // 20190415

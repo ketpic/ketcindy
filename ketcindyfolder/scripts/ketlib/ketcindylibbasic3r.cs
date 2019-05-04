@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190502] loaded");
+println("ketcindylibbasic3[20190503] loaded");
 
 //help:start();
 
@@ -3024,6 +3024,7 @@ Setketcindyjs():=(
 Setketcindyjs(list):=(
 //help:Setketcindyjs();
 //help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
+//help:Setketcindyjs(["Removept=[]"]);
   regional(eqL,color,tmp);
   KetcindyjsDataList=[]; //190422
   tmp=Divoptions(list);
@@ -3244,16 +3245,17 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore="]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,out,Out,igno,onlyflg); //190416 DL globalized
+      nolabel,color,grid,out,Out,igno,onlyflg,rmptL); //190416 DL globalized
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
-  color="";
+  color="lightgray"; //190503
   grid="";
   path=Dircdy;
   igno=[];
+  rmptL=REMOVEPTJS;
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -3290,15 +3292,6 @@ Mkketcindyjs(options):=( //17.11.18
     if(tmp1=="C", //190209
       if(length(tmp2)>0,
         color=tmp2;
-        if(substring(color,0,1)=="[", //190409from
-          tmp=parse(color);
-          if(length(tmp)==4,
-            tmp=Colorcode("cmyk","rgb",tmp);
-            tmp=apply(tmp,round(#*255));
-            color=text(tmp);
-          );
-          color=substring(color,1,length(color)-1);
-        ); //190409to
       );
     );
     if(tmp1=="G",
@@ -3317,7 +3310,26 @@ Mkketcindyjs(options):=( //17.11.18
         igno=tokenize(tmp2,",");
       );
     );  //190417to
+    if(tmp1=="R",  //190503from
+      if(substring(tmp2,0,1)=="[",
+        tmp2=substring(tmp2,1,length(tmp2)-1);
+        tmp2=tokenize(tmp2,",");
+        rmptL=concat(rmptL,tmp2);
+      );  //190503to
+    );  //190503to
   );
+  if(substring(color,0,1)=="[",
+    tmp=parse(color);
+    if(length(tmp)==4,
+      tmp=Colorcode("cmyk","rgb",tmp);
+    );
+  ,
+    tmp=Colorname2rgb(color); //190503frin
+  ); //190503to
+  tmp=apply(tmp,round(#*255));
+  tmp=text(tmp);
+  color=substring(tmp,1,length(tmp)-1);
+  println([3332,color]);
   if((webflg=="N")&(localflg=="Y"),
     if(!isexists(Dircdy,"ketcindyjs"),
       Copyketcindyjs();
@@ -3576,7 +3588,7 @@ Mkketcindyjs(options):=( //17.11.18
     tmp1=htmorg_(from..upto);
     ketflg="off"; //190202from
     onlyflg="off"; //190502
-   forall(tmp1,
+    forall(tmp1,
       if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
       if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
       if(indexof(#,"no ketjs")>0,

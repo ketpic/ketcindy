@@ -1,5 +1,11 @@
+// 20190505
+//    Ptselected changed (for KeTCinyJS, one point)
+//    text(pt) => pt.name
+// 20190504
+//    Ketinit changed (REMOVEPT,SLIDEFLG)
+//    Colorname2rgb changed  ("cindycolor" added)
 // 20190502
-//    Pp -> pp
+//    Pp -> pp, etc
 // 20190429
 //    Colorname2rgb changed (lightgray added)
 // 20190426

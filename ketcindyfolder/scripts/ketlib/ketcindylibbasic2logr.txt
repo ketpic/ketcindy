@@ -1,3 +1,8 @@
+// 20190505
+//    Periodfun changed  ( equal option added )
+//    text(pt) => pt.name
+// 20190504
+//    Lightarrowdata changed  ("Line=" added )
 // 20190429
 //    Pp => pp, Bow => bow
 // 20190429

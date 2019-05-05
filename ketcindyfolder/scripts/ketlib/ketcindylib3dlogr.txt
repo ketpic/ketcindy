@@ -1,3 +1,15 @@
+// 20190506
+//    Skeletonparadata debugged  ( parseparse for pfe3d )
+// 20190505
+//    Xyzax3data changed  ( Lightarrowdata used,"axx,axy,axz" generated )
+//    isselected changed to Ptselected
+//    text(pt) => pt.name
+//    PointonCurve => Poinoncurve
+//    Makeskeletondata changed  (floor() => re(floor())
+// 20190504
+//    Ketinit3d changed  (Slider part moved to Start3d)
+//    Start3d  changed  ( optionjs (slider,removept) added )
+//    Start3d  debugged  ( SLIDEFLG )
 // 20190502
 //    Vertexedgeface changed ( Label=n )
 //    VertexEdgeFace added ( for compatibility with conventional files)

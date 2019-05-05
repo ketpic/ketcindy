@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190502] loaded");
+println("ketcindylibbasic2[20190505] loaded");
 
 //help:start();
 
@@ -300,7 +300,7 @@ Arrowdata(Arg1,Arg2):=(
     name="";
     forall(Arg1,
       if(ispoint(#),
-        name=name+text(#);
+        name=name+#.name; //190505
       );
     );
     Arrowdata(name,Arg1,Arg2);
@@ -418,7 +418,7 @@ Lightarrowdata(Arg1,Arg2):=(
     name="";
     forall(Arg1,
       if(ispoint(#),
-        name=name+text(#);
+        name=name+#.name; //190505
       );
     );
     Lightarrowdata(name,Arg1,Arg2);
@@ -426,8 +426,8 @@ Lightarrowdata(Arg1,Arg2):=(
 );  //181110from
 Lightarrowdata(nm,ptlist,optionsorg):=(
 //help:Lightarrowdata("1",[pt1,pt2]);
-//help:Lightarrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0"]);
-  regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,
+//help:Lightarrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
+  regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,lineflg,
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,Ev,Nv,pP);
   pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
   scaley=SCALEY; //190412
@@ -468,6 +468,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
   options=remove(options,strL);
   cutend=[0,0];//180719
   coord="P";//181018
+  lineflg=1; //190504
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,2));
@@ -479,6 +480,11 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
       if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
       options=remove(options,[#]);
     );
+    if(tmp1=="LI",//190504from
+      tmp2=Toupper(substring(tmp2,0,1));
+      if(tmp2=="N",lineflg=0);
+      options=remove(options,[#]);
+    );//190504to
   );
   if(Noflg<3,
     tmp="ar"+nm+"="+Textformat([pA,pB],5)+";";
@@ -486,7 +492,13 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
+      if(lineflg==1, //190504from
+        Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
+      ,
+        tmp=pB;
+        pB=pA;
+        pA=pB-tmp;
+      );  //190504to
       size=0.2*size;
       angle=angle*pi/180;
       pP=pA+segpos*(pB-pA);
@@ -1789,8 +1801,8 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
         tmp2=flatten(tmp2);
         forall(tmp2,
           if(ispoint(#),
-            if(!contains(pL,text(#)),
-              pL=append(pL,text(#));
+            if(!contains(pL,#.name), //190505
+              pL=append(pL,#.name); //190505
             );
           );
         );
@@ -3334,7 +3346,7 @@ Putbezierdata(name,ptL,options):=(
   forall(1..length(ptL),
     p2=ptL_#; // 16.08.16
     if(ispoint(p2),
-      tmp1=text(p2);
+      tmp1=p2.name; //190505
     ,
       tmp1=name+text(#);
       Putpoint(tmp1,p2,Lcrd(parse(tmp1))); // 16.08.16
@@ -3874,29 +3886,32 @@ Crosspoint(name,Crv1,Crv2,range):=(
 ////%Crosspoint end////
 
 ////%Periodfun start////
-Periodfun(defL,rep):=Periodfun(defL,rep,[]);
+Periodfun(defL,rng):=Periodfun(defL,rng,[]);
 Periodfun(Arg1,Arg2,Arg3):=( //190419from
-  regional(nm,defL,rep,rng,options);
+  regional(nm,defL,,rng,options);
   if(isstring(Arg1),
     nm=Arg1; defL=Arg2; rng=Arg3;
     Periodfun(nm,defL,rng,[]);
   ,
-    defL=Arg1; rep=Arg2; options=Arg3;
-    Periodfun("",defL,rep,options); //190421
+    defL=Arg1; rng=Arg2; options=Arg3;
+    Periodfun("",defL,rng,options); //190421
   );
 );
 Periodfun(nm,defL,rng,optionorg):=( //190420[new]
 //help:Periodfun("1",defL,"x=range",options);
-//help:Periodfun(defL=[function string,range,devision number,...]);
+//help:Periodfun(defL=[function string,range(with equal option),devision number,...]);
+//help:Periodfun(equal option "l","r","b","n");
 //help:Periodfun(options=["Connect)=da,Color=red"]);//180725
-  regional(name,range,nr,nn,eqL,options,connect,Eps,fun,scaley,
-           mxfun,var,left,right,period,cL,crL,sL,sdL,flg,tmp,tmp1,tmp2);
+  regional(name,range,nr,nn,eqL,options,connect,Eps,fun,scaley,interval,
+           mxfun,var,left,right,period,cL,crL,sL,sdL,flg,equal,tmp,tmp1,tmp2);
   Eps=10^(-2);
   name="pe"+nm;
   var="x";
   nr=3*floor(length(defL)/3);
   left=defL_2_1;
+  if(isstring(left),left=parse(left)); //190505
   right=defL_(nr-1)_2;
+  if(isstring(right),right=parse(right)); ///190505
   period=right-left;
   if(isstring(rng),
     tmp=Strsplit(rng,"=");
@@ -3936,14 +3951,24 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
   forall(1..(nr/3),nn,
     nst=text(nn);
     fun=defL_(3*nn-2);
-    tmp1=var+"="+Textformat(defL_(3*nn-1),5);
+    interval=defL_(3*nn-1); //190505from
+    equal="l";
+    if(length(interval)>2,
+      equal=substring(interval_3,0,1);
+      interval=interval_(1..2);
+    );
+    tmp=apply(interval,if(isstring(#),parse(#),#));
+    tmp1=var+"="+Textformat(tmp,5);
     tmp2="Num="+text(defL_(3*nn));
     tmp=Plotdata("",fun,tmp1,[tmp2,"nodata","Msg=n"]);
     cL=append(cL,tmp);
-    tmp=defL_(3*nn-1);
-    tmp1=tmp_1; tmp2=tmp_2;
-    mxfun=mxfun+"elseif ("+tmp1+
-       "<=x and x<"+tmp2+") then "+fun+" ";
+    if(equal=="l",equal=["<=","<"]);
+    if(equal=="r",equal=["<","<="]);
+    if(equal=="b",equal=["<=","<="]);
+    if(equal=="n",equal=["<","<"]);
+   println([3969,equal,interval]);
+    mxfun=mxfun+"elseif ("+interval_1+
+       equal_1+var+" and "+var+equal_2+interval_2+") then "+fun+" ";
    );
   crL=cL;
   flg=0;

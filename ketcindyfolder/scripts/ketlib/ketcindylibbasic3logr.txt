@@ -1,3 +1,7 @@
+// 20190506
+      Setketcindyjs,Mkketcindyjs debugged (color)
+// 20190504
+      Mkketcindyjs changed ( rmptL,REMOVEPTJS,border,"z" )
 // 20190502
       Mkketcindyjs changed ( only ketjs on/off added )
 // 20190430

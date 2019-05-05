@@ -8,7 +8,7 @@ Com2nd
 Com2ndpre
 Copyketcindyjs
 Definecolor
-Defvar
+//Defvar
 Dottedline
 Drwline
 Example
@@ -34,18 +34,18 @@ Setslidebody
 Setslidehyper
 Texcom
 
-Datalist3d
-Ptseg3data
+//Datalist3d
+//Ptseg3data
 Subgraph
-Setangle
-Mainsubpt3d
-Parasubpt
-Mkpointlist
-Workprocess
-Drawprocess
-Dependgeo
-Finddef
-Mkseg3d
+//Setangle
+//Mainsubpt3d
+//Parasubpt
+//Mkpointlist
+//Workprocess
+//Drawprocess
+//Dependgeo
+//Finddef
+//Mkseg3d
 
 //Ketinit
 //Windispg

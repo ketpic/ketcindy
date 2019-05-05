@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190503] loaded");
+println("ketcindylibbasic3[20190506] loaded");
 
 //help:start();
 
@@ -3025,17 +3025,7 @@ Setketcindyjs(list):=(
 //help:Setketcindyjs();
 //help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
 //help:Setketcindyjs(["Removept=[]"]);
-  regional(eqL,color,tmp);
-  KetcindyjsDataList=[]; //190422
-  tmp=Divoptions(list);
-  eqL=tmp_5;
-  tmp=tmp_(length(tmp));
-  tmp=substring(tmp,1,length(tmp));
-  tmp=replace(tmp,"->","=");
-  parse(tmp+";"); //190415
-  tmp=round(255*color);
-  if(color!=[0,0,0],eqL=append(eqL,"Color="+text(tmp)));
-  KETJSOP=eqL;
+  KETJSOP=list;
   KETJSOP;
 );
 ////%Setketcindyjs end////
@@ -3245,7 +3235,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore="]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,out,Out,igno,onlyflg,rmptL); //190416 DL globalized
+      nolabel,color,grid,out,Out,igno,onlyflg,rmptL,colorrgb,ptname); 
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -3321,15 +3311,16 @@ Mkketcindyjs(options):=( //17.11.18
   if(substring(color,0,1)=="[",
     tmp=parse(color);
     if(length(tmp)==4,
-      tmp=Colorcode("cmyk","rgb",tmp);
+      colorrgb=Colorcode("cmyk","rgb",tmp); //190504
+    ,
+      colorrgb=color; //190506
     );
   ,
-    tmp=Colorname2rgb(color); //190503frin
+    colorrgb=Colorname2rgb(color); //190504
   ); //190503to
-  tmp=apply(tmp,round(#*255));
+  tmp=apply(colorrgb,round(#*255)); //190504
   tmp=text(tmp);
   color=substring(tmp,1,length(tmp)-1);
-  println([3332,color]);
   if((webflg=="N")&(localflg=="Y"),
     if(!isexists(Dircdy,"ketcindyjs"),
       Copyketcindyjs();
@@ -3637,44 +3628,91 @@ Mkketcindyjs(options):=( //17.11.18
         );
         flg=1;
       );
-      if(indexof(tmp1_jj,"Evaluate")>0,
-        tmp=replace(tmp1_jj,Dqq("Evaluate"),Dqq("EditableText"));
-        out=append(out,tmp);
-        flg=1;
-      );
-      if(indexof(tmp1_jj,"Calculation")>0,
-        tmp=replace(tmp1_jj,Dqq("Calculation"),Dqq("EditableText"));
-        out=append(out,tmp);
-        flg=1;
-      );
       if(flg==0,
-        tmp=Indexof(tmp1_jj,"labeled: "); //190225
-        if(tmp>0,
-          tmp2=tmp1_jj;
-          tmp=Indexall(tmp2,Dq); //190129from
-          tmp=substring(tmp2,tmp_1,tmp_2-1);
-          if(indexof(tmp,"z")==0, //190416
-            if(contains(nolabel,tmp),
-              if(indexof(tmp2,"labeled: true")>0,
-                tmp2=replace(tmp2,"labeled: true","labeled: false");
-              );
-            );
-            tmp=indexof(tmp2,Dqq("NE"))+indexof(tmp2,Dqq("SW")); //190405from
-            if(tmp>0, 
-              tmp2=replace(tmp2,"color: [1.0, 0.0, 0.0]","color: [1.0, 1.0, 1.0], size: 1.5");
-            ); //190405to
-            if(indexof(tmp2,"size:")==0,
-              tmp2=replace(tmp2,"}",", size: 3.0}");
-              out=append(out,tmp2); //190129
-            ,
-              out=append(out,tmp2); //190129
-            );  //190129to
-          ); //190416
+        if(indexof(tmp1_jj,"Evaluate")>0,
+          tmp=replace(tmp1_jj,Dqq("Evaluate"),Dqq("EditableText"));
+          out=append(out,tmp);
           flg=1;
         );
       );
       if(flg==0,
-        out=append(out,tmp1_jj); //190129
+        if(indexof(tmp1_jj,"Calculation")>0,
+          tmp=replace(tmp1_jj,Dqq("Calculation"),Dqq("EditableText"));
+          out=append(out,tmp);
+          flg=1;
+        );
+      );
+      tmp=indexall(tmp1_jj,Dq); //190504from
+      if(length(tmp)>0,
+        ptname=substring(tmp1_jj,tmp_1,tmp_2-1);
+      ,
+        ptname="";
+      );
+      if(flg==0,
+        if(contains(rmptL,ptname), flg=1);
+      ); 
+      tmp2=tmp1_jj;
+      if(length(ptname)>0,
+        if(indexof(tmp2,"size:")==0,
+          tmp2=replace(tmp2,"}",", size: 3.0}");
+        );
+        if(indexof(tmp2,"border:")==0,
+          tmp2=replace(tmp2,"}",", border: true }");
+        );
+      );
+      if(flg==0,
+        tmp=Indexof(tmp2,"labeled: ");
+        if((ptname=="")%(tmp==0),
+          out=append(out,tmp2);
+          flg=1;
+        );
+      );
+      if(flg==0,
+        if(contains(["TH","FI"],ptname),
+          if(SLIDEFLG=="Y",
+            out=append(out,tmp2);
+            flg=1;
+          );
+        );
+      );
+      if(flg==0,
+        if(contains(nolabel,ptname),
+          tmp2=replace(tmp2,"labeled: true","labeled: false");
+        );
+        if((indexof(ptname,"z")>0)%(contains(["NE","SW","TH","FI"],ptname)),
+          if(indexof(ptname,"z")>0,
+            tmp2=replace(tmp2,"labeled: true","labeled: false");
+          );
+          tmp=indexof(tmp2,"color:");
+          tmp3=Indexall(tmp2,"],");
+          tmp3=select(tmp3,#>tmp);
+          if(length(tmp3)>0,
+            tmp3=tmp3_1;
+          ,
+            tmp3=indexof(tmp2,"]}");
+          );
+          tmp=substring(tmp2,tmp-1,tmp3);
+          tmp2=replace(tmp2,tmp,"color: [1.0,1.0,1.0]");
+//          tmp2=replace(tmp2,"color: tmp,"color: "+text(colorrgb));
+          tmp2=replace(tmp2,"border: true","border:false");
+          tmp=indexof(tmp2," size:");
+          tmp3=Indexall(tmp2,",");
+          tmp3=select(tmp3,#>tmp);
+          if(length(tmp3)>0,
+            tmp3=tmp3_1;
+          ,
+            tmp3=indexof(tmp2,"}");
+          );
+          tmp=substring(tmp2,tmp-1,tmp3-1);
+          tmp2=replace(tmp2,tmp," size: 2.0");
+        );
+        out=append(out,tmp2);
+        flg=1;
+      ); //190504to
+      if(flg==0,
+        if(length(tmp1_jj)>0, //190504from
+          out=append(out,tmp1_jj);
+        ); //190504to
       ); //190126to
     );
     tmp=select(1..(length(out)),indexof(out_#," ],")>0); //190129from

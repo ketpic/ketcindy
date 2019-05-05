@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190502] loaded");
+println("ketcindylibbasic1[20190505] loaded");
 
 //help:start();
 
@@ -100,6 +100,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   GPACK="tpic"; //180817
   ErrFlag=0;
   KETJSOP=[]; //190129
+  REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
   // no ketjs on 190122
 //  setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12
@@ -899,17 +900,19 @@ Op(n,object):=( //  16.05.25
 ////%Op end////
 
 ////%Ptselected start////
-Ptselected():=Isptselected(allpoints());//180711[2lines] 
-Ptselected(ptlist):=Isptselected(ptlist);
-Isptselected():=Isptselected(allpoints()); //180706
-Isptselected(ptlist):=(
+Ptselected():=Isptselected(allpoints()); //180706
+Ptselected(ptlistorg):=(
 //help:Ptselected();
-//help:Isptselected();
- regional(flg);
+//help:Ptselected(geopoint);
+ regional(ptlist,flg,Eps);
+ Eps=(XMAX-XMIN)/100; //190505
  flg=0;
+ ptlist=ptlistorg; //190505[2lines]
+ if(!islist(ptlist),ptlist=[ptlist]);
  forall(ptlist,
   if(flg==0,
-    if(isselected(#),flg=1);
+    if(isselected(#),flg=1); // no ketjs
+//    if(|mouse().xy-#.xy|<Eps,flg=1); // only ketjs //190505
   );
  );
  if(flg==0,false,true);
@@ -973,7 +976,7 @@ Dependgeo(geo):=(
   regional(tmp,tmp1,tmp2,out);
   tmp=Finddef(geo);
   if(!iscircle(geo),
-    out=[text(geo)];
+    out=[geo.name]; //190505
   ,
     out=[geo];
   );
@@ -1016,7 +1019,7 @@ Drawprocess(nn,options):=(
   ); //181030to
   tmp=remove(allpoints(),[NE,SW,TH,FI]);
   tmp1=select(tmp,
-    substring(text(#),length(text(#))-1,length(text(#)))!="z");
+    substring(#.name,length(#.name)-1,length(#.name))!="z"); //190505
   tmp1=concat(tmp1,alllines());
 //  tmp1=concat(tmp1,allcircles());
   All=apply(tmp1,Dependgeo(#));
@@ -3420,6 +3423,7 @@ Colorname2rgb(name):=( //181212
     ["sepia",[0,0.83,1,0.7]],["brown",[0,0.81,1,0.6]],
     ["tan",[0.14,0.42,0.56,0]],["gray",[0,0,0,0.5]],
     ["lightgray",[0,0,0,0.17]], //190429
+    ["cindycolor",[0.66,0,69,0.71]], //190504
     ["black",[0,0,0,1]],["white",[0,0,0,0]]
   ];
   tmp=select(dL,#_1==name);
@@ -3940,7 +3944,7 @@ Pointdata(nm,listorg,options):=(
           tmp=#;
         ,
           if(ispoint(#),
-            tmp=text(#);
+            tmp=#.name; //190505
           ,
             tmp=Textformat(#,6);
           );

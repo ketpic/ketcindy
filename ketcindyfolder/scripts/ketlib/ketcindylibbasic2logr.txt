@@ -1,3 +1,5 @@
+// 20190507
+//   Tabledata debugged  ( for "r_c_c_" )
 // 20190505
 //    Periodfun changed  ( equal option added )
 //    text(pt) => pt.name

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190505] loaded");
+println("ketcindylibbasic2[20190507] loaded");
 
 //help:start();
 
@@ -4171,7 +4171,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       );
     );
     forall(0..n,
-      tmp1="c0r"+text(#);
+      tmp1="c0"+"r"+text(#); //190507[2lines]
       tmp2="c"+text(m)+"r"+text(#);
       Tlistplot("-"+name+"r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options); //190428
       if(tick!=0, //190421
@@ -4472,7 +4472,7 @@ Changetablestyle(nameL,style):=(
       tmp=Indexall(#,sb);
       tmp1=substring(#,tmp_1,tmp_2-1);
       tmp2=substring(#,tmp_2,length(#));
-      tmp=apply([tmp1,tmp2],parse(#));
+       tmp=apply([tmp1,tmp2],parse(#));
       if((tsg_1>=tmp_1) & (tsg_2<=tmp_2),
         sg=tmp;
         Changestyle(#,["nodisp"]);

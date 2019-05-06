@@ -177,12 +177,13 @@ Fillstore():=(
   regional(tmp,tmp1,out,dtL,txtL,clrL,txt,clr,nn,jj);
   dtL=[  //181209from
     ["Figure",[1,0.29,0.29]],["Parent",[1,1,0]],
-    ["ParaF",[0,1,1]],["Flip",[0,0,1]],["Anime",[0.51,0.95,1]],
+    ["ParaF",[1,0.93,0.6]],["Flip",[0,0,1]],["Anime",[0.51,0.95,1]],
     ["Title",[0,1,0]],["Slide",[0.47,0,0.72]],["Digest",[1,0.74,0.47]],
     ["KeTJS",[0,1,1]],["KeTJSoff",[0,1,1]],
     ["Objview",[0,1,0]],
-    ["Start",[1.0, 0.741, 0.467]],["Pause",[1.0, 0.741, 0.467]], //190426[2lines]
-    ["Rev",[1.0, 0.741, 0.467]],["End",[1.0, 0.741, 0.467]]
+    ["Play",[1.0, 0.741, 0.467]],["Pause",[1.0, 0.741, 0.467]], //190426[2lines]
+    ["Rev",[1.0, 0.741, 0.467]],["Stop",[1.0, 0.741, 0.467]],
+    ["Skele",[1.0, 0.741, 0.467]],["Nohid",[1.0, 0.741, 0.467]]
   ];
   txtL=apply(dtL,#_1);
   clrL=apply(dtL,#_2);
@@ -905,7 +906,7 @@ Ptselected(ptlistorg):=(
 //help:Ptselected();
 //help:Ptselected(geopoint);
  regional(ptlist,flg,Eps);
- Eps=(XMAX-XMIN)/100; //190505
+ Eps=(XMAX-XMIN)/10; //190505
  flg=0;
  ptlist=ptlistorg; //190505[2lines]
  if(!islist(ptlist),ptlist=[ptlist]);

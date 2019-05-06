@@ -1,5 +1,6 @@
 // 20190506
 //    Skeletonparadata debugged  ( parseparse for pfe3d )
+//    Vertexedgeface debugged   (vname)
 // 20190505
 //    Xyzax3data changed  ( Lightarrowdata used,"axx,axy,axz" generated )
 //    isselected changed to Ptselected

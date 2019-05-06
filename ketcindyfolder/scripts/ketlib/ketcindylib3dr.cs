@@ -1983,35 +1983,37 @@ Ptseg3data():=Ptseg3data([]);
 //help:Ptseg3data();
 //help:Ptseg3data([A,B]);
 Ptseg3data(options):=(
-  regional(pt,pt3,plist,tmp,tmp1,tmp2);
+  regional(pt,ptz,pt3,plist,plistz,tmp,tmp1,tmp2);
+  tmp=remove(allpoints(),options);
+  tmp=remove(tmp,[SW,NE,TH,FI]);
+  plist=select(tmp,indexof(#.name,"z")==0);
+  plistz=select(tmp,indexof(#.name,"z")>0);
   if(Ptselected(TH) % Ptselected(FI),
-    tmp=remove(allpoints(),options); //16.11.12
-    tmp=apply(tmp,#.name); //190505
-    plist=select(tmp,substring(#,length(#)-1,length(#))!="z"); 
     forall(plist,pt,
-      tmp1=pt.name; //190505
-      tmp=select(VLIST,#_1==tmp1+"3d"); //17.10.07
+      tmp=select(plistz,#.name==pt.name+"z");
+      if(length(tmp)>0,
+        ptz=tmp_1;
+      ,
+        ptz=[];
+      );
+      tmp=select(VLIST,#_1==pt.name+"3d"); //190506
       if(length(tmp)>0,
         pt3=tmp_1_2;
-        tmp=tmp1+".xy="+Textformat(Parapt(pt3),6)+";" ;//181107//190415
-        parse(tmp);
-        if(SUBSCR==1,
-          tmp=tmp1+"z"+".xy="+Textformat(Parasubpt(pt3),6)+";";//181107//190415
-          parse(tmp);
-        );
+        pt.xy=Parapt(pt3);
+        ptz.xy=Parasubpt(pt3);
       ,
-        tmp=Mainsubpt3d(parse(pt+".xy"),parse(tmp1+"z.xy")); //181107[2lines]
-        Defvar(tmp1+"3d",tmp);
+        pt3=Mainsubpt3d(pt.xy,ptz.xy); //181107[2lines]
+        Defvar(pt+"3d",pt3);
       );
     );
   ,
     Mkpointlist(options); // 16.12.18
   );
-  forall(alllines(),
+  forall(alllines(), // no ketjs on
     #.color=[0.5,0.5,1];
   );
   SEG3dlist=Mkseg3d(options);
-  SEG3dlist;
+  SEG3dlist; // no ketjs off
 );
 ////%Ptseg3data end////
 
@@ -2902,7 +2904,8 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
 //help:Vertexedgeface("1",["A","B","C"]);
 //help:Vertexedgeface(options=["Vtx=n(y)" ',"Pt=fix") ,"Edg=n(y)","Label=8(/0)"]);
   regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL, Lsize,msgflg,
-      vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
+    Eps,vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
+  Eps=10^(-5);
   name3="phvef"+nm;
   namev="phv3d"+nm;
   namee="phe3d"+nm;
@@ -2920,8 +2923,8 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   eqL=tmp_5;
   strL=tmp_7;
   fixflg=1;
-  vtxflg=0; //180905
-  edgflg=0;
+  vtxflg="N"; //180905
+  edgflg="N";
   dispflg=1; //181106
   Lsize="8"; //190331
   msgflg="Y"; //190506
@@ -2934,15 +2937,11 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
       options=remove(options,[#]);
     );
     if(tmp1=="V", //180905from
-      if((tmp2=="Y")%(tmp2==G), //181107
-        vtxflg=1;
-      );
+      vtxflg=tmp2;
       options=remove(options,[#]);
     ); //180905to
     if(tmp1=="E",
-      if((tmp2=="Y")%(tmp2=="G"),//181107[2lines]
-        if(vtxflg==1,edgflg=1);
-      );
+      edgflg=tmp2;
       options=remove(options,[#]);
     );
     if(tmp1=="L", //190331from
@@ -2961,22 +2960,30 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
       options=remove(options,[#]);
     );
   );
+  tmp=select(allpoints(),indexof(#.name,"z")==0); //190506from
+  tmp1=remove(tmp,[SW,NE,TH,FI]);
   vL=[];
   forall(1..length(vfnL_1),
     vtx=vfnL_1_#;  // 16.02.10 from
     if(isstring(vtx),vtx=parse(vtx)); // 16.06.19
     if(ispoint(vtx),
-      tmp=parse(text(vtx)+"3d");
-      vname=text(vtx);
+      tmp=parse(vtx.name+"3d"); //190506
+      vname=vtx.name;
     ,
-      vname="V"+nm+text(#); //181212
-      if(vtxflg==1, //180905
+      tmp=select(tmp1,|#.xy-Parapt(vtx)|<Eps);
+      if(length(tmp)>0,
+        tmp=tmp_1;
+        vname=tmp.name;
+      ,
+        vname="V"+nm+text(#); //181212
+      ); //190506to
+      if(vtxflg=="Y",
         if(fixflg==1,
           Putpoint3d([vname,vtx],"fix");
         ,
           Putpoint3d([vname,vtx]);
         );
-      , //180905from
+      , 
         tmp=vname+"3d="+format(vtx,6)+";"; //190415
         parse(tmp);
         Defvar(vname+"3d",parse(vname+"3d"));
@@ -3015,7 +3022,7 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   if(Noflg<3,
     enL=[];
     forall(eL,edge,
-      if(edgflg==0,
+      if(edgflg=="N",
         if(Noflg<2,
           tmp1=edge_1;//parse(edge_1);
           tmp2=edge_2;//parse(edge_2);

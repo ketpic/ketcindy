@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190505] loaded");
+println("ketcindylibbasic1[20190507] loaded");
 
 //help:start();
 
@@ -1155,6 +1155,20 @@ Sprintf(value,dig):=(
   vv;
 );
 ////%Sprintf end////
+
+////%Replaceall start//// 190507
+Replaceall(str,repL):=(
+  regional(tmp1,tmp2,out);
+  out=str;
+  forall(1..(length(repL)/2),
+    tmp1=repL_(2*#-1);
+    tmp2=repL_(2*#);
+    if(!isstring(tmp2),tmp2=text(tmp2));
+    out=replace(out,tmp1,tmp2);
+  );
+  out;
+);
+////%Replaceall end////
 
 ////%Assign start////
 Assign(str):=( //190125from

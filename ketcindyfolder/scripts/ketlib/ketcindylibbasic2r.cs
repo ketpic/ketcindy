@@ -4101,7 +4101,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 //help:Tabledatalight(xLst,yLst,rmvL,[0(notick)]);
 //help:Tabledatalight(xLst,yLst,rmvL,[2,"Setwindow=y","Move=[0,0]"]); //190428
   regional(options,rng,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
-    rlist,clist,Tb,tmp,tmp1,tmp2,tmp3,Eps);
+    rlist,clist,Tb,jj,kk,tmp,tmp1,tmp2,tmp3,Eps);
   // TableMove is global for Table
   TABLECOUNT=TABLECOUNT+1; //190428from
   TableMove=GENTEN; //190428to
@@ -4160,25 +4160,43 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   Tb=[clist,rlist]; //190427
   tmp=name+"="+Tb+";"; //190415
   parse(tmp);
-  forall(0..m,
-    tmp1="c"+text(#)+"r0";
-    tmp2="c"+text(#)+"r"+text(n);
-    Tlistplot("-"+name+"c"+text(#)+"r0r"+text(n),[tmp1,tmp2],options); //190428
+  forall(0..m,jj,  //190507from
+    tmp3="c"+text(jj);
+    if(length(rmvL)>=0,
+      tmp1="r"+text(0);
+      tmp2="r"+text(n);
+      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);     
+    ,
+      forall(0..(n-1),
+        tmp1="r"+text(#);
+        tmp2="r"+text(#+1);
+        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);
+      );
+    );  //190507to
     if(tick!=0, //190421
       if(mod(#,tick)==0 % #==m,
         tmp=clist_(#+1);
         drawtext(clist_(#+1)+TableMove-[0.04,-0.1],"c"+text(#)); //190428
       );
     );
-    forall(0..n,
-      tmp1="c0"+"r"+text(#); //190507[2lines]
-      tmp2="c"+text(m)+"r"+text(#);
-      Tlistplot("-"+name+"r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options); //190428
-      if(tick!=0, //190421
-        if(mod(#,tick)==0 % #==n,
-          tmp=rlist_(#+1);
-          drawtext(rlist_(#+1)+TableMove-[0.4,0.1],"r"+text(#)); //190428
-        );
+  ); //190507
+  forall(0..n,jj,
+    tmp3="r"+text(jj);
+    if(length(rmvL)>=0,
+      tmp1="c"+text(0);
+      tmp2="c"+text(m);
+      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],options);
+    ,
+      forall(0..(m-1),
+        tmp1="c"+text(#);
+        tmp2="c"+text(#+1);
+        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],options);
+      );
+    );
+    if(tick!=0, //190421
+      if(mod(#,tick)==0 % #==n,
+        tmp=rlist_(#+1);
+        drawtext(rlist_(#+1)+TableMove-[0.4,0.1],"r"+text(#)); //190428
       );
     );
   );
@@ -4447,58 +4465,78 @@ Tlistplot(nm,ptL,options):=(
 ////%Changetablestyle start////
 Changetablestyle(nameL,style):=(
 //help:Changetablestyle(["r0c0c3"],["da"]);
-  regional(nmL,nametb, grid,head,sb,tmp,tmp1,tmp2,
-      tsg,segall,sg,str);
+  regional(nmL,nametb, name,grid,head,sb,tmp,tmp1,tmp2,tmp3,
+      tsg,pts,p1,p2,names,name,nn,segall,sg,str,gname);
   nametb="tb"+text(TABLECOUNT); //190428
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   forall(nmL,grid,
     if(substring(grid,0,1)=="r",sb="c",sb="r");
+    tmp=indexof(grid,sb);
+    head=substring(grid,0,tmp-1);
+    if(sb=="r", //190507from
+      pts=head+sb+"x";
+    ,
+      pts=sb+"x"+head;
+    ); 
+    names=nametb+head+sb+"x"+sb+"y";//190507to
+    tmp3=apply(GCLIST,#_1); // 161206from
+    tmp3=select(tmp3,indexof(#,nametb)>0);
+    tmp3=apply(tmp3,substring(#,length(nametb),length(#))); //190507from
+    tmp3=select(tmp3,substring(#,0,length(head))==head);
     tmp=Indexall(grid,sb);
-    head=substring(grid,0,tmp_1-1);
     tmp1=substring(grid,tmp_1,tmp_2-1);
     tmp2=substring(grid,tmp_2,length(grid));
     tsg=apply([tmp1,tmp2],parse(#));
-    tmp1=apply(GCLIST,#_1); // 161206from
-    tmp1=select(tmp1,indexof(#,nametb)>0);
-    segall=[];
-    forall(tmp1,
-      tmp2=substring(#,length(nametb),length(#)); //190428
-      tmp=indexof(tmp2,sb);
-      tmp2=substring(tmp2,0,tmp-1);
-      if(head==tmp2,segall=append(segall,#));
-    );// 161206to
-    sg=[];
-    forall(segall,
-      tmp=Indexall(#,sb);
-      tmp1=substring(#,tmp_1,tmp_2-1);
-      tmp2=substring(#,tmp_2,length(#));
-       tmp=apply([tmp1,tmp2],parse(#));
-      if((tsg_1>=tmp_1) & (tsg_2<=tmp_2),
-        sg=tmp;
-        Changestyle(#,["nodisp"]);
+//    segall=[];
+    forall(tmp3,gname,
+      tmp=Indexall(gname,sb);
+      tmp1=parse(substring(gname,tmp_1,tmp_2-1));
+      tmp2=parse(substring(gname,tmp_2,length(gname)));
+      if((tmp1<=tsg_1)&(tsg_2<=tmp2),
+        if(tmp1==tsg_1,
+          if(tsg_2==tmp2,
+            name=Replaceall(names,["x",tsg_1,"y",tsg_2]);
+            Changestyle(name,style);
+          ,
+            name=Replaceall(names,["x",tsg_2,"y",tmp2]);
+            p1=Replaceall(pts,["x",tsg_2]);
+            p2=Replaceall(pts,["x",tmp2]);
+            Tlistplot("-"+name,[p1,p2]);
+            GCLIST=GCLIST_(1..(length(GCLIST)-1));
+            name=Replaceall(names,["x",tmp1,"y",tmp2]);
+            nn=select(1..(length(GCLIST)),indexof(GCLIST_#_1,name)>0);
+            nn=nn_1;
+            tmp=GCLIST_nn;
+            tmp=tmp_[2,3];
+            name=Replaceall(names,["x",tsg_2,"y",tmp2]);
+            GCLIST_nn=prepend(name,tmp);
+         );
+        ,
+          name=Replaceall(names,["x",tmp1,"y",tsg_1]);
+          p1=Replaceall(pts,["x",tmp1]);
+          p2=Replaceall(pts,["x",tsg_1]);
+          Tlistplot("-"+name,[p1,p2]);
+          GCLIST=GCLIST_(1..(length(GCLIST)-1));
+          name=Replaceall(names,["x",tmp1,"y",tmp2]);
+          nn=select(1..(length(GCLIST)),indexof(GCLIST_#_1,name)>0);
+          nn=nn_1;
+          tmp=GCLIST_nn;
+          tmp=tmp_[2,3];
+          name=Replaceall(names,["x",tmp1,"y",tsg_1]);
+          GCLIST_nn=prepend(name,tmp);
+          if(tsg_2<tmp2,
+            p1=Replaceall(pts,["x",tsg_2]);
+            p2=Replaceall(pts,["x",tmp2]);
+            name=Replaceall(names,["x",tsg_2,"y",tmp2]);
+            Tlistplot("-"+name,[p1,p2]);
+          );
+        );
+        name=Replaceall(names,["x",tsg_1,"y",tsg_2]);
+        p1=Replaceall(pts,["x",tsg_1]);
+        p2=Replaceall(pts,["x",tsg_2]);
+        Tlistplot("-"+name,[p1,p2],style);
       );
-    );
-    if(length(sg)==0,
-      println("No segment includes "+grid);
-    ,
-      if(sb=="c",str=sb+"no"+head,str=head+sb+"no");
-      if(sg_1<tsg_1,
-        tmp1=replace(str,"no",text(sg_1));
-        tmp2=replace(str,"no",text(tsg_1));
-        tmp=nametb+head+sb+text(sg_1)+"r"+text(tsg_1); //190428[2lines]
-        Tlistplot("-"+tmp,[tmp1,tmp2],TableOptions);
-      );
-      tmp1=replace(str,"no",text(tsg_1));
-      tmp2=replace(str,"no",text(tsg_2));
-      tmp=nametb+head+"c"+text(tsg_1)+"c"+text(tsg_2); //190428[2lines]
-      Tlistplot("-"+tmp,[tmp1,tmp2],style);
-      if(tsg_2<sg_2,
-        tmp1=replace(str,"no",text(tsg_2));
-        tmp2=replace(str,"no",text(sg_2));
-        tmp=nametb+head+"c"+text(tsg_2)+"c"+text(sg_2); //190428[2lines]
-        Tlistplot("-"+tmp,[tmp1,tmp2],TableOptions);
-      );
-    );
+    );// 190507to
   );
 );
 ////%Changetablestyle end////

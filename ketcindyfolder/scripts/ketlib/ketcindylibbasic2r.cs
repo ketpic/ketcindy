@@ -4212,48 +4212,26 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 ////%Tabledatalight end////
 
 ////%Tabledatageo start//// //190428(renamed)
-Tabledatageo(nm,xLst,yLst,rmvL,optionorg):=(
-// help:Tabledatageo("",xLst,yLst,rmvL,[2,"Setwindow=y"]);
-  regional(name,options,eqL,reL,rng,upleft,ul,flg,tick,n,m,xsize,ysize,
-    rlist,clist,Tb,tmp,tmp1,tmp2,tmp3,Eps);
-  name="tb";
-  tmp=sum(yLst);
-  upleft=[0,tmp];
-  options=optionorg;
+Tabledatageo(nm,xLstorg,yLstorg,rmvL,options):=(
+  regional(eqL,ul,n,m,Tb,xLst,yLst,
+    rlist,clist,tmp,tmp1,tmp2);
+  xLst=xLstorg;
+  yLst=yLstorg;
   tmp=Divoptions(options);
-  eqL=tmp_5; //161216from
-  reL=tmp_6;
-  rng="Y";
+  eqL=tmp_5;
+  TableMove=[0,0];
   forall(eqL,
     tmp=Strsplit(#,"=");;
-    tmp1=Toupper(substring(tmp_1,0,2)); //181111
+    tmp1=Toupper(substring(tmp_1,0,2));
     tmp2=Toupper(substring(tmp_2,0,1));
-    if(tmp1=="RN",
-      rng=tmp2;
-      options=remove(options,[#]);
-    );
-    if(tmp1=="SE", //190428from
-      rng=tmp2;
-      options=remove(options,[#]);
-    ); //190428to
-  );//161216to
-  tick=1;
-  flg=0;
-  forall(reL,
-    if(flg==0,
-      tick=#;
-      flg=flg+1;
-    ,
-      upleft=tmp_6_1;
+    if(tmp1=="MO",
+      TableMove=parse(tmp_2);
     );
   );
-  TableOptions=options; // 16.11.28
-  println("Tabledata "+name+" generated");
-  ul=upleft/10;
+  tmp=sum(yLst);
+  ul=[0,tmp]/10;
   m=length(xLst);
   n=length(yLst);
-  xsize=sum(xLst);
-  ysize=sum(yLst);
   clist=[ul];
   rlist=[ul];
   forall(1..m,
@@ -4264,149 +4242,42 @@ Tabledatageo(nm,xLst,yLst,rmvL,optionorg):=(
     tmp1=rlist_(#)_2-yLst_#/10;
     rlist=append(rlist,[0,tmp1]);
   );
-  Tb=[clist,rlist];
-  tmp=name+"="+Tb+";"; //190415
-  parse(tmp);
   forall(0..m,
     tmp="C"+text(#);
-    tmp1="c"+text(#)+"r0";
+    tmp1=TableMove+clist_(#+1);
     if(#==0,
-      Putpoint(tmp,Tgrid(tmp1));
+      Putpoint(tmp,tmp1);
     ,
-      Putpoint(tmp,Tgrid(tmp1),[parse(tmp+".x"),C0.y]);
-      clist_(#+1)=parse(tmp+".xy");
+      Putpoint(tmp,tmp1,[parse(tmp+".x"),tmp1_2]);
     );
     inspect(parse(tmp),"ptsize",3);
     inspect(parse(tmp),"labeled",false);
-    if(mod(#,tick)==0 % #==m,
-      tmp=clist_(#+1);
-      drawtext(clist_(#+1)-[0.04,-0.1],"c"+text(#));
-    );
   );
-  forall(0..n,
+  forall(1..n,
     tmp="R"+text(#);
-    tmp1="c0r"+text(#);
-    if(#==0,
-      Putpoint(tmp,Tgrid(tmp1));
-    ,
-      Putpoint(tmp,Tgrid(tmp1),[R0.x,parse(tmp+".y")]);
-      rlist_(#+1)=parse(tmp+".xy"); //no ketjs
-    );
-    Putpoint(tmp,Tgrid(tmp1),[R0.x,parse(tmp+".y")]); 
+    tmp1=TableMove+rlist_(#+1);
+    Putpoint(tmp,tmp1,[tmp1_1,parse(tmp+".y")]);
     inspect(parse(tmp),"ptsize",3);
     inspect(parse(tmp),"labeled",false);
-    if(mod(#,tick)==0 % #==n,
-      tmp=rlist_(#+1);
-      drawtext(rlist_(#+1)-[0.4,0.1],"r"+text(#));
-    );
   );
-  Tb=[clist,rlist];
-  tmp=name+"="+Tb+";"; //190415
-  parse(tmp);
-  forall(0..m,
-    tmp1="c"+text(#)+"r0";
-    tmp2="c"+text(#)+"r"+text(n);
-    Tlistplot("c"+text(#)+"r0r"+text(n),[tmp1,tmp2],options);
-    if(#<m,
-      tmp1=parse("C"+text(#));
-      tmp2=parse("C"+text(#+1));
-      tmp=(tmp1.xy+tmp2.xy)/2;
-      drawtext(tmp+[-0.2,0.5],text((tmp2.x-tmp1.x)*10));
-    );
+  tmp1=0;
+  forall(1..m,
+    tmp=parse("C"+text(#)+".x")-TableMove_1;
+    tmp=tmp*10;
+    xLst_#=tmp-tmp1;
+    tmp1=tmp;
   );
-  forall(0..n,
-    tmp1="c0r"+text(#);
-    tmp2="c"+text(m)+"r"+text(#);
-    Tlistplot("r"+text(#)+"c0c"+text(m),[tmp1,tmp2],options);
-    if(#<n,
-      tmp1=parse("R"+text(#));
-      tmp2=parse("R"+text(#+1));
-      tmp=(tmp1.xy+tmp2.xy)/2;
-      drawtext(tmp-[1.2,0.1],text(abs(tmp1.y-tmp2.y)*10));
-    );
+  tmp1=C0.y*10;
+  forall(1..n,
+    tmp=parse("R"+text(#)+".y")-TableMove_2;
+    tmp=tmp*10;
+    yLst_#=tmp1-tmp;
+    tmp1=tmp;
   );
-  Tsegrmv(rmvL,options);
-  Addax(0);
-  Eps=10^(-3);
-  tmp1=clist_(length(clist));
-  tmp2=rlist_1;
-  tmp3=rlist_(length(rlist));  // 15.06.11
-  if(rng=="Y", // 16.12.16
-    Setwindow([0-Eps,tmp1_1+Eps],[tmp3_2-Eps,tmp2_2+Eps]);
-  );
+  Tb=Tabledatalight(nm,xLst,yLst,rmvL,options);
   Tb;
 );
 ////%Tabledatageo end////
-
-////%Tseginfo start////
-Tseginfo(seg):=(
-  regional(cr,tp,tpc,n1,n2,n3,tmp,tmp1,tmp2);
-  if(substring(seg,0,2)=="sg",
-    cr=substring(seg,2,length(seg));
-  ,
-    cr=seg;
-  );
-  tp=substring(cr,0,1);
-  if(tp=="c",
-    tpc="r";
-  ,
-    tpc="c";
-  );
-  tmp1=indexof(cr,tpc);
-  tmp=substring(cr,tmp1,length(cr));
-  tmp2=tmp1+indexof(tmp,tpc);
-  n1=substring(cr,1,tmp1-1);
-  n2=substring(cr,tmp1,tmp2-1);
-  n3=substring(cr,tmp2,length(cr));
-  [tp+n1,tpc,parse(n2),parse(n3)];
-);
-////%Tseginfo end////
-
-////%Tsegrmv start////
-Tsegrmv(rmvL):=Tsegrmv(rmvL,[]);
-Tsegrmv(rmvL,options):=(
-  regional(cr,gcL,flg,gc,hd,tail,tpc,m1,m2,n1,n2,tmp,tmp1,tmp2);
-  forall(rmvL,cr,
-    tmp1=Tseginfo(cr);
-    hd=tmp1_1;
-    tpc=tmp1_2;
-    m1=tmp1_3;
-    m2=tmp1_4;
-    gcL=select(GCLIST,Tseginfo(#_1)_1==tmp1_1);
-    flg=0;
-    forall(gcL,
-      if(flg==0,
-        tmp=Tseginfo(#_1);
-        n1=tmp_3;
-        n2=tmp_4;
-        if(m1>=n1 & m2<=n2,
-          gc=#;
-          flg=1;
-        );
-      );
-    );
-    if(flg==1,
-      Changestyle([gc_1],["nodisp"]);
-      tail="";
-      if(indexof(hd,"r")>0,
-        tail=hd; hd="";
-      );
-      if(n1<m1,
-        tmp1=tpc+text(n1);
-        tmp2=tpc+text(m1);
-        tmp=hd+tail+tmp1+tmp2;
-        Tlistplot(tmp,[hd+tmp1+tail,hd+tmp2+tail],options);
-      );
-      if(m2<n2,
-        tmp1=tpc+text(m2);
-        tmp2=tpc+text(n2);
-        tmp=hd+tail+tmp1+tmp2;
-        Tlistplot(tmp,[hd+tmp1+tail,hd+tmp2+tail],options);
-      );
-    );
-  );
-);
-////%Tsegrmv end////
 
 ////%Tgrid start////
 Tgrid(ptstr):=(

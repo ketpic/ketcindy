@@ -1,3 +1,5 @@
+// 20190508
+//    Implicitplot debugged  (bisection method employed )
 // 20190507
 //    Replaceall added
 // 20190505

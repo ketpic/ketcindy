@@ -134,14 +134,14 @@ Plotdata,basic1,4174,4379,Divoptions,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measur
 Paramplot,basic1,4383,4555,Divoptions,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Com2nd,Getlinestyle,Texcom
 Polarplot,basic1,4559,4568,Strsplit,Paramplot
 Connectseg,basic1,4572,4634,Norm
-Implicitplot,basic1,4638,4776,Divoptions,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Com2nd,Getlinestyle,Texcom
-Circledata,basic1,4780,4899,Divoptions,Strsplit,Toupper,Lcrd,Defvar,Lineplot,Pcrd,Textformat,Com2nd,Getlinestyle,Texcom
-Framedata,basic1,4903,4955,Measuredepth,LLcrd,Divoptions,Lcrd,Listplot
-Framedata2,basic1,4959,4966,Lcrd,Framedata
-Ovaldata,basic1,4970,5040,Divoptions,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Com2nd,Getlinestyle,Texcom,Pcrd,Textformat
-Segmark,basic1,5044,5104,Drawsegmark,Divoptions,Toupper,Circledata,Listplot
-Parabolaplot,basic1,5108,5148,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
-Ellipseplot,basic1,5152,5195,Lcrd,Rotatepoint,Paramplot,Rotatedata
-Hyperbolaplot,basic1,5199,5263,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
-Polygonplot,basic1,5267,5313,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
-Putintersect,basic1,5317,5345,Intersectcrvs,Putpoint
+Implicitplot,basic1,4638,4814,Divoptions,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Com2nd,Getlinestyle,Texcom
+Circledata,basic1,4818,4937,Divoptions,Strsplit,Toupper,Lcrd,Defvar,Lineplot,Pcrd,Textformat,Com2nd,Getlinestyle,Texcom
+Framedata,basic1,4941,4993,Measuredepth,LLcrd,Divoptions,Lcrd,Listplot
+Framedata2,basic1,4997,5004,Lcrd,Framedata
+Ovaldata,basic1,5008,5078,Divoptions,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Com2nd,Getlinestyle,Texcom,Pcrd,Textformat
+Segmark,basic1,5082,5142,Drawsegmark,Divoptions,Toupper,Circledata,Listplot
+Parabolaplot,basic1,5146,5186,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
+Ellipseplot,basic1,5190,5233,Lcrd,Rotatepoint,Paramplot,Rotatedata
+Hyperbolaplot,basic1,5237,5301,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
+Polygonplot,basic1,5305,5351,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
+Putintersect,basic1,5355,5383,Intersectcrvs,Putpoint

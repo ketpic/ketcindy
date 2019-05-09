@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190409)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190508)" 
 
 print(ThisVersion)
 
+# 20190508
+#   Implicitplot debugged  ( bisection method employed )
 # 20190409
 #   Plotdata debugged  ( Exclution at left side)
 # 20190408
@@ -11757,14 +11759,28 @@ Implicitplot<- function(...){ #180402
         }else{
           if(vL[kk]>Eps){
             if(vL[kk+1]< -Eps){
-              tmp=1/(vL[kk]-vL[kk+1])*
-                    (-vL[kk+1]*pL[[kk]]+vL[kk]*pL[[kk+1]])
+#              tmp=1/(vL[kk]-vL[kk+1])*
+#                    (-vL[kk+1]*pL[[kk]]+vL[kk]*pL[[kk+1]])
+              tmp1=pL[[kk]]; tmp2=pL[[kk+1]] #190508from
+              for(ii in 1:10){
+                tmp=(tmp1+tmp2)/2
+                tmp3=Impfun(tmp[1],tmp[2])
+                if(abs(tmp3)<=Eps){break}
+                if(tmp3>Eps){tmp1=tmp}else{tmp2=tmp}
+              } #190508to
               qL=Appendrow(qL,tmp)
 			}
           }else{
             if(vL[kk+1]>Eps){
-              tmp=1/(-vL[kk]+vL[kk+1])*
-                    (vL[kk+1]*pL[[kk]]-vL[kk]*pL[[kk+1]])
+#              tmp=1/(-vL[kk]+vL[kk+1])*
+#                    (vL[kk+1]*pL[[kk]]-vL[kk]*pL[[kk+1]])
+              tmp1=pL[[kk]]; tmp2=pL[[kk+1]] #190508from
+              for(ii in 1:10){
+                tmp=(tmp1+tmp2)/2
+                tmp3=Impfun(tmp[1],tmp[2])
+                if(abs(tmp3)<=Eps){break}
+                if(tmp3>Eps){tmp2=tmp}else{tmp1=tmp}
+              } #190508to
               qL=Appendrow(qL,tmp)
 			}
           }

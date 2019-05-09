@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190507] loaded");
+println("ketcindylibbasic1[20190508] loaded");
 
 //help:start();
 
@@ -4638,9 +4638,9 @@ Connectseg(Pdata):=(
 Implicitplot(name1,func,xrng,yrng):=Implicitplot(name1,func,xrng,yrng,[]);
 Implicitplot(name1,func,xrng,yrng,optionsorg):=(
 //help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
-//help:Implicitplot(options=["Num=[50,50]","Msg=y(n)"]);
+//help:Implicitplot(options=["Num=[50,50]","Msg=y(n)","Bisection=y(n)]);
   regional(name,options,Fn,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
-      Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,
+      Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,biflg,flg,
       yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
   name="imp"+name1;
   Eps=10^(-4);
@@ -4654,6 +4654,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
   opstr=tmp_(length(tmp)-1); //190406
   Mdv=50;Ndv=50;
   msg="Y";
+  biflg="Y";
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -4672,6 +4673,10 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
       msg=Toupper(substring(tmp2,0,1));
       options=remove(options,[#]);
     ); //181112to
+    if(substring(#,0,1)=="B", //190509from
+      biflg==Toupper(substring(tmp2,0,1));
+      options=remove(options,[#]);
+    ); //190509to
   );
   tmp=indexof(func,"=");
   if(tmp==0,
@@ -4714,14 +4719,46 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
         ,
           if(vL_kk>Eps,
             if(vL_(kk+1)< -Eps,
-              tmp=1/(vL_kk-vL_(kk+1))*
+              if(biflg=="n", //190508
+                tmp=1/(vL_kk-vL_(kk+1))*
                     (-vL_(kk+1)*pL_kk+vL_kk*pL_(kk+1));
+              , 
+                tmp1=pL_(kk); tmp2=pL_(kk+1); //190508from
+                flg=0;
+                forall(1..10,
+                  if(flg==0,
+                    tmp=(tmp1+tmp2)/2;
+                    eval11=Impfun(tmp_1,tmp_2);
+                    if(abs(eval11)<=Eps,
+                      flg=1;
+                    ,
+                      if(eval11>Eps,tmp1=tmp,tmp2=tmp);
+                    );
+                  );
+                ); //190508to
+              ); 
               qL=append(qL,tmp);
             );
-          ,
+          , 
             if(vL_(kk+1)>Eps,
-              tmp=1/(-vL_kk+vL_(kk+1))*
+              if(biflg=="n", //190508
+                tmp=1/(-vL_kk+vL_(kk+1))*
                     (vL_(kk+1)*pL_kk-vL_kk*pL_(kk+1));
+              , 
+                tmp1=pL_(kk); tmp2=pL_(kk+1); //190508from
+                flg=0;
+                forall(1..10,
+                  if(flg==0,
+                    tmp=(tmp1+tmp2)/2;
+                    eval11=Impfun(tmp_1,tmp_2);
+                    if(abs(eval11)<=Eps,
+                      flg=1;
+                    ,
+                      if(eval11>Eps,tmp2=tmp,tmp1=tmp);
+                    );
+                  );
+                ); //190508to
+              ); 
               qL=append(qL,tmp);
             );
           );
@@ -4753,19 +4790,20 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
         tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
       );
     );
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
-    parse(tmp);
+    tmp=name+"="+Textformat(tmp1,5); //190415
+    parse(tmp+";");
     tmp=name+"=Implicitplot('"+func+"','"+xrng+"','"+yrng+"'"+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs
+//    Drawfigures(name,[name],[options]);  //190508
   );
   if(Noflg<2,
     if(isstring(Ltype),
      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
-      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name); 
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("}");//180722
+        Texcom("}");//180722 
       ); //no ketjs off
     ,
       if(Noflg==1,Ltype=0);

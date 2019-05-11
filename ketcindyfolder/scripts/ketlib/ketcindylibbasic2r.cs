@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190508] loaded");
+println("ketcindylibbasic2[20190510] loaded");
 
 //help:start();
 
@@ -3966,7 +3966,6 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
     if(equal=="r",equal=["<","<="]);
     if(equal=="b",equal=["<=","<="]);
     if(equal=="n",equal=["<","<"]);
-   println([3969,equal,interval]);
     mxfun=mxfun+"elseif ("+interval_1+
        equal_1+var+" and "+var+equal_2+interval_2+") then "+fun+" ";
    );

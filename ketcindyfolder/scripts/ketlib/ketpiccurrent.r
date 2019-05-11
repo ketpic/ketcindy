@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190508)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190511)" 
 
 print(ThisVersion)
 
+# 20190511
+#   Implicitplot changed  (Eps=> 10^(-6))
 # 20190508
 #   Implicitplot debugged  ( bisection method employed )
 # 20190409
@@ -11696,7 +11698,7 @@ Connectseg<- function(...){
 
 Implicitplot<- function(...){ #180402
   varargin=list(...)
-  Eps=10^(-4)
+  Eps=10^(-6)  #190511
   Nargs=length(varargin)
   Func=varargin[[1]]
   Xrng=varargin[[2]]
@@ -11762,7 +11764,7 @@ Implicitplot<- function(...){ #180402
 #              tmp=1/(vL[kk]-vL[kk+1])*
 #                    (-vL[kk+1]*pL[[kk]]+vL[kk]*pL[[kk+1]])
               tmp1=pL[[kk]]; tmp2=pL[[kk+1]] #190508from
-              for(ii in 1:10){
+              for(ii in 1:20){  #190511
                 tmp=(tmp1+tmp2)/2
                 tmp3=Impfun(tmp[1],tmp[2])
                 if(abs(tmp3)<=Eps){break}
@@ -11775,7 +11777,7 @@ Implicitplot<- function(...){ #180402
 #              tmp=1/(-vL[kk]+vL[kk+1])*
 #                    (vL[kk+1]*pL[[kk]]-vL[kk]*pL[[kk+1]])
               tmp1=pL[[kk]]; tmp2=pL[[kk+1]] #190508from
-              for(ii in 1:10){
+              for(ii in 1:20){ #190511
                 tmp=(tmp1+tmp2)/2
                 tmp3=Impfun(tmp[1],tmp[2])
                 if(abs(tmp3)<=Eps){break}

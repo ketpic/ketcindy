@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190506] loaded");
+println("ketcindylib3d[20190511] loaded");
 
 //help:start();
 
@@ -102,6 +102,9 @@ Start3d(ptexception,optionjs):=(//190503to
   OBJCMD=[]; // 161129from
   OCNAME=Fhead;
   OCOPTION=["m","v"];// 161129to //no ketjs off
+  KETJSOP=[]; //190129
+  REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
+  KetcindyjsDataList=[]; //190511
   ArrowlineNumber=1;  // 16.01.31
   ArrowheadNumber=1;
   BezierNumber=1; //16.01.31

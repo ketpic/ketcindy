@@ -1,3 +1,6 @@
+// 20190511
+//    Implicitplot changed (Eps=>10^(-6))
+//    Ketinit changed (KetcindyDataList initialized)
 // 20190508
 //    Implicitplot debugged  (bisection method employed )
 // 20190507

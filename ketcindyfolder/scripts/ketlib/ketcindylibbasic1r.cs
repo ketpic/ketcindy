@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190508] loaded");
+println("ketcindylibbasic1[20190511] loaded");
 
 //help:start();
 
@@ -101,7 +101,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ErrFlag=0;
   KETJSOP=[]; //190129
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
-  // no ketjs on 190122
+  KetcindyjsDataList=[];
 //  setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12
     Fhead=text(curkernel());
@@ -4643,7 +4643,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
       Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,biflg,flg,
       yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
   name="imp"+name1;
-  Eps=10^(-4);
+  Eps=10^(-6); //190511
   options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -4725,7 +4725,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
               , 
                 tmp1=pL_(kk); tmp2=pL_(kk+1); //190508from
                 flg=0;
-                forall(1..10,
+                forall(1..20,  //190511
                   if(flg==0,
                     tmp=(tmp1+tmp2)/2;
                     eval11=Impfun(tmp_1,tmp_2);
@@ -4747,7 +4747,7 @@ Implicitplot(name1,func,xrng,yrng,optionsorg):=(
               , 
                 tmp1=pL_(kk); tmp2=pL_(kk+1); //190508from
                 flg=0;
-                forall(1..10,
+                forall(1..20,  //190511
                   if(flg==0,
                     tmp=(tmp1+tmp2)/2;
                     eval11=Impfun(tmp_1,tmp_2);

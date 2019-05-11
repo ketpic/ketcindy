@@ -1,3 +1,5 @@
+// 20190511
+//    Start3d changed (KetcindyDataList initialized)
 // 20190506
 //    Skeletonparadata debugged  ( parseparse for pfe3d )
 //    Vertexedgeface debugged   (vname)

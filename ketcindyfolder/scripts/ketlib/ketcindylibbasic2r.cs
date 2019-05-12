@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190510] loaded");
+println("ketcindylibbasic2[20190512] loaded");
 
 //help:start();
 
@@ -4723,7 +4723,7 @@ Windispg(gcLorg):=( //190125
               parse(tmp);
             ,
               if(tmp1==1,
-                tmp4=Dashlinedata(Nk,2.5,2.5,0);
+                tmp=tokenize(Nj_2_2,",");tmp4=Dashlinedata(Nk,tmp_1,tmp_2,0); //190512
                 forall(tmp4,
                   tmp="connect("+Textformat(#,5)+tmp3+");";
                   parse(tmp);
@@ -4751,6 +4751,7 @@ Windispg(gcLorg):=( //190125
   layer(0);
 );
 ////%Windispg end////
+
 
 ////%Extractdata start////
 Extractdata(name):=Extractdata(1,name,[]);

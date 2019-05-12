@@ -1,3 +1,5 @@
+// 20190512
+//   Windispg changed  (Dashlinedata)
 // 20190511
 //   Periodfun changed  ( println for debug removed)
 // 20190508

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190511] loaded");
+println("ketcindylibbasic1[20190514] loaded");
 
 //help:start();
 
@@ -2885,13 +2885,6 @@ Dottedline(gstr):=(
  Com2nd("Dottedline("+gstr+")");
 );
 ////%Dottedline end////
-
-////%SetEnglish start////
-SetEnglish():=(
-//help:SetEnglish();
-  Com0th("setlanguage('en')");
-);
-////%SetEnglish end////
 
 ////%Drawlinetype start////
 Drawlinetype(name,type):=(

@@ -1,3 +1,5 @@
+// 20190514
+//    Setenglith removed
 // 20190511
 //    Implicitplot changed (Eps=>10^(-6))
 //    Ketinit changed (KetcindyDataList initialized)

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190506] loaded");
+println("ketcindylibbasic3[20190514] loaded");
 
 //help:start();
 
@@ -2947,6 +2947,83 @@ BBdata(fname,optionorg):=(
 );
 ////%BBdata end////
 
+////%Totexformpart start////
+Totexformpart(str):=( //190514
+  regional(plv,funL,repL,flg,flgf,nall,nn,
+      fun,frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
+  repL=[["frac",2,"\frac{xx}{yy}"],["log",2,"\log_{xx} yy"]];
+  funL=apply(repL,#_1);
+  out="";
+  plv=Bracket(str,"()");
+  nall=length(plv);
+  if(nall>0,
+    frL=[];
+    forall(1..nall,nn,
+      tmp1=plv_nn;
+      if(tmp1_2>0,
+        fun="";
+        flgf=0;
+        forall(1..10,
+          if(flgf==0,
+            tmp2=tmp1_1;
+            tmp=substring(str,tmp2-#-1,tmp2-#);
+            if((tmp>="a")&(tmp<="z"),
+              fun=tmp+fun;
+            ,
+              flgf=1;
+            );       
+          );
+        );
+        if(contains(funL,fun),
+          tmp=select(plv,(#_1>tmp1_1)&(#_2==-tmp1_2));
+          tmp=tmp_1_1-1;
+          frL=append(frL,[fun,tmp1_1,tmp,tmp1_2]);
+        );
+      );
+    );
+    if(length(frL)>0,
+      frL=sort(frL,[-#_4]);
+      fr=frL_1;
+      fun=fr_1;
+      tmp1=substring(str,fr_2,fr_3);
+      tmp=select(repL,#_1==fr_1);
+      tmp=tmp_1;
+      nn=tmp_2;
+      tmp2=tmp_3;
+      if(nn==2,
+        tmp=Strsplit(tmp1,",");
+        tmp2=Assign(tmp2,["xx",tmp_1,"yy",tmp_2]);
+      );
+      nn=fr_2-length(fun);
+      tmp=substring(str,0,nn-1);
+      out=tmp+tmp2+substring(str,fr_3+1,length(str));
+    ,
+      out="";
+    );
+  );
+  out;
+);
+////%Totexformpart end////
+
+////%Totexform start////
+Totexform(str):=( //190514
+  regional(out,flg,tmp);
+  out=replace(str," ","\ ");
+  flg=0;
+  forall(1..10,
+    if(flg==0,
+      tmp=Totexformpart(out);
+      if(length(tmp)==0,
+        flg=1;
+      ,
+        out=tmp;
+      );
+    );
+  );
+  out;
+);
+////%Totexform end////
+
 ////%Copyketcindyjs start//// 190128
 Copyketcindyjs():=(
   regional(tmp,tmp1,tmp2,drive,fname);
@@ -2996,7 +3073,7 @@ Copyketcindyjs():=(
     ); //190214to
     SCEOUTPUT = openfile(Shellparent);
     println(SCEOUTPUT,"#!/bin/sh");
-    println(SCEOUTPUT,"cd "+Dqq(tmp1)); //190214from
+    println(SCEOUTPUT,"cd "+Dqq(tmp1+"/")); //190214from
     println(SCEOUTPUT,"mkdir ketcindyjs");
     println(SCEOUTPUT,"cd "+Dqq(Dirhead+"/ketcindyjs"));
     println(SCEOUTPUT,"cp -r -p katex "+tmp1+"/ketcindyjs");
@@ -3323,7 +3400,7 @@ Mkketcindyjs(options):=( //17.11.18
   color=substring(tmp,1,length(tmp)-1);
   if((webflg=="N")&(localflg=="Y"),
     if(!isexists(Dircdy,"ketcindyjs"),
-      Copyketcindyjs();
+      println(3402);Copyketcindyjs();println(3403);
       println("ketcindyjs has been copied");
     );
   );

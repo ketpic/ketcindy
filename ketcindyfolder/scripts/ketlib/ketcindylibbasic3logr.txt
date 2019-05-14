@@ -1,3 +1,6 @@
+// 20190514
+     Totexform,Totexformpart added
+     Copyketcindyjs debugged  ( "/" added for "cd")
 // 20190506
       Setketcindyjs,Mkketcindyjs debugged (color)
 // 20190504

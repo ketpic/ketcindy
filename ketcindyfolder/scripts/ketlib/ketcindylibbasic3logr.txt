@@ -1,3 +1,5 @@
+// 20190515
+     Totexform,Totexformpart changed(enhanced)
 // 20190514
      Totexform,Totexformpart added
      Copyketcindyjs debugged  ( "/" added for "cd")

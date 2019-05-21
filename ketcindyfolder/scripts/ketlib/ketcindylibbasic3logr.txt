@@ -1,7 +1,7 @@
 // 20190521
      Textedit2value added
      Tocindyform,Tocindyformpart adde
-     Totexform changed  (pi => \pi)
+     Totexform changed  (pi => \pi, case without "()")
 // 20190515
      Totexform,Totexformpart changed(enhanced)
 // 20190514

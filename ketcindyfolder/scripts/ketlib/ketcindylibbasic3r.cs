@@ -2971,7 +2971,7 @@ Totexformpart(str):=( //190514
       if(tmp1_2>0,
         fun="";
         flgf=0;
-        forall(1..10,
+        forall(1..20,
           if(flgf==0,
             tmp2=tmp1_1;
             tmp=substring(str,tmp2-#-1,tmp2-#);
@@ -3026,23 +3026,26 @@ Totexform(str):=( //190514
   out=replace(str," ","\ ");
   out=replace(str,"*"," ");
   plv=Bracket(out,"()"); //190515from
-  tmp=plv_(length(plv));
-  flg=0;
-  if(tmp_2< -1,
-    flg=2;
-    out="{\color{red}{?}}\ \ "+out+"{\color{red}{)+?}}\ \ ";
-  );
-  if(tmp_2> -1,
-    flg=3;
-    out="{\color{red}{?}}\ \ "+out+"{\color{red}{-)?}}\ \ ";
-  ); //190515to
-  forall(1..10,
-    if(flg==0,
-      tmp=Totexformpart(out);
-      if(length(tmp)==0,
-        flg=1;
-      ,
-        out=tmp;
+  flg=0; //190521from
+  if(length(plv)==0,flg=2);
+  if(flg==0, //190521to
+    tmp=plv_(length(plv));
+    if(tmp_2< -1,
+      flg=2;
+      out="{\color{red}{?}}\ \ "+out+"{\color{red}{)+?}}\ \ ";
+    );
+    if(tmp_2> -1,
+      flg=3;
+      out="{\color{red}{?}}\ \ "+out+"{\color{red}{-)?}}\ \ ";
+    ); //190515to
+    forall(1..20,
+      if(flg==0,
+        tmp=Totexformpart(out);
+        if(length(tmp)==0,
+          flg=1;
+        ,
+          out=tmp;
+        );
       );
     );
   );
@@ -3089,7 +3092,7 @@ Tocindyformpart(str):=( //190521
       if(tmp1_2>0,
         fun="";
         flgf=0;
-        forall(1..10,
+        forall(1..20,
           if(flgf==0,
             tmp2=tmp1_1;
             tmp=substring(str,tmp2-#-1,tmp2-#);
@@ -3141,26 +3144,29 @@ Tocindyformpart(str):=( //190521
 Tocindyform(str):=( //190521
 //help:Tocindyform("frac(2,3)");
   regional(out,plv,flg,nn,tmp,tmp1);
-  out=replace(str," ","\ ");
-  out=replace(str,"*"," ");
-  plv=Bracket(out,"()"); //190515from
-  tmp=plv_(length(plv));
+  out=str;
+  plv=Bracket(out,"()");
   flg=0;
-  if(tmp_2< -1,
-    flg=2;
-    out="{\color{red}{?}}\ \ "+out+"{\color{red}{)+?}}\ \ ";
-  );
-  if(tmp_2> -1,
-    flg=3;
-    out="{\color{red}{?}}\ \ "+out+"{\color{red}{-)?}}\ \ ";
-  ); //190515to
-  forall(1..10,
-    if(flg==0,
-      tmp=Tocindyformpart(out);
-      if(length(tmp)==0,
-        flg=1;
-      ,
-        out=tmp;
+  if(length(plv)==0,flg=2);
+  if(flg==0,
+    tmp=plv_(length(plv));
+    flg=0;
+    if(tmp_2< -1,
+      flg=2;
+      out="{\color{red}{?}}\ \ "+out+"{\color{red}{)+?}}\ \ ";
+    );
+    if(tmp_2> -1,
+      flg=3;
+      out="{\color{red}{?}}\ \ "+out+"{\color{red}{-)?}}\ \ ";
+    ); //190515to
+    forall(1..20,
+      if(flg==0,
+        tmp=Tocindyformpart(out);
+        if(length(tmp)==0,
+          flg=1;
+        ,
+          out=tmp;
+        );
       );
     );
   );
@@ -3467,18 +3473,25 @@ Textedit(no):=(
 Textedit2value(no):=Textedit2value(no,[]);
 Textedit2value(no,options):=(
 //help:Textedit2value(50);
-//help:Textedit2value(51,["Parse=n"]);
-  regional(str,tmp,tmp1,parseflg);
+//help:Textedit2value(51,["Parse=y","Tocindy=y"]);
+  regional(str,tmp,tmp1,parseflg,tocdyflg);
   parseflg="Y";
+  tocdyflg="Y";
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="P",
       parseflg=Toupper(substring(tmp_2,0,1));
     );
+    if(tmp1=="T",
+      tocdyflg=Toupper(substring(tmp_2,0,1));
+    );
   );
   str=Textedit(no);
   str=Removespace(str);
+  if(tocdyflg=="Y",
+    str=Tocindyform(str);
+  );
   if(length(str)>0,
     tmp=Strsplit(str,"=");
     if(length(tmp)>1,str=tmp_2);

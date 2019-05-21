@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190512] loaded");
+println("ketcindylibbasic2[20190520] loaded");
 
 //help:start();
 
@@ -58,7 +58,7 @@ Drawfigures(nm,figlistorg,optionlistorg,options):=(
     );
   );
   tmp=apply(figL,Dqq(#));
-  tmp=name+"="+text(tmp);
+  tmp=name+"="+text(tmp)+";";
   parse(tmp);
   if(msg=="Y",
     println("generate "+name+"="+text(figL));
@@ -608,9 +608,10 @@ Anglemark(nm,plist,options):=(
     );
     Th=(Rg_1+Rg_2)/2; //16.10.31from[moved]
     tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
-    tmp="Defvar("+Dq+Bpos+"=";
-    tmp=tmp+Textformat(tmp1,5)+Dq+");";
-    parse(tmp);//16.10.31to[moved]
+    tmp="Defvar("+Dq+Bpos+"="; //no ketjs
+    tmp=tmp+Textformat(tmp1,5)+Dq+")"; //no ketjs
+//    tmp=Bpos+"="+Textformat(tmp1,5); ; //only ketjs
+    parse(tmp+";");//16.10.31to[moved]
     if(length(Bname)>0,
       parse(Bname);
     );
@@ -704,8 +705,9 @@ Paramark(nm,plist,options):=(
   Out=append(Out,pA+ra*(pC-pA)/|pC-pA|);
   if(length(Bname)>0,
     tmp1=pA+Brat*ra*(pB-pA)/|pB-pA|+Brat*ra*(pC-pA)/|pC-pA|;
-    tmp="Defvar("+Dq+Bpos+"="+Textformat(tmp1,5)+Dq+");";
-    parse(tmp);
+    tmp="Defvar("+Dq+Bpos+"="+Textformat(tmp1,5)+Dq+")";// no ketjs
+    tmp=Bpos+"="+Textformat(tmp1,5);// only ketjs
+    parse(tmp+";");
     parse(Bname+";") //190415;
   );
   if(Noflg<3,
@@ -2092,10 +2094,10 @@ Shade(nm,plistorg,options):=(
           forall(tmp1,if(ispoint(#),tmp=#.xy,tmp=#);
             tmp2=append(tmp2,tmp);
           );
-          tmp1=Dqq("-"+name+text(ctr));
-          tmp2=Textformat(tmp2,6)+",["+Dqq("nodisp")+"]";
-          tmp=name+text(ctr)+"=Listplot("+tmp1+","+tmp2+");"; //190415
-          parse(tmp);
+          Listplot("-"+name+text(ctr),tmp2,["nodisp"]); //190520
+//          tmp1=Dqq("-"+name+text(ctr));
+//          tmp2=Textformat(tmp2,6)+",["+Dqq("nodisp")+"]";
+//          tmp=name+text(ctr)+"=Listplot("+tmp1+","+tmp2+");";parse(tmp);
           plist_jj=name+text(ctr);
           ctr=ctr+1;
         );
@@ -4011,9 +4013,9 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
       );
     );
   );
-  tmp=name+"="+Textformat(sL,5);
+  tmp=name+"="+Textformat(sL,5)+";";
   parse(tmp);
-  tmp=name+"dc="+Textformat(sdL,5);
+  tmp=name+"dc="+Textformat(sdL,5)+";";
   parse(tmp);
   println("   generate "+name+","+name+"dc");
   mxfun=substring(mxfun,4,length(mxfun)-1);

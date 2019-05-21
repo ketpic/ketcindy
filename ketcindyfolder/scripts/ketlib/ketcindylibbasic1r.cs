@@ -4880,9 +4880,9 @@ Circledata(nm,cenrad,options):=(
     ,
       Ctr=1/2*(pA+pB)+1/2*d2/d1*tmp1;
       ra=|pA-Ctr|;
-      tmp=name+"center="+Ctr+";";
+      tmp=name+"center="+Textformat(Ctr,5)+";";
       parse(tmp);
-      Defvar(name+"center",Ctr);
+      Defvar(name+"center",re(Ctr));
     );
   );
   if(ra>0,

@@ -1,3 +1,6 @@
+// 20190520
+//   Anglemark,Paramark debugged
+//   Shade changed ( Listplot )
 // 20190512
 //   Windispg changed  (Dashlinedata)
 // 20190511

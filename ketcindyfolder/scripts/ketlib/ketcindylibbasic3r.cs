@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190521] loaded");
+println("ketcindylibbasic3[20190522] loaded");
 
 //help:start();
 
@@ -2956,9 +2956,9 @@ Totexformpart(str):=( //190514
     ["log",["\log{xx}","\log_{xx} yy"]],
     ["sqrt",["\sqrt{xx}","\sqrt[xx]{yy}"]],
     ["pow",["","{xx}^{yy}"]],
-    ["sin",["\sin{xx}"]],
-    ["cos",["\cos{xx}"]],
-    ["tan",["\tan{xx}"]]
+    ["sin",["\sin{xx}","\sin^{xx}{yy}"]], //190522from
+    ["cos",["\cos{xx}","\cos^{xx}{yy}"]],
+    ["tan",["\tan{xx}","\tan^{xx}{yy}"]] //190522to
   ];
   funL=apply(repL,substring(#_1,0,2)); //190515to
   out="";
@@ -3027,17 +3027,20 @@ Totexform(str):=( //190514
   out=replace(str,"*"," ");
   plv=Bracket(out,"()"); //190515from
   flg=0; //190521from
-  if(length(plv)==0,flg=2);
+  if(length(plv)==0,
+    flg=4; //190522
+  );
   if(flg==0, //190521to
-    tmp=plv_(length(plv));
-    if(tmp_2< -1,
+    tmp=Indexall(out,"("); //190522from
+    tmp1=Indexall(out,")");
+    if(length(tmp)>length(tmp1),
       flg=2;
-      out="{\color{red}{?}}\ \ "+out+"{\color{red}{)+?}}\ \ ";
+      out=out+"?+)?";
     );
-    if(tmp_2> -1,
+    if(length(tmp)<length(tmp1),
       flg=3;
-      out="{\color{red}{?}}\ \ "+out+"{\color{red}{-)?}}\ \ ";
-    ); //190515to
+      out=out+"?)-?";
+    );  //190522to
     forall(1..20,
       if(flg==0,
         tmp=Totexformpart(out);
@@ -3078,8 +3081,11 @@ Tocindyformpart(str):=( //190521
   repL=[ //190515from
     ["frac",["","{xx}/{yy}"]],
     ["log",["log{xx}","log{yy}/log{xx}"]],
-    ["sqrt",["sqrt{xx}",]],
-    ["pow",["","{xx}^{yy}"]]
+    ["sqrt",["sqrt{xx}","{yy}^(1/{xx})"]], //190522
+    ["pow",["","{xx}^{yy}"]],
+    ["sin",["sin{xx}","{sin{yy}}^{xx}"]], //190522from
+    ["cos",["cos{xx}","{cos{yy}}^{xx}"]],
+    ["tan",["tan{xx}","{tan{yy}}^{xx}"]] //190522to
   ];
   funL=apply(repL,substring(#_1,0,2)); //190515to
   out="";
@@ -3147,18 +3153,20 @@ Tocindyform(str):=( //190521
   out=str;
   plv=Bracket(out,"()");
   flg=0;
-  if(length(plv)==0,flg=2);
+  if(length(plv)==0,
+    flg=4; //190522
+  );
   if(flg==0,
-    tmp=plv_(length(plv));
-    flg=0;
-    if(tmp_2< -1,
+    tmp=Indexall(out,"("); //190522from
+    tmp1=Indexall(out,")");
+    if(length(tmp)>length(tmp1),
       flg=2;
-      out="{\color{red}{?}}\ \ "+out+"{\color{red}{)+?}}\ \ ";
+      out=out+"?+)?";
     );
-    if(tmp_2> -1,
+    if(length(tmp)<length(tmp1),
       flg=3;
-      out="{\color{red}{?}}\ \ "+out+"{\color{red}{-)?}}\ \ ";
-    ); //190515to
+      out=out+"?)-?";
+    );  //190522to
     forall(1..20,
       if(flg==0,
         tmp=Tocindyformpart(out);
@@ -3473,29 +3481,43 @@ Textedit(no):=(
 Textedit2value(no):=Textedit2value(no,[]);
 Textedit2value(no,options):=(
 //help:Textedit2value(50);
-//help:Textedit2value(51,["Parse=y","Tocindy=y"]);
-  regional(str,tmp,tmp1,parseflg,tocdyflg);
+//help:Textedit2value(51,["Parse=y/n","Form=c/t/m"]);
+  regional(str,tmp,tmp1,parseflg,formflg);
   parseflg="Y";
-  tocdyflg="Y";
+  formflg="C"; //190522
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="P",
       parseflg=Toupper(substring(tmp_2,0,1));
     );
-    if(tmp1=="T",
-      tocdyflg=Toupper(substring(tmp_2,0,1));
+    if(tmp1=="F",
+      formflg=Toupper(substring(tmp_2,0,1));
     );
   );
   str=Textedit(no);
   str=Removespace(str);
-  if(tocdyflg=="Y",
+  if(formflg=="C",
     str=Tocindyform(str);
+    if(indexof(str,"?")>0,parseflg="N"); //190522
   );
+  if(formflg=="T", //190522from
+    str=Totexform(str);
+    parseflg="N";
+  );
+  if(formflg=="M",
+    str=Tomaxform(str);
+    parseflg="N";
+  ); //190522to
   if(length(str)>0,
     tmp=Strsplit(str,"=");
     if(length(tmp)>1,str=tmp_2);
-    str=parse(str);
+  );
+  if(length(str)==0, //190522from
+    parseflg="N";
+  ); //190522from
+  if(parseflg=="Y",
+    str=parse(str); //190522
   );
   str;
 );

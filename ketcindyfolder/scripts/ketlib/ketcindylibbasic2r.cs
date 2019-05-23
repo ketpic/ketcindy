@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190520] loaded");
+println("ketcindylibbasic2[20190523] loaded");
 
 //help:start();
 
@@ -983,7 +983,7 @@ Deqdata(deq,rng,initt,initf,Num):=( //17.10.04
   X0=Lcrd(initf);
   pdL=[flatten([tt,X0])];
   flg=0;
-  forall(1..floor((t2-initt)/dt),
+  forall(1..(round((t2-initt)/dt)), //190523
     if(flg==0,
       kl1=dt*funP(tt,X0);
       kl2=dt*funP(tt+dt/2,X0+kl1/2);
@@ -999,7 +999,7 @@ Deqdata(deq,rng,initt,initf,Num):=( //17.10.04
   tt=initt;
   X0=Lcrd(initf);
   flg=0;
-  forall(1..floor((initt-t1)/dt),
+  forall(1..(round((initt-t1)/dt)), //190523
     if(flg==0,
       kl1=dt*funN(tt,X0);
       kl2=dt*funN(tt+dt/2,X0+kl1/2);
@@ -4024,6 +4024,26 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
 );
 ////%Periodfun end////
 
+////%Mkcstable start////
+Mkcstable(nterm,num):=( //190523
+//help:Mkcstable(number of terms, division number)
+  regional(cosL,sinL,dL,jj,x,tmp);
+  cosL=[];
+  sinL=[];
+  forall(0..num,jj,
+    x=-pi+2*pi/num*jj;
+    dL=apply(1..nterm,cos(#*x));
+    cosL=append(cosL,dL);
+    dL=apply(1..nterm,sin(#*x));
+    sinL=append(sinL,dL);
+  );
+  tmp="Costable="+Textformat(cosL,6);
+  parse(tmp);
+  tmp="Sintable="+Textformat(sinL,6);
+  parse(tmp);
+);
+////%Mkcstable end////
+
 ////%Fourierseries start////
 Fourierseries(nm,coeff,per,nterm):=
    Fourierseries(nm,coeff,per,nterm,[]);  // 16.11.24
@@ -4034,10 +4054,29 @@ Fourierseries(nm,coeff,per,nterm,Arg1):=( //190420from
     Fourierseries(nm,coeff,per,nterm,"x=[XMIN,XMAX]",Arg1);
   );
 );  
-Fourierseries(nm,coefforg,per,nterm,range,options):=(
+Fourierseries(nm,coefforg,per,nterm,range,optionorg):=(
 //help:Fourierseries("1",[c0,cn,sn],period,numterm,"x=range",options);
 //help:Fourierseries("1","[c0,cn,sn]",period,numterm,"x=range",options);
-  regional(coeff,c0,cn,sn,fs,tmp,tmp1,tmp2);
+//help:Fourierseries(options2=["Table=n/y"]);
+  regional(options,eqL,num,coeff,c0,cn,sn,fs,tbflg,jj,dL,
+        tmp,tmp1,tmp2);
+  options=optionorg; //190523from
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  tbflg="N";
+  num=100;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="T",
+      tbflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+    if(tmp1=="N",
+      num=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+  ); //190523to
   coeff=coefforg;
   if(isstring(coeff),
     tmp=substring(coeff,1,length(coeff)-1);
@@ -4050,17 +4089,33 @@ Fourierseries(nm,coefforg,per,nterm,range,options):=(
   cn=coeff_2;
   sn=coeff_3;
   fs=c0;
-  forall(1..nterm,
-    tmp=parse(Assign(cn,["n",#]));
-    tmp1=Assign("("+format(tmp,5)+")*cos(n*2*pi/per*x)",
-      ["n",#,"per",per]);
-    tmp=parse(Assign(sn,["n",#]));
-    tmp2=Assign("("+format(tmp,5)+")*sin(n*2*pi/per*x)",
-      ["n",#,"per",per]);
-    fs=fs+"+"+tmp1+"+"+tmp2;
-  );
-  Plotdata("-four"+nm,fs,range,options);
-); //190420to
+  if(tbflg=="N", //190523
+    forall(1..nterm,
+      tmp=parse(Assign(cn,["n",#]));
+      tmp1=Assign("("+format(tmp,5)+")*cos(n*2*pi/per*x)",
+                  ["n",#,"per",per]);
+      tmp=parse(Assign(sn,["n",#]));
+      tmp2=Assign("("+format(tmp,5)+")*sin(n*2*pi/per*x)",
+                 ["n",#,"per",per]);
+      fs=fs+"+"+tmp1+"+"+tmp2;
+    );
+    Plotdata("-four"+nm,fs,range,append(options,"Num="+Num));
+  ,
+    c0=parse(c0); //190523from
+    cn=apply(1..nterm,parse(Assign(cn,["n",#])));
+    sn=apply(1..nterm,parse(Assign(sn,["n",#])));
+    dL=[]; //1900523from
+    forall(0..num,jj,
+      x=-per/2+per/num*jj;
+      fs=c0;
+      forall(1..nterm,
+        fs=fs+cn_#*Costable_(jj+1)_#+sn_#*Sintable_(jj+1)_#;
+      );
+      dL=append(dL,[x,fs]);
+    );
+    Listplot("-four"+nm,dL,options);
+  ); //190523to
+);
 ////%Fourierseries end////
 
 ////%Tabledata start//// //190428from

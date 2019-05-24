@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190522] loaded");
+println("ketcindylibbasic3[20190524] loaded");
 
 //help:start();
 
@@ -3196,6 +3196,30 @@ Tocindyform(str):=( //190521
   out;
 );
 ////%Tocindyform end////
+
+////%Animepar start//// //190524
+Animepar(start,ratio,stop):=Animationparam(start,ratio,stop);
+////%Animepar end////
+
+////%Animationparam start////
+Animationparam(start,ratio,stop):=( //190524
+//help::Animationparam(S.x,5,30);
+//  Animeflg,sstart,Dirflg,sorg are used in animation buttons
+  if(isreal(Animeflg),
+    if(Animeflg==1,
+      sstart=Dirflg*ratio*seconds()+sorg;
+    );
+  ,
+    Current=start;
+    sstart=start;
+  );
+  if(sstart>=stop,
+    sstart=stop;
+    stopanimation();
+  );
+  sstart;
+);
+////%Animationparam end////
 
 ////%Copyketcindyjs start//// 190128
 Copyketcindyjs():=(

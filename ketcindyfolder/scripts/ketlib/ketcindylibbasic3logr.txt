@@ -1,3 +1,5 @@
+// 20190524
+     Animationparam added
 // 20190522
      Textedit2value changed
      Tocindyform,Tocindyformpart debugged

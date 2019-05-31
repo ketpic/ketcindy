@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190524] loaded");
+println("ketcindylibbasic3[20190528] loaded");
 
 //help:start();
 
@@ -3204,7 +3204,10 @@ Animepar(start,ratio,stop):=Animationparam(start,ratio,stop);
 ////%Animationparam start////
 Animationparam(start,ratio,stop):=( //190524
 //help::Animationparam(S.x,5,30);
-//  Animeflg,sstart,Dirflg,sorg are used in animation buttons
+//help::Animationparam(S.x,5,[-100,100]);
+//  Animeflg,sstart,Dirflg,Current,sorg are used in animation buttons
+  regional(rng);
+  if(islist(stop),rng=stop,rng=[start,stop]);
   if(isreal(Animeflg),
     if(Animeflg==1,
       sstart=Dirflg*ratio*seconds()+sorg;
@@ -3213,8 +3216,8 @@ Animationparam(start,ratio,stop):=( //190524
     Current=start;
     sstart=start;
   );
-  if(sstart>=stop,
-    sstart=stop;
+  if((sstart<=rng_1)%(sstart>=rng_2), //190528
+    if(sstart<=rng_1,sstart=rng_1, sstart=rng_2); //190528
     stopanimation();
   );
   sstart;

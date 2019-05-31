@@ -14,18 +14,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190523] loaded");
+println("ketcindylibbasic2[20190531] loaded");
 
 //help:start();
+
+////%Drwfigs start//// 190530
+Drwfigs(nm,figlist):=Drawfigures(nm,figlist,[]);
+Drwfigs(nm,figlist,optionlist):=Drawfigures(nm,figlist,optionlist,[]);
+Drwfigs(nm,figlist,optionlist,commonops):=Drawfigures(nm,figlist,optionlist,commonops);
+////%Drwfigs end//// 
 
 ////%Drawfigures start//// 190426
 Drawfigures(nm,figlist):=Drawfigures(nm,figlist,[]);
 Drawfigures(nm,figlist,optionlist):=Drawfigures(nm,figlist,optionlist,[]);
-Drawfigures(nm,figlistorg,optionlistorg,options):=(
-//help:Drawfigures(["pt1","cr1"], ["Size=3"],["Color=red"]);
+Drawfigures(nm,figlistorg,optionlistorg,commonops):=(
+//help:Drawfigures(["pt1","cr1"], [["Size=3"],[]],["Msg=n"]);
   regional(figlist,name,figL,optionlist,nn,kk,fig,eqL,msg,tmp,tmp1,tmp2);
   name="figs"+nm;
-  tmp=Divoptions(options);
+  tmp=Divoptions(commonops);
   eqL=tmp_5;
   msg="Y";
   forall(eqL,
@@ -35,26 +41,40 @@ Drawfigures(nm,figlistorg,optionlistorg,options):=(
       msg=Toupper(substring(tmp_2,0,1));
     );
   );
-  optionlist=optionlistorg;
   figlist=figlistorg;
   if(isstring(figlist),figlist=parse(figlist));
   nn=length(figlist);
-  tmp=optionlist_(length(optionlist));
-  tmp1=apply(1..nn,tmp);
-  optionlist=concat(optionlist,tmp1);
+  optionlist=optionlistorg;
+  if(length(optionlist)==0, //190531from
+    optionlist=apply(1..nn,[]);
+  );
+  if(!islist(optionlist_1),
+    optionlist=apply(1..nn,optionlist);
+  );
+  if(length(optionlist)<nn,
+    tmp=optionlist_(length(optionlist));
+    tmp2=length(optionlist);
+    tmp1=apply(tmp2..nn,tmp);
+    optionlist=concat(optionlist,tmp1);
+  ); //190531to
   figL=[];
   forall(1..nn,kk,
     fig=figlist_kk;
     if(isstring(fig),fig=parse(fig));
     if(length(fig)>0,
-      if(length(fig)==1,
-        if(Measuredepth(fig)==1,fig=fig_1);
-        Pointdata(name+"N"+text(kk),fig,optionlist_kk); //190427
-        figL=append(figL,"pt"+name+"N"+text(kk)); //190427
-      ,
-        Listplot("-"+name+"N"+text(kk),fig,optionlist_kk); //190427
-        figL=append(figL,name+"N"+text(kk)); //190427
-      );
+      if(Measuredepth(fig)==0,fig=[fig]); //190531from
+      if(Measuredepth(fig)==1,fig=[fig]);
+      forall(1..(length(fig)),
+        tmp1=fig_#;
+        tmp2=name+"n"+text(kk)+"p"+text(#);
+        if(length(tmp1)==1,
+          Pointdata(tmp2,tmp1,optionlist_kk); 
+          figL=append(figL,"pt"+tmp2);
+        ,
+          Listplot("-"+tmp2,tmp1,optionlist_kk);
+          figL=append(figL,tmp2); //190427
+        );
+      ); //190531to
     );
   );
   tmp=apply(figL,Dqq(#));
@@ -576,12 +596,30 @@ Anglemark(nm,plist,options):=(
     if((tmp1=="L")%(tmp1=="E"),
       if(tmp1=="L",Bname="Letter(");
       if(tmp1=="E",Bname="Expr(");
-      Bname=Bname+Bpos+","+Dq+"c"+Dq+","+Dq;//16.10.29
-      tmp1=indexof(tmp_2,",");
-      Bname=Bname+substring(tmp_2,tmp1,length(tmp_2))+Dq+")"; //190219
-      if(tmp1>0,
-        Brat=parse(substring(tmp_2,0,tmp1-1));
+      Bname=Bname+Bpos+","+Dqq("c")+",";//16.10.29
+      tmp=tmp_2; //190524from
+      tmp1=Indexall(tmp,",");
+      if(length(tmp1)==0,
+        Bname=Bname+Dqq(tmp);
+      ,
+        if(length(tmp1)>1,
+          Brat=parse(substring(tmp,0,tmp1_1-1));
+          tmp=substring(tmp,tmp1_1,length(tmp));
+          tmp1=Indexall(tmp,",");
+        ,
+          if(substring(tmp,tmp1_1,tmp1_1+1)!="[",
+            Brat=parse(substring(tmp,0,tmp1_1-1));
+            tmp=substring(tmp,tmp1_1,length(tmp))+",[]";
+            tmp1=Indexall(tmp,",");
+          );
+        );
+        Bname=Bname+Dqq(substring(tmp,0,tmp1_1-1));
+        tmp=substring(tmp,tmp1_1+1,length(tmp)-1);
+        tmp=Strsplit(tmp,",");
+        tmp1=apply(tmp,Dqq(#));
+        Bname=Bname+","+text(tmp1);
       );
+      Bname=Bname+");"; //190524to
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
@@ -686,16 +724,39 @@ Paramark(nm,plist,options):=(
     opstr=opstr+","+text(tmp);
   );
   forall(eqL,
-    if(substring(#,0,1)=="L",Bname="Letter(");
-    if(substring(#,0,1)=="E",Bname="Expr(");
-    Bpos="md"+name;
-    Bname=Bname+Bpos+","+Dq+"c"+Dq+","+Dq; //180705
-    tmp=substring(#,indexof(#,"="),length(#));
-    tmp1=indexof(tmp,",");
-    Bname=Bname+substring(tmp,tmp1,length(tmp))+Dq+")";
-    if(tmp1>0,
-      Brat=parse(substring(tmp,0,tmp1-1));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if((tmp1=="L")%(tmp1=="E"),
+      if(tmp1=="L",Bname="Letter(");
+      if(tmp1=="E",Bname="Expr(");
+      Bname=Bname+Bpos+","+Dqq("c")+",";//16.10.29
+      tmp=tmp_2; //190524from
+      tmp1=Indexall(tmp,",");
+      if(length(tmp1)==0,
+        Bname=Bname+Dqq(tmp);
+      ,
+        if(length(tmp1)>1,
+          Brat=parse(substring(tmp,0,tmp1_1-1));
+          tmp=substring(tmp,tmp1_1,length(tmp));
+          tmp1=Indexall(tmp,",");
+        ,
+          if(substring(tmp,tmp1_1,tmp1_1+1)!="[",
+            Brat=parse(substring(tmp,0,tmp1_1-1));
+            tmp=substring(tmp,tmp1_1,length(tmp))+",[]";
+            tmp1=Indexall(tmp,",");
+          );
+        );
+        Bname=Bname+Dqq(substring(tmp,0,tmp1_1-1));
+        tmp=substring(tmp,tmp1_1+1,length(tmp)-1);
+        tmp=Strsplit(tmp,",");
+        tmp1=apply(tmp,Dqq(#));
+        Bname=Bname+","+text(tmp1);
+      );
+      Bname=Bname+");"; //190524to
     );
+    if(tmp1=="M", //190206from
+      Msg=Toupper(substring(tmp_2,0,1));
+    ); //190206to
   );
   pB=Lcrd(plist_1); pA=Lcrd(plist_2); pC=Lcrd(plist_3);
   Ctr=Lcrd(pA);

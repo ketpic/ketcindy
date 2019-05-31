@@ -1,3 +1,5 @@
+// 20190528
+     Animationparam changed  ( stop => rng)
 // 20190524
      Animationparam added
 // 20190522

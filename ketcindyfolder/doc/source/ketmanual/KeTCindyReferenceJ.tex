@@ -37,20 +37,22 @@
 \item[関数]Ketinit(options)
 \item[機能]\ketcindy を初期化する。平面図形ではDrawスロットに，空間図形ではInitialization スロットの冒頭に記述する必要がある。
 \item[説明]option 作業サブフォルダ\\%，縦方向の倍率と描画領域を設定する。\\
-\phantom{option }通常は不要で，\verb|Ketinit()| だけでよい。\\
+\phantom{option }通常は不要で，\verb|Ketinit()| だけでよい。
 
-【例】
+\vspace{\baselineskip}
+\hypertarget{Initglist}{}
+\item[関数]Initglist(), Setglist(), Addglist()
+\item[機能]ketlibスロットで作られる描画データを描画リストに追加する。
+\item[説明]Implicitplot,Hatchdataなど実行時間のかかるコマンドをfiguresスロットにおくと，その都度実行されてしまう。それを避けるためketlibスロットにおいたときに用いる。
 
-\verb|Ketinit()| ：作業フォルダは，サブフォルダ\verb|"fig"|
+\begin{verbatim}
+ Initglist(); // ketlibスロットで
+ Implicitplot(''1'',fun,rng);
+ Setglist();
 
-\verb|Ketinit("")| ： 作業フォルダはcindyファイルと同じ
-
-%\verb|Ketinit(2)| ： 倍率2，描画領域 $-5 \leq x \leq 5 , -5 \leq y \leq 5$
-%
-%\verb|Ketinit(2,[-2,3],[-2,4])| ： 倍率2，描画領域 $-2 \leq x \leq 3 , -2 \leq y \leq 4$
-
-%\vspace{\baselineskip}
-%描画領域(TeXに出力する領域)は制御点SW（左下）とNE（右上）を対角とする矩形領域。描画領域を指定すると，制御点がなければその位置に作り，すでに存在する場合は何もしない。作成された制御点はドラッグして描画領域を変更することができる。倍率は，Setscaling(倍率)を実行するのと同じ。ただし，Cinderellaで作図した幾何要素に対しては無効。(\hyperlink{setscaling}{Setscaling()}の項参照)
+ Ketinit(); // figuresスロットで
+ Addglist();
+\end{verbatim}
 
 \vspace{\baselineskip}
 \hypertarget{setfiles}{}
@@ -2460,7 +2462,7 @@ Rulerscale(A,["r",0,5,1],["f",1,"d1",3,"d2"]);
 \begin{description}
 
 \hypertarget{drawfigures}{}
-\item[関数]Drawfigures(name ,データリスト,オプションリスト)
+\item[関数]Drawfigures(or Drwfigs)(name ,データリスト,オプションリスト)
 \item[機能]複数のプロットデータのスタイル（オプション）をリストで与えて描画する
 \item[説明]複数のプロットデータをまとめて扱う。たとえば，円と，円周上の点の2つのプロットデータをまとめて扱えば，平行移動や回転で，それらのプロットデータをまとめて平行移動や回転ができる。%Joincrvs()では，プロットデータをつなげて１つのプロットデータにするが，Addgraph()では，それぞれのプロットデータからなるリスト（リストのリスト）にする。（プロットデータは座標のリストである）
 
@@ -2481,7 +2483,7 @@ forall(1..nn,
   t=dt*#;
   Rotatedata(2,ad1,-t,[[0,1],"nodisp"]);
   Translatedata(2,"rt2",[t,0],["nodisp"]);
-  Drawfigures(text(#),"tr2",[opcr,oppt]);
+  Drawfigures(text(#),["tr2_1","tr2_2"],[opcr,oppt]);
 );
 \end{verbatim}
 
@@ -8133,6 +8135,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{drwxy}{Drwxy()} \>座標軸を先に描く\\
 \hyperlink{fontsize}{Fontsize(記号)}\>フォントサイズを設定する\\
 \hyperlink{ketinit}{Ketinit(options)}\>\ketcindy を初期化する\\
+\hyperlink{initglist}{Initglist} \> ketlib スロットの描画データを追加する\\
 \hyperlink{ptsize}{Ptsize(数)} \>表示する点の大きさを設定する\\
 \hyperlink{setarrow}{Setarrow(size,angle,pos,cut,style}\>矢線の形状を設定する\\
 \hyperlink{setax}{Setax(list)}\>座標軸の書式を設定する\\

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190514] loaded");
+println("ketcindylibbasic1[20190530] loaded");
 
 //help:start();
 
@@ -171,6 +171,39 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
 // no ketjs off 190122
 );
 ////%Ketinit end////
+
+////%Initglist start//// 190530
+Initglist():=(
+  GLIST=[]; // no ketjs
+  GCLIST=[];
+  COM0thlist=[]; // no ketjs on
+  COM1stlist=[];
+  COM2ndlist=[]; // no ketjs off
+  KCOLOR=[0,0,0];
+  SCALEX=1;
+  SCALEY=1;
+);
+////%Initglist end////
+
+////%Setglist start//// 190530
+Setglist():=(
+  GLISTadd=GLIST;
+  GCLISTadd=GCLIST;
+  COM0thlistadd=COM0thlist; // no ketjs on
+  COM1stlistadd=COM1stlist;
+  COM2ndlistadd=COM2ndlist; // no ketjs off
+);
+////%Setglist end////
+
+////%Addglist start//// 190530
+Addglist():=(
+  GLIST=GLISTadd;
+  GCLIST=GCLISTadd;
+  COM0thlist=COM0thlist; // no ketjs on
+  COM1stlist=COM1stlistadd;
+  COM2ndlist=COM2ndlistadd; // no ketjs off
+);
+////%Addglist end////
 
 ////%Fillstore start////
 Fillstore():=(
@@ -3899,7 +3932,7 @@ Pointdata(nm,listorg,options):=(
       dispflg=Toupper(substring(tmp_2,0,1));
     );
     if(tmp1=="I", //190405from
-      if(Toupper(tmp_2)=="NO",
+      if(Toupper(substring(tmp_2,0,1))=="N",
         inside=[-1,-1,-1];
       ,
         tmp3=["0","1","2","3","4","5","6","7","8","9"];

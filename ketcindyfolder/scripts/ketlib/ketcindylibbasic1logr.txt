@@ -1,3 +1,5 @@
+// 20190530
+//    Initglist, Setglist, Addglist added
 // 20190514
 //    Setenglish removed
 // 20190511

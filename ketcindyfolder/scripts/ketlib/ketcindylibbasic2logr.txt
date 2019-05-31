@@ -1,3 +1,7 @@
+// 20190531
+//   Drawfigures (Drwfigs) changed 
+// 20190524
+//   Anglemark,Paramark changed ( "E/L" option )
 // 20190523
 //   Deqdata debugged  ( floor => round )
 //   Mkcstable added

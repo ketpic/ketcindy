@@ -66,6 +66,22 @@
 This function should be written at the first line on Draw slot page.  In case of space figure (KeTCindy's 3D-mode), write it in the initialization slot page \verb|ketlib|.
 \end{cmd}
 
+%----------Initglist,Setglist,Addglist----------------------------------
+\begin{cmd}{Initglist}{initglist}
+\itemket{Usage}Initglist(), Setglist(), Addglist()
+\itemket{Description}Add the list generated in \verb|"ketlib"| slot to that of \verb|"ketlib"| slot.
+\itemket{Examples}\mbox{}
+
+\begin{verbatim}
+ Initglist(); // in ketlib slot
+ Implicitplot(''1'',fun,rng);
+ Setglist();
+
+ Ketinit(); // in figures slot
+ Addglist();
+\end{verbatim}
+\end{cmd}
+
 %-----------Setfiles---------------------------------
 \begin{cmd}{Setfiles}{setfiles}
 \itemket{Usage}Setfiles(filename)
@@ -1971,7 +1987,7 @@ and keep them from being drawn on \TeX\ final output.
 %--------Drawfigures ------------------------------------
 \begin{cmd}{Drawfigures}{drawfigures}
 
-\itemket{Usage}Drawfigures(name,List of PDs,List of Options)
+\itemket{Usage}Drawfigures(or Drwfigs)(name,List of PDs,List of Options)
 \itemket{Description}Manipulate a plural number of PDs together.
 \itemket{Remark} List of Options should corrensponds to that of PDs.
 
@@ -1992,7 +2008,7 @@ forall(1..nn,
   t=dt*#;
   Rotatedata(2,ad1,-t,[[0,1],"nodisp"]);
   Translatedata(2,"rt2",[t,0],["nodisp"]);
-  Drawfigures(text(#),"tr2",[opcr,oppt]);
+  Drawfigures(text(#),["tr2_1","tr2_2"],[opcr,oppt]);
 );
 \end{verbatim}
 
@@ -2774,7 +2790,7 @@ The result is a list of center, half of width, half of height.
 \end{cmd}
 
 %------------Putcell--------------------------------
-\begin{cmd}{Putcell}{putcell}
+\begin{cmd}{Putcell, Putcellexpr}{putcell}
 \itemket{Usage}Putcell(grid name of upper left, grid name of lower right, postion, a string);
 \itemket{Description}Table function to put a string at the cell.
 \itemket{Details}
@@ -5607,6 +5623,7 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{drwxy}{Drwxy} \> draw axis in the \TeX\ figure.\\
 \hyperlink{fontsize}{Fontsize} \> define the font size in the \TeX\ figure.\\
 \hyperlink{ketinit}{Ketinit} \> initialize \ketcindy.\\
+\hyperlink{initglist}{Initglist} \> add the list in ketlib slot to that of figures slot.\\
 \hyperlink{ptsize}{Ptsize}  \> set the size of points.\\
 \hyperlink{setarrow}{Setarrow} \> set the style of arrow.\\
 \hyperlink{setax}{Setax} \> set the style of axis.\\
@@ -5720,10 +5737,11 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{changetablestyle}{Changetablestyle} \> change line styles of rules.\\
 \hyperlink{findcell}{Findcell} \> return the information of a cell.\\
 \hyperlink{putcell}{Putcell} \> put a string at the cell.\\
+\hyperlink{putcell}{Putcellexpr} \> put a math expression at the cell.\\
 \hyperlink{putcol}{Putcol} \> put strings to a column.\\
-\hyperlink{putcolexpr}{Putcolexpr} \> put strings to a column.\\
+\hyperlink{putcolexpr}{Putcolexpr} \> put math expressions to a column.\\
 \hyperlink{putrow}{Putrow} \> put strings to a row.\\
-\hyperlink{putrowexpr}{Putrowexpr} \> put strings to a row.\\
+\hyperlink{putrowexpr}{Putrowexpr} \> put math expressions to a row.\\
 \hyperlink{tabledata}{Tabledata} \> draw rules of a table.\\
 \hyperlink{tgrid}{Tgrid} \> return the coordinates of the grid name.\\
 \hyperlink{tlistplot}{Tlistplot} \> connect two lattice points by line segments.\\

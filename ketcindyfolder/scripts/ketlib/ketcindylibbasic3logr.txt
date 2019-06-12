@@ -1,3 +1,5 @@
+// 20190604
+     Mkketcindyjs changed ( eqflg added )
 // 20190528
      Animationparam changed  ( stop => rng)
 // 20190524

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190528] loaded");
+println("ketcindylibbasic3[20190604] loaded");
 
 //help:start();
 
@@ -3555,16 +3555,17 @@ Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
 //help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
-//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore="]);
+//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Equal="]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,out,Out,igno,onlyflg,rmptL,colorrgb,ptname); 
+      nolabel,color,grid,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep); 
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
   color="lightgray"; //190503
+  eqflg=0; //190603
   grid="";
   path=Dircdy;
   igno=[];
@@ -3612,6 +3613,14 @@ Mkketcindyjs(options):=( //17.11.18
         grid=tmp2;
       );
     );
+    if(tmp1=="E", //190603from
+      eqflg=1;
+      if(length(tmp2)>0,
+        eqrep=tmp2;
+      ,
+        eqrep="";
+      );
+    );  //190603to
     if(tmp1=="P",
       if(!tmp2="Dircdy",
         path=tmp2;
@@ -3954,6 +3963,7 @@ Mkketcindyjs(options):=( //17.11.18
       if(flg==0,
         if(indexof(tmp1_jj,"Evaluate")>0,
           tmp=replace(tmp1_jj,Dqq("Evaluate"),Dqq("EditableText"));
+          if(eqflg==1,tmp=replace(tmp,"=",eqrep)); //190604
           out=append(out,tmp);
           flg=1;
         );
@@ -3961,7 +3971,8 @@ Mkketcindyjs(options):=( //17.11.18
       if(flg==0,
         if(indexof(tmp1_jj,"Calculation")>0,
           tmp=replace(tmp1_jj,Dqq("Calculation"),Dqq("EditableText"));
-          out=append(out,tmp);
+          if(eqflg==1,tmp=replace(tmp,"=",eqrep)); //190604
+         out=append(out,tmp);
           flg=1;
         );
       );

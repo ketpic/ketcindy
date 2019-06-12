@@ -51,4 +51,4 @@ Extractfun,basic3,3424,3441,Indexall,Findfun
 Extractall,basic3,3450,3494
 Textedit,basic3,3498,3504
 Textedit2value,basic3,3508,3550,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Mkketcindyjs,basic3,3554,4102,Strsplit,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Dqq,indexall,Indexof,Indexall
+Mkketcindyjs,basic3,3554,4113,Strsplit,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Extractfun,Extractall,pathsep,Readlines,Removespace,Dqq,indexall,Indexof,Indexall

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190530] loaded");
+println("ketcindylibbasic1[20190603] loaded");
 
 //help:start();
 
@@ -182,6 +182,8 @@ Initglist():=(
   KCOLOR=[0,0,0];
   SCALEX=1;
   SCALEY=1;
+  XMIN=SW.x; XMAX=NE.x; //190603[2lines]
+  YMIN=SW.y; YMAX=NE.y;
 );
 ////%Initglist end////
 

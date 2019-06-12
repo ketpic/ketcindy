@@ -1,3 +1,5 @@
+// 20190603
+//    Initglist changed (XMIN,... added )
 // 20190530
 //    Initglist, Setglist, Addglist added
 // 20190514

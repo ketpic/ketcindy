@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20180310
+#      20180614
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
@@ -60,19 +60,63 @@ else
 fi
 cd ${cindyplug}
 if [ -e KetCindyPlugin.jar ]; then
-  sudo rm ${cindyplug}/KetCindyPlugin.jar
-fi
-if [ -e ketcindy.ini ]; then
-  sudo rm ${cindyplug}/ketcindy.ini
+  sudo rm KetCindyPlugin.jar
 fi
 cd ${ketcindyscripts}
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
-echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/ketcindy.ini
-echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/ketcindy.ini
-echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/ketcindy.ini
-echo "setdirectory(Dirhead);"  >> ${cindyplug}/ketcindy.ini
-echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/ketcindy.ini
-echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/ketcindy.ini
-echo "KetCindyPlugin and others copied to Cinderella"
+echo "KetCindyPlugin.jar copied to Cinderella"
+
+# 20190614from
+cd ${cindyplug}
+remake="y"
+if [ -e ketcindy.ini ]; then
+  echo "Contentes of ketcindy.ini : " 
+  echo ""
+  cat ketcindy.ini
+  echo ""
+  read -p 'Do you want to remake ketcindy.ini? (y/n) : ' remake
+fi
+if [ ! ${remake} = "y" ]; then
+  echo "finished"
+  sleep 1
+  exit 0
+fi
+# 20190614to
+
+if [ -e ketcindy.ini ]; then
+    sudo rm ketcindy.ini
+fi
+echo "PathThead=\"${texbinpath}/\";"  > ketcindy.ini
+echo "Dirhead=\"${ketcindyscripts}\";"  >> ketcindy.ini
+echo "Homehead=\"${homehead}\";"  >> ketcindy.ini
+echo "setdirectory(Dirhead);"  >> ketcindy.ini
+echo "import(\"setketcindy.txt\");"  >> ketcindy.ini
+echo "import(\"ketoutset.txt\");"  >> ketcindy.ini
+
+echo "Choose TeX with the 1st(+2nd) character"
+read -p 'p=platex, u=uplatex, l=latex, x=xelatex, pd=pdflatex, lu=lualatex:' tex
+if [ ${tex} = "p" ]; then
+  tex="platex"
+fi
+if [ ${tex} = "u" ]; then
+  tex="uplatex"
+fi
+if [ ${tex} = "l" ]; then
+  tex="latex"
+fi
+if [ ${tex} = "x" ]; then
+  tex="xelatex"
+fi
+if [ ${tex} = "pd" ]; then
+  tex="pdflatex"
+fi
+if [ ${tex} = "lu" ]; then
+  tex="lualatex"
+fi
+echo  "PathT=PathThead+\"${tex}\";" >> ketcindy.ini
+echo  "Pathpdf=\"${pathpdf}\";" >> ketcindy.ini
+echo  "Mackc=\"bash\";" >> ketcindy.ini
+
+echo "ketcindy.ini generated(updated)"
 sleep 1
 exit 0

@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20190413
+#      20190613
 
 # Edit and uncomment the following lines if necessary
 #texpath=/Applications/kettex/texlive
@@ -82,12 +82,30 @@ fi
 
 cd ${ketcindyscripts}
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
-echo "PathThead=\"${texbinpath}/\";"  > ${cindyplug}/ketcindy.ini
-echo "Dirhead=\"${ketcindyscripts}\";"  >> ${cindyplug}/ketcindy.ini
-echo "Homehead=\"${homehead}\";"  >> ${cindyplug}/ketcindy.ini
-echo "setdirectory(Dirhead);"  >> ${cindyplug}/ketcindy.ini
-echo "import(\"setketcindy.txt\");"  >> ${cindyplug}/ketcindy.ini
-echo "import(\"ketoutset.txt\");"  >> ${cindyplug}/ketcindy.ini
+
+# 20190613from
+cd ${cindyplug}
+remake="y"
+if [ -e ketcindy.ini ]; then
+  echo "Contentes of ketcindy.ini : " 
+  echo ""
+  cat ketcindy.ini
+  echo ""
+  read -p 'Do you want to remake ketcindy.ini? (y/n) : ' remake
+fi
+if [ ! ${remake} = "y" ]; then
+  echo "finished"
+  sleep 1
+  exit 0
+fi
+# 20190613to
+
+echo "PathThead=\"${texbinpath}/\";"  > ketcindy.ini
+echo "Dirhead=\"${ketcindyscripts}\";"  >> ketcindy.ini
+echo "Homehead=\"${homehead}\";"  >> ketcindy.ini
+echo "setdirectory(Dirhead);"  >> ketcindy.ini
+echo "import(\"setketcindy.txt\");"  >> ketcindy.ini
+echo "import(\"ketoutset.txt\");"  >> ketcindy.ini
 
 echo "Choose TeX with the 1st(+2nd) character"
 read -p 'p=platex, u=uplatex, l=latex, x=xelatex, pd=pdflatex, lu=lualatex:' tex
@@ -109,19 +127,19 @@ fi
 if [ ${tex} = "lu" ]; then
   tex="lualatex"
 fi
-echo  "PathT=PathThead+\"${tex}\";" >> ${cindyplug}/ketcindy.ini
-echo  "Pathpdf=\"preview\";" >> ${cindyplug}/ketcindy.ini
+echo  "PathT=PathThead+\"${tex}\";" >> ketcindy.ini
+echo  "Pathpdf=\"preview\";" >> ketcindy.ini
 
 pathM="/Applications/Maxima.app/Contents/Resources/maxima.sh"
 pathMn="/Applications/Maxima.app/Contents/Resources/opt/bin/maxima"
 find -f ${pathM}
 if [ $? -gt 0 ]; then
-  echo  "PathM=\"${pathMn}\";" >> ${cindyplug}/ketcindy.ini
+  echo  "PathM=\"${pathMn}\";" >> ketcindy.ini
 else
-  echo  "PathM=\"${pathM}\";" >> ${cindyplug}/ketcindy.ini
+  echo  "PathM=\"${pathM}\";" >> ketcindy.ini
 fi
-echo  "Mackc=\"open\";" >> ${cindyplug}/ketcindy.ini
+echo  "Mackc=\"open\";" >> ketcindy.ini
 
-echo "KetCindyPlugin and others copied to Cinderella"
+echo "ketcindy.ini generated(updated)"
 sleep 1
 exit 0

@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20190413
+#      20190614
 cd `dirname $0`
 if [ -e ../ketcindyfolder ]; then
   cd ../ketcindyfolder
@@ -7,7 +7,8 @@ fi
 echo Files will be copied from
 echo "    "`pwd`/work
 changesetting=/.ketcindy.conf #181017
-dist=~/ketcindy #180913
+home=~
+dist=${home}/ketcindy #180913
 cp -r -p work/  ${dist}/
 if [ $? -gt 0 ]; then
   echo Error:$?
@@ -28,16 +29,15 @@ else
   cp -p  KeTpicStyleJ.pdf ${dist}
 fi
 
-dist=~ 
-echo  Generating ${dist}/${changesetting}
-echo // Re-setting PathT,PathR,Pathpdf,PathM,PathAd,Mackc >${dist}${changesetting}
-echo "// PathT=PathThead+\"platex\";" >>${dist}${changesetting}
-echo "// Pathpdf=\"skim\";" >> ${dist}${changesetting}
+echo  Generating ${home}/${changesetting}
+echo // Re-setting PathT,PathR,Pathpdf,PathM,PathAd,Mackc >${home}${changesetting}
+echo "// PathT=PathThead+\"platex\";" >>${home}${changesetting}
+echo "// Pathpdf=\"skim\";" >> ${home}${changesetting}
 pathM="/Applications/Maxima.app/Contents/Resources/maxima.sh"
 pathMn="/Applications/Maxima.app/Contents/Resources/opt/bin/maxima"
-echo "// PathM=\"${pathM}\";" >> ${dist}${changesetting}
-echo "// PathM=\"${pathMn}\";" >> ${dist}${changesetting}
-echo "// Mackc=\"open\";" >>${dist}${changesetting}
+echo "// PathM=\"${pathM}\";" >> ${home}${changesetting}
+echo "// PathM=\"${pathMn}\";" >> ${home}${changesetting}
+echo "// Mackc=\"open\";" >>${home}${changesetting}
 
 sleep 1
 exit 0

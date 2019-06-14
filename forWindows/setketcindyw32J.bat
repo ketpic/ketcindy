@@ -1,4 +1,4 @@
-REM 20190611
+REM 20190614
 echo off
 
 rem Edit the followings if necessary
@@ -74,20 +74,20 @@ cd "%pathT%%scripts%"
 copy /Y "ketjava\KetCindyPlugin.jar" "%cindyplug%\"
 cd "%cindyplug%"
 
-rem 20190611from
+rem 20190614from
 if exist ketcindy.ini (
   echo Contentes of ketcindy.ini : 
+  echo .
   type ketcindy.ini
-  echo ""
+  echo .
+  set /P remake="Do you want to remake ketindy.ini? (y/n): "
 )
-set /P remake="Do you want to make/remake ketindy,ini? (y/n): "
-echo "%remake%"
-if not "%remake%" == "y" (
+if "%remake%" neq "y" (
   echo "Finished"
   pause
   exit
 )
-rem 20190611to
+rem 20190614to
 
 echo PathThead="%pathT%%bin%\"; > ketcindy.ini
 echo Homehead="%homehead%"; >> ketcindy.ini

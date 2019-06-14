@@ -74,6 +74,7 @@ copy /Y "ketjava\KetCindyPlugin.jar" "%cindyplug%\"
 cd "%cindyplug%"
 
 rem 20190614from
+set remake="y"
 if exist ketcindy.ini (
   echo Contentes of ketcindy.ini : 
   echo .
@@ -81,7 +82,7 @@ if exist ketcindy.ini (
   echo .
   set /P remake="Do you want to remake ketindy.ini? (y/n): "
 )
-if "%remake%" neq "y" (
+if "%remake%" == "n" (
   echo "Finished"
   pause
   exit

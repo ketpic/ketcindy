@@ -1,3 +1,5 @@
+// 20190615
+     WritetoRS,Usegraphics,Viewtex,Figpdf changed  ( indexof for pict2e,tikz )
 // 20190604
      Mkketcindyjs changed ( eqflg added )
 // 20190528

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190604] loaded");
+println("ketcindylibbasic3[20190615] loaded");
 
 //help:start();
 
@@ -573,11 +573,11 @@ WritetoRS(filename,shchoice):=(
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
     if(GPACK=="tpic",GPACK="pict2e");
   );
-  if(GPACK=="pict2e", //  180817
+  if(indexof(GPACK,"pict2e")>0, //  190615
     tmp=replace(tmp+"_rep2e","\","/");
     println(SCEOUTPUT,"source('"+tmp+".r')");
   ); 
-  if(GPACK=="tikz", //181213from
+  if(indexof(GPACK,"tikz")>0, //181213from //190615
     tmp=replace(tmp+"_reptikz","\","/");
     println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')");
   ); //181213to
@@ -1217,7 +1217,7 @@ Addpackage(packorg):=(
 Usegraphics(gpack):=( //180817
 //help:Usegraphics("pict2e");
   if(!contains(ADDPACK,gpack),
-    if(gpack =="tikz", //181213from
+    if(indexof(gpack,"tikz")>0, //181213from //190615
       Addpackage(["pgf","tikz"]); //190101
     ,
       Addpackage([gpack]);
@@ -1235,7 +1235,7 @@ Viewtex():=(
 //  sep="/";
   SCEOUTPUT=openfile(texfile+".tex");
   tmp="\documentclass{article}";
-  if(GPACK=="tikz", //190324from
+  if(indexof(GPACK,"tikz")>0, //190324from //190615
     if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
       tmp="\documentclass[dvipdfmx]{article}";
     ); //190324to
@@ -1254,16 +1254,16 @@ Viewtex():=(
     tmp=replace(Dirhead,"\","/");
     println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
   );
-  if(GPACK=="pict2e", 
-    println(SCEOUTPUT,"\usepackage{pict2e}");
+  if(indexof(GPACK,"pict2e")>0, //190615 
+//    println(SCEOUTPUT,"\usepackage{pict2e}"); //190615
     println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
     if(indexof(PathT,"lualatex")>0,
       println(SCEOUTPUT,"\usepackage{luatexja}");
     );
   );
-  if(GPACK=="tikz", 
-//    println(SCEOUTPUT,"\usepackage{pgf,tikz}");//190101
-    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
+  if(indexof(GPACK,"tikz")>0, //190615 
+    println(SCEOUTPUT,"\usepackage{pict2e}"); //190615
+    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}"); //190615
     if(indexof(PathT,"lualatex")>0, 
       println(SCEOUTPUT,"\usepackage{luatexja}");
     );
@@ -1373,7 +1373,7 @@ Figpdf(fnameorg,optionorg):=(
     sc=parse(tmp1);
   );
   tmp="\documentclass{article}";
-  if(GPACK=="tikz", //190324from
+  if(indexof(GPACK,"tikz")>0, //190324from //190615
     if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
       tmp="\documentclass[dvipdfmx]{article}";
     ); //190324to

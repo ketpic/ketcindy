@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20190613
+#      20190616
 
 # Edit and uncomment the following lines if necessary
 #texpath=/Applications/kettex/texlive
@@ -83,7 +83,7 @@ fi
 cd ${ketcindyscripts}
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
 
-# 20190613from
+# 20190616from
 cd ${cindyplug}
 remake="y"
 if [ -e ketcindy.ini ]; then
@@ -93,12 +93,14 @@ if [ -e ketcindy.ini ]; then
   echo ""
   read -p 'Do you want to remake ketcindy.ini? (y/n) : ' remake
 fi
-if [ ! ${remake} = "y" ]; then
+if [ ${remake} = "y" ]; then
+  echo "ketcindy.ini will be made"
+else
   echo "finished"
   sleep 1
   exit 0
 fi
-# 20190613to
+# 20190616to
 
 echo "PathThead=\"${texbinpath}/\";"  > ketcindy.ini
 echo "Dirhead=\"${ketcindyscripts}\";"  >> ketcindy.ini

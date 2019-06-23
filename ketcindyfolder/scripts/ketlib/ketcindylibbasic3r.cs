@@ -2969,7 +2969,12 @@ Fracform(x,denorg):=(
 //help:Fracform(1.3);
 //help:Fracform(1.3,[denomlist]);
   regional(den,fL,tmp,nn,mm,err);
-  den=denorg; if(!islist(den),den=1..den);
+  den=denorg;
+  if(islist(den),
+    if(!contains(den,1), den=prepend(1,den));
+  ,
+    den=1..den;
+  );
   fL=[];
   forall(den,
     tmp=round(x*#);

@@ -3347,7 +3347,40 @@ Cindyscript has a function \verb|format(value, number)|, like as Textformat.
 %\verb|Windispg();|
 \end{cmd}
 
+%----------Windispg----------------------------------
+\begin{cmd}{Windispg}{windispg}
+\itemket{Usage}Windispg();
+\itemket{Description}Generic function to display all graphs on Euclidean view.
+\itemket{Remark}This command must be put on the final line.
+%\itemket{Examples}\mbox{}
+
+%\verb|Windispg();|
+\end{cmd}
+%----------Fracform----------------------------------
+\begin{cmd}{Fracform}{fracform}
+\itemket{Usage}Fracform(number,list of denominators)
+\itemket{Description}returns Tex-like form of the fraction
+\itemket{Examples}\verb|Fracform(0.33,[2,3]); => fr(1,3)|
+
+\end{cmd}
+
+%----------Totexform----------------------------------
+\begin{cmd}{Totexform}{totexform}
+\itemket{Usage}Totexform(Tex-like form)
+\itemket{Description}returns TeX form
+\itemket{Examples}\verb|Totexform(fr(1,3)); => frac{1}{3}|
+
+\end{cmd}
+
+%----------Totexform----------------------------------
+\begin{cmd}{Tocindyform}{tocindyform}
+\itemket{Usage}Tocindyform(Tex-like form)
+\itemket{Description}returns Cindy form
+\itemket{Examples}\verb|Tocindyform(fr(1,3)); => (1)/(3)|
+\end{cmd}
+
 \newpage
+
 %==== Calling Other Softwares =========
 \section{Calling Other Softwares}
 \subsection{R}
@@ -5770,6 +5803,9 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{textformat}{Textformat} \> converts a real number to a string.\\
 \hyperlink{toupper}{Toupper} \> return the upper case letters of a string.\\
 \hyperlink{windispg}{Windispg} \> display all graphs on Euclidean view.\\
+\hyperlink{fracform}{Fracform} \>return TeX-like form of the fraction.\\
+\hyperlink{totexform}{Totexform} \> return TeX form.\\
+\hyperlink{tocindyform}{Tocindyform} \> return Cindy form.\\
 
 {\bf R} \> \\
 \hyperlink{boxplot}{Boxplot} \> draw boxplots.\\

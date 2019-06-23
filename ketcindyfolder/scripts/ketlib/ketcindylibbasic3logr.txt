@@ -1,40 +1,44 @@
+// 20190623
+//    Fracform,Gcd added
+// 20190618
+//    Mkketcindyjs changed (Error message)
 // 20190615
-     WritetoRS,Usegraphics,Viewtex,Figpdf changed  ( indexof for pict2e,tikz )
+//    WritetoRS,Usegraphics,Viewtex,Figpdf changed  ( indexof for pict2e,tikz )
 // 20190604
-     Mkketcindyjs changed ( eqflg added )
+//    Mkketcindyjs changed ( eqflg added )
 // 20190528
-     Animationparam changed  ( stop => rng)
+//    Animationparam changed  ( stop => rng)
 // 20190524
-     Animationparam added
+//    Animationparam added
 // 20190522
-     Textedit2value changed
-     Tocindyform,Tocindyformpart debugged
-     Toctexform,Totexformpart debugged
+//    Textedit2value changed
+//    Tocindyform,Tocindyformpart debugged
+//    Toctexform,Totexformpart debugged
 // 20190521
-     Textedit2value added
-     Tocindyform,Tocindyformpart adde
-     Totexform changed  (pi => \pi, case without "()")
+//    Textedit2value added
+//    Tocindyform,Tocindyformpart adde
+//    Totexform changed  (pi => \pi, case without "()")
 // 20190515
-     Totexform,Totexformpart changed(enhanced)
+//    Totexform,Totexformpart changed(enhanced)
 // 20190514
-     Totexform,Totexformpart added
-     Copyketcindyjs debugged  ( "/" added for "cd")
+//    Totexform,Totexformpart added
+//    Copyketcindyjs debugged  ( "/" added for "cd")
 // 20190506
-      Setketcindyjs,Mkketcindyjs debugged (color)
+//    Setketcindyjs,Mkketcindyjs debugged (color)
 // 20190504
-      Mkketcindyjs changed ( rmptL,REMOVEPTJS,border,"z" )
+//    Mkketcindyjs changed ( rmptL,REMOVEPTJS,border,"z" )
 // 20190502
-      Mkketcindyjs changed ( only ketjs on/off added )
+//    Mkketcindyjs changed ( only ketjs on/off added )
 // 20190430
 //    Textedit added
 //    Mkketcindyjs debugged  ( only ketjs)
 // 20190428
-      Mkketcindyjs debugged  ( basic3d => basic3 )
-      Tenkeybrd, Getkey changed
+//    Mkketcindyjs debugged  ( basic3d => basic3 )
+//    Tenkeybrd, Getkey changed
 // 20190427
-      Tenkeybrd, Getkey added
+//    Tenkeybrd, Getkey added
 // 20190423
-      Ketcindyjsdata and Mkketcindyjs changed
+//    Ketcindyjsdata and Mkketcindyjs changed
 // 20190422
 //    Ketcindyjsdata added
 //    Setketcindyjs, Mkketcindyjs changed ( for Ketcindyjsdata )

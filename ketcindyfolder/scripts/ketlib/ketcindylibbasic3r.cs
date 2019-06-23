@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190615] loaded");
+println("ketcindylibbasic3[20190623] loaded");
 
 //help:start();
 
@@ -2947,6 +2947,46 @@ BBdata(fname,optionorg):=(
 );
 ////%BBdata end////
 
+////%Gcd start//// //190623
+Gcd(xL):=Gcd(xL,100);
+Gcd(xL,nmx):=(
+//help:Gcd([12,18,24]);
+//help:Gcd(xlist,max<100>);
+  regional(mL,ng,tmp);
+  ng=nmx;
+  mL=apply(xL,mod(abs(#),ng));
+  while(sum(mL)>0,
+    ng=ng-1;
+    mL=apply(xL,mod(abs(#),ng));
+  );
+  ng;
+);
+////%Gcd end////
+
+////%Fracform start//// //190623
+Fracform(x):=Fracform(x,5);
+Fracform(x,denorg):=(
+//help:Fracform(1.3);
+//help:Fracform(1.3,[denomlist]);
+  regional(den,fL,tmp,nn,mm,err);
+  den=denorg; if(!islist(den),den=1..den);
+  fL=[];
+  forall(den,
+    tmp=round(x*#);
+    fL=append(fL,[tmp,#,abs(tmp/#-x)]);
+  );
+  fL=sort(fL,#_3);
+  tmp=fL_1;
+  mm=tmp_1; nn=tmp_2; err=tmp_3;
+  if(nn>1,
+    out="fr("+text(mm)+","+text(nn)+")";
+  ,
+    out=text(mm);
+  );
+  [out,"err="+format(err,6)];
+);
+////%Fracform end////
+
 ////%Totexformpart start////
 Totexformpart(str):=( //190514
   regional(plv,funL,repL,flg,flgf,nall,nn,fun,funf,
@@ -3203,8 +3243,8 @@ Animepar(start,ratio,stop):=Animationparam(start,ratio,stop);
 
 ////%Animationparam start////
 Animationparam(start,ratio,stop):=( //190524
-//help::Animationparam(S.x,5,30);
-//help::Animationparam(S.x,5,[-100,100]);
+//help:Animationparam(S.x,5,30);
+//help:Animationparam(0,5,[-100,100]);
 //  Animeflg,sstart,Dirflg,Current,sorg are used in animation buttons
   regional(rng);
   if(islist(stop),rng=stop,rng=[start,stop]);
@@ -3660,7 +3700,7 @@ Mkketcindyjs(options):=( //17.11.18
     );
   );
   if(!isexists(Dircdy,Fhead+".html"),
-    drawtext(mouse().xy-[0,1],"'Write/Rewrite to CindyJS' at first",size->24,color->[1,0,0]);
+    drawtext(mouse().xy-[0,1],Cdyname()+".html not found",size->24,color->[1,0,0]);
     wait(3000);
   ,
     htmorg=Readlines(Dircdy,Fhead+".html");

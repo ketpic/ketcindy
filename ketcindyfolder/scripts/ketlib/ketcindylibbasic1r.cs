@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190603] loaded");
+println("ketcindylibbasic1[20190622] loaded");
 
 //help:start();
 
@@ -4664,13 +4664,20 @@ Connectseg(Pdata):=(
 
 ////%Implicitplot start////
 Implicitplot(name1,func,xrng,yrng):=Implicitplot(name1,func,xrng,yrng,[]);
-Implicitplot(name1,func,xrng,yrng,optionsorg):=(
+Implicitplot(name1,func,xrngorg,yrngorg,optionsorg):=(
 //help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
 //help:Implicitplot(options=["Num=[50,50]","Msg=y(n)","Bisection=y(n)]);
-  regional(name,options,Fn,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
+  regional(name,options,Fn,xrng,yrng,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
       Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,biflg,flg,
       yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
   name="imp"+name1;
+  xrng=xrngorg; yrng=yrngorg; //190622from
+  if(indexof(xrng,"=")==0,
+    xrng=xrng+"="+Textformat([XMIN,XMAX],5);
+  );
+  if(indexof(yrng,"=")==0,
+    yrng=yrng+"="+Textformat([YMIN,YMAX],5);
+  ); //190622to
   Eps=10^(-6); //190511
   options=optionsorg;
   tmp=Divoptions(options);

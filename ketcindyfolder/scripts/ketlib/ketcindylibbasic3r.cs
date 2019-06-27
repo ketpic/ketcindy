@@ -3395,7 +3395,7 @@ Ketcindyjsdata(datalistorg):=(
       );
       tmp2=substring(tmp,0,length(tmp)-1)+"]";
     ,
-      tmp2=Dqq(tmp2);
+      if(isstring(tmp2),tmp2=Dqq(tmp2));
     );
     tmp=tmp1+"="+tmp2;
     KetcindyjsDataList=append(KetcindyjsDataList,tmp);
@@ -3611,11 +3611,11 @@ Textedit2value(no,options):=(
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
-//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Equal="]);
+//help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid=","Axes="]);
+//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Equal=","Figure=(n)"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep); 
+      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,figure,dpi,margin);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -3623,7 +3623,11 @@ Mkketcindyjs(options):=( //17.11.18
   nolabel=["SW","NE"]; //190129
   color="lightgray"; //190503
   eqflg=0; //190603
+  figure=0;
+  dpi=86.4; // 12px/10pt = 12px/(10/72)in = 86.4dpi
+  margin=0.5;
   grid="";
+  axes="";
   path=Dircdy;
   igno=[];
   rmptL=REMOVEPTJS;
@@ -3670,6 +3674,11 @@ Mkketcindyjs(options):=( //17.11.18
         grid=tmp2;
       );
     );
+    if(tmp1=="A",
+      if(length(tmp2)>0,
+        axes=tmp2;
+      );
+    );
     if(tmp1=="E", //190603from
       eqflg=1;
       if(length(tmp2)>0,
@@ -3696,6 +3705,11 @@ Mkketcindyjs(options):=( //17.11.18
         rmptL=concat(rmptL,tmp2);
       );  //190503to
     );  //190503to
+    if(tmp1=="F",
+      if(length(tmp2)>0, //190209
+        if(Toupper(substring(tmp2,0,1))=="Y",figure=1,figure=0);
+      );
+    );
   );
   if(substring(color,0,1)=="[",
     tmp=parse(color);
@@ -3957,6 +3971,7 @@ Mkketcindyjs(options):=( //17.11.18
         );
       ); 
     );
+    Ketcindyjsdata(["Ketcindyjsfigure",figure,"Ketcindyjsscale",scale]);
     forall(KetcindyjsDataList,  //190422from
       println(SCEOUTPUT,#+";");
     ); //190422to
@@ -4112,6 +4127,7 @@ Mkketcindyjs(options):=( //17.11.18
     if(substring(tmp1,length(tmp1)-1,length(tmp1))==",", //190201from
       out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
     ); //190201to
+    if(figure==0,
     tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
     jj=tmp_1;
     tmp1=out_jj;
@@ -4142,6 +4158,19 @@ Mkketcindyjs(options):=( //17.11.18
     );
     tmp=round(scale*parse(tmp2));
     out_jj="    height: "+text(tmp)+",";
+    , // figure>0
+      tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
+      jj=tmp_1;
+      tmp=round(dpi*scale*(XMAX-XMIN+margin*2)*10/25.4);
+      out_jj="    width: "+text(tmp)+",";
+      tmp=select(1..(length(out)),indexof(out_#,"height:")>0);
+      jj=tmp_1;
+      tmp=round(dpi*scale*(YMAX-YMIN+margin*2)*10/25.4);
+      out_jj="    height: "+text(tmp)+",";
+      tmp=select(1..(length(out)),indexof(out_#,"transform:")>0);
+      jj=tmp_1;
+      out_jj="    transform: [{visibleRect: ["+text(XMIN-margin)+","+text(YMAX+margin)+","+text(XMAX+margin)+","+text(YMIN-margin)+"]}],";
+    );
     if(length(color)>0,
       tmp=select(1..(length(out)),indexof(out_#,"background: ")>0);
       jj=tmp_1;
@@ -4153,6 +4182,15 @@ Mkketcindyjs(options):=( //17.11.18
       tmp=select(1..(length(out)),indexof(out_#,"grid:")>0);
       jj=tmp_1;
       tmp1="    grid: "+grid;
+      if(indexof(out_jj,",")>0,
+        tmp1=tmp1+",";
+      );
+      out_jj=tmp1;
+    );
+    if(length(axes)>0,
+      tmp=select(1..(length(out)),indexof(out_#,"axes:")>0);
+      jj=tmp_1;
+      tmp1="    axes: "+axes;
       if(indexof(out_jj,",")>0,
         tmp1=tmp1+",";
       );

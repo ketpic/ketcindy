@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190511)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190627)" 
 
 print(ThisVersion)
 
+# 20190627
+#   Plotdata, Paramplot debugged (Exc)
 # 20190511
 #   Implicitplot changed  (Eps=> 10^(-6))
 # 20190508
@@ -5411,10 +5413,14 @@ Paramplot<- function(...)
       }
     }
   }
+  Tmp<- Nrow(P) #190627from
+  Tmp1<- Op(1,P)
+  if(Tmp1[1]==Inf){
+    P<- P[2:Tmp,]
+  } #190627to
   Tmp<- Nrow(P)
   Tmp1<- Op(Tmp,P)
-  if(Tmp1[1]==Inf)
-  {
+  if(Tmp1[1]==Inf){
     P<- P[1:(Tmp-1),]
   }
   return(P)
@@ -5611,10 +5617,14 @@ Plotdata<- function(...)
       }
     }
   }
+  Tmp<- Nrow(P) #190627from
+  Tmp1<- P[1,]
+  if(Tmp1[1]==Inf){
+    P<- P[2:Tmp,]
+  } #190627to
   Tmp<- Nrow(P)
-  Tmp1<-P[Tmp,]
-  if(Tmp1[1]==Inf)
-  {
+  Tmp1<- P[Tmp,]
+  if(Tmp1[1]==Inf){
     P<- P[1:(Tmp-1),]
   }
   return(P)

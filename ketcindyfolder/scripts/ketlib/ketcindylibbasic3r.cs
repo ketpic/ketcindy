@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190623] loaded");
+println("ketcindylibbasic3[20190629] loaded");
 
 //help:start();
 
@@ -2963,12 +2963,14 @@ Gcd(xL,nmx):=(
 );
 ////%Gcd end////
 
-////%Fracform start//// //190623
+////%Fracform start//// //190623,29
 Fracform(x):=Fracform(x,5);
-Fracform(x,denorg):=(
+Fracform(x,den):=Fracform(x,den,5);
+Fracform(x,denorg,deg):=(
 //help:Fracform(1.3);
-//help:Fracform(1.3,[denomlist]);
-  regional(den,fL,tmp,nn,mm,err);
+//help:Fracform(1.3,[denomlist],5);
+  regional(Eps,den,fL,flg,tmp,nn,mm,err);
+  Eps=10^(-deg);
   den=denorg;
   if(islist(den),
     if(!contains(den,1), den=prepend(1,den));
@@ -2976,12 +2978,22 @@ Fracform(x,denorg):=(
     den=1..den;
   );
   fL=[];
+  flg=0;
   forall(den,
-    tmp=round(x*#);
-    fL=append(fL,[tmp,#,abs(tmp/#-x)]);
+    if(flg==0,
+      tmp=round(x*#);
+      tmp=[tmp,#,abs(tmp/#-x)];
+      if(tmp_3<Eps,
+        flg=1;
+      ,
+        fL=append(fL,tmp);
+      );
+    );
   );
-  fL=sort(fL,#_3);
-  tmp=fL_1;
+  if(flg==0,
+    fL=sort(fL,#_3);
+    tmp=fL_1;
+  );
   mm=tmp_1; nn=tmp_2; err=tmp_3;
   if(nn>1,
     out="fr("+text(mm)+","+text(nn)+")";

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190622] loaded");
+println("ketcindylibbasic1[20190628] loaded");
 
 //help:start();
 
@@ -3904,11 +3904,11 @@ Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,options):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
-//help:Pointdata(options=["Size=(1)","Disp=(y)","Msg=(y)","Inside=","Color="]);
-//help:Pointdata("Inside=color/ratio/no"]);
+//help:Pointdata(options=["Size=(1)","Msg=(y)","Color="]);
+//help:Pointdata("Inside=color/ratio/no","Border=y(n)"]);
   regional(list,name,nameL,ptlist,opstr,opcindy,Msg,
       eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
-      Ltype,Noflg,color,inside);
+      Ltype,Noflg,color,inside,border);
   name="pt"+nm;
   nameL=name+"L";
   tmp=Divoptions(options);
@@ -3921,6 +3921,7 @@ Pointdata(nm,listorg,options):=(
   size="";
   dispflg="Y";
   inside=color;
+  border="Y";
   Msg="Y";
   forall(eqL,
     tmp=Strsplit(#,"=");
@@ -3933,20 +3934,39 @@ Pointdata(nm,listorg,options):=(
     if(tmp1=="D", //181030from
       dispflg=Toupper(substring(tmp_2,0,1));
     );
-    if(tmp1=="I", //190405from
-      if(Toupper(substring(tmp_2,0,1))=="N",
-        inside=[-1,-1,-1];
-      ,
-        tmp3=["0","1","2","3","4","5","6","7","8","9"];
-        if(contains(tmp3,substring(tmp_2,0,1)),
-          inside=parse(tmp_2)*color;
-        ,
-          tmp3=Divoptions(["Color="+text(tmp_2)]);
-          inside=tmp3_(length(tmp3)-2);
+    if(tmp1=="I", //190628from
+      tmp2=Toupper(substring(tmp_2,0,1));
+      if(tmp2=="[",
+        tmp=parse(tmp_2);
+        if(length(tmp)==4,
+          tmp=Colorcmyk2rgb(tmp);
         );
-        opcindy=opcindy+",pointcolor->"+text(inside); 
+        inside=text(tmp);
+      ,
+        if(contains(["0","1"],tmp2),
+          tmp=[1,1,1]-color;
+          tmp=parse(tmp_2)*tmp;
+          inside=[1,1,1]-tmp;
+        ,
+          if(tmp2=="N",
+            inside=[1,1,1];
+          ,
+            inside=Colorname2rgb(tmp_2);
+          );
+        );
+        tmp1=indexof(opcindy,"color->");
+        tmp=substring(opcindy,tmp1,length(opcindy));
+        tmp2=indexof(tmp,"]");
+        tmp=substring(tmp,tmp2,length(tmp));
+        opcindy=substring(opcindy,0,tmp1-1)+"color->"+text(inside)+tmp;
       );
-    ); //100405to
+    );  //190628to
+    if(tmp1=="B", //1810628from
+      border=Toupper(substring(tmp_2,0,1));
+      if(border=="N",
+        opcindy=opcindy+",border->false";
+      );
+    ); //1810628to
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
     ); //190206to

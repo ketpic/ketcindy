@@ -4856,7 +4856,7 @@ Windispg(gcLorg):=( //190125
             );
           ,
             if(indexof(opcindy,"size")==0,  //190425from
-              opcindy=opciny+",size->"+text(TenSize/TenSizeInit);
+              opcindy=opcindy+",size->"+text(TenSize/TenSizeInit);
             ); //190425to
             tmp="draw("+text(Nk_1)+opcindy+");"; 
             parse(tmp);

@@ -101,6 +101,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   ErrFlag=0;
   KETJSOP=[]; //190129
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
+  MOVETOJSLIST=[];
   KetcindyjsDataList=[];
 //  setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12

@@ -53,4 +53,8 @@ Extractfun,basic3,3469,3486,Indexall,Findfun
 Extractall,basic3,3495,3539
 Textedit,basic3,3543,3549
 Textedit2value,basic3,3553,3595,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Mkketcindyjs,basic3,3599,4196, 12px/10pt = 12px/,Strsplit,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Removespace,Dqq,indexall,Indexof,Indexall
+Parsejson,basic3,3599,3652, unicode
+Resizetextsize,basic3,3656,3680,Parsejson
+Movetojs,basic3,3684,3688
+Movetojsexe,basic3,3692,3708,Dqq,Parsejson
+Mkketcindyjs,basic3,3712,4318, 12px/10pt = 12px/,Strsplit,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Removespace,Dqq,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall

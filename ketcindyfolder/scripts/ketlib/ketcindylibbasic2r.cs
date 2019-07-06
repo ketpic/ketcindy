@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190531] loaded");
+println("ketcindylibbasic2[20190704] loaded");
 
 //help:start();
 
@@ -959,7 +959,7 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<3,
     if(Msg=="Y", //190206
-      println("generate bowdata "+name+" and "+Bpos);//16.10.31
+      println("generate bowdata "+name+" and BOWMIDDLE="+Bpos);//16.10.31,190704
     );
     if(Measuredepth(Out)==1,Out=[Out]);
     tmp1=[];

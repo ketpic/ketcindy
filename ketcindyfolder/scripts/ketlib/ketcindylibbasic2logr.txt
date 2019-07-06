@@ -1,3 +1,5 @@
+// 20190704
+//   Bowdata changed  (BOWMIDDLE message)
 // 20190531
 //   Drawfigures (Drwfigs) changed 
 // 20190524

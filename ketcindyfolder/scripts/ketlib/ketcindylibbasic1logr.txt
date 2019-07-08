@@ -1,3 +1,5 @@
+// 20190704
+//    Ketinit changed (MOVETOJSLIST added)
 // 20190628
 //    Pointdata debugged  ( Inside )
 // 20190622

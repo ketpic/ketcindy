@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190628] loaded");
+println("ketcindylibbasic1[20190704] loaded");
 
 //help:start();
 

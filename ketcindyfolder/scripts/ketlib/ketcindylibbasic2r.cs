@@ -3025,6 +3025,7 @@ Letter(list,options):=(
   Off=-4;
   Dmv=8;
   Nj=1;
+//  if(Ketcindyjsfigure>0,sz=round(sz*Ketcindyjsscale) ); // only ketjs
   while(Nj+2<=length(list),
     Pos=list_Nj;
     Dir=list_(Nj+1);
@@ -3077,6 +3078,11 @@ Letter(list,options):=(
         if(Ymv==0,Ymv=-4);//16.10.08
         aln="mid"; // 16.09.30until
       );
+//      if(Ketcindyjsfigure>0, // only ketjs on
+//        Off=round(Off*Ketcindyjsscale);
+//        Xmv=round(Xmv*Ketcindyjsscale);
+//        Ymv=round(Ymv*Ketcindyjsscale);
+//      ); // only ketjs off
       Str=list_(Nj+2);  //17.10.17
       drawtext(Pcrd(Pos),Str,offset->[Off+Xmv,Off+Ymv],
          size->sz,color->color,align->aln,bold->bld,italics->ita);//16.10.09

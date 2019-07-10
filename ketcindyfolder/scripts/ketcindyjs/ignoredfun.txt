@@ -20,6 +20,10 @@ Helplist
 Invdashline
 Ketcindyjsdata
 Ketjsoption
+Parsejson
+Resizetextsize
+Movetojs
+Movetojsexe
 Mkketcindyjs
 Presentation
 //Putbezierdata

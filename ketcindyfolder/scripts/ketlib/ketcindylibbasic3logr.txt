@@ -1,5 +1,9 @@
+// 20190704
+//    Parsejson,Resizetextsize,Movetojs,Movetojsexe added
 // 20190629
 //    Fracform changed
+// 20190627
+//    Mkketcindyjs ( Axes and Figure options added )
 // 20190623
 //    Fracform,Gcd added
 // 20190618

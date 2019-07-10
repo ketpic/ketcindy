@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190511] loaded");
+println("ketcindylib3d[20190709] loaded");
 
 //help:start();
 
@@ -1328,18 +1328,21 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
 );
 ////%Embed end////
 
-////%Rotatepoint3d start////
+////%Rotate3pt start////
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
+////%Rotate3pt end////
+////%Rotatepoint3d start////
 Rotatepoint3d(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);//180809
-Rotatepoint3d(point,w1,w2,center):=(
+Rotatepoint3d(point,w1org,w2org,center):=(
 //help:Rotatepoint3d(pt3d,[0,0,1],pi/2);
 //help:Rotatepoint3d(pt3d,[0,0,1],pi/2,[1,1,1]);
-  regional(Eps,ct,st,v3,v1,v2,Ans,ns,PtL,num,
+  regional(Eps,w1,w2,ct,st,v3,v1,v2,Ans,ns,PtL,num,
     pt,tmp,tmp1,tmp2,Retflg,x,y,z,xx,yy,zz,flg);
   Eps=10^(-4);
+  w1=w1org; w2=w2org; //190709
   Retflg=0;
-  if(length(w2)==1,
+  if(!islist(w2), //190709
     ct=cos(w2);
     st=sin(w2);
     v3=1/|w1|*w1;
@@ -1695,7 +1698,7 @@ Scalepoint3d(point,ratio,center):=(
 //help:Scalepoint3d(A,[3,2,4],[1,2,3]);
   regional(ra1,ra2,ra3,X1,Y1,Z1,X2,Y2,Z2,Cx,Cy,Cz);
   X1=point_1; Y1=point_2;  Z1=point_3;
-  if(length(ratio)==1, //1808from
+  if(!islist(ratio), //1808from.190709
     ra1=ratio; ra2=ratio; ra3=ratio;
   ,
     ra1=ratio_1; ra2=ratio_2; ra3=ratio_3;
@@ -2898,7 +2901,7 @@ Mkobjfile(path,fnameorg,objL):=(
 ////%VertexEdgeFace start//// //190502
 VertexEdgeFace(nm,vfnL):=Vertexedgeface(nm,vfnL,[]); 
 VertexEdgeFace(nm,vfnLorg,optionorg):=Vertexedgeface(nm,vfnLorg,optionorg);
-////%VertexEdgeFace start////
+////%VertexEdgeFace end////
 
 ////%Vertexedgeface start////
 Vertexedgeface(nm,vfnL):=Vertexedgeface(nm,vfnL,[]);  // 16.02.10

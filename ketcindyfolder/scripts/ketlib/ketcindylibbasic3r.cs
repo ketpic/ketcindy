@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190704] loaded");
+println("ketcindylibbasic3[20190712] loaded");
 
 //help:start();
 
@@ -3080,8 +3080,8 @@ Totexformpart(str):=( //190514
 Totexform(str):=( //190514
 //help:Totexform("frac(2,3)");
   regional(out,plv,flg,nn,tmp,tmp1);
-  out=replace(str," ","\ ");
-  out=replace(str,"*"," ");
+  out=replace(str,"*"," "); //190712[2lines]
+  out=replace(str,"  ","\;");
   plv=Bracket(out,"()"); //190515from
   flg=0; //190521from
   if(length(plv)==0,
@@ -3208,6 +3208,10 @@ Tocindyform(str):=( //190521
 //help:Tocindyform("frac(2,3)");
   regional(out,plv,flg,nn,tmp,tmp1);
   out=str;
+  out=replace(out,"\",""); //190712[4lines]
+  out=replace(out,"   "," ");
+  out=replace(out,"  "," "); 
+  out=replace(out," ","*"); 
   plv=Bracket(out,"()");
   flg=0;
   if(length(plv)==0,
@@ -3724,11 +3728,13 @@ Movetojsexe(json):=(
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid=","Axes="]);
-//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Equal=","Figure=(n)"]);
+//help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
+//help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Remove=(list)"]);
+//help:Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,figure,dpi,margin,defaultbuttonsize,defaulteditsize);
+     nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
+     figure,dpi,margin,defaultbuttonsize,defaulteditsize);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -4165,7 +4171,7 @@ Mkketcindyjs(options):=( //17.11.18
           tmp=Movetojsexe(tmp);
           if(eqflg==1,tmp=replace(tmp,"=",eqrep)); //190604
           if(figure>0,tmp=Resizetextsize(tmp,defaulteditsize,scale));
-         out=append(out,tmp);
+          out=append(out,tmp);
           flg=1;
         );
       );
@@ -4291,7 +4297,8 @@ Mkketcindyjs(options):=( //17.11.18
       out_jj="    height: "+text(tmp)+",";
       tmp=select(1..(length(out)),indexof(out_#,"transform:")>0);
       jj=tmp_1;
-      out_jj="    transform: [{visibleRect: ["+text(XMIN-margin/10)+","+text(YMAX+margin/10)+","+text(XMAX+margin/10)+","+text(YMIN-margin/10)+"]}],";
+      tmp="    transform: [{visibleRect: ["+text(XMIN-margin/10)+","+text(YMAX+margin/10);
+      out_jj=tmp+","+text(XMAX+margin/10)+","+text(YMIN-margin/10)+"]}],";
     );
     if(length(color)>0,
       tmp=select(1..(length(out)),indexof(out_#,"background: ")>0);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190709] loaded");
+println("ketcindylib3d[20190714] loaded");
 
 //help:start();
 
@@ -47,6 +47,13 @@ Ketinit3d(subflg):=(
   TSIZE=10;
   TSIZEZ=10;
   ErrFlg=0;
+  xPos=-5; yTh=tmp-0.5; yPh=tmp-1;
+  Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]);  //190713from
+  Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); 
+  drawtext([xPos-0.8,yTh-0.1],Sprintf((TH.x-xPos)*20,2),align->"right"); 
+  drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right");
+  THETA=(TH.x-xPos)*20*pi/180;
+  PHI=(FI.x-xPos)*40*pi/180; //190713to
 );
 ////%Ketinit3d end////
 
@@ -2273,13 +2280,26 @@ Putperp(name,ptstr,pLstr,option):=(
 ////%Perpplane start////
 Perpplane(name,ptstr,nvec):=
     Perpplane(name,ptstr,nvec,"draw");
-Perpplane(name,ptstr,nstr,option):=(
+Perpplane(name,ptstr,nstr,optionorg):=(
 //help:Perpplane("A-B","P",[1,3,2]);
 //help:Perpplane("A-B","P",[1,3,2]);
-//help:Perpplane(option=["Put/Draw"]);
-  regional(Eps,nvec,sgstr,pP,v1,v2,v3,
-    th,ph,pA,pB,tmp,tmp1,tmp2);
+//help:Perpplane(options=["Put/Draw"]);
+  regional(Eps,options,eqL,strL,nvec,sgstr,pP,v1,v2,v3,
+     gptflg,th,ph,pA,pB,tmp,tmp1,tmp2);
   Eps=10^(-4);
+  options=optionorg; //190714from
+  if(!islist(options),options=[options]);
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  strL=tmp_7;
+  gptflg=0;
+  forall(strL,
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="P",
+      gptflg=1;
+      options=remove(options,#);
+    );
+  ); //190714to
   if(isstring(nstr),nvec=parse(nstr+"3d"),nvec=nstr);
   if(indexof(ptstr,"3d")==0, //181107from
     pP=parse(ptstr+"3d");
@@ -2299,17 +2319,13 @@ Perpplane(name,ptstr,nstr,option):=(
   tmp=indexof(pLstr,"-");
   pA=pP+v1;
   pB=pP+v2;
-  if(islist(option),tmp=option_1,tmp=option);
-  tmp=Toupper(substring(tmp,0,1)); // 16.06.19
-  if(tmp=="P",
+  if(gptflg==1, //190714from
     Putpoint3d([tmp1,pA,tmp2,pB],["fix"]);
   ,
-    Defvar(tmp1+"3d",pA); //181107[2lines]
+    Defvar(tmp1+"3d",pA); //190714from
     Defvar(tmp2+"3d",pB);
-  );
-  if(tmp=="D",
-    Drawpoint3d(pA);
-    Drawpoint3d(pB);
+    Pointdata3d(tmp1,pA,options);
+    Pointdata3d(tmp2,pB,options); //190714to
   );
   [pA,pB];
 );
@@ -2339,12 +2355,17 @@ Drawpoint3d(pt3,options):=(
 Pointdata3d(nm,pt3):=Pointdata3d(nm,pt3,[]);//181017from
 Pointdata3d(nm,pt3,options):=( //181017from
 //help:Pointdata3d("1",pt3dlist,options);
-  regional(pt3L,pt2L,tmp);
-  if(Measuredepth(pt3)==0,pt3L=[pt3],pt3L=pt3);
-  pt2L=apply(pt3L,Parapt(#));
+  regional(pt2L,tmp);
+  if(Measuredepth(pt3)==0,tmp=[pt3],tmp=pt3);
+  pt2L=apply(tmp,Parapt(#));
   Pointdata("2d"+nm,pt2L,append(options,"Disp=n"));
-  tmp="pt3d"+nm+"="+format(pt3L,6)+";"; //190415
-  parse(tmp);
+  tmp=substring(nm,0,1); //190714from
+  if((tmp>="A")&(tmp<="Z"),
+    tmp=nm+"3d";
+  ,
+    tmp="pt3d"+nm;
+  );
+  Defvar(tmp,pt3); //190714to
 ); //181017to
 ////%Pointdata3d end////
 

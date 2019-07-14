@@ -1,3 +1,6 @@
+// 20190712
+//    Totexformpart changed (double spaces replaced with \;)
+//    Tocindyformpart changed (single space replaced with *)
 // 20190704
 //    Parsejson,Resizetextsize,Movetojs,Movetojsexe added
 // 20190629

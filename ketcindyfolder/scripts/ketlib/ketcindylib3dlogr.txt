@@ -1,3 +1,8 @@
+// 20190714
+//    Perpplane changed  (option)
+//    Pointdata3d changed (option,Defvar)
+// 20190713
+//    Ketinit3d changed  (TH,PHI copied from Start3d)
 // 20190709
 //    Rotatepoint3d,Scalepoint3d debugged (length(...)==1>!isstring())
 //    Rotatepoint3d debugged  ( w1,w2 )

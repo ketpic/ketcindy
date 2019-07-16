@@ -1,3 +1,5 @@
+// 20190715
+//    Totexform debugged  ( for pi )
 // 20190712
 //    Totexformpart changed (double spaces replaced with \;)
 //    Tocindyformpart changed (single space replaced with *)

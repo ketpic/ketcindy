@@ -39,7 +39,7 @@ BBdata,basic3,2804,2947,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,Sprintf,Rem
 Gcd,basic3,2951,2963
 Fracform,basic3,2967,3004
 Totexformpart,basic3,3008,3076,Bracket,Strsplit,Assign
-Totexform,basic3,3080,3131,Totexformpart,Assign,Indexall,Bracket
+Totexform,basic3,3080,3131,Totexformpart,Indexall,Bracket
 Tocindyformpart,basic3,3135,3203,Bracket,Strsplit,Assign
 Tocindyform,basic3,3207,3258,Tocindyformpart,Indexall,Bracket
 Animepar,basic3,3262,3262,Animationparam

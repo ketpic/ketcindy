@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190712] loaded");
+println("ketcindylibbasic3[20190715] loaded");
 
 //help:start();
 
@@ -3080,8 +3080,9 @@ Totexformpart(str):=( //190514
 Totexform(str):=( //190514
 //help:Totexform("frac(2,3)");
   regional(out,plv,flg,nn,tmp,tmp1);
-  out=replace(str,"*"," "); //190712[2lines]
-  out=replace(str,"  ","\;");
+  out=replace(str,"pi","\pi"); //190715
+  out=replace(out,"*"," "); 
+  out=replace(out,"  ","\;");
   plv=Bracket(out,"()"); //190515from
   flg=0; //190521from
   if(length(plv)==0,
@@ -3114,7 +3115,6 @@ Totexform(str):=( //190514
     out=replace(out,"-+","\mp ");
     out=replace(out,"<=","\leq ");
     out=replace(out,">=","\geq ");
-    out=Assign(out,["pi","\pi"]); //190521
     tmp1=Indexall(out,"^");
     forall(tmp1,nn,
       if(substring(out,nn,nn+1)=="(",

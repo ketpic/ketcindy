@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190704] loaded");
+println("ketcindylibbasic1[20190719] loaded");
 
 //help:start();
 
@@ -177,6 +177,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
 Initglist():=(
   GLIST=[]; // no ketjs
   GCLIST=[];
+  GCLISTadd=[]; //190719
   COM0thlist=[]; // no ketjs on
   COM1stlist=[];
   COM2ndlist=[]; // no ketjs off
@@ -190,7 +191,7 @@ Initglist():=(
 
 ////%Setglist start//// 190530
 Setglist():=(
-  GLISTadd=GLIST;
+  GLISTadd=GLIST; // no ketjs
   GCLISTadd=GCLIST;
   COM0thlistadd=COM0thlist; // no ketjs on
   COM1stlistadd=COM1stlist;
@@ -200,7 +201,7 @@ Setglist():=(
 
 ////%Addglist start//// 190530
 Addglist():=(
-  GLIST=GLISTadd;
+  GLIST=GLISTadd; // no ketjs
   GCLIST=GCLISTadd;
   COM0thlist=COM0thlist; // no ketjs on
   COM1stlist=COM1stlistadd;

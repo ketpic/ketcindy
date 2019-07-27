@@ -566,7 +566,7 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 \item[機能]点のデータを作成する。
 \item[説明]与えられた座標の点データを作成する。オプションは"Size=","Color=","Inside"。
 
-Inside オプションは，点の内部についての指定。ただし，Cinderellaの描画面には反映されない。
+Inside オプションは，点の内部についての指定。
 
 0 : 白抜き
 
@@ -8027,18 +8027,19 @@ Cinderellaのファイルメニューから「CindyJSに書き出す」ときの
 Local \> y/n \>動作環境の設定。 \>初期値は y\\
 Scale \> 実数 \> 拡大・縮小　\>初期値は 1\\
 Nolabel \> 点のリスト \> ラベルを表示しない点を指定する。"No"だけでも可。\\
-Color \>  色名またはコード\> 背景色の指定。初期値はCinderellaの画面の色。\\
+\hspace*{10mm}"Nolabel=all"とすると，すべての点のラベルが表示されない。\\
+Color \>  色名またはコード\> 背景色の指定。初期値はlightgray([0,0,0,0.17])\\
+Figure \> y \>書き出す範囲をNE,SWの範囲にする。\\
+Axes \> false \>CindyJSが表示している座標軸を非表示にする。 \\
 \end{tabbing}
 【例】すべて設定するとき，次のように記述する。
 
-\verb|  Setketcindyjs(["Local=n","Scale=1.5","No=[A,B]","Color=[0.2,0,0,0]"]) |
+\verb|  Setketcindyjs(["Local=n","Scale=1.5","No=[A,B]","Color=lightgray"]) |
 
 \vspace{\baselineskip}
 注１）Cinderellaの画面に背景の方眼が描かれているとき，「CindyJSに書き出す」で，この方眼も表示される。方眼を消したい場合は，画面下の「グリッドを描く」ツールで非表示にしておく。
 
-注２）「CindyJSに書き出す」で書き出すときの範囲は，ウィンドウ全体である。NE,SWの範囲ではない。2点NE,SWは\verb|  Setketcindyjs(["No=[NE,SW]" | で非表示になるが，NE,SEの範囲を広くとっておき，ウィンドウサイズをこれより小さくすれば \verb|"No=[NE,SW]"| オプションを使わなくても表示されずにすむ。
-
-注３）HTMLなので，画面に説明文などを表示したい場合は，HTMLファイルを開き，下の方の \verb|<body>| と \verb|</body>| の間，\verb|<div id="CSCanvas"></div>| の前後に書けば表示される。改行などは，HTMLのタグを用いる。
+注２）HTMLなので，画面に説明文などを表示したい場合は，HTMLファイルを開き，下の方の \verb|<body>| と \verb|</body>| の間，\verb|<div id="CSCanvas"></div>| の前後に書けば表示される。改行などは，HTMLのタグを用いる。
 
 \vspace{\baselineskip}
 \hypertarget{setketcindy}{}
@@ -8067,10 +8068,109 @@ Listplot("3",[B,D]);
 
 この場合，対角線は2本とも描かれない。
 
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+
+\vspace{\baselineskip}
+\hypertarget{setketcindy}{}
+\item[KeTJSだけで有効] only ketjs
+\item[機能] KeTJSだけに書き込む
+\item[説明] コマンドの先頭に　\verb|//| につけて，行の最後に続けて書くと，その行はKeTJSだけで有効となる。
+ブロック単位で有効化するには，ブロックを \verb|only ketjs on|，\verb|only ketjs off| ではさむ。
+
+【例】KeTJSだけで入力窓を作る。
+
+\begin{verbatim}
+str="x^2";
+//str=Textedit(50); only ketjs
+Plotdata("1",str,"x");
+\end{verbatim}
+
+注）\verb|Textedit|はKeTJSで入力窓からの入力を得るコマンド
+
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
 
+
+%======KeTJSの設定============================
+
+\subsection{KeTJSのコマンド}
+
+\begin{description}
+
+\hypertarget{ketcindyjsdata}{}
+\item[関数]Ketcindyjsdata(変数名と値のリスト)
+\item[機能]KeTJSファイルのscript "csinit"の最後にデータを書き込む
+\item[説明]Maximaの返り値などKeTJSでは得られないデータを使えるようにする。
+
+【例】
+\begin{verbatim}
+Mxfun("1","integrate",["x*sin(x)","x"]);// no ketjs
+Ketcindyjsdata(["mx1",mx1]); 
+Plotdata("1",mx1,"x");
+\end{verbatim}
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\end{description}
+
+\begin{description}
+
+\hypertarget{animationparam}{}
+\item[関数]Animationparam(初期値，速度，範囲)
+\item[機能]アニメーションボタンのパラメータ値を取得する。
+\item[例　]ss=Animationparam(0,1,[-60,60]);
+\item[説明]\mbox{}
+
+\begin{itemize}
+\item \Ltab{15mm}{"Play"}パラメータ値が初期値にセットされ，変化が始まる。
+\item \Ltab{15mm}{"Stop"}パラメータ値が初期値にセットされ，変化が終わる。
+\item \Ltab{15mm}{速度}パラメータ値の変化速度（秒速）
+\item \Ltab{15mm}{範囲}パラメータ値が端点に達したら停止する。
+\end{itemize}
+
+
+\end{description}
+
+
+\begin{description}
+
+\hypertarget{textedit}{}
+\item[関数]Textedit(識別番号)
+\item[機能]KeTJSで入力窓に入れた文字列を取得する。
+\item[説明]KeTJSでの入力窓の作り方
+
+\begin{itemize}
+\item[(1)]CindyScreenの"f(x)"を選び，適当な初期値を入れてEvaluateを押す。\\
+　注）"="だけを入れて，Setketcindyjsのオプションに\\
+　　　　"Equal="\\
+　　を追加すると，KeTJSの入力窓は空欄になる。
+\item[(2)]"要素を動かす"に戻り，(1)を選んでインスペクタを開く。
+\item[(3)]識別番号を確認（修正）して，フォントサイズを変える。
+
+\end{itemize}
+
+【例】識別番号を0とする。
+
+\begin{verbatim}
+str="x^2"; //no ketjs
+//str=Textedit(0); //only ketjs
+Plotdata("1",str,"x");
+\end{verbatim}
+
+\end{description}
+
+\begin{description}
+
+\hypertarget{movetojs}{}
+\item[関数]Movetojs(要素名,座標,フォントサイズ);
+\item[機能]KeTJSでテキストボタンの位置とフォントサイズを指定
+\item[例　]Movetojs(Text0,[2,-4],15);
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\end{description}
 
 \newpage
 %付録==================================
@@ -8417,6 +8517,10 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{xyzcoord}{Xyzcoord(P.x,P.y,Pz.y)}\>主副画面で決まる点の座標\\
 【KeTJS】\\
 \hyperlink{setketcindyjs}{Setketcindyjs(options)}\>KeTJSの設定\\
+\hyperlink{ketcindyjsdata}{Ketcindyjsdata(変数名と値のリスト)}\>script "csinit"にデータを書き込む\\
+\hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
+\hyperlink{textedit}{Textedit(識別番号)}\>KeTJSで入力窓に入れた文字列を取得\\
+\hyperlink{movetojs}{Movetojs(要素名,座標,フォントサイズ)}\>Textボタンの位置とフォントサイズを設定\\
 
 \end{tabbing}
 

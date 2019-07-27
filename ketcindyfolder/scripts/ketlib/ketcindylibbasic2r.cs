@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190704] loaded");
+println("ketcindylibbasic2[20190727] loaded");
 
 //help:start();
 
@@ -310,12 +310,18 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
 );
 ////%Arrowhead end////
 
-////%Arrowdata start////
-Arrowdata(ptlist):=Arrowdata(ptlist,[]); //181110from
-Arrowdata(Arg1,Arg2):=(
+////%Arrowdata start//// 190727 (<= Lightarrowdata)
+Arrowdata(ptlist):=Lightarrowdata(ptlist,[]);
+Arrowdata(Arg1,Arg2):=Lightarrowdata(Arg1,Arg2);
+Arrowdata(nm,ptlistorg,optionsorg):=Lightarrowdata(nm,ptlistorg,optionsorg);
+////%Arrowdata end////
+
+////%OldArrowdata start////
+Arrowdata(ptlist):=OldArrowdata(ptlist,[]); //181110from
+OldArrowdata(Arg1,Arg2):=(
   regional(name);
   if(isstring(Arg1),
-    Arrowdata(Arg1,Arg2,[]);
+    OldArrowdata(Arg1,Arg2,[]);
   ,
     name="";
     forall(Arg1,
@@ -323,14 +329,14 @@ Arrowdata(Arg1,Arg2):=(
         name=name+#.name; //190505
       );
     );
-    Arrowdata(name,Arg1,Arg2);
+    OldArrowdata(name,Arg1,Arg2);
   );
 );  //181110from
-Arrowdata(nm,ptlistorg,optionsorg):=(
-//help:Arrowdata("1",[A,B]);
-//help:Arrowdata("1",[pt1,pt2]);
-//help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
-//help:Arrowdata(optionsadded=["line"]);
+OldArrowdata(nm,ptlistorg,optionsorg):=(
+// help:Arrowdata("1",[A,B]);
+// help:Arrowdata("1",[pt1,pt2]);
+// help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
+// help:Arrowdata(optionsadded=["line"]);
   regional(options,Ltype,Noflg,name,opstr,opcindy,eqL,reL,strL,color,size,coord,
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,ptlist);
   name="ar"+nm;
@@ -426,7 +432,7 @@ Arrowdata(nm,ptlistorg,optionsorg):=(
   Setscaling(scaley); //190412
   [Lcrd(pA),Lcrd(pB)];
 );
-////%Arrowdata end////
+////%OldArrowdata end////
 
 ////%Lightarrowdata start////
 Lightarrowdata(ptlist):=Lightarrowdata(ptlist,[]); //181110from
@@ -445,8 +451,8 @@ Lightarrowdata(Arg1,Arg2):=(
   );
 );  //181110from
 Lightarrowdata(nm,ptlist,optionsorg):=(
-//help:Lightarrowdata("1",[pt1,pt2]);
-//help:Lightarrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
+//help:Arrowdata("1",[pt1,pt2]);
+//help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,lineflg,
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,Ev,Nv,pP);
   pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
@@ -532,10 +538,16 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off
       Setscaling(scaley);
-      tmp1=Textformat(LLcrd(pP),5);
+      tmp1=Textformat(LLcrd(pP),5); //no ketjs on
       tmp2=Textformat(LLcrd(pB-pA),5);
+      if(cut>0, //190727from //no ketjs on
+        tmp=Indexall(opstr,",");
+        tmp=tmp_(length(tmp));
+        opstr=substring(opstr,0,tmp-1);
+        opstr=opstr+","+Dqq("Cut="+text(cut));
+      );  //190727to
       Com2nd("Arrowhead("+tmp1+","+tmp2+opstr+")");
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color!=KCOLOR), //180904 
         Texcom("}");//180722
       ); //no ketjs off
     ,

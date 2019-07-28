@@ -5608,6 +5608,116 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \end{center}
 \end{cmd}
 
+%================== KeTCindyJS ===============
+\section{KeTCindyJS}
+
+\subsection{How to create HTML}
+
+\ketcindy\ can create the HTML file from a \ketcindy\ file using CindyJS.
+
+\begin{enumerate}[(1)]
+\item Use a \ketcindy\ file with buttons of KeTJS in CindyScreen, for example, templateketcindyjs.cdy.
+\item Select from the top menu, \verb|File > Export to CindyJS|.
+\item Press button "KeTJS" for on-line mode, or "KeTJSoff" for off-line mode.
+\item Then the HTML file will be created in the same folder of the cdy file.
+\end{enumerate}
+
+\subsection{Control of code writing}
+
+\begin{itemize}
+\item \verb|no ketjs (on/off)| for not writing to HTML
+\item \verb|only ketjs (on/off)| for only writing to HTML
+\item \verb|on, off| are used for multi lines of scripts.
+\end{itemize}
+
+{\bf Example}
+\begin{verbatim}
+    str="x^2"; //no ketjs
+    //str=Textedit(0); //only ketjs
+\end{verbatim}
+
+\subsection{Commands of KeTCindyJS}
+
+%--------------Setketcindyjs-----------------------------
+
+\begin{cmd}{Setketcindyjs}{setketcindyjs}
+
+\itemket{Usage}Setketcindyjs( list of options )
+\itemket{Description} Function to set options of KeTCindyJS.
+\itemket{Options}  \mbox{}\\
+\hspace*{5mm}\Ltab{25mm}{"Scale="}Ratio of scaling (default : 1)\\
+\hspace*{5mm}\Ltab{25mm}{"Nolabel="}list of points without label. \verb|all| can be used\\
+\hspace*{5mm}\Ltab{25mm}{"Color="}Name or code of background color (default : lightgray)\\
+\hspace*{5mm}\Ltab{25mm}{"Grid="}Grid size (mm)\\
+\hspace*{5mm}\Ltab{25mm}{"Figure=y"}To set window size to that of \ketcindy\\
+\hspace*{5mm}\Ltab{25mm}{"Axes=false"}Not to display axes of Cinderella
+\itemket{Example}Setketcindyjs(["Nolabel=all","Grid=2","Color=white"]);
+\end{cmd}
+
+%--------------Ketcindyjsdata-----------------------------
+
+\begin{cmd}{Ketcindyjsdata}{ketcindyjsdata}
+
+\itemket{Usage}Ketcindyjsdata( list of name, value of variables )
+\itemket{Description} Function to write the variables into "csinit".
+\itemket{Examples}  \mbox{}
+
+\verb|Mxfun("1","integrate",["x*sin(x)","x"]);// no ketjs|\\
+\verb|Ketcindyjsdata(["mx1",mx1]);|\\
+\verb|Plotdata("1",mx1,"x");|
+
+\end{cmd}
+
+%--------------Animationparam-----------------------------
+
+\begin{cmd}{Animationparam}{animationparam}
+
+\itemket{Usage}Animationparam(init, speed( /sec), range )
+\itemket{Description} to get parameter value of buttons for animation.
+\itemket{Examples}  \verb|ss=Animationparam(0,1,[-60,60]);|
+\itemket{Buttons}\mbox{}
+
+\begin{itemize}
+\item \Ltab{15mm}{"Play"}Parameter value set to the initial value, and starts changing
+\item \Ltab{15mm}{"Stop"}Parameter value set to the initial value, and ends changing
+\end{itemize}
+
+\end{cmd}
+
+%--------------Textedit-----------------------------
+
+\begin{cmd}{Textedit}{textedit}
+
+\itemket{Usage}Texedit(number of identifier)
+\itemket{Description} Function to get a string from an input box in HTML.
+\itemket{Remark}To create the input box,
+\begin{enumerate}[(1)]
+\item Use button "Define function".
+\item Input a string into "text" and press "Evaluation".\\
+\hspace*{3mm}Rem)To create a blank box, input only "=", and add "Equal=" to Setketcindyjs.
+\item With the inspector, confirm the number of identifier and change styles.
+\end{enumerate}
+
+\itemket{Examples}Let the number of identifier be 50.\\
+\verb|str="x^2";|\\
+\verb|//str=Textedit(50); //only ketjs|\\
+\verb|Plotdata("1",str,"x");|
+
+
+\end{cmd}
+
+%--------------Movetojs-----------------------------
+
+\begin{cmd}{Movetojs}{movetojs}
+
+\itemket{Usage}Movetojs(Text+number,position,font size )
+\itemket{Description} Function to set the position and font size of text box in HTML.
+\itemket{Example}  \verb|Movetojs(Text50,[0,-5],15);// no ketjs|
+
+\end{cmd}
+
+
+
 \newpage
 %-==Appendix ========================
 \section{Appendix}
@@ -5894,8 +6004,12 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{wireparadata}{Wireparadata} \> draw the surface by wire frame data with performing hidden line processing.\\
 \hyperlink{xyzax3data}{Xyzax3data} \> draw the coordinate axis.\\
 \hyperlink{xyzcoord}{Xyzcoord} \> return the 3D-coordinate of the point P.\\
-\hyperlink{setangle}{Setangle} \>Set TH and FI\\
-\hyperlink{getangle}{Getangle}\>Get TH and FI\\
+{\bf KeTCindyJS} \> \\
+\hyperlink{setketcindyjs}{Setketcindyjs} \>Set options of KeTCindyJS\\
+\hyperlink{ketcindyjsdata}{Ketcindyjsdata}\>Write into csinit\\
+\hyperlink{animationparam}{Animationparam}\>Get parmeter value of animation\\
+\hyperlink{textedit}{Textedit}\>Get string from input box of KeTCindyJS\\
+\hyperlink{movetojs}{Movetojs}\>Set position and fontsize of text box in HTML\\
 \end{tabbing}
 
 \end{document}

@@ -3697,8 +3697,11 @@ Resizetextsize(json,defaultsize,scale):=(
 ////%Resizetextsize end////
 
 ////%Movetojs start////
-Movetojs(geo,pos,textsize):=(
+Movetojs(geoorg,pos,textsize):=(
 //help:Movetojs(Text51,[1,2],12);
+  regional(geo); //190729from
+  geo=geoorg;
+  if(isreal(geo),geo=parse("Text"+text(geo))); //190729to
   inspect(geo,"textsize",textsize);
   MOVETOJSLIST=append(MOVETOJSLIST,[geo.name,[pos_1,pos_2]]);
 );
@@ -3797,7 +3800,8 @@ Mkketcindyjs(options):=( //17.11.18
     );
     if(tmp1=="A",
       if(length(tmp2)>0,
-        axes=tmp2;
+        tmp2=Toupper(substring(tmp2,0,1)); //190729[2lines]
+        if(contains(["N","F"],tmp2),axes="false");
       );
     );
     if(tmp1=="E", //190603from

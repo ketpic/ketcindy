@@ -1,3 +1,6 @@
+// 20190729
+//    Mkketcindyjs changed  (Axes option)
+//    Movetojs changed (number of text available)
 // 20190715
 //    Totexform debugged  ( for pi )
 // 20190712

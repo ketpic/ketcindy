@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190715] loaded");
+println("ketcindylibbasic3[20190731] loaded");
 
 //help:start();
 
@@ -3726,6 +3726,21 @@ Movetojsexe(json):=(
   out;
 );
 ////%Movetojsexe end////
+
+////%Setplaybuttons start////
+Setplaybuttons(x,y,font):=(
+//help:Setplaybuttons(-2,-6,14);
+ regional(x1);
+ x1=x;
+ Movetojs(71,[x1,y],font);
+ x1=x1+0.84*font/10;
+ Movetojs(72,[x1,y],font);
+ x1=x1+1.06*font/10;
+ Movetojs(73,[x1,y],font);
+ x1=x1+0.76*font/10;
+ Movetojs(74,[x1,y],font);
+);
+////%Setplaybuttons end////
 
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 

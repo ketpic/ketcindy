@@ -1,3 +1,5 @@
+// 20190731
+//    Setplaybuttons added
 // 20190729
 //    Mkketcindyjs changed  (Axes option)
 //    Movetojs changed (number of text available)

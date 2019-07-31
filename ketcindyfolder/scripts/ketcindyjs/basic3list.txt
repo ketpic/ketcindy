@@ -57,4 +57,5 @@ Parsejson,basic3,3615,3668, unicode
 Resizetextsize,basic3,3672,3696,Parsejson
 Movetojs,basic3,3700,3707
 Movetojsexe,basic3,3711,3727,Dqq,Parsejson
-Mkketcindyjs,basic3,3731,4341, 12px/10pt = 12px/,Strsplit,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Removespace,Dqq,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall
+Setplaybuttons,basic3,3731,3742,Movetojs
+Mkketcindyjs,basic3,3746,4356, 12px/10pt = 12px/,Strsplit,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Removespace,Dqq,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall

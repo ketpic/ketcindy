@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190731] loaded");
+println("ketcindylibbasic3[20190801] loaded");
 
 //help:start();
 
@@ -3372,6 +3372,7 @@ Setketcindyjs(list):=(
 Ketcindyjsdata(datalistorg):=(
 //help:Ketcindyjsdata(["ans",ans,"pea[parse]",pea]);
   regional(nn,func,tmp,tmp1,tmp2);
+  if(!islist(KetcindyjsDataList),KetcindyjsDataList=[]); //190801
   datalist=datalistorg;
   forall(1..(length(datalist)/2), nn, //190423from
     tmp1=datalist_(2*nn-1);
@@ -4077,6 +4078,10 @@ Mkketcindyjs(options):=( //17.11.18
         );
       );
     );
+    Ketcindyjsdata(["Ketcindyjsfigure",figure,"Ketcindyjsscale",scale]);//190801from[moved]
+    forall(KetcindyjsDataList, 
+      println(SCEOUTPUT,#+";");
+    ); //190801to[moved]
     tmp=select(partL,#_1=="csinit");
     if(length(tmp)>0,
       tmp=tmp_1;
@@ -4111,10 +4116,6 @@ Mkketcindyjs(options):=( //17.11.18
         );
       ); 
     );
-    Ketcindyjsdata(["Ketcindyjsfigure",figure,"Ketcindyjsscale",scale]);
-    forall(KetcindyjsDataList,  //190422from
-      println(SCEOUTPUT,#+";");
-    ); //190422to
     println(SCEOUTPUT,"</script>");
     tmp=select(partL,#_1=="csdraw");
     tmp=tmp_1;

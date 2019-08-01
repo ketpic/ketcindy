@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190719] loaded");
+println("ketcindylibbasic1[20190801] loaded");
 
 //help:start();
 
@@ -102,7 +102,7 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   KETJSOP=[]; //190129
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
   MOVETOJSLIST=[];
-  KetcindyjsDataList=[];
+//  KetcindyjsDataList=[]; //190801
 //  setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12
     Fhead=text(curkernel());

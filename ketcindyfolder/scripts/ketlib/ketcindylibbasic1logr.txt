@@ -103,6 +103,8 @@
 //    Divoptions  changed  ("dr,thickness" )
 // 20190116
 //    Ketinit() debuggded ( Mackc for Linux)
+// 20190801
+//    Ketinit changed (KetcindyjsDataList=[] removed)
 // 20190115
 //    Plotdata debugged( ( => [ )
 //    Pointdata change( colorcode => colorcmyk2rgb)

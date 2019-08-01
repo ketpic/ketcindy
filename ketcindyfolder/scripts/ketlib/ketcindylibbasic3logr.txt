@@ -1,3 +1,6 @@
+// 20190801
+//    Ketcindyjsdata debugged  ( KetcindyjsDataList initialized )
+//    Mkketcindyjs debugged  ( position of KetcindyjsDataList)
 // 20190731
 //    Setplaybuttons added
 // 20190729

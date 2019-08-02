@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190801] loaded");
+println("ketcindylibbasic3[20190802] loaded");
 
 //help:start();
 
@@ -3404,7 +3404,8 @@ Ketcindyjsdata(datalistorg):=(
     );
     tmp=tmp1+"="+tmp2;
     KetcindyjsDataList=append(KetcindyjsDataList,tmp);
-  ); //190423to
+    KetcindyjsDataList=set(KetcindyjsDataList); //190802
+  );
 );
 Ketcindyjsdata(name,vaL):=(
   Ketcindyjsdata([name,vaL]);
@@ -3704,6 +3705,7 @@ Movetojs(geoorg,pos,textsize):=(
   geo=geoorg;
   if(isreal(geo),geo=parse("Text"+text(geo))); //190729to
   inspect(geo,"textsize",textsize);
+  if(!islist(MOVETOJSLIST), MOVETOJSLIST=[]); //190802
   MOVETOJSLIST=append(MOVETOJSLIST,[geo.name,[pos_1,pos_2]]);
 );
 ////%Movetojs end////

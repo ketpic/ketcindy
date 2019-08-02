@@ -1,3 +1,6 @@
+// 20190802
+//    Movetojs debugged  ( MOVETOJSLIST initialized )
+//    Ketcindyjsdata debugged  ( set() used to remove identical elements )
 // 20190801
 //    Ketcindyjsdata debugged  ( KetcindyjsDataList initialized )
 //    Mkketcindyjs debugged  ( position of KetcindyjsDataList)

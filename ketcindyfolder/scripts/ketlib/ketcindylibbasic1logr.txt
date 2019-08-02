@@ -1,3 +1,7 @@
+// 20190802
+//    Ketinit() changed (MOVETOLIST commented out)
+//    Initglist changed  (GCLISTadd + Ketinit);
+//    Koutenseg changed  ( re(out)  for JS)
 // 20190719
 //    Initglist debugged  (GCLISTadd)
 //    Setglist changed (GLIST (//no ketjs)

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190801] loaded");
+println("ketcindylibbasic1[20190802] loaded");
 
 //help:start();
 
@@ -89,19 +89,19 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
   LFmark=unicode("000a");
   CRmark=unicode("000d");//16.12.13
   Dq=unicode("0022");
-  CommonMake=0;//180610
+  CommonMake=0;//180610 //no ketjs on
   WaitUnit=10;
   CONTINUED=0;
   OutComList=[];
   OutFileLIst=[];   // 15.10.22
-  FigPdfList=[];  // 16.04.08
+  FigPdfList=[];  // 16.04.08 //no ketjs off
   Fillstore(); //181212
-  ADDPACK=[]; // 16.05.16
+  ADDPACK=[]; // 16.05.16 //no ketjs on
   GPACK="tpic"; //180817
   ErrFlag=0;
   KETJSOP=[]; //190129
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
-  MOVETOJSLIST=[];
+//  MOVETOJSLIST=[]; //190802
 //  KetcindyjsDataList=[]; //190801
 //  setdirectory(Dirwork);
   if(!isstring(Fhead),  // 17.10.13from, 17.11.12
@@ -173,19 +173,10 @@ Ketinit(work,sy,rangex,rangey):=(//181001to
 );
 ////%Ketinit end////
 
-////%Initglist start//// 190530
+////%Initglist start//// 190802
 Initglist():=(
-  GLIST=[]; // no ketjs
-  GCLIST=[];
   GCLISTadd=[]; //190719
-  COM0thlist=[]; // no ketjs on
-  COM1stlist=[];
-  COM2ndlist=[]; // no ketjs off
-  KCOLOR=[0,0,0];
-  SCALEX=1;
-  SCALEY=1;
-  XMIN=SW.x; XMAX=NE.x; //190603[2lines]
-  YMIN=SW.y; YMAX=NE.y;
+  Ketinit(); //190802
 );
 ////%Initglist end////
 
@@ -1710,7 +1701,8 @@ Koutenseg(pA,pB,pC,pD,options):=(
     Tmp1=pA+rT*pV;
     Out=[Tmp1,rT,1];
   );
- Out;
+  if(!isstring(Out_1),Out=apply(Out,re(#))); //190802
+  Out;
 );
 ////%Koutenseg end////
 

@@ -3251,6 +3251,21 @@ Draw the point A near the origin.
 
 \end{cmd}
 
+%-------------Reparse-------------------------------
+\begin{cmd}{Reparse}{reparse}
+\itemket{Usage}Reparse(string or list of string)
+\itemket{Description}function to return the real part after \verb|parse|
+\itemket{Remark}\verb|parse| of CindyJS has a bug to return an imaginary number in some cases.
+\itemket{Examples}\mbox{}
+
+\verb|str="(0-1)^2"; |\\
+\verb|format(parse(str),0);| // returns \verb|1+i*0| in CindyJS\\
+\verb|format(Reparse(str),0);| // returns \verb|1|\\
+
+
+
+\end{cmd}
+
 %-------------Slider-------------------------------
 \begin{cmd}{Slider}{slider}
 \itemket{Usage}Slider("endpoint1-pt-endpoint2",endpoint1,endpoint2);\vspace{-2mm}
@@ -5908,6 +5923,7 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \hyperlink{norml}{Norm} \> return the norm of a vector.\\
 \hyperlink{opl}{Op} \> return the n-th element of a list or a string.\\
 \hyperlink{ptselected}{Ptselected} \> tests whether the point is selected.\\
+\hyperlink{reparse}{Reparse} \> return the real part afger parsing.\\
 \hyperlink{slider}{Slider} \> make a slider on a Euclidean view.\\
 \hyperlink{sprintf}{Sprintf} \> converts a real number to a string.\\
 \hyperlink{texcom}{Texcom} \> add the command in the \TeX file.\\

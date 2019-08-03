@@ -4118,6 +4118,15 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \hspace{10mm}\includegraphics[bb=0.00 0.00 219.01 204.51,width=40mm]{Fig/ptselected02.pdf} 
 
 \vspace{\baselineskip}
+\hypertarget{reparse}{}
+\item[関数]Reparse(文字列か文字列のリスト)
+\item[機能]評価(parse)してから実部をとる(re)。
+\item[説明]CindyJSでは，実数の演算でも虚数の項が出ることがあり，その対応である。
+
+【例】\verb|str="(0-1)^2"; Reparse(str);|\\
+　　注）CindyJSでformat(parse(str),0)を実行すると\verb|1-i*0|になる。
+
+\vspace{\baselineskip}
 \hypertarget{slider}{}
 \item[関数]Slider(名称，位置1,位置2)
 \item[機能]スライダを作成する
@@ -4175,7 +4184,7 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \hspace{10mm} \verb|Textformat(dt,4); | // 戻り値は "[ 0.1667 , 0.5 ]" \\
 \hspace{10mm} \verb|format(dt,4); | // 戻り値は [ "0.1667" , "0.5" ] \\
 
-\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
 \hypertarget{texcom}{}
@@ -8226,7 +8235,7 @@ Cinderellaで使っている用語に次のものがある。
 画面ツール（下のツールバー）\\
 \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/translate-view.pdf}原点を移動する \>：画面上の任意の位置でドラッグする\\
 \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/zoom-in.pdf}矩形領域を画面サイズに拡大 \>：ドラッグしてできる矩形で領域を選択する\\
-\includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/zoom-out.pdf}画面を矩形領域サイズに縮小 \>：どっらっぐしてで切る矩形で領域を選択する\\
+\includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/zoom-out.pdf}画面を矩形領域サイズに縮小 \>：ドラッグしてで切る矩形で領域を選択する\\
 \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/snap.pdf}格子点にスナップする \>：軸と方眼を表示しスナップモードにする\\
 \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/grid-more.pdf}\includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/grid-less.pdf}グリッドを粗く / 細かくする\\
  \end{tabbing}
@@ -8407,6 +8416,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{op}{Op(n,list)} \> listまたは文字列から要素を抜き出す\\
 \hyperlink{isptselected}{Isptselected(点名)} \>点が選択されていればtrueを返す\\
 \hyperlink{isptselected}{Ptselected(点名)} \>点が選択されていればtrueを返す\\
+\hyperlink{reparse}{Reparse(文字列（リスト）}\>評価して実数化する\\
 \hyperlink{slider}{Slider()}\>スライダを作る\\
 \hyperlink{sprintf}{Sprintf(実数,長さ)}\>小数点以下の長さを固定した文字列に変換\\
 \hyperlink{strsplit}{Strsplit(文字列,文字)}\>文字列を分解する。\\

@@ -1,3 +1,5 @@
+// 20190803
+//    Reparse added
 // 20190802
 //    Ketinit() changed (MOVETOLIST commented out)
 //    Initglist changed  (GCLISTadd + Ketinit);

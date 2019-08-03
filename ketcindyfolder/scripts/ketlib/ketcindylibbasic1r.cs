@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190802] loaded");
+println("ketcindylibbasic1[20190803] loaded");
 
 //help:start();
 
@@ -389,6 +389,20 @@ Setparent(file):=( // 17.11.27
   ); //180618to
 );
 ////%Setparent end////
+
+////%Reparse start////
+Reparse(str):=( //190803
+//help:Reparse(str);
+//help:Reparse(strlist);
+  regional(out);
+  if(islist(str),
+    out=apply(str,re(parse(#)));
+  ,
+    out=re(parse(str));
+  );
+  out;
+);
+////%Reparse end////
 
 ////%Dqq start////
 Dqq(str):=DqDq(str); //18.02.11

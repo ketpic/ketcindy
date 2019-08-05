@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190803] loaded");
+println("ketcindylibbasic1[20190805] loaded");
 
 //help:start();
 
@@ -943,7 +943,7 @@ Op(n,object):=( //  16.05.25
 ////%Op end////
 
 ////%Ptselected start////
-Ptselected():=Isptselected(allpoints()); //180706
+Ptselected():=Ptselected(allpoints()); //190805
 Ptselected(ptlistorg):=(
 //help:Ptselected();
 //help:Ptselected(geopoint);

@@ -1,3 +1,5 @@
+// 20190805
+//    Ptselected change (Isptselected removed)
 // 20190803
 //    Reparse added
 // 20190802

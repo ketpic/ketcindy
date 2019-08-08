@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190802] loaded");
+println("ketcindylibbasic3[20190808] loaded");
 
 //help:start();
 
@@ -3731,17 +3731,31 @@ Movetojsexe(json):=(
 ////%Movetojsexe end////
 
 ////%Setplaybuttons start////
-Setplaybuttons(x,y,font):=(
+Setplaybuttons(pt,font):=Setplaybuttons(pt_1,pt_2,font,[]);
+Setplaybuttons(Arg1,Arg2,Arg3):=(
+  if(islist(Arg1),
+    Setplaybuttons(Arg1_1,Arg1_2,Arg2,Arg3);
+  ,
+    Setplaybuttons(Arg1,Arg2,Arg3,[]);
+  );
+);
+Setplaybuttons(x,y,font,sporg):=(
 //help:Setplaybuttons(-2,-6,14);
- regional(x1);
- x1=x;
- Movetojs(71,[x1,y],font);
- x1=x1+0.84*font/10;
- Movetojs(72,[x1,y],font);
- x1=x1+1.06*font/10;
- Movetojs(73,[x1,y],font);
- x1=x1+0.76*font/10;
- Movetojs(74,[x1,y],font);
+//help:Setplaybuttons([-2,-6],14,[1,1,1]);
+  regional(x1,sp,tmp,tmp1);
+  sp=sporg;
+  tmp=length(sp);
+  if(tmp==0,tmp1=0,tmp1=sp_tmp);
+  tmp=apply(1..(3-tmp),tmp1);
+  sp=concat(sp,tmp);
+  x1=x;
+  Movetojs(71,[x1,y],font);
+  x1=x1+(0.84*font+sp_1)/10;
+  Movetojs(72,[x1,y],font);
+  x1=x1+(1.06*font+sp_2)/10;
+  Movetojs(73,[x1,y],font);
+  x1=x1+(0.76*font+sp_3)/10;
+  Movetojs(74,[x1,y],font);
 );
 ////%Setplaybuttons end////
 

@@ -1,3 +1,5 @@
+// 20190808
+//    Setplaybuttons changed  ( space option added )
 // 20190802
 //    Movetojs debugged  ( MOVETOJSLIST initialized )
 //    Ketcindyjsdata debugged  ( set() used to remove identical elements )

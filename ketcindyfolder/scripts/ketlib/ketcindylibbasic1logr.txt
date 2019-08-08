@@ -1,3 +1,5 @@
+// 20190809
+//    lightgray 0.17=>0.15
 // 20190805
 //    Ptselected change (Isptselected removed)
 // 20190803

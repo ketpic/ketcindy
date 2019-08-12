@@ -1,3 +1,5 @@
+// 20190811
+//    Assign changed  ( precise options added (def=6))
 // 20190809
 //    lightgray 0.17=>0.15
 //    offwhite added

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190809] loaded");
+println("ketcindylibbasic1[20190811] loaded");
 
 //help:start();
 
@@ -1219,20 +1219,21 @@ Assign(str):=( //190125from
   forall(VLIST,tmp=concat(tmp,[#_1,#_2]));
   Assign(str,tmp);
 ); //190125to
-Assign(funstr,vrL):=(
+Assign(funstr,vrL):=Assign(funstr,vrL,6);
+Assign(funstr,vrL,precise):=( //190811from
   regional(nn,out);
   nn=length(vrL)/2;
   out=funstr;
   forall(1..nn,
-    out=Assign(out,vrL_(2*#-1),vrL_(2*#));
+    out=Assign(out,vrL_(2*#-1),vrL_(2*#),precise);
   );
   out;
 );
-Assign(funstr,varname,rep):=(
-//help:Assign("x^2+a*x","a",1.3);
+Assign(funstr,varname,rep,precise):=(
 //help:Assign("a*x^2+b*x",["a",1,"b",2]);
+//help:Assign("a*x^2+b*x",["a",aa,"b",bb],10(def=6));
   regional(repstr,ii,jj,tmp,tmp1,tmp2,Notvar,Flg);
-  if(isstring(rep),repstr=rep,repstr="("+Textformat(rep,6)+")");
+  if(isstring(rep),repstr=rep,repstr="("+Textformat(rep,precise)+")"); //190811to
         // 15.02.09, 07.06,17.08.24
   tmp=[46];  // 12.20
   tmp=concat(tmp,48..57);

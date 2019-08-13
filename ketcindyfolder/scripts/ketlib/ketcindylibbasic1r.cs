@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190811] loaded");
+println("ketcindylibbasic1[20190813] loaded");
 
 //help:start();
 
@@ -1220,15 +1220,20 @@ Assign(str):=( //190125from
   Assign(str,tmp);
 ); //190125to
 Assign(funstr,vrL):=Assign(funstr,vrL,6);
-Assign(funstr,vrL,precise):=( //190811from
-  regional(nn,out);
-  nn=length(vrL)/2;
-  out=funstr;
-  forall(1..nn,
-    out=Assign(out,vrL_(2*#-1),vrL_(2*#),precise);
+Assign(funstr,Arg1,Arg2):=( //190813from
+  regional(vrL,precise,nn,out,tmp);
+  if(islist(Arg1),
+    vrL=Arg1; precise=Arg2;
+    nn=length(vrL)/2;
+    out=funstr;
+    forall(1..nn,
+      out=Assign(out,vrL_(2*#-1),vrL_(2*#),precise);
+    );
+  , 
+    out=Assign(funstr,Arg1,Arg2,6);
   );
   out;
-);
+); //190813to
 Assign(funstr,varname,rep,precise):=(
 //help:Assign("a*x^2+b*x",["a",1,"b",2]);
 //help:Assign("a*x^2+b*x",["a",aa,"b",bb],10(def=6));

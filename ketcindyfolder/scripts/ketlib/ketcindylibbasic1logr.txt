@@ -1,3 +1,5 @@
+// 20190813
+//    Assign debugged
 // 20190811
 //    Assign changed  ( precise options added (def=6))
 // 20190809

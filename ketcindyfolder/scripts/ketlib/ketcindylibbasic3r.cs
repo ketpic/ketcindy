@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190808] loaded");
+println("ketcindylibbasic3[20190814] loaded");
 
 //help:start();
 
@@ -456,7 +456,7 @@ Deffun(name,bodylist):=(
   );
   funstr=funstr+");";
   parse(funstr);
-  tmp=indexof(name,"("); 
+  tmp=indexof(name,"("); // no ketjs on //190814
   str=substring(name,0,tmp-1)+"<-function"+PaO();
   str=str+substring(name,tmp,length(name))+"{";
   forall(1..(length(bodylist)-1),nbody,
@@ -493,7 +493,7 @@ Deffun(name,bodylist):=(
     );
   );
   str=str+"return"+PaO()+bodylist_(length(bodylist))+")}";
-  FUNLIST=append(FUNLIST,str);
+  FUNLIST=append(FUNLIST,str); // no ketjs off
 );
 ////%Deffun end////
 

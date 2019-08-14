@@ -1,3 +1,5 @@
+// 20190814
+//    Deffun changed( for ketcindyjs )
 // 20190808
 //    Setplaybuttons changed  ( space option added )
 // 20190802

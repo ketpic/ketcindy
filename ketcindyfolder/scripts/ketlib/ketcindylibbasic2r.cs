@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190727] loaded");
+println("ketcindylibbasic2[20190814] loaded");
 
 //help:start();
 
@@ -4168,17 +4168,14 @@ Fourierseries(nm,coefforg,per,nterm,range,optionorg):=(
   cn=coeff_2;
   sn=coeff_3;
   fs=c0;
+  fn="(cn)*cos(n*2*pi/per*x)+(sn)*sin(n*2*pi/per*x)";
+  fn=Assign(fn,["cn",cn,"sn",sn,"per",per]);
   if(tbflg=="N", //190523
     forall(1..nterm,
-      tmp=parse(Assign(cn,["n",#]));
-      tmp1=Assign("("+format(tmp,5)+")*cos(n*2*pi/per*x)",
-                  ["n",#,"per",per]);
-      tmp=parse(Assign(sn,["n",#]));
-      tmp2=Assign("("+format(tmp,5)+")*sin(n*2*pi/per*x)",
-                 ["n",#,"per",per]);
-      fs=fs+"+"+tmp1+"+"+tmp2;
+        fs=fs+"+"+Assign(fn,["n",#]);
     );
-    Plotdata("-four"+nm,fs,range,append(options,"Num="+Num));
+    Deffun("four(x)",[fs]);
+    Plotdata("-four"+nm,"four(x)",range,append(options,"Num="+num));
   ,
     c0=parse(c0); //190523from
     cn=apply(1..nterm,parse(Assign(cn,["n",#])));

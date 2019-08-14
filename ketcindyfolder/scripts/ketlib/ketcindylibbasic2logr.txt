@@ -1,3 +1,5 @@
+// 20190814
+//   Fourier debugged/changed  (Num>num, deffun)
 // 20190727
 //   Lightarrowdata => Arrowdata, Arrowdata => OldArrowdata
 //   Lightarrowdata debugged  ( arrowhead option )

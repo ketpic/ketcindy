@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190714] loaded");
+println("ketcindylib3d[20190818] loaded");
 
 //help:start();
 
@@ -523,7 +523,7 @@ Projpara(ptdata,optionsorg):=(
       tmp=name2+"=Projpara("+name3+")";
       GLIST=append(GLIST,tmp);
     );
-    if(Noflg<2,
+    if(Noflg<3, //190818
       if(isstring(Ltype),
         if(color!=KCOLOR, //180904
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -535,7 +535,7 @@ Projpara(ptdata,optionsorg):=(
 	  ,
         if(Noflg==1,Ltype=0);
       );
-    GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
+     GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
     );
   );
   if(length(Out)==1,Out=Out_1);
@@ -713,7 +713,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -880,7 +880,7 @@ Spacecurve(nm,funstr,variable,optionorg):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1019,7 +1019,7 @@ Joincrvs3d(nm,plotstrL,options):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1138,7 +1138,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,optionorg):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1312,7 +1312,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1481,7 +1481,7 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1578,7 +1578,7 @@ Translatedata3d(nm,P3data,w1,options):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1675,7 +1675,7 @@ Reflectdata3d(nm,P3data,vecL,options):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1771,7 +1771,7 @@ Scaledata3d(nm,P3data,ratio,options):=(
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(color!=KCOLOR, //180904
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -2589,7 +2589,7 @@ Bezier3(nm,ptlistorg,ctrlistorg,options):=( //17.10.08 greatly changed
     tmp=name2+"=Projpara("+name3+")";
     GLIST=append(GLIST,tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
@@ -3075,7 +3075,7 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
         enL=append(enL,tmp+"3d");//16.02.29
       );
     );
-    if(Noflg<2,
+    if(Noflg<3, //190818
       if(msgflg=="Y",
         println("generate "+namev+","+namee+","+namef);
       );
@@ -3187,7 +3187,7 @@ Phparadata(nm,nmvf,vfL,options):=(
       GLIST=append(GLIST,tmp);
     );
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
@@ -3592,7 +3592,7 @@ Faceremovaldata(nm,vfdata,crvdata,options):=(
       GLIST=append(GLIST,tmp);
     );
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
@@ -4718,7 +4718,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
     );
   ); //no ketjs off
-  if((Noflg<2)&(mkflg>-1), //181103
+  if((Noflg<3)&(mkflg>-1), //181103,190818
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);

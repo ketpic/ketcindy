@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190814] loaded");
+println("ketcindylibbasic2[20190818] loaded");
 
 //help:start();
 
@@ -280,7 +280,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
     tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       Listplot("-arh"+nm,apply(list,LLcrd(#)),concat(options,["notex","Msg=n"]));
     );
@@ -516,7 +516,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
     tmp="ar"+nm+"="+Textformat([pA,pB],5)+";";
     parse(tmp);
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if(lineflg==1, //190504from
         Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
@@ -677,7 +677,7 @@ Anglemark(nm,plist,options):=(
       tmp=name+"=Anglemark("+tmp1+opstr+")";
       GLIST=append(GLIST,tmp); //no ketjs off
     );
-    if(Noflg<2,
+  if(Noflg<3, //190818
       if(isstring(Ltype),
         if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -792,7 +792,7 @@ Paramark(nm,plist,options):=(
     tmp=name+"=Paramark("+tmp1+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -985,7 +985,7 @@ Bowdata(nm,plist,options):=(
     tmp=name+"=Bowdata("+tmp1+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1220,7 +1220,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
     tmp=RSform(tmp);
     GLIST=append(GLIST,tmp);
   ); //no ketjs off
-  if((nn>0)&(Noflg<2), //190211
+  if((nn>0)&(Noflg<3), //190211
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1236,170 +1236,6 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
 );
 ////%Deqplot end////
-
-////////// old enclosing ///////////////
-
-Enclosing(nm,plist):=EnclosingS(nm,plist);
-Enclosing(nm,plist,options):=EnclosingS(nm,plist,options);
-EnclosingS(nm,plist):=EnclosingS(nm,plist,[]);
-EnclosingS(nm,plist,options):=(
-// help:Enclosing("1",["sc2","crAB","sc2","Invert(sc1)"],[pt,"dr"]);
-  regional(name,AnsL,Start,Eps,EEps,S,Flg,Fdata,Gdata,KL,pt,qt,color
-      t1,t2,t3,ii,nn,tmp,tmp1,tmp2,Ltype,Noflg,realL,eqL,opstr,opcindy);
-  name="en"+nm;
-  tmp=Divoptions(options);
-  Ltype=tmp_1;
-  Noflg=tmp_2;
-  eqL=tmp_5;
-  realL=tmp_6;
-  color=tmp_(length(tmp)-2);
-  opstr=tmp_(length(tmp)-1);
-  opcindy=tmp_(length(tmp));
-  Eps=10^(-5); // 16.12.05
-  EEps=0.05;
-  Start=[];
-  Flg=0;
-  forall(realL,
-    if(islist(#) % ispoint(#),
-      Start=Lcrd(#); // 15.09.12
-    ,
-      Flg=Flg+1;
-      if(Flg==1,Eps=#);
-      if(Flg==2,EEps=#);
-    );
-  );
-//  tmp1=concat([Eps,EEps],eqL); // 15.04.06
-  Fdata=plist_1;
-  Gdata=plist_(length(plist));
-  KL=Intersectcrvspp(Fdata,Gdata);
-  if(length(KL)==1,
-    pt=KL_1_1;
-    t1=KL_1_2;
-  );
-  if(length(KL)==0,
-    if(Numptcrv(Fdata)>Numptcrv(Gdata),
-      tmp=Nearestpt(Fdata,Gdata);
-      pt=tmp_1;
-      t1=tmp_2;
-    ,
-      tmp=Nearestpt(Gdata,Fdata);
-      pt=tmp_3;
-      t1=tmp_4;
-    );
-  );
-  if(length(KL)>1,
-    if(Start==[],
-      err("No Start Point");
-    ,
-      pt=KL_1_1;
-      t1=KL_1_2;
-      tmp=Norm(pt-Start);
-      forall(2..(length(KL)),ii, // 15.04.20
-        tmp1=KL_ii_1;
-        tmp2=Norm(tmp1-Start); // 15.04.20
-        if(tmp2<tmp,
-          pt=tmp1;
-          t1=KL_ii_2;
-          tmp=tmp2;
-        );
-      );
-    );
-  );
-//  pt=Pcrd(pt);  // 15.09.12
-  Start=pt;
-  AnsL=[];
-  forall(1..(length(plist)),nn,
-    Fdata=plist_nn;
-    if(nn>1, pt=qt); 
-    if(nn==length(plist),
-      qt=Start;
-    ,
-      Flg=0;
-      Gdata=plist_(nn+1);
-//      tmp1=concat([Eps,EEps],eqL); // 15.04.06
-      KL=Intersectcrvspp(Gdata,Fdata);
-      if(length(KL)==1,
-        tmp=KL_1;
-        qt=KL_1_1;
-        t3=KL_1_2;
-        Flg=10;
-      );
-      if(length(KL)==0,Flg=1);
-      if(length(KL)>1, 
-        tmp1=KL_1_1;
-        tmp2=KL_2_1;
-        tmp=|tmp1-tmp2|;
-        if(tmp<Eps*10, Flg=1); 
-      );
-      if(Flg==1,
-        if(Numptcrv(Fdata)>Numptcrv(Gdata),
-          tmp=Nearestpt(Fdata,Gdata);
-          qt=tmp_1;
-          t3=tmp_4;
-          Flg=10;
-        ,
-          tmp=Nearestpt(Gdata,Fdata);
-          qt=tmp_3;
-          t3=tmp_2;
-          Flg=10;
-        );
-      );
-      if(Flg<10,
-        t2=10^6; //%inf;
-        forall(1..(length(KL)),ii,
-          tmp1=KL_ii_1;
-          tmp=KL_ii_3;
-          tmp2=Paramoncurve(tmp1,tmp,Fdata);
-          tmp3=KL_ii_2;
-          if(tmp2>t1+Eps & tmp2<t2+Eps,
-            qt=tmp1;
-            t2=tmp2;
-            t3=tmp3;
-          );
-        );
-      );
-    );
-    tmp=Partcrv("",pt,qt,Fdata,["nodata"]);
-    t1=t3;
-    if(nn==1,
-      AnsL=tmp;
-    ,
-      AnsL=concat(AnsL,tmp_(2..(length(tmp))));
-    );
-  );
-  AnsL=apply(AnsL,Pcrd(#));  // 15.09.12
-  AnsL_(length(AnsL))=AnsL_1;//16.10.20
-  if(Noflg<3,
-    println("generate Enclosing "+name);
-    tmp=name+"="+Textformat(AnsL,5)+";";
-    parse(tmp);
-    tmp=name+"=Enclosing(";//16.11.07from //no ketjs on
-    tmp1="list"+PaO();
-    forall(plist,
-      tmp1=tmp1+#+",";
-    );
-    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")"+opstr+")";
-    GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
-  );
-  if(Noflg<2,
-    if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      ); //no ketjs off
-      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("}");//180722
-      ); //no ketjs off
-    ,
-      if(Noflg==1,Ltype=0);
-    );
-    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-  );
-  tmp=apply(AnsL,LLcrd(#));//16.10.20
-  tmp;
-);
-
-/////////// new enclosing ///////////
 
 ////%Enclosing start////
 Enclosing(nm,plist):=Enclosing2(nm,plist,[]);//180706[2lines]
@@ -1552,7 +1388,7 @@ Enclosing2(nm,plistorg,options):=(
     tmp=tmp+","+text(epspara)+")";//18.0706to,180707
     GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -1570,8 +1406,6 @@ Enclosing2(nm,plistorg,options):=(
   tmp;
 );
 ////%Enclosing end////
-
-/////////// end of new enclosing ///////////
 
 /////////// new Hatchdata(cindy) ///////////
 
@@ -1959,7 +1793,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
       GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102 //no ketjs
     );
   );
-  if((Noflg<2)&(mkflg>-1),
+  if((Noflg<3)&(mkflg>-1), //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -2361,7 +2195,7 @@ Rotatedata(nm,plist,angle,optionorg):=(
     +Textformat(angle,5)+","+RSform(Textformat(Pt,5))+")"; //17.12.23
     GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -2443,7 +2277,7 @@ Translatedata(nm,plist,mov,optionorg):=(
     tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,5))+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -2549,7 +2383,7 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
       +Textformat(rx,5)+","+Textformat(ry,5)+","+RSform(Textformat(Pt,5))+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -2647,7 +2481,7 @@ Reflectdata(nm,plist,symL,optionorg):=(
     tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,5))+")";//17.12.23
     GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -3385,7 +3219,7 @@ Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
     tmp2=RSform(tmp2,3); //17.12.23
     GLIST=append(GLIST,name+"=Bezier("+tmp1+","+tmp2+opstr+")"); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -4829,6 +4663,7 @@ Windispg(gcLorg):=( //190125
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);
   ); //190125to
+  gcL=select(gcL,#_2_1>=0); //190818
   gsave();
   layer(KETPIClayer);
   forall(gcL,Nj,
@@ -4928,7 +4763,7 @@ Extractdata(number,name,options):=(
     ];
     GLIST=concat(GLIST,tmp3); //no ketjs off
   );
-  if(Noflg<2,
+  if(Noflg<3, //190818
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722

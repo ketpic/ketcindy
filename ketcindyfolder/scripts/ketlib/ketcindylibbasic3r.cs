@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190814] loaded");
+println("ketcindylibbasic3[20190816] loaded");
 
 //help:start();
 
@@ -452,7 +452,11 @@ Deffun(name,bodylist):=(
   regional(funstr,str,Pos,nbody,bdy,ppL,bpL,excma,tmp,tmp1,tmp2);
   funstr=name+":=(";
   forall(bodylist,
-    funstr=funstr+#+";";
+    tmp1=Removespace(#); //190816from
+//    tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
+//    if(tmp!=",", tmp1=tmp1+";");
+    tmp1=tmp1+";";
+    funstr=funstr+tmp1; //190816to
   );
   funstr=funstr+");";
   parse(funstr);
@@ -492,7 +496,9 @@ Deffun(name,bodylist):=(
       str=str+bdy+";";
     );
   );
-  str=str+"return"+PaO()+bodylist_(length(bodylist))+")}";
+  tmp1=bodylist_(length(bodylist)); //190816from
+  tmp1=RSform(tmp1,2);
+  str=str+"return"+PaO()+tmp1+")}"; //190816to
   FUNLIST=append(FUNLIST,str); // no ketjs off
 );
 ////%Deffun end////

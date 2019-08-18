@@ -1,3 +1,9 @@
+// 20190818
+//   Windispg changed  ( to remove "nodisp" data )
+//   Arrowhead,Lightarrowdata,Anglemark,Paramark,Bowdata,Deqplot,
+//      Enclosing,Hatchdata,Rotatedata,Translatedata,Scaledata,Reflectdata,
+//      Beziercurve,Extractdata,
+//   changed
 // 20190814
 //   Fourier debugged/changed  (Num>num, deffun)
 // 20190727

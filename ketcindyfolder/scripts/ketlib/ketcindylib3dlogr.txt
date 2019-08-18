@@ -1,3 +1,7 @@
+// 20190818
+//    Projpara,Spaceline,Spacecurve,Joincrvs3d,Xyzax3data,Embed,
+//       Rotatedata3d,Translatedata3d,Reflectdata3d,Scaledata3d,Bezier3d,
+//       Vertexedgeface,Phparadata,Faceremovaldata,Skeletondatacindy,
 // 20190714
 //    Perpplane changed  (option)
 //    Pointdata3d changed (option,Defvar)

@@ -1,3 +1,8 @@
+// 20190818
+//    Getlinestyle changed  ( to register  "nodisp"(2) dat to GCLIST )
+//    Chanestyle,AddGraph,Joincrvs,Partcrv,Pointdata,Listplot,Lineplot,Plotdata,
+//        Paramplot,Implicitplot,Circledata,Ovaldata
+//    changed  (Nflg<2 => Nflg<3 )
 // 20190813
 //    Assign debugged
 // 20190811

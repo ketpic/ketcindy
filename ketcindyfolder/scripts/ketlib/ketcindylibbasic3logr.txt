@@ -1,3 +1,5 @@
+// 20190816
+//    Deffun debugged (return )
 // 20190814
 //    Deffun changed( for ketcindyjs )
 // 20190808

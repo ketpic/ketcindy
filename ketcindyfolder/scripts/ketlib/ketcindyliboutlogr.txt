@@ -1,3 +1,5 @@
+// 20190818
+//    Readcsv changed (Head=y as default, old def removed)
 // 20190424
 //    PlotdiscR changed  ( "-" added to Listplot )
 //    Mxfun debugged  (options)

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190424] loaded");
+println("ketcindylibout[20190818] loaded");
 
 //help:start();
 
@@ -1148,143 +1148,6 @@ Rfun(name,fun,argL,optionorg):=(
 ////%Rfun end////
 
 ////%Readcsv start////
-Readcsv(file):=Readcsv(Dirwork,file,[]);
-Readcsv(Arg1,Arg2):=(
-  if(isstring(Arg2),
-    Readcsv(Arg1,Arg2,[]);
-  ,
-    Readcsv(Dirwork,Arg1,Arg2);
-  );
-);
-Readcsv(pathorg,file,optionorg):=(
-// help:Readcsv("ex.csv");
-// help:Readcsv(directory,"ex.csv");
-// help:Readcsv(options=["Head=yes","Sep=-999","Flat=no","Use=R"]);
-  regional(path,fname,fout,options,eqL,header,cmdL,sep,
-        dt,nrow,tmp,tmp1,tmp2,csv,use,flat);
-  options=optionorg;
-  tmp=divoptions(options);
-  eqL=tmp_5;
-  header=1;
-  sep="-999";
-  csv="Y"; // 16.12.12
-  use="R";
-  flat="N";
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,0,tmp-1);
-    tmp2=substring(#,tmp,length(#));
-    tmp=Toupper(substring(tmp1,0,1)); //181111
-    if(tmp=="H",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="F" % tmp=="N",
-        header=0;
-        options=remove(options,[#]);
-      );
-    );
-    if(tmp=="S",
-      sep=tmp2;
-      options=remove(options,[#]);
-    );
-    if(tmp=="C",
-      csv=Toupper(substring(tmp2,0,1));
-      options=remove(options,[#]);
-    );
-    if(tmp=="U",
-      use=Toupper(substring(tmp2,0,1));
-      options=remove(options,[#]);
-    );
-    if(tmp=="F",
-      flat=Toupper(substring(tmp2,0,1));
-      options=remove(options,[#]);
-    );
-  );
-  if(flat=="Y",csv="N");
-  sep=","+sep;
-  tmp=indexof(file,".");
-  if(tmp==0, 
-    fname=file+".csv";
-    fout=file+"sep.csv";
-  ,
-    fname=file;
-    tmp1=substring(file,0,tmp-1);
-    tmp2=substring(file,tmp-1,length(file));
-    fout=tmp1+"sep"+tmp2;
-  );
-  path=pathorg;
-  if(!isexists(path,fname),
-    println(path+" "+fname+" not found");
-  ,
-    path=replace(path,"\","/");
-    if(use=="S",
-      cmdL=[  // 16.12.20from
-        "cd('"+path+"')",[],
-        "Dt=mgetl('"+fname+"');",[],
-        "cd('"+Dirwork+"')",[],
-        "Dt2=[]",[],
-        "for I=1:size(Dt,1),
-           Tmp=Dt(I,:)+'"+sep+"';
-           Dt2=[Dt2;Tmp];
-         end",[],
-        "mputl(Dt2,'"+fout+"')",[]
-      ];
-      CalcbyS("sep",cmdL,options);
-    ,
-      cmdL=[
-        "setwd",[Dq+path+Dq],
-        "tmp1=readLines",[Dq+fname+Dq,"warn=FALSE"],
-        "fun=function(s) paste(s,"+Dq+sep+Dq+",sep="+Dq+Dq+")",[], 
-        "tmp2=sapply(tmp1,fun)",[],
-        "writeLines",["tmp2",Dq+fout+Dq]
-      ];
-      CalcbyR("sep",cmdL,concat(options,["Cat=n"])); 
-    ); // 16.12.20until
-    if(ErrFlag==1,
-      println("Readcsv  not completed");
-    ,
-      dt=load(fout);
-      dt=tokenize(dt,sep);
-      dt=dt_(1..(length(dt)-1));//16.12.20
-      if(isstring(dt_1),// 17.02.10from
-        if(indexof(dt_1,",")==0,csv="N");
-      ,
-        csv="N";
-      );// 17.02.10until
-      if(csv=="Y",
-        dt=apply(dt,tokenize(#,","));
-      ,
-        dt=apply(dt,[#]);
-      );
-      forall(1..(length(dt)),nrow,
-        tmp1=dt_nrow;
-        tmp2=[];
-        forall(tmp1,
-          if(!isstring(#),
-            tmp=#;
-          ,
-            if(substring(#,0,1)==Dq,
-              tmp=parse(#);
-            ,
-              tmp=#;
-            );
-          );
-          tmp2=append(tmp2,tmp);
-        );
-        dt_nrow=tmp2;
-      );
-      if(header==0,dt=dt_(2..(length(dt))));
-      if(length(dt)==1,
-        dt=dt_1
-      ,
-        if(length(dt_1)==1,
-          dt=apply(dt,#_1);
-        );
-      );
-      dt;
-    );
-  );
-);
-// New readcsv [181125] 
 Readcsv(file):=Readcsv(Dirwork,file);
 Readcsv(Arg1,Arg2):=(  //190301from
   if(islist(Arg2),
@@ -1300,16 +1163,17 @@ Readcsv(path,file,options):=(
   regional(dt,eqL,head,from,end,tmp);
   tmp=Divoptions(options);
   eqL=tmp_5;
-  head="n"; from=1; //190125from
+  head="Y"; from=1; //190125from,190818
+  from=2;
   forall(eqL,
     tmp=Strsplit(#,"=");
     if(Toupper(substring(tmp_1,0,1))=="H",
-      head=substring(tmp_2,0,1);
+      head=Toupper(substring(tmp_2,0,1));//190818
     );
   );
-  if(Toupper(head)=="Y",
-    from=2;
-  ); //190125to
+  if(head=="N",//190818from
+    from=1;
+  ); //190125,190818to
   tmp=file;
   if(indexof(tmp,".csv")==0,tmp=tmp+".csv"); //190301
   dt=readfile2str(path,tmp);
@@ -1968,7 +1832,7 @@ Scatterplot(nm,file,optionorg,optionsreg):=(
   ,
     tmp=file;
   );
-  parse("rc"+nm+"="+tmp+";"); //181013to //190415
+  parse("rc"+nm+"="+Textformat(tmp,5)+";"); //181013to //190415
   Pointdata(name,parse("rc"+nm),options);
   tmp=parse("rc"+nm);
   dtx=apply(tmp,#_1);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190818] loaded");
+println("ketcindylib3d[20190822] loaded");
 
 //help:start();
 
@@ -61,7 +61,8 @@ Ketinit3d(subflg):=(
 Start3d():=Start3d([],[]); 
 Start3d(Arg):=( //190503from
   regional(tmp);
-  tmp=select(Arg,indexof(#,"=")>0);
+  tmp=select(Arg,isstring(#)); //190822
+  tmp=select(tmp,indexof(#,"=")>0);
   if(length(tmp)==0,
     Start3d(Arg,[]);
   ,

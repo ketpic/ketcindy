@@ -4033,7 +4033,8 @@ Pointdata(nm,listorg,options):=(
     GLIST=append(GLIST,name+"=Pointdata("+tmp2+")"); //no ketjs
   );
   if(Noflg<3, //190818
-    tmp=[nameL,[0,1],opcindy];  //190126
+    if(Noflg<2,tmp=[0,1],tmp=[-1,1]); //190819
+    tmp=[nameL,tmp,opcindy];  //190126
     GCLIST=append(GCLIST,tmp);
     if(Noflg==0,
       if(length(size)>0,

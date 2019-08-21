@@ -1,3 +1,5 @@
+// 20190821
+//    Start3d debugged  ( isstring added )
 // 20190818
 //    Projpara,Spaceline,Spacecurve,Joincrvs3d,Xyzax3data,Embed,
 //       Rotatedata3d,Translatedata3d,Reflectdata3d,Scaledata3d,Bezier3d,

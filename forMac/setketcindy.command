@@ -1,7 +1,7 @@
 #!/bin/sh
-#      20190616
+#      20190824
 
-# Edit and uncomment the following lines if necessary
+# Edit, uncomment the following lines and choose 4 if necessary
 #texpath=/Applications/kettex/texlive
 #texbinpath=${texpath}/bin/x86_64-darwin
 #ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
@@ -28,8 +28,8 @@ echo `pwd ` will be used
 echo 1. "/Applications/kettex/texlive".
 echo 2. "/Applications/kettex.app/texlive"
 echo 3. "/Library/TeX (TeXLive)"
-echo 4. Modification of this file is finished
-read -p 'Choose path of TeX from the above (number) : ' ans
+echo 4. Other
+read -p 'Choose number from the above (number) : ' ans
 if [ ${ans} = "1" ]; then 
   texpath=/Applications/kettex/texlive
   texbinpath=${texpath}/bin/x86_64-darwin
@@ -50,6 +50,15 @@ if [ ${ans} = "3" ]; then
   ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
   ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
   ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
+fi
+if [ ${ans} = "4" ]; then
+  read -p ' Input texpath (/Library/TeX/Root) : ' texpath
+  read -p ' Input texbinpath (bin/x86_64-darwin) : ' binpath
+  texbinpath=${texpath}/${binpath}
+  read -p ' Input scriptspath (texmf-dist) : ' scriptspath
+  ketcindyscripts=${texpath}/${scriptspath}/scripts/ketcindy
+  ketcindydoc=${texpath}/${scriptspath}/doc/support/ketcindy
+  ketcindystyle=${texpath}/${scriptspath}/tex/latex/ketcindy
 fi
 echo texpath=${texpath}
 echo texbinpath=${texbinpath}

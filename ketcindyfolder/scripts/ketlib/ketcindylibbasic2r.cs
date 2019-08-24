@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190818] loaded");
+println("ketcindylibbasic2[20190824] loaded");
 
 //help:start();
 
@@ -28,9 +28,9 @@ Drwfigs(nm,figlist,optionlist,commonops):=Drawfigures(nm,figlist,optionlist,comm
 Drawfigures(nm,figlist):=Drawfigures(nm,figlist,[]);
 Drawfigures(nm,figlist,optionlist):=Drawfigures(nm,figlist,optionlist,[]);
 Drawfigures(nm,figlistorg,optionlistorg,commonops):=(
-//help:Drawfigures(["pt1","cr1"], [["Size=3"],[]],["Msg=n"]);
+//help:Drawfigures("1",["pt1","cr1"], [["Size=3"],[]],["Msg=n"]);
+//help:Drawfigures("","re1",[["Size=3"],[]],["Msg=n"]);
   regional(figlist,name,figL,optionlist,nn,kk,fig,eqL,msg,tmp,tmp1,tmp2);
-  name="figs"+nm;
   tmp=Divoptions(commonops);
   eqL=tmp_5;
   msg="Y";
@@ -42,7 +42,12 @@ Drawfigures(nm,figlistorg,optionlistorg,commonops):=(
     );
   );
   figlist=figlistorg;
-  if(isstring(figlist),figlist=parse(figlist));
+  if(isstring(figlist), //190818from
+    name=figlist+nm;
+    figlist=parse(figlist);
+  ,
+    name="figs"+nm;
+  ); //190818to
   nn=length(figlist);
   optionlist=optionlistorg;
   if(length(optionlist)==0, //190531from
@@ -62,26 +67,40 @@ Drawfigures(nm,figlistorg,optionlistorg,commonops):=(
     fig=figlist_kk;
     if(isstring(fig),fig=parse(fig));
     if(length(fig)>0,
-      if(Measuredepth(fig)==0,fig=[fig]); //190531from
-      if(Measuredepth(fig)==1,fig=[fig]);
-      forall(1..(length(fig)),
-        tmp1=fig_#;
-        tmp2=name+"n"+text(kk)+"p"+text(#);
-        if(length(tmp1)==1,
-          Pointdata(tmp2,tmp1,optionlist_kk); 
-          figL=append(figL,"pt"+tmp2);
+      if(isstring(figlistorg),
+        tmp1=Measuredepth(fig);
+        tmp2=append(optionlist_kk,"Msg=n");
+        tmp=fig;
+        if(tmp1==2,tmp=tmp_1);
+        if(length(tmp)>1,
+          Listplot("-"+name+"n"+text(kk),fig,tmp2);
         ,
-          Listplot("-"+tmp2,tmp1,optionlist_kk);
-          figL=append(figL,tmp2); //190427
+          if(tmp1==2,fig=apply(fig,#_1));
+          Pointdata("-"+name+"n"+text(kk),fig,tmp2);
         );
-      ); //190531to
+        figL=append(figL,name+"n"+text(kk));
+     ,
+        if(Measuredepth(fig)==0,fig=[fig]); //190531from
+        if(Measuredepth(fig)==1,fig=[fig]);
+        forall(1..(length(fig)),
+          tmp1=fig_#;
+          tmp2=name+"n"+text(kk)+"p"+text(#);
+          if(length(tmp1)==1,
+            Pointdata(tmp2,tmp1,optionlist_kk); 
+            figL=append(figL,"pt"+tmp2);
+          ,
+            Listplot("-"+tmp2,tmp1,optionlist_kk);
+            figL=append(figL,tmp2); //190427
+          );
+        ); //190531to
+        tmp=apply(figL,Dqq(#));
+        tmp=name+"="+text(tmp)+";";
+        parse(tmp);
+      );
     );
-  );
-  tmp=apply(figL,Dqq(#));
-  tmp=name+"="+text(tmp)+";";
-  parse(tmp);
-  if(msg=="Y",
-    println("generate "+name+"="+text(figL));
+    if(msg=="Y",
+      println("generate "+name+"="+text(figL));
+    );
   );
   figL;
 );
@@ -3036,49 +3055,55 @@ Slider(ptstr,p1,p2):=Slider(ptstr,p1,p2,[]);
 Slider(ptstr,p1,p2,options):=(//190120
 //help:Slider("A-C-B",[-3,0],[3,0]);
 //help:Slider("C",[-3,0],[3,0]);
-//help:Slider(options=["Color=0.6*[0,0,1]","Size=2"]);
-  regional(pA,pB,pC,seg,sname,Alpha,color,size,tmp,tmp1);
+//help:Slider(options=["Color=[0,0,0.6]","Thick=2"]);
+//help:Slider(options2=["Sep=0.3"]); //190824
+  regional(pA,pB,pC,color,thick,sep,tmp,tmp1,tmp2);
   color="Color=0.6*[0,0,1]"; //190120from
-  size="size->2";
+  thick="size->2";
+  sep=0.3; //190824
   forall(options,
     tmp=Toupper(substring(#,0,1));
     if(tmp=="C",
       color=#;
     );
-    if(tmp=="S",
+    if(tmp=="T",
       tmp=Strsplit(#,"=");
-      size="size->"+tmp_2;
+      thick="size->"+tmp_2;
     );
-  ); //190120to
+    if(tmp=="S",//190824from
+      tmp=Strsplit(#,"=");
+      sep=parse(tmp_2);
+    ); //190824to
+  );
   tmp=Indexall(ptstr,"-");
-  if(length(tmp)>0, //190209from
-    pA=substring(ptstr,0,tmp_1-1);
+  if(length(tmp)>0,
+    pA=substring(ptstr,0,tmp_1-1); //190824from
     pC=substring(ptstr,tmp_1,tmp_2-1);
     pB=substring(ptstr,tmp_2,length(ptstr));
-    seg=pA+pB;
-    Alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    sname="";
-    forall(1..(length(seg)),
-      tmp=substring(seg,#-1,#);
-      tmp1=indexof(Alpha,tmp);
-      if(tmp1>0,
-        sname=sname+unicode(text(tmp1+96),base->10);
-      ,
-        sname=sname+tmp;
-      );
-    ); 
-    Putpoint(pA,p1);
-    Putpoint(pB,p2);
-    Listplot([parse(pA),parse(pB)],["Msg=n","notex",color,size]);
-    Putonseg(pC,parse("sg"+pA+pB));
+//    parse(pA).xy=p1; //only ketjs on
+//    parse(pB).xy=p2; //only ketjs off //190824to
     PTEXCEPTION=concat(TEXCEPTION,[pA,pC,pB]);
   ,
-    pA=""; pB=""; pC=ptstr;
-    tmp=pC+"l"+pC+pC+"r";
-    Listplot(tmp,[p1,p2],["Msg=n","notex",color,size]);
-    Putonseg(pC,parse("sg"+tmp));
-    PTEXCEPTION=concat(PTEXCEPTION,[pC]); //190329
-  ); //190209to
+    pC=ptstr; pA=pC+"l"; pB=pC+"r"; 
+    PTEXCEPTION=concat(PTEXCEPTION,[pC]);
+  );
+  Listplot(pA+pB,[p1,p2],["Msg=n","notex",color,thick]);
+  Putonseg(pC,parse("sg"+pA+pB));
+  tmp1=pC+"position"; //190824fro
+  if(!islist(parse(tmp1)),
+    tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
+    parse(tmp);
+  ,
+    tmp=parse(pC).xy;
+    tmp2=mouse().xy;
+    if(|tmp-tmp2|>sep,
+      tmp=pC+".xy="+pC+"position";
+      parse(pC).xy=parse(pC+"position");
+    ,
+      tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
+      parse(tmp);
+    );
+  ); //190824to
 );
 ////%Slider end////
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190824] loaded");
+println("ketcindylibbasic2[20190826] loaded");
 
 //help:start();
 
@@ -3080,8 +3080,14 @@ Slider(ptstr,p1,p2,options):=(//190120
     pA=substring(ptstr,0,tmp_1-1); //190824from
     pC=substring(ptstr,tmp_1,tmp_2-1);
     pB=substring(ptstr,tmp_2,length(ptstr));
-//    parse(pA).xy=p1; //only ketjs on
-//    parse(pB).xy=p2; //only ketjs off //190824to
+    parse(pA).xy=p1;
+    parse(pB).xy=p2; //190824to
+    tmp1=pC+"position"; //190826from
+    if(!islist(parse(tmp1)),
+      tmp=tmp1+"="+textformat((p1+p2)/2,6)+";";
+      parse(tmp);
+      parse(pC).xy=(p1+p2)/2;
+    ); //190826to
     PTEXCEPTION=concat(TEXCEPTION,[pA,pC,pB]);
   ,
     pC=ptstr; pA=pC+"l"; pB=pC+"r"; 

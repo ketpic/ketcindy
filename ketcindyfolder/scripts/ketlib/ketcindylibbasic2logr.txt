@@ -1,3 +1,5 @@
+// 20190826
+//   Slider changed  ( for pA-pC-pB, initial position)
 // 20190824
 //   Slider changed  ( for ketcindyjs, separation controlable)
 // 20190818

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190816] loaded");
+println("ketcindylibbasic3[20190827] loaded");
 
 //help:start();
 
@@ -4360,12 +4360,14 @@ Mkketcindyjs(options):=( //17.11.18
     );
     if(length(axes)>0,
       tmp=select(1..(length(out)),indexof(out_#,"axes:")>0);
-      jj=tmp_1;
-      tmp1="    axes: "+axes;
-      if(indexof(out_jj,",")>0,
-        tmp1=tmp1+",";
+      if(length(tmp)>0,
+        jj=tmp_1;
+        tmp1="    axes: "+axes;
+        if(indexof(out_jj,",")>0,
+          tmp1=tmp1+",";
+        );
+        out_jj=tmp1;
       );
-      out_jj=tmp1;
     );
     forall(out,
       println(SCEOUTPUT,#);

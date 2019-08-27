@@ -1,3 +1,5 @@
+// 20190827
+//    Mkketcindyjs debugged (case of no "axes:"  )
 // 20190816
 //    Deffun debugged (return )
 // 20190814

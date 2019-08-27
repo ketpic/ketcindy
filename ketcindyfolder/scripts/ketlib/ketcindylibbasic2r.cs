@@ -3051,7 +3051,7 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 ////%Exprrot end////
 
 ////%Strictmove start////
-Strictmove(pC):=Strictmove(pC,0.3);
+Strictmove(pC):=Strictmove(pC,0.1);
 Strictmove(pCorg,sep):=(
   regional(pC,tmp,tmp1,tmp2);
   pC=pCorg;
@@ -3067,7 +3067,7 @@ Strictmove(pCorg,sep):=(
       tmp=pC+".xy="+pC+"position";
       parse(pC).xy=parse(pC+"position");
     ,
-      tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
+      tmp=tmp1+"="+Textformat(parse(pC).xy,6)+";";
       parse(tmp);
     );
   );
@@ -3122,7 +3122,7 @@ Slider(ptstr,p1,p2,options):=(//190120
   );
   Listplot(pA+pB,[p1,p2],["Msg=n","notex",color,thick]);
   Putonseg(pC,parse("sg"+pA+pB));
-//  Strictmove(pC,sep); //only ketjs
+//  Strictmove(pC,sep);
 );
 ////%Slider end////
 
@@ -4703,7 +4703,7 @@ Windispg():=(
 );
 Windispg(gcLorg):=( //190125
   regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
-//  forall(allpoints(),Strictmove(#)); // only ketjs //190827
+  forall(allpoints(),Strictmove(#));  //190827
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);

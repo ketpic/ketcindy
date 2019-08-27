@@ -44,7 +44,7 @@ Expr,basic2,2837,2852,Letter
 Letter,basic2,2856,2957,Divoptions,Removespace,Strsplit,Toupper,RSslash,Com2nd,Lcrd,Texcom,Pcrd
 Letterrot,basic2,2961,3003,Divoptions,Letter,Com2nd,Dqq,Texcom
 Exprrot,basic2,3007,3050,Divoptions,Expr,Com2nd,Dqq,Texcom
-Strictmove,basic2,3054,3074,textformat
+Strictmove,basic2,3054,3074,textformat,Textformat
 Slider,basic2,3078,3126,Toupper,Strsplit,Indexall,textformat,Listplot,Putonseg
 Putpoint,basic2,3130,3141,Textformat,Pcrd
 Putpoint,basic2,3145,3156,Textformat,Pcrd

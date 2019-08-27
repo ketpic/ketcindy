@@ -37,7 +37,7 @@ Pardiagram,basic1,732,828,Divoptions,Toupper,Bracket,Listplot,Letter,Expr
 Changework,basic1,832,890,Divoptions,Strsplit,Toupper,Indexall,isexists,Dqq,makedir,pathsep,iswindows,iskcexists,setexec
 Changestyle,basic1,894,926,Divoptions,Com2nd,Getlinestyle,Texcom
 Op,basic1,930,942
-Ptselected,basic1,946,962
+Ptselected,basic1,946,962,|mouse
 Finddef,basic1,966,985
 Findgeoinfo,basic1,989,1014,Finddef
 Dependgeo,basic1,1018,1038,Finddef

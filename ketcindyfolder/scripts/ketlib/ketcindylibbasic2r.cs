@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190826] loaded");
+println("ketcindylibbasic2[20190827] loaded");
 
 //help:start();
 
@@ -3050,6 +3050,30 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 );
 ////%Exprrot end////
 
+////%Strictmove start////
+Strictmove(pC):=Strictmove(pC,0.3);
+Strictmove(pCorg,sep):=(
+  regional(pC,tmp,tmp1,tmp2);
+  pC=pCorg;
+  if(ispoint(pC),pC=pC.name);
+  tmp1=pC+"position";
+  if(!islist(parse(tmp1)),
+    tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
+    parse(tmp);
+  ,
+    tmp=parse(pC).xy;
+    tmp2=mouse().xy;
+    if(|tmp-tmp2|>sep,
+      tmp=pC+".xy="+pC+"position";
+      parse(pC).xy=parse(pC+"position");
+    ,
+      tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
+      parse(tmp);
+    );
+  );
+);
+////%Strictmove end////
+
 ////%Slider start////
 Slider(ptstr,p1,p2):=Slider(ptstr,p1,p2,[]);
 Slider(ptstr,p1,p2,options):=(//190120
@@ -3082,12 +3106,15 @@ Slider(ptstr,p1,p2,options):=(//190120
     pB=substring(ptstr,tmp_2,length(ptstr));
     parse(pA).xy=p1;
     parse(pB).xy=p2; //190824to
-    tmp1=pC+"position"; //190826from
+    tmp1=pC+"position"; //190827from
     if(!islist(parse(tmp1)),
-      tmp=tmp1+"="+textformat((p1+p2)/2,6)+";";
+      tmp2=parse(pC).xy;
+      if(|tmp2-p1|<0.1,tmp2=p1+0.1*(p2-p1)/|p2-p1|);
+      if(|tmp2-p2|<0.1,tmp2=p2+0.1*(p1-p2)/|p1-p2|);
+      tmp=tmp1+"="+textformat(tmp2,6)+";";
       parse(tmp);
-      parse(pC).xy=(p1+p2)/2;
-    ); //190826to
+      parse(pC).xy=tmp2;
+    ); //190827to
     PTEXCEPTION=concat(TEXCEPTION,[pA,pC,pB]);
   ,
     pC=ptstr; pA=pC+"l"; pB=pC+"r"; 
@@ -3095,21 +3122,7 @@ Slider(ptstr,p1,p2,options):=(//190120
   );
   Listplot(pA+pB,[p1,p2],["Msg=n","notex",color,thick]);
   Putonseg(pC,parse("sg"+pA+pB));
-  tmp1=pC+"position"; //190824fro
-  if(!islist(parse(tmp1)),
-    tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
-    parse(tmp);
-  ,
-    tmp=parse(pC).xy;
-    tmp2=mouse().xy;
-    if(|tmp-tmp2|>sep,
-      tmp=pC+".xy="+pC+"position";
-      parse(pC).xy=parse(pC+"position");
-    ,
-      tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
-      parse(tmp);
-    );
-  ); //190824to
+//  Strictmove(pC,sep); //only ketjs
 );
 ////%Slider end////
 
@@ -4690,6 +4703,7 @@ Windispg():=(
 );
 Windispg(gcLorg):=( //190125
   regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
+//  forall(allpoints(),Strictmove(#)); // only ketjs //190827
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);

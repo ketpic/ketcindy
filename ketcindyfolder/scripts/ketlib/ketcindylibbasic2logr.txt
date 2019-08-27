@@ -1,3 +1,7 @@
+// 20190827
+//   Strictmove added
+//   Windispg changed (Stricstmove added)
+//   Slider changed  ( A-C-B)
 // 20190826
 //   Slider changed  ( for pA-pC-pB, initial position)
 // 20190824

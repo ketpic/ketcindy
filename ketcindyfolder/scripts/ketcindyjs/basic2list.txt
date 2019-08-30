@@ -85,7 +85,7 @@ Putcolexpr,basic2,4577,4590,Putcellexpr,Putcol
 Setrange,basic2,4594,4600,Pcrd
 Inwindow,basic2,4604,4616
 Dashlinedata,basic2,4620,4693
-Windispg,basic2,4697,4765,Drwxy,Strictmove,Measuredepth,Dashlinedata,Textformat
+Windispg,basic2,4697,4765,Drwxy,Measuredepth,Dashlinedata,Textformat
 Extractdata,basic2,4770,4826,Divoptions,Com2nd,Getlinestyle,Texcom
 Removeout,basic2,4830,4840
 Makecmdlist,basic2,4844,4874

@@ -1,3 +1,5 @@
+// 20190831
+//    Ketinit changed (StrictSep added)
 // 20190829
 //    Setwindow changed (Strictmove(SW,NE))
 // 20190818

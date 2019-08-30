@@ -1,3 +1,5 @@
+// 20190831
+//   Strictmove changed (StrictSep used)
 // 20190829
 //   Windispg changed (remove SW,NE from Stricstmove)
 // 20190827

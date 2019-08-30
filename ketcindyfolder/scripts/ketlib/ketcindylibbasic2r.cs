@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190829] loaded");
+println("ketcindylibbasic2[20190831] loaded");
 
 //help:start();
 
@@ -3051,7 +3051,7 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 ////%Exprrot end////
 
 ////%Strictmove start////
-Strictmove(pC):=Strictmove(pC,0.1);
+Strictmove(pC):=Strictmove(pC,StrictSep); //190831
 Strictmove(pCorg,sep):=(
   regional(pC,tmp,tmp1,tmp2);
   pC=pCorg;
@@ -4703,7 +4703,7 @@ Windispg():=(
 );
 Windispg(gcLorg):=( //190125
   regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
-  forall(remove(allpoints(),[SW,NE]),Strictmove(#,0.2));  //190827,29
+  //forall(remove(allpoints(),[SW,NE]),Strictmove(#));  //only for ketjs //190827,29
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);

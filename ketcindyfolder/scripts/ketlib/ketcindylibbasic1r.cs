@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190818] loaded");
+println("ketcindylibbasic1[20190829] loaded");
 
 //help:start();
 
@@ -353,7 +353,7 @@ Setwindow(xrange,yrange):=(
   YMAX=yrange_2;
   Putpoint("SW",[XMIN,YMIN]);//181016
   Putpoint("NE",[XMAX,YMAX]);//181016
-//  Ketinit();
+  Strictmove("SW",0.2); Strictmove("NE",0.2); //no ketjs //190829
 );
 ////%Setwindow end////
 

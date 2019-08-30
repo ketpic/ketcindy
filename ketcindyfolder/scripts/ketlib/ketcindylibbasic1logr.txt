@@ -1,3 +1,5 @@
+// 20190829
+//    Setwindow changed (Strictmove(SW,NE))
 // 20190818
 //    Getlinestyle changed  ( to register  "nodisp"(2) dat to GCLIST )
 //    Chanestyle,AddGraph,Joincrvs,Partcrv,Pointdata,Listplot,Lineplot,Plotdata,

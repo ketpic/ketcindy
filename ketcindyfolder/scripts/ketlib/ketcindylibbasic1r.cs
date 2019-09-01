@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190831] loaded");
+println("ketcindylibbasic1[20190901] loaded");
 
 //help:start();
 
@@ -85,7 +85,7 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
   COM2ndlist=[]; // no ketjs off
  // COM2ndlistb=[]; //180612
   ADDAXES="1";
-  AXSTYLE=["l","x","e","y","n","O","sw","","",""]; //181216
+  AXSTYLE=[["l","x","e","y","n","O","sw","","",""],[]]; //190901
   AXCOUNT=1; //181215
   SHADECTR=1; //190222
   LFmark=unicode("000a");

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190901] loaded");
+println("ketcindylibbasic2[20190902] loaded");
 
 //help:start();
 
@@ -2674,17 +2674,17 @@ Setax(arglistorg):=(
   if(length(arglist)==0,
     arglist=["l","x","e","y","n","O","sw"];
   ); //190901to
-  st=1; nn=1;
+  st=1; nn=1; 
   if(isreal(arglist_1),
     st=2;
     nn=arglist_1;
   );
   forall(st..(length(arglist)),
     tmp=arglist_#;
-    if(length(tmp)>0,AXSTYLE_nn=tmp);
+    if(length(tmp)>0,AXSTYLE_1_nn=tmp);
     nn=nn+1;
-  );  
-  AXSTYLE=[AXSTYLE,eqL]; //190901
+  ); 
+  AXSTYLE=[AXSTYLE_1,eqL]; //190901,02
 //  tmp=MakeRarg(arglist);
 //  Com1st("Setax("+tmp+")");
 );

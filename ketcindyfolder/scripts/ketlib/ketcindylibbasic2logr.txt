@@ -1,3 +1,5 @@
+// 20190902
+//   Setax debugged  (AXSTYLE)
 // 20190901
 //   Drwxy changed ("Size" supported for labels)
 //   Setpointxy added (Ptposition arrange )

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190831] loaded");
+println("ketcindylibbasic2[20190901] loaded");
 
 //help:start();
 
@@ -2663,11 +2663,17 @@ Htick(px,lenorg,options):=(
 ////%Htick end////
 
 ////%Setax start////
-Setax(arglist):=(
-//help:Setax(["l","x","e","y","n","O","sw"]);
+Setax(arglistorg):=(
+//help:Setax(["l","x","e","y","n","O","sw","Size=1.5"]);
 //help:Setax([7,"nw"]);
 //help:Setax([8,linestyle,colorax,colorlabel]);
-  regional(st,nn,tmp); //181215from
+  regional(arglist,st,nn,tmp,eqL); 
+  tmp=Divoptions(arglistorg); //190901from
+  eqL=tmp_5;
+  arglist=remove(arglistorg,eqL);
+  if(length(arglist)==0,
+    arglist=["l","x","e","y","n","O","sw"];
+  ); //190901to
   st=1; nn=1;
   if(isreal(arglist_1),
     st=2;
@@ -2677,24 +2683,28 @@ Setax(arglist):=(
     tmp=arglist_#;
     if(length(tmp)>0,AXSTYLE_nn=tmp);
     nn=nn+1;
-  ); //181215from
+  );  
+  AXSTYLE=[AXSTYLE,eqL]; //190901
 //  tmp=MakeRarg(arglist);
 //  Com1st("Setax("+tmp+")");
 );
 ////%Setax end////
 
 ////%Drwxy start////
-Drwxy():=Drwxy(0,[]); //190103from
-Drwxy(Arg):=(
-  if(islist(Arg),Drwxy(0,Arg); Drwxy(Arg,[]));
+Drwxy():=Drwxy(0,[]);
+Drwxy(Arg):=( //190901from
+  if(islist(Arg),
+    Drwxy(0,Arg);
+  ,
+    Drwxy(Arg,[]);
+  ); //190901to
 );
-Drwxy(add):=Drwxy(add,[]);
-Drwxy(add,optionsorg):=( //190103to
+Drwxy(add,optionsorg):=(
 //help:Drwxy();
 //help:Drwxy(1[the last axis will be drawn],oprions);
 //help:Drwxy(options);
-//help:Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,..."]);
-  regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,
+//help:Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,...","Size="]);
+  regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,labelsize,
   linesty,colorax,colorla,tmp,tmp1,tmp2);
   options=optionsorg;
   tmp=Divoptions(options);
@@ -2707,7 +2717,16 @@ Drwxy(add,optionsorg):=( //190103to
   //tmp1=max([org_2+YMIN,YMIN]);
   //tmp2=min([org_2+YMAX,YMAX]);
   yrng=[YMIN,YMAX];  //190103
-  ax=AXSTYLE;
+  ax=AXSTYLE_1; //190901from
+  labelsize="Size=1";
+  forall(AXSTYLE_2,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(contains(["S","L"],tmp1), 
+      labelsize="Size="+tmp_2;
+      options=remove(options,[#]);
+    );
+  );  //190901to
   linesty=ax_8;
   if(length(ax_9)>0, //190427
     if(isstring(ax_9),colorax=ax_9,colorax=text(ax_9));
@@ -2724,8 +2743,6 @@ Drwxy(add,optionsorg):=( //190103to
     );
   ); //181217to
   forall(eqL,
-    tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="O", //190103from
       org=parse(tmp_2);
       options=remove(options,[#]);
@@ -2773,9 +2790,10 @@ Drwxy(add,optionsorg):=( //190103to
     Listplot("-axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
-  Expr([[xrng_2,org_2],ax_3,ax_2],[colorla]);//181216[3lines]
-  Expr([[org_1,yrng_2],ax_5,ax_4],[colorla]);
-  Letter([org,ax_7,ax_6],[colorla]);
+  tmp=[colorla,labelsize]; //190901from
+  Expr([[xrng_2,org_2],ax_3,ax_2],tmp);
+  Expr([[org_1,yrng_2],ax_5,ax_4],tmp);
+  Letter([org,ax_7,ax_6],tmp); //190901to
   if(add==0, //190103
     Addax(0);
   );
@@ -3050,6 +3068,17 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 );
 ////%Exprrot end////
 
+////%Setpointxy start//// 190901
+Setpointxy(pt,pos):=(
+  regional(pstr,tmp);
+  if(ispoint(pt),pstr=pt.name,pstr=pt);
+  tmp=pstr+".xy="+Textformat(pos,6)+";";
+  parse(tmp);
+  tmp=pstr+"position="+pstr+".xy;";
+  parse(tmp);
+);
+////%Setpointxy end////
+
 ////%Strictmove start////
 Strictmove(pC):=Strictmove(pC,StrictSep); //190831
 Strictmove(pCorg,sep):=(
@@ -3122,7 +3151,7 @@ Slider(ptstr,p1,p2,options):=(//190120
   );
   Listplot(pA+pB,[p1,p2],["Msg=n","notex",color,thick]);
   Putonseg(pC,parse("sg"+pA+pB));
-//  Strictmove(pC,sep);
+  Strictmove(pC);
 );
 ////%Slider end////
 
@@ -4703,7 +4732,7 @@ Windispg():=(
 );
 Windispg(gcLorg):=( //190125
   regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
-  //forall(remove(allpoints(),[SW,NE]),Strictmove(#));  //only for ketjs //190827,29
+//  forall(remove(allpoints(),[SW,NE]),Strictmove(#.name));  //only ketjs //190827,29
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);

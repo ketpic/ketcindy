@@ -1,3 +1,7 @@
+// 20190901
+//   Drwxy changed ("Size" supported for labels)
+//   Setpointxy added (Ptposition arrange )
+//   Setax, Drwxy changed  ( "Size=" option )
 // 20190831
 //   Strictmove changed (StrictSep used)
 // 20190829

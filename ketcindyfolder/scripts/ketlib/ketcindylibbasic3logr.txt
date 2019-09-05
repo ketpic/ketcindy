@@ -1,3 +1,5 @@
+// 201908905
+//    Mkketcindyjs debugged (multi-initialization)
 // 20190827
 //    Mkketcindyjs debugged (case of no "axes:"  )
 // 20190816

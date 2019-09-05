@@ -1,14 +1,6 @@
 REM 20190904
 echo off
 
-rem Edit the followings if necessary
-set pathT=C:\texlive
-set bin=\bin\win32
-set scripts=\texmf-dist\scripts\ketcindy
-set style=\texmf-dist\tex\latex\ketcindy
-set doc=\texmf-dist\doc\support\ketcindy
-set homehead=C:\Users
-
 set prgcin=C:\Program Files (x86)
 set xcp="\Windows\System32\xcopy"
 if not exist "%prgcin%\Cinderella" (
@@ -26,13 +18,16 @@ if %ERRORLEVEL% == 0 (
   exit
 )
 
-set /P year="Year of TeXLive (ex)2019: "
+set /P pathT="Path of TeX (ex) C:\texlive\2019: "
+set /P bin="Path of bin (ex) bin\win32: "
+set /P texmf="Path of scripts/doc/style (ex) texmf-dist: "
+set /P homehead="Path of home head (ex) C:\Users: "
 
-echo Path of TeX  ; %pathT%\%year%
+echo Path of TeX  ; %pathT%
 echo     bin      : %bin%
-echo     scripts  : %scripts%
-echo     style    : %style%
-echo     doc      : %doc%
+echo     scripts  : %texmf%\scripts\ketcindy
+echo     style    : %texmf%\tex\latex\ketcindy
+echo     doc      : %texmf%\doc\support\ketcindy
 echo Head of home : %homehead%
 set /P ans="Are the above paths OK (y/n): "
 if "%ans%" == "n" (
@@ -48,31 +43,31 @@ if not exist "ketcindyfolder" (
 echo ketcindyfolder is
 cd
 
-if exist "%pathT%\%year%%scripts%\." (
-  echo Deleting "%pathT%\%year%%scripts%"
-  rd /s "%pathT%\%year%%scripts%"
+if exist "%pathT%\%texmf%\scripts\ketcindy\." (
+  echo Deleting "%pathT%\%texmf%\scripts\ketcindy"
+  rd /s "%pathT%\%texmf%\scripts\ketcindy"
 )
-echo Copying ketcindy to "%pathT%\%year%%scripts%"
-%xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%\%year%%scripts%\"
-if exist "%pathT%\%year%%doc%\." (
-  echo Deleting docs to "%pathT%\%year%%doc%"
-  rd /s "%pathT%\%year%%doc%"
+echo Copying ketcindy to "%pathT%\%texmf%\scripts\ketcindy"
+%xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%\%texmf%\scripts\ketcindy\"
+if exist "%pathT%\%texmf%\doc\support\ketcindy\." (
+  echo Deleting docs to "%pathT%\%texmf%\doc\support\ketcindy"
+  rd /s "%pathT%\%texmf%\doc\support\ketcindy"
 )
-echo Copying doc to "%pathT%\%year%%doc%"
+echo Copying doc to "%pathT%\%texmf%\doc\support\ketcindy"
 set docsrc=doc
-%xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%\%year%%doc%\"
-if exist "%pathT%\%year%%style%\." (
-  echo Deleting "%pathT%\%year%%style%"
-  rd /s "%pathT%\%year%%style%"
+%xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%\%texmf%\doc\support\ketcindy\"
+if exist "%pathT%\tex\latex\ketcind\." (
+  echo Deleting "%pathT%\tex\latex\ketcindy"
+  rd /s "%pathT%\tex\latex\ketcindy"
 )
-echo Copying ketcindy styles to "%pathT%\%year%%style%"
+echo Copying ketcindy styles to "%pathT%\tex\latex\ketcindy"
 set stylesrc=style
-%xcp% /Y /Q /S /E /R "%stylesrc%\*.*" "%pathT%\%year%%style%\"
-rem "%pathT%\%year%%bin%\mktexlsr"
+%xcp% /Y /Q /S /E /R "%stylesrc%\*.*" "%pathT%\tex\latex\ketcindy\"
 
+rem "%pathT%%bin%\mktexlsr"
 set cindyplug=%prgcin%\Cinderella\Plugins
 echo Setting of "%cindyplug%\"
-cd "%pathT%\%year%%scripts%"
+cd "%pathT%%scripts%"
 copy /Y "ketjava\KetCindyPlugin.jar" "%cindyplug%\"
 cd "%cindyplug%"
 
@@ -98,9 +93,9 @@ if "%remake%"=="y" (
 )
 rem 20190616to
 
-echo PathThead="%pathT%\%year%%bin%\"; > ketcindy.ini
+echo PathThead="%pathT%\%bin%\"; > ketcindy.ini
 echo Homehead="%homehead%"; >> ketcindy.ini
-echo Dirhead="%pathT%\%year%%scripts%"; >> ketcindy.ini
+echo Dirhead="%pathT%\%texmf%\scripts\ketcindy"; >> ketcindy.ini
 echo setdirectory(Dirhead); >> ketcindy.ini
 echo import("setketcindy.txt"); >> ketcindy.ini
 echo import("ketoutset.txt"); >> ketcindy.ini

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190827] loaded");
+println("ketcindylibbasic3[20190905] loaded");
 
 //help:start();
 
@@ -4107,9 +4107,18 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=select(partL,#_1=="csinit");
     if(length(tmp)>0,
       tmp=tmp_1;
-      from=tmp_2+5; //190206
+      from=tmp_2; //190905from
+      flg=0;
+      forall(1..6,
+        if(flg==0,
+          if(indexof(htmorg_from,"ketcindy.ini")>0,
+            flg=1;
+          );
+          from=from+1;
+        );
+      );//190905to
       upto=tmp_3;
-      tmp1=htmorg_((from+1)..(upto-1)); //190119
+      tmp1=htmorg_((from)..(upto-1)); //190905
       ketflg="off"; //190206from
       onlyflg="off";  //190502
       forall(tmp1,

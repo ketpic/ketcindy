@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190902] loaded");
+println("ketcindylibbasic2[20190906] loaded");
 
 //help:start();
 
@@ -3068,16 +3068,29 @@ Exprrot(pt,dir,tmov,nmov,str,options):=(
 );
 ////%Exprrot end////
 
-////%Setpointxy start//// 190901
-Setpointxy(pt,pos):=(
-  regional(pstr,tmp);
-  if(ispoint(pt),pstr=pt.name,pstr=pt);
-  tmp=pstr+".xy="+Textformat(pos,6)+";";
-  parse(tmp);
-  tmp=pstr+"position="+pstr+".xy;";
-  parse(tmp);
+////%Ptpos start//// 190906
+Ptpos(pt):=Ptpos(pt,[]);
+Ptpos(ptorg,pos):=(
+//help:Ptpos(A);
+//help:Ptpos(A, [3,2]);
+  regional(pt,out,tmp);
+  if(ispoint(ptorg),pt=ptorg,pt=parse(ptorg));
+  if(length(pos)==0,
+    tmp=pt.name+"position";
+    out=parse(tmp);
+    if(!islist(out),
+      tmp=tmp+"="+Textformat(pt.xy,6)+";";
+      parse(tmp);
+    );
+  ,
+    pt.xy=pos;
+    tmp=pt.name+"position="+Textformat(pt.xy,6)+";";
+    parse(tmp);
+    out=pt.xy;
+  );
+  out;
 );
-////%Setpointxy end////
+////%Ptpos end////
 
 ////%Strictmove start////
 Strictmove(pC):=Strictmove(pC,StrictSep); //190831

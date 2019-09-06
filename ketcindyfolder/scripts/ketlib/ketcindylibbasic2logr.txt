@@ -1,3 +1,5 @@
+// 20190905
+//   Ptpos added ( <= Setpintxy renamed/changed )
 // 20190902
 //   Setax debugged  (AXSTYLE)
 // 20190901

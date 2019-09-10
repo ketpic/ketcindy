@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190905] loaded");
+println("ketcindylibbasic3[20190909] loaded");
 
 //help:start();
 
@@ -3369,10 +3369,19 @@ Setketcindyjs(list):=(
 //help:Setketcindyjs();
 //help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
 //help:Setketcindyjs(["Removept=[]"]);
+  JSBODY=[[],[]]; //190909
   KETJSOP=list;
   KETJSOP;
 );
 ////%Setketcindyjs end////
+
+////%Ketcindyjsbody start//// 190909
+Ketcindyjsbody(list1,list2):=(
+//help:Ketcindyjsbody(listfront,listrear);
+  JSBODY=[list1,list2];
+  JSBODY;
+);
+////%Ketcindyjsbody end////
 
 ////%Ketcindyjsdata start////  //190421
 Ketcindyjsdata(datalistorg):=(
@@ -4316,7 +4325,7 @@ Mkketcindyjs(options):=( //17.11.18
         if(tmp==":",
           tmp2=substring(tmp1,#+1,length(tmp1)-1);
           flg=1;
-        );
+        );d
       );
     );
     tmp=round(scale*parse(tmp2));
@@ -4378,9 +4387,59 @@ Mkketcindyjs(options):=( //17.11.18
         out_jj=tmp1;
       );
     );
-    forall(out,
-      println(SCEOUTPUT,#);
-    ); //190129to
+    forall(out,tmp1, //190910from
+      if(indexof(tmp1,"</body>")==0,
+        println(SCEOUTPUT,tmp1);
+        if(indexof(tmp1,"<body>")>0,
+          forall(JSBODY_1,
+            tmp2=replace(#,"_","&emsp;");
+            tmp2=Removespace(tmp2);
+            tmp=indexof(tmp2,">");
+            tmp3=substring(tmp2,1,tmp-1);
+            if(indexof(tmp3,"p")>0,
+              tmp2=substring(tmp2,tmp,length(tmp2));
+            );
+            tmp3=Strsplit(tmp3,",");
+            forall(reverse(1..(length(tmp3))),nn,
+              tmp=tmp3_nn;
+              if(substring(tmp,0,1)=="f",
+                tmp="<font size="+Dqq(substring(tmp,1,length(tmp)))+">";
+                tmp2=tmp+tmp2+"</font>";
+              );
+              if(substring(tmp,0,1)=="p",
+                tmp2="<p>"+tmp2+"</p>";
+              );
+            );
+            tmp2="    "+replace(tmp2,"'",Dq);
+            println(SCEOUTPUT,tmp2);
+          );
+        );
+      ,
+        forall(JSBODY_2,
+          tmp2=replace(#,"_","&emsp;");
+          tmp2="    "+replace(tmp2,"'",Dq);
+          tmp2=Removespace(tmp2);
+          tmp=indexof(tmp2,">");
+          tmp3=substring(tmp2,1,tmp-1);
+          if(indexof(tmp3,"p")>0,
+            tmp2=substring(tmp2,tmp,length(tmp2));
+          );
+          tmp3=Strsplit(tmp3,",");
+          forall(reverse(1..(length(tmp3))),nn,
+            tmp=tmp3_nn;
+            if(substring(tmp,0,1)=="f",
+              tmp="<font size="+Dqq(substring(tmp,1,length(tmp)))+">";
+              tmp2=tmp+tmp2+"</font>";
+            );
+            if(substring(tmp,0,1)=="p",
+              tmp2="<p>"+tmp2+"</p>";
+            );
+          );
+          println(SCEOUTPUT,tmp2);
+        );
+        println(SCEOUTPUT,tmp1);
+      ); 
+    ); //190910to
     closefile(SCEOUTPUT);
     setdirectory(Dirwork);
     if(webflg=="Y",tmp="json",tmp="jsoff");

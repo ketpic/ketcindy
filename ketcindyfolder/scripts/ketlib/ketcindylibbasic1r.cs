@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.2.9");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190901] loaded");
+println("ketcindylibbasic1[20190909] loaded");
 
 //help:start();
 
@@ -333,13 +333,10 @@ Setwindow(str):=(
     XMIN=tmp1_1; XMAX=tmp2_1;
     YMIN=tmp1_2; YMAX=tmp2_2;
   ,
-//    XMIN=-5; XMAX=5;
-//    YMIN=Lcrdy(-5); YMAX=Lcrdy(5);
-//    createpoint("SW",Pcrd([XMIN,YMIN]));
-//    createpoint("NE", Pcrd([XMAX,YMAX]));
     Putpoint("SW",Pcrd([XMIN,YMIN]));
     Putpoint("NE", Pcrd([XMAX,YMAX])); 
   );
+//  Strictmove("SW"); Strictmove("NE"); //only ketjs //190909
   if(msg=="y", // no ketjs on
     println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");
   );

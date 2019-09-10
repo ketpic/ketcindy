@@ -1,3 +1,6 @@
+// 201908910
+//    Ketcindyjsbody added  (JSBODY)
+//    Setketcindyjs,Mkketcindyjs changed  (JSBODY)
 // 201908905
 //    Mkketcindyjs debugged (multi-initialization)
 // 20190827

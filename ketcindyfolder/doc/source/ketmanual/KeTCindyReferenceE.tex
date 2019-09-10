@@ -3373,7 +3373,7 @@ Cindyscript has a function \verb|format(value, number)|, like as Textformat.
 \end{cmd}
 %----------Fracform----------------------------------
 \begin{cmd}{Fracform}{fracform}
-\itemket{Usage}Fracform(number,list of denominators)
+\itemket{Usage}Fracform(number,list of denominators/max number[, allowable error(5)])
 \itemket{Description}returns Tex-like form of the fraction
 \itemket{Examples}\verb|Fracform(0.33,[2,3]); => fr(1,3)|
 
@@ -5683,6 +5683,19 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 
 \end{cmd}
 
+%--------------Ketcindyjsbody-----------------------------
+
+\begin{cmd}{Ketcindyjsbody}{ketcindyjsbody}
+
+\itemket{Usage}Ketcindyjsbody( prependlist, appendlist)
+\itemket{Description} Function to add scripts to the first/last of body tag.
+\itemket{Examples}  \mbox{}
+
+\verb|Ketcindyjsbody(["<p,f10>__Title''],[]);|\\
+\verb|   =>     <p><font size="10">&emsp;&emsp;Title</font></p>|
+
+\end{cmd}
+
 %--------------Animationparam-----------------------------
 
 \begin{cmd}{Animationparam}{animationparam}
@@ -6036,6 +6049,7 @@ Rem) lightgray\ [0,0,0,0.15],\ offwhite\ [0,0,0,0.3],\ cindycolor\ [0.66,0,69,0.
 {\bf KeTCindyJS} \> \\
 \hyperlink{setketcindyjs}{Setketcindyjs} \>Set options of KeTCindyJS\\
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata}\>Write into csinit\\
+\hyperlink{ketcindyjsbody}{Ketcindyjsbody}\>Add scripts to the first/last of body tag\\
 \hyperlink{animationparam}{Animationparam}\>Get parmeter value of animation\\
 \hyperlink{textedit}{Textedit}\>Get string from input box of KeTCindyJS\\
 \hyperlink{movetojs}{Movetojs}\>Set position and fontsize of text box in HTML\\

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190909] loaded");
+println("ketcindylibbasic3[20190911] loaded");
 
 //help:start();
 
@@ -4410,14 +4410,14 @@ Mkketcindyjs(options):=( //17.11.18
                 tmp2="<p>"+tmp2+"</p>";
               );
             );
-            tmp2="    "+replace(tmp2,"'",Dq);
+            tmp2=replace(tmp2,"'",Dq);
+            tmp2="    "+replace(tmp2,"`","'");
             println(SCEOUTPUT,tmp2);
           );
         );
       ,
         forall(JSBODY_2,
           tmp2=replace(#,"_","&emsp;");
-          tmp2="    "+replace(tmp2,"'",Dq);
           tmp2=Removespace(tmp2);
           tmp=indexof(tmp2,">");
           tmp3=substring(tmp2,1,tmp-1);
@@ -4435,9 +4435,10 @@ Mkketcindyjs(options):=( //17.11.18
               tmp2="<p>"+tmp2+"</p>";
             );
           );
+          tmp2=replace(tmp2,"'",Dq);
+          tmp2="    "+replace(tmp2,"`","'");
           println(SCEOUTPUT,tmp2);
         );
-        println(SCEOUTPUT,tmp1);
       ); 
     ); //190910to
     closefile(SCEOUTPUT);

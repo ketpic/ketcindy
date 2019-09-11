@@ -3183,21 +3183,6 @@ Putpoint(name,Ptinit,Pt):=(
 );
 ////%Putpoint end////
 
-////%Putpoint start////
-Putpoint(name,Pt):=Putpoint(name,Pt,Pt);
-Putpoint(name,Ptinit,Pt):=(
-//help:Putpoint("A",[1,2],[1,A.y]);
-  regional(ptstr);
-  ptstr=apply(allpoints(),#.name);//16.10.06
-  if(!contains(ptstr,name),
-    createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
-    ,
-    ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
-    parse(ptstr);
-  );
-);
-////%Putpoint end////
-
 ////%Bezierpt start////
 Bezierpt(t,ptlist,ctrlist):=(
   regional(flg3,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);

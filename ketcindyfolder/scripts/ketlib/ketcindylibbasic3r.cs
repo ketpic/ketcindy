@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190911] loaded");
+println("ketcindylibbasic3[20190914] loaded");
 
 //help:start();
 
@@ -3006,7 +3006,7 @@ Fracform(x,denorg,deg):=(
   ,
     out=text(mm);
   );
-  [out,"err="+format(err,6)];
+  [out,"err="+format(err,6),mm,nn]; //190914
 );
 ////%Fracform end////
 

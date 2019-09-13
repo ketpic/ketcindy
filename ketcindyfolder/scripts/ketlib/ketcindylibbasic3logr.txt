@@ -1,3 +1,5 @@
+// 201908914
+//    Fracform changed  ( numer, denom added to output)
 // 201908911
 //    Mketcindyjs debugged  (JSBODY, ` => ')
 // 201908910

@@ -8,7 +8,7 @@ Fillrestore,basic1,262,274
 Readlines,basic1,278,289,readfile2str
 Changesetting,basic1,293,308,pathsep,getname,isexists
 Cindyname,basic1,312,319,Cdyname,Getcdyname
-Setwindow,basic1,323,357,Toupper,Lcrd,Pcrd,Putpoint,Strictmove
+Setwindow,basic1,323,357,Toupper,LLcrd,Ptpos,Lcrd,Pcrd,Putpoint,Strictmove
 Setfiles,basic1,361,374,Dqq
 Setparent,basic1,378,390,Dqq
 Reparse,basic1,394,404

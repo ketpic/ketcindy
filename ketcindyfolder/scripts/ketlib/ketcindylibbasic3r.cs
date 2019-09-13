@@ -4392,7 +4392,7 @@ Mkketcindyjs(options):=( //17.11.18
         println(SCEOUTPUT,tmp1);
         if(indexof(tmp1,"<body>")>0,
           forall(JSBODY_1,
-            tmp2=replace(#,"_","&emsp;");
+            tmp2=replace(#,"_;","&emsp;");
             tmp2=Removespace(tmp2);
             tmp=indexof(tmp2,">");
             tmp3=substring(tmp2,1,tmp-1);
@@ -4410,14 +4410,14 @@ Mkketcindyjs(options):=( //17.11.18
                 tmp2="<p>"+tmp2+"</p>";
               );
             );
-            tmp2=replace(tmp2,"'",Dq);
+            tmp2=replace(tmp2,"''",Dq);
             tmp2="    "+replace(tmp2,"`","'");
             println(SCEOUTPUT,tmp2);
           );
         );
       ,
         forall(JSBODY_2,
-          tmp2=replace(#,"_","&emsp;");
+          tmp2=replace(#,"_;","&emsp;");
           tmp2=Removespace(tmp2);
           tmp=indexof(tmp2,">");
           tmp3=substring(tmp2,1,tmp-1);
@@ -4435,7 +4435,7 @@ Mkketcindyjs(options):=( //17.11.18
               tmp2="<p>"+tmp2+"</p>";
             );
           );
-          tmp2=replace(tmp2,"'",Dq);
+          tmp2=replace(tmp2,"''",Dq);
           tmp2="    "+replace(tmp2,"`","'");
           println(SCEOUTPUT,tmp2);
         );

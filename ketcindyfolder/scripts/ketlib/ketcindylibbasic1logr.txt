@@ -1,3 +1,5 @@
+// 20190912
+//    Setwindow changed  ( Ptpos used )
 // 20190909
 //    Setwindow debugged  ( Strictmove added to another place )
 // 20190901

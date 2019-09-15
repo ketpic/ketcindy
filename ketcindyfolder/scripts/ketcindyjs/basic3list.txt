@@ -39,24 +39,24 @@ BBdata,basic3,2810,2953,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,Sprintf,Rem
 Gcd,basic3,2957,2969
 Fracform,basic3,2973,3010
 Totexformpart,basic3,3014,3082,Bracket,Strsplit,Assign
-Totexform,basic3,3086,3137,Totexformpart,Indexall,Bracket
-Tocindyformpart,basic3,3141,3209,Bracket,Strsplit,Assign
-Tocindyform,basic3,3213,3264,Tocindyformpart,Indexall,Bracket
-Animepar,basic3,3268,3268,Animationparam
-Animationparam,basic3,3272,3291,seconds,stopanimation
-Copyketcindyjs,basic3,3295,3356,iswindows,Dqq,kc
-Ketjsoption,basic3,3360,3361,Setketcindyjs
-Setketcindyjs,basic3,3365,3375
-Ketcindyjsbody,basic3,3379,3383
-Ketcindyjsdata,basic3,3387,3427,Textformat,Dqq,set
-Findfun,basic3,3431,3498,Removespace,Indexall
-Extractfun,basic3,3502,3519,Indexall,Findfun
-Extractall,basic3,3528,3572
-Textedit,basic3,3576,3582
-Textedit2value,basic3,3586,3628,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3632,3685, unicode
-Resizetextsize,basic3,3689,3713,Parsejson
-Movetojs,basic3,3717,3725
-Movetojsexe,basic3,3729,3745,Dqq,Parsejson
-Setplaybuttons,basic3,3749,3774,Movetojs
-Mkketcindyjs,basic3,3778,4450, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq
+Totexform,basic3,3086,3149,Totexformpart,Indexall,Bracket
+Tocindyformpart,basic3,3153,3221,Bracket,Strsplit,Assign
+Tocindyform,basic3,3225,3263,Bracket,Indexall,Tocindyformpart
+Animepar,basic3,3267,3267,Animationparam
+Animationparam,basic3,3271,3290,seconds,stopanimation
+Copyketcindyjs,basic3,3294,3355,iswindows,Dqq,kc
+Ketjsoption,basic3,3359,3360,Setketcindyjs
+Setketcindyjs,basic3,3364,3374
+Ketcindyjsbody,basic3,3378,3382
+Ketcindyjsdata,basic3,3386,3426,Textformat,Dqq,set
+Findfun,basic3,3430,3497,Removespace,Indexall
+Extractfun,basic3,3501,3518,Indexall,Findfun
+Extractall,basic3,3527,3571
+Textedit,basic3,3575,3581
+Textedit2value,basic3,3585,3627,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3631,3684, unicode
+Resizetextsize,basic3,3688,3712,Parsejson
+Movetojs,basic3,3716,3724
+Movetojsexe,basic3,3728,3744,Dqq,Parsejson
+Setplaybuttons,basic3,3748,3773,Movetojs
+Mkketcindyjs,basic3,3777,4449, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq

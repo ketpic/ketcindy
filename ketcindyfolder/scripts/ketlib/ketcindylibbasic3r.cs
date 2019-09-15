@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190914] loaded");
+println("ketcindylibbasic3[20190915] loaded");
 
 //help:start();
 
@@ -3085,9 +3085,20 @@ Totexformpart(str):=( //190514
 ////%Totexform start////
 Totexform(str):=( //190514
 //help:Totexform("frac(2,3)");
-  regional(out,plv,flg,nn,tmp,tmp1);
+  regional(out,plv,flg,nn,tmp,tmp1,tmp2);
   out=replace(str,"pi","\pi"); //190715
-  out=replace(out,"*"," "); 
+  tmp1=apply(0..9,text(#));  //190915from
+  tmp2=Indexall(out,"*");
+  forall(tmp2,
+    tmp=substring(out,#,#+1);
+    if(contains(tmp1,tmp),
+      out=substring(out,0,#-1)+"$"+substring(out,#,length(out));
+    ,
+      out=substring(out,0,#-1)+"%"+substring(out,#,length(out));
+    );
+  );
+  out=replace(out,"$","\cdot ");
+  out=replace(out,"%",""); //190915to
   out=replace(out,"  ","\;");
   plv=Bracket(out,"()"); //190515from
   flg=0; //190521from
@@ -3128,8 +3139,9 @@ Totexform(str):=( //190514
         tmp2=select(tmp2,#_2==-1);
         tmp2=tmp2_1_1+nn;
         tmp=substring(out,nn+1,tmp2-1);
+        tmp2=substring(out,tmp2,length(out));//190915
         out=substring(out,0,nn)+"{"+tmp+"}";
-        out=out+substring(out,tmp2,length(out));
+        out=out+tmp2;
       );
     );
   );
@@ -3242,19 +3254,6 @@ Tocindyform(str):=( //190521
         ,
           out=tmp;
         );
-      );
-    );
-  );
-  if(flg<=1,
-    tmp1=Indexall(out,"^");
-    forall(tmp1,nn,
-      if(substring(out,nn,nn+1)=="(",
-        tmp2=Bracket(substring(out,nn,length(out)),"()");
-        tmp2=select(tmp2,#_2==-1);
-        tmp2=tmp2_1_1+nn;
-        tmp=substring(out,nn+1,tmp2-1);
-        out=substring(out,0,nn)+"{"+tmp+"}";
-        out=out+substring(out,tmp2,length(out));
       );
     );
   );

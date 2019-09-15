@@ -1,3 +1,6 @@
+// 201908915
+//    Tocindyform,Totexform debugged ( ^ )
+//    Totexform change ( "*" to "\cdot " or "" )
 // 201908914
 //    Fracform changed  ( numer, denom added to output)
 // 201908911

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190906] loaded");
+println("ketcindylibbasic2[20190917] loaded");
 
 //help:start();
 
@@ -4730,7 +4730,7 @@ Windispg():=(
 );
 Windispg(gcLorg):=( //190125
   regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
-//  forall(remove(allpoints(),[SW,NE]),Strictmove(#.name));  //only ketjs //190827,29
+//  forall(remove(allpoints(),[SW,NE]),Strictmove(#.name));
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);

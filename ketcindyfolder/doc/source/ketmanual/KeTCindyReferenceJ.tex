@@ -8109,16 +8109,28 @@ Plotdata("1",str,"x");
 
 \begin{description}
 
+\hypertarget{ptpos}{}
+\item[関数]Ptpos(幾何点)
+\item[機能]幾何点の現在（直前）座標を返す。
+\item[説明]幾何点を制御可能範囲外に移動した場合に保持されるもとの座標
+
+【例】\verb|Ptpos(A)|
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\end{description}
+
+\begin{description}
+
 \hypertarget{ketcindyjsdata}{}
 \item[関数]Ketcindyjsdata(変数名と値のリスト)
 \item[機能]KeTJSファイルのscript "csinit"の最後にデータを書き込む
 \item[説明]Maximaの返り値などKeTJSでは得られないデータを使えるようにする。
 
-【例】
 \begin{verbatim}
-Mxfun("1","integrate",["x*sin(x)","x"]);// no ketjs
-Ketcindyjsdata(["mx1",mx1]); 
-Plotdata("1",mx1,"x");
+【例】Mxfun("1","integrate",["x*sin(x)","x"]);// no ketjs
+　　　Ketcindyjsdata(["mx1",mx1]); 
+　　　Plotdata("1",mx1,"x");
 \end{verbatim}
 
 %\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
@@ -8131,10 +8143,10 @@ Plotdata("1",mx1,"x");
 \item[関数]Ketcindyjsbody(prependlist,appendlist)
 \item[機能]KeTJSファイルのbodyの最初と最後にスクリプトを追加する。
 
-【例】
+
 \begin{verbatim}
-Ketcindyjsbody(["<p,f10>__Title''],[]);
-   =>     <p><font size="10">&emsp;&emsp;Title</font></p>
+【例】Ketcindyjsbody(["<p,f10>__Title''],[]);
+　　　   =>     <p><font size="10">&emsp;&emsp;Title</font></p>
 \end{verbatim}
 
 %\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
@@ -8187,7 +8199,7 @@ Plotdata("1",str,"x");
 
 \end{description}
 
-\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \begin{description}
 
@@ -8558,6 +8570,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{xyzax3data}{Xyzax3data(name,文字,文字,文字,options)}\>座標軸の表示\\
 \hyperlink{xyzcoord}{Xyzcoord(P.x,P.y,Pz.y)}\>主副画面で決まる点の座標\\
 【KeTJS】\\
+\hyperlink{ptpos}{Ptpos(幾何点)}\>幾何点の現在（直前）座標\\
 \hyperlink{setketcindyjs}{Setketcindyjs(options)}\>KeTJSの設定\\
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata(変数名と値のリスト)}\>script "csinit"にデータを書き込む\\
 \hyperlink{ketcindyjsbody}{Ketcindyjsbody(prependlist,appendlist)}\>bodyの最初と最後にスクリプトを追加\\

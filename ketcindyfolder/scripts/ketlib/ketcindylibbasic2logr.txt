@@ -1,3 +1,5 @@
+// 20190917
+//   Windispg changed (Strictmove moved to ketinit)
 // 20190905
 //   Ptpos added ( <= Setpintxy renamed/changed )
 // 20190902

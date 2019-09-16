@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.2.9");
+println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190916] loaded");
+println("ketcindylibbasic1[20190917] loaded");
 
 //help:start();
 
@@ -154,13 +154,13 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
   BezierNumber=1; //15.01.03
   SCALEX=1;
   SCALEY=sy;
-//  Setscaling(sy);
   XMIN=rangex_1/SCALEX;
   XMAX=rangex_2/SCALEX;
   YMIN=rangey_1/SCALEY;
   YMAX=rangey_2/SCALEY;
   StrictSep=strictsep; //190831
   Setwindow("Msg=n"); // 16.05.31
+  forall(remove(allpoints(),[SW,NE]),Strictmove(#.name)); //190917
   KETJSOP=[]; //190916
   JSBODY=[[],[]]; //190916
 // no ketjs on 190122

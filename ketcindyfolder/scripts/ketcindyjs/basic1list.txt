@@ -1,4 +1,4 @@
-Ketinit,basic1,41,178,Fillstore,Cindyname,Indexall,getname,iswindows,ismacosx,Changesetting,Changework,pathsep,Setwindow
+Ketinit,basic1,41,178,Fillstore,Cindyname,Indexall,getname,iswindows,ismacosx,Changesetting,Changework,pathsep,Setwindow,Strictmove
 Initglist,basic1,182,185,Ketinit
 Setglist,basic1,189,195
 Addglist,basic1,199,205

@@ -1,3 +1,5 @@
+// 201908916
+//    Setketcindyjs changed ( JSBODY moved to Ketinit)
 // 201908915
 //    Tocindyform,Totexform debugged ( ^ )
 //    Totexform change ( "*" to "\cdot " or "" )

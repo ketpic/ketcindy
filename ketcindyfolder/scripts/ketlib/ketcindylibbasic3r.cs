@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190915] loaded");
+println("ketcindylibbasic3[20190916] loaded");
 
 //help:start();
 
@@ -3368,7 +3368,6 @@ Setketcindyjs(list):=(
 //help:Setketcindyjs();
 //help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
 //help:Setketcindyjs(["Removept=[]"]);
-  JSBODY=[[],[]]; //190909
   KETJSOP=list;
   KETJSOP;
 );

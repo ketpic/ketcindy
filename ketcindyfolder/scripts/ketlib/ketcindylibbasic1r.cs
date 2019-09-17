@@ -2310,7 +2310,7 @@ Intersectcurves(crv1org,crv2org,options):=(
 //help:Intersectcurves(crv1,crv2);
 //help:Intersectcurves(options=[Eps1(0.1),Dist(2)])
   regional(tmp);
-  tmp=Intersectcurvesop(crv1org,crv2org,options);
+  tmp=Intersectcurvespp(crv1org,crv2org,options); //190917(debugged)
   tmp=apply(tmp,#_1);
 );
 ////%Intersectcurves end////

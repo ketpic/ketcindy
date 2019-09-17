@@ -3164,7 +3164,6 @@ Slider(ptstr,p1,p2,options):=(//190120
   );
   Listplot(pA+pB,[p1,p2],["Msg=n","notex",color,thick]);
   Putonseg(pC,parse("sg"+pA+pB));
-  Strictmove(pC);
 );
 ////%Slider end////
 
@@ -4730,7 +4729,6 @@ Windispg():=(
 );
 Windispg(gcLorg):=( //190125
   regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
-//  forall(remove(allpoints(),[SW,NE]),Strictmove(#.name));
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);

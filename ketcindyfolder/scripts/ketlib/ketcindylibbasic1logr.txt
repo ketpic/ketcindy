@@ -1,5 +1,6 @@
 // 20190917
 //    Ketinit changed (Strictmove moved from windispg)
+//    Intersectcurves debugged  (op => pp)
 // 20190916
 //    Ketinit changed (JSBODY moved from Setketincyjs,  KETJSOP=[] added)
 // 20190912

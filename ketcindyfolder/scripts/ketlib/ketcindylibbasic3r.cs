@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190916] loaded");
+println("ketcindylibbasic3[20190918] loaded");
 
 //help:start();
 
@@ -356,7 +356,7 @@ Defvar(name,value):=(
       if(isstring(#), // 16.11.14
         tmp1=tmp1+Dq+#+Dq+","; // 16.11.14
       ,
-        tmp1=tmp1+format(#,5)+",";
+        tmp1=tmp1+format(#,16)+","; //190918
       );
     );
     tmp1=substring(tmp1,0,length(tmp1)-1)+"]";

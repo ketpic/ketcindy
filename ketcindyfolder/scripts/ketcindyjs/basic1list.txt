@@ -73,7 +73,7 @@ Osplineseg,basic1,2025,2042,Dotprod,Bezier
 Intersectpartseg,basic1,2046,2148,Crossprod,Norm,Reflectpoint,Osplineseg,Intersectseg,Op,Intersectline
 Collectsameseg,basic1,2152,2194
 Intersectcurvespp,basic1,2198,2304,LLcrd,Intersectpartseg,Collectsameseg,Nearestpt
-Intersectcurves,basic1,2308,2315,Intersectcurvesop
+Intersectcurves,basic1,2308,2315,Intersectcurvespp,190917
 Nearestptcrvphy,basic1,2321,2330,Pcrd,Measuredepth,Nearestpt
 Nearestptcrv,basic1,2334,2340,Nearestpt
 Nearestpt,basic1,2344,2397,Measuredepth,Paramoncurve

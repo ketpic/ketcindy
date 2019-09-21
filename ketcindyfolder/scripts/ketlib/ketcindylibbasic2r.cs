@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190917] loaded");
+println("ketcindylibbasic2[20190921] loaded");
 
 //help:start();
 
@@ -1265,7 +1265,7 @@ Enclosing2(nm,plistorg,options):=(
 //help:Enclosing(options=[startpoint,epspara(1)]);
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
-      tmp,tmp1,tmp2,color,epspara,p1,p2);
+      tmp,tmp1,tmp2,color,p1,p2);
   name="en"+nm;
   plist=plistorg;
   tmp=Divoptions(options);
@@ -1277,7 +1277,6 @@ Enclosing2(nm,plistorg,options):=(
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Eps=10^(-5); // 16.12.05
-  epspara=1; //180707
   Eps1=0.01;
   Eps2=0.1;
   Start=[];
@@ -1286,7 +1285,6 @@ Enclosing2(nm,plistorg,options):=(
     if(isList(#) % ispoint(#),
       Start=Lcrd(#); // 18.02.02
     ,
-      if(flg==0,epspara=#);//180707
       if(flg==1,Eps1=#);
       if(flg==2,Eps2=#);
       flg=flg+1;
@@ -1363,8 +1361,7 @@ Enclosing2(nm,plistorg,options):=(
       ,
         KL=sort(KL,[#_2]);//180706
         tmp=parse(Fdata);
-        tmp1=t1+epspara/50*length(tmp);
-//        KL=select(KL,#_2>t1+epspara/50*length(tmp)); //180707
+        tmp1=t1+Eps;
         KL=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //180713,16
         t2=KL_1_2;
         ss=KL_1_3;
@@ -1404,7 +1401,7 @@ Enclosing2(nm,plistorg,options):=(
     );
     tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from //no ketjs on
     if(length(Start)>0,tmp=tmp+","+Textformat(Start,6));
-    tmp=tmp+","+text(epspara)+")";//18.0706to,180707
+    tmp=tmp+","+text(Eps1)+")";//18.0706to,180707
     GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
   );
   if(Noflg<3, //190818

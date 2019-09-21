@@ -1,3 +1,5 @@
+// 20190921
+//   Enclosing debugged/changed  ( in case of length(KL)==1, epspara removed)
 // 20190917
 //   Windispg changed (Strictmove moved to ketinit)
 //   Slider changed (Strictmove removed)

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20190818] loaded");
+println("ketcindylibout[20190821] loaded");
 
 //help:start();
 
@@ -679,7 +679,7 @@ MkprecommandR():=MkprecommandR(6,"PVOFG");  //180508(9lines)
 MkprecommandR(Arg):=(
   regional(out,tmp1);
   if(isstring(Arg),
-    MkprecommandR(6,Arg);
+    MkprecommandR(8,Arg); //190921
   ,
     if(islist(Arg),
       out=[];
@@ -693,14 +693,14 @@ MkprecommandR(Arg):=(
     );
   );
 );
-MkprecommandR(prec,chstr):=(
+MkprecommandR(dig,chstr):=( //190921 pre->dig
   regional(cmdL,Plist,tmp,tmp1,tmp2);
   cmdL=[];
   cmdL=concat(cmdL,["arccos=acos; arcsin=asin; arctan=atan",[]]); //181209
   if(indexof(chstr,"P")>0,
     Plist=[];
     forall(remove(allpoints(),[SW,NE]),
-      tmp=textformat(re(Lcrd(#)),prec);
+      tmp=textformat(re(Lcrd(#)),dig);
       tmp=RSform(tmp);
       tmp1=#.name;
       tmp1=tmp1+"="+tmp+";Assignadd('"+tmp1+"',"+tmp1+")";
@@ -726,11 +726,11 @@ MkprecommandR(prec,chstr):=(
         if(islist(tmp1),
           tmp2="[";
           forall(tmp1,
-            tmp2=tmp2+textformat(#,prec)+",";
+            tmp2=tmp2+textformat(#,dig)+",";
           );
           tmp1=substring(tmp2,0,length(tmp2)-1)+"]";
         ,
-          tmp1=format(tmp1,prec);
+          tmp1=format(tmp1,dig);
         );
       ); 
       tmp1=RSform(tmp1);
@@ -772,7 +772,7 @@ CalcbyR(name,Arg1,Arg2):=(
 );
 CalcbyR(name,path,cmd,optionorg):=(
 //help:CalcbyR(name,cmd);
-//help:CalcbyR(options=["m/r","Wait=2","Out=y/n","Pre=PVFG"]);
+//help:CalcbyR(options=["m/r","Wait=2","Out=y/n","Dig=8","Pre=PVFG"]);
 //help:CalcbyR(options2=["Pre=!G" ]);
   regional(options,tmp,tmp1,tmp2,tmp3,realL,strL,eqL,
        cat,dig,prestr,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,waiting);
@@ -781,7 +781,7 @@ CalcbyR(name,path,cmd,optionorg):=(
   eqL=tmp_5;
   realL=tmp_6;
   strL=tmp_7;
-  dig=5;
+  dig=8; //190921
   tmp=cmd_(length(cmd)-1); //181130from
   if(!isstring(tmp),tmp=text(tmp)); //190109
   if(indexof(tmp,"=")+indexof(tmp,"::")>0,
@@ -866,7 +866,7 @@ CalcbyR(name,path,cmd,optionorg):=(
     file=Cindyname();
   );//180412to
   cmdR=[];
-  cmdR=MkprecommandR(6,prestr);
+  cmdR=MkprecommandR(dig,prestr); //190921
   cmdR=concat(cmdR,cmd); //18.01.27to
   cmdlist=[];
   if(dig>5, //16.10.28from

@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190627)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20190921)" 
 
 print(ThisVersion)
 
+# 20190921
+#   Enclosing2 debugged/changed  (epspara removed)
 # 20190627
 #   Plotdata, Paramplot debugged (Exc)
 # 20190511
@@ -13019,7 +13021,6 @@ Enclosing2<- function(...){
   Nargs=length(varargin)
   plist=varargin[[1]]
   Eps0=10^(-5)
-  epspara=1; #180707
   Eps1=0.01
   Eps2=0.1
   Start=c()
@@ -13029,9 +13030,8 @@ Enclosing2<- function(...){
     if(length(tmp)>1){
       Start=tmp
     }else{
-     if(flg==0){epspara=tmp}
-     if(flg==1){Eps1=tmp}
-     if(flg==2){Eps2=tmp}
+     if(flg==0){Eps1=tmp}
+     if(flg==1){Eps2=tmp}
      flg=flg+1
     }
   }
@@ -13115,19 +13115,8 @@ Enclosing2<- function(...){
         t2=Length(Fdata)
         ss=1 #18.02.02to
       }else{
-#        KL=Quicksort(KL,2); #180706from
-#        for(j in Looprange(1,length(KL))){
-#          tmp1=t1+epspara/50*Length(Fdata)#180713(2lines)
-#          tmp2=Op(2,KL[[j]])
-#          if((tmp2>tmp1)||((tmp2>t1)&&(Norm(Op(3,KL[[j]])-p1)>Eps1))){
-#            break
-#          } #180711,16
-#        }
-#        t2=Op(2,KL[[j]])
-#        p2=Pointoncurve(t2,Fdata)#180713
-#        ss=Op(3,KL[[j]])# 180706to
-		tmp=c()  #180711from
-        for(j in Looprange(1,length(KL))){
+        tmp=c(Op(2,KL[[1]]))  #180711from #190921
+        for(j in Looprange(2,length(KL))){
           tmp=c(tmp,Op(2,KL[[j]]))
         }
         tmp1=order(tmp)
@@ -13135,7 +13124,7 @@ Enclosing2<- function(...){
         KL=list()
         for(j in tmp1){
           tmp=tmp2[[j]]
-          tmp3=t1+epspara/50*Length(Fdata)
+          tmp3=t1+Eps0
           tmp4=Op(2,tmp)
           if((tmp4>tmp3)||((tmp4>t1)&&(Norm(Op(1,tmp)-p1)>Eps1))){
             KL=c(KL,list(tmp))

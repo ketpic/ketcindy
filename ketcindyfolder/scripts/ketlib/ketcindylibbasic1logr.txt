@@ -1,3 +1,5 @@
+// 20190927
+//    Setwindow debugged  ( for Strictmove)
 // 20190917
 //    Ketinit changed (Strictmove moved from windispg)
 //    Intersectcurves debugged  (op => pp)

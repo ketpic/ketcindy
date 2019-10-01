@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20190921)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20191001)" 
 
 print(ThisVersion)
 
+# 20191001
+#   Intersectpartseg, Enclosing2 debugged  (Listplot => rbind)
 # 20190921
 #   Enclosing2 debugged/changed  (epspara removed)
 # 20190627
@@ -12685,8 +12687,8 @@ Intersectpartseg<- function(...){
   Eps00=10^(-8)
   Eps0=10^(-4)
   out=list()
-  seg1=Listplot(Op(ii,crv1),Op(ii+1,crv1))
-  seg2=Listplot(Op(jj,crv2),Op(jj+1,crv2))
+  seg1=rbind(Op(ii,crv1),Op(ii+1,crv1)) #191001
+  seg2=rbind(Op(jj,crv2),Op(jj+1,crv2)) #191001
   tmp1=Op(2,seg1)-Op(1,seg1)
   tmp2=Op(2,seg2)-Op(1,seg2)
   snang=abs(Crossprod(tmp1,tmp2))/(Norm(tmp1)*Norm(tmp2))
@@ -12741,8 +12743,8 @@ Intersectpartseg<- function(...){
 	  tmp2=list()
       for(kk in Looprange(1,Length(os1)-1)){
         for(ll in Looprange(1,Length(os2)-1)){
-          seg1=Listplot(Op(kk,os1),Op(kk+1,os1))
-          seg2=Listplot(Op(ll,os2),Op(ll+1,os2))
+          seg1=rbind(Op(kk,os1),Op(kk+1,os1)) #191001
+          seg2=rbind(Op(ll,os2),Op(ll+1,os2)) #191001
           tmp=Intersectseg(seg1,seg2,Eps1)
           if((Op(1,tmp)<Eps1)&&(length(tmp)>1)){ #18.02.05
             if(Op(1,tmp)<dst+Eps00){
@@ -13055,7 +13057,7 @@ Enclosing2<- function(...){
     if(length(KL)==0){
       tmp1=Op(Length(Gdata),Gdata)
       tmp2=Op(1,Fdata)
-      tmp=Listplot(tmp1,tmp2)
+      tmp=rbind(tmp1,tmp2) #191001
       plist=c(plist,list(tmp))
       Start=tmp2
       tst=1

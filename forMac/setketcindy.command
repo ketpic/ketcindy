@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20190824
+#      20191003
 
 # Edit, uncomment the following lines and choose 4 if necessary
 #texpath=/Applications/kettex/texlive
@@ -139,6 +139,19 @@ if [ ${tex} = "lu" ]; then
   tex="lualatex"
 fi
 echo  "PathT=PathThead+\"${tex}\";" >> ketcindy.ini
+
+read -p 'Number of default graphics (1=tpic, 2=pict2e, 3=tikz) : ' num
+if [ ${num} = "1" ]; then
+  gc="tpic"
+fi
+if [ ${num} = "2" ]; then
+  gc="pict2e"
+fi
+if [ ${num} = "3" ]; then
+  gc="tikz"
+fi
+echo  "Usegraphics(\"${gc}\");" >> ketcindy.ini
+
 echo  "Pathpdf=\"preview\";" >> ketcindy.ini
 
 pathM="/Applications/Maxima.app/Contents/Resources/maxima.sh"

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20190927] loaded");
+println("ketcindylibbasic1[20191002] loaded");
 
 //help:start();
 
@@ -99,7 +99,7 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
   FigPdfList=[];  // 16.04.08 //no ketjs off
   Fillstore(); //181212
   ADDPACK=[]; // 16.05.16 //no ketjs on
-  GPACK="tpic"; //180817
+  if(!isstring(GPACK),GPACK="tpic",Usegraphics(GPACK)); //180817//191002
   ErrFlag=0;
   KETJSOP=[]; //190129
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504

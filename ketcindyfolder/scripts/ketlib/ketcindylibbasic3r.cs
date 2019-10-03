@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20190918] loaded");
+println("ketcindylibbasic3[20191003] loaded");
 
 //help:start();
 
@@ -1222,14 +1222,19 @@ Addpackage(packorg):=(
 ////%Usegraphics start////
 Usegraphics(gpack):=( //180817
 //help:Usegraphics("pict2e");
-  if(!contains(ADDPACK,gpack),
-    if(indexof(gpack,"tikz")>0, //181213from //190615
-      Addpackage(["pgf","tikz"]); //190101
-    ,
-      Addpackage([gpack]);
-    ); //181213to
-  );
+  regional(tmp);
   GPACK=gpack;
+  tmp=Toupper(gpack); //191003from
+  if(tmp=="TIKZ",  //190615
+    if(!contains(ADDPACK,"tikz"),
+      Addpackage(["pgf","tikz"]); //190101
+    );
+  );
+  if(tmp=="PICT2E",
+    if(!contains(ADDPACK,"pict2e"),
+      Addpackage(["pict2e"]);
+    );
+  ); //191003to
 );
 ////%Usegraphics end////
 

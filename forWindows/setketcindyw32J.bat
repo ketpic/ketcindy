@@ -1,4 +1,4 @@
-REM 20190616
+REM 20191003
 echo off
 
 rem Edit the followings if necessary
@@ -131,6 +131,18 @@ if not exist "%prgSm%" (
   set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
 )
 echo Pathpdf="%prgSm%"; >>  ketcindy.ini
+
+set /P STR_INPUT="Number of default graphics (1=tpic 2=pict2e 3=tikz) : "
+if "%STR_INPUT%" == "1" (
+  set gc=tpic
+)
+if "%STR_INPUT%" == "2" (
+  set gc=pict2e
+)
+if "%STR_INPUT%" == "3" (
+  set gc=tikz
+)
+echo Usegraphics("%gc%"); >> ketcindy.ini
 
 set /P STR_INPUT="Input version of R (ex)3.5.0 :"
 set verR=%STR_INPUT%

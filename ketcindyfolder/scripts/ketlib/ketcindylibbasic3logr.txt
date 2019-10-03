@@ -1,3 +1,5 @@
+// 20191003
+//    Usegraphics changed ( for tpic )
 // 201908918
 //    Defvar changed ( precision 5 -> 16)
 // 201908916

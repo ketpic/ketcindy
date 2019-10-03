@@ -1,4 +1,4 @@
-REM 20190616
+REM 20191003
 echo off
 
 rem Edit the followings if necessary
@@ -124,6 +124,18 @@ if "%STR_INPUT%" == "lu" (
   set tex=lualatex
 )
 echo PathT=PathThead+"%tex%"; >> ketcindy.ini
+
+set /P STR_INPUT="Number of default graphics (1=tpic 2=pict2e 3=tikz) : "
+if "%STR_INPUT%" == "1" (
+  set gc=tpic
+)
+if "%STR_INPUT%" == "2" (
+  set gc=pict2e
+)
+if "%STR_INPUT%" == "3" (
+  set gc=tikz
+)
+echo Usegraphics("%gc%"); >> ketcindy.ini
 
 set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe
 if not exist "%prgSm%" (

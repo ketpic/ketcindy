@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20180616
+#      20181003
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
@@ -116,6 +116,19 @@ if [ ${tex} = "lu" ]; then
   tex="lualatex"
 fi
 echo  "PathT=PathThead+\"${tex}\";" >> ketcindy.ini
+
+read -p 'Number of default graphics (1=tpic, 2=pict2e, 3=tikz) : ' num
+if [ ${num} = "1" ]; then
+  gc="tpic"
+fi
+if [ ${num} = "2" ]; then
+  gc="pict2e"
+fi
+if [ ${num} = "3" ]; then
+  gc="tikz"
+fi
+echo  "Usegraphics(\"${gc}\");" >> ketcindy.ini
+
 echo  "Pathpdf=\"${pathpdf}\";" >> ketcindy.ini
 echo  "Mackc=\"bash\";" >> ketcindy.ini
 

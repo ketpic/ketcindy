@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20191003] loaded");
+println("ketcindylibbasic3[20191004] loaded");
 
 //help:start();
 
@@ -3381,6 +3381,7 @@ Setketcindyjs(list):=(
 ////%Ketcindyjsbody start//// 190909
 Ketcindyjsbody(list1,list2):=(
 //help:Ketcindyjsbody(listfront,listrear);
+//help:Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
   JSBODY=[list1,list2];
   JSBODY;
 );
@@ -3787,7 +3788,7 @@ Mkketcindyjs(options):=( //17.11.18
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
-     figure,dpi,margin,defaultbuttonsize,defaulteditsize);
+     figure,dpi,margin,defaultbuttonsize,defaulteditsize,dname,fname);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -3909,7 +3910,32 @@ Mkketcindyjs(options):=( //17.11.18
     drawtext(mouse().xy-[0,1],Cdyname()+".html not found",size->24,color->[1,0,0]);
     wait(3000);
   ,
-    htmorg=Readlines(Dircdy,Fhead+".html");
+    tmp3=Readlines(Dircdy,Fhead+".html");
+    tmp=select(1..(length(tmp3)),indexof(tmp3_#,"import")>0);
+    tmp2=select(tmp,indexof(tmp3_#,"ketcindy.ini")==0);
+    tmp1=[];
+    forall(tmp2,
+      tmp=Removespace(tmp3_#);
+      if(substring(tmp,0,2)!="//",
+        tmp1=append(tmp1,#);
+      );
+    );
+    htmorg=[];
+    from=1;
+    forall(tmp1,
+      htmorg=concat(htmorg,tmp3_(from..(#-2)));
+      tmp=Bracket(tmp3_(#-1),"()");
+      dname=substring(tmp3_(#-1),tmp_1_1,tmp_(length(tmp))_1-1);
+      dname=parse(dname);
+      tmp=Bracket(tmp3_#,"()");
+      fname=substring(tmp3_#,tmp_1_1,tmp_(length(tmp))_1-1);
+      fname=parse(fname);
+      tmp2=Readlines(dname,fname);
+      htmorg=concat(htmorg,tmp2);
+      from=#+2;
+    );
+    upto=length(tmp3);
+    htmorg=concat(htmorg,tmp3_(from..upto));
     tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csinit"))>0); //190206from
     from=tmp_1+5;
     flg=0;

@@ -47,16 +47,16 @@ Animationparam,basic3,3276,3295,seconds,stopanimation
 Copyketcindyjs,basic3,3299,3360,iswindows,Dqq,kc
 Ketjsoption,basic3,3364,3365,Setketcindyjs
 Setketcindyjs,basic3,3369,3378
-Ketcindyjsbody,basic3,3382,3386
-Ketcindyjsdata,basic3,3390,3430,Textformat,Dqq,set
-Findfun,basic3,3434,3501,Removespace,Indexall
-Extractfun,basic3,3505,3522,Indexall,Findfun
-Extractall,basic3,3531,3575
-Textedit,basic3,3579,3585
-Textedit2value,basic3,3589,3631,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3635,3688, unicode
-Resizetextsize,basic3,3692,3716,Parsejson
-Movetojs,basic3,3720,3728
-Movetojsexe,basic3,3732,3748,Dqq,Parsejson
-Setplaybuttons,basic3,3752,3777,Movetojs
-Mkketcindyjs,basic3,3781,4453, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq
+Ketcindyjsbody,basic3,3382,3387
+Ketcindyjsdata,basic3,3391,3431,Textformat,Dqq,set
+Findfun,basic3,3435,3502,Removespace,Indexall
+Extractfun,basic3,3506,3523,Indexall,Findfun
+Extractall,basic3,3532,3576
+Textedit,basic3,3580,3586
+Textedit2value,basic3,3590,3632,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3636,3689, unicode
+Resizetextsize,basic3,3693,3717,Parsejson
+Movetojs,basic3,3721,3729
+Movetojsexe,basic3,3733,3749,Dqq,Parsejson
+Setplaybuttons,basic3,3753,3778,Movetojs
+Mkketcindyjs,basic3,3782,4479, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Bracket,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq

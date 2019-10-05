@@ -1,3 +1,5 @@
+// 20191005
+//   Putpoint changed   (Ptpos added in case of new point)
 // 20190921
 //   Enclosing debugged/changed  ( in case of length(KL)==1, epspara removed)
 // 20190917

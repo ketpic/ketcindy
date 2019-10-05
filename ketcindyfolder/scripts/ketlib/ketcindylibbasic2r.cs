@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20190921] loaded");
+println("ketcindylibbasic2[20191005] loaded");
 
 //help:start();
 
@@ -3172,10 +3172,11 @@ Putpoint(name,Ptinit,Pt):=(
   ptstr=apply(allpoints(),#.name); //no ketjs on
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
-    ,  //no ketjs off
+    Ptpos(name,Pcrd([Ptinit_1,Ptinit_2])); //191005
+    , 
     ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
     parse(ptstr);
-  ); //no ketjs
+  ); //no ketjs off
 );
 ////%Putpoint end////
 

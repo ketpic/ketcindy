@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191002] loaded");
+println("ketcindylibbasic1[20191005] loaded");
 
 //help:start();
 
@@ -329,14 +329,22 @@ Setwindow(str):=(
   tmp=indexof(str,"="); // 16.02.10
   msg=Toupper(substring(str,tmp,tmp+1));
   Strictmove("SW"); Strictmove("NE");//190927
-  if((ispoint(SW) & ispoint(NE)),
+  if((ispoint(SW)) & (ispoint(NE)),
     tmp1=LLcrd(Ptpos(SW));//190912[2lines]
     tmp2=LLcrd(Ptpos(NE));
     XMIN=tmp1_1; XMAX=tmp2_1;
     YMIN=tmp1_2; YMAX=tmp2_2;
   ,
-    Putpoint("SW",Pcrd([XMIN,YMIN]));
-    Putpoint("NE", Pcrd([XMAX,YMAX]));
+    if(!ispoint(SW), //191005from
+      Putpoint("SW",Pcrd([-5,-5]));
+      XMIN=-5; YMIN=-5;
+      Ptpos(SW,SW.xy);
+    );
+    if(!ispoint(NE),
+      Putpoint("NE", Pcrd([5,5]));
+      XMAX=5; YMAX=5;
+      Ptpos(NE,NE.xy);
+    ); //191005to
   );
   if(msg=="Y", // no ketjs on
     println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");
@@ -346,7 +354,8 @@ Setwindow(str):=(
   drawpoly([Pcrd([XMIN,YMIN]), Pcrd([XMAX,YMIN]),
         Pcrd([XMAX,YMAX]),Pcrd([XMIN,YMAX])],color->[1,1,1]); // no ketjs off
 );
-Setwindow(xrange,yrange):=(
+Setwindow(xrange,yrange):=Setwindow(xrange,yrange,"Msg=y");
+Setwindow(xrange,yrange,msg):=(
 //help:Setwindow([2,3],[-1,1]);
   XMIN=xrange_1;
   XMAX=xrange_2;
@@ -359,6 +368,9 @@ Setwindow(xrange,yrange):=(
   autoclearlayer(KETPICLAYER,true);
   drawpoly([Pcrd([XMIN,YMIN]), Pcrd([XMAX,YMIN]),
         Pcrd([XMAX,YMAX]),Pcrd([XMIN,YMAX])],color->[1,1,1]); //190927to
+  if(Toupper(substring(msg,0,1))=="Y", 
+    println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");
+  );
 );
 ////%Setwindow end////
 

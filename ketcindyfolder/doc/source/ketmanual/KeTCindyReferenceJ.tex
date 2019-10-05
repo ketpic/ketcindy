@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 % \usepackage{amsmath,newtxmath}
 \usepackage[dvipdfmx]{graphicx,color}
+\usepackage{enumerate,bm}
 \usepackage{wrapfig}
 \usepackage{jsverb}
 \usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
@@ -564,7 +565,7 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 \hypertarget{pointdata}{}
 \item[関数]Pointdata(name , 点リスト , options)
 \item[機能]点のデータを作成する。
-\item[説明]与えられた座標の点データを作成する。オプションは"Size=","Color=","Inside"。
+\item[説明]与えられた座標の点データを作成する。オプションは"Size=","Color=","Inside="。
 
 Inside オプションは，点の内部についての指定。
 
@@ -8145,7 +8146,7 @@ Plotdata("1",str,"x");
 
 
 \begin{verbatim}
-【例】Ketcindyjsbody(["<p,f10>__Title''],[]);
+【例】Ketcindyjsbody(["<p,f10>_;_;Title"],[]);
 　　　   =>     <p><font size="10">&emsp;&emsp;Title</font></p>
 \end{verbatim}
 
@@ -8280,6 +8281,33 @@ Cinderellaで使っている用語に次のものがある。
 \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/snap.pdf}格子点にスナップする \>：軸と方眼を表示しスナップモードにする\\
 \includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/grid-more.pdf}\includegraphics[bb=0 0 6.48 5.04 , width=0.6cm]{Fig/grid-less.pdf}グリッドを粗く / 細かくする\\
  \end{tabbing}
+
+\hypertarget{colorcodelist}{}
+\subsection{他のテキストエディタの使用}
+
+例えば，cdyファイル名をtemplate.cdyとする．
+
+\begin{enumerate}[(1)]
+\item template.txtを作成して，template.cdyと同じ場所におく．
+\item template.cdyのFiguresスロットを以下を記述して実行する．
+\begin{verbatim}
+  Ketinit();
+  setdirectory(Dircdy);
+  import(Cdyname()+''.txt'');
+  setdirectory(Dirwork);
+  Windispg();
+\end{verbatim}
+
+\item template.txtにスクリプトを書いて保存する．\\
+例）\verb|Putpoint("A",[0,0],A.xy);|\\
+　　\verb|Plotdata("1'',''x^2'',''x'');|
+\end{enumerate}
+
+注）template.txtを変更した場合も，cdy画面をクリックすればよい．
+
+\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\newpage
 
 \hypertarget{colorcodelist}{}
 \subsection{色名とカラーコード一覧}

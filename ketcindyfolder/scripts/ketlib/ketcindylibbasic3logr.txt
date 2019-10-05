@@ -1,3 +1,5 @@
+// 20191004
+//    Mkketcindyjs changed  ( import for ketcindyjs supported)
 // 20191003
 //    Usegraphics changed ( for tpic )
 // 201908918

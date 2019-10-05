@@ -5701,7 +5701,7 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \itemket{Description} Function to add scripts to the first/last of body tag.
 \itemket{Examples}  \mbox{}
 
-\verb|Ketcindyjsbody(["<p,f10>__Title''],[]);|\\
+\verb|Ketcindyjsbody(["<p,f10>_;_;Title"],[]);|\\
 \verb|   =>     <p><font size="10">&emsp;&emsp;Title</font></p>|
 
 \end{cmd}
@@ -5768,6 +5768,30 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 \newpage
 %-==Appendix ========================
 \section{Appendix}
+
+\subsection{To use other text editor}
+
+
+For example, let the cdyfie be \verb|template.cdy|.
+
+\begin{enumerate}[(1)]
+\item Create \verb|template.txt| and put it in the same folder as the cdy file.
+\item Describe in Figures slot as follows, and execute.
+\begin{verbatim}
+  Ketinit();
+  setdirectory(Dircdy);
+  import(Cdyname()+''.txt'');
+  setdirectory(Dirwork);
+  Windispg();
+\end{verbatim}
+
+\item Write scripts in \verb|template.txt| and save it.\\
+Ex)\ \verb|Putpoint("A",[0,0],A.xy);|\\
+\phantom{Ex)\ }\verb|Plotdata("1'',''x^2'',''x'');|
+
+\item Click any position on the screen.
+
+\end{enumerate}
 
 \subsection{Color table}
 

@@ -1,3 +1,5 @@
+// 20191005
+//    Setwindow(str) changed  ( in case of deleting NE,SW)
 // 20191002
 //    Ketinit changed  (GPACK)
 // 20190927

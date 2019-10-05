@@ -1,3 +1,5 @@
+// 20191006
+//    Sfparadata,...  debugged  (tmp_7 removed)
 // 20190821
 //    CalcbyR changed ( pre->dig, 6->8)
 // 20190818

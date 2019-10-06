@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20181003
+#      20181006
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
@@ -129,7 +129,9 @@ if [ ${num} = "3" ]; then
 fi
 echo  "Usegraphics(\"${gc}\");" >> ketcindy.ini
 
+read -p 'PDF viewer (ex) evince : ' pathpdf
 echo  "Pathpdf=\"${pathpdf}\";" >> ketcindy.ini
+
 echo  "Mackc=\"bash\";" >> ketcindy.ini
 
 echo "ketcindy.ini generated(updated)"

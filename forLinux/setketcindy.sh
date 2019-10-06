@@ -36,7 +36,7 @@ if [ ${ans} = "n" ]; then
 fi
 
 echo copying scripts
-sudo cp -r -p scripts/ ${ketcindyscripts}/
+sudo cp -r -p scripts/* ${ketcindyscripts}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5

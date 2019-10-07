@@ -2261,9 +2261,16 @@ the surrounded region is filled with dots.
 \begin{cmd}{Shade}{shade}
 \itemket{Usage}Shade(("name"),list of PD, options);
 \itemket{Description}This function fills a domain surrounded by a closed curve.
-\itemket{Details}\mbox{}\\
-If "Invert" is used in some PD, \verb|Enclosing| is used, if not, \verb|Joincrvs| is used as default. 
-The options are use of enclosing("Enc=y/n") and color.
+\itemket{Details}Options are as follows. () means the default.\\
+\begin{itemize}
+\item Starting point. The defaults are the intersect of the first curve and the last one.
+\item "Color="
+\item "Enc=n(y)"\ \ Whether \verb|Enclosing| is used.
+\item "Trim=n(y)"\ \ Whether it is trimmed in the window.
+\item "First=y(n)"\\
+\hspace*{5mm}Whether \verb|Shade| is placed at the top in \TeX. The default is just before Gdata.
+
+\end{itemize}
 \itemket{Examples}\mbox{}\\
 \verb|Setax([7,"nw"]);|\\
 \verb|Plotdata("1","2*sin(x)","x",["Num=100"]);|\\

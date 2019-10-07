@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191005] loaded");
+println("ketcindylibbasic2[20191007] loaded");
 
 //help:start();
 
@@ -1944,13 +1944,10 @@ Shade(Arg1,Arg2):=(
   );
 );
 Shade(nm,plistorg,options):=(
-//help:Shade(["gr1"],[0.5]);
-//help:Shade(["gr1"],["Color=red"]);
-//help:Shade(["gr1"],["Trim=y(n)"]); //190224
-// help:Shade(["gr1","sg1"],["Color=[1,0,0]"]);
-// help:Shade([[A,B,C,A]]);
+//help:Shade(["gr1"]);
+// help:Shade(options=["Trim=(n)","Enc=(n)",Rirst=(n)","Color=",Startpoint]);
 //help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
-  regional(name,plist,jj,nn,trim,tmp,tmp1,tmp2,
+  regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
   name="shade"+nm;
   plist=plistorg;
@@ -1968,6 +1965,7 @@ Shade(nm,plistorg,options):=(
   tmp=select(plist,indexof(#,"Invert")>0); //180929from
   if(length(tmp)>0,encflg=1,encflg=0);
   trim="N";
+  first="N"; //191007
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(tmp_1);
@@ -1982,6 +1980,9 @@ Shade(nm,plistorg,options):=(
     );
     if(substring(tmp1,0,1)=="T",
       trim=substring(tmp2,0,1);
+    );
+    if(substring(tmp1,0,1)=="F",
+      first=substring(tmp2,0,1);
     );
   );
   startpt=[];
@@ -2050,11 +2051,15 @@ Shade(nm,plistorg,options):=(
   );
   Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929 
   nn=length(COM2ndlist); //190311from
-  jj=nn;
-  forall(plist,tmp1,
-    tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
-    jj=min(append(tmp,jj));
-  );
+  if(first=="Y", //191007from
+    jj=1;
+  ,
+    jj=nn;
+    forall(plist,tmp1,
+      tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
+      jj=min(append(tmp,jj));
+    );
+  ); //191007to
   tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color+")",Str,"Texcom("+Dqq("}")+")"];
   tmp2=COM2ndlist_(1..(jj-1));
   tmp=COM2ndlist_(jj..(length(COM2ndlist)));
@@ -2065,8 +2070,6 @@ Shade(nm,plistorg,options):=(
   SHADECTR=SHADECTR+1;
 );
 ////%Shade end////
-
-/////////// end of new Hatchdata(cindy) ///////////
 
 ////%Rotatepoint start////
 Rotatepoint(point,Theta,ctr):=(

@@ -2819,13 +2819,16 @@ optionの Color は，Cinderellaの画面上での描画色をリストで与え
 
 optionsには，他に，次のものがある。
 
-・Enclosingを使うかどうか：''Enc=y/n''（初期値は y）
+・Enclosingを使うかどうか："Enc=y/n"（初期値は n）\\
+　　　''Enc=y''のとき，複数のShadeを使うときは，名前をつける。
 
 ・Enclosingのときの開始点，描画色
 
-・描画領域のトリミング：Trim=y/n （初期値は n ）
+・描画領域のトリミング："Trim=y/n" （初期値は n ）
 
-複数のShadeを使うときは，名前をつける。
+・TeXへの書き出しで，先頭に配置するか："First=y/n" （初期値は n ）\\
+　　　"First=n" のときは，使われているGdataの書き出しの直前におく．
+
 
 \vspace{\baselineskip}
 【例】$y=2\sin x$のグラフと直線$y=1$ とで囲まれた部分に黒0.2の濃さで色を塗る。

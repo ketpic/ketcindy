@@ -1,3 +1,5 @@
+// 20191007
+//   Shade changed   (option "First" added)
 // 20191005
 //   Putpoint changed   (Ptpos added in case of new point)
 // 20190921

@@ -1,3 +1,7 @@
+// 20191008
+//   Shade debugged   (in case of "nodisp"/"notex")
+//   Tabledata changed  ("Geo=")
+//   Tabledatalight changed  (tb+Counter+str added )
 // 20191007
 //   Shade changed   (option "First" added)
 // 20191005

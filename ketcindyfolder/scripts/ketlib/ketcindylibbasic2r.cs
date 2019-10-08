@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191007] loaded");
+println("ketcindylibbasic2[20191008] loaded");
 
 //help:start();
 
@@ -2059,6 +2059,7 @@ Shade(nm,plistorg,options):=(
       tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
       jj=min(append(tmp,jj));
     );
+    if(jj==0, jj=1); //191008
   ); //191007to
   tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color+")",Str,"Texcom("+Dqq("}")+")"];
   tmp2=COM2ndlist_(1..(jj-1));
@@ -4109,15 +4110,22 @@ Tabledata(Arg1,Arg2,Arg3,Arg4):=(
   );
 ); //190428to
 Tabledata(nm,xL,yL,rmvL,optionorg):=(
-//help:Tabledata(xL,yL,rmvL,["Geo=n"]);
+//help:Tabledata(xL,yL,rmvL,["Geo=y(n)"]);
 //help:Tabledata(options=[2(tick,0 for no tick),"Setwin=y","Move=[0,0]"]); //190428
   regional(options,geo,tmp,tmp1,tmp2);
   options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
-  tmp=select(tmp_5,indexof(Toupper(#),"GEO")>0);
-  if(length(tmp)>0,
-    options=remove(options,tmp);
+  geo="N"; //191008from
+  forall(eqL,
+    tmp=Strsplit(#);
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="G",
+      geo=Toupper(substring(tmp_2,0,1));
+      options=remove(options,#);
+    );
+  );
+  if(geo=="Y", //191008to
     Tabledatageo(nm,xL,yL,rmvL,options);
   ,
     Tabledatalight(nm,xL,yL,rmvL,options);
@@ -4138,7 +4146,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 //help:Tabledatalight(xLst,yLst,rmvL,[0(notick)]);
 //help:Tabledatalight(xLst,yLst,rmvL,[2,"Setwindow=y","Move=[0,0]"]); //190428
   regional(options,rng,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
-    rlist,clist,Tb,jj,kk,tmp,tmp1,tmp2,tmp3,Eps);
+    rlist,clist,Tb,jj,kk,tmp,tmp1,tmp2,tmp3,Eps,tbstr);
   // TableMove is global for Table
   TABLECOUNT=TABLECOUNT+1; //190428from
   TableMove=GENTEN; //190428to
@@ -4197,17 +4205,20 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   Tb=[clist,rlist]; //190427
   tmp=name+"="+Tb+";"; //190415
   parse(tmp);
+  tbstr="["; //191008
   forall(0..m,jj,  //190507from
     tmp3="c"+text(jj);
     if(length(rmvL)>=0,
       tmp1="r"+text(0);
       tmp2="r"+text(n);
-      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);     
+      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);
+      tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
     ,
       forall(0..(n-1),
         tmp1="r"+text(#);
         tmp2="r"+text(#+1);
         Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);
+        tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
       );
     );  //190507to
     if(tick!=0, //190421
@@ -4222,11 +4233,13 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       tmp1="c"+text(0);
       tmp2="c"+text(m);
       Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],options);
+      tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
     ,
       forall(0..(m-1),
         tmp1="c"+text(#);
         tmp2="c"+text(#+1);
         Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],options);
+        tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
       );
     );
     if(tick!=0, //190421
@@ -4235,6 +4248,10 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       );
     );
   );
+  tbstr=substring(tbstr,0,length(tbstr)-1)+"]"; //101008from
+  tmp1=parse(tbstr);
+  tmp=name+"str="+tbstr+";";
+  parse(tmp); //101008to
   Changetablestyle(rmvL,["nodisp"]); //190428
   Addax(0);
   Eps=10^(-3);

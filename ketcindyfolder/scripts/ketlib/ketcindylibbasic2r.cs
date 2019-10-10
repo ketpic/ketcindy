@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191008] loaded");
+println("ketcindylibbasic2[20191011] loaded");
 
 //help:start();
 
@@ -503,7 +503,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
     reL=append(reL,tmp1_#);
   );
   size=reL_1;
-  angle=reL_2;
+  if(reL_2<2.5,angle=reL_2*tmp1_2,angle=reL_2); //191011
   segpos=reL_3;
   cut=reL_4;
   lineflg=0;
@@ -553,6 +553,8 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
       tmp2=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
       ArrowheadNumber=ArrowheadNumber+1;
       Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n"));
+      tmp=pP+(1-cut)*((tmp1+tmp2)/2-pP); //191011[2lines]
+      fillpoly([tmp1,pP,tmp2,tmp,tmp1],color->color);      
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180722
       ); //no ketjs off

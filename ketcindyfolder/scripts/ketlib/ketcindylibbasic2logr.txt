@@ -1,3 +1,5 @@
+// 20191011
+//   Arrowhead debugged (angle) and changed (fillpoly)
 // 20191008
 //   Shade debugged   (in case of "nodisp"/"notex")
 //   Tabledata changed  ("Geo=")

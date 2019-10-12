@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191011] loaded");
+println("ketcindylibbasic2[20191012] loaded");
 
 //help:start();
 
@@ -302,7 +302,11 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   if(Noflg<3, //190818
     if(isstring(Ltype),
       Listplot("-arh"+nm,apply(list,LLcrd(#)),concat(options,["notex","Msg=n"]));
-    );
+      tmp=tmp1_2+(1-cut)*(tmp1_1+tmp1_3)/2-tmp1_2; //191012from
+      tmp1=append(tmp1,tmp);
+      tmp1=apply(append(tmp1,tmp1_1),Pcrd(#));;
+      fillpoly(tmp1,color->color); //191012to
+   );
   );
   if(Noflg==0,
     tmp=Divoptions(options);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20191006] loaded");
+println("ketcindylibout[20191020] loaded");
 
 //help:start();
 
@@ -1345,8 +1345,8 @@ PlotdataR(name1,Arg1,Arg2,Arg3):=(
 );
 PlotdataR(name1,path,func,variable,optionorg):=(
 //help:PlotdataR("1","dnorm(x)","x");
-//help:PlotdataR(options=["m/r","Num=50","Wait=10"]);
-  regional(options,tmp,tmp1,tmp2,tmp3,name,varstr,flg,Num,
+//help:PlotdataR(options=["Num=50","Pre=PVF","Wait=10"]); //191020
+  regional(options,tmp,tmp1,tmp2,tmp3,name,varstr,flg,Num,pre,
          Ltype,Noflg,eqL,strL,flg,outreg,filename,wfile,cmdL,waiting);
   name="grR"+name1;
   options=optionorg;
@@ -1356,23 +1356,28 @@ PlotdataR(name1,path,func,variable,optionorg):=(
   Num=50;
   waiting=5;
   outreg=0;
+  pre="PVF";
   flg=0;
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,tmp,length(#));
-    if(Toupper(substring(#,0,1))=="N",
-      Num=parse(tmp1);
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="N",
+      Num=parse(tmp_2);
       options=remove(options,[#]);
     );
-    if(Toupper(substring(#,0,1))=="W",
-      waiting=parse(tmp1);
+    if(tmp1=="W",
+      waiting=parse(tmp_2);
       options=remove(options,[#]);
     );
-    if(Toupper(substring(#,0,1))=="O",
-      tmp=Toupper(substring(tmp1,0,1));
-      if(tmp=="T" % tmp=="Y", outreg=1);
+    if(tmp1=="O",
+      tmp2=Toupper(substring(tmp_2,0,1));
+      if(tmp2=="T" % tmp2=="Y", outreg=1);
       options=remove(options,[#]);
     );
+    if(tmp1=="P", //191020from
+      pre=tmp_2;
+      options=remove(options,[#]);
+    ); //191020to
   );
   tmp=indexof(variable,"=");
   if(tmp>0,
@@ -1384,13 +1389,14 @@ PlotdataR(name1,path,func,variable,optionorg):=(
   varstr=replace(varstr,"]",")");
   filename=Fhead+name+".r";
   wfile=Fhead+name+".txt";
-  cmdL=MkprecommandR();
+  cmdL=MkprecommandR(pre); //191020
   cmdL=concat(cmdL,[
-    name+"=Plotdata",[Dq+func+Dq,Dq+varstr+Dq,Dq+"Num="+text(Num)+Dq],
-    "WriteOutData",[Dq+wfile+Dq,Dq+name+Dq,name]
+    name+"=Plotdata",[Dqq(func),Dqq(varstr),Dqq("Num="+text(Num))],
+    "WriteOutData",[Dqq(wfile),Dqq(name),name]
   ]);
   if(ErrFlag==0,
-    CalcbyR(name,cmdL,concat(options,["Cat=middle","Wait="+text(waiting)]));
+    tmp=["Cat=middle","Wait="+text(waiting)];  //191020[2lines]
+    CalcbyR(name,cmdL,concat(options,tmp));
   );
   if(ErrFlag==1,
     println("PlotdataR not completed");
@@ -1412,23 +1418,45 @@ PlotdataR(name1,path,func,variable,optionorg):=(
 
 ////%PlotdiscR start////
 PlotdiscR(nm,fun,varrng):=PlotdiscR(nm,fun,varrng,[]);
-PlotdiscR(nm,fun,varrng,options):=(
+PlotdiscR(nm,fun,varrng,optionorg):=(
 //help:PlotdiscR("1","dbinom(k,10,0.4)","k=[0,10]");
-  regional(name,pb,cmdL,var,range,tmp,tmp1,tmp2,wfile);
+//help:PlotdiscR(options=["Pre=PVF","Wait=10"]); //191020
+  regional(name,pb,cmdL,var,range,tmp,tmp1,tmp2,
+         pre,waiting,options,wfile,eqL);
   name="grd"+nm;
+  options=optionorg; //191020from
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  waiting=5;
+  pre="PVF";
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="W",
+      waiting=parse(tmp_2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="P", //191020from
+      pre=tmp_2;
+      options=remove(options,[#]);
+    );
+  ); //191020
   tmp=indexof(varrng,"=");
   var=substring(varrng,0,tmp-1);
   range=parse(substring(varrng,tmp,length(varrng)));
   if(length(range)==2,
     range=(range_1)..(range_2);
   );
-  cmdL=[
+  wfile=Fhead+name+".txt";
+  println([1451,wfile]);
+  cmdL=MkprecommandR(pre); //191020from
+  cmdL=concat(cmdL,[
     "fnb=function("+var+") "+fun,[],
     name+"=sapply",[range,"fnb"]
-  ];
-  wfile=Fhead+name+".txt";
+  ]);  //191020to
   if(ErrFlag==0,
-    CalcbyR(name,cmdL,options);
+    tmp=["Wait="+text(waiting)]; //191020[2lines]
+    CalcbyR(name,cmdL,concat(options,tmp));
   );
   if(ErrFlag==1,
     println("PlotdiscR not completed");

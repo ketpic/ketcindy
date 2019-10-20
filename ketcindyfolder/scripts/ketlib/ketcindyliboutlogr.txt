@@ -1,3 +1,5 @@
+// 20191020
+//    PlotdataR, PlotdatadiscR debugged  ( "Pre=PVF")
 // 20191006
 //    Sfparadata,...  debugged  (tmp_7 removed)
 // 20190821

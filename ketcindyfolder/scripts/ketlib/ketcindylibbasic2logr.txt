@@ -1,3 +1,5 @@
+// 20191023
+//   Tabledata debugged  (Strsplit(#))
 // 20191012
 //   Arrowhead changed (fillpoly)
 // 20191011

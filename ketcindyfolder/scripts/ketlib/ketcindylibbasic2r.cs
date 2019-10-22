@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191012] loaded");
+println("ketcindylibbasic2[20191023] loaded");
 
 //help:start();
 
@@ -4124,7 +4124,7 @@ Tabledata(nm,xL,yL,rmvL,optionorg):=(
   eqL=tmp_5;
   geo="N"; //191008from
   forall(eqL,
-    tmp=Strsplit(#);
+    tmp=Strsplit(#,"="); //191023
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="G",
       geo=Toupper(substring(tmp_2,0,1));

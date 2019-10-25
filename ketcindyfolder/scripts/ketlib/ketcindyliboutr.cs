@@ -1448,7 +1448,6 @@ PlotdiscR(nm,fun,varrng,optionorg):=(
     range=(range_1)..(range_2);
   );
   wfile=Fhead+name+".txt";
-  println([1451,wfile]);
   cmdL=MkprecommandR(pre); //191020from
   cmdL=concat(cmdL,[
     "fnb=function("+var+") "+fun,[],

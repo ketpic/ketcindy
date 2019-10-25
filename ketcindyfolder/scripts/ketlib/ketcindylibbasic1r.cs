@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191005] loaded");
+println("ketcindylibbasic1[20191025] loaded");
 
 //help:start();
 
@@ -3974,8 +3974,9 @@ Pointdata(nm,listorg,options):=(
         inside=text(tmp);
       ,
         if(contains(["0","1"],tmp2),
+          tmp2=tmp_2; //191025
           tmp=[1,1,1]-color;
-          tmp=parse(tmp_2)*tmp;
+          tmp=parse(tmp2)*tmp;  //191025
           inside=[1,1,1]-tmp;
         ,
           if(tmp2=="N",

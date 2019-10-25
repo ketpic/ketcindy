@@ -1,3 +1,5 @@
+// 20191025
+//    Pointdata debugged  ( Inside=numeric )
 // 20191005
 //    Setwindow(str) changed  ( in case of deleting NE,SW)
 // 20191002

@@ -1,3 +1,5 @@
+// 20191027
+//    Ellipseplot, Hyperbolaplot debugged  ( for Ptpos )
 // 20191025
 //    Pointdata debugged  ( Inside=numeric )
 // 20191005

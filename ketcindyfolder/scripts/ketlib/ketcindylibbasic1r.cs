@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191025] loaded");
+println("ketcindylibbasic1[20191027] loaded");
 
 //help:start();
 
@@ -5289,14 +5289,14 @@ Ellipseplot(nm,ptlist,Arg):=(
 Ellipseplot(nm,ptlist,rng,options):=(
 //help:Ellipseplot("1",[A,B,3]);
 //help:Ellipseplot("1",[A,B,C],"[0,pi]",[options]);
-  regional(pA,pB,d,angle,f,a,b,pM,tmp,tmp1,tmp2);
+  regional(pA,pB,dd,angle,f,a,b,pM,tmp,tmp1,tmp2);
   pA=Lcrd(ptlist_1);
   tmp1=Lcrd(ptlist_2);
-  if(ispoint(ptlist_3),
+  if((ispoint(ptlist_3))%(length(ptlist_3)>1), //191027
     tmp2=Lcrd(ptlist_3);
-    d=|tmp2-pA|+|tmp2-tmp1|;
+    dd=|tmp2-pA|+|tmp2-tmp1|;
   ,
-    d=ptlist_3;
+    dd=ptlist_3;
   );
   tmp=(tmp1-pA)/|tmp1-pA|;
   if(tmp_2>=0,
@@ -5310,8 +5310,8 @@ Ellipseplot(nm,ptlist,rng,options):=(
   );
   pB=Rotatepoint(tmp1,-angle,pA);
   f=|pB_1-pA_1|/2;
-  a=d/2;
-  b=sqrt(d^2/4-f^2);
+  a=dd/2;
+  b=sqrt(dd^2/4-f^2);
   pM=(pA+pB)/2;
   tmp="["+format(pM_1,5)+","+format(pM_2,5)+"]";
   tmp=tmp+"+["+format(a,5)+"*cos(t),"+format(b,5)+"*sin(t)]";
@@ -5350,7 +5350,7 @@ Hyperbolaplot(nm,ptlist,rng,optionsorg):=(
   );
   pA=Lcrd(ptlist_1);
   tmp1=Lcrd(ptlist_2);
-  if(ispoint(ptlist_3),
+  if((ispoint(ptlist_3))%(length(ptlist_3)>1), //191027
     tmp2=Lcrd(ptlist_3);
     d=abs(|tmp2-pA|-|tmp2-tmp1|);
   ,

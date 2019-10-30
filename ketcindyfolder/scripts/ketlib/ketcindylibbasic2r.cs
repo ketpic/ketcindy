@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191023] loaded");
+println("ketcindylibbasic2[20191030] loaded");
 
 //help:start();
 
@@ -3178,15 +3178,15 @@ Slider(ptstr,p1,p2,options):=(//190120
 Putpoint(name,Pt):=Putpoint(name,Pt,Pt);
 Putpoint(name,Ptinit,Pt):=(
 //help:Putpoint("A",[1,2],[1,A.y]);
-  regional(ptstr);
-  ptstr=apply(allpoints(),#.name); //no ketjs on
+  regional(ptstr); 
+  ptstr=apply(allpoints(),#.name); //no ketjs on //191030
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
     Ptpos(name,Pcrd([Ptinit_1,Ptinit_2])); //191005
-    , 
+    ,  //no ketjs off  //191030
     ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
     parse(ptstr);
-  ); //no ketjs off
+  ); //no ketjs  //191030
 );
 ////%Putpoint end////
 

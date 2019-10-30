@@ -1,3 +1,5 @@
+// 20191030
+//   Putpoint changed (for ketcindyjs )
 // 20191023
 //   Tabledata debugged  (Strsplit(#))
 // 20191012

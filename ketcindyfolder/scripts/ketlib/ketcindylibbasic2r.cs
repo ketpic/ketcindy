@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191030] loaded");
+println("ketcindylibbasic2[20191101] loaded");
 
 //help:start();
 
@@ -2596,7 +2596,7 @@ Htickmark(arglist,options):=( //190203
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
     Listplot("ht"+text(nn),
-        [[arglist_nn,mark],[arglist_nn,-mark]],["Msg=n"]);//181017
+        [[arglist_nn,mark],[arglist_nn,-mark]],append(options,"Msg=n"));//191101
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
@@ -2623,7 +2623,7 @@ Vtickmark(arglist,options):=( //190203
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
     Listplot("vt"+text(nn),
-         [[mark,arglist_nn],[-mark,arglist_nn]],["Msg=n"]); //181021
+         [[mark,arglist_nn],[-mark,arglist_nn]],append(options,"Msg=n")); //191101
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),

@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(190405)"
+ThisVersion<- "2ev5_2_4(191104)"
 
+# 20191104
+#   Dottedline changed  ( Ookisa 2->1)
 # 20190405
 #   Drwpt debugged/changed ( Incolor )
 # 20181230
@@ -38,7 +40,7 @@ Dottedline<- function(...)
   varargin <- list(...)     
   Nall <- length(varargin)
   Nagasa <- 0.1
-  Ookisa <- PenThick*2 #17.10.07
+  Ookisa <- PenThick*1 #2 #17.10.07,191104(*1)
   I <- Nall
   Tmp <- varargin[[I]]
   while (mode(Tmp)=="numeric" && length(Tmp)==1 ) {

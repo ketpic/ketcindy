@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "tikzv1_1_1(190402)"
+ThisVersion<- "tikzv1_1_1(191104)"
 
+# 20191104
+#    Dotteline changed (Ookisa 2->1/0.075)
 # 2019.04.05 Drwpt  ( Incolor, Takato)
 # 2019.04.02 Beginpicture  ( Unitlen, Takato)
 # 2019.04.02 Drwline  ( Sepen restore when finished, Takato)
@@ -248,7 +250,7 @@ Dottedline<- function(...)
   varargin <- list(...)     
   Nall <- length(varargin)
   Nagasa <- 0.1
-  Ookisa <- PenThick*2 #17.10.07
+  Ookisa <- PenThick*1/0.075 #2 #171007,191104(1/0.075)
   I <- Nall
   Tmp <- varargin[[I]]
   while (mode(Tmp)=="numeric" && length(Tmp)==1 ) {

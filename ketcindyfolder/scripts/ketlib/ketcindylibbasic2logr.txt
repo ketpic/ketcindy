@@ -1,3 +1,5 @@
+// 20191104
+//   Arrowhead debugged/changed (cut, datalist)
 // 20191101
 //   Htickmark,Vtickmark changed (options added to ticks)
 // 20191030

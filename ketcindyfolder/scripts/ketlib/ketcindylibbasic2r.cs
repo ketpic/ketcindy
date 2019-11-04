@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191101] loaded");
+println("ketcindylibbasic2[20191104] loaded");
 
 //help:start();
 
@@ -140,6 +140,8 @@ Setarrow(arglist):=(
 Arrowheaddata(point,direction):=Arrowheaddata(point,direction,[]);
 Arrowheaddata(point,direction,options):=(
 // help:Arrowheaddata(A,B);
+// help:Arrowheaddata("1",A,"gr1");
+// help:Arrowheaddata("1",A,gr1);
 // help:Arrowheaddata(options=[size(1),angle(18), "Coord=phy"]);
   regional(list,ookisa,hiraki,Houkou,Str,Flg,Ev,Nv,pA,pB,
        reL,eqL,coord,pP,rF,gG,Flg,Nj,Eps,scx,scy,tmp,tmp1,tmp2);
@@ -231,7 +233,7 @@ Arrowheaddata(point,direction,options):=(
     list;
   );
 );
-////%Arrowheaddata end////
+////    aaddata end////
 
 ////%Arrowhead start////
 Arrowhead(point,Houkou):=Arrowhead(point,Houkou,[]); //181018from
@@ -302,9 +304,9 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   if(Noflg<3, //190818
     if(isstring(Ltype),
       Listplot("-arh"+nm,apply(list,LLcrd(#)),concat(options,["notex","Msg=n"]));
-      tmp=tmp1_2+(1-cut)*(tmp1_1+tmp1_3)/2-tmp1_2; //191012from
+      tmp=tmp1_2+(1-cut)*((tmp1_1+tmp1_3)/2-tmp1_2); //191012from, 191104
       tmp1=append(tmp1,tmp);
-      tmp1=apply(append(tmp1,tmp1_1),Pcrd(#));;
+      tmp1=apply(append(tmp1,tmp1_1),Pcrd(#));
       fillpoly(tmp1,color->color); //191012to
    );
   );
@@ -319,7 +321,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
       if(!islist(Houkou_1),
         hostr=format(LLcrd(Houkou),5);
       ,
-        hostr=format(apply(Houkou,LLcrd(#)),5);
+        hostr="Listplot("+Textformat(Houkou,5)+")" //191104
       );
     );
     if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on

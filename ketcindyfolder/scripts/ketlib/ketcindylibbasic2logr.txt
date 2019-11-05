@@ -1,3 +1,5 @@
+// 20191106
+//   Lightarrowdata debugged
 // 20191104
 //   Arrowhead debugged/changed (cut, datalist)
 // 20191101

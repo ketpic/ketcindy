@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(191104)"
+ThisVersion<- "2ev5_2_4(191106)"
 
+# 20191106
+#   Drwline debugged  ( Thick)
 # 20191104
 #   Dottedline changed  ( Ookisa 2->1)
 # 20190405
@@ -156,9 +158,10 @@ Drwline<-function(...)
 {
   varargin<-list(...)
   Nall<-length(varargin)
-  Thick<-0
+  Thick<- 0
   Tmp<-varargin[[Nall]]
   if (mode(Tmp)=="numeric" && length(Tmp)==1){
+    Thick<- PenThick/PenThickInit #191106
     Setpen(Tmp)
     Nall<-Nall-1
   }
@@ -205,8 +208,7 @@ Drwline<-function(...)
     }
   }
   if (Thick>0){
-    Tmp<-PenThick/PenThickInit
-    Setpen(Tmp)
+    Setpen(Thick) #191106
   }
 }
 

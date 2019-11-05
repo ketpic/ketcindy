@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191104] loaded");
+println("ketcindylibbasic2[20191106] loaded");
 
 //help:start();
 
@@ -321,7 +321,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
       if(!islist(Houkou_1),
         hostr=format(LLcrd(Houkou),5);
       ,
-        hostr="Listplot("+Textformat(Houkou,5)+")" //191104
+        hostr="Listplot("+Textformat(Houkou,5)+")"; //191104
       );
     );
     if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
@@ -448,7 +448,7 @@ OldArrowdata(nm,ptlistorg,optionsorg):=(
   );
   if(Noflg<2,
     if(isstring(Ltype),
-      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
+      Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],concat(options,["Msg=n"]));
       Arrowhead(nm,pA+segpos*(pB-pA),pB-pA,options); //181110
     ,
       if(Noflg==1,Ltype=0);
@@ -479,7 +479,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
 //help:Arrowdata("1",[pt1,pt2]);
 //help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,lineflg,
-      flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,Ev,Nv,pP);
+      flg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,Ev,Nv,pP);
   pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
   scaley=SCALEY; //190412
   Setscaling(1); 
@@ -516,7 +516,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
   if(contains(strL,"l")%contains(strL,"L"),
     lineflg=1;
   );//181018from
-  options=remove(options,strL);
+  options=reL; //191106
   cutend=[0,0];//180719
   coord="P";//181018
   lineflg=1; //190504
@@ -529,12 +529,12 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
       tmp2=replace(tmp2,"]","");
       cutend=tokenize(tmp2,",");
       if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
-      options=remove(options,[#]);
+//      options=remove(options,[#]); //191106
     );
     if(tmp1=="LI",//190504from
       tmp2=Toupper(substring(tmp2,0,1));
       if(tmp2=="N",lineflg=0);
-      options=remove(options,[#]);
+//      options=remove(options,[#]); //191106
     );//190504to
   );
   if(Noflg<3,
@@ -544,7 +544,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
   if(Noflg<3, //190818
     if(isstring(Ltype),
       if(lineflg==1, //190504from
-        Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],append(options,"Msg=n"));
+        Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],[Ltype,"Color="+color,"Msg=n"]); //191106
       ,
         tmp=pB;
         pB=pA;
@@ -558,7 +558,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
       tmp1=pP+size*cos(angle)*Ev+size*sin(angle)*Nv;
       tmp2=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
       ArrowheadNumber=ArrowheadNumber+1;
-      Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n"));
+  //    Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n")); //191106
       tmp=pP+(1-cut)*((tmp1+tmp2)/2-pP); //191011[2lines]
       fillpoly([tmp1,pP,tmp2,tmp,tmp1],color->color);      
       if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on

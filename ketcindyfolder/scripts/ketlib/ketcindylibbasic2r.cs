@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191106] loaded");
+println("ketcindylibbasic2[20191114] loaded");
 
 //help:start();
 
@@ -123,7 +123,7 @@ Setarrow(arglist):=(
     if((tmp_2>0)&(tmp_2<90),YaAngle=tmp_2);
    );
   if(length(tmp)>=3,
-     if((tmp_3>=0)&(tmp_3<=1),YaPosition=tmp_3);
+     YaPosition=tmp_3; //191114
   );
   if(length(tmp)>=4,
     if((tmp_4>=0)&(tmp_4<1),YaCut=tmp_4);
@@ -173,6 +173,9 @@ Arrowheaddata(point,direction,options):=(
       ,
         hiraki=tmp;
       );
+    );
+    if(#==3,
+      iti=reL_#;
     );
   ); //181110to
   Flg=0;
@@ -233,7 +236,7 @@ Arrowheaddata(point,direction,options):=(
     list;
   );
 );
-////    aaddata end////
+////%Arrowheaddata end////
 
 ////%Arrowhead start////
 Arrowhead(point,Houkou):=Arrowhead(point,Houkou,[]); //181018from
@@ -284,8 +287,9 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
   if(ispoint(direction),Houkou=direction.xy); //181018
   if(isstring(direction),Houkou=parse(direction),Houkou=direction);
   if(Measuredepth(Houkou)==2,Houkou=Houkou_1);
+  Houkou=Pcrd(Houkou); //191114
   if(coord=="P",//181018from
-    if(ispoint(point),pP=point.xy,pP=point);
+    if(ispoint(point),pP=point.xy,pP=Pcrd(point)); //191114
   ,
     pP=Pcrd(point);
     if(!islist(Houkou_1),
@@ -294,6 +298,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
       Houkou=apply(Houkou,Pcrd(#)); 
     );
   );//181018to
+  pP=pP-(1-reL_3)*Houkou/Norm(Houkou); //191104
   list=Arrowheaddata(pP,Houkou,options);
   if(!Inwindow(LLcrd(pP)),Noflg=2);//181018
   if(Noflg<3,

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191114] loaded");
+println("ketcindylibbasic2[20191119] loaded");
 
 //help:start();
 
@@ -340,18 +340,24 @@ Arrowhead(nm,point,direction,optionsorg):=(//181018from
 );
 ////%Arrowhead end////
 
-////%Arrowdata start//// 190727 (<= Lightarrowdata)
-Arrowdata(ptlist):=Lightarrowdata(ptlist,[]);
-Arrowdata(Arg1,Arg2):=Lightarrowdata(Arg1,Arg2);
-Arrowdata(nm,ptlistorg,optionsorg):=Lightarrowdata(nm,ptlistorg,optionsorg);
+////%Arrowdata start//// 191119 (Arrowdataseg,Arrowdatacrv)
+Arrowdata(ptlist):=Arrowdataseg(ptlist);
+Arrowdata(Arg1,Arg2):=Arrowdataseg(Arg1,Arg2);
+Arrowdata(nm,ptlistorg,optionsorg):=(
+//help:Arrowdata("1",[A,B]);
+//help:Arrowdata("1",[p1,p2]);
+//help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
+//help:Arrowdata(optionsadded=["line"]);
+  Arrowdataseg(nm,ptlistorg,optionsorg);
+);
 ////%Arrowdata end////
 
-////%OldArrowdata start////
-Arrowdata(ptlist):=OldArrowdata(ptlist,[]); //181110from
-OldArrowdata(Arg1,Arg2):=(
+////%Oldarrowdata start////
+Oldrrowdata(ptlist):=Oldarrowdata(ptlist,[]);  //181110from
+Oldrrowdata(Arg1,Arg2):=(
   regional(name);
   if(isstring(Arg1),
-    OldArrowdata(Arg1,Arg2,[]);
+    Oldarrowdata(Arg1,Arg2,[]);
   ,
     name="";
     forall(Arg1,
@@ -359,14 +365,14 @@ OldArrowdata(Arg1,Arg2):=(
         name=name+#.name; //190505
       );
     );
-    OldArrowdata(name,Arg1,Arg2);
+    Oldarrowdata(name,Arg1,Arg2);
   );
-);  //181110from
-OldArrowdata(nm,ptlistorg,optionsorg):=(
+);  //181110to
+Oldarrowdata(nm,ptlistorg,optionsorg):=(
 // help:Arrowdata("1",[A,B]);
 // help:Arrowdata("1",[pt1,pt2]);
-// help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
-// help:Arrowdata(optionsadded=["line"]);
+// help:Arrowdatacrv(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
+// help:Arrowdatacrv(optionsadded=["line"]);
   regional(options,Ltype,Noflg,name,opstr,opcindy,eqL,reL,strL,color,size,coord,
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,ptlist);
   name="ar"+nm;
@@ -462,14 +468,14 @@ OldArrowdata(nm,ptlistorg,optionsorg):=(
   Setscaling(scaley); //190412
   [Lcrd(pA),Lcrd(pB)];
 );
-////%OldArrowdata end////
+////%Oldarrowdata end////
 
-////%Lightarrowdata start////
-Lightarrowdata(ptlist):=Lightarrowdata(ptlist,[]); //181110from
-Lightarrowdata(Arg1,Arg2):=(
+////%Arrowdataseg start////
+Arrowdataseg(ptlist):=Arrowdataseg(ptlist,[]); //181110from
+Arrowdataseg(Arg1,Arg2):=(
   regional(name);
   if(isstring(Arg1),
-    Lightarrowdata(Arg1,Arg2,[]);
+    Arrowdataseg(Arg1,Arg2,[]);
   ,
     name="";
     forall(Arg1,
@@ -477,22 +483,22 @@ Lightarrowdata(Arg1,Arg2):=(
         name=name+#.name; //190505
       );
     );
-    Lightarrowdata(name,Arg1,Arg2);
+    Arrowdataseg(name,Arg1,Arg2);
   );
 );  //181110from
-Lightarrowdata(nm,ptlist,optionsorg):=(
-//help:Arrowdata("1",[pt1,pt2]);
-//help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
+Arrowdataseg(nm,ptlistorg,optionsorg):=(
+//help:Arrowdataseg("1",[pt1,pt2]);
+//help:Arrowdataseg(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,lineflg,
-      flg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,Ev,Nv,pP);
-  pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
+      flg,cutend,tmp,tmp1,tmp2,pA,pB,pC,wangle,segpos,cut,scaley,Ev,Nv,pP,ptlist);
   scaley=SCALEY; //190412
   Setscaling(1); 
   ptlist=[];
   forall(ptlistorg,
-    if(ispoint(#),tmp=[#.x, scaley*#.y], tmp=[#_1,scaley*#_2]);
+    if(ispoint(#),tmp=[#.x, #.y], tmp=[#_1,scaley*#_2]);
     ptlist=append(ptlist,tmp);
   );
+  pA=ptlist_1; pB=ptlist_2;
   options=optionsorg;
   tmp=select(options,isstring(#)); //181214from
   tmp1=select(tmp,contains(["dr","da","do","id"],substring(#,0,2)));
@@ -513,7 +519,7 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
   forall((length(reL)+1)..4,
     reL=append(reL,tmp1_#);
   );
-  size=reL_1;
+  size=0.2*reL_1;
   if(reL_2<2.5,angle=reL_2*tmp1_2,angle=reL_2); //191011
   segpos=reL_3;
   cut=reL_4;
@@ -524,7 +530,6 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
   options=reL; //191106
   cutend=[0,0];//180719
   coord="P";//181018
-  lineflg=1; //190504
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,2));
@@ -534,62 +539,46 @@ Lightarrowdata(nm,ptlist,optionsorg):=(
       tmp2=replace(tmp2,"]","");
       cutend=tokenize(tmp2,",");
       if(length(cutend)==1,cutend=[cutend_1,cutend_1]);
-//      options=remove(options,[#]); //191106
     );
     if(tmp1=="LI",//190504from
       tmp2=Toupper(substring(tmp2,0,1));
       if(tmp2=="N",lineflg=0);
-//      options=remove(options,[#]); //191106
     );//190504to
   );
-  if(Noflg<3,
-    tmp="ar"+nm+"="+Textformat([pA,pB],5)+";";
-    parse(tmp);
-  );
-  if(Noflg<3, //190818
-    if(isstring(Ltype),
-      if(lineflg==1, //190504from
-        Listplot("-ar"+nm,[LLcrd(pA),LLcrd(pB)],[Ltype,"Color="+color,"Msg=n"]); //191106
-      ,
-        tmp=pB;
-        pB=pA;
-        pA=pB-tmp;
-      );  //190504to
-      size=0.2*size;
-      angle=angle*pi/180;
-      pP=pA+segpos*(pB-pA);
-      Ev=-1/|pB-pA|*(pB-pA);
-      Nv=[-Ev_2, Ev_1];
-      tmp1=pP+size*cos(angle)*Ev+size*sin(angle)*Nv;
-      tmp2=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
-      ArrowheadNumber=ArrowheadNumber+1;
-  //    Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n")); //191106
-      tmp=pP+(1-cut)*((tmp1+tmp2)/2-pP); //191011[2lines]
-      fillpoly([tmp1,pP,tmp2,tmp,tmp1],color->color);      
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
-      ); //no ketjs off
-      Setscaling(scaley);
-      tmp1=Textformat(LLcrd(pP),5); //no ketjs on
-      tmp2=Textformat(LLcrd(pB-pA),5);
-      if(cut>0, //190727from //no ketjs on
-        tmp=Indexall(opstr,",");
-        tmp=tmp_(length(tmp));
-        opstr=substring(opstr,0,tmp-1);
-        opstr=opstr+","+Dqq("Cut="+text(cut));
-      );  //190727to
-      Com2nd("Arrowhead("+tmp1+","+tmp2+opstr+")");
-      if((Noflg==0)&(color!=KCOLOR), //180904 
-        Texcom("}");//180722
-      ); //no ketjs off
+
+//  if(Noflg<3,
+//    tmp="ar"+nm+"="+Textformat([pA,pB],5)+";";
+//    parse(tmp);
+//  );
+  tmp=pB-pA;
+  tmp=tmp/|tmp|;
+  pA=ptlist_1+tmp*cutend_1;
+  pB=ptlist_2-tmp*cutend_2;
+  angle=angle*pi/180;
+  pP=pA+segpos*(pB-pA);
+  Ev=-1/|pB-pA|*(pB-pA);
+  Nv=[-Ev_2, Ev_1];
+  tmp1=pP+size*cos(angle)*Ev+size*sin(angle)*Nv;
+  tmp2=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
+  pC=pP+(1-cut)*((tmp1+tmp2)/2-pP);
+  ArrowheadNumber=ArrowheadNumber+1;
+  if(Noflg<2,
+    if(lineflg==1,
+      Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n")); //191106
     ,
-      if(Noflg==1,Ltype=0);
+      Listplot("-arh"+nm,[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //191106
+      Shade(["arh"+nm],[Ltype,"Color="+color]);
+      if(segpos==1,
+        pB=pC;
+//      fillpoly([tmp1,pP,tmp2,pC,tmp1],color->color);
+      ); 
     );
+    Listplot("-ar"+nm,[pA,pB],[Ltype,"Color="+color,"Msg=n"]);
   );
   Setscaling(scaley); //190412
   [Lcrd(pA),Lcrd(pB)];
 );
-////%Lightarrowdata end////
+////%Arrowdataseg end////
 
 ////%Anglemark start////
 Anglemark(plist):=Anglemark(plist,[]);
@@ -2793,9 +2782,9 @@ Drwxy(add,optionsorg):=(
     if(length(tmp)>0,size=parse(tmp),size=YaSize);
     tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//181216
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
-    Lightarrowdata("axx"+text(AXCOUNT),tmp,tmp1);
+    Arrowdataseg("axx"+text(AXCOUNT),tmp,tmp1);
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];
-    Lightarrowdata("axy"+text(AXCOUNT),tmp,tmp1); //190419
+    Arrowdataseg("axy"+text(AXCOUNT),tmp,tmp1); //190419
   ,
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
     tmp1=concat(options,[colorax,"Msg=n"]);//181216,190325

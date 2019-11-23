@@ -519,7 +519,7 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
   forall((length(reL)+1)..4,
     reL=append(reL,tmp1_#);
   );
-  size=0.2*reL_1;
+  size=0.2*reL_1*1/2.54*1000/MilliIn; //191123
   if(reL_2<2.5,angle=reL_2*YaAngle,angle=reL_2); //191011
   segpos=reL_3;
   cut=reL_4;

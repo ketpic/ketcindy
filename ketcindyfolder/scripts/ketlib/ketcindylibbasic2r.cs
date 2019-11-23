@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191119] loaded");
+println("ketcindylibbasic2[20191123] loaded");
 
 //help:start();
 
@@ -120,7 +120,7 @@ Setarrow(arglist):=(
     if((tmp_1>0),YaSize=tmp_1);
   );
   if(length(tmp)>=2,
-    if((tmp_2>0)&(tmp_2<90),YaAngle=tmp_2);
+    if(tmp_2<2.5,YaAngle=tmp_2*YaAngle,Yaangle=tmp_2); //191123
    );
   if(length(tmp)>=3,
      YaPosition=tmp_3; //191114
@@ -490,7 +490,7 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
 //help:Arrowdataseg("1",[pt1,pt2]);
 //help:Arrowdataseg(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,coord,lineflg,
-      flg,cutend,tmp,tmp1,tmp2,pA,pB,pC,wangle,segpos,cut,scaley,Ev,Nv,pP,ptlist);
+      flg,cutend,tmp,tmp1,tmp2,pA,pB,pC,angle,segpos,cut,scaley,Ev,Nv,pP,ptlist);
   scaley=SCALEY; //190412
   Setscaling(1); 
   ptlist=[];
@@ -520,7 +520,7 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
     reL=append(reL,tmp1_#);
   );
   size=0.2*reL_1;
-  if(reL_2<2.5,angle=reL_2*tmp1_2,angle=reL_2); //191011
+  if(reL_2<2.5,angle=reL_2*YaAngle,angle=reL_2); //191011
   segpos=reL_3;
   cut=reL_4;
   lineflg=0;
@@ -1954,9 +1954,9 @@ Shade(nm,plistorg,options):=(
   name="shade"+nm;
   plist=plistorg;
   if(isstring(plist_1), // 16.01.24
-    println("output Shade of "+plist);
+//    println("output Shade of "+plist);
   ,
-    println("output Shade of lists");
+//    println("output Shade of lists");
   );
   tmp=Divoptions(options);
   eqL=tmp_5; 

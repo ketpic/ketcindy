@@ -1,3 +1,5 @@
+// 20191123
+//   Setarrow debugged (YaAngle)
 // 20191119
 //   Arrowdata(Arrowdataseg) changed  ( making seg short to be hidden )
 // 20191114

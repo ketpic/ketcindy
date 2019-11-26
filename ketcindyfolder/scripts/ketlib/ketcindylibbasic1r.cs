@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191027] loaded");
+println("ketcindylibbasic1[20191126] loaded");
 
 //help:start();
 
@@ -5056,22 +5056,37 @@ Framedata(nm,list,optionsorg):=( //190424modified
 //help:Framedata();
 //help:Framedata("1",[C,A]);
 //help:Framedata("1",[C,dx,dy]);
+//help:Framedata("1",[p1,p2],["corner"]);
   regional(name,options,Out,tmp,tmp1,x1,x2,y1,y2,dx,dy,
-      opcindy,Ltype,Noflg,strL,cent,dx,dy,color);
+      opcindy,Ltype,Noflg,strL,cent,dx,dy,color,strL,corner);
   name="fr"+nm;
   options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  strL=tmp_7; //191126
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
-  if(length(list)==2,  // 15.05.12
-    cent=Lcrd(list_1); tmp=Lcrd(list_2);
-    dx=abs(tmp_1-cent_1); dy=abs(tmp_2-cent_2);
-  ,
-    cent=Lcrd(list_1);
-    dx=list_2; dy=list_3;
+  corner=0; //191126from
+  forall(strL,
+    tmp=substring(Toupper(#),0,1);
+    if(tmp=="C",
+      cent=(list_1+list_2)/2;
+      dx=abs(list_2_1-list_1_1)/2;
+      dy=abs(list_2_2-list_1_2)/2;
+      corner=1;
+      options=remove(options,[#]);
+    );
   );
+  if(corner==0,
+    if(length(list)==2,  // 15.05.12
+      cent=Lcrd(list_1); tmp=Lcrd(list_2);
+      dx=abs(tmp_1-cent_1); dy=abs(tmp_2-cent_2);
+    ,
+      cent=Lcrd(list_1);
+      dx=list_2; dy=list_3;
+    );
+  );  //191126to
   x1=cent_1-dx; x2=cent_1+dx;
   y1=cent_2-dy; y2=cent_2+dy;
   Listplot("-"+name,[[x1,y1],[x2,y1],[x2,y2],[x1,y2],[x1,y1]],options);

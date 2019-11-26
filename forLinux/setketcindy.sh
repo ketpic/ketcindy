@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20181006
+#      20181125
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
@@ -36,7 +36,7 @@ if [ ${ans} = "n" ]; then
 fi
 
 echo copying scripts
-sudo cp -r -p -T scripts/${ketcindyscripts}/
+sudo cp -r -p -T scripts/ ${ketcindyscripts}/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
@@ -63,7 +63,7 @@ if [ -e KetCindyPlugin.jar ]; then
   sudo rm KetCindyPlugin.jar
 fi
 cd ${ketcindyscripts}
-cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
+sudo cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
 echo "KetCindyPlugin.jar copied to Cinderella"
 
 # 20190616from

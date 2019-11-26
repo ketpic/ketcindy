@@ -1,3 +1,5 @@
+// 20191126
+//    Framedata changed  ("corner" option)
 // 20191027
 //    Ellipseplot, Hyperbolaplot debugged  ( for Ptpos )
 // 20191025

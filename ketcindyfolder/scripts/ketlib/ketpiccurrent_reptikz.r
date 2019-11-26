@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "tikzv1_1_1(191104)"
+ThisVersion<- "tikzv1_1_1(191126)"
 
+# 20191126
+#    Drwpt debugged/changed
 # 20191104
 #    Dotteline changed (Ookisa 2->1/0.075)
 # 2019.04.05 Drwpt  ( Incolor, Takato)
@@ -505,24 +507,23 @@ Drwpt<-function(...) #181230
       P<- Doscaling(P)
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      if(Same!="no"){  #190405from
-        Str=paste("{\\linethickness{0 in}",Incolor,sep="")
-      }
-      if(Same!="no"){  #190405from
-        Str=paste("{\\linethickness{0 in}%\n",sep="")
-        cat(Str,file=Wfile,append=TRUE)
-        if(Same=="n"){ #190405
-          Str1<- paste("{\\color[rgb]",Incolor,"%\n",sep="")
-          cat(Str1,file=Wfile,append=TRUE)
+      Str1<- paste("{\\color[rgb]",Incolor,"%\n",sep="")
+      cat(Str1,file=Wfile,append=TRUE)
+      Str=paste('\\fill (',X,',',Y,') circle [radius=',sprintf('%6.6f',Ra/2),'];%\n',sep="") 
+          #191126
+      cat(Str,file=Wfile,append=TRUE)
+      cat("}%\n",file=Wfile,append=TRUE)
+      Str=paste('\\draw [line width=','0.008','in]',sep="")
+      for(J in 0:24){
+        Tmp1=sprintf('%6.6f',P[1]+Ra/2*cos(J*2*pi/24))
+        Tmp2=sprintf('%6.6f',P[2]+Ra/2*sin(J*2*pi/24))
+        Str=paste(Str,"(",Tmp1,",",Tmp2,")",sep="");
+        if(J<24){
+          Str=paste(Str,"--",sep="")
+        }else{
+          Str=paste(Str,";%\n",sep="")
         }
-        Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}%\n',sep="")
-        cat(Str,file=Wfile,append=TRUE)
-        if(Same=="n"){
-          cat("}%\n",file=Wfile,append=TRUE)
-        }
-        cat("}%\n",file=Wfile,append=TRUE)
       }
-      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}%\n',sep="")
       cat(Str,file=Wfile,append=TRUE)
     }
   } # 190405to

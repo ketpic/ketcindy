@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20191001)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20191126)" 
 
 print(ThisVersion)
 
+# 20191126
+#   Drwpt debugge/changed  (sh 1, pen)
 # 20191001
 #   Intersectpartseg, Enclosing2 debugged  (Listplot => rbind)
 # 20190921
@@ -2478,14 +2480,14 @@ Drwpt<-function(...){
           }
           Mojisu=0
         }
-        Str1<- "\\special{sh}\\special{fp}" #190405from
+        Str1<- "\\special{sh 1}\\special{fp}" #190405from, 191126
         if(Same=="n"){
           Str1<- paste(Str1,"}",sep="")
         }
         Str1<- paste(Str1,"%\n",sep="") #190405to
         cat(Str1,file=Wfile,append=TRUE)
       }
-      cat("\\special{pn 4}",file=Wfile,append=TRUE) #181231
+      cat("\\special{pn 8}",file=Wfile,append=TRUE) #181231,191126
       Mojisu=0
       for (J in 1:Nrow(PL)){
         Q<- PL[J,]

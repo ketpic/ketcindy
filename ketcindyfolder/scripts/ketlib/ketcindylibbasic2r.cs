@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191128] loaded");
+println("ketcindylibbasic2[20191201] loaded");
 
 //help:start();
 
@@ -508,11 +508,11 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
       Listplot("-arh"+nm,[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //191106
       Shade(["arh"+nm],[Ltype,"Color="+color]);
       if(segpos==1,
-        pB=pC;
+//        pB=pC;
 //      fillpoly([tmp1,pP,tmp2,pC,tmp1],color->color);
       ); 
     );
-    Listplot("-ar"+nm,[pA,pB],[Ltype,"Color="+color,"Msg=n"]);
+    Listplot("-ar"+nm,[pA,pC],[Ltype,"Color="+color,"Msg=n"]); //191201
   );
   Setscaling(scaley); //190412
   [Lcrd(pA),Lcrd(pB)];

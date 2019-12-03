@@ -1,3 +1,6 @@
+// 20191203
+//    Ketinit changed  (Yacut 0.2 as default)
+//    Changestyle changed  ( for list setting, color->)
 // 20191126
 //    Framedata changed  ("corner" option)
 // 20191027

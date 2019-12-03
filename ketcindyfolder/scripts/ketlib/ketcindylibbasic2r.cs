@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191201] loaded");
+println("ketcindylibbasic2[20191204] loaded");
 
 //help:start();
 
@@ -145,8 +145,8 @@ Arrowheaddata(point,direction,options):=( //191127remade
 // help:Arrowheaddata("1",A,gr1);
 // help:Arrowheaddata(options=[size(1),angle(18),pos(1),cut(0)]);
   regional(scaley,Eps,size,angle,segpos,cut, Houkou,hflg,Str,Ev,Nv,
-       reL,pP,vec,pA,pB,pC,out,tmp,tmp1,tmp2);
-  Eps=10^(-3);
+       reL,pP,vec,pA,pB,pC,par,out,tmp,tmp1,tmp2);
+  Eps=10^(-4);
   tmp=Divoptions(options);
   reL=tmp_6;
   size=0.2*YaSize*1/2.54*1000/MilliIn; 
@@ -167,25 +167,33 @@ Arrowheaddata(point,direction,options):=( //191127remade
     cut=reL_4;
   );
   if(ispoint(point),pP=Lcrd(point),pP=point);
-  scaley=SCALEY;
   hflg=0; 
   out=[];
   if(ispoint(direction),
     Houkou=direction.xy;
-    hflg=1;
-    Setscaling(1); 
+    hflg=2;
   );
+  if(hflg==0, //191203from
+    if(Measuredepth(parse(direction))==0,
+      Houkou=direction;
+      hflg=2;
+    );  //191203to
+  );
+  scaley=SCALEY;
+  Setscaling(1); //191203(moved)
   if(hflg==0,
     if(isstring(direction),Houkou=parse(direction),Houkou=direction);
     if(!islist(pP),
-      segpos=1;
-      tmp=max(1,length(Houkou)*pP);
+      par=pP;
+      tmp=1+(length(Houkou)-1)*par; //191202
       pP=Ptcrv(tmp,Houkou);
+      tmp=floor(tmp); //191203from
+    ,
+      tmp=Nearestpt(pP,Houkou);
+      pP=tmp_1;
+      par=tmp_2;
+      tmp=floor(par); //191203to
     );
-    Setscaling(1); 
-    tmp=Nearestpt(pP,Houkou);
-    pP=tmp_1;
-    tmp=floor(tmp_2);
     if(tmp<length(Houkou),
       tmp1=Houkou_tmp;
       tmp2=Houkou_(tmp+1);
@@ -201,7 +209,7 @@ Arrowheaddata(point,direction,options):=( //191127remade
     ,
       pC=tmp_1_1;
       if(Dotprod(pP-pC,vec)<0,
-        if(length(tmp)==1,
+       if(length(tmp)==1,
           pC=2*pP-pC;
         ,
           pC=tmp_2_1;
@@ -211,13 +219,21 @@ Arrowheaddata(point,direction,options):=( //191127remade
       hflg=1;
     );
   );
-  if(hflg==1,
+  if(hflg>=1,
     Ev=-Houkou/|Houkou|;
-    Nv=[-Ev_2, Ev_1];
-    pP=pC+segpos*(pP-pC);
+    Nv=[-Ev_2, Ev_1];    
     pA=pP+size*cos(angle)*Ev+size*sin(angle)*Nv;
     pB=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
+    if(hflg==2,
+      pC=(pA+pB)/2;
+    );
     pC=pC+cut*(pP-pC);
+    tmp=(pP-(pA+pB)/2);
+    tmp=(1-segpos)*tmp;
+    pP=Translatepoint(pP,tmp);
+    pA=Translatepoint(pA,tmp);
+    pB=Translatepoint(pB,tmp);
+    pC=Translatepoint(pC,tmp);
     Setscaling(scaley);
     out=apply([pA,pP,pB,pC,pA],LLcrd(#));
   );
@@ -239,8 +255,9 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
 //help:Arrowhead("1",[1,2],"gr1");
 //help:Arrowhead("1",0.5,"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
-   regional(name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
+   regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
          options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
+  Eps=10^(-4);
   name="arh"+nm; //181018
   ArrowheadNumber=ArrowheadNumber+1;
   options=optionsorg;
@@ -270,7 +287,18 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
       if(line=="N",
         fillpoly(apply(list,Pcrd(#)),color->color);
         if(Noflg==0,
-          Listplot("-arh"+nm,list,concat(options,["Msg=n"]));
+          if((point==1)&(isstring(direction)), //191202from
+            if(norm(Ptend(direction)-Ptstart(direction))>Eps, //191203from
+              tmp=select(GCLIST,indexof(direction,#_1)>0);
+              tmp=tmp_1;
+              tmp1=Nearestpt(list_4,direction);
+              tmp1=tmp1_2;
+              Partcrv("arh"+text(ArrowheadNumber),1,tmp1,direction,["Msg=n"]);
+              Changestyle("part"+direction,[tmp_2,tmp_3]);
+              Changestyle(direction,["nodisp"]);
+            );
+          );  //191202to
+          Listplot("-arh"+nm,list,["dr,0.1","Color="+text(color),"Msg=n"]);//191202
           Shade(["arh"+nm],["Color="+text(color)]);
         );
       ,
@@ -278,6 +306,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
       );
    );
   );
+  list; //191202
 );
 ////%Arrowhead end////
 
@@ -429,7 +458,7 @@ Arrowdataseg(Arg1,Arg2):=(
 );  //181110from
 Arrowdataseg(nm,ptlistorg,optionsorg):=(
 //help:Arrowdataseg("1",[pt1,pt2]);
-//help:Arrowdataseg(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=y(n)"]);
+//help:Arrowdataseg(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=n(y)"]);
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,lineflg,
       flg,cutend,tmp,tmp1,tmp2,pA,pB,pC,angle,segpos,cut,scaley,Ev,Nv,pP,ptlist);
   scaley=SCALEY; //190412
@@ -441,9 +470,6 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
   );
   pA=ptlist_1; pB=ptlist_2;
   options=optionsorg;
-  tmp=select(options,isstring(#)); //181214from
-  tmp1=select(tmp,contains(["dr","da","do","id"],substring(#,0,2)));
-  if(length(tmp1)==0,options=append(options,YasenStyle)); //181214to
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -453,23 +479,26 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
   color=tmp_(length(tmp)-2);
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
-  tmp1=[YaSize,YaAngle,YaPosition,YaCut]; //181214from
-  forall(1..(length(reL)),
-    if(reL_#<0, reL_#=tmp1_#);
-  ); 
-  forall((length(reL)+1)..4,
-    reL=append(reL,tmp1_#);
+  size=0.2*YaSize*1/2.54*1000/MilliIn; 
+  angle=YaAngle*pi/180;
+  segpos=YaPosition;
+  cut=YaCut;
+  if(length(reL)>=1,
+    size=0.2*reL_1*1/2.54*1000/MilliIn; 
   );
-  size=0.2*reL_1*1/2.54*1000/MilliIn; //191123
-  if(reL_2<2.5,angle=reL_2*YaAngle,angle=reL_2); //191011
-  segpos=reL_3;
-  cut=reL_4;
-  lineflg=0;
-  if(contains(strL,"l")%contains(strL,"L"),
-    lineflg=1;
-  );//181018from
-  options=reL; //191106
+  if(length(reL)>=2,
+    if(reL_2<2.5,angle=reL_2*YaAngle,angle=reL_2);
+    angle=angle*pi/180;
+  );
+  if(length(reL)>=3,
+    segpos=reL_3;
+  );
+  if(length(reL)>=4,
+    cut=reL_4;
+  );
+  options=remove(options,reL); //191202
   cutend=[0,0];//180719
+  lineflg=0;
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,2));
@@ -482,18 +511,13 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
     );
     if(tmp1=="LI",//190504from
       tmp2=Toupper(substring(tmp2,0,1));
-      if(tmp2=="N",lineflg=0);
+      if(tmp2=="Y",lineflg=1);
     );//190504to
   );
-//  if(Noflg<3,
-//    tmp="ar"+nm+"="+Textformat([pA,pB],5)+";";
-//    parse(tmp);
-//  );
   tmp=pB-pA;
   tmp=tmp/|tmp|;
   pA=ptlist_1+tmp*cutend_1;
   pB=ptlist_2-tmp*cutend_2;
-  angle=angle*pi/180;
   pP=pA+segpos*(pB-pA);
   Ev=-1/|pB-pA|*(pB-pA);
   Nv=[-Ev_2, Ev_1];
@@ -507,15 +531,14 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
     ,
       Listplot("-arh"+nm,[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //191106
       Shade(["arh"+nm],[Ltype,"Color="+color]);
-      if(segpos==1,
-//        pB=pC;
-//      fillpoly([tmp1,pP,tmp2,pC,tmp1],color->color);
-      ); 
     );
-    Listplot("-ar"+nm,[pA,pC],[Ltype,"Color="+color,"Msg=n"]); //191201
+    if(lineflg==0,
+      if(segpos==1,pB=pC); //191202
+    );
+    Listplot("-ar"+nm,[pA,pB],[Ltype,"Color="+color,"Msg=n"]); 
   );
   Setscaling(scaley); //190412
-  [Lcrd(pA),Lcrd(pB)];
+  [LLcrd(pA),LLcrd(pB)];
 );
 ////%Arrowdataseg end////
 

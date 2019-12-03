@@ -1,3 +1,9 @@
+// 20191204
+//   Arrowheaddata changed ( segpos )
+// 20191203
+//   Arrowheaddata,Arrowhead changed ( style )
+// 20191202
+//   Arrowdataseg,Arrowhead changed (for segpos==1)
 // 20191201
 //   Arrowdata debugged (pB => pC)
 // 20191128

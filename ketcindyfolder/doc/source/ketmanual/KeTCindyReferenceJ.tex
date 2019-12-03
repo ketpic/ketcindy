@@ -268,22 +268,28 @@ Setcolor("darkmaz");
 
 
 \vspace{\baselineskip}
-【例】Cinderellaの描画ツールとCindyScriptで線分AB,ACを60°の角をなすように描いておき，点DとEを弧の両端になるように設定して
+【例】Cを大きさがBと一致するようにとり，Anglemarkと矢印を描く
 \begin{verbatim}
-Setcolor([1,0,0]);
-Circledata([A,D],["Rng=[0,pi/3]"]);
-Arrowhead(E,[-1,0.8],[2,1]);
+C.xy=|B.xy|/|C.xy|*C.xy;
+Listplot([B,A,C]);
+Setcolor("red");
+Anglemark("1",[B,A,C],[3]); //size=3
+Arrowhead(1,"ag1",[2]); //position=1,size=2
 \end{verbatim}
-を実行すると，矢じりつきの弧を赤で表示することができる。
 
-１行目は，\verb|Setcolor("red");|でもよい。
 座標軸を描く場合は，このあと \verb|Setcolor("black")| で黒に戻しておかないと，座標軸が赤で表示されてしまうので要注意。
 
 
 \vspace{\baselineskip}
-\hspace{20mm} \includegraphics[width=3.5cm,bb=0 0 161 134]{Fig/setcolor.pdf} 
+\hspace{20mm}%
+%\includegraphics[width=3.5cm,bb=0 0 161 134]{Fig/setcolor.pdf} 
+\includegraphics[width=35mm,bb=0.00 0.00 176.00 165.00]{Fig/anglearrowscreen.pdf}%
+\hspace{20mm}\scalebox{0.5}{\input{Fig/anglearrow.tex}}
+
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\newpage
 
 \vspace{\baselineskip}
 \hypertarget{deffun}{}
@@ -388,12 +394,6 @@ Pointdata("4",D,["Size=4"]);
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\hypertarget{setarrow}{}
-\item[関数]Setarrow(size,angle,position,cut,segstyle)
-\item[機能]矢線の形状の設定をする。
-\item[説明]引数は，順に，矢じりの大きさ, 開き角, 矢じり位置, 切り込み位置, 線種と表示色 
-
-それぞれの意味と値は，\hyperlink{arrowdata}{Arrowdata()} を参照のこと。
 
 \vspace{\baselineskip}
 \hypertarget{setmarklen}{}
@@ -879,28 +879,31 @@ D.xy=Translatepoint(A,B.xy);
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
+\vspace{\baselineskip}
+\hypertarget{setarrow}{}
+\item[関数]Setarrow([arrowsize,angle,position,cut])
+\item[機能]Arrowdata,Arrowheadで描く矢印のスタイルを設定する。
+\item[説明]arrowsize,angle,position,cut,linestyleは，順に大きさ(1)，開き角(18)，位置(1)，切り込み(0.2)である。（カッコ内はデフォルト値）
+
+\vspace{10mm}
+
 \hypertarget{arrowdata}{}
 \item[関数]Arrowdata(name,[始点 , 終点] , options) 
 \item[機能]2点間を結ぶ矢線を描く。
-\item[説明]name は，座標を数値で与えるときに必要。幾何要素の識別名で与えるときはなくてもよい。
+\item[説明]name はなくてもよい（自動的に通し番号をつける）。
 
-optionsは矢じりの形状などの指定。
+optionsは矢じりの形状などの指定（リストで与える）。
 
-\hspace{10mm} [ 矢じりの大きさ, 開き角, 矢じり位置,切り込み位置, 線種, 線の表示色,トリミング] 
+\hspace*{10mm} 数値は， 大きさ, 開き角, 位置,切り込み\\
+\hspace*{10mm} "Line=n(y)''（矢印は線だけ），"Cutend=''（トリミング），"Color=''
 
-のリストで与える。矢じりの大きさから切り込み位置までは数で，後方のオプションを指定するときは，前方も書く。
-
-開き角は60分法で与える。ただし，° はつけない。5未満の時は18°の倍数指定とする。
+開き角は60分法で与える。2.5未満の時は18°の倍数指定とする。
 
 矢じり位置は，線分の長さを１とした始点からの距離。
 
-切り込み位置は，０のとき三角形の矢じり，１のとき線のみの矢じりとなる。
-
-ただし，Cinderellaの画面上には全ては反映されない。たとえば，太さ指定をしても画面上では太さは同じ。
+切り込みのデフォルトは0.2
  
 トリミング :"Cutend=m" または "Cutend=[m,n]" で，右辺が数のときは両端をmだけカットする。リストのときは始点をm,終点をnだけカットする。mが負のときは延長する。
-
-これらの設定は，\hyperlink{setarrow}{Setarrow()} で初期設定を変更することができる。
 
 \vspace{\baselineskip}
 【例】オプションの設定とその結果を示す。
@@ -910,12 +913,15 @@ Arrowdata("1",[A,B]);
 Arrowdata("2",[[1,0],[2,3]],[2]);
 Arrowdata("3",[[2,0],[3,3]],[3,45]);
 Arrowdata("4",[[3,0],[4,3]],[3,1,0.5]);
-Arrowdata("5",[[4,0],[5,3]],[3,1,1,0.5]);
-Arrowdata("6",[[5,0],[6,3]],[3,1,1,1]);
+Arrowdata("5",[[4,0],[5,3]],[3,1,1,0]);
+Arrowdata("6",[[5,0],[6,3]],[3,"Line=y"]);
 Arrowdata("7",[[6,0],[7,3]],[3,"dr,2"]);
 Arrowdata("8",[[7,0],[8,3]],[3,1,1,0.5,"Color=red"]);
 \end{verbatim}
-\hspace{20mm}\input{Fig/arrowdata}
+
+\vspace{6mm}
+
+\hspace{20mm}\scalebox{0.9}{\input{Fig/arrowhead}}
 
 【例】２つの円を矢線で結ぶ。
 
@@ -934,87 +940,80 @@ Cinderellaの作図ツールで２点ABをとっておく。
 
 円A,Bの半径が同じ（たとえば0.5）であれば，\verb|Arrowdata([A,B],["Cutend=0.5"]);| でよい。
 
-\vspace{\baselineskip}
-\hypertarget{setarrow}{}
-\item[関数]Setarrow([arrowsize,angle,position,cut,linestyle])
-\item[機能]Arrowdata,Arrowheadで描く矢印のスタイルを設定する。
-\item[説明]arrowsize,angle,position,cut,linestyleは，順に大きさ(1)，開き角(18)，位置(1)，切り込み(0)，矢線スタイル("dr")である。（カッコ内はデフォルト値）
-
-
 %\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 \hypertarget{arrowhead}{}
-\item[関数]Arrowhead(点 , 方向 , options) , Arrowhead(点 , プロットデータ,options)
-\item[機能]点に矢じりだけを描く
-\item[説明]指定された位置に，指定された方向を向いた矢じりだけを描く。
+\item[関数]（１）Arrowhead(点 , 方向 , options)\\
+（２）Arrowhead(点または位置比 , プロットデータ, options)
+\item[機能]点に矢じりだけを描く（optionはSetarrowと同じ）
+\item[説明]（１）指定された位置に，指定された方向を向いた矢じりだけを描く。\\
+\hspace*{2.5zw}点は座標または幾何要素名。方向は原点から見て座標[a,b]の方向。
 
-点は座標または幾何要素名。方向は原点から見て座標[a,b]の方向。
 
-optionsは [大きさ，矢じりの開き角，形状と位置] のリスト。
+（２）プロットデータ（曲線）を指定したときは，曲線上の点に矢じりをつける。
 
-矢じりの開き角は60分法で片側半分の角。
+\hspace*{2.5zw}曲線には向きがあり，それによって矢じりの向きが決まる。\\
+\hspace*{2.5zw}"Invert(曲線名)" とすると反対向きの矢じりになる。\\
+\hspace*{2.5zw}曲線の向きとは，曲線を描くときの順序で，プロットデータの順序でもある。\\
+\hspace*{2.5zw}位置比は曲線上の位置を表す比率（0から1）。\\
+\hspace*{3.5zw}例えば，分割数が50で位置比が0.3のとき　\verb|1+50*0.3=2.5|\\
+\hspace*{4.5zw}2番目と3番目の点の中点
 
-形状は， "f" ：塗りつぶしの三角形（ 初期設定）または" l " ： ラインのみ。
+\vspace{0.5zw}
 
-ただし，塗りつぶし矢じりは画面上では塗りつぶしにならない。 
-
-位置は，"t"（ 初期設定）または "c" , "b"
-\begin{tabbing}
-1234\=567890123\=\kill
-\>"t" は矢じりの先端が終点に一致\\
-\>"c" は三角形の中心が終点と一致\\
-\>"b" は終点が矢じりの底辺にのる。
-\end{tabbing}
-プロットデータを指定したときは，曲線上の点に矢じりをつける。
-
-曲線には向きがあり，それによって矢じりの向きが決まる。" Invert(PD) " とすると反対向きの矢じりになる。
-
-曲線の向きとは，曲線を描くときの順序で，プロットデータの順序でもある。invert() はこのプロットデータを逆順にするものである。
-
-\vspace{\baselineskip}
-
-【例】
-
-\vspace{\baselineskip}
-%\hspace{6mm}
 \begin{layer}{150}{0}
-\putnotese{0}{0}{点 A が右図の位置のとき}
-\putnotese{80}{8}{\input{Fig/ForRef-Arrowhead-1}}
-\putnotese{0}{7}{(ア) Arrowhead(A,[-1,1]);}
-\putnotese{0}{14}{(イ) Arrowhead([1,1],[-1,1],[2,60]);}
-\putnotese{0}{21}{(ウ) Arrowhead(A,[-1,1],[2,30,"b"]);}
-\putnotese{0}{28}{(エ) Arrowhead([1,1],[-1,1],[2,20,"lc"]);}
-\putnotese{0}{38}{(ア)}
-\putnotese{30}{38}{(イ)}
-\putnotese{60}{38}{(ウ)}
-\putnotese{90}{38}{(エ)}
-\putnotese{0}{45}{ \input{Fig/ForRef-Arrowhead-2}}
-\putnotese{30}{45}{ \input{Fig/ForRef-Arrowhead-3}}
-\putnotese{60}{45}{ \input{Fig/ForRef-Arrowhead-4}}
-\putnotese{90}{45}{ \input{Fig/ForRef-Arrowhead-5}}
+\putnotese{100}{8}{\input{Fig/ForRef-Arrowhead-1}}
 \end{layer}
 
-\vspace{75mm}
+【例】 A が右図の位置のとき\\
+\hspace*{2.5zw}(ア) \verb|Arrowhead(A,[-1,1]);|\\
+\hspace*{2.5zw}(イ) \verb|Arrowhead([1,1],[-1,1],[2,60]);|\\
+\hspace*{2.5zw}(ウ) \verb|Arrowhead(A,[-1,1],[2,30,0.5]]);|\\
+\hspace*{2.5zw}(エ) \verb|Arrowhead([1,1],[-1,1],[2,20,0.5,"Line=y"]);|
+
 %\hspace{6mm}
+\vspace{5mm}
+
 \begin{layer}{150}{0}
-\putnotese{0}{0}{曲線 crBC 上の点 D が右図のようなとき}
-\putnotese{80}{8}{ \input{Fig/ForRef-Arrowhead-6}}
-\putnotese{96}{22}{crBC}
-\putnotese{0}{7}{(オ) Arrowhead(D,"crBC");}
-\putnotese{0}{14}{(カ) Arrowhead(D,"crBC",[2]);}
-\putnotese{0}{21}{(キ) Arrowhead(D,"crBC",[2,30,"l"]);}
-\putnotese{0}{28}{(ク) Arrowhead(D,"Invert(crBC)");}
-\putnotese{0}{38}{(オ)}
-\putnotese{30}{38}{(カ)}
-\putnotese{60}{38}{(キ)}
-\putnotese{90}{38}{(ク)}
-\putnotese{0}{45}{ \input{Fig/ForRef-Arrowhead-7}}
-\putnotese{30}{45}{ \input{Fig/ForRef-Arrowhead-8}}
-\putnotese{60}{45}{ \input{Fig/ForRef-Arrowhead-9}}
-\putnotese{90}{45}{ \input{Fig/ForRef-Arrowhead-10}}
+\putnotese{0}{0}{(ア)}
+\putnotese{30}{0}{(イ)}
+\putnotese{60}{0}{(ウ)}
+\putnotese{90}{0}{(エ)}
+\putnotese{0}{7}{ \input{Fig/ForRef-Arrowhead-2}}
+\putnotese{30}{7}{ \input{Fig/ForRef-Arrowhead-3}}
+\putnotese{60}{7}{ \input{Fig/ForRef-Arrowhead-4}}
+\putnotese{90}{7}{ \input{Fig/ForRef-Arrowhead-5}}
 \end{layer}
 
-\vspace{70mm}
+\vspace{35mm}
+
+\vspace{0.5zw}
+
+\begin{layer}{150}{0}
+\putnotese{100}{4}{\input{Fig/ForRef-Arrowhead2-6}}
+\end{layer}
+
+曲線 cr1 上の点 A の位置比が0.6のとき\\
+\hspace*{2.5zw}(オ) \verb|Arrowhead(A,"cr1");|\\
+\hspace*{2.5zw}(カ) \verb|Arrowhead(0.6,"cr1",[2,1,0.5,"Color=red"]);|\\
+\hspace*{2.5zw}(キ) \verb|Arrowhead(1,"cr1");|\\
+\hspace*{2.5zw}(ク) \verb|Arrowhead(1,"Invert(cr1)",["Line=y"]);|
+
+\vspace{5mm}
+
+\begin{layer}{150}{0}
+\putnotese{0}{0}{オ)}
+\putnotese{30}{0}{(カ)}
+\putnotese{60}{0}{(キ)}
+\putnotese{90}{0}{(ク)}
+\putnotese{0}{7}{ \input{Fig/ForRef-Arrowhead2-7}}
+\putnotese{30}{7}{ \input{Fig/ForRef-Arrowhead2-8}}
+\putnotese{60}{7}{ \input{Fig/ForRef-Arrowhead2-9}}
+\putnotese{90}{7}{ \input{Fig/ForRef-Arrowhead2-10}}
+\end{layer}
+
+\vspace{35mm}
+%\vspace{70mm}
 
 \vspace{\baselineskip}
 \hypertarget{lineplot}{}

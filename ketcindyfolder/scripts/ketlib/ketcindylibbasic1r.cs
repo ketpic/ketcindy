@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.0");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191126] loaded");
+println("ketcindylibbasic1[20191203] loaded");
 
 //help:start();
 
@@ -69,7 +69,8 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
   TenSizeInit=0.02;
   TenSize=TenSizeInit;
   YaSize=1; YaAngle=18; YaPosition=1;
-  YaCut=0; YasenStyle="dr,1"; Yajiristyle="tf";
+  YaCut=0.2; //191203
+  YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
   KCOLOR=[0,0,0];
   GLIST=[]; // no ketjs
@@ -908,14 +909,35 @@ Changework(dirorg,options):=( //16.10.21
 ////%Changework end////
 
 ////%Changestyle start////
-Changestyle(nameL,style):=(
+Changestyle(nameL,styleorg):=(
 //help:Changestyle(["sgAB"],["da"]);
-  regional(nmL,name,Ltype,Ltypeorg,Noflg,color,opcindy,tmp);
+  regional(nmL,name,style,Ltype,Ltypeorg,Noflg,reL,color,opcindy,
+      tmp,tmp1,tmp2);
+  style=styleorg; //191203from
+  style=apply(style,
+    if(isstring(#),replace(#,",color->","Color="),#);
+  ); //191203to
   tmp=Divoptions(style);
   Ltypeorg=tmp_1;
   Noflg=tmp_2;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
+  reL=tmp_6; //191203from
+  if(length(reL)>0,
+    tmp1=reL_1;
+    if(islist(tmp1),
+      tmp=tmp1_1;
+      if(tmp==0,tmp2="dr");
+      if(tmp==1,tmp2="da");
+      if(tmp==2,tmp2="id");
+      if(tmp==3,tmp2="do");
+      if(tmp==-1,tmp2="nodisp");
+      forall(2..(length(tmp1)),
+        if(tmp1_# !=0,tmp2=tmp2+","+text(tmp1_#));
+      );
+      Ltypeorg=tmp2;
+    );
+  );
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   forall(nmL,name,
     tmp=select(GCLIST,#_1==name);

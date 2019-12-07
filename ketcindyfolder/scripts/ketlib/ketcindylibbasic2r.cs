@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191207] loaded");
+println("ketcindylibbasic2[20191208] loaded");
 
 //help:start();
 
@@ -174,11 +174,13 @@ Arrowheaddata(point,direction,options):=( //191127remade
     hflg=2;
   );
   if(hflg==0, //191203from
-    if(Measuredepth(parse(direction))==0,
-      Houkou=direction;
-      hflg=2;
-    );  //191203to
-  );
+    if(!isstring(direction), //191207
+      if(Measuredepth(direction)==0,
+        Houkou=direction;
+        hflg=2;
+      );
+    );  //191207to
+  ); //191203to
   scaley=SCALEY;
   Setscaling(1); //191203(moved)
   if(hflg==0,
@@ -202,19 +204,23 @@ Arrowheaddata(point,direction,options):=( //191127remade
     );
     vec=(tmp2-tmp1)/|tmp2-tmp1|;
     gG=Circledata("",[pP,size*cos(angle)],["Num=10","nodata"]);
-    tmp=Intersectcrvspp(Houkou,gG);
-    if(length(tmp)==0,
+    tmp1=Intersectcrvspp(Houkou,gG);
+    if(length(tmp1)==0,
       println("Arrowhead may be too large (no intersect)");
     ,
-      tmp=sort(tmp,[abs(#_2-par)]); //191207[2lines]
-      pC=tmp_1_1;
-      if(Dotprod(pP-pC,vec)<0,
-       if(length(tmp)==1,
-          pC=2*pP-pC;
+      tmp=select(tmp1,#_2<par); //191208from
+      if(length(tmp)>0,
+        tmp=sort(tmp,[-#_2]);
+        pC=tmp_1_1;
+      ,
+        if(Norm(Ptend(direction)-Ptstart(direction))>Eps,
+          tmp=sort(tmp1,[#_2]);
+          pC=2*pP-tmp_1_1;
         ,
-          pC=tmp_2_1;
+          tmp=sort(tmp1,[-#_2]);
+          pC=tmp_1_1;
         );
-      );
+      ); //191208to
       Houkou=pP-pC;
       hflg=1;
     );
@@ -288,7 +294,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
         fillpoly(apply(list,Pcrd(#)),color->color);
         if(Noflg==0,
           if((point==1)&(isstring(direction)), //191202from
-            if(norm(Ptend(direction)-Ptstart(direction))>Eps, //191203from
+            if(Norm(Ptend(direction)-Ptstart(direction))>Eps, //191203from
               tmp=select(GCLIST,#_1==direction);
               tmp=tmp_1;
               tmp1=Nearestpt(list_4,direction);

@@ -1,3 +1,5 @@
+// 20191208
+//   Arrowheaddata debugged (decision of pC)
 // 20191207
 //   Arrowheaddata debugged (selecting intersect)
 //   Arrowhead debugged (name of partcrv)

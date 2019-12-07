@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191204] loaded");
+println("ketcindylibbasic2[20191207] loaded");
 
 //help:start();
 
@@ -184,9 +184,8 @@ Arrowheaddata(point,direction,options):=( //191127remade
   if(hflg==0,
     if(isstring(direction),Houkou=parse(direction),Houkou=direction);
     if(!islist(pP),
-      par=pP;
-      tmp=1+(length(Houkou)-1)*par; //191202
-      pP=Ptcrv(tmp,Houkou);
+      par=1+(length(Houkou)-1)*pP; //191207
+      pP=Ptcrv(par,Houkou);
       tmp=floor(tmp); //191203from
     ,
       tmp=Nearestpt(pP,Houkou);
@@ -207,6 +206,7 @@ Arrowheaddata(point,direction,options):=( //191127remade
     if(length(tmp)==0,
       println("Arrowhead may be too large (no intersect)");
     ,
+      tmp=sort(tmp,[abs(#_2-par)]); //191207[2lines]
       pC=tmp_1_1;
       if(Dotprod(pP-pC,vec)<0,
        if(length(tmp)==1,
@@ -289,11 +289,11 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
         if(Noflg==0,
           if((point==1)&(isstring(direction)), //191202from
             if(norm(Ptend(direction)-Ptstart(direction))>Eps, //191203from
-              tmp=select(GCLIST,indexof(direction,#_1)>0);
+              tmp=select(GCLIST,#_1==direction);
               tmp=tmp_1;
               tmp1=Nearestpt(list_4,direction);
               tmp1=tmp1_2;
-              Partcrv("arh"+text(ArrowheadNumber),1,tmp1,direction,["Msg=n"]);
+              Partcrv(direction,1,tmp1,direction,["Msg=n"]); //191207
               Changestyle("part"+direction,[tmp_2,tmp_3]);
               Changestyle(direction,["nodisp"]);
             );

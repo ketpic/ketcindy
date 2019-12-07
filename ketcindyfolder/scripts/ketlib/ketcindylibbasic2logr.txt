@@ -1,3 +1,6 @@
+// 20191207
+//   Arrowheaddata debugged (selecting intersect)
+//   Arrowhead debugged (name of partcrv)
 // 20191204
 //   Arrowheaddata changed ( segpos )
 // 20191203

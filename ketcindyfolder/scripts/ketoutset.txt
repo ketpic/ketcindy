@@ -1,7 +1,6 @@
 if(!isstring(PathThead),
  PathThead="";
 );
-PathT=PathThead+"uplatex";
 if(iswindows(),
   PathS="C:\Program Files\scilab-6.0.0\bin\scilex";
   PathC="C:\MinGW\bin\gcc.exe";
@@ -37,10 +36,10 @@ if(islinux(),
   PathAd="acroread";
 );
 
-if(indexof(PathT,"platex")>0,
-  Helplist(["+","+3d","+mv"],"helpJ");
-,
+if(Langhelp=="e",
   Helplist(["+","+3d","+mv"],"helpE");
+,
+  Helplist(["+","+3d","+mv"],"helpJ");
 );
 
 setdirectory(Dircdy);

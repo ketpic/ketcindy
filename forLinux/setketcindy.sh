@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20181125
+#      20181224
 
 # Edit and uncomment the following lines if necessary
 texpath=/usr/share/texlive
@@ -93,6 +93,12 @@ echo "Dirhead=\"${ketcindyscripts}\";"  >> ketcindy.ini
 echo "Homehead=\"${homehead}\";"  >> ketcindy.ini
 echo "setdirectory(Dirhead);"  >> ketcindy.ini
 echo "import(\"setketcindy.txt\");"  >> ketcindy.ini
+
+#191224from
+read -p 'Language for Help (j/e) : ' lang
+echo  "Langhelp=\"${lang}\";" >> ketcindy.ini
+#191224upto
+
 echo "import(\"ketoutset.txt\");"  >> ketcindy.ini
 
 echo "Choose TeX with the 1st(+2nd) character"

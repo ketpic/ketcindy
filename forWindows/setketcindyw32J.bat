@@ -1,4 +1,4 @@
-REM 20191003
+REM 20191224
 echo off
 
 rem Edit the followings if necessary
@@ -101,6 +101,12 @@ echo Homehead="%homehead%"; >> ketcindy.ini
 echo Dirhead="%pathT%%scripts%"; >> ketcindy.ini
 echo setdirectory(Dirhead); >> ketcindy.ini
 echo import("setketcindy.txt"); >> ketcindy.ini
+
+rem 20191224from
+set /P STR_INPUT="Language for Help (j/e) :"
+echo Langhelp="%STR_INPUT%"; >> ketcindy.ini
+rem 20191224to
+
 echo import("ketoutset.txt"); >> ketcindy.ini
 
 echo Setting of TeX, R, Maxima

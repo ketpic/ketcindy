@@ -1,5 +1,5 @@
 #!/bin/sh
-#      20191003
+#      20191224
 
 # Edit, uncomment the following lines and choose 4 if necessary
 #texpath=/Applications/kettex/texlive
@@ -116,6 +116,12 @@ echo "Dirhead=\"${ketcindyscripts}\";"  >> ketcindy.ini
 echo "Homehead=\"${homehead}\";"  >> ketcindy.ini
 echo "setdirectory(Dirhead);"  >> ketcindy.ini
 echo "import(\"setketcindy.txt\");"  >> ketcindy.ini
+
+#191224from
+read -p 'Language for Help (j/e) : ' lang
+echo  "Langhelp=\"${lang}\";" >> ketcindy.ini
+#191224upto
+
 echo "import(\"ketoutset.txt\");"  >> ketcindy.ini
 
 echo "Choose TeX with the 1st(+2nd) character"

@@ -1,3 +1,10 @@
+// 200102
+//   Bowdata changed ("Textcolor=")
+// 200101
+//   Anglemark,Paramark,Bowdata debugged (putting letter)
+//   Exprrot,Letterrot changed  ( corresponding to changes of R)
+// 20191227
+//   Bowdata debugged (re added to md+name )
 // 20191208
 //   Arrowheaddata debugged (decision of pC)
 // 20191207

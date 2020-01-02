@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20191208] loaded");
+println("ketcindylibbasic2[20200102] loaded");
 
 //help:start();
 
@@ -570,8 +570,8 @@ Anglemark(nm,plist,options):=(
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
 // help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=[size,"E/L=(sep,)letter"]);
-  regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,color,
-       Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg);
+  regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,
+       Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg,scaley);
   name="ag"+nm;
   Bpos="md"+name;
   ra=0.5;
@@ -595,41 +595,28 @@ Anglemark(nm,plist,options):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if((tmp1=="L")%(tmp1=="E"),
-      if(tmp1=="L",Bname="Letter(");
-      if(tmp1=="E",Bname="Expr(");
-      Bname=Bname+Bpos+","+Dqq("c")+",";//16.10.29
-      tmp=tmp_2; //190524from
-      tmp1=Indexall(tmp,",");
-      if(length(tmp1)==0,
-        Bname=Bname+Dqq(tmp);
+      if(tmp1=="L",Bname="L");
+      if(tmp1=="E",Bname="E");
+      tmp2=tmp_2;
+      tmp=indexof(tmp2,",");
+      if(tmp==0,
+        Bstr=tmp2;
       ,
-        if(length(tmp1)>1,
-          Brat=parse(substring(tmp,0,tmp1_1-1));
-          tmp=substring(tmp,tmp1_1,length(tmp));
-          tmp1=Indexall(tmp,",");
-        ,
-          if(substring(tmp,tmp1_1,tmp1_1+1)!="[",
-            Brat=parse(substring(tmp,0,tmp1_1-1));
-            tmp=substring(tmp,tmp1_1,length(tmp))+",[]";
-            tmp1=Indexall(tmp,",");
-          );
-        );
-        Bname=Bname+Dqq(substring(tmp,0,tmp1_1-1));
-        tmp=substring(tmp,tmp1_1+1,length(tmp)-1);
-        tmp=Strsplit(tmp,",");
-        tmp1=apply(tmp,Dqq(#));
-        Bname=Bname+","+text(tmp1);
+        Bstr=substring(tmp2,tmp,lenght(tmp2));
+        tmp1=parse(substring(tmp2,0,tmp-1));
+        Brat=tmp1*Brat;
       );
-      Bname=Bname+");"; //190524to
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
     ); //190206to
   );
-  pB=Lcrd(plist_1); pA=Lcrd(plist_2); sab=pB-pA;
+  pB=Pcrd(plist_1); pA=Pcrd(plist_2); pC=Pcrd(plist_3);
+  scaley=SCALEY; //191231[2lines]
+  SCALEY=1;
+  sab=pB-pA;
   Ctr=pA;
   if((length(plist_3)>1)%(ispoint(plist_3)), //180506from
-    pC=Lcrd(plist_3);
     sac=pC-pA;
     Rg=[arctan2(sab)+0,arctan2(sac)+0];
   ,
@@ -646,14 +633,6 @@ Anglemark(nm,plist,options):=(
       Out=append(Out,Ctr+ra*[cos(Th),sin(Th)]);
     );
     Th=(Rg_1+Rg_2)/2; //16.10.31from[moved]
-    tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
-    tmp="Defvar("+Dq+Bpos+"="; //no ketjs
-    tmp=tmp+Textformat(tmp1,5)+Dq+")"; //no ketjs
-//    tmp=Bpos+"="+Textformat(tmp1,5); ; //only ketjs
-    parse(tmp+";");//16.10.31to[moved]
-    if(length(Bname)>0,
-      parse(Bname);
-    );
     if(Noflg<3,
       if(Msg=="Y", //190206
         println("generate anglemark "+name+" and "+Bpos);
@@ -666,7 +645,7 @@ Anglemark(nm,plist,options):=(
       tmp=name+"=Anglemark("+tmp1+opstr+")";
       GLIST=append(GLIST,tmp); //no ketjs off
     );
-  if(Noflg<3, //190818
+    if(Noflg<3, //190818
       if(isstring(Ltype),
         if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
           Texcom("{");Com2nd("Setcolor("+color+")");//180722
@@ -681,6 +660,11 @@ Anglemark(nm,plist,options):=(
       GCLIST=append(GCLIST,[name,Ltype,opcindy]);
     );
   );
+  SCALEY=scaley;  //191231
+  tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
+  Bpos=LLcrd(tmp1);
+  if(Bname=="L",Letter(Bpos,"c",Bstr));
+  if(Bname=="E",Expr(Bpos,"c",Bstr));
   Out;
 );
 ////%Anglemark end////
@@ -705,8 +689,8 @@ Paramark(Arg1,Arg2):=( // 17.03.27 from
 Paramark(nm,plist,options):=(
 //help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
-  regional(name,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,
-         Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color);
+  regional(name,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,,
+         Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color,sc,Msg,scaley);
   name="pm"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -717,7 +701,7 @@ Paramark(nm,plist,options):=(
   eqL=tmp_5;
   realL=tmp_6;
   ra=0.5;
-  Bname="";
+  Msg="Y";
   Brat=1.2;
   if(length(realL)>0,
     tmp=realL_1;
@@ -728,52 +712,36 @@ Paramark(nm,plist,options):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if((tmp1=="L")%(tmp1=="E"),
-      if(tmp1=="L",Bname="Letter(");
-      if(tmp1=="E",Bname="Expr(");
-      Bname=Bname+Bpos+","+Dqq("c")+",";//16.10.29
-      tmp=tmp_2; //190524from
-      tmp1=Indexall(tmp,",");
-      if(length(tmp1)==0,
-        Bname=Bname+Dqq(tmp);
+      if(tmp1=="L",Bname="L");
+      if(tmp1=="E",Bname="E");
+      tmp2=tmp_2;
+      tmp=indexof(tmp2,",");
+      if(tmp==0,
+        Bstr=tmp2;
       ,
-        if(length(tmp1)>1,
-          Brat=parse(substring(tmp,0,tmp1_1-1));
-          tmp=substring(tmp,tmp1_1,length(tmp));
-          tmp1=Indexall(tmp,",");
-        ,
-          if(substring(tmp,tmp1_1,tmp1_1+1)!="[",
-            Brat=parse(substring(tmp,0,tmp1_1-1));
-            tmp=substring(tmp,tmp1_1,length(tmp))+",[]";
-            tmp1=Indexall(tmp,",");
-          );
-        );
-        Bname=Bname+Dqq(substring(tmp,0,tmp1_1-1));
-        tmp=substring(tmp,tmp1_1+1,length(tmp)-1);
-        tmp=Strsplit(tmp,",");
-        tmp1=apply(tmp,Dqq(#));
-        Bname=Bname+","+text(tmp1);
+        Bstr=substring(tmp2,tmp,lenght(tmp2));
+        tmp1=parse(substring(tmp2,0,tmp-1));
+        Brat=tmp1*Brat;
       );
-      Bname=Bname+");"; //190524to
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
     ); //190206to
   );
-  pB=Lcrd(plist_1); pA=Lcrd(plist_2); pC=Lcrd(plist_3);
-  Ctr=Lcrd(pA);
+  pB=Pcrd(plist_1); pA=Pcrd(plist_2); pC=Pcrd(plist_3);
+  scaley=SCALEY; //191231[2lines]
+  SCALEY=1;
+  sab=pB-pA;
+  Ctr=pA;
   Out=[];
   Out=append(Out,pA+ra*(pB-pA)/|pB-pA|);
   Out=append(Out,pA+ra*(pB-pA)/|pB-pA|+ra*(pC-pA)/|pC-pA|);
   Out=append(Out,pA+ra*(pC-pA)/|pC-pA|);
-  if(length(Bname)>0,
-    tmp1=pA+Brat*ra*(pB-pA)/|pB-pA|+Brat*ra*(pC-pA)/|pC-pA|;
-    tmp="Defvar("+Dq+Bpos+"="+Textformat(tmp1,5)+Dq+")";// no ketjs
-    tmp=Bpos+"="+Textformat(tmp1,5);// only ketjs
-    parse(tmp+";");
-    parse(Bname+";") //190415;
-  );
+  Bpos=pA+Brat*ra*(pB-pA)/|pB-pA|+Brat*ra*(pC-pA)/|pC-pA|;
   if(Noflg<3,
-    println("generate paramark "+name);
+    if(Msg=="Y", //190206
+      println("generate paramark "+name+" and "+Bpos);
+    );
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5)+";"; //190415
     parse(tmp);
@@ -795,6 +763,11 @@ Paramark(nm,plist,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
+  SCALEY=scaley;  //191231
+  tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
+  Bpos=LLcrd(tmp1);
+  if(Bname=="L",Letter(Bpos,"c",Bstr));
+  if(Bname=="E",Expr(Bpos,"c",Bstr));
   Out;
 );
 ////%Paramark end////
@@ -835,9 +808,11 @@ Bowdata(nm,plist,options):=(
 //help:Bowdata([C,A],[2,1.2,"Expr=10","da"]);
 //help:Bowdata([A,B],["Expr=t0n3,a"]);
 //help:Bowdata([A,B],["Exprrot=t0n2r,a"]);
+//help:Bowdata(options1=["Num=(24)"]);
+//help:Bowdata(options2=["Size=","Textcolor="]);
   regional(name,Out,pB,pA,pC,ra,tmp,tmp1,tmp2,Ltype,eqL,realL,
-    Bname,Bpos,Th,Cut,Num,Hgt,opstr,opcindy,Ydata,pC,Msg,
-    Th1,Th2,Noflg,Bops,Bmov,Tmov,Nmov,rev,color);
+    Bname,Bpos,Th,Cut,Num,Hgt,opstr,opcindy,Ydata,Msg,tcolor,
+    Th1,Th2,Noflg,Bops,color,Bstr);
   name="bw"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -847,16 +822,15 @@ Bowdata(nm,plist,options):=(
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   realL=tmp_6;
-  pA=Lcrd(plist_1); pB=Lcrd(plist_2);
+  pA=Pcrd(plist_1); pB=Pcrd(plist_2);
+  scaley=SCALEY; //191231[2lines]
+  SCALEY=1;
   Hgt=1/2*|pB-pA|*0.2;
   Cut=0;
   Num=24;
+  tcolor="";
   Bname="";
   Msg="Y";  //190206
-  Tmov=0;//161101from
-  Nmov=0;
-  Bmov="";
-  rev=0;//16.11.01until
   if(length(realL)>0,
     Hgt=realL_1*Hgt; // 15.04.12
     if(length(realL)>1,Cut=realL_2);
@@ -864,75 +838,52 @@ Bowdata(nm,plist,options):=(
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
-    if(tmp1=="L",
-      if(indexof(#,"rot")>0,
-        Bname="Letterrot(";
-      ,
-        Bname="Letter(";
+    if((tmp1=="L")%(tmp1=="E"),
+      if(tmp1=="L",
+        if(indexof(#,"rot")>0,
+          Bname="Lr";
+        ,
+          Bname="L";
+        );
       );
-      Bops=tmp_2;
+      if(tmp1=="E",
+        if(indexof(#,"rot")>0,
+          Bname="Er";
+        ,
+          Bname="E";
+        );
+      );
+      tmp2=tmp_2;
+      tmp=indexof(tmp2,",");
+      if(tmp==0,
+        Bops="";
+        Bstr=tmp2;
+      ,
+        Bops=substring(tmp2,0,tmp-1);
+        Bstr=substring(tmp2,tmp,length(tmp2));
+      );
+      eqL=remove(eqL,[#]);
     );
-    if(tmp1=="E",
-      if(indexof(#,"rot")>0,
-        Bname="Exprrot(";
-      ,
-        Bname="Expr(";
-      );
-      Bops=tmp_2;
+    if(tmp1=="N", //190206from
+      Num=parse(tmp_2);
+      eqL=remove(eqL,[#]);
+    );
+    if(tmp1=="T", //190206from
+      tcolor="Color="+tmp_2;
+      eqL=remove(eqL,[#]);
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
+      eqL=remove(eqL,[#]);
     ); //190206to
   );
+  if(length(tcolor)>0,eqL=append(eqL,tcolor));
   Ydata=Makebowdata(pA,pB,Hgt); 
-  pC=Ydata_1;
-  ra=Ydata_2;
+  pC=Ydata_1; ra=Ydata_2;
   Th=(Ydata_3+Ydata_4)*0.5;
-  BOWMIDDLE=[pC_1+ra*cos(Th),pC_2+ra*sin(Th)];
-  Defvar("md"+name,BOWMIDDLE); //190415
-  Bpos=Textformat(BOWMIDDLE,5); //190415
-  if(length(Bname)>0,  //16.11.01from
-    tmp=indexof(Bops,",");
-    if(tmp>0,
-      tmp1=substring(Bops,0,tmp-1);
-      if(length(tmp1)>=4 & substring(tmp1,0,1)=="t" & indexof(tmp1,"n")>0,
-        Bmov=tmp1;
-        Bops=substring(Bops,tmp,length(Bops));
-      );
-    );
-    if(length(Bmov)>0,
-      tmp=indexof(Bmov,"t");
-      if(tmp>0,
-        tmp1=indexof(Bmov,"n");
-        Tmov=parse(substring(Bmov,tmp,tmp1-1));
-        tmp=indexof(Bmov,"r");
-        if(tmp>0,
-          Nmov=parse(substring(Bmov,tmp1,tmp-1));
-          rev=1;
-        ,
-          Nmov=parse(substring(Bmov,tmp1,length(Bmov)));
-        );
-      );
-    );
-    Bname=Bname+Bpos; //190415
-    if(abs(Tmov)+abs(Nmov)>0,
-      tmp=Pcrd(pA)-Pcrd(pB);
-      tmp1=1/Norm(tmp)*tmp;
-      tmp2=[-tmp1_2,tmp1_1];
-      tmp=MARKLEN*(Tmov*tmp1+Nmov*tmp2);
-      tmp=LLcrd(tmp);
-      Bname=Bname+"+"+Textformat(tmp,5);
-    );
-    Bname=Bname+",";
-    if(indexof(Bname,"rot")>0,
-      if(rev==1,tmp=pB-pA,tmp=pA-pB);
-      Bname=Bname+Textformat(tmp,5)+",";
-    ,
-      Bname=Bname+Dq+"c"+Dq+",";
-    );
-    Bname=Bname+Dqq(Bops)+");"; //190415
-    parse(Bname);
-  );//161101to
+  BOWMIDDLE=[pC_1+ra*cos(Th),pC_2+ra*sin(Th)]; 
+  BOWMIDDLE=re(BOWMIDDLE); //191231from
+  Bpos=BOWMIDDLE;
   if(Cut==0,
     Th1=Ydata_3;
     Th2=Ydata_4;
@@ -945,14 +896,14 @@ Bowdata(nm,plist,options):=(
     Th1=Ydata_3;
     Th2=Th-Cut/(2*ra);
     tmp1=[];
-    forall(0..Num/2,
+    forall(0..(floor(Num/2)),
       tmp=Th1+#*(Th2-Th1)/(Num/2);
       tmp1=append(tmp1,pC+ra*[cos(tmp),sin(tmp)]);
     );
     Th1=Th+Cut/(2*ra);
     Th2=Ydata_4;
     tmp2=[];
-    forall(0..Num/2,
+    forall(0..(floor(Num/2)),
       tmp=Th1+#*(Th2-Th1)/(Num/2);
       tmp2=append(tmp2,pC+ra*[cos(tmp),sin(tmp)]);
     );
@@ -960,7 +911,7 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<3,
     if(Msg=="Y", //190206
-      println("generate bowdata "+name+" and BOWMIDDLE="+Bpos);//16.10.31,190704
+      println("generate bowdata "+name+" and BOWMIDDLE="+BOWMIDDLE);//16.10.31,190704
     );
     if(Measuredepth(Out)==1,Out=[Out]);
     tmp1=[];
@@ -988,6 +939,12 @@ Bowdata(nm,plist,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
+  SCALEY=scaley; //191231from
+//  Bpos=LLcrd(Bpos);
+  if(Bname=="L",Letter(Bpos,"c",Bstr,eqL));
+  if(Bname=="Lr",Letterrot(Bpos,pB-pA,Bops,Bstr,eqL));
+  if(Bname=="E",Expr(Bpos,"c",Bstr,eqL));
+  if(Bname=="Er",Exprrot(Bpos,pB-pA,Bops,Bstr,eqL)); //191231to
 );
 ////%Bowdata end////
 
@@ -2947,7 +2904,7 @@ Letter(list,options):=(
 ////%Letter end////
 
 ////%Letterrot start////
-Letterrot(pt,dir,str):=Letterrot(pt,dir,0,0,str,[]);
+Letterrot(pt,dir,str):=Letterrot(pt,dir,0,0,1,str,[]);
 Letterrot(pt,dir,Arg1,Arg2):=(
   if(islist(Arg2),
     Letterrot(pt,dir,"t0n0",Arg1,Arg2);
@@ -2955,46 +2912,62 @@ Letterrot(pt,dir,Arg1,Arg2):=(
     Letterrot(pt,dir,Arg1,Arg2,[]);
   );
 );
-Letterrot(pt,dir,movstr,str,options):=(
-// help:Letterrot(C,B-A,"AB");
-// help:Letterrot(C,B-A,0,5,"AB");
-//help:Letterrot(C,B-A,AB",["Size=20"]);
+Letterrot(pt,dir,movstrorg,str,options):=( //200101renewal
+//help:Letterrot(C,B-A,AB",["Size=2.0"]);
 //help:Letterrot(C,B-A,"t0n5","AB");
-  regional(tmov,nmov,tmp,tmp1,tmp2,color);
-  tmp1=indexof(movstr,"t");
-  tmp2=indexof(movstr,"n");
-  if(tmp1>0,
-    if(tmp2>0,tmp=tmp2-1,tmp=length(movstr));
-    tmov=parse(substring(movstr,tmp1,tmp));
-  ,
-    tmov=0;
+//help:Letterrot(optiions=["Color=","Size=1.0(10)"]);
+  regional(mstr,tmov,nmov,rot,tmp,tmp1,tmp2,color);
+    mstr=movstrorg;
+    rot=1;
+    if(indexof(mstr,"r")>0,
+      rot=-1;
+      mstr=replace(mstr,"r","");
+    );
+    tmp1=indexof(mstr,"t");
+    tmp2=indexof(mstr,"n");
+    if(tmp1==0,
+      tmov=0;
+    ,
+      tmov=1;
+      if(tmp1<tmp2,
+        tmp=substring(mstr,tmp1,tmp2-1);
+      ,
+        tmp=substring(mstr,tmp1,length(mstr));
+      );
+      if(length(tmp)>0,tmov=tmov+parse(tmp));
+    );
+    if(tmp2==0,
+      nmov=0;
+    ,
+      nmov=1;
+      if(tmp2<tmp1,
+        tmp=substring(mstr,tmp2,tmp1-1);
+      ,
+        tmp=substring(mstr,tmp2,length(mstr));
+      );
+      if(length(tmp)>0,nmov=nmov+parse(tmp);
+    );
   );
-  if(tmp2>0,
-    nmov=parse(substring(movstr,tmp2,length(movstr)));
-  ,
-    nmov=0;
-  );
-  Letterrot(pt,dir,tmov,nmov,str,options);
+  Letterrot(pt,dir,tmov,nmov,rot,str,options);
 );
-Letterrot(pt,dir,tmov,nmov,str,options):=(
+Letterrot(pt,dir,tmov,nmov,rot,str,options):=(
   regional(tmp,color);
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
-  Letter([pt,"c",str],append(options,"notex"));
-  tmp=replace(str,"\","\\"); //17.10.18
+  Letter(LLcrd(pt),"c",str,append(options,"notex"));
+  tmp=replace(str,"\","\\");
   if(color!=KCOLOR, //180904
-    Texcom("{");Com2nd("Setcolor("+color+")");//180722
+    Texcom("{");Com2nd("Setcolor("+color+")");
   );
-  Com2nd("Letterrot("+pt+","+dir+","+tmov+","+nmov+","+Dqq(tmp)+")");//180805
-  if(color!=KCOLOR, //180904
-    Texcom("}");//180722
+  Com2nd("Letterrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rot+","+Dqq(tmp)+")");
+  if(color!=KCOLOR, 
+    Texcom("}");
   );
 );
 ////%Letterrot end////
 
 ////%Exprrot start////
-Exprrot(pt,dir,str):=Exprrot(pt,dir,0,0,str,[]);
-Expr(pt,dir,str,options):=Expr([pt,dir,str],options);//181218
+Exprrot(pt,dir,str):=Exprrot(pt,dir,"",str,[]);
 Exprrot(pt,dir,Arg1,Arg2):=(
   if(islist(Arg2),
     Exprrot(pt,dir,"t0n0",Arg1,Arg2);
@@ -3002,39 +2975,56 @@ Exprrot(pt,dir,Arg1,Arg2):=(
     Exprrot(pt,dir,Arg1,Arg2,[]);
   );
 );
-Exprrot(pt,dir,movstr,str,options):=(
-// help:Exprrot(C,B-A,"d");
-// help:Exprrot(C,B-A,0,5,"d");
-//help:Exprrot(C,B-A,"d",["Color=red"]);
-//help:Exprrot(C,B-A,"t0n5","d");
-  regional(tmov,nmov,tmp,tmp1,tmp2,color);
-  tmp1=indexof(movstr,"t");
-  tmp2=indexof(movstr,"n");
-  if(tmp1>0,
-    if(tmp2>0,tmp=tmp2-1,tmp=length(movstr));
-    tmov=parse(substring(movstr,tmp1,tmp));
-  ,
-    tmov=0;
+Exprrot(pt,dir,movstrorg,str,options):=( //200101renewal
+//help:Exprrot(C,B-A,"d");
+//help:Exprrot(C,B-A,"t0n2r","d");
+//help:Exprrot(options=["Color=","Size="]);
+  regional(mstr,tmov,nmov,rot,tmp,tmp1,tmp2,color);
+    mstr=movstrorg;
+    rot=1;
+    if(indexof(mstr,"r")>0,
+      rot=-1;
+      mstr=replace(mstr,"r","");
+    );
+    tmp1=indexof(mstr,"t");
+    tmp2=indexof(mstr,"n");
+    if(tmp1==0,
+      tmov=0;
+    ,
+      tmov=1;
+      if(tmp1<tmp2,
+        tmp=substring(mstr,tmp1,tmp2-1);
+      ,
+        tmp=substring(mstr,tmp1,length(mstr));
+      );
+      if(length(tmp)>0,tmov=tmov+parse(tmp));
+    );
+    if(tmp2==0,
+      nmov=0;
+    ,
+      nmov=1;
+      if(tmp2<tmp1,
+        tmp=substring(mstr,tmp2,tmp1-1);
+      ,
+        tmp=substring(mstr,tmp2,length(mstr));
+      );
+      if(length(tmp)>0,nmov=nmov+parse(tmp);
+    );
   );
-  if(tmp2>0,
-    nmov=parse(substring(movstr,tmp2,length(movstr)));
-  ,
-    nmov=0;
-  );
-  Exprrot(pt,dir,tmov,nmov,str,options);
+  Exprrot(pt,dir,tmov,nmov,rot,str,options);
 );
-Exprrot(pt,dir,tmov,nmov,str,options):=(
+Exprrot(pt,dir,tmov,nmov,rot,str,options):=(
   regional(tmp,color);
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
-  Expr([pt,"c",str],append(options,"notex"));
+  Expr(LLcrd(pt),"c",str,append(options,"notex"));
   tmp=replace(str,"\","\\"); //17.10.18
   if(color!=KCOLOR, //180904
-    Texcom("{");Com2nd("Setcolor("+color+")");//180722
+    Texcom("{");Com2nd("Setcolor("+color+")");
   );
-  Com2nd("Exprrot("+pt+","+dir+","+tmov+","+nmov+","+Dqq(tmp)+")");//180802
-  if(color!=KCOLOR, //180904
-    Texcom("}");//180722
+  Com2nd("Exprrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rot+","+Dqq(tmp)+")");
+  if(color!=KCOLOR, 
+    Texcom("}");
   );
 );
 ////%Exprrot end////
@@ -3902,7 +3892,7 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
     );
   );
   scaley=SCALEY;
-  Setscaling(1);
+  SCALEY=1;
   mxfun="";
   cL=[];
   forall(1..(nr/3),nn,
@@ -3951,7 +3941,7 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
       );
     );
   );
-  Setscaling(scaley);
+  SCALEY=scaley;
   sL=[];
   sdL=[];
   forall(1..(length(crL)),nn,

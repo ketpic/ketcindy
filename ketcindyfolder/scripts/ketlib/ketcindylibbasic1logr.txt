@@ -1,3 +1,8 @@
+// 20200101
+//    Pcrd,Lcrd,LLcrd changed  (re added)
+// 20191227
+//    Framedata debugged  ( "corner" for geometric points )
+//    Pointdata changed  ( for i included )
 // 20191203
 //    Ketinit changed  (Yacut 0.2 as default)
 //    Changestyle changed  ( for list setting, color->)

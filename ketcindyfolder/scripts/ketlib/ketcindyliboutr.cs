@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20191020] loaded");
+println("ketcindylibout[20191231] loaded");
 
 //help:start();
 
@@ -2606,6 +2606,7 @@ CalcbyA(name,cmd,optionorg):=(
 );
 ////%CalcbyA end////
 
+////%AsfunO start////
 AsfunO(name,fun,argL):=AsirfunO(name,fun,argL); // 16.02.03
 AsfunO(name,fun,argL,options):=AsirfunO(name,fun,argL,options);
 Asfun(name,fun,argL):=Asirfun(name,fun,argL);
@@ -2726,7 +2727,9 @@ Asirfun(name,fun,argL,optionorg):=(
   );
   out;  //16.05.26until
 );
+////%AsfunO end////
 
+////%WritetoM start////
 WritetoM(fname,cmdL,allflg):=(
 // help:WritetoM("outdata",cmdL);
   regional(tmp,tmp1,tmp2,filename,wfilename,outflg);
@@ -2765,6 +2768,7 @@ WritetoM(fname,cmdL,allflg):=(
   );
   closefile(SCEOUTPUT);
 );
+////%WritetoM end////
 
 ////%kcM start////
 kcM(fname):=kcM(fname,[]);
@@ -6520,6 +6524,378 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
   );
 );
 ////%Sfcutparadata end////
+
+////%WritetoW start////  //191229
+WritetoW(fname,cmdL,allflg):=(
+// help:WritetoM("outdata",cmdL);
+  regional(tmp,tmp1,tmp2,filename,jj);
+  if(indexof(fname,".")==0,
+    filename=fname+".wl";
+  ,
+    filename=fname;
+  );
+  wfilename=replace(filename,".wl",".txt");
+  SCEOUTPUT = openfile(filename);
+  outflg=0;
+  forall(1..(length(cmdL)),jj,
+    tmp1=cmdL_jj;
+    if(#<length(cmdL),
+      tmp=tmp1;
+    ,
+      tmp1=Strsplit(tmp1,"::");
+      tmp="Print[";
+      forall(tmp1,
+        tmp=tmp+#+",";
+      );
+      tmp=substring(tmp,0,length(tmp)-1)+"]";
+    );
+    println(SCEOUTPUT,tmp1+"(*##*)");
+  );
+  closefile(SCEOUTPUT);
+);
+////%WritetoW end////
+
+////%kcW start////
+kcW(fname):=kcW(fname,[]);
+kcW(fname,optionorg):=(
+//help:kcW("boxdata");
+//help:kcW(options=["r/m"]);
+  regional(options,tmp,tmp1,tmp2,eqL,strL,filename,wfile,flg);
+  if(indexof(fname,".")==0,
+    filename=fname+".wl";
+  ,
+    filename=fname;
+  );
+  wfile=replace(filename,".wl",".txt");
+  options=optionorg;
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  strL=tmp_7;
+  flg=0;
+  forall(strL,
+    if(Toupper(substring(#,0,1))=="R",
+      flg=0;
+      options=remove(options,[#]);
+    );
+    if(Toupper(substring(#,0,1))=="M",
+      flg=1;
+    );
+  );
+  if(flg==0,
+    tmp2=replace(filename,".wl",".txt");
+    tmp1=load(tmp2);
+    if(length(tmp1)==0,
+      flg=1;
+    ); 
+  );
+  if(flg==1,
+    tmp1=""; 
+    if(iswindows(),
+      tmp2=Batparent;
+    ,
+      tmp2=Shellparent;
+    );
+    flg=0;
+    forall(reverse(1..length(tmp2)),
+      if(flg==0,
+        tmp=substring(tmp2,#-1,#);
+        if(tmp=="/" % tmp=="\",  // 14.01.15
+          tmp1=substring(tmp2,0,#-1);
+          tmp2=substring(tmp2,#,length(tmp2));
+          flg=1;
+        );
+      );
+    );
+    if(length(tmp1)>0,
+      setdirectory(tmp1);
+    ); 
+    if(iswindows(),
+      SCEOUTPUT=openfile(replace(filename,".wl",".txt"));
+      println(SCEOUTPUT,"");
+      closefile(SCEOUTPUT);
+      SCEOUTPUT = openfile("kc.bat");
+      println(SCEOUTPUT,"cd "+Dqq(Dirwork));
+//      tmp=Indexall(PathW,".");
+//      tmp=substring(PathW,tmp_1,tmp_2-1);
+//      tmp=parse(tmp);
+//      if(tmp<39,
+//        tmp="call "+Dq+Dq+PathW+Dq+Dq+" -b "+Dq+filename+Dq;
+//      ,
+//        tmp="call "+Dq+PathW+Dq+" -b "+Dq+filename+Dq;
+//      );
+//      println(SCEOUTPUT,tmp); 
+      println(SCEOUTPUT,"exit");
+      closefile(SCEOUTPUT);
+      println(kc(Dirwork+Batparent,Mackc+Dirlib,wfile));
+    ,
+      if(ismacosx(),
+        SCEOUTPUT = openfile("kc.command");
+      ,
+        SCEOUTPUT = openfile("kc.sh");
+      );
+      println(SCEOUTPUT,"#!/bin/sh");
+      println(SCEOUTPUT,"cd "+Dqq(Dirwork));
+      println(SCEOUTPUT,"rm "+Dqq(wfile));
+      tmp=Dqq("wolframscript")+" -file "+Dqq(filename)+" > "+Dqq(wfile);
+      println(SCEOUTPUT,tmp); 
+      println(SCEOUTPUT,"echo 99999 >>"+Dqq(wfile)); 
+      println(SCEOUTPUT,"exit 0");
+      closefile(SCEOUTPUT);
+      println(kc(Dirwork+Shellparent,Mackc+Dirlib,wfile));
+    );
+    setdirectory(Dirwork);
+  );
+);
+////%kcW end////
+
+////%CalcbyW start////
+CalcbyW(name,cmd):=CalcbyW(name,cmd,[]);
+CalcbyW(name,cmd,optionorg):=(
+//help:CalcbyW("a",cmdL);
+//help:CalcbyW(options1= ["m/r","Wait=5","Dig=6","Pow=n"]);
+//help:CalcbyW(options2= ["line=1000"]);
+  regional(options,time,tmp,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,allflg,indL,line,
+      dig,flg,wflg,file,nc,arg,add,powerd,cmdW,cmdlist,wfile,errchk,waiting,num,st);
+  options=optionorg;
+  tmp=divoptions(options);
+  eqL=tmp_5;
+  realL=tmp_6;
+  strL=tmp_7;
+  wfile="";
+//  errchk="Y"; //190411
+  waiting=5;
+  dig=6;
+  powerd="false";
+  line=1000; // 16.06.13
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(tmp1=="W",
+      waiting=parse(tmp2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="D",
+      dig=parse(tmp2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="L",  // 16.06.13
+      line=parse(tmp2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="P",
+      tmp=Toupper(substring(tmp2,0,1));
+      if((tmp=="Y") % (tmp=="F"),powerd="true");
+      options=remove(options,[#]);
+    );
+  );
+  wfile=Fhead+name+".txt"; //190411
+  wflg=0;
+  forall(strL,
+    tmp=Toupper(substring(#,0,1));
+    if(tmp=="M",
+      wflg=1;
+      options=remove(options,[#]);
+    );
+    if(tmp=="R",
+      wflg=-1;
+      options=remove(options,[#]);
+    );
+  );
+  file=Fhead+name;
+  cmdW=cmd;
+  cmdlist=[
+//    "powerdisp:"+powerd,"display2d:false","linel:"+text(line)
+  ];
+  forall(1..floor(length(cmdW)/2),nc, //17.5.18
+    tmp1=replace(cmdW_(2*nc-1),"`","'");//2016.02.23
+    tmp1=replace(tmp1,LFmark,""); // 16.06.12
+    if(nc==length(cmdW)/2,
+      tmp1=replace(tmp1,"(*##*)","");
+      tmp=tokenize(tmp1,"::");
+      tmp2="Print[{";
+      forall(1..(length(tmp)-1),
+        tmp2=tmp2+"{"+tmp_#+"},";
+      );
+      tmp2=tmp2+"{"+tmp_(length(tmp))+"}}]";
+      cmdlist=append(cmdlist,tmp2);
+    ,
+      tmp2=cmdW_(2*nc);  // list of argments
+      tmp3="";
+      tmp4="";
+      add="";
+      forall(tmp2,arg,
+        if(isstring(arg),
+          if(substring(arg,0,1)!=",",
+            tmp=arg;   // 16.03.03
+            tmp=replace(tmp,"`","'");// 2016.02.23
+            tmp3=tmp3+tmp+",";
+          ,
+            add=add+arg; 
+          );
+        ,
+          if(!islist(arg),
+            tmp3=tmp3+textformat(arg,dig)+",";
+          ,
+            tmp3=tmp3+"{";
+            tmp4="}";
+            forall(arg,
+              if(isstring(#),
+                tmp=replace(#,"'",Dq);
+                tmp3=tmp3+tmp+",";
+              ,
+                if(!islist(#),  
+                  tmp3=tmp3+textformat(#,dig)+",";
+                ,
+                  tmp=textformat(#,dig);
+                  tmp=replace(tmp,"},{","};{");
+                  tmp3=tmp3+tmp+",";
+                );
+              );
+            );
+            tmp3=substring(tmp3,0,length(tmp3)-1)+tmp4+",";
+          );
+        );
+      );
+      if(length(tmp3)>0,
+        tmp3=substring(tmp3,0,length(tmp3)-1);
+        tmp1=tmp1+"["+tmp3+"]"+add;
+      );
+      cmdlist=append(cmdlist,tmp1);
+    );
+  );
+  cmdlist=append(cmdlist,"Quit[]");
+  if(wflg==0,
+    tmp1=load(file+".wl");
+    if(length(tmp1)==0,
+      wflg=1;
+    ,
+      if(indexof(tmp1,"(*##*)")==0,  // 15.11.26
+        wflg=1;
+      ,
+        tmp1=tokenize(tmp1,"(*##*)");
+        tmp1=tmp1_(1..(length(tmp1)-1));
+        if(length(tmp1)!=length(cmdlist),  // 15.12.07
+          wflg=1;
+        ,
+          tmp=select(1..length(tmp1),tmp1_#!=cmdlist_#);
+          if(length(tmp)>0, wflg=1);
+        );
+      );
+    );
+  ); 
+  if(wflg==0,wflg=-1); // 15.10.16
+  if(wflg==1,
+    if(length(wfile)>0,   // 15.10.05
+      SCEOUTPUT=openfile(wfile);
+      println(SCEOUTPUT,"");
+      closefile(SCEOUTPUT);
+    );
+    WritetoW(file+".wl",cmdlist,allflg); // 2016.02.23
+    kcW(file,concat(options,["m"]));
+  );
+  flg=0;
+  time=floor(waiting*1000/WaitUnit);
+  repeat(time,nc,
+    if(flg==0,
+      tmp2=load(wfile);
+      if(wflg==1,wait(WaitUnit));
+      if(length(tmp2)>0,
+        if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999",
+          tmp=Bracket(tmp2,"{}");
+          tmp=select(tmp,#_2==1);
+          tmp=tmp_(length(tmp))_1;
+          tmp2=substring(tmp2,tmp-1,length(tmp2)-5);
+          if(tmp>1,
+            print("Errors may occur");
+            tmp1=Readlines(Dirwork,wfile);
+            forall(1..(length(tmp1)-2),println("  "+tmp1_#));
+          );
+          tmp1=Bracket(tmp2,"{}");
+          tmp1=select(tmp1,abs(#_2)==2);
+          tmp1=apply(tmp1,#_1);
+          tmp="";
+          forall(1..(length(tmp1)/2),
+            tmp3=tmp1_(2*#-1);
+            tmp4=tmp1_(2*#);  
+            tmp=tmp+Dqq(substring(tmp2,tmp3,tmp4-1))+",";
+          );
+          tmp=substring(tmp,0,length(tmp)-1);
+          parse(name+"=["+tmp+"];");
+          tmp1=nc*WaitUnit/1000;
+          flg=1;
+        );
+      ,
+        if(wflg==-1,
+          flg=-1;
+        ,
+          wait(WaitUnit);
+        );
+      );
+    );
+  );
+  if(flg<=0,
+    ErrFlag=1;
+    if(flg==-1,
+      println(wfile+" does not exist");
+    ,
+      tmp="("+text(waiting)+" s )";
+      tmp2=load(wfile);
+      if(length(tmp2)>0,
+        println(wfile+" incomplete"+tmp1); // 2016.02.24
+      ,
+        println(wfile+" not generated "+tmp);
+      );
+    );
+  ,
+    if(flg==1,  // 2016.02.23
+      println("      CalcbyW succeeded "+name+" ("+text(tmp1)+" sec)");
+    );
+  );
+);
+////%CalcbyW end////
+
+////%Wlfun start////
+Wlfun(name,fun,argL):=Wlfun(name,fun,argL,[]);
+Wlfun(name,fun,argL,optionorg):=(
+//help:Wlfun("ca1","diff",["sin(x)^3","x"],[""]);
+//help:Wlfun(options=["Pre=6","Disp=y"]);
+  regional(nm,options,eqL,precise,disp,set,cmdL,tmp,tmp1,tmp2);
+  nm="wx"+name;
+  options=optionorg;
+  tmp=divoptions(options);
+  precise=6;
+  disp=1;
+  eqL=tmp_5;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1)); //190424
+    tmp2=tmp_2;
+    if(tmp1=="P",
+      precise=parse(tmp2);
+      options=remove(options,[#]);
+    );
+    if(tmp1=="D" ,  //190327(to 1 char)
+      tmp=Toupper(substring(tmp2,0,1));
+      if((tmp=="F") % (tmp=="N"),
+        disp=0;
+      );
+      options=remove(options,[#]);
+    );
+  );
+  cmdL=[];
+  cmdL=concat(cmdL,[
+    "ans"+"="+fun,argL,
+    "ans",[]
+  ]);
+  CalcbyW(nm,cmdL,options);
+  if(disp==1, // 15.11.24
+    println(nm+" is : ");
+    println(parse(nm));
+  );
+  parse(nm);
+);
+////%Wlfun end////
 
 //help:end();
 

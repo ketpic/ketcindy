@@ -16,10 +16,14 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20191126)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20200101)" 
 
 print(ThisVersion)
 
+# 20201231
+#   Exprrot,Letterrot debugged ( for setscaling, rotate )
+# 20191231
+#   Anglemark debugged  ( for scaling )
 # 20191126
 #   Drwpt debugge/changed  (sh 1, pen)
 # 20191001
@@ -897,9 +901,11 @@ Anglemark<- function(...)
   varargin<- list(...) 
   Nargs<- length(varargin)
   Eps<- 10^(-3)
-  PB<- varargin[[1]]
-  PA<- varargin[[2]]
-  PC=varargin[[3]]
+  PB<- Doscaling(varargin[[1]]) #####3######
+  PA<- Doscaling(varargin[[2]])
+  PC<- Doscaling(varargin[[3]])
+  scaley=SCALEY #191231
+  SCALEY=1
   r <-  0.5
   if(Nargs>=4){
     r<-  varargin[[4]]*r  
@@ -914,10 +920,10 @@ Anglemark<- function(...)
     return(Out)
   }
   Cir<- Circledata(c(PA,r)) #17.11.29
-  Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PB))
+  Tmp<- IntersectcrvsPp(Cir,rbind(PA,PB))
   P1<- Op(2,Op(1,Tmp))
   if(length(PC)>1){
-    Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PC))
+    Tmp<- IntersectcrvsPp(Cir,rbind(PA,PC))
     P2<- Op(2,Op(1,Tmp))
     if(abs(P1-P2)<Eps){
       Out<-c()
@@ -945,7 +951,13 @@ Anglemark<- function(...)
       Out<- Joincrvs(Tmp1,Tmp2)
     }
   }
-  Out
+  SCALEY=scaley #191231from
+  Tmp1=c()
+  for(J in Looprange(1,Length(Out))){
+    Tmp=Unscaling(Op(J,Out))
+    Tmp1=rbind(Tmp1,Tmp)
+  }
+  Tmp1 #191231to
 }
 
 ##############################################
@@ -1545,46 +1557,59 @@ Beginpicture<-function(ul)
 
 Bowdata<- function(...)  #17.09.17
 {       
- varargin <- list(...) 
- Nargs <- length(varargin)
- PA <- varargin[[1]]
- PB <- varargin[[2]]
- Cut <- 0
- D <- 1/2*Norm(PB-PA)  
- if(Nargs>=3) {
-   H <- varargin[[3]]*D*0.2 
- }
- else {
-   H <- D*0.2
- }
- H <- min(H,D)
- if(Nargs>=4){  
-   Cut <- varargin[[4]]
- }
- Ydata <- MakeBowdata(PA,PB,H) 
- C <- Op(1,Ydata)  
- r <- Op(2,Ydata)  
- R1 <- Op(3,Ydata)  
- R2 <- Op(4,Ydata)  
- Rng <- paste("R=c(",as.character(R1),",",as.character(R2),")",sep="")  
- Theta <- (R1+R2)*0.5
- BOWMIDDLE <<- list(c(C[1]+r*cos(Theta),C[2]+r*sin(Theta)),Theta)  
- M <- Op(1,BOWMIDDLE)  
- ThetaM <- Op(2,BOWMIDDLE)  
- BOWSTART <<- PA  
- BOWEND <<- PB
- if(Cut==0){
-   Pd<- Circledata(c(C,r),Rng)
- }
- else{
-   Alpha <- R1; Beta <- ThetaM-Cut/(2*r)
-   Rng <- paste("Rng=c(",as.character(Alpha),",",as.character(Beta),")",sep="") 
-   Pd <- Circledata(c(C,r),Rng)
-   Alpha <- ThetaM+Cut/(2*r); Beta <- R2
-   Rng <- paste("R=c(",as.character(Alpha),",",as.character(Beta),")",sep="")  
-   Tmp <- Circledata(c(C,r),Rng)
-   Pd <- Appendrow(Pd,c(Inf,Inf),Tmp)  
- }
+  varargin <- list(...) 
+  Nargs <- length(varargin)
+  PA <- Doscaling(varargin[[1]]) #191231from
+  PB <- Doscaling(varargin[[2]]) 
+  scaley=SCALEY
+  SCALEY=1 #191231to
+  Cut <- 0
+  D <- 1/2*Norm(PB-PA)  
+  if(Nargs>=3) {
+    H <- varargin[[3]]*D*0.2 
+  }
+  else {
+    H <- D*0.2
+  }
+  H <- min(H,D)
+  if(Nargs>=4){  
+    Cut <- varargin[[4]]
+  }
+  Ydata <- MakeBowdata(PA,PB,H) 
+  C <- Op(1,Ydata)  
+  r <- Op(2,Ydata)  
+  R1 <- Op(3,Ydata)  
+  R2 <- Op(4,Ydata)  
+  Rng <- paste("R=c(",as.character(R1),",",as.character(R2),")",sep="")  
+  Theta <- (R1+R2)*0.5
+  BOWMIDDLE <<- list(c(C[1]+r*cos(Theta),C[2]+r*sin(Theta)),Theta)  
+  M <- Op(1,BOWMIDDLE)  
+  ThetaM <- Op(2,BOWMIDDLE)  
+  BOWSTART <<- PA  
+  BOWEND <<- PB
+  if(Cut==0){
+    Pd<- Circledata(c(C,r),Rng)
+  }
+  else{
+    Alpha <- R1; Beta <- ThetaM-Cut/(2*r)
+    Rng <- paste("Rng=c(",as.character(Alpha),",",as.character(Beta),")",sep="") 
+    Pd <- Circledata(c(C,r),Rng)
+    Alpha <- ThetaM+Cut/(2*r); Beta <- R2
+    Rng <- paste("R=c(",as.character(Alpha),",",as.character(Beta),")",sep="")  
+    Tmp <- Circledata(c(C,r),Rng)
+    Pd <- Appendrow(Pd,c(Inf,Inf),Tmp)  
+  }
+  SCALEY=scaley #191231from
+  Tmp=Unscaling(Op(1,BOWMIDDLE))
+  Tmp=list(Tmp,Op(2,BOWMIDDLE))
+  BOWMIDDLE <<- Tmp
+  Tmp1=c()
+  for(J in Looprange(1,nrow(Pd))){
+    Tmp=Pd[J,]
+    if(Tmp[1]<Inf){Tmp=Unscaling(Tmp)}
+    Tmp1=rbind(Tmp1,Tmp)
+  }
+  Tmp1 #191231to
 }
 
 Bowmiddle <- function(...)
@@ -1638,7 +1663,8 @@ Bowmiddle <- function(...)
    #M <- list(P,T)  
    M <- P  
  }
- return(M)
+ Setscaling(scaley)
+ return(Unscaling(M))
 }
 
 ##########################
@@ -2848,38 +2874,30 @@ Expr<-function(...)
 
 ##########################################
 
-Exprrot<- function(...)
+Exprrot<- function(...) # 200101renewal
 {
   varargin<- list(...)
+  Nargs=length(varargin)
   P<- varargin[[1]]
-  V<- varargin[[2]]; N<- 3
-  P<- Doscaling(P)
-  V<- Doscaling(V)
-  Tmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Tmov<- Tmp; N<- N+1
+  V<- varargin[[2]];
+  Pu<- Unscaling(P)
+  Vu<- Unscaling(V)
+  Tmov=0; Nmov=0; Rot=1
+  for(N in Looprange(3,Nargs-1)){
+    if(N==3){Tmov=varargin[[N]]}
+    if(N==4){Nmov=varargin[[N]]}
+    if(N==5){Rot=varargin[[N]]}
   }
-  Nmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Nmov<- Tmp; N<- N+1
-  }
-  Mojiretu<- paste("$",Assign(varargin[[N]]),"$",sep="") # 2017.11.26
+  Mojiretu<- paste("$",varargin[[Nargs]],"$",sep="")
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
-  P<- P+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
+  Pu<- Pu+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
   Tmp<- acos(V[1]/Norm(V))
   Theta<- round(Tmp*180/pi)
-  if(V[2]>=0){
-    Units<- ""
-  }
-  else{
-    Units<- "units=-360,"
-  }
-  Tmp<- paste("\\rotatebox[",Units,"origin=c]{",as.character(Theta),sep="")
-  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
-  Letter(P,"c",Tmp)
+  if(Rot<0){Theta=Theta+180}
+  Tmp<- paste("\\rotatebox[origin=c]{",as.character(Theta),"}{",Mojiretu,"}",sep="")
+#  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
+  Letter(Pu,"c",Tmp)
 }
 
 ######################################################
@@ -4353,38 +4371,30 @@ Letter<-function(...)
 
 ######################################################
 
-Letterrot<- function(...)
+Letterrot<- function(...) #200101renewal
 {
   varargin<- list(...)
+  Nargs=length(varargin)
   P<- varargin[[1]]
-  V<- varargin[[2]]; N<- 3
-  P<- Doscaling(P)
-  V<- Doscaling(V)
-  Tmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Tmov<- Tmp; N<- N+1
-  }
-  Nmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Nmov<- Tmp; N<- N+1
-  }
-  Mojiretu<- Assign(varargin[[N]]) #2017.11.26
+  V<- varargin[[2]];
+  Pu<- Unscaling(P) 
+  Vu<- Unscaling(V)
+  Tmov=0; Nmov=0; Rot=1
+  for(N in Looprange(3,Nargs-1)){
+    if(N==3){Tmov=varargin[[N]]}
+    if(N==4){Nmov=varargin[[N]]}
+    if(N==5){Rot=varargin[[N]]}
+  } #20200101to
+  Mojiretu<- varargin[[Nargs]]
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
-  P<- P+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
+  Pu<- Pu+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
   Tmp<- acos(V[1]/Norm(V))
   Theta<- round(Tmp*180/pi)
-  if(V[2]>=0){
-    Units<- ""
-  }
-  else{
-    Units<- "units=-360,"
-  }
-  Tmp<- paste("\\rotatebox[",Units,"origin=c]{",as.character(Theta),sep="")
-  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
-  Letter(P,"c",Tmp)
+  if(Rot<0){Theta=Theta+180}
+  Tmp<- paste("\\rotatebox[origin=c]{",as.character(Theta),"}{",Mojiretu,"}",sep="")
+#  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
+  Letter(Pu,"c",Tmp)
 }
 
 ###################################
@@ -5247,9 +5257,11 @@ Paramark<- function(...)
 {
   varargin<- list(...)
   Nargs<- length(varargin)
-  PA<- varargin[[1]]
-  PB<- varargin[[2]]
-  PC<- varargin[[3]]
+  PA<- Doscaling(varargin[[1]])
+  PB<- Doscaling(varargin[[2]])
+  PC<- Doscaling(varargin[[3]])
+  scaley=SCALEY #191231
+  SCALEY=1
   R<- 0.5
   if(Nargs>=4){
     R<- varargin[[4]]*R
@@ -5262,6 +5274,8 @@ Paramark<- function(...)
   else{
     P<- c()
   }
+  SCALEY=scaley #191231from
+  P
 }
 
 ###########################################

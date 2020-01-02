@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.3.0");
+println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191203] loaded");
+println("ketcindylibbasic1[20191231] loaded");
 
 //help:start();
 
@@ -3106,25 +3106,28 @@ Setscaling(sc):=(
 
 ////%Lcrd start////
 Lcrd(pt):=(
+//help:Lcrd(A);
+//help:LLcrd([2,3]);
   regional(tmp);
   if(ispoint(pt),
     tmp=[pt.x/SCALEX,pt.y/SCALEY];
   ,
     tmp=pt;
   );
-  tmp;
+  re(tmp); //191231
 );
 ////%Lcrd end////
 
 ////%Pcrd start////
 Pcrd(pt):=(
+//help:Pcrd([2,3]);
   regional(tmp);
   if(ispoint(pt),
-    tmp=re(pt.xy); // 15.07.24
+    tmp=pt.xy;
   ,
     tmp=[pt_1*SCALEX,pt_2*SCALEY];
   );
- tmp;
+ re(tmp); //191231
 );
 ////%Pcrd end////
 
@@ -3137,7 +3140,7 @@ LLcrd(pt):=(
     tmp=pt;
   );
   tmp=[tmp_1/SCALEX,tmp_2/SCALEY];
-  tmp;
+  re(tmp); //191231
 );
 ////%LLcrd end////
 
@@ -3960,11 +3963,10 @@ Pointdata(nm,listorg,options):=(
 //help:Pointdata("Inside=color/ratio/no","Border=y(n)"]);
   regional(list,name,nameL,ptlist,opstr,opcindy,Msg,
       eqL,dispflg,size,thick,tmp,tmp1,tmp2,tmp3,
-      Ltype,Noflg,color,inside,border);
+      Noflg,color,inside,border);
   name="pt"+nm;
   nameL=name+"L";
   tmp=Divoptions(options);
-  Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
   opstr=tmp_(length(tmp)-1);
@@ -4035,6 +4037,7 @@ Pointdata(nm,listorg,options):=(
     list=listorg;
    ); //17.10.23
   list=apply(list,Lcrd(#));  //190426
+  list=apply(list,[re(#_1),re(#_2)]); //191227
   if(Measuredepth(list)==0,list=[list]);//180530
   tmp=Measuredepth(list);
   if(tmp==1,ptlist=list,ptlist=list_1); //190126from
@@ -5080,7 +5083,7 @@ Framedata(nm,list,optionsorg):=( //190424modified
 //help:Framedata("1",[C,dx,dy]);
 //help:Framedata("1",[p1,p2],["corner"]);
   regional(name,options,Out,tmp,tmp1,x1,x2,y1,y2,dx,dy,
-      opcindy,Ltype,Noflg,strL,cent,dx,dy,color,strL,corner);
+      Ltype,Noflg,strL,cent,dx,dy,color,strL,corner);
   name="fr"+nm;
   options=optionsorg;
   tmp=Divoptions(options);
@@ -5088,14 +5091,14 @@ Framedata(nm,list,optionsorg):=( //190424modified
   Noflg=tmp_2;
   strL=tmp_7; //191126
   color=tmp_(length(tmp)-2);
-  opcindy=tmp_(length(tmp));
   corner=0; //191126from
   forall(strL,
     tmp=substring(Toupper(#),0,1);
     if(tmp=="C",
-      cent=(list_1+list_2)/2;
-      dx=abs(list_2_1-list_1_1)/2;
-      dy=abs(list_2_2-list_1_2)/2;
+      tmp=Lcrd(list_1); tmp1=Lcrd(list_2); //191227
+      cent=(tmp+tmp1)/2;
+      dx=abs(tmp1_1-tmp_1)/2;
+      dy=abs(tmp1_2-tmp_2)/2;
       corner=1;
       options=remove(options,[#]);
     );

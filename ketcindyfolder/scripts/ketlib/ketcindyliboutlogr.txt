@@ -1,3 +1,6 @@
+// 20191231
+//    Calling WolframLanguage supported
+//       WritetoW, kcW, CalcbyW, Wlfun added
 // 20191020
 //    PlotdataR, PlotdatadiscR debugged  ( "Pre=PVF")
 // 20191006

@@ -1,3 +1,5 @@
+// 20200102
+//    Wltex added
 // 20191231
 //    Calling WolframLanguage supported
 //       WritetoW, kcW, CalcbyW, Wlfun added

@@ -2955,14 +2955,14 @@ Letterrot(pt,dir,tmov,nmov,rot,str,options):=(
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
   Letter(LLcrd(pt),"c",str,append(options,"notex"));
-  tmp=replace(str,"\","\\");
-  if(color!=KCOLOR, //180904
+  tmp=replace(str,"\","\\"); // no ketjs on
+  if(color!=KCOLOR, //
     Texcom("{");Com2nd("Setcolor("+color+")");
   );
   Com2nd("Letterrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rot+","+Dqq(tmp)+")");
   if(color!=KCOLOR, 
     Texcom("}");
-  );
+  ); // no ketjs off
 );
 ////%Letterrot end////
 
@@ -3018,14 +3018,14 @@ Exprrot(pt,dir,tmov,nmov,rot,str,options):=(
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
   Expr(LLcrd(pt),"c",str,append(options,"notex"));
-  tmp=replace(str,"\","\\"); //17.10.18
+  tmp=replace(str,"\","\\"); // no ketjs on
   if(color!=KCOLOR, //180904
     Texcom("{");Com2nd("Setcolor("+color+")");
   );
   Com2nd("Exprrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rot+","+Dqq(tmp)+")");
   if(color!=KCOLOR, 
     Texcom("}");
-  );
+  ); // no ketjs off
 );
 ////%Exprrot end////
 

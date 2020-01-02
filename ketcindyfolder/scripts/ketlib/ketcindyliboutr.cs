@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20191231] loaded");
+println("ketcindylibout[20200102] loaded");
 
 //help:start();
 
@@ -6856,12 +6856,12 @@ CalcbyW(name,cmd,optionorg):=(
 ////%CalcbyW end////
 
 ////%Wlfun start////
-Wlfun(name,fun,argL):=Wlfun(name,fun,argL,[]);
-Wlfun(name,fun,argL,optionorg):=(
+Wlfun(nm,fun,argL):=Wlfun(nm,fun,argL,[]);
+Wlfun(nm,fun,argL,optionorg):=(
 //help:Wlfun("ca1","diff",["sin(x)^3","x"],[""]);
 //help:Wlfun(options=["Pre=6","Disp=y"]);
-  regional(nm,options,eqL,precise,disp,set,cmdL,tmp,tmp1,tmp2);
-  nm="wx"+name;
+  regional(name,options,eqL,precise,disp,set,cmdL,tmp,tmp1,tmp2);
+  name="wl"+nm;
   options=optionorg;
   tmp=divoptions(options);
   precise=6;
@@ -6888,14 +6888,63 @@ Wlfun(name,fun,argL,optionorg):=(
     "ans"+"="+fun,argL,
     "ans",[]
   ]);
-  CalcbyW(nm,cmdL,options);
+  CalcbyW(name,cmdL,options);
+  tmp1=parse(name);
+  tmp1=tmp1_1;
+  tmp=name+"="+Dqq(tmp1)+";";
+  parse(tmp);
   if(disp==1, // 15.11.24
-    println(nm+" is : ");
-    println(parse(nm));
+    println(name+" is : ");
+    println(tmp1);
   );
-  parse(nm);
+  tmp1;
 );
 ////%Wlfun end////
+
+////%Wltex start////
+Wltex(nm,ex):=Wltex(nm,ex,[]);
+Wltex(nm,ex,optionorg):=(
+//help:Wltex("1","sin(x)/x");
+//help:Wltex(options=["Disp=y"]);
+  regional(name,cmdL,eqL,options,tx,disp,
+     tmp,tmp1,tmp2); // 16.01.25
+  name="tx"+nm;
+  options=optionorg;
+  tmp=divoptions(options);
+  eqL=tmp_5;
+  disp=1;
+  set=[];
+  forall(eqL,
+    tmp=indexof(#,"=");
+    tmp1=Toupper(substring(#,0,1));
+    tmp2=substring(#,tmp,length(#));
+	if(tmp1=="D" ,
+      tmp=Toupper(substring(tmp2,0,1));
+      if((tmp=="F") % (tmp=="N"),
+        disp=0;
+      );
+      options=remove(options,[#]);
+    );
+  );
+  cmdL=[
+  ];
+  cmdL=concat(cmdL,[
+    "tx=TeXForm",[ex],
+    "ans=ToString[tx]",[],
+    "ans",[]
+  ]);
+  CalcbyW(name,cmdL,options);
+  tx=parse(name);
+  tx=tx_1;
+  if(disp==1,  //  16.01.10
+    println(name+" is:");
+    println(tx);
+  );
+  tmp=name+"="+Dqq(tx)+";";
+  parse(tmp);
+  tx;
+);
+////%Wltex end////
 
 //help:end();
 

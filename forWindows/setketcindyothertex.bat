@@ -45,20 +45,20 @@ cd
 
 if exist "%pathT%\%texmf%\scripts\ketcindy\." (
   echo Deleting "%pathT%\%texmf%\scripts\ketcindy"
-  rd /s "%pathT%\%texmf%\scripts\ketcindy"
+  rd /s/q "%pathT%\%texmf%\scripts\ketcindy"
 )
 echo Copying ketcindy to "%pathT%\%texmf%\scripts\ketcindy"
 %xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%\%texmf%\scripts\ketcindy\"
 if exist "%pathT%\%texmf%\doc\support\ketcindy\." (
   echo Deleting docs to "%pathT%\%texmf%\doc\support\ketcindy"
-  rd /s "%pathT%\%texmf%\doc\support\ketcindy"
+  rd /s/q "%pathT%\%texmf%\doc\support\ketcindy"
 )
 echo Copying doc to "%pathT%\%texmf%\doc\support\ketcindy"
 set docsrc=doc
 %xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%\%texmf%\doc\support\ketcindy\"
 if exist "%pathT%\tex\latex\ketcind\." (
   echo Deleting "%pathT%\tex\latex\ketcindy"
-  rd /s "%pathT%\tex\latex\ketcindy"
+  rd /s/q "%pathT%\tex\latex\ketcindy"
 )
 echo Copying ketcindy styles to "%pathT%\tex\latex\ketcindy"
 set stylesrc=style

@@ -50,20 +50,20 @@ cd
 
 if exist "%pathT%\%year%%scripts%\." (
   echo Deleting "%pathT%\%year%%scripts%"
-  rd /s "%pathT%\%year%%scripts%"
+  rd /s/q "%pathT%\%year%%scripts%"
 )
 echo Copying ketcindy to "%pathT%\%year%%scripts%"
 %xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%\%year%%scripts%\"
 if exist "%pathT%\%year%%doc%\." (
   echo Deleting docs to "%pathT%\%year%%doc%"
-  rd /s "%pathT%\%year%%doc%"
+  rd /s/q "%pathT%\%year%%doc%"
 )
 echo Copying doc to "%pathT%\%year%%doc%"
 set docsrc=doc
 %xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%\%year%%doc%\"
 if exist "%pathT%\%year%%style%\." (
   echo Deleting "%pathT%\%year%%style%"
-  rd /s "%pathT%\%year%%style%"
+  rd /s/q "%pathT%\%year%%style%"
 )
 echo Copying ketcindy styles to "%pathT%\%year%%style%"
 set stylesrc=style

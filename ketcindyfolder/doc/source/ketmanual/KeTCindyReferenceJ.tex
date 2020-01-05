@@ -5091,6 +5091,45 @@ Expr([2,-0.5],"e",tx2);
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \newpage
 
+%Wolfram Engineとの連携==================================
+\subsection{Wolfram Engineとの連携}
+
+2019年5月，Wolfram ResearchはMathematicaのコアであるWolfram Engineを開発者や個人ユースのために無償開放した。\\
+\hspace*{4zw}インストール・ライセンスは　\url{https://www.wolfram.com/engine/}\\
+ただし，Wolfram IDを取得する必要がある。
+
+\begin{description}
+
+\hypertarget{calcbyW}{}
+\item[関数]CalcbyW(name，コマンド，option)
+\item[機能]Wolfram 言語(Wl)のスクリプトを実行する
+\item[説明]第2引数はWolfram Engineで実行するコマンド。
+
+コマンドと引数リストの繰り返しからなるリスト（例えばcmdL）を作って，一度に実行する。
+結果は，コマンドリストの最後に記述した変数（引数は空リスト）の値がwl+name で指定された変数に代入される。複数の結果を戻すときは，:: で区切って記述するとリストにして代入される。
+
+\vspace{\baselineskip}
+
+\hypertarget{wlfun}{}
+\item[関数]Wlfun(name，式，リスト，option)
+\item[機能]Wlの1つの関数を実行する
+\item[説明]第2引数の「式」はWlの関数名。第3引数のリストは関数に渡す引数のリスト。
+
+オプションに "Disp=no" をつけると，結果をコンソールに表示しない。
+
+\vspace{\baselineskip}
+
+\hypertarget{wltex}{}
+\item[関数]Wltex(name,式)
+\item[機能]式をTeX書式にする
+\item[説明]第2引数の式は，直接書いたWlの式もしくはWlfunの戻り値。これをTeXの書式にする。
+
+戻り値は，変数 wl+name にも代入される。
+オプションに "Disp=no" をつけると，結果をコンソールに表示しない。
+
+\end{description}
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 
 %Risa/Asirとの連携==================================
 \subsection{Risa/Asirとの連携}
@@ -8515,6 +8554,10 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{mxbatch}{Mxbatch(list)}\>Maximaの外部スクリプト用コマンドを作る\\
 \hyperlink{mxfun}{Mxfun(name,式,list,option)}\>Maximaの関数を実行する\\
 \hyperlink{mxtex}{Mxtex(num,式)}\>式をTeX書式にする\\
+\vspace{\baselineskip}
+【Wolfram Engineとの連携】\\
+\hyperlink{calcbyW}{CalcbyW(name,list,option)}\>Wolfram 言語のスクリプトを実行する\\\hyperlink{wlfun}{Wlfun(name,式,list,option)}\>Wolfram 言語の1つの関数を実行する\\
+\hyperlink{mxtex}{Wltex(name,式)}\>式をTeX書式にする\\
 \vspace{\baselineskip}
 【Risa/Asirとの連携】\\
 \hyperlink{asirfun}{Asirfun(name,式,list,option)}\>Risa/Asirの関数を実行する\\

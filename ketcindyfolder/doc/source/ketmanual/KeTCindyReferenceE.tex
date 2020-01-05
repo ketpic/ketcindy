@@ -3860,6 +3860,42 @@ Example2
 \end{minipage}
 \end{cmd}
 
+%========= Wolfram Engine =======
+\subsection{Wolfram Engine}
+
+%------------CalcbyW-------------------------------
+\begin{cmd}{CalcbyW}{calcbyw}
+
+\itemket{Usage}CalcbyW(name, command,options)
+\itemket{Description}To execute scripts of Wolfram Language(Wl).
+\itemket{Details}The second argument is a command to be executed by Wl.\\
+The result is assigned to the variable specified by "name", the value of the variable of the command list last described (argument is the empty list). 
+If you want to return more than one result, if you describe it by separating it with "::", it will be substituted into the list.
+%\itemket{Examples}  \mbox{}
+
+\end{cmd}
+
+%-------------Wlfun-------------------------------
+\begin{cmd}{Wlfun}{wlfun}
+
+\itemket{Usage}Wlfun(name, formula, list,options)
+\itemket{Description}To execution of a function of Wl.
+
+If "Disp = no" is added to the option, the result is not displayed on the console.
+%\itemket{Examples}  \mbox{}
+
+\end{cmd}
+
+%-------------Wltex-------------------------------
+\begin{cmd}{Wltex}{wltex}
+
+\itemket{Usage}Wltex(name, formula,options)
+\itemket{Description}To convert expression to LaTeX format
+\itemket{Details}The second argument "formula" is the expression directly written or the returned value of Wlfun or CalcbyW.
+The return value is also assigned to the variable "txname".
+If "Disp = no" is added to the option, the result is not displayed on the console.
+\end{cmd}
+
 %========= Risa/Asir =======
 \subsection{Risa/Asir}
 
@@ -6033,6 +6069,11 @@ Rem) lightgray\ [0,0,0,0.15],\ offwhite\ [0,0,0,0.3],\ cindycolor\ [0.66,0,69,0.
 \hyperlink{mxbatch}{Mxbatch} \> make a command to execute the Maxima file. \\
 \hyperlink{mxfun}{Mxfun} \> execute Maxima's function. \\
 \hyperlink{mxtex}{Mxtex} \> convert expression to TeX format. \\
+
+{\bf Wolfram Engine} \> \\
+\hyperlink{calcbyw}{CalcbyW} \> execute scripts of Wolfram language(Wl). \\
+\hyperlink{wlfun}{Wlfun} \> execute a function of Wl.\\
+\hyperlink{wltex}{Wltex} \> convert expression to LaTeX format. \\
 
 {\bf Risa/Asir} \> \\
 \hyperlink{calcbya}{CalcbyA} \> execute Risa/Asir's script. \\

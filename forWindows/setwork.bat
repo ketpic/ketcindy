@@ -18,7 +18,7 @@ set change=\.ketcindy.conf
 set dist=%HOMEPATH%\ketcindy
 if exist "%dist%\." (
   echo Deleting "%dist%"
-  rd /s "%dist%"
+  rd /s/q "%dist%"
 )
 %xcp% /Y /Q /S /E /R "work\*.*" "%dist%\"
 echo Workfolder has been generated as %dist%

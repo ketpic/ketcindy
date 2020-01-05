@@ -1,3 +1,5 @@
+// 20200105
+//    kcW, CalcbyW changed  (for not PathW="wolframscript" )
 // 20200102
 //    Wltex added
 // 20191231

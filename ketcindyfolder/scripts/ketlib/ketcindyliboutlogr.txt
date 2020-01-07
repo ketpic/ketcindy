@@ -1,3 +1,5 @@
+// 20200106
+//    CalcbyW changed  (time,massage )
 // 20200105
 //    kcW, CalcbyW changed  (for not PathW="wolframscript" )
 // 20200102

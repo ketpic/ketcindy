@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200105] loaded");
+println("ketcindylibout[20200106] loaded");
 
 //help:start();
 
@@ -6659,8 +6659,8 @@ CalcbyW(name,cmd):=CalcbyW(name,cmd,[]);
 CalcbyW(name,cmd,optionorg):=(
 //help:CalcbyW("a",cmdL);
 //help:CalcbyW(options1= ["m/r","Wait=5","Dig=6"]);
-  regional(options,time,tmp,tmp1,tmp2,tmp3,tmp4,strL,eqL,
-      dig,flg,wflg,file,nc,arg,add,cmdW,cmdlist,wfile,rfile,waiting);
+  regional(options,time,tmp,tmp1,tmp2,tmp3,tmp4,strL,eqL,tm,
+      dig,flg,wflg,nc,arg,add,cmdW,cmdlist,file,wfile,rfile,waiting);
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
@@ -6790,7 +6790,6 @@ CalcbyW(name,cmd,optionorg):=(
   repeat(time,nc,
     if(flg==0,
       tmp2=load(wfile);
-      tmp3=load(rfile);
       if(wflg==1,wait(WaitUnit));
       if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999",
         tmp=Bracket(tmp2,"{}");
@@ -6807,46 +6806,48 @@ CalcbyW(name,cmd,optionorg):=(
           tmp=tmp+Dqq(substring(tmp2,tmp3,tmp4-1))+",";
         );
         tmp=substring(tmp,0,length(tmp)-1);
-        parse(name+"=["+tmp+"];");
-        tmp1=nc*WaitUnit/1000;
+        if(length(tmp1)/2>1,
+          tmp="["+tmp+"];";
+        );
+        parse(name+"="+tmp);
+        tm=nc*WaitUnit/1000;
         flg=1;
-        ,
+      ,
+        tmp3=load(rfile);
         if(substring(tmp3,length(tmp3)-5,length(tmp3))=="99999", //200105from
+          tm=nc*WaitUnit/1000;
           flg=1;
         ); //200105to
       );
     ,
       if(wflg==-1,
-        flg=-1;
+        flg=1;
       ,
         wait(WaitUnit);
       );
     );
   );
-  if(flg<=0,
-    if(flg==-1,
+  if(flg==0,
+    tmp="("+text(waiting)+" s )";
+    tmp2=load(wfile);
+    if(length(tmp2)>0,
+      println(wfile+" incomplete"+tmp1);
     ,
-      tmp="("+text(waiting)+" s )";
-      tmp2=load(wfile);
-      if(length(tmp2)>0,
-        println(wfile+" incomplete"+tmp1);
-      ,
-        println(wfile+" not generated "+tmp);
-      );
+      println(wfile+" not generated "+tmp);
     );
   ,
-    tmp1=Readlines(Dirwork,rfile); //200105from
-    tmp1=select(tmp1,(length(#)>0)&(isstring(#)));
+    tmp2=Readlines(Dirwork,rfile); //200105from
+    tmp2=select(tmp2,(length(#)>0)&(isstring(#)));
     if(PathW!="wolframscript",
-      tmp1=select(tmp1,indexof(#,"::")>0);
+      tmp2=select(tmp2,indexof(#,"::")>0);
     );
-    if(length(tmp1)>0,
+    if(length(tmp2)>0,
       println(name+" : Errors may have occurred");
-      apply(tmp1,println("        "+#));
+      apply(tmp2,println("        "+#));
       flg=0;
     ); //200105to
     if(flg==1,
-      println("      CalcbyW succeeded "+name+" ("+text(tmp1)+" sec)");
+      println("      CalcbyW succeeded "+name+" ("+text(tm)+" sec)");
     );
   );
 );
@@ -6887,7 +6888,7 @@ Wlfun(nm,fun,argL,optionorg):=(
   ]);
   CalcbyW(name,cmdL,options);
   tmp1=parse(name);
-  tmp1=tmp1_1;
+  if(islist(tmp1),tmp1=tmp1_1);
   tmp=name+"="+Dqq(tmp1)+";";
   parse(tmp);
   if(disp==1, // 15.11.24
@@ -6932,7 +6933,7 @@ Wltex(nm,ex,optionorg):=(
   ]);
   CalcbyW(name,cmdL,options);
   tx=parse(name);
-  tx=tx_1;
+  if(islist(tx),tx=tx_1);
   if(disp==1,  //  16.01.10
     println(name+" is:");
     println(tx);

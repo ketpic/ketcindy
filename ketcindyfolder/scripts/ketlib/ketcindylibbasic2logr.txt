@@ -1,3 +1,5 @@
+// 200108
+//   Ptpos changed ( 6-> 12)
 // 200102
 //   Bowdata changed ("Textcolor=")
 // 200101

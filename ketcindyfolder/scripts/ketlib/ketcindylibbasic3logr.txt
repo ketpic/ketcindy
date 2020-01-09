@@ -1,3 +1,5 @@
+// 20200109
+//    Getcindystr added
 // 20191004
 //    Mkketcindyjs changed  ( import for ketcindyjs supported)
 // 20191003

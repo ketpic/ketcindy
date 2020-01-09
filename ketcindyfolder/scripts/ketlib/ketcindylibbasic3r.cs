@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20191127] loaded");
+println("ketcindylibbasic3[20200109] loaded");
 
 //help:start();
 
@@ -3264,6 +3264,26 @@ Tocindyform(str):=( //190521
   out;
 );
 ////%Tocindyform end////
+
+////%Getcindystr start////
+Getcindystr(str):=(
+//help:Getcindystr("val=sq(3)");
+//help:Getcindystr("a=sq(3);b=fr(1,2)");
+  regional(out,semi,tmp,tmp1);
+  out=[];
+  semi=Strsplit(str,";");
+  forall(semi,
+    tmp1="";
+    if(length(#)>0,
+      tmp=Strsplit(#,"=");
+      if(length(tmp)>1,tmp1=tmp_2,tmp1=tmp_1);
+    );
+    out=append(out,Tocindyform(tmp1));
+  );
+  if(length(out)==1,out=out_1);
+  out;
+);
+////%Getcindystr end////
 
 ////%Animepar start//// //190524
 Animepar(start,ratio,stop):=Animationparam(start,ratio,stop);

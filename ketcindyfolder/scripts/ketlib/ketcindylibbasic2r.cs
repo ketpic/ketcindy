@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200102] loaded");
+println("ketcindylibbasic2[20200108] loaded");
 
 //help:start();
 
@@ -3040,12 +3040,12 @@ Ptpos(ptorg,pos):=(
     tmp=pt.name+"position";
     out=parse(tmp);
     if(!islist(out),
-      tmp=tmp+"="+Textformat(pt.xy,6)+";";
+      tmp=tmp+"="+Textformat(pt.xy,12)+";";  //200108 6->12
       parse(tmp);
     );
   ,
     pt.xy=pos;
-    tmp=pt.name+"position="+Textformat(pt.xy,6)+";";
+    tmp=pt.name+"position="+Textformat(pt.xy,12)+";"; //200108 6->12
     parse(tmp);
     out=pt.xy;
   );

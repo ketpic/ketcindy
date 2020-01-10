@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200106] loaded");
+println("ketcindylibout[20200110] loaded");
 
 //help:start();
 
@@ -6561,7 +6561,7 @@ kcW(fname,optionorg):=(
 //help:kcW("boxdata");
 //help:kcW(options=["r/m"]);
   regional(options,tmp,tmp1,tmp2,eqL,strL,filename,wfile,rfile,flg);
-  if(!isstring(PathW),PathW="wolframscript"); //200105
+  if((!isstring(PathW))%(PathW==""),PathW="wolframscript"); //200105
   if(indexof(fname,".")==0,
     filename=fname+".wl";
   ,
@@ -6791,32 +6791,14 @@ CalcbyW(name,cmd,optionorg):=(
     if(flg==0,
       tmp2=load(wfile);
       if(wflg==1,wait(WaitUnit));
-      if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999",
-        tmp=Bracket(tmp2,"{}");
-        tmp=select(tmp,#_2==1);
-        tmp=tmp_(length(tmp))_1;
-        tmp2=substring(tmp2,tmp-1,length(tmp2)-5);
-        tmp1=Bracket(tmp2,"{}");
-        tmp1=select(tmp1,abs(#_2)==2);
-        tmp1=apply(tmp1,#_1);
-        tmp="";
-        forall(1..(length(tmp1)/2),
-          tmp3=tmp1_(2*#-1);
-          tmp4=tmp1_(2*#);  
-          tmp=tmp+Dqq(substring(tmp2,tmp3,tmp4-1))+",";
-        );
-        tmp=substring(tmp,0,length(tmp)-1);
-        if(length(tmp1)/2>1,
-          tmp="["+tmp+"];";
-        );
-        parse(name+"="+tmp);
+      if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999", //////////////
         tm=nc*WaitUnit/1000;
         flg=1;
       ,
         tmp3=load(rfile);
         if(substring(tmp3,length(tmp3)-5,length(tmp3))=="99999", //200105from
           tm=nc*WaitUnit/1000;
-          flg=1;
+          flg=2; /////////
         ); //200105to
       );
     ,
@@ -6827,6 +6809,39 @@ CalcbyW(name,cmd,optionorg):=(
       );
     );
   );
+  if(flg==2, //200110from
+    wait(WaitUnit);
+    tmp2=load(wfile);
+    if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999",
+      flg=1;
+    ,
+      tmp3=Readlines(Dirwork,rfile); 
+      tmp3=select(tmp3,(length(#)>0)&(isstring(#)));
+      println(name+" : Installing may not be completed");
+      apply(tmp3,println("        "+#));
+      flg=0;
+    );
+  );
+  if(flg==1,
+    tmp=Bracket(tmp2,"{}");
+    tmp=select(tmp,#_2==1);
+    tmp=tmp_(length(tmp))_1;
+    tmp2=substring(tmp2,tmp-1,length(tmp2)-5);
+    tmp1=Bracket(tmp2,"{}");
+    tmp1=select(tmp1,abs(#_2)==2);
+    tmp1=apply(tmp1,#_1);
+    tmp="";
+    forall(1..(length(tmp1)/2),
+      tmp3=tmp1_(2*#-1);
+      tmp4=tmp1_(2*#);  
+      tmp=tmp+Dqq(substring(tmp2,tmp3,tmp4-1))+",";
+    );
+    tmp=substring(tmp,0,length(tmp)-1);
+    if(length(tmp1)/2>1,
+      tmp="["+tmp+"];";
+    );
+    parse(name+"="+tmp);
+  ); //200110to
   if(flg==0,
     tmp="("+text(waiting)+" s )";
     tmp2=load(wfile);
@@ -6836,14 +6851,14 @@ CalcbyW(name,cmd,optionorg):=(
       println(wfile+" not generated "+tmp);
     );
   ,
-    tmp2=Readlines(Dirwork,rfile); //200105from
-    tmp2=select(tmp2,(length(#)>0)&(isstring(#)));
+    tmp3=Readlines(Dirwork,rfile); //200105from
+    tmp3=select(tmp3,(length(#)>0)&(isstring(#)));
     if(PathW!="wolframscript",
-      tmp2=select(tmp2,indexof(#,"::")>0);
+      tmp3=select(tmp3,indexof(#,"::")>0);
     );
-    if(length(tmp2)>0,
+    if(length(tmp3)>0,
       println(name+" : Errors may have occurred");
-      apply(tmp2,println("        "+#));
+      apply(tmp3,println("        "+#));
       flg=0;
     ); //200105to
     if(flg==1,

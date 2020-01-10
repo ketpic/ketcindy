@@ -1,3 +1,5 @@
+// 20200110
+//    CalcbyW changed  (case that installing of wolframscript not fininshed )
 // 20200106
 //    CalcbyW changed  (time,massage )
 // 20200105

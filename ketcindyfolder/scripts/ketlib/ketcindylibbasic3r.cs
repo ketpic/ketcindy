@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200109] loaded");
+println("ketcindylibbasic3[20200111] loaded");
 
 //help:start();
 
@@ -3266,19 +3266,26 @@ Tocindyform(str):=( //190521
 ////%Tocindyform end////
 
 ////%Getcindystr start////
-Getcindystr(str):=(
+Getcindystr(str):=Getcindystr(str,"");
+Getcindystr(str,num):=(
 //help:Getcindystr("val=sq(3)");
-//help:Getcindystr("a=sq(3);b=fr(1,2)");
-  regional(out,semi,tmp,tmp1);
+//help:Getcindystr("val=sq(3)",5);
+//help:Getcindystr("a=sq(3);b=fr(1,2)",[3,2]);
+  regional(numlist,out,semi,tmp,tmp1);
+  if(islist(num),numlist=num,numlist=[num]); //200111
   out=[];
   semi=Strsplit(str,";");
-  forall(semi,
+  forall(1..(length(semi)),
     tmp1="";
-    if(length(#)>0,
-      tmp=Strsplit(#,"=");
+    if(length(semi_#)>0,
+      tmp=Strsplit(semi_#,"=");
       if(length(tmp)>1,tmp1=tmp_2,tmp1=tmp_1);
     );
-    out=append(out,Tocindyform(tmp1));
+    tmp1=Tocindyform(tmp1);
+    if(length(tmp1)>0,
+      if(isreal(numlist_#),tmp1=parse(tmp1));
+    );
+    out=append(out,tmp1);
   );
   if(length(out)==1,out=out_1);
   out;

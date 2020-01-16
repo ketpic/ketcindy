@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200108] loaded");
+println("ketcindylibbasic2[20200112] loaded");
 
 //help:start();
 
@@ -182,7 +182,7 @@ Arrowheaddata(point,direction,options):=( //191127remade
     );  //191207to
   ); //191203to
   scaley=SCALEY;
-  Setscaling(1); //191203(moved)
+  SCALEY=1; //200114
   if(hflg==0,
     if(isstring(direction),Houkou=parse(direction),Houkou=direction);
     if(!islist(pP),
@@ -240,7 +240,7 @@ Arrowheaddata(point,direction,options):=( //191127remade
     pA=Translatepoint(pA,tmp);
     pB=Translatepoint(pB,tmp);
     pC=Translatepoint(pC,tmp);
-    Setscaling(scaley);
+    SCALEY=scaley;
     out=apply([pA,pP,pB,pC,pA],LLcrd(#));
   );
   out;
@@ -353,7 +353,7 @@ Oldarrowdata(nm,ptlistorg,optionsorg):=(
       flg,lineflg,cutend,tmp,tmp1,tmp2,pA,pB,angle,segpos,cut,scaley,ptlist);
   name="ar"+nm;
   scaley=SCALEY; //190412
-  Setscaling(1); //190412
+  SCALEY=1; //100114
   ptlist=[];
   forall(ptlistorg,
     if(ispoint(#),tmp=[#.x, scaley*#.y], tmp=[#_1,scaley*#_2]);
@@ -418,9 +418,9 @@ Oldarrowdata(nm,ptlistorg,optionsorg):=(
     if(ispoint(pA),pA=pA.xy);
     if(ispoint(pB),pB=pB.xy);
   ,
-    Setscaling(scaley); //190419
+    SCALEY=scaley;
     pA=Pcrd(ptlist_1); pB=Pcrd(ptlist_2);
-    Setscaling(1); //190419
+    SCALEY=1;
   );//181018to
   if(Noflg<3,
     println("generate Arrowdata "+name);
@@ -441,7 +441,7 @@ Oldarrowdata(nm,ptlistorg,optionsorg):=(
       if(Noflg==1,Ltype=0);
     );
   );
-  Setscaling(scaley); //190412
+  SCALEY=scaley; //200114
   [Lcrd(pA),Lcrd(pB)];
 );
 ////%Oldarrowdata end////
@@ -468,7 +468,7 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,lineflg,
       flg,cutend,tmp,tmp1,tmp2,pA,pB,pC,angle,segpos,cut,scaley,Ev,Nv,pP,ptlist);
   scaley=SCALEY; //190412
-  Setscaling(1); 
+  SCALEY=1; //200114
   ptlist=[];
   forall(ptlistorg,
     if(ispoint(#),tmp=[#.x, #.y], tmp=[#_1,scaley*#_2]);
@@ -525,8 +525,7 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
   pA=ptlist_1+tmp*cutend_1;
   pB=ptlist_2-tmp*cutend_2;
   pP=pA+segpos*(pB-pA);
-  Ev=-1/|pB-pA|*(pB-pA);
-  Nv=[-Ev_2, Ev_1];
+  Ev=-1/|pB-pA|*(pB-pA); Nv=[-Ev_2, Ev_1];
   tmp1=pP+size*cos(angle)*Ev+size*sin(angle)*Nv;
   tmp2=pP+size*cos(angle)*Ev-size*sin(angle)*Nv;
   pC=pP+(1-cut)*((tmp1+tmp2)/2-pP);
@@ -536,14 +535,15 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
       Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n")); //191106
     ,
       Listplot("-arh"+nm,[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //191106
-      Shade(["arh"+nm],[Ltype,"Color="+color]);
+      Shade(["arh"+nm],[Ltype,"Color="+color]); // no ketjs
+//    fillpoly(parse("arh"+nm),color->color); // only ketjs
     );
     if(lineflg==0,
       if(segpos==1,pB=pC); //191202
     );
     Listplot("-ar"+nm,[pA,pB],[Ltype,"Color="+color,"Msg=n"]); 
   );
-  Setscaling(scaley); //190412
+  SCALEY=scaley; //200114
   [LLcrd(pA),LLcrd(pB)];
 );
 ////%Arrowdataseg end////
@@ -3061,16 +3061,16 @@ Strictmove(pCorg,sep):=(
   if(ispoint(pC),pC=pC.name);
   tmp1=pC+"position";
   if(!islist(parse(tmp1)),
-    tmp=tmp1+"="+textformat(parse(pC).xy,6)+";";
+    tmp=tmp1+"="+Textformat(parse(pC).xy,12)+";"; //200112
     parse(tmp);
   ,
-    tmp=parse(pC).xy;
+   tmp=parse(pC).xy;
     tmp2=mouse().xy;
     if(|tmp-tmp2|>sep,
       tmp=pC+".xy="+pC+"position";
       parse(pC).xy=parse(pC+"position");
     ,
-      tmp=tmp1+"="+Textformat(parse(pC).xy,6)+";";
+      tmp=tmp1+"="+Textformat(parse(pC).xy,12)+";"; //200112
       parse(tmp);
     );
   );

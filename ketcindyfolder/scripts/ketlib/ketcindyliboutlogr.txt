@@ -1,3 +1,7 @@
+// 20200115
+//    TocindyW debugged
+// 20200114
+//    TocindyW added
 // 20200110
 //    CalcbyW changed  (case that installing of wolframscript not fininshed )
 // 20200106

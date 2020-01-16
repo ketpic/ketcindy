@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200110] loaded");
+println("ketcindylibout[20200115] loaded");
 
 //help:start();
 
@@ -6958,6 +6958,37 @@ Wltex(nm,ex,optionorg):=(
   tx;
 );
 ////%Wltex end////
+
+////%TocindyW end////
+TocindyW(str):=(
+//help:TocindyW(ans);
+  regional(out,nn,kk,tmp,tmp1,tmp2,tmp3);
+  if(substring(str,0,1)=="{",
+    tmp3=[];
+    tmp1=Bracket(str,"{}");
+    tmp2=Indexall(str,",");
+    forall(1..(length(tmp2)),nn,
+      tmp=select(tmp1,#_1<tmp2_nn);
+      tmp=tmp_(-1);
+      if(tmp_2>0,kk=tmp_2,kk=abs(tmp_2+1));
+      if(kk==1,tmp3=append(tmp3,tmp2_nn));
+    );
+    tmp3=append(tmp3,length(str));
+    out=[];
+    kk=1; //200115
+    forall(1..(length(tmp3)),
+      tmp=substring(str,kk,tmp3_#-1);
+      tmp=Removespace(tmp);
+      tmp=replace(tmp,[["{","["],["}","]"]]);
+      out=append(out,tmp);
+      kk=tmp3_#;
+    );
+  ,
+    out=replace(out,[["{","["],["}","]"]]);      
+  );
+  out;
+);
+////%TocindyW end////
 
 //help:end();
 

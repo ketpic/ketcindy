@@ -1,4 +1,8 @@
-/ 20200111
+// 20200116
+//    Mkketcindyjs changed ("import" removed , message)
+// 20200115
+//    Ketcindyjsdata debugged ( for list )
+// 20200111
 //    Getcindystr changed ( value)
 // 20200109
 //    Getcindystr added

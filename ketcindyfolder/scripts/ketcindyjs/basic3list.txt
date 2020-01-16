@@ -11,7 +11,7 @@ Rform,basic3,312,322,PaO
 Defvar,basic3,326,370
 IftoR,basic3,374,413,PaO,Indexall,Bracket
 FortoR,basic3,417,446,PaO,Bracket
-Deffun,basic3,450,503,Removespace,Bracket,Indexall,FortoR,IftoR,RSform,PaO
+Deffun,basic3,450,503,Removespace
 WritetoRS,basic3,507,740,WritetoSci,Lcrd,Datetime,Textformat,Cindyname,RSform,PPa,iswindows,Indexall,Dqq,PaO
 Readoutdata,basic3,744,857,Divoptions,Strsplit,Toupper,Pcrd,Textformat
 Writeoutdata,basic3,861,923,Flattenlist,Measuredepth
@@ -49,15 +49,15 @@ Copyketcindyjs,basic3,3323,3384,iswindows,Dqq,kc
 Ketjsoption,basic3,3388,3389,Setketcindyjs
 Setketcindyjs,basic3,3393,3402
 Ketcindyjsbody,basic3,3406,3411
-Ketcindyjsdata,basic3,3415,3455,Textformat,Dqq,set
-Findfun,basic3,3459,3526,Removespace,Indexall
-Extractfun,basic3,3530,3547,Indexall,Findfun
-Extractall,basic3,3556,3600
-Textedit,basic3,3604,3610
-Textedit2value,basic3,3614,3656,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3660,3713, unicode
-Resizetextsize,basic3,3717,3741,Parsejson
-Movetojs,basic3,3745,3753
-Movetojsexe,basic3,3757,3773,Dqq,Parsejson
-Setplaybuttons,basic3,3777,3802,Movetojs
-Mkketcindyjs,basic3,3806,4503, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Bracket,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq
+Ketcindyjsdata,basic3,3415,3439,Dqq,set
+Findfun,basic3,3443,3510,Removespace,Indexall
+Extractfun,basic3,3514,3531,Indexall,Findfun
+Extractall,basic3,3540,3584
+Textedit,basic3,3588,3594
+Textedit2value,basic3,3598,3640,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3644,3697, unicode
+Resizetextsize,basic3,3701,3725,Parsejson
+Movetojs,basic3,3729,3737
+Movetojsexe,basic3,3741,3757,Dqq,Parsejson
+Setplaybuttons,basic3,3761,3786,Movetojs
+Mkketcindyjs,basic3,3790,4488, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq

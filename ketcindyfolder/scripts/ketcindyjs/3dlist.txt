@@ -1,5 +1,5 @@
 Ketinit3d,3d,22,57,Setwindow,Addax,Slider,Sprintf
-Start3d,3d,61,170,Strsplit,Toupper,Setfiles,Setwindow,Slider,Sprintf,Ptselected,Ptseg3data
+Start3d,3d,61,170,Strsplit,Toupper,Setwindow,Slider,Sprintf,Ptselected,Ptseg3data
 Setangle,3d,174,245,Parapt,Ptselected,Xyzcoord,Defvar,Datalist3d,Projpara,textformat,Ptseg3data
 Getangle,3d,249,267,getangle,divoptions,Strsplit,181111,Toupper,textformat
 Angleselected,3d,271,272,IsAngle
@@ -19,7 +19,7 @@ Projpara,3d,481,550,Divoptions,Strsplit,Toupper,Projcurve,textformat,Com2nd,Getl
 Invparaptpp,3d,554,609,textformat,Projpara,Nearestpt,Crossprod,Dotprod,Ptend,Numptcrv,Ptcrv
 Invparapt,3d,613,617,Invparaptpp
 Subgraph,3d,621,638,Measuredepth,Parasubpt,Textformat
-Spaceline,3d,642,735,Divoptions,Toupper,Projpara,Textformat,Com2nd,Getlinestyle,Texcom,Subgraph
+Spaceline,3d,642,735,Divoptions,Toupper,Projpara,Textformat,Com2nd,Getlinestyle,Texcom
 Spacecurve,3d,739,905,Divoptions,Toupper,tmpfn,Projpara,textformat,Com2nd,Getlinestyle,Texcom,Subgraph
 Partcrv3d,3d,909,945,parapt,partcrv,Xyzcoord,Spaceline
 Joincrvs3d(,3d,949,1044,Joincrvs3d,Divoptions,Norm,Projpara,textformat,Com2nd,Getlinestyle,Texcom,Subgraph
@@ -41,7 +41,7 @@ Xyzcoord,3d,1797,1803,Mainsubpt3d
 Putoncurve3d,3d,1807,1823,PutonCurve,Nearestpt,Paramoncurve,Pointoncurve,Xyzcoord,textformat,Defvar
 Mkpointlist,3d,1827,1944,Workprocess,Finddef,Norm,Parapt,Parasubpt,Putpoint,Mainsubpt3d,Defvar,Ptselected
 Mkseg3d,3d,1948,1992,Divoptions,Finddef,Spaceline
-Ptseg3data,3d,1996,2031,Ptselected,Parapt,Parasubpt,Mainsubpt3d,Defvar,Mkpointlist,Mkseg3d
+Ptseg3data,3d,1996,2031,Ptselected,Parapt,Parasubpt,Mainsubpt3d,Defvar,Mkpointlist
 Putonseg3d,3d,2035,2087,divoptions,Putonseg,Putpoint,Parapt,Textformat,Parasubpt,Xyzcoord,Defvar
 Putpoint3d,3d,2091,2149,Toupper,Xyzcoord,Defvar,Parapt,Putpoint,Parasubpt,Fixpoint3d
 Fixpoint3d,3d,2153,2170,Defvar,Parapt,textformat
@@ -77,7 +77,7 @@ WireparadataR,3d,4250,4351,Divoptions,Toupper,Select,MkprecommandR,RSform,textfo
 IntersectcrvsfR,3d,4355,4443,Intersectcrvsf,Divoptions,Toupper,RSform,textformat,Rsform,Dqq,CalcbyR,ReadOutData
 SfcutparadataR,3d,4447,4544,Strsplit,Changestyle,Divoptions,Toupper,RSform,Select,MkprecommandR,textformat,Rsform,Dqq,CalcbyR,ReadOutData,Extractdata,Projpara
 Skeletonparadata,3d,4550,4554,Skeletondatacindy
-Skeletondatacindy,3d,4558,4747,Datalist3d,Divoptions,Strsplit,Toupper,Anyselected,Flattenlist,isexists,ReadOutData,Textformat,Projcoordcurve,Makeskeletondata,Norm,Ptcrv,Invparapt,Projcurve,textformat,Changestyle3d,Getlinestyle,Com2nd,Subgraph,WriteOutData
+Skeletondatacindy,3d,4558,4747,Datalist3d,Divoptions,Flattenlist,Projcoordcurve,Makeskeletondata,Norm,Ptcrv,Invparapt,Projcurve,textformat,Changestyle3d,Getlinestyle,Com2nd,Subgraph
 Makeskeletondata,3d,4751,4953,Columnlist,Intersectcrvspp,Op,column,Dotprod,Norm,Kukannozoku,Pointoncurve,Listplot
 Kukannozoku,3d,4957,5008
 Projcoordcurve,3d,5014,5028

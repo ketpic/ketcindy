@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200111] loaded");
+println("ketcindylibbasic3[20200116] loaded");
 
 //help:start();
 
@@ -3413,39 +3413,23 @@ Ketcindyjsbody(list1,list2):=(
 
 ////%Ketcindyjsdata start////  //190421
 Ketcindyjsdata(datalistorg):=(
-//help:Ketcindyjsdata(["ans",ans,"pea[parse]",pea]);
-  regional(nn,func,tmp,tmp1,tmp2);
+//help:Ketcindyjsdata(["ans1",ans1,"ans2",ans2]);
+  regional(nn,tmp,tmp1,tmp2,tmp3);
   if(!islist(KetcindyjsDataList),KetcindyjsDataList=[]); //190801
   datalist=datalistorg;
   forall(1..(length(datalist)/2), nn, //190423from
     tmp1=datalist_(2*nn-1);
-    func="";
-    tmp=indexof(tmp1,"[");
-    if(tmp>0,
-      func=substring(tmp1,tmp,length(tmp1)-1);
-      tmp1=substring(tmp1,0,tmp-1);
-    );
     tmp2=datalist_(2*nn);
-    if(length(func)>0,
-      forall(1..(length(tmp2)),
-        tmp=func+"("+Dqq(tmp2_#)+")";
-        tmp2_#=parse(tmp);
-      );
-    );
     if(islist(tmp2),
-      tmp="[";
+      tmp3=[];
       forall(tmp2,
-        if(isstring(#),
-          tmp=tmp+Dqq(#)+",";
-        ,
-          tmp=tmp+Textformat(#,5)+",";
-        );
-      );
-      tmp2=substring(tmp,0,length(tmp)-1)+"]";
+        if(isstring(#),tmp=Dqq(#),tmp=format(#,12));
+        tmp3=append(tmp3,tmp);
+       );
     ,
-      if(isstring(tmp2),tmp2=Dqq(tmp2));
+      if(isstring(tmp2),tmp3=Dqq(tmp2),tmp3=format(tmp2,12));
     );
-    tmp=tmp1+"="+tmp2;
+    tmp=tmp1+"="+text(tmp3);
     KetcindyjsDataList=append(KetcindyjsDataList,tmp);
     KetcindyjsDataList=set(KetcindyjsDataList); //190802
   );
@@ -3812,7 +3796,7 @@ Mkketcindyjs(options):=( //17.11.18
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
-     figure,dpi,margin,defaultbuttonsize,defaulteditsize,dname,fname);
+     figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -3931,33 +3915,34 @@ Mkketcindyjs(options):=( //17.11.18
     );
   );
   if(!isexists(Dircdy,Fhead+".html"),
-    drawtext(mouse().xy-[0,1],Cdyname()+".html not found",size->24,color->[1,0,0]);
+    drawtext(mouse().xy-[0,1],Cdyname()+".html not found",size->24,color->[0,0,1]);
     wait(3000);
   ,
     tmp3=Readlines(Dircdy,Fhead+".html");
-    tmp=select(1..(length(tmp3)),indexof(tmp3_#,"import")>0);
-    tmp2=select(tmp,indexof(tmp3_#,"ketcindy.ini")==0);
-    tmp1=[];
-    forall(tmp2,
-      tmp=Removespace(tmp3_#);
-      if(substring(tmp,0,2)!="//",
-        tmp1=append(tmp1,#);
-      );
-    );
+//    tmp=select(1..(length(tmp3)),indexof(tmp3_#,"import")>0);
+//    tmp1=[];
+//    tmp2=select(tmp,indexof(tmp3_#,"ketcindy.ini")==0);
+//    tmp1=[];
+//    forall(tmp2,
+//      tmp=Removespace(tmp3_#);
+//      if(substring(tmp,0,2)!="//",
+//        tmp1=append(tmp1,#);
+//      );
+//    );
     htmorg=[];
     from=1;
-    forall(tmp1,
-      htmorg=concat(htmorg,tmp3_(from..(#-2)));
-      tmp=Bracket(tmp3_(#-1),"()");
-      dname=substring(tmp3_(#-1),tmp_1_1,tmp_(length(tmp))_1-1);
-      dname=parse(dname);
-      tmp=Bracket(tmp3_#,"()");
-      fname=substring(tmp3_#,tmp_1_1,tmp_(length(tmp))_1-1);
-      fname=parse(fname);
-      tmp2=Readlines(dname,fname);
-      htmorg=concat(htmorg,tmp2);
-      from=#+2;
-    );
+//    forall(tmp1,
+//      htmorg=concat(htmorg,tmp3_(from..(#-2)));
+//      tmp=Bracket(tmp3_(#-1),"()");
+//      dname=substring(tmp3_(#-1),tmp_1_1,tmp_(length(tmp))_1-1);
+//      dname=parse(dname);
+//      tmp=Bracket(tmp3_#,"()");
+//      fname=substring(tmp3_#,tmp_1_1,tmp_(length(tmp))_1-1);
+//      fname=parse(fname);
+//      tmp2=Readlines(dname,fname);
+//      htmorg=concat(htmorg,tmp2);
+//      from=#+2;
+//    );
     upto=length(tmp3);
     htmorg=concat(htmorg,tmp3_(from..upto));
     tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csinit"))>0); //190206from
@@ -4083,13 +4068,13 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=max(tmp)+1;
     lastpart=[tmp,length(htmorg)];
     if(webflg=="Y",
-      tmp1=Fhead+"json.html";
+      fname=Fhead+"json.html";
     ,
-      tmp1=Fhead+"jsoff.html";
-      if(localflg=="Y",tmp1=replace(tmp1,"off.","offL.")); //190209
+      fname=Fhead+"jsoff.html"; //200116[2lines]
+      if(localflg=="Y",fname=replace(fname,"off.","offL."));
     );
     setdirectory(path);
-    SCEOUTPUT = openfile(tmp1);
+    SCEOUTPUT = openfile(fname); //200116
     tmp1=htmorg_((toppart_1)..(toppart_2));
     if(webflg=="N",
       if(localflg=="N", //190128
@@ -4496,8 +4481,8 @@ Mkketcindyjs(options):=( //17.11.18
     ); //190910to
     closefile(SCEOUTPUT);
     setdirectory(Dirwork);
-    if(webflg=="Y",tmp="json",tmp="jsoff");
-    drawtext(mouse().xy-[0,1],tmp+"in "+path,size->20,color->[1,0,0]);
+//    if(webflg=="Y",tmp="json",tmp="jsoff");
+    drawtext(mouse().xy-[0,1],"Generate : "+fname,size->20,color->[0,0,0]);
     wait(1000);
   );
 );

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20191231] loaded");
+println("ketcindylibbasic1[20200117] loaded");
 
 //help:start();
 
@@ -4037,7 +4037,7 @@ Pointdata(nm,listorg,options):=(
     list=listorg;
    ); //17.10.23
   list=apply(list,Lcrd(#));  //190426
-  list=apply(list,[re(#_1),re(#_2)]); //191227
+//  list=apply(list,re(#)); //191227,200117(removed)
   if(Measuredepth(list)==0,list=[list]);//180530
   tmp=Measuredepth(list);
   if(tmp==1,ptlist=list,ptlist=list_1); //190126from

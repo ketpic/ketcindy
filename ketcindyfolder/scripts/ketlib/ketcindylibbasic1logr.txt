@@ -1,3 +1,5 @@
+// 20200117
+//    Pointdata debugged  (re removed)
 // 20200101
 //    Pcrd,Lcrd,LLcrd changed  (re added)
 // 20191227

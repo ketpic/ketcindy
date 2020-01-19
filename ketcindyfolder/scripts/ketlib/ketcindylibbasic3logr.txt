@@ -1,3 +1,6 @@
+// 20200119
+//    Ketcindyjsmain added
+//    Mkketcindyjs changed (JSMAIN)
 // 20200116
 //    Mkketcindyjs changed ("import" removed , message)
 // 20200115

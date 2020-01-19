@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200116] loaded");
+println("ketcindylibbasic3[20200119] loaded");
 
 //help:start();
 
@@ -3411,6 +3411,18 @@ Ketcindyjsbody(list1,list2):=(
 );
 ////%Ketcindyjsbody end////
 
+////%Ketcindyjsmain start//// 200119
+Ketcindyjsmain(prelist):=Ketcindyjsmain(prelist,[]);
+Ketcindyjsmain(prelist,postlist):=(
+//help:Ketcindyjsmain(["<pf10/fp>_;Sample"]);
+//help:Ketcindyjsmain(["<pf10/fp>_;Sample"],["<pf5/fpbr>end"]);
+  JSMAIN=[[],[]];
+  if(islist(prelist),JSMAIN_1=prelist,JSMAIN_1=[prelist]);
+  if(islist(postlist),JSMAIN_2=postlist,JSMAIN_2=[postlist]);
+  JSMAIN;
+);
+////%Ketcindyjsmain end////
+
 ////%Ketcindyjsdata start////  //190421
 Ketcindyjsdata(datalistorg):=(
 //help:Ketcindyjsdata(["ans1",ans1,"ans2",ans2]);
@@ -3796,7 +3808,7 @@ Mkketcindyjs(options):=( //17.11.18
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
-     figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname);
+     figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -4074,7 +4086,7 @@ Mkketcindyjs(options):=( //17.11.18
       if(localflg=="Y",fname=replace(fname,"off.","offL."));
     );
     setdirectory(path);
-    SCEOUTPUT = openfile(fname); //200116
+    SCEOUTPUT = openfile(fname); 
     tmp1=htmorg_((toppart_1)..(toppart_2));
     if(webflg=="N",
       if(localflg=="N", //190128
@@ -4353,46 +4365,46 @@ Mkketcindyjs(options):=( //17.11.18
       out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
     ); //190201to
     if(figure==0,
-    tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
-    jj=tmp_1;
-    tmp1=out_jj;
-    flg=0;
-    forall(1..(length(tmp1)-1),
-      if(flg==0,
-        tmp=substring(tmp1,#-1,#);
-        if(tmp==":",
-          tmp2=substring(tmp1,#+1,length(tmp1)-1);
-          flg=1;
-        );d
-      );
-    );
-    tmp=round(scale*parse(tmp2));
-    out_jj="    width: "+text(tmp)+",";
-    tmp=select(1..(length(out)),indexof(out_#,"height:")>0);
-    jj=tmp_1;
-    tmp1=out_jj;
-    flg=0;
-    forall(1..(length(tmp1)-1),
-      if(flg==0,
-        tmp=substring(tmp1,#-1,#);
-        if(tmp==":",
-          tmp2=substring(tmp1,#+1,length(tmp1)-1);
-          flg=1;
+      tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
+      jj=tmp_1;
+      tmp1=out_jj;
+      flg=0;
+      forall(1..(length(tmp1)-1),
+        if(flg==0,
+          tmp=substring(tmp1,#-1,#);
+          if(tmp==":",
+            tmp2=substring(tmp1,#+1,length(tmp1)-1);
+            flg=1;
+          );
         );
       );
-    );
-    tmp=round(scale*parse(tmp2));
-    out_jj="    height: "+text(tmp)+",";
+      jssizeW=round(scale*parse(tmp2));
+      out_jj="    width: "+text(jssizeW)+",";
+      tmp=select(1..(length(out)),indexof(out_#,"height:")>0);
+      jj=tmp_1;
+      tmp1=out_jj;
+      flg=0;
+      forall(1..(length(tmp1)-1),
+        if(flg==0,
+          tmp=substring(tmp1,#-1,#);
+          if(tmp==":",
+            tmp2=substring(tmp1,#+1,length(tmp1)-1);
+            flg=1;
+          );
+        );
+      );
+      jssizeH=round(scale*parse(tmp2));
+      out_jj="    height: "+text(jssizeH)+",";
     );
     if(figure>0,
       tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
       jj=tmp_1;
-      tmp=round(dpi*scale*(XMAX-XMIN+margin/10*2)*10/25.4);
-      out_jj="    width: "+text(tmp)+",";
+      jssizeW=round(dpi*scale*(XMAX-XMIN+margin/10*2)*10/25.4);
+      out_jj="    width: "+text(jssizeW)+",";
       tmp=select(1..(length(out)),indexof(out_#,"height:")>0);
       jj=tmp_1;
-      tmp=round(dpi*scale*(YMAX-YMIN+margin/10*2)*10/25.4);
-      out_jj="    height: "+text(tmp)+",";
+      jssizeH=round(dpi*scale*(YMAX-YMIN+margin/10*2)*10/25.4);
+      out_jj="    height: "+text(jssizeH)+",";
       tmp=select(1..(length(out)),indexof(out_#,"transform:")>0);
       jj=tmp_1;
       tmp="    transform: [{visibleRect: ["+text(XMIN-margin/10)+","+text(YMAX+margin/10);
@@ -4480,6 +4492,90 @@ Mkketcindyjs(options):=( //17.11.18
       ); 
     ); //190910to
     closefile(SCEOUTPUT);
+    if(length(JSMAIN)>0, //200119from
+      SCEOUTPUT = openfile(Fhead+"main.html"); 
+      println(SCEOUTPUT,"<!DOCTYPE html>");
+      println(SCEOUTPUT,"<head>");
+      println(SCEOUTPUT,"<meta charset="+Dqq("utf-8")+">");
+      println(SCEOUTPUT,"<title>Page of "+Fhead+"</title>");
+      println(SCEOUTPUT,"<script src="+Dqq("https://polyfill.io/v3/polyfill.min.js?features=es6")+"></script>");
+      tmp=Dqq("MathJax-script")+" async src=";
+      tmp=tmp+Dqq("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js");
+      println(SCEOUTPUT,"<script id="+tmp+"></script>");
+      println(SCEOUTPUT,"</head>");
+      println(SCEOUTPUT,"<body");    
+      println(SCEOUTPUT,"<p></p>");    
+      forall(JSMAIN_1,tmp1,
+        tmp2=replace(tmp1,"_;","&emsp;");
+        tmp2=Removespace(tmp2);
+        if(substring(tmp2,0,1)=="<",
+          tmp=indexof(tmp2,">");
+          tmp3=substring(tmp2,1,tmp-1);
+          tmp2=substring(tmp2,tmp,length(tmp2));
+          tmp3=Strsplit(tmp3,"/");
+          tmp=indexof(tmp3_1,"f");
+          if(tmp>0,
+            tmp=substring(tmp3_1,tmp,length(tmp3_1));
+            tmp="<font size="+Dqq(tmp)+">";
+            tmp2=tmp+tmp2;
+          );
+          if(indexof(tmp3_1,"p")>0,
+            tmp2="<p>"+tmp2;
+          );
+          if(length(tmp3)>1,
+            if(indexof(tmp3_2,"f")>0,
+              tmp2=tmp2+"</font>";
+            );
+            if(indexof(tmp3_2,"p")>0,
+              tmp2=tmp2+"</p>";
+            );
+            if(indexof(tmp3_2,"br")>0,
+              tmp2=tmp2+"</br>";
+            );
+          );
+        );
+        println(SCEOUTPUT,tmp2);
+      );
+      println(SCEOUTPUT,"<p></p>");    
+      tmp="<iframe src="+Dqq(fname)+" width="+Dqq(jssizeW);
+      tmp=tmp+" height="+Dqq(jssizeH)+"></iframe>";
+      println(SCEOUTPUT,tmp);    
+      println(SCEOUTPUT,"<p></p>");
+      forall(JSMAIN_2,tmp1,
+        tmp2=replace(tmp1,"_;","&emsp;");
+        tmp2=Removespace(tmp2);
+        if(substring(tmp2,0,1)=="<",
+          tmp=indexof(tmp2,">");
+          tmp3=substring(tmp2,1,tmp-1);
+          tmp2=substring(tmp2,tmp,length(tmp2));
+          tmp3=Strsplit(tmp3,"/");
+          tmp=indexof(tmp3_1,"f");
+          if(tmp>0,
+            tmp=substring(tmp3_1,tmp,length(tmp3_1));
+            tmp="<font size="+Dqq(tmp)+">";
+            tmp2=tmp+tmp2;
+          );
+          if(indexof(tmp3_1,"p")>0,
+            tmp2="<p>"+tmp2;
+          );
+          if(length(tmp3)>1,
+            if(indexof(tmp3_2,"f")>0,
+              tmp2=tmp2+"</font>";
+            );
+            if(indexof(tmp3_2,"p")>0,
+              tmp2=tmp2+"</p>";
+            );
+            if(indexof(tmp3_2,"br")>0,
+              tmp2=tmp2+"</br>";
+            );
+          );
+        );
+        println(SCEOUTPUT,tmp2);
+      );
+      println(SCEOUTPUT,"</body");    
+      println(SCEOUTPUT,"</html");
+      closefile(SCEOUTPUT);
+    ); //200119to
     setdirectory(Dirwork);
 //    if(webflg=="Y",tmp="json",tmp="jsoff");
     drawtext(mouse().xy-[0,1],"Generate : "+fname,size->20,color->[0,0,0]);

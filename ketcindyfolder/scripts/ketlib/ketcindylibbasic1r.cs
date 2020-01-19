@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200117] loaded");
+println("ketcindylibbasic1[20200119] loaded");
 
 //help:start();
 
@@ -163,7 +163,7 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
   Setwindow("Msg=n"); // 16.05.31
   forall(remove(allpoints(),[SW,NE]),Strictmove(#.name)); //190917
   KETJSOP=[]; //190916
-  JSBODY=[[],[]]; //190916
+  JSBODY=[[],[]]; JSMAIN=[]; //190916,200119
 // no ketjs on 190122
   // for Presentation
   letterc=[0.98,0.13,0,0.43]; boxc=[0.2,0,0,0];//190307 [0,0.32,0.52,0];

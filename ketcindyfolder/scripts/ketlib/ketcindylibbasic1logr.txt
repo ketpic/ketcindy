@@ -1,3 +1,5 @@
+// 20200119
+//    Ketinit changed  (JSMAIN=[])
 // 20200117
 //    Pointdata debugged  (re removed)
 // 20200101

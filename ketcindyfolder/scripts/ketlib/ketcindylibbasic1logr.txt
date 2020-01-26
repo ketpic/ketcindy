@@ -1,3 +1,5 @@
+// 20200123
+//    Ketinit changed  (GLIST,GCLIST,VLIST,FUNLIST,COM..list)
 // 20200119
 //    Ketinit changed  (JSMAIN=[])
 // 20200117

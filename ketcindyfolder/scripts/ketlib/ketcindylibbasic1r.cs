@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200119] loaded");
+println("ketcindylibbasic1[20200123] loaded");
 
 //help:start();
 
@@ -73,18 +73,17 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
   YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
   KCOLOR=[0,0,0];
-  GLIST=[]; // no ketjs
-  GCLIST=[];
+  if(!islist(GLISTadd),GLIST=[],GLIST=GLISTadd); //200123
+  if(!islist(GCLISTadd),GCLIST=[],GCLIST=GCLISTadd); //200123
 //  GDATALIST=[]; //no ketjs on
   GOUTLIST=[];
   POUTLIST=[]; // no ketjs off
-  VLIST=[];
-  FUNLIST=[];
+  if(!islist(VLISTadd),VLIST=[],VLIST=VLISTadd); //200123
+  if(!islist(FUNLISTadd),FUNLIST=[],FUNLIST=FUNLISTadd); //200123
   LETTERlist=[];
-  COM0thlist=[]; // no ketjs on
-  COM1stlist=[];
-  COM2ndlist=[]; // no ketjs off
- // COM2ndlistb=[]; //180612
+  if(!islist(COM0thlistadd),COM0thlist=[],COM0thlist=COM0thlistadd); // no ketjs on
+  if(!islist(COM1stlistadd),COM1stlist=[],COM1stlist=COM1stlistadd); 
+  if(!islist(COM2ndlistadd),COM2ndlist=[],COM2ndlist=COM2ndlistadd); // no ketjs off
   ADDAXES="1";
   AXSTYLE=[["l","x","e","y","n","O","sw","","",""],[]]; //190901
   AXCOUNT=1; //181215
@@ -181,6 +180,7 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
 
 ////%Initglist start//// 190802
 Initglist():=(
+//help:Initglist();
   GCLISTadd=[]; //190719
   Ketinit(); //190802
 );
@@ -188,9 +188,12 @@ Initglist():=(
 
 ////%Setglist start//// 190530
 Setglist():=(
-  GLISTadd=GLIST; // no ketjs
+//help:Setglist();
   GCLISTadd=GCLIST;
-  COM0thlistadd=COM0thlist; // no ketjs on
+  VLISTadd=VLIST; //200124[2lines]
+  FUNLISTadd=FUNLIST;
+  GLISTadd=GLIST; // no ketjs on
+  COM0thlistadd=COM0thlist;
   COM1stlistadd=COM1stlist;
   COM2ndlistadd=COM2ndlist; // no ketjs off
 );
@@ -198,9 +201,12 @@ Setglist():=(
 
 ////%Addglist start//// 190530
 Addglist():=(
+//help:Addglist();
   GLIST=GLISTadd; // no ketjs
   GCLIST=GCLISTadd;
-  COM0thlist=COM0thlist; // no ketjs on
+  VLIST=VLISTadd; //200124[2lines]
+  FUNLIST=FUNLISTadd;
+  COM0thlist=COM0thlistadd; // no ketjs on
   COM1stlist=COM1stlistadd;
   COM2ndlist=COM2ndlistadd; // no ketjs off
 );

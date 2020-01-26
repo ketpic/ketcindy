@@ -1,3 +1,9 @@
+// 20200127
+//    Copyketcindyjs debugged  (for windows)
+// 20200123
+//    Copyketcindyjs changed  (jquery, autorender added )
+// 20200122
+//    Mkketcindyjs debugged ("html" added to "main")
 // 20200119
 //    Ketcindyjsmain added
 //    Mkketcindyjs changed (JSMAIN)

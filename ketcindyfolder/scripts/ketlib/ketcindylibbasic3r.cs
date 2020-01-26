@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200119] loaded");
+println("ketcindylibbasic3[20200127] loaded");
 
 //help:start();
 
@@ -3337,25 +3337,24 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,drive);
     println(SCEOUTPUT,"cd "+Dqq(fname));
     println(SCEOUTPUT,"set xcp="+Dqq("\Windows\System32\xcopy"));
-    tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\");
+    println(SCEOUTPUT,"cd ketcindyjs");
+    tmp1="%xcp%"+" /Y /Q /S /E /R ";
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\");
-    println(SCEOUTPUT,tmp1+"Cindy.js.map"+tmp2);
-    println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
-    println(SCEOUTPUT,tmp1+"katex-plugin.js"+tmp2);
     println(SCEOUTPUT,tmp1+"Cindy.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"Cindy.js.map"+tmp2);
     println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
-    tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\katex\");
+    println(SCEOUTPUT,tmp1+"katex-plugin.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"jquery.min.js"+tmp2); //200123[2lines]
+    println(SCEOUTPUT,tmp1+"auto-render.min.js"+tmp2);
+    println(SCEOUTPUT,"cd katex");
+    tmp1="%xcp%"+" /Y /Q /S /E /R ";
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\");
     println(SCEOUTPUT,tmp1+"katex.min.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex.min.js"+tmp2);
-    tmp1=Dqq("%xcp%")+" /Y /Q /S /E /R "+Dqq("ketcindyjs\katex\fonts\");
+    tmp1="%xcp%"+" /Y /Q /S /E /R fonts";
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\fonts\");
-    println(SCEOUTPUT,tmp1+"KaTeX_Main-Regular.ttf"+tmp2);
-    println(SCEOUTPUT,tmp1+"KaTeX_Main-Regular.woff"+tmp2);
-    println(SCEOUTPUT,tmp1+"KaTeX_Main-Regular.woff2"+tmp2);
-    println(SCEOUTPUT,tmp1+"KaTeX_Math-Italic.ttf"+tmp2);
-    println(SCEOUTPUT,tmp1+"KaTeX_Math-Italic.woff"+tmp2);
-    println(SCEOUTPUT,tmp1+"KaTeX_Math-Italic.woff2"+tmp2);
+    println(SCEOUTPUT,tmp1+tmp2);
     println(SCEOUTPUT,"exit 0");
     closefile(SCEOUTPUT);
   ,
@@ -3377,6 +3376,8 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,"cp -p CindyJS.css "+tmp1+"/ketcindyjs");
     println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp1+"/ketcindyjs");
     println(SCEOUTPUT,"cp -p webfont.js "+tmp1+"/ketcindyjs"); //190214to
+    println(SCEOUTPUT,"cp -p jquery.min.js "+tmp1+"/ketcindyjs"); //200123[2lines]
+    println(SCEOUTPUT,"cp -p auto-render.min.js "+tmp1+"/ketcindyjs");
     println(SCEOUTPUT,"exit 0");
     closefile(SCEOUTPUT);
   );
@@ -3922,7 +3923,7 @@ Mkketcindyjs(options):=( //17.11.18
   color=substring(tmp,1,length(tmp)-1);
   if((webflg=="N")&(localflg=="Y"),
     if(!isexists(Dircdy,"ketcindyjs"),
-      println(3402);Copyketcindyjs();println(3403);
+      Copyketcindyjs();
       println("ketcindyjs has been copied");
     );
   );
@@ -4495,13 +4496,22 @@ Mkketcindyjs(options):=( //17.11.18
     if(length(JSMAIN)>0, //200119from
       SCEOUTPUT = openfile(Fhead+"main.html"); 
       println(SCEOUTPUT,"<!DOCTYPE html>");
+      println(SCEOUTPUT,"<html>");
       println(SCEOUTPUT,"<head>");
       println(SCEOUTPUT,"<meta charset="+Dqq("utf-8")+">");
       println(SCEOUTPUT,"<title>Page of "+Fhead+"</title>");
-      println(SCEOUTPUT,"<script src="+Dqq("https://polyfill.io/v3/polyfill.min.js?features=es6")+"></script>");
-      tmp=Dqq("MathJax-script")+" async src=";
-      tmp=tmp+Dqq("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js");
-      println(SCEOUTPUT,"<script id="+tmp+"></script>");
+//      println(SCEOUTPUT,"<script src="+Dqq("https://polyfill.io/v3/polyfill.min.js?features=es6")+"></script>");
+//      tmp=Dqq("MathJax-script")+" async src=";
+//      tmp=tmp+Dqq("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js");
+//      println(SCEOUTPUT,"<script id="+tmp+"></script>");
+      println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/jquery.min.js")+"></script>"); //200122from
+      println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/katex/katex.min.css")+" />");
+      println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/katex/katex.min.js")+"></script>");
+      println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/auto-render.min.js")+"></script>");
+      tmp="<script>$(document).ready(function(){renderMathInElement(document.body,{delimiters: ";
+      tmp=tmp+"[{left: "+Dqq("[[")+", right: "+Dqq("]]")+", display: true},";
+      tmp=tmp+"{left: "+Dqq("$")+", right: "+Dqq("$")+", display: false}]})});</script>";
+      println(SCEOUTPUT,tmp); //200122to
       println(SCEOUTPUT,"</head>");
       println(SCEOUTPUT,"<body");    
       println(SCEOUTPUT,"<p></p>");    
@@ -4572,8 +4582,8 @@ Mkketcindyjs(options):=( //17.11.18
         );
         println(SCEOUTPUT,tmp2);
       );
-      println(SCEOUTPUT,"</body");    
-      println(SCEOUTPUT,"</html");
+      println(SCEOUTPUT,"</body>");    
+      println(SCEOUTPUT,"</html>");
       closefile(SCEOUTPUT);
     ); //200119to
     setdirectory(Dirwork);

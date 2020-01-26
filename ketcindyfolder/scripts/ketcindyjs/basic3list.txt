@@ -45,20 +45,20 @@ Tocindyform,basic3,3227,3265,Bracket,Indexall,Tocindyformpart
 Getcindystr,basic3,3269,3292,Strsplit,Tocindyform
 Animepar,basic3,3296,3296,Animationparam
 Animationparam,basic3,3300,3319,seconds,stopanimation
-Copyketcindyjs,basic3,3323,3384,iswindows,Dqq,kc
-Ketjsoption,basic3,3388,3389,Setketcindyjs
-Setketcindyjs,basic3,3393,3402
-Ketcindyjsbody,basic3,3406,3411
-Ketcindyjsmain,basic3,3415,3423
-Ketcindyjsdata,basic3,3427,3451,Dqq,set
-Findfun,basic3,3455,3522,Removespace,Indexall
-Extractfun,basic3,3526,3543,Indexall,Findfun
-Extractall,basic3,3552,3596
-Textedit,basic3,3600,3606
-Textedit2value,basic3,3610,3652,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3656,3709, unicode
-Resizetextsize,basic3,3713,3737,Parsejson
-Movetojs,basic3,3741,3749
-Movetojsexe,basic3,3753,3769,Dqq,Parsejson
-Setplaybuttons,basic3,3773,3798,Movetojs
-Mkketcindyjs,basic3,3802,4584, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq
+Copyketcindyjs,basic3,3323,3385,iswindows,Dqq,kc
+Ketjsoption,basic3,3389,3390,Setketcindyjs
+Setketcindyjs,basic3,3394,3403
+Ketcindyjsbody,basic3,3407,3412
+Ketcindyjsmain,basic3,3416,3424
+Ketcindyjsdata,basic3,3428,3452,Dqq,set
+Findfun,basic3,3456,3523,Removespace,Indexall
+Extractfun,basic3,3527,3544,Indexall,Findfun
+Extractall,basic3,3553,3597
+Textedit,basic3,3601,3607
+Textedit2value,basic3,3611,3653,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3657,3710, unicode
+Resizetextsize,basic3,3714,3738,Parsejson
+Movetojs,basic3,3742,3750
+Movetojsexe,basic3,3754,3770,Dqq,Parsejson
+Setplaybuttons,basic3,3774,3799,Movetojs
+Mkketcindyjs,basic3,3803,4594, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq

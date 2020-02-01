@@ -61,4 +61,4 @@ Resizetextsize,basic3,3714,3738,Parsejson
 Movetojs,basic3,3742,3750
 Movetojsexe,basic3,3754,3770,Dqq,Parsejson
 Setplaybuttons,basic3,3774,3799,Movetojs
-Mkketcindyjs,basic3,3803,4594, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq
+Mkketcindyjs,basic3,3803,4602, 12px/10pt = 12px/,Toupper,Colorcode,Colorname2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq

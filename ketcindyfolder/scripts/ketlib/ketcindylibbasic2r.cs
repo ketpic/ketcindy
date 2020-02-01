@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200112] loaded");
+println("ketcindylibbasic2[20200201] loaded");
 
 //help:start();
 
@@ -602,7 +602,7 @@ Anglemark(nm,plist,options):=(
       if(tmp==0,
         Bstr=tmp2;
       ,
-        Bstr=substring(tmp2,tmp,lenght(tmp2));
+        Bstr=substring(tmp2,tmp,length(tmp2)); //200201
         tmp1=parse(substring(tmp2,0,tmp-1));
         Brat=tmp1*Brat;
       );

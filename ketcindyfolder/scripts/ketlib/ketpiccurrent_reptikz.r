@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "tikzv1_1_1(191126)"
+ThisVersion<- "tikzv1_1_1(200208)"
 
+# 202008
+#    Drwline changed ( for option "cycle","join");
 # 20191126
 #    Drwpt debugged/changed
 # 20191104
@@ -170,6 +172,21 @@ Drwline<-function(...)
 {
   varargin<-list(...)
   Nall <- length(varargin)
+  cycflg=0
+  joinstr=""
+  for(N in Nall:1){ #200208from
+    Tmp=varargin[[N]]
+    if(!is.character(Tmp)){ break}
+    Tmp=strsplit(Tmp,"=")
+    Tmp1=Tmp[[1]][1]; Tmp2=Tmp[[1]][2]
+    if(Tmp1=="cycle"){
+      if(Tmp2=="Y"){cycflg=1}
+    }
+    if(Tmp1=="join"){
+      joinstr=paste("join=",Tmp2,sep="")
+    }
+  }  #200208to
+  Nall=N
   Tmp <- varargin[[Nall]]
   Width <- PenThick/PenThickInit
   Thick <- 1
@@ -191,44 +208,35 @@ Drwline<-function(...)
       }
       Pdata <- Tmp1
     } 
-    for (II in Looprange(1,length(Pdata))){
-      Clist <- MakeCurves(Pdata[[II]])
-      DinM <- Dataindex(Clist)
-      for (n in Looprange(1,Nrow(DinM))){
-        Tmp <- DinM[n,]
-        Data <- Clist[Tmp[1]:Tmp[2],]
-#        Mojisu <- 0 #from 20190317
-        for (I in Looprange(1,Nrow(Data))){
-          Tmp <- Data[I,]
-          X=sprintf('%5.5f',Tmp[1])
-          Y=sprintf('%5.5f',Tmp[2])
-          Pt=paste('(',X,',',Y,')',sep="")
-          if (I==1){
-#		    if (Width>1){  #from 20190317
-		      Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
-#			}else{
-#			  if (Thick>1){
-#		    	Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
-#			  }else{
-#                Str=paste('\\draw [line width=',round(PenThick,digit=6),']',Pt,sep="")
-#			  }
-#            }
-		  }else{
-            Str=paste('--',Pt,sep="")  
-          }
-          cat(Str,file=Wfile,append=TRUE)
-#          Mojisu <- Mojisu+nchar(Str)
-#          if (Mojisu>80){
-#            cat(";%\n",file=Wfile,append=TRUE)
-#            Mojisu <- 0
-#          }
+  }
+  for (II in Looprange(1,length(Pdata))){
+    Clist <- MakeCurves(Pdata[[II]])
+    DinM <- Dataindex(Clist)
+    for (n in Looprange(1,Nrow(DinM))){
+      Tmp <- DinM[n,]
+      Data <- Clist[Tmp[1]:Tmp[2],]
+      Str=paste('\\draw [line width=',round(PenThick,digit=6),sep="")  #200208from
+      if(nchar(joinstr)>0){
+        Str=paste(Str,",",joinstr,']',sep="")
+      } 
+      for (I in Looprange(1,Nrow(Data))){
+        Tmp <- Data[I,]
+        X=sprintf('%5.5f',Tmp[1])
+        Y=sprintf('%5.5f',Tmp[2])
+        Pt=paste('(',X,',',Y,')',sep="")
+        if(I<Nrow(Data)){
+          Str=paste(Str,Pt,"--",sep="")
+        }else{
+          if(cycflg==0){
+              Str=paste(Str,Pt,sep="")  
+          }else{
+            Str=paste(Str,'cycle',sep="") 
+          }   #200208to
         }
-#        if (Mojisu!=0){
-#           cat(";%\n",file=Wfile,append=TRUE)
-#        }
-        cat(";%\n",file=Wfile,append=TRUE)
       }
+      cat(Str,file=Wfile,append=TRUE)
     }
+    cat(";%\n",file=Wfile,append=TRUE)
   }
   if (Thick!=1){  #from 20190402
     Setpen(Width)

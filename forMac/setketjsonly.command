@@ -3,7 +3,7 @@
 
 homehead=/Users
 cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
-texpath=/Applications/kejs/texlive
+texpath=/Applications/ketjs/texlive
 
 echo Plugins of Cinderella
 read -p '    '${cindyplug}?' (y/n): ' ans

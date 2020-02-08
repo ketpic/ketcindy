@@ -6,7 +6,7 @@ Arrowhead,basic2,251,316,Divoptions,Strsplit,Toupper,Arrowheaddata,Inwindow,Text
 Arrowdata,basic2,320,328,Arrowdataseg
 Oldarrowdata,basic2,332,446,Oldrrowdata,Divoptions,Strsplit,Toupper,Pcrd,Textformat,Listplot,LLcrd,Arrowhead,Lcrd
 Arrowdataseg,basic2,450,548,Divoptions,Strsplit,Toupper,Listplot,LLcrd
-Anglemark,basic2,552,669,Divoptions,Strsplit,lenght,Toupper,Pcrd,Textformat,Getlinestyle,LLcrd,Letter,Expr
+Anglemark,basic2,552,669,Divoptions,Strsplit,Toupper,Pcrd,Textformat,Getlinestyle,LLcrd,Letter,Expr
 Paramark,basic2,673,772,Divoptions,Strsplit,lenght,Toupper,Pcrd,Textformat,Getlinestyle,LLcrd,Letter,Expr
 Makebowdata,basic2,776,789,Lcrd,Rotatepoint
 Bowdata,basic2,793,948,Divoptions,Strsplit,Toupper,Makebowdata,Measuredepth,Pcrd,Textformat,Getlinestyle,Letter,Letterrot,Expr,Exprrot

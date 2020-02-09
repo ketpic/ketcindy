@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200208] loaded");
+println("ketcindylibbasic1[20200123] loaded");
 
 //help:start();
 
@@ -3544,19 +3544,13 @@ Colorname2rgb(name):=( //181212
 ////%Colorname2rgb end////
 
 ////%Getlinestyle start////
-Getlinestyle(strorg,name):=(
-  regional(str,noflg,tmp,tmp1,tmp2,Dop,Ltype,subflg,optikz);
-  str=strorg; //200208
+Getlinestyle(str,name):=(
+  regional(noflg,tmp,tmp1,tmp2,Dop,Ltype,subflg);
   Ltype=-1;
   Dop="";
-  optikz="";
-  tmp2=indexof(str,":"); //200208from
-  tmp=substring(str,tmp2-1,length(str));
-  optikz=replace(tmp,":",",");
-  str=substring(str,0,tmp2-1);
   tmp1=indexof(str,",");
   if(tmp1>0,
-    Dop=substring(str,tmp1-1,length(str));
+    Dop=","+substring(str,tmp1,length(str));
   );
   noflg=parse(substring(str,0,1));
   if(substring(name,0,3)=="sub",subflg=1,subflg=0);  // 16.02.29
@@ -3574,11 +3568,7 @@ Getlinestyle(strorg,name):=(
     if(length(tmp2)==0,tmp2="1"); //190125
     Ltype=[0,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
-      if(Toupper(GPACK)!="TIKZ",  //200208from
-        Drwline(name+Dop);
-      ,
-        Drwline(name+Dop+optikz);
-      );  //200208to
+      Drwline(name+Dop);
     );
   );
   if(tmp1=="DA",
@@ -4141,10 +4131,8 @@ Listplot(nm,list,options):=(
 //help:Listplot([A,B]);
 // help:Listplot(["A","B"]);
 //help:Listplot("1",[[2,1],[3,3]]);
-//help:Listplot(options2=["Msg=y","Cutend=n");//180719
-//help:Listplot(options3=["Cycle=","Join=round/bevel");//200208
-  regional(name,cutend,tmp,tmp1,tmp2,ptlist,Ltype,opcindy,Noflg,eqL,
-       Msg,color,cycflg,joinstr);
+//help:Listplot(options2=["Msg=y","Cutend=n"]);//180719
+  regional(name,cutend,tmp,tmp1,tmp2,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color);
   if(substring(nm,0,1)=="-",  // 16.01.27 from
     name=substring(nm,1,length(nm));
   ,
@@ -4158,26 +4146,18 @@ Listplot(nm,list,options):=(
   opcindy=tmp_(length(tmp));
   Msg="Y";  //190206
   cutend=[0,0];//180719
-  cycflg="N";
-  joinstr="";
   forall(eqL,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,2));
-    if(tmp1=="MS",
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
       Msg=Toupper(substring(tmp_2,0,1));
     );
-    if(tmp1=="CU",//180719from
+    if(tmp1=="C",//180719from
       tmp2=replace(tmp_2,"[","");
       tmp2=replace(tmp2,"]","");
       cutend=tokenize(tmp2,",");
       if(length(cutend)==1,cutend=[cutend_1,cutend_1]);     
     );//180719to
-    if(tmp1=="CY",//200208from
-       cycflg=Toupper(tmp_2);
-    );//180719to
-    if(tmp1=="JO",
-      joinstr="join="+tmp_2;
-    ); //200208to
   );
   if(Noflg<3,
     if(Msg=="Y", //190206
@@ -4185,7 +4165,6 @@ Listplot(nm,list,options):=(
     );
     if(isstring(list_1),tmp=apply(list,parse(#)),tmp=list); // 15.03.24
     ptlist=apply(tmp,Pcrd(#));
-    if(cycflg=="Y",ptlist=append(ptlist,ptlist_1)); //200208
     if(|cutend|>0,//180719from
       tmp=ptlist_(length(ptlist))-ptlist_1;
       tmp=tmp/|tmp|;
@@ -4200,9 +4179,8 @@ Listplot(nm,list,options):=(
     if(isstring(Ltype),
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("{");Com2nd("Setcolor("+color+")");//180711
-      ); //no ketjs off
-      tmp=":"+Dqq("cycle="+cycflg)+":"+Dqq(joinstr); //200208 [2lines]
-      Ltype=Getlinestyle(text(Noflg)+Ltype+tmp,name);
+     ); //no ketjs off
+      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
       if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180711
       ); //no ketjs off

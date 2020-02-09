@@ -1,5 +1,3 @@
-// 20200208
-//    Listplot,Getlinestyle changed ( for tikz option "cycle","join")
 // 20200123
 //    Ketinit changed  (GLIST,GCLIST,VLIST,FUNLIST,COM..list)
 // 20200119

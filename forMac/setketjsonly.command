@@ -1,9 +1,18 @@
 #!/bin/sh
-#      20200112
+#      20200213
 
 homehead=/Users
 cindyplug=/Applications/Cinderella2.app/Contents/PlugIns
 texpath=/Applications/ketjs/texlive
+ketcindyscripts=${texpath}/texmf-dist/scripts
+ketcindydoc=${texpath}/texmf-dist/doc/support
+ketcindystyle=${texpath}/texmf-dist/tex/latex
+
+echo `pwd ` is needed
+sudo mkdir -p ${texpath}
+sudo mkdir -p ${ketcindyscripts}
+sudo mkdir -p ${ketcindydoc}
+sudo mkdir -p ${ketcindystyle}
 
 echo Plugins of Cinderella
 read -p '    '${cindyplug}?' (y/n): ' ans
@@ -19,39 +28,31 @@ if [ -e ../ketcindyfolder ]; then
   cd ../ketcindyfolder
 fi
 
-echo `pwd ` will be used
-texbinpath=${texpath}/bin/x86_64-darwin
-ketcindyscripts=${texpath}/texmf-dist/scripts/ketcindy
-ketcindydoc=${texpath}/texmf-dist/doc/support/ketcindy
-ketcindystyle=${texpath}/texmf-dist/tex/latex/ketcindy
-
 echo texpath=${texpath}
 echo copying scripts
-sudo cp -r -p scripts/ ${ketcindyscripts}/
+sudo cp -r -p scripts/ ${ketcindyscripts}/ketcindy/
 if [ $? -gt 0 ]; then
   echo Error $?
   sleep 5
 else
-  echo "scripts copied to "${ketcindyscripts}
+  echo "scripts copied to "${ketcindyscripts}/ketcindy
+fi
+sudo cp -r -p doc/ ${ketcindydoc}/ketcindy/
+if [ $? -gt 0 ]; then
+  echo Error $?
+  sleep 5
+else
+  echo "doc copied to "${ketcindydoc}/ketcindy
+fi
+sudo cp -r -p style/ ${ketcindystyle}/ketcindy/
+if [ $? -gt 0 ]; then
+  echo Error $?
+  sleep 5
+else
+  echo "styles copied to "${ketcindystyle}/ketcindy
 fi
 
-sudo cp -r -p doc/ ${ketcindydoc}/
-if [ $? -gt 0 ]; then
-  echo Error $?
-  sleep 5
-else
-  echo "doc copied to "${ketcindydoc}
-fi
-sudo cp -r -p style/ ${ketcindystyle}/
-if [ $? -gt 0 ]; then
-  echo Error $?
-  sleep 5
-else
-  echo "styles copied to "${ketcindystyle}
-  sudo ${texbinpath}/mktexlsr
-fi
-
-cd ${ketcindyscripts}
+cd ${ketcindyscripts}/ketcindy
 cp -p ketjava/KetCindyPlugin.jar ${cindyplug}
 
 cd ${cindyplug}
@@ -71,8 +72,7 @@ else
   exit 0
 fi
 
-echo "PathThead=\"${texbinpath}/\";"  > ketcindy.ini
-echo "Dirhead=\"${ketcindyscripts}\";"  >> ketcindy.ini
+echo "Dirhead=\"${ketcindyscripts}/ketcindy\";"  > ketcindy.ini
 echo "Homehead=\"${homehead}\";"  >> ketcindy.ini
 echo "setdirectory(Dirhead);"  >> ketcindy.ini
 echo "import(\"setketcindy.txt\");"  >> ketcindy.ini

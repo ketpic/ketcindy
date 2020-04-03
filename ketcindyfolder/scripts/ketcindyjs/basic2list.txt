@@ -97,3 +97,5 @@ Helplist,basic2,4994,5048,Makehelplist
 Help,basic2,5052,5103
 Helpkey,basic2,5107,5125,Help
 Example,basic2,5129,5153
+Tikzptseq,basic2,5157,5173,Sprintf,Pcrd
+Tikzline,basic2,5177,5213,Divoptions,Strsplit,Tikzptseq,Textformat,Texcom

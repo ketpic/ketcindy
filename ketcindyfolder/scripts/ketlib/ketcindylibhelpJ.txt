@@ -128,8 +128,8 @@
 //help:Rulerscale*(点の右と上に目盛を描く);
 //help:Segmark*(線分にマークをつける);
 //help:Sprintf*(小数点以下の長さを固定した文字列に変換);
-//help:Readcsv*(csvファイルを読み込み);
-//help:Writecsv*(csvファイルを書き込み);
+// help:Readcsv*(csvファイルを読み込み);
+// help:Writecsv*(csvファイルを書き込み);
 //help:Drwpt*(点をTeXに描く．オプション：白抜き 0);
 
 

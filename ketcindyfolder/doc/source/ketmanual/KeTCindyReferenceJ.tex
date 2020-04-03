@@ -11,6 +11,9 @@
 \usepackage{setspace}
 \usepackage{comment}
 \setcounter{tocdepth}{3}
+\usepackage{pgf}
+\usepackage{tikz}
+
 
 \begin{document}
 \title{\ketcindy 関数リファレンス}
@@ -121,10 +124,10 @@ Parent ボタンで出力するファイル名は 初期設定がないので，
 
 \vspace{\baselineskip}
 \hypertarget{usegraphics}{}
-\item[関数]Usegraphics("pict2e")
-\item[機能]TeXのグラフィクスパッケージを\verb|"pict2e"| に変更する
-\item[説明]デフォルトのパッケージは \verb|"tpic"| であるが，これを\verb|"pict2e"| に変更する。
-
+\item[関数]Usegraphics("tpic"/"pict2e"/"tikz")
+\item[機能]TeXのグラフィクスパッケージを変更する。
+\item[説明]デフォルトのパッケージは Pluginsにある\verb|"ketcindy.ini"| に記述されているが，
+これを変更する。
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -699,6 +702,11 @@ Listplot("3",[[5,2],[6,0]]);
 
 描画範囲に2つ以上の交点がある場合，第4引数を省略するとコンソールに交点の座標のリストと，「Choose point number 」というガイドが表示される。そこで，引数のNoとして，その番号を指定すると，その点が作られる。この関数で作成されるのは幾何点だけなので，\TeX の図に点として明示するためにはPointdata()で書き出す。
 
+%\vspace{\baselineskip}
+注）交点が存在しない場合は，「No intersect point」がコンソールに表示される。
+
+\newpage
+
 次の例は，3次曲線と直線の交点を3つとも取ったものである。
 
 \begin{layer}{150}{0}
@@ -714,8 +722,6 @@ Putintersect("R","gr1","gr2",3);
 Pointdata("1",[P,Q,R],["size=4"]);
 \end{verbatim}
 
-\vspace{\baselineskip}
- 交点が存在しない場合は，「No intersect point」がコンソールに表示される。
 
 \vspace{\baselineskip}
 \hypertarget{putoncurve}{}
@@ -832,7 +838,8 @@ E.xy=Rotatepoint([3,0],-pi/4,A);
 \item[機能]点の位置の拡大・縮小を行う
 \item[説明]点を，指定された中心を原点とする座標系で，比率ベクトルの分だけ拡大・縮小した位置の座標を返す。
 
-\vspace{\baselineskip}
+\vspace{3mm}
+
 【例】点A〜Fは作図ツールで適当な位置にとっておく。
 
 点Dを，点Aを原点を中心に横に3倍，縦に2倍した位置に置く。
@@ -840,6 +847,8 @@ E.xy=Rotatepoint([3,0],-pi/4,A);
 点Eを，点Aを点Bを中心に横に3倍，縦に2倍した位置に置く。
 
 点Fを，点Aを原点を中心にベクトル$\overrightarrow{OC} $で示された比率の位置に置く。
+\vspace{-2mm}
+
 \begin{verbatim}
 D.xy=Scalepoint(A,[3,2],[0,0]);
 E.xy=Scalepoint(A,[3,2],B);
@@ -854,7 +863,13 @@ Letter([E,"e2","E("+E.x+","+E.y+")"]);
 Letter([F,"e2","F("+F.x+","+F.y+")"]);
 \end{verbatim}
 \vspace{\baselineskip}
-\begin{center} \input{Fig/scalepoint} \end{center}
+%\begin{center} \input{Fig/scalepoint} \end{center}
+
+\begin{layer}{150}{0}
+\putnotese{5}{-2}{\input{Fig/scalepoint}}
+\end{layer}
+
+\vspace{40mm}
 
 点A,B,Cをドラッグすると，インタラクティブにD,E,F の位置が変わる。
 
@@ -1268,20 +1283,20 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 
 オプションは
 
-"Num=n": 節点間の分割数（分点数 $-1$）を指定できる。 ベジェ曲線とスプライト曲線の関数は節点間が短い場合が多いので初期設定は10になっている。Plotdata()などと違い，大きい数（200など）を指定すると，全体の分割数が増大して描画時間がかかるようになってしまうので注意。
+"Num=n": 節点間の分割数（分点数 $-1$）を指定できる。 ベジェ曲線とスプライン曲線の関数は節点間が短い場合が多いので初期設定は10になっている。Plotdata()などと違い，大きい数（200など）を指定すると，全体の分割数が増大して描画時間がかかるようになってしまうので注意。
 
 \vspace{\baselineskip}
 【例】
 
 \begin{layer}{150}{0}
-\putnotese{60}{-10}{\scalebox{0.9}{ \input{Fig/checkbe1}}}
+\putnotese{60}{-15}{\scalebox{0.9}{ \input{Fig/checkbe1}}}
 \end{layer}
 
 2次ベジェ曲線
 
 \verb|Bezier("1",[A,B],[C]);|
 
-\vspace{20mm}
+\vspace{10mm}
 
 \begin{layer}{150}{0}
 \putnotese{60}{-10}{\scalebox{0.9}{\input{Fig/checkbe2}}}
@@ -1291,7 +1306,7 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 
 \verb|Bezier("2",[A,B],[C,D]);|
 
-\vspace{20mm}
+\vspace{15mm}
 
 \begin{layer}{150}{0}
 \putnotese{60}{-10}{\scalebox{0.9}{ \input{Fig/checkbe3}}}
@@ -1312,10 +1327,10 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 
 \verb|Bezier("3",[A,B,C],[[D],[E,F]]);|
 
-\vspace{20mm}
+\vspace{12mm}
 
 全て同じ次数の場合，次のようにしてもよい。
-\newpage
+%\newpage
 
 \verb|Bezier("4",[A,B,C,D],[E,F,G,H,K,L] ); |
 
@@ -1323,7 +1338,7 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 \putnotese{20}{2}{\input{Fig/checkbe7}}
 \end{layer}
 
-\vspace{35mm}
+\vspace{30mm}
 
 オプションの例
 
@@ -1331,7 +1346,12 @@ ptiは，各頂点に対応する複素数のリスト，ptが各頂点の座標
 
 \hspace{20mm}\input{Fig/checkbe5}
 
+\vspace{-5mm}
+
+
 \verb|Bezier("6",[A,B,C],[[D],[E,F]],["Num=40","da"]);|
+
+\vspace{-2mm}
 
 \hspace{20mm}\input{Fig/checkbe6}
 
@@ -1434,8 +1454,8 @@ C2p と C3p は表示されず，動かせない。
 【例】
 
 \begin{layer}{150}{0}
-\putnotese{70}{25}{bzA}
-\putnotese{40}{-5}{ \input{Fig/checkb8}}
+\putnotese{70}{18}{bzA}
+\putnotese{40}{-13}{ \input{Fig/checkb8}}
 \end{layer}
 
 \verb|Mkbezierptcrv([A,B,C]);|
@@ -3870,6 +3890,62 @@ nelarrow,nerarrow,selarrow,serarrow,NELarrow,NERarrow,SELarrow,SERrarrow があ�
 \end{description}
 
 %===================================================
+\subsection{Tikzコマンドの利用}
+
+\hypertarget{tikztexcom}{}
+
+\verb|Tikz|は\ketcindy にはない豊富なコマンドを持っている。
+これらを利用するには，\hyperlink{texcom}{Texcom}で\TeX のコマンド列に追加すればよい。
+
+【例】
+\begin{verbatim}
+Usegraphics("tikz");
+Setwindow([-1,5],[-1,3]);
+Htickmark([1,"1",2,"2"]);
+Vtickmark([1,"1",2,"2"]);
+Circledata("1",[[4,2],1]);
+Texcom("\shadedraw (1,1) rectangle +(2,2);");
+\end{verbatim}
+
+\begin{center}
+\input{Fig/tikzshade}
+\end{center}
+
+\begin{description}
+
+\hypertarget{tikzptseq}{}
+\item[関数]Tikzptseq(点リスト）
+\item[機能]\ketcindy の点リストをTikzの点列に変換して，文字列として返す。
+
+\vspace{3mm}
+【例】\verb|A.xy=[-4,-3], B.xy=[4,3]|のとき\\
+\hspace*{5mm}\verb|Tikzptseq([A,B,[4,-3]]);|\\
+\hspace*{10mm}$\Rightarrow$\ \verb|(-4.00000,-3.00000)--(4.00000,3.00000)--(4.00000,-3.00000)|
+
+\hypertarget{tikzline}{}
+\item[関数]Tikzline(点リスト, [オプション]）
+\item[機能]Tikzのlineコマンドを用いて線分をかく。
+\item[説明]\verb|"cycle"|は閉多角形, \verb|"Join=round/bevel/miter"|(コーナーの形状)
+
+\vspace{3mm}
+【例】\verb|A.xy=[-4,-3], B.xy=[4,3], C.xy=[4,-3]|のとき
+
+\hspace*{5mm}\verb|Listplot("1",[A,B,C,A],["dr,6"]);|\\
+\hspace*{5mm}\verb|Changestyle(["sg1"],["notex"]);|\\
+\hspace*{5mm}\verb|Tikzline([A,B,C,"cycle"],["Width=6","Join=round"]);|
+
+\vspace{-15mm}
+
+\begin{center}
+\input{Fig/tikzline}
+\end{center}
+
+
+\end{description}
+
+
+
+%===================================================
 \subsection{その他}
 
 \begin{description}
@@ -3993,6 +4069,14 @@ println([str,str2]);
 \hypertarget{factorial}{}
 \item[関数]Factorial(n)
 \item[機能]正の整数$n$の階乗を計算する。
+
+\vspace{\baselineskip}
+\hypertarget{binomial}{}
+\item[関数]Binomial(n,r)
+\item[機能]2項係数${}_n\mathrm{C}_r$を計算する。
+
+\vspace{\baselineskip}
+【例】Binomial(60,30) $\Rightarrow$ 118264581564861424
 
 \vspace{\baselineskip}
 \hypertarget{norm}{}
@@ -4195,6 +4279,8 @@ KeTCindyの関数の中には処理に時間がかかるものがある。その
 \item[機能]\TeX のコードを書き出す
 \item[説明]任意の\TeX のコードを書き出す
 
+\hspace*{10mm}\hyperlink{tikztexcom}{Tikz}参照
+
 \vspace{\baselineskip}
 \hypertarget{windispg}{}
 \item[関数]Windispg()またはWindisp(データのリスト）
@@ -4278,7 +4364,9 @@ Cindyscriptの アンダーバーの演算子 (list\_n , str\_n) と同様。
 \item[説明]戻り値は，簡易TeX-like書式の文字列，誤差，分子，分母。
 
 \vspace{\baselineskip}
-【例】\verb|Fracform(0.33,[2,3]); => [fr(1,3),''err=0.0033'',1,3]|
+【例】\verb|Fracform(0.33,1..100); => [fr(33,100),''err=0',1,3]|
+
+【例】\verb|Fracform(pi,200)); => [fr(355,113),err=0.0000002668,355,113]|
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -5690,19 +5778,19 @@ PDFと，関連する中間ファイルは，作業フォルダではなく，ma
 
 \begin{tabbing}
 1234567890\=12345678912345678901234567890\=\kill
- \>title::slide0//\> タイトルスライド。title はコマンド。\\
- \>main::三角比と三角関数//\> セクション1のタイトル。main はコマンド。\\
- \>直角三角形と三角比//\> 1ページ目の表示内容。\\
- \>・・・・// \\
- \> new::角の概念の拡張//\> 新しいページとタイトル。new はコマンド。\\
- \> enumerate::[(1)]// \> 2ページ目の表示内容。enumerate はコマンド。\\
- \> ・・・・//\\
- \> new::負の角//\> 新しいページとタイトル。\\
- \> ・・・・//\\
- \>main::三角関数のグラフ//\> セクション2のタイトル。\\
- \>$f(x)=\sin x$//\> \hspace{10mm}以下同様\\
- \> new::振幅と周期// \\
- \> ・・・・//\\ 
+ \>title::slide0\> タイトルスライド。title はコマンド。\\
+ \>main::三角比と三角関数\> セクション1のタイトル。main はコマンド。\\
+ \>直角三角形と三角比\> 1ページ目の表示内容。\\
+ \>・・・・ \\
+ \> new::角の概念の拡張\> 新しいページとタイトル。new はコマンド。\\
+ \> enumerate::[(1)] \> 2ページ目の表示内容。enumerate はコマンド。\\
+ \> ・・・・\\
+ \> new::負の角\> 新しいページとタイトル。\\
+ \> ・・・・\\
+ \>main::三角関数のグラフ\> セクション2のタイトル。\\
+ \>$f(x)=\sin x$\> \hspace{10mm}以下同様\\
+ \> new::振幅と周期 \\
+ \> ・・・・\\ 
 \end{tabbing}
 %あまりスマートな方法ではないが，枠をKeTCindyで作ってレイヤーで表示
 \begin{layer}{150}{0}
@@ -5710,7 +5798,7 @@ PDFと，関連する中間ファイルは，作業フォルダではなく，ma
 \end{layer}
 
 
-・すべての行の末尾には必ず // をつける。
+%・すべての行の末尾には必ず // をつける。
 
 \hspace{10mm} 注）urlの指定で // を用いるときは，$||||$ とすれば // に変換される。
 
@@ -5726,20 +5814,20 @@ PDFと，関連する中間ファイルは，作業フォルダではなく，ma
  
  タイトルスライドをつけるときは，
  
- \hspace{10mm}\verb|title::slide0//|
+ \hspace{10mm}\verb|title::slide0|
  
  を１行目に置く。タイトルスライドは makeslide.cdy で作る。slide0は 初期設定のタイトルスライドのファイル名。このファイル名を変更(たとえば "start")したときは，makeslide.cdy で，Settile() のオプションに "Title=start" をつけて，ファイル名が一致するようにしておく。
  
  タイトルスライドをつけないときはスライド名をつけないでおく。
  
-\hspace{10mm} \verb|title:://|
+\hspace{10mm} \verb|title::|
 
 注）title コマンドは必須で，これを１行目に書かないとスライドは作成されない。
 
 \vspace{\baselineskip}
 壁紙（背景）を表示するときは，タイトルコマンドに続けて壁紙ファイル名を書く。
  
- \hspace{10mm}\verb|title::slide0::wallpaper//|
+ \hspace{10mm}\verb|title::slide0::wallpaper|
  
 wallpaper は壁紙のファイル名。壁紙ファイルはTeXのファイルで，作業フォルダ（fig）に入れておく。
 
@@ -5759,20 +5847,20 @@ wallpaper は壁紙のファイル名。壁紙ファイルはTeXのファイル�
 \vspace{\baselineskip}
 {\bf 【セクションタイトル】}
  
-\hspace{10mm}\verb|main::セクションタイトル名//|
+\hspace{10mm}\verb|main::セクションタイトル名|
  
 セクションを分けないときはなくてもよい。
 
 \vspace{\baselineskip}
  {\bf 【新しいページ】}
  
-\hspace{10mm}\verb|new(::行下げ)::タイトル((::位置)::読み込みファイル)//|
+\hspace{10mm}\verb|new(::行下げ)::タイトル((::位置)::読み込みファイル)|
  
- 例）\verb|new::[10]::はじめに::{50}{20}::figure//|
+ 例）\verb|new::[10]::はじめに::{50}{20}::figure|
  
 読み込みファイルの表示サイズを変更するときは
  
- \hspace{10mm}\verb|new::[10]::はじめに::{50}{20}::figure,0.8//|
+ \hspace{10mm}\verb|new::[10]::はじめに::{50}{20}::figure,0.8|
  
 のようにする。 
 
@@ -5783,7 +5871,7 @@ wallpaper は壁紙のファイル名。壁紙ファイルはTeXのファイル�
  
 番号つき箇条書きは
 
- \hspace{10mm}\verb|enumerate//|
+ \hspace{10mm}\verb|enumerate|
  
  で，enumerate環境の始まりを示す。
 
@@ -5795,19 +5883,19 @@ wallpaper は壁紙のファイル名。壁紙ファイルはTeXのファイル�
 
 記号つき箇条書きは
 
-\hspace{10mm}\verb|itemize//|
+\hspace{10mm}\verb|itemize|
  
 で itemize環境の始まりを示す。記号は中黒。
 
 enumerate，itemizeのいずれも
 
-\hspace{10mm}\verb|item::文//|
+\hspace{10mm}\verb|item::文|
  
 で itemを記述する。
 
 環境の終わりは，
 
-\hspace{10mm}\verb|end//|
+\hspace{10mm}\verb|end|
 
 で示す。
 
@@ -5816,22 +5904,22 @@ enumerate，itemizeのいずれも
 
 1枚のスライド内で，項目を段階的に表示するときは，\verb|new| の次の行に
 
-\hspace{10mm}\verb| %repeat=m(,para)//|
+\hspace{10mm}\verb| %repeat=m(,para)|
 
 を書く。mは段階数で，たとえば，そのスライドの内容を3段階で表示したい場合は
 
-\hspace{10mm}\verb| %repeat=3//|
+\hspace{10mm}\verb| %repeat=3|
 
 とする。実際には３枚のスライドが作られる。
 
 para をつけると，右下にコントローラが表示され，前後に進めやすくなる。
 
-\hspace{10mm}\verb| %repeat=3,para//|
+\hspace{10mm}\verb| %repeat=3,para|
 
 段階的に表示したい行の先頭に，表示する順番を，2番目以降から
 \begin{verbatim}
-%[2,-]::text//
-%[3,-]::text//
+%[2,-]::text
+%[3,-]::text
 \end{verbatim}
 
 のように書く。
@@ -5846,19 +5934,19 @@ para をつけると，右下にコントローラが表示され，前後に進
  順表示したい項目の全体像を見せておいて，そのうちの現在までの項目を示すような場合に用いる。番号指定の前に thin をつけ，
  
  \begin{verbatim}
-%thin[2,-]::text//
-%thin[3,-]::text//
+%thin[2,-]::text
+%thin[3,-]::text
 \end{verbatim}
 
 のように書くと，現段階の項目よりあとは薄文字で表示される。
  
 薄文字の濃さは，
 
-\hspace{10mm} \verb|\setthin{alpha}//|
+\hspace{10mm} \verb|\setthin{alpha}|
 
 で指定できる。alphaは0から1までの数で， 初期設定は0.1。
 
-\verb|\setthin{0}//| のとき，指定段階以降の項目は非表示になる。
+\verb|\setthin{0}| のとき，指定段階以降の項目は非表示になる。
 
  初期設定の薄文字の濃さは，makeslide.cdy の Setslidebodyの第３引数で設定できる。たとえば，
 
@@ -5877,17 +5965,17 @@ item とともに用いるときは，\verb|%thin[n,-]| を先に書く。
 \putnotese{70}{10} {\includegraphics[bb=0.00 0.00 777.04 516.03,width=7cm]{Fig/sliderepeat.pdf} }
 \end{layer}
 \begin{verbatim}
-new::プログラミング言語 //
-%repeat=6,para// 
-\slidepage// 
-itemize// 
-item::Python// 
-%thin[2,-]::item::Ruby// 
-%thin[3,-]::item::Java// 
-%thin[4,-]::item::JavaScript// 
-%thin[5,-]::item::CindyScript// 
-%thin[6,-]::item::C// 
-end// 
+new::プログラミング言語 
+%repeat=6,para 
+\slidepage 
+itemize 
+item::Python 
+%thin[2,-]::item::Ruby 
+%thin[3,-]::item::Java 
+%thin[4,-]::item::JavaScript 
+%thin[5,-]::item::CindyScript 
+%thin[6,-]::item::C 
+end 
 \end{verbatim}
 
 \vspace{\baselineskip}
@@ -5899,9 +5987,9 @@ end//
 
 \verb|new| の次に
  
-\hspace{10mm} \verb|%repeat=//|
+\hspace{10mm} \verb|%repeat=|
  
-\hspace{10mm} \verb|%para=subfig:{0}:s{60}{10}:input(:倍率)//|
+\hspace{10mm} \verb|%para=subfig:{0}:s{60}{10}:input(:倍率)|
 
 を書く。TeXのソースには，
  
@@ -5919,40 +6007,40 @@ end//
 
 ketlayerの\verb|\begin{layer}・・\end{layer}| として書き出す。本来の記述より簡素になっている。
 
-\hspace{10mm}\verb|layer::{範囲}{0}//|
+\hspace{10mm}\verb|layer::{範囲}{0}|
 
 で layer環境の始まりを示す。layer環境の終わりは 
 
-\hspace{10mm}\verb|end//|
+\hspace{10mm}\verb|end|
  
  レイヤーの中に作業フォルダ（fig）にある図を表示するには
  
-\hspace{10mm}\verb|putnote::方向と位置::読み込みファイル//|
+\hspace{10mm}\verb|putnote::方向と位置::読み込みファイル|
  
 とする。
  
  例） figure.texを(30,10)の位置の南東（原点は左上）に表示する。
  
-\hspace{10mm} \verb|putnote::se{30}{10}::figure//|
+\hspace{10mm} \verb|putnote::se{30}{10}::figure|
 
  例） figの中のfigure.texを0.8倍にして表示する。
  
-\hspace{10mm} \verb|putnote::se{30}{10}::figure,0.8//|
+\hspace{10mm} \verb|putnote::se{30}{10}::figure,0.8|
  
 
  例）includegraphics で figure.pdf を表示する。
  
-\hspace{10mm} \verb|putnote::se{30}{10}::include[width=5cm]::figure.pdf//|
+\hspace{10mm} \verb|putnote::se{30}{10}::include[width=5cm]::figure.pdf|
  
  
  注）\verb|KeTpicStyle.pdf|を参照。文字などは本来の書式を用いて次のように入れる。
  
-\hspace{10mm} \verb|\putnotee{30}{10}{文字}//|
+\hspace{10mm} \verb|\putnotee{30}{10}{文字}|
 
 \vspace{\baselineskip}
 {\bf 【テキストと動画】}
  
-コマンド以外のテキストはそのまま \TeX\ に書き出される。行末には // をつける。
+コマンド以外のテキストはそのまま \TeX\ に書き出される。行末には  をつける。
 
 テキストを途中で改行するには，\TeX\ の 強制改行マーク \textbackslash \textbackslash をつける。
 
@@ -5960,15 +6048,15 @@ ketlayerの\verb|\begin{layer}・・\end{layer}| として書き出す。本来�
 
 パラパラ動画の場合は，ParaFボタンをクリックすると，figフォルダ内に動画のフレームファイルが入ったフォルダ（たとえば sincurve）が作られる。これを，
 
-\hspace{10mm} \verb|%repeat=//|
+\hspace{10mm} \verb|%repeat=|
  
-\hspace{10mm} \verb|%para=sincurve:{0}:s{60}{10}:input(:倍率)//|
+\hspace{10mm} \verb|%para=sincurve:{0}:s{60}{10}:input(:倍率)|
 
 で表示する。
 
 アニメーションの場合は，スライドのために，makeslide.cdy のスクリプトに， \verb|Addpackage(["[dvipdfmx]{animate}"]);| を追加しておく。
 
-Animeボタンをクリックすると，パラパラアニメと同様に動画のフレームファイルが入ったフォルダが作られ，動画用の\TeX\ ファイルができる。Setpara() で設定したファイル名が "sincurve" のとき，動画用の\TeX\ ファイルは "animsincurve.tex" となるので，\verb|%repeat| ではなく \verb|\input{fig/animsincurve}//| で表示する。
+Animeボタンをクリックすると，パラパラアニメと同様に動画のフレームファイルが入ったフォルダが作られ，動画用の\TeX\ ファイルができる。Setpara() で設定したファイル名が "sincurve" のとき，動画用の\TeX\ ファイルは "animsincurve.tex" となるので，\verb|%repeat| ではなく \verb|\input{fig/animsincurve}| で表示する。
 
  
 \vspace{\baselineskip}
@@ -5979,7 +6067,7 @@ Animeボタンをクリックすると，パラパラアニメと同様に動画
 \vspace{\baselineskip}
 {\bf 【空白行】}
 
-空白行を入れたいときは，\verb|...//| とする。
+空白行を入れたいときは，\verb|...| とする。
 
 \vspace{\baselineskip}
 {\bf 【タブ】}
@@ -5993,9 +6081,9 @@ Animeボタンをクリックすると，パラパラアニメと同様に動画
 
 page番号を表示するときは次のようにする。
  
- mainの場合は \verb|\slidepage[m]//|
+ mainの場合は \verb|\slidepage[m]|
  
-それ以外の場合は \verb|%repeatの後に \slidepage//|
+それ以外の場合は \verb|%repeatの後に \slidepage|
  
  注）総ページ数を取得するため，TeXを２度コンパイルすることが必要である。そのため，Slideボタンを２度クリックすると総ページ数が表示される。
 
@@ -6006,7 +6094,7 @@ makeslide.txtのタイトルコマンドの後に，以下を追加する。
 \begin{verbatim}
 title::slide0(::wallpaper)
 ::\usepackage{ketmedia}
-::\usepackage[dvipdfmx]{media9}//
+::\usepackage[dvipdfmx]{media9}
 \end{verbatim}
 
 mp3ファイルを追加するときは，\verb|\inputsound|または\verb|\inputsoundclick|を用いる。\\
@@ -7520,8 +7608,8 @@ Letter([A,"s","A",B,"w","B",C,"ne","C",D,"ne","D"]);
 点Aを，$(0,-1,0)$に置いたときの記述例と戻り値
  
 \verb|Putpoint3d("A",[0,-1,0]);| \\
-\verb|Rotatepoint3d(A3d,[0,0,1],pi/2);|// 戻り値は [1,0,0]\\
-\verb|Rotatepoint3d(A3d,[0,0,1],pi/2,[1,1,0]);| // 戻り値は [3,0,0]\\
+\verb|Rotatepoint3d(A3d,[0,0,1],pi/2);| //戻り値は [1,0,0]\\
+\verb|Rotatepoint3d(A3d,[0,0,1],pi/2,[1,1,0]);|  //戻り値は [3,0,0]\\
 
  %------------------Scaledata3d -----------------------------------------------
 \vspace{\baselineskip}
@@ -8520,6 +8608,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{colorcode}{Colorcode(文字1，文字2,color)}\>カラーコードの変換\\
 \hyperlink{dqq}{Dqq(文字列)}\>文字列の前後に\verb|"|をつける。\\
 \hyperlink{factorial}{Factorial(n)}\>nの階乗を計算する。\\
+\hyperlink{binomial}{Binomial(n,r)}\>2項係数を計算する。\\
 \hyperlink{norm}{Norm(ベクトル)}\>ベクトルの大きさを計算する。\\
 \hyperlink{figpdf}{Figpdf(option)} \>出力枠サイズのPDFを作る\\
 \hyperlink{help}{Help(str)}\>コマンドヘルプを表示する\\

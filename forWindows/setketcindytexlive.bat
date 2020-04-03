@@ -1,4 +1,4 @@
-REM 20191224
+REM 20200323
 echo off
 
 rem Edit the followings if necessary
@@ -68,7 +68,7 @@ if exist "%pathT%\%year%%style%\." (
 echo Copying ketcindy styles to "%pathT%\%year%%style%"
 set stylesrc=style
 %xcp% /Y /Q /S /E /R "%stylesrc%\*.*" "%pathT%\%year%%style%\"
-rem "%pathT%\%year%%bin%\mktexlsr"
+"%pathT%\%year%%bin%\mktexlsr"
 
 set cindyplug=%prgcin%\Cinderella\Plugins
 echo Setting of "%cindyplug%\"
@@ -152,31 +152,36 @@ if not exist "%prgSm%" (
 )
 echo Pathpdf="%prgSm%"; >>  ketcindy.ini
 
-set /P STR_INPUT="Input version of R (ex)3.5.0 :"
+set /P STR_INPUT="Input version of R (ex)3.6.2 :"
 set verR=%STR_INPUT%
 set prg=C:\Program Files
 if exist "%prg%\R\R-%verR%\bin\" (
   echo PathR="%prg%\R\R-%verR%\bin"; >>  ketcindy.ini
 ) else (
   if exist "%prg% (x86)\R\R-%verR%\bin\" (
-    echo "%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
+    echo PathR="%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
   ) else (
-    echo "R-%verR% not found"
+    echo "R-%verR% not found in neither %prg% nor %prg%(x86)"
+    echo PathR="";//Check R and remake ketcindy.ini >> ketcindy.ini
   )
 )
 
-set /P STR_INPUT="Input version of Maxima (ex)5.39.0 :"
+set /P STR_INPUT="Input version of Maxima (ex)5.43.2 :"
 set verM=%STR_INPUT%
 echo %verM%
-set prg=C:\maxima-%verM%\bin\maxima.bat
-if exist "%prg%" (
-  echo PathM="%prg%"; >> ketcindy.ini
+set prg=C:\maxima-%verM%
+if exist "%prg%\bin\maxima.bat" (
+  echo PathM="%prg%\bin\maxima.bat"; >> ketcindy.ini
 ) else (
-  echo "Maxima-%verM% not found"
-  set prg=C:\maxima-x.xx.x\bin\maxima.bat
-  echo // PathM="%prg%"; >> ketcindy.ini
+  echo "%prg%" not found"
+  echo PathM="";//Check Maxima and remake ketcindy.ini >> ketcindy.ini
   )
 )
 
-echo "Plugins of Cindy has been set"
+echo.
+echo   ketcindy.ini in Plugins
+echo.
+type ketcindy.ini
+echo.
+
 pause

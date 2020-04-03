@@ -1,3 +1,6 @@
+// 20200403
+//    Factorial changed  (product used)
+//    Binomial added
 // 20200123
 //    Ketinit changed  (GLIST,GCLIST,VLIST,FUNLIST,COM..list)
 // 20200119

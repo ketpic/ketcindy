@@ -22,16 +22,15 @@ KETCindyのインストール (Windows)
 \hfill 修正日：\today
 
 \begin{enumerate}[\bf\large 1.]
-\item Cinderella, R, Maxima をインストールする．
+\item Cinderella, R, Maxima, Sumatra をインストールする．
  \begin{itemize}
  \item \url{https://beta.cinderella.de}  (Cinderella)
  \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)\\
-\hspace*{1zw}・v5.38.0以前の方がv5.40.0以降より軽い．
- \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} (Sumatra)\\ \hspace*{10mm}注）SumatraはWindowsだけである．
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} (Sumatra)\\
+ \hspace*{5mm}注）Sumatraのインストール先をProgram FilesまたはProgram Files (x86)にする（オプション指定）．
  \end{itemize}
- 注) ダブルクリックして，起動するかを確認する．
-
+ 
 \item TeXをインストールしていない場合はインストールする．
  \begin{enumerate}[(1)]
  \item TeXLiveを推奨
@@ -121,14 +120,12 @@ KETCindyのインストール (Windows)
      \end{itemize} 
   \end{enumerate}
 
-\item TeXworksの設定（kettexの場合）
+\item TeXworksの設定
   \begin{itemize}
-  \item \url{https://github.com/TeXworks/texworks/releases/} からダウンロードできる．
-  \item TeXworksを立ち上げる
-  \item TeXworks \verb|>| ファイル \verb|>| 設定 \verb|>| タイプセット
-  \item 上の欄（パス）に以下を追加\\
-  \hspace*{5mm}\verb|C:\kettex\texlive\bin\win32|\\
-  \hspace*{10mm}注) 上の行を上の欄の先頭になるように移動する．
+ \item KeTTeXでは，\verb|C:\kettex\texlive\bin\win32|にすでに入っている．\\
+ \hspace*{5mm}注）TeXLiveの場合も同様
+  \item TeXworksを立ち上げて，「TeXworks \verb|>| ファイル \verb|>| 設定 \verb|>| タイプセット」
+  \item 上の欄にTeXworksのパスが入っていることを確認する．
   \item 下の欄の横にある + をクリック
     \begin{itemize}
     \item 名前：uplatex(ptex2pdf)またはplatex(ptex2pdf)

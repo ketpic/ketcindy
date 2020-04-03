@@ -38,6 +38,8 @@ Setparent
 Setslidebody
 Setslidehyper
 Texcom
+Tikzptseq
+Tikzline
 
 //Datalist3d
 //Ptseg3data

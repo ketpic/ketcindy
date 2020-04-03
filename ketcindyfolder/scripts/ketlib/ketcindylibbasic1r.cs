@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200123] loaded");
+println("ketcindylibbasic1[20200403] loaded");
 
 //help:start();
 
@@ -629,16 +629,33 @@ Sqr(x):=(
 ////%Sqr end////
 
 ////%Factorial start////
-Factorial(n):=(
+Factorial(n):=( //200403
 //help:Factorial(5);
-  regional(out);
-  out=1;
-  forall(1..n,
-    out=out*#;
+  product(1..n);
+);
+////%Factorial end////
+
+////%Binomial start//// //200403
+Binomlist(n):=(
+  regional(out,pL);
+  if(n==0,out=[1]);
+  if(n==1,out=[1,1]);
+  if(n>=2,
+    pL=Binomlist(n-1);
+    out=[1];
+    forall(1..(length(pL)-1),
+      out=append(out,pL_#+pL_(#+1));
+    );
+    out=append(out,1);
   );
   out;
 );
-////%Factorial end////
+Binomial(n,m):=(
+  regional(tmp);
+  tmp=Binomlist(n);
+  tmp_(m+1);
+);
+////%Binomial end////
 
 ////%Norm start////
 Norm(v1):=(  // 16.09.01

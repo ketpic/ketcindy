@@ -1157,7 +1157,7 @@ Readcsv(Arg1,Arg2):=(  //190301from
   );
 ); //190301from
 Readcsv(path,file,options):=(
-//help:Readcsv("ex.csv");
+// help:Readcsv("ex.csv");
 //help:Readcsv(directory,"ex.csv");
 //help:Readcsv(options=["Head=no"]);
   regional(dt,eqL,head,from,end,tmp);
@@ -1192,9 +1192,9 @@ Readcsv(path,file,options):=(
 ////%Writecsv start////
 Writecsv(nmL,data,file):=Writecsv(nmL,data,file,[]);
 Writecsv(nmL,dataorg,file,optionorg):=(
-//help:Writecsv([],data,"ex.csv");
-//help:Writecsv(["a","b"],data,"ex.csv");
-//help:Writecsv(optins=["Col=1"]);
+// help:Writecsv([],data,"ex.csv");
+// help:Writecsv(["a","b"],data,"ex.csv");
+// help:Writecsv(optins=["Col=1"]);
   regional(nameL,data,eqL,strL,ncol,nrow,fname,dig,tmp,tmp1,tmp2);
   ncol=0; // 17.02.09from
   dig=5;

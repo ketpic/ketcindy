@@ -1,4 +1,4 @@
-REM 20191224
+REM 20200323
 echo off
 
 rem Edit the followings if necessary
@@ -132,12 +132,6 @@ if "%STR_INPUT%" == "lu" (
 )
 echo PathT=PathThead+"%tex%"; >> ketcindy.ini
 
-set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe
-if not exist "%prgSm%" (
-  set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
-)
-echo Pathpdf="%prgSm%"; >>  ketcindy.ini
-
 set /P STR_INPUT="Number of default graphics (1=tpic 2=pict2e 3=tikz) : "
 if "%STR_INPUT%" == "1" (
   set gc=tpic
@@ -150,31 +144,42 @@ if "%STR_INPUT%" == "3" (
 )
 echo Usegraphics("%gc%"); >> ketcindy.ini
 
-set /P STR_INPUT="Input version of R (ex)3.5.0 :"
+set prgSm=C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe
+if not exist "%prgSm%" (
+  set prgSm=C:\Program Files\SumatraPDF\SumatraPDF.exe
+)
+echo Pathpdf="%prgSm%"; >>  ketcindy.ini
+
+set /P STR_INPUT="Input version of R (ex)3.6.2 :"
 set verR=%STR_INPUT%
 set prg=C:\Program Files
 if exist "%prg%\R\R-%verR%\bin\" (
   echo PathR="%prg%\R\R-%verR%\bin"; >>  ketcindy.ini
 ) else (
   if exist "%prg% (x86)\R\R-%verR%\bin\" (
-    echo "%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
+    echo PathR="%prg% (x86)\R\R-%verR%\bin"; >> ketcindy.ini
   ) else (
-    echo "R-%verR% not found"
+    echo "R-%verR% not found in neither %prg% nor %prg%(x86)"
+    echo PathR="";//Check R and remake ketcindy.ini >> ketcindy.ini
   )
 )
 
-set /P STR_INPUT="Input version of Maxima (ex)5.39.0 :"
+set /P STR_INPUT="Input version of Maxima (ex)5.43.2 :"
 set verM=%STR_INPUT%
 echo %verM%
-set prg=C:\maxima-%verM%\bin\maxima.bat
-if exist "%prg%" (
-  echo PathM="%prg%"; >> ketcindy.ini
+set prg=C:\maxima-%verM%
+if exist "%prg%\bin\maxima.bat" (
+  echo PathM="%prg%\bin\maxima.bat"; >> ketcindy.ini
 ) else (
-  echo "Maxima-%verM% not found"
-  set prg=C:\maxima-x.xx.x\bin\maxima.bat
-  echo // PathM="%prg%"; >> ketcindy.ini
+  echo "%prg%" not found"
+  echo PathM="";//Check Maxima and remake ketcindy.ini >> ketcindy.ini
   )
 )
 
-echo "Plugins of Cindy has been set"
+echo.
+echo   ketcindy.ini in Plugins
+echo.
+type ketcindy.ini
+echo.
+
 pause

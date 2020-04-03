@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200127] loaded");
+println("ketcindylibbasic3[20200329] loaded");
 
 //help:start();
 
@@ -449,7 +449,7 @@ FortoR(strorg):=(
 ////%Deffun start////
 Deffun(name,bodylist):=(
 //help:Deffun("f(x)",["regional(y)","y=x^2*(x-3)","y"]);
-  regional(funstr,str,Pos,nbody,bdy,ppL,bpL,excma,tmp,tmp1,tmp2);
+  regional(funstr,str,pos,nbody,bdy,ppL,bpL,excma,tmp,tmp1,tmp2);
   funstr=name+":=(";
   forall(bodylist,
     tmp1=Removespace(#); //190816from
@@ -459,14 +459,15 @@ Deffun(name,bodylist):=(
     funstr=funstr+tmp1; //190816to
   );
   funstr=funstr+");";
+  println([462,funstr]);
   parse(funstr);
   tmp=indexof(name,"("); // no ketjs on //190814
   str=substring(name,0,tmp-1)+"<-function"+PaO();
   str=str+substring(name,tmp,length(name))+"{";
   forall(1..(length(bodylist)-1),nbody,
     bdy=bodylist_nbody;
-    Pos=indexof(bdy,"regional")+indexof(bdy,"local");
-    if(Pos==0,
+    pos=indexof(bdy,"regional")+indexof(bdy,"local");
+    if(pos==0,
       bdy=replace(bdy,LFmark,"");
       bdy=replace(bdy," ","");
       ppL=Bracket(bdy,"()");
@@ -2972,22 +2973,25 @@ Gcd(xL,nmx):=(
 ////%Gcd end////
 
 ////%Fracform start//// //190623,29
-Fracform(x):=Fracform(x,5);
-Fracform(x,den):=Fracform(x,den,5);
-Fracform(x,denorg,deg):=(
-//help:Fracform(1.3);
-//help:Fracform(1.3,[denomlist],5);
-  regional(Eps,den,fL,flg,tmp,nn,mm,err);
-  Eps=10^(-deg);
-  den=denorg;
-  if(islist(den),
-    if(!contains(den,1), den=prepend(1,den));
+Fracform(x):=Fracform(x,1..100,5);
+Fracform(x,Arg):=( //200329
+  if(islist(Arg),
+    Fracform(x,Arg,5);
   ,
-    den=1..den;
+    if(Arg<0,Fracform(x,1..100,-Arg),Fracform(x,1..Arg,5));
   );
+);
+Fracform(x,denorg,deg):=(
+//help:Fracform(1.33);
+//help:Fracform(1.33,1..100 (,err(-5)));
+//help:Fracform(1.33,200 (,err(-5)));
+  regional(Eps,denL,fL,flg,tmp,nn,mm,err);
+  Eps=10^(-abs(deg));
+  denL=denorg;
+  if(!islist(denL),denL=1..denL);
   fL=[];
   flg=0;
-  forall(den,
+  forall(denL,
     if(flg==0,
       tmp=round(x*#);
       tmp=[tmp,#,abs(tmp/#-x)];
@@ -3002,13 +3006,13 @@ Fracform(x,denorg,deg):=(
     fL=sort(fL,#_3);
     tmp=fL_1;
   );
-  mm=tmp_1; nn=tmp_2; err=tmp_3;
+  mm=tmp_1; nn=tmp_2; err=abs(x-mm/nn);
   if(nn>1,
     out="fr("+text(mm)+","+text(nn)+")";
   ,
     out=text(mm);
   );
-  [out,"err="+format(err,6),mm,nn]; //190914
+  [out,"err="+format(err,10),mm,nn]; //190914
 );
 ////%Fracform end////
 

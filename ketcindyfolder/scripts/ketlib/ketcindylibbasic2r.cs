@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200201] loaded");
+println("ketcindylibbasic2[20200309] loaded");
 
 //help:start();
 
@@ -5153,6 +5153,65 @@ Example(exorg,suborg):=(
 );
 ////%Example end////
 
+////%Tikzptseq start////
+Tikzptseq(ptlist):=(
+//help:Tikzptseq([A,B,[3,1]]);
+  regional(outp,tmp);
+  outp="";
+  forall(1..(length(ptlist)),
+    tmp=ptlist_#;
+    if(!isstring(tmp),
+      tmp=Sprintf(Pcrd(tmp),5);
+      tmp="("+tmp_1+","+tmp_2+")";
+    );
+    outp=outp+tmp;
+    if(#<length(ptlist),
+      outp=outp+"--";
+    );
+  );
+  outp;
+);
+////%Tikzptseq end////
+
+////%Tikzline start////
+Tikzline(ptlist,options):=(
+//help:Tikzline([A,B,C,"cycle"],["Join=round"]);
+//help:Tikzline(options=["Join=(round,bevel)","Width=(1)","Color="]);
+  regional(out,outp,tmp,tmp1,tmp2,color,eqL,wflg);
+  tmp=Divoptions(options);
+  color=tmp_8;
+  eqL=tmp_5;
+  out="";
+  wflg=0;
+  forall(eqL,
+    tmp1=substring(#,0,1);
+    if((tmp1>="a")&(tmp1<="z"),
+      out=out+","+#;
+      if(tmp1=="l",wflg=1);
+    ,
+      tmp=Strsplit(#,"=");
+      if(tmp1=="W",
+        tmp2=parse(tmp_2)*0.6;
+        out=out+",line width="+text(tmp2);
+        wflg=1;
+      );
+      if(tmp1=="J",
+        out=out+",join="+tmp_2;
+      );
+    );
+  );
+  if(wflg==0,
+    out=",line width=0.6";
+  );
+  out="\draw ["+substring(out,1,length(out))+"]";
+  out=out+Tikzptseq(ptlist)+";";
+  tmp=Textformat(color,3);
+  tmp=replace(tmp,[["[","{"],["]","}"]]);
+  Texcom("{\color[rgb]"+tmp);
+  Texcom(out);
+  Texcom("}");
+);
+////%Tikzline end////
 
 //help:end();
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200309] loaded");
+println("ketcindylibbasic2[20200420] loaded");
 
 //help:start();
 
@@ -812,7 +812,7 @@ Bowdata(nm,plist,options):=(
 //help:Bowdata(options2=["Size=","Textcolor="]);
   regional(name,Out,pB,pA,pC,ra,tmp,tmp1,tmp2,Ltype,eqL,realL,
     Bname,Bpos,Th,Cut,Num,Hgt,opstr,opcindy,Ydata,Msg,tcolor,
-    Th1,Th2,Noflg,Bops,color,Bstr);
+    Th1,Th2,Noflg,Bops,color,Bstr,flg,tv,mv,rev);
   name="bw"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -911,7 +911,8 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<3,
     if(Msg=="Y", //190206
-      println("generate bowdata "+name+" and BOWMIDDLE="+BOWMIDDLE);//16.10.31,190704
+      print("generate bowdata "+name); 
+      println(" BOWMIDDLE="+BOWMIDDLE);//161031,190704
     );
     if(Measuredepth(Out)==1,Out=[Out]);
     tmp1=[];
@@ -921,7 +922,8 @@ Bowdata(nm,plist,options):=(
     );
     tmp=name+"="+Textformat(tmp1,5)+";";
     parse(tmp);
-    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1); //no ketjs on
+    tmp=Textformat(plist,5);
+    tmp1=substring(tmp,1,length(tmp)-1); //no ketjs on
     tmp=name+"=Bowdata("+tmp1+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
@@ -939,12 +941,46 @@ Bowdata(nm,plist,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
-  SCALEY=scaley; //191231from
-//  Bpos=LLcrd(Bpos);
-  if(Bname=="L",Letter(Bpos,"c",Bstr,eqL));
-  if(Bname=="Lr",Letterrot(Bpos,pB-pA,Bops,Bstr,eqL));
-  if(Bname=="E",Expr(Bpos,"c",Bstr,eqL));
-  if(Bname=="Er",Exprrot(Bpos,pB-pA,Bops,Bstr,eqL)); //191231to
+  SCALEY=scaley;
+  if(pB_1<pA_1,
+    tmp=pA;pA=pB;pB=tmp
+  ,
+    if(|pB_1-pA_1|<10^(-5),
+      if(pB_2<pA_2,
+        tmp=pA;pA=pB;pB=tmp
+      );
+    );
+  );
+  flg=""; //200419from
+  tmp1=""; tmp2=""; rev=1;
+  forall(1..(length(Bops)),
+    tmp=substring(Bops,#-1,#);
+    if(contains(["t","n","r"],tmp),
+      if(tmp=="r",
+        rev=-1;
+      ,
+        flg=tmp;
+      );
+    ,
+      if(flg=="t",tmp1=tmp1+tmp);
+      if(flg=="n",tmp2=tmp2+tmp);
+    );
+  );
+  tv=MEMORI*(pB-pA)/|pB-pA|;
+  tmp=BOWMIDDLE-(pA+pB)/2;
+  nv=MEMORI*tmp/|tmp|;
+  if(length(tmp1)>0,tmp1=parse(tmp1),tmp1=0);
+  if(length(tmp2)>0,tmp2=parse(tmp2),tmp2=0);
+  Bpos=Bpos+tmp1*tv+tmp2*nv;
+  Bpos=LLcrd(Bpos);
+  flg=0;
+  if(Bname=="L",Letter(Bpos,"c",Bstr,eqL);flg=1);
+  if(Bname=="E",Expr(Bpos,"c",Bstr,eqL);flg=1);
+  if(flg==0,
+    if(rev==1,tmp="t0n0",tmp="t0n0r");
+    if(Bname=="Lr",Letterrot(Bpos,pB-pA,tmp,Bstr,eqL));
+    if(Bname=="Er",Exprrot(Bpos,pB-pA,tmp,Bstr,eqL));
+  ); //200419to
 );
 ////%Bowdata end////
 
@@ -2916,41 +2952,28 @@ Letterrot(pt,dir,movstrorg,str,options):=( //200101renewal
 //help:Letterrot(C,B-A,AB",["Size=2.0"]);
 //help:Letterrot(C,B-A,"t0n5","AB");
 //help:Letterrot(optiions=["Color=","Size=1.0(10)"]);
-  regional(mstr,tmov,nmov,rot,tmp,tmp1,tmp2,color);
-    mstr=movstrorg;
-    rot=1;
-    if(indexof(mstr,"r")>0,
-      rot=-1;
-      mstr=replace(mstr,"r","");
-    );
-    tmp1=indexof(mstr,"t");
-    tmp2=indexof(mstr,"n");
-    if(tmp1==0,
-      tmov=0;
-    ,
-      tmov=1;
-      if(tmp1<tmp2,
-        tmp=substring(mstr,tmp1,tmp2-1);
+  regional(mstr,tmov,nmov,rev,tmp,tmp1,tmp2,flg,color);
+  mstr=movstrorg;
+  flg="";  //200420from
+  tmp1=""; tmp2=""; rev=1;
+  forall(1..(length(mstr)), 
+    tmp=substring(mstr,#-1,#);
+    if(contains(["t","n","r"],tmp),
+      if(tmp=="r",
+        rev=-1;
       ,
-        tmp=substring(mstr,tmp1,length(mstr));
+        flg=tmp;
       );
-      if(length(tmp)>0,tmov=tmov+parse(tmp));
-    );
-    if(tmp2==0,
-      nmov=0;
     ,
-      nmov=1;
-      if(tmp2<tmp1,
-        tmp=substring(mstr,tmp2,tmp1-1);
-      ,
-        tmp=substring(mstr,tmp2,length(mstr));
-      );
-      if(length(tmp)>0,nmov=nmov+parse(tmp);
+      if(flg=="t",tmp1=tmp1+tmp);
+      if(flg=="n",tmp2=tmp2+tmp);
     );
   );
-  Letterrot(pt,dir,tmov,nmov,rot,str,options);
+  if(length(tmp1)>0,tmov=parse(tmp1),tmov=0);
+  if(length(tmp2)>0,nmov=parse(tmp2),nmov=0); //200420to
+  Letterrot(pt,dir,tmov,nmov,rev,str,options);
 );
-Letterrot(pt,dir,tmov,nmov,rot,str,options):=(
+Letterrot(pt,dir,tmov,nmov,rev,str,options):=(
   regional(tmp,color);
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
@@ -2959,7 +2982,7 @@ Letterrot(pt,dir,tmov,nmov,rot,str,options):=(
   if(color!=KCOLOR, //
     Texcom("{");Com2nd("Setcolor("+color+")");
   );
-  Com2nd("Letterrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rot+","+Dqq(tmp)+")");
+  Com2nd("Letterrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rev+","+Dqq(tmp)+")");
   if(color!=KCOLOR, 
     Texcom("}");
   ); // no ketjs off
@@ -2979,41 +3002,28 @@ Exprrot(pt,dir,movstrorg,str,options):=( //200101renewal
 //help:Exprrot(C,B-A,"d");
 //help:Exprrot(C,B-A,"t0n2r","d");
 //help:Exprrot(options=["Color=","Size="]);
-  regional(mstr,tmov,nmov,rot,tmp,tmp1,tmp2,color);
-    mstr=movstrorg;
-    rot=1;
-    if(indexof(mstr,"r")>0,
-      rot=-1;
-      mstr=replace(mstr,"r","");
-    );
-    tmp1=indexof(mstr,"t");
-    tmp2=indexof(mstr,"n");
-    if(tmp1==0,
-      tmov=0;
-    ,
-      tmov=1;
-      if(tmp1<tmp2,
-        tmp=substring(mstr,tmp1,tmp2-1);
+  regional(mstr,tmov,nmov,rev,tmp,tmp1,tmp2,flg,color);
+  mstr=movstrorg;
+  flg="";  //200420from
+  tmp1=""; tmp2=""; rev=1;
+  forall(1..(length(mstr)), 
+    tmp=substring(mstr,#-1,#);
+    if(contains(["t","n","r"],tmp),
+      if(tmp=="r",
+        rev=-1;
       ,
-        tmp=substring(mstr,tmp1,length(mstr));
+        flg=tmp;
       );
-      if(length(tmp)>0,tmov=tmov+parse(tmp));
-    );
-    if(tmp2==0,
-      nmov=0;
     ,
-      nmov=1;
-      if(tmp2<tmp1,
-        tmp=substring(mstr,tmp2,tmp1-1);
-      ,
-        tmp=substring(mstr,tmp2,length(mstr));
-      );
-      if(length(tmp)>0,nmov=nmov+parse(tmp);
+      if(flg=="t",tmp1=tmp1+tmp);
+      if(flg=="n",tmp2=tmp2+tmp);
     );
   );
-  Exprrot(pt,dir,tmov,nmov,rot,str,options);
+  if(length(tmp1)>0,tmov=parse(tmp1),tmov=0);
+  if(length(tmp2)>0,nmov=parse(tmp2),nmov=0); //200420to
+  Exprrot(pt,dir,tmov,nmov,rev,str,options);
 );
-Exprrot(pt,dir,tmov,nmov,rot,str,options):=(
+Exprrot(pt,dir,tmov,nmov,rev,str,options):=(
   regional(tmp,color);
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
@@ -3022,7 +3032,7 @@ Exprrot(pt,dir,tmov,nmov,rot,str,options):=(
   if(color!=KCOLOR, //180904
     Texcom("{");Com2nd("Setcolor("+color+")");
   );
-  Com2nd("Exprrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rot+","+Dqq(tmp)+")");
+  Com2nd("Exprrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rev+","+Dqq(tmp)+")");
   if(color!=KCOLOR, 
     Texcom("}");
   ); // no ketjs off

@@ -1,3 +1,6 @@
+// 200420
+//   Letterrot,Exprrot changed (tmov,nmov)
+//   Bowdata debugged/changed  (move option)
 // 200309
 //   Tikzptseq,Tikzline added
 // 200201

@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20200101)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20200420)" 
 
 print(ThisVersion)
 
+# 20200420
+#   Exprrot,Letterrot debugged ( Theta )
 # 20201231
 #   Exprrot,Letterrot debugged ( for setscaling, rotate )
 # 20191231
@@ -2892,7 +2894,7 @@ Exprrot<- function(...) # 200101renewal
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
   Pu<- Pu+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
-  Tmp<- acos(V[1]/Norm(V))
+  if(abs(V[1])<10^(-4)){Tmp=pi/2}else{Tmp=atan(V[2]/V[1])} #200420
   Theta<- round(Tmp*180/pi)
   if(Rot<0){Theta=Theta+180}
   Tmp<- paste("\\rotatebox[origin=c]{",as.character(Theta),"}{",Mojiretu,"}",sep="")
@@ -4389,7 +4391,7 @@ Letterrot<- function(...) #200101renewal
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
   Pu<- Pu+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
-  Tmp<- acos(V[1]/Norm(V))
+  if(abs(V[1])<10^(-4)){Tmp=pi/2}else{Tmp=atan(V[2]/V[1])} #200420
   Theta<- round(Tmp*180/pi)
   if(Rot<0){Theta=Theta+180}
   Tmp<- paste("\\rotatebox[origin=c]{",as.character(Theta),"}{",Mojiretu,"}",sep="")

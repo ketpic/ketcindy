@@ -2134,7 +2134,7 @@ Vtickmark([1,"1"]);
 
 複数の箇所に文字を書く場合は，Letter() と同様，引数をリストにして与える。
 
-optionは フォントサイズで，["size=32"] のように指定する。
+optionは サイズの倍率("Size=", Cinderraのみ)と色("Color=")。
 
 \vspace{\baselineskip}
 【例】$f(x)=\dfrac{1}{4} x^2$とその導関数 $f'(x)=\dfrac{1}{2} x$ の式，軸上に必要な数を入れる。
@@ -2163,21 +2163,21 @@ text(L.x*(log(L.x)-1)-G.x*(log(G.x)-1)) ]);
 
 \vspace{\baselineskip}
 \hypertarget{exprrot}{}
-\item[関数]Exprrot(座標 , 向き , 方向，文字列,option)
+\item[関数]Exprrot(座標 , 向き , 移動，文字列，option)
 \item[機能]\TeX 記法の文字列を与えて傾いた数式を書く。
 \item[説明]「座標」の位置に，指定された向きで数式を書く。
 
 向きはベクトルで与える。
 
-方向は t (ベクトルと同じ向き) と n（ベクトルと垂直な向き） の両方を数字つきで与える。ただし，方向はオプション。
+移動（オプション）は t (接線方向の移動) ， n (法線方向の移動) ，反転 (r)。
 
 座標，向きとも，Cinderellaで作図した幾何点を用いることができる。
 
-optionは フォントサイズで，["size=32"] のように指定する。
+optionは サイズの倍率("Size=", Cinderraのみ)と色("Color=")。
 
 \begin{verbatim}
 Exprrot([3,2],[2,-1],"t0n1","\sqrt{3}");
-Exprrot(C,B-A,"\frac{2}{3}");
+Exprrot(C,B-A,"t0n0r","\frac{2}{3}");
 \end{verbatim}
 
 \vspace{\baselineskip}
@@ -2201,7 +2201,7 @@ Exprrot(C,B-A,"\frac{2}{3}");
 
 注）導関数の記号$'$は，数式モード（\$ ではさむ）で$'$（シングルクォート）を用いる。
 
-optionは フォントサイズで，["size=32"] のように指定する。
+optionは サイズの倍率("Size=", Cinderraのみ)と色("Color=")。
 
 文字列が一つのときは，
 
@@ -2225,19 +2225,19 @@ Letter(位置, 方向, 文字列,option)
 \hspace{10mm}\verb|Letter([A,"sw","A",E,"s","$ f(x)=\frac{1}{4} x^2 $"]);| 
 
 \vspace{\baselineskip}
-\hypertarget{letterrot}{}\item[関数]Letterrot(座標, 方向ベクトル,移動量, 文字列,option)
+\hypertarget{letterrot}{}\item[関数]Letterrot(座標, 方向ベクトル,移動, 文字列, option)
 \item[機能]文字列を回転して表示する
 \item[説明]座標で示された位置に，方向ベクトルで指定された向きに回転して文字を書き込む。
 
-第3引数は微小移動量で，略すこともできる。
+移動（オプション）は t (接線方向の移動) ， n (法線方向の移動) ，反転 (r)。
 
-optionは フォントサイズで，["size=32"] のように指定する。
+optionは サイズの倍率("Size=", Cinderraのみ)と色("Color=")。
 
 \begin{verbatim}
 Letterrot(C,B-A,"t2n5","AB");
 \end{verbatim}
 
-移動量を略して
+移動を略して
 
 \hspace{10mm}\verb|Letterrot(C,B-A,"AB");|
 

@@ -2325,7 +2325,7 @@ optionsは次の通り。
 \hypertarget{bowdata}{}
 \item[関数]Bowdata(name,点リスト , options)
 \item[機能]弓形を描く
-\item[説明]点リストで与えられた2点を結ぶ弓形を描く。Listplot() などと同様，点リストが点名の場合はnameは省略できる。
+\item[説明]点リストで与えられた2点を結ぶ弓形を描く。
 
 2点を反時計回りに回る方向に弓形を描く。
 
@@ -2339,11 +2339,11 @@ optionsは，[曲がり , 空白サイズ, 文字, 線種]
 
 また，"Expr=微小移動 , 文字"で位置を指定して文字を入れる。
 
-微小移動は tn 
+微小移動は t,n。移動量は数字をつける（正負が可）。
 
- t は線分方向の微小移動。移動量は数字をつける。正負が可。
+ t は線分方向の微小移動，n は線分と垂直方向の微小移動
 
- n は線分と垂直方向の微小移動
+ 微小移動の最後にr をつけると，上下反転する。
 
 \vspace{\baselineskip}
  \begin{layer}{150}{0}
@@ -2352,11 +2352,11 @@ optionsは，[曲がり , 空白サイズ, 文字, 線種]
 
 【例】三角形ABCの各辺に弓形マークをつけ記号を入れる。
 \begin{verbatim}
-Listplot([A,B,C,A]);
+Listplot("1",[A,B,C,A]);
 Letter([A,"n1","A",B,"w1","B",C,"e1","C"]);
-Bowdata([A,B]);
-Bowdata([B,C],[1,"Expr=t0n3,a"]);
-Bowdata([C,A],[2,1.2,"Expr=10","da"]);
+Bowdata("1",[A,B]);
+Bowdata("2",[B,C],[1,"Expr=t0n3,a"]);
+Bowdata("3",[C,A],[2,1.2,"Expr=10","da"]);
 \end{verbatim}
 
 \vspace{\baselineskip}
@@ -2364,8 +2364,6 @@ Bowdata([C,A],[2,1.2,"Expr=10","da"]);
 
 \hspace{10mm}"Exprrot=微小移動 , 文字"
 
- 微小移動の最後にr をつけると，上下反転する。
- 
 以下にいくつか例を示す。
 \begin{verbatim}
 Bowdata([B,A],[1,1,"Exprrot=a"]);
@@ -2379,31 +2377,29 @@ Bowdata([N,M],[1,1,"Exprrot=t3n0r,a"]);
 
 %\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-\hypertarget{drawsegmark}{}
-\item[関数]Drawsegmark(name,リスト,options）または Segmark(name,リスト,options）
+\hypertarget{segmark}{}
+\item[関数]Segmark(name,リスト,options）
 \item[機能]線分に印をつける
-\item[説明]リストで与えられた2点を端点とする線分に印をつける。印には4種類がある。
+\item[説明]リストで与えられた2点を端点とする線分に印をつける。
 
-optionsは
-\begin{tabbing}
-1234\=56789012\=345678901234567890\=\kill
- \> Type=n \>：印の種類 n=1〜4\\
- \> Width\>：二本線のときの線の幅
-\end{tabbing}
+オプション\\
+　Type=印の種類 "seg(,n)","cir","poly(,n)"\\
+　Width：線の幅，Size：大きさ
 
 【例】四角形ABCDを描き線分に印をつける。
 
-\begin{layer}{150}{0}
-\putnotese{90}{0}{ \input{Fig/segmark}}
-\end{layer}
-\hspace{50mm}
 \begin{verbatim}
 Listplot([A,B,C,D,A]);
-Segmark("1",[A,B],["Type=1"]); 
-Segmark("2",[B,C],["Type=2","Width=1.5"]);
-Segmark("3",[C,D],["Type=3"]);
-Segmark("4",[D,A],["Type=4"]);
+Segmark("1",[A,B],["Type=seg,1"]); 
+Segmark("2",[B,C],["Type=seg,2","Width=1.2"]);
+Segmark("3",[C,D],["Type=cir"]);
+Segmark("4",[D,A],["Type=poly,4","Size=1.5"]);
 \end{verbatim}
+
+\begin{layer}{150}{0}
+\putnotene{90}{0}{ \input{Fig/segmark}}
+\end{layer}
+
 
 %\vspace{\baselineskip}
 \hypertarget{htickmark}{}
@@ -8549,7 +8545,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{rulerscale}{Rulerscale(点,list,list)}\>目盛を打つ\\
 \hyperlink{scaledata}{Scaledata(name,PD,x,y,中心,options)} \>点を拡大・縮小する\\
 \hyperlink{scalepoint}{Scalepoint(点,比率ベクトル,中心)} \>点の位置を拡大・縮小する\\
-\hyperlink{drawsegmark}{Segmark(name,list,options)}\>線分に印をつける\\
+\hyperlink{segmark}{Segmark(name,list,options)}\>線分に印をつける\\
 \hyperlink{shade}{Shade（PDlist , 数)}\>閉曲線の内部にシェードをかける\\
 \hyperlink{tangentplot}{Tangentplot(name,PD, 位置)}\>曲線の接線を引く\\
 \hyperlink{translatedata}{Translatedata(name,PD,ベクトル,options)}\>プロットデータを平行移動する\\

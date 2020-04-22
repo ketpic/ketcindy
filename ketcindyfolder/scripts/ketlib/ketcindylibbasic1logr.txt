@@ -1,3 +1,6 @@
+// 20200422
+//    Polygonplot debugged  (println deleted)
+//    Segmark changed  ( type="s/c/p" )
 // 20200403
 //    Factorial changed  (product used)
 //    Binomial added

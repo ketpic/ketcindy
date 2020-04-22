@@ -1,3 +1,5 @@
+// 200421
+//   Bowdata changed (case of cut==0 )
 // 200420
 //   Letterrot,Exprrot changed (tmov,nmov)
 //   Bowdata debugged/changed  (move option)

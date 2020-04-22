@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200420] loaded");
+println("ketcindylibbasic2[20200421] loaded");
 
 //help:start();
 
@@ -920,6 +920,7 @@ Bowdata(nm,plist,options):=(
       tmp=apply(tmp2,Pcrd(#));
       tmp1=append(tmp1,tmp);
     );
+    if(length(tmp1)==1,tmp1=tmp1_1); //200421
     tmp=name+"="+Textformat(tmp1,5)+";";
     parse(tmp);
     tmp=Textformat(plist,5);

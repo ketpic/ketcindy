@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200403] loaded");
+println("ketcindylibbasic1[20200422] loaded");
 
 //help:start();
 
@@ -5229,66 +5229,73 @@ Ovaldata(nm,Pdata,options):=(
 ////%Ovaldata end////
 
 ////%Segmark start////
-Segmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
-Segmark(nm,ptlist,options):=Drawsegmark(nm,ptlist,options);//180704
-Drawsegmark(nm,ptlist):=Drawsegmark(nm,ptlist,[]);
-Drawsegmark(nm,ptlist,options):=(
+Segmark(nm,ptlist):=Segmark(nm,ptlist,[]);
+Segmark(nm,ptlist,options):=(
 //help:Segmark("1",[A,B]);
-//help:Segmark(options=["Type=1","Width=1","Size=1"]);
+//help:Segmark("1",[A,B],["Type=seg,2"]);
+//help:Segmark(options=["Type=seg(,n)/cir/poly(,n)/","Width=1","Size=1"]);
   regional(name,pA,pB,wid,mid,size,tp,dir,nor,eqL,color, //180704
       tmp,tmp1,tmp2);
   name="mrk"+nm;
   pA=ptlist_1;
   pB=ptlist_2;
-  size=0.15;
+  size=0.15/2;
   wid=0.05;
-  tp=1;
+  tp=["s",1];
   tmp1=Divoptions(options);
   eqL=tmp1_5;
   color=tmp1_(length(tmp1)-2);//180704
   forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,tmp,length(#));
-    tmp1=parse(tmp1);
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="S",
-      size=size*tmp1;
+    tmp=Strsplit(#,"="); //200422[2lines]
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=tmp_2;
+    if(tmp1=="S",
+      size=size*parse(tmp2); //200422
     );
-    if(tmp=="W",
-      wid=wid*tmp1;
+    if(tmp1=="W",
+      wid=wid*parse(tmp2); //200422
     );
-    if(tmp=="T",
-      tp=tmp1;
+    if(tmp1=="T",
+      if(contains(["1","2","3","4"],tmp2), //200422from
+        if(tmp2=="1",tp=["s",1]);
+        if(tmp2=="2",tp=["s",2]);
+        if(tmp2=="3",tp=["c",0]);
+        if(tmp2=="4",tp=["p",3]);
+      ,
+        tp_1=substring(tmp2,0,1);
+        tmp=Strsplit(tmp2,",");
+        if(tp_1=="s",
+          if(length(tmp)==1,tp_2=1,tp_2=parse(tmp_2));
+        );
+        if(tp_1=="c",
+         tp_2=0;
+        );
+        if(tp_1=="p",
+          if(length(tmp)==1,tp_2=3,tp_2=parse(tmp_2));
+        );
+      ); //200422to
     );
   );
   mid=(pA+pB)/2;
   dir=(pB-pA)/|pB-pA|;
   nor=[-dir_2,dir_1];
-//  nor=nor/|nor|;
-  if(tp==1,
-    tmp1=mid+size*nor;
-    tmp2=mid-size*nor;
-    Listplot(name,[tmp1,tmp2],["Color="+text(color)]);//180704
+  clr="Color="+text(color);
+  if(tp_1=="s", //200422from
+    tmp=wid*(tp_2-1)/2;
+    mid=mid-tmp*dir;
+    repeat(tp_2,
+      tmp1=mid+size*nor;
+      tmp2=mid-size*nor;
+      Listplot(name+text(#),[tmp1,tmp2],[clr]);
+      mid=mid+wid*dir;
+    );
   );
-  if(tp==2,
-    tmp1=mid+wid*dir+size*nor;
-    tmp2=mid+wid*dir-size*nor;
-    Listplot(name+"r",[tmp1,tmp2],["Color="+text(color)]);//180704
-    tmp1=mid-wid*dir+size*nor;
-    tmp2=mid-wid*dir-size*nor;
-    Listplot(name+"l",[tmp1,tmp2],["Color="+text(color)]);//180704
+  if(tp_1=="c",
+    Circledata(name,[mid,size],[clr]);
   );
-  if(tp==3,
-    tmp1=mid;
-    tmp2=mid+size*dir;
-    Circledata(name,[tmp1,tmp2],["Color="+text(color)]);//180704
-  );
-  if(tp==4,
-    tmp=mid+size*2/sqrt(3)*nor;
-    tmp1=mid+size*dir-size/sqrt(3)*nor;
-    tmp2=mid-size*dir-size/sqrt(3)*nor;
-    Listplot(name,[tmp,tmp1,tmp2,tmp],["Color="+text(color)]);//180704
-  );
+  if(tp_1=="p",
+    Polygonplot(name,[mid,mid-size*dir],tp_2,["Geo=n",clr]);
+  ); //200422to
 );
 ////%Segmark end////
 
@@ -5457,7 +5464,6 @@ Polygonplot(nm,ptlist,number,optionorg):=(
 //help:Polygonplot("1",[A,B],12);
 //help:Polygonplot("1",[A,B],12,["Geo=n"]);
   regional(options,eqL,geo,rr,pA,pB,ptL,angle,tmp,tmp1,tmp2);
-println([4573,ptlist]);
   geo="N"; //180708from
   options=optionorg;
   tmp=Divoptions(options);

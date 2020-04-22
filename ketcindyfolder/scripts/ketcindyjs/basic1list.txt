@@ -143,9 +143,9 @@ Circledata,basic1,4953,5072,Divoptions,Strsplit,Toupper,Lcrd,Defvar,Lineplot,Pcr
 Framedata,basic1,5076,5143,Measuredepth,LLcrd,Divoptions,Toupper,Lcrd,Listplot
 Framedata2,basic1,5147,5154,Lcrd,Framedata
 Ovaldata,basic1,5158,5228,Divoptions,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Getlinestyle,Pcrd,Textformat
-Segmark,basic1,5232,5292,Drawsegmark,Divoptions,Toupper,Circledata,Listplot
-Parabolaplot,basic1,5296,5336,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
-Ellipseplot,basic1,5340,5383,Lcrd,Rotatepoint,Paramplot,Rotatedata
-Hyperbolaplot,basic1,5387,5451,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
-Polygonplot,basic1,5455,5501,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
-Putintersect,basic1,5505,5533,Intersectcrvs,Putpoint
+Segmark,basic1,5232,5299,Divoptions,Toupper,Strsplit,Listplot,Circledata,Polygonplot
+Parabolaplot,basic1,5303,5343,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
+Ellipseplot,basic1,5347,5390,Lcrd,Rotatepoint,Paramplot,Rotatedata
+Hyperbolaplot,basic1,5394,5458,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
+Polygonplot,basic1,5462,5507,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
+Putintersect,basic1,5511,5539,Intersectcrvs,Putpoint

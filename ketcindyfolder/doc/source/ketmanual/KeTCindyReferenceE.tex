@@ -1866,11 +1866,13 @@ Options :\\
 curvature (default is 1)\\
 size of the blank space in the middle of bow\\
 expression located at the blank space \verb|"Expr=expressions"|\\
-The location of expressions can be modified via \verb|"Expr=tn, expressions"| where 
+The location of expressions can be modified via \verb|"Expr=t(num)n(num),expressions"| where 
 \verb|t| specifies the movement in the direction of segment and 
 \verb|n| specifies that of normal direction. 
 Both positive and negative numbers are permitted.\\
-line type \verb|"dr,n"  , "da,m,n" , "do,m,n"|
+line type \verb|"dr,n"  , "da,m,n" , "do,m,n"|\\
+Adding \verb|r| to \verb|tn| results in the turning round. 
+
 \itemket{Examples}\mbox{}
 
 draw the shapes of bow along with the edges of triangle ABC and add marks.\\
@@ -1886,7 +1888,6 @@ draw the shapes of bow along with the edges of triangle ABC and add marks.\\
 Expressions can be displayed in rotated manner 
 via \verb|"Exprrot=tn,expressions"| 
 though the Euclidean view does not correspond to this modification.  
-Adding \verb|r| to \verb|tn| results in the turning round. 
 \itemket{Examples}\mbox{}
 
 \verb|  Bowdata([B,A],[1,1,"Exprrot=a"]);|\\
@@ -1900,27 +1901,28 @@ Adding \verb|r| to \verb|tn| results in the turning round.
 \end{center}
 \end{cmd}
 
-%------Drawsegmark--------------------------------------
-\begin{cmd}{Drawsegmark}{drawsegmark}
-\itemket{Usage}Drawsegmark(name, list, options) or Segmark(name, list, options)
+%------Segmark--------------------------------------
+\begin{cmd}{Segmark}{segmark}
+\itemket{Usage}Segmark(name, list, options)
 \itemket{Description}Add a mark to a segment. 
 \itemket{Details}
-Add a mark to the segment determined by the end points specified in the list. 
-Four kinds of marks can be used.\\
-Extra options :\\
-\verb|"Type=n"| (n=1,2,3,4) specifies the kind of mark.\\
-\verb|"Width="| specifies the distance between two segments of the mark 
-(in case when $n=2$).
+Options :\\
+\verb|"Type=seg(,n),cir,poly(,n)"| specifies the kind of mark.\\
+\verb|"Width="| specifies the distance between segments of the mark.\\
+\verb|"Size="| specifies the size of the mark.
+
 \itemket{Examples}\mbox{}
 
 \verb|Listplot([A,B,C,D,A]);|\\
-\verb|Segmark("1",[A,B],["Type=1"]);|\\
-\verb|Segmark("2",[B,C],["Type=2","Width=1.5"]);| //width of two lines\\
-\verb|Segmark("3",[C,D],["Type=3"]);|\\
-\verb|Segmark("4",[D,A],["Type=4"]);|
+\verb|Segmark("1",[A,B],["Type=seg,1"]);|\\
+\verb|Segmark("2",[B,C],["Type=seg,2","Width=1.2"]);|\\
+\verb|Segmark("3",[C,D],["Type=cir"]);|\\
+\verb|Segmark("4",[D,A],["Type=poly,4","Size=1.5"]);|
+
 \begin{center}
 \input{Fig/segmark}
 \end{center}
+
 \end{cmd}
 
 %--------Htickmark------------------------------------
@@ -5940,7 +5942,6 @@ Rem) lightgray\ [0,0,0,0.15],\ offwhite\ [0,0,0,0.3],\ cindycolor\ [0.66,0,69,0.
 \hyperlink{dotfilldata}{Dotfilldata} \> fill a domain with dots.\\
 \hyperlink{drwpt}{Drawppoint} \> draw a point. \\
 %\hyperlink{drwpt}{Drwpt} \> draw a point. \\
-\hyperlink{drawsegmark}{Drawsegmark} \> Add a mark to a segment. \\
 \hyperlink{ellipseplot}{Ellipseplot} \> draw ellipse.\\
 \hyperlink{enclosing}{Enclosing} \> make a closed curve form the list of plotting data.\\
 \hyperlink{expr}{Expr} \> write an expression in \TeX style.\\

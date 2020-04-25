@@ -1,3 +1,9 @@
+// 20200425
+//    Colorname2cmyk added
+//    Colorname2rgb changed (+name list added)
+//    Divoptions, Setcolor changed  ( for color name)
+// 20200423
+//    Readlines changed ( case of not string)
 // 20200422
 //    Polygonplot debugged  (println deleted)
 //    Segmark changed  ( type="s/c/p" )

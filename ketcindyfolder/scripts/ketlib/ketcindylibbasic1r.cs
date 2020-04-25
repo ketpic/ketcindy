@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200422] loaded");
+println("ketcindylibbasic1[20200425] loaded");
 
 //help:start();
 
@@ -294,6 +294,8 @@ Readlines(path,file):=(
   if(length(tmp)==0,
     out=out_(1..(length(out)-1));
   );
+  tmp=out; //200423[2lines]
+  out=apply(tmp,if(!isstring(#),text(#),#));
   out;
 );
 ////%Readlines end////
@@ -1412,8 +1414,8 @@ Flattenlist(pltlist):=(
 ////%Divoptions start////
 Divoptions(options):=(
 //help:Divoptions(options);
-  regional(Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy,flg,
-       tmp,tmp1,tmp2);
+  regional(Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,
+      color,opstr,opcindy,flg,tmp,tmp1,tmp2);
   Ltype="dr";  // 2015.01.13
   Noflg=0;
   Inflg=0;
@@ -1446,8 +1448,9 @@ Divoptions(options):=(
               tmp1=Colorcmyk2rgb(tmp1);
             );
           ,
-            tmp1=Colorname2rgb(tmp2); color=tmp1; //181212
-         );
+            color=Colorname2cmyk(tmp2);//200425
+            tmp1=Colorcmyk2rgb(color); ;//200425
+          );
           tmp="color->"+text(tmp1);
           opcindy=opcindy+","+tmp;
         ,
@@ -3255,17 +3258,11 @@ Definecolor(name,data):=(
 Setcolor(parorg):=(  //180603renew
 //help:Setcolor([1,0,0,1]);
 //help:Setcolor([1,1,0]);
+//help:Setcolor("cyan");
   regional(par,cstr,tmp,tmp1);
   par=parorg;
   if(isstring(par),
-    if(par=="black",par=[0,0,0]);
-    if(par=="white",par=[1,1,1]);
-    if(par=="red",par=[1,0,0]);
-    if(par=="green",par=[0,1,0]);
-    if(par=="blue",par=[0,0,1]);
-    if(par=="cyan",par=[0,1,1]);
-    if(par=="magenta",par=[1,0,1]);
-    if(par=="yellow",par=[1,1,0]);
+    par=Colorname2cmyk(par); //200425
   );
   cstr=text(par);
   cstr=substring(cstr,1,length(cstr)-1);
@@ -3275,8 +3272,8 @@ Setcolor(parorg):=(  //180603renew
   );
   if(length(par)==4,
     cstr="Texcom('\\color[cmyk]{"+cstr+"}')"; //no ketjs
-    tmp=Colorcmyk2rgb(par);
-    KCOLOR=tmp;
+//    tmp=Colorcmyk2rgb(par);
+    KCOLOR=par;//tmp;
   );
   Com2nd(cstr); //no ketjs
 );
@@ -3506,10 +3503,23 @@ Colorcode(src,dest,sL):=( // 181212 some colorchange deleted
 );
 ////%Colorcode end////
 
-////%Colorname2rgb start////
-Colorname2rgb(name):=( //181212
-//help:Colorname2rgb("sepia");
-  regional(dL,nameL,codeL,tmp);
+////%Colorname2cmyk start//// 200425
+Colorname2cmyk(name):=( //181212
+//help:Colorname2cmyk("sepia");
+//help:Colorname2cmyk(name1=greenyellow/goldenrod/dandelion/apricot/melon);
+//help:Colorname2cmyk(name2=yelloworange/orange/burntorange/bittersweet/redorange);
+//help:Colorname2cmyk(name3=mahogany/maroon/brickred/red/orangered);
+//help:Colorname2cmyk(name4=rubinered/wildstrawberry/salmon/carnationpink/magenta);
+//help:Colorname2cmyk(name5=violetred/rhodamine/mulberry/redviolet/fuchsia);
+//help:Colorname2cmyk(name6=lavender/thistle/orchid/darkorchid/purple);
+//help:Colorname2cmyk(name7=plum//violet/royalpurple/blueviolet/periwinkle);
+//help:Colorname2cmyk(name8=cadetblue/cornflowerblue/midnightblue/navyblue/royalblue);
+//help:Colorname2cmyk(name9=blue/cerulean/cyan/processblue/skyblue);
+//help:Colorname2cmyk(namea=turquoise/tealblue/aquamarine/bluegreen/emerald);
+//help:Colorname2cmyk(nameb=junglegreen/seagreen/green/forestgreen/pinegreen);
+//help:Colorname2cmyk(namec=limegreen/yellowgreen/springgreen/olivegreen/rawsienna);
+//help:Colorname2cmyk(named=sepia/brown/tan/gray/lightgray/cindycolor/offwhite);
+  regional(dL,code,tmp);
   dL=[
     ["greenyellow",[0.15,0,0.69,0]],["yellow",[0,0,1,0]],
     ["goldenrod",[0,0.1,0.84,0]],["dandelion",[0,0.29,0.84,0]],
@@ -3530,7 +3540,8 @@ Colorname2rgb(name):=( //181212
     ["plum",[0.5,1,0,0]],["violet",[0.79,0.88,0,0]],
     ["royalpurple",[0.75,0.9,0,0]],["blueviolet",[0.86,0.91,0,0.04]],
     ["periwinkle",[0.57,0.55,0,0]], ["cadetblue",[0.62,0.57,0.23,0]],
-    ["cornflowerblue",[0.65,0.13,0,0]],["midnightblue",[0.98,0.13,0,0.43]],
+    ["cornflowerblue",[0.65,0.13,0,0]],
+    ["midnightblue",[0.98,0.13,0,0.43]],
     ["navyblue",[0.94,0.54,0,0]],["royalblue",[1,0.5,0,0]],
     ["blue",[1,1,0,0]],["cerulean",[0.94,0.11,0,0]],
     ["cyan",[1,0,0,0]],["processblue",[0.96,0,0,0]],
@@ -3546,17 +3557,26 @@ Colorname2rgb(name):=( //181212
     ["tan",[0.14,0.42,0.56,0]],["gray",[0,0,0,0.5]],
     ["lightgray",[0,0,0,0.15]], //190429,0809
     ["cindycolor",[0.66,0,69,0.71]], //190504
-    ["black",[0,0,0,1]],["white",[0,0,0,0]],["offwhite",[0,0,0,0.03]] //190809
+    ["black",[0,0,0,1]],["white",[0,0,0,0]],
+    ["offwhite",[0,0,0,0.03]] //190809
   ];
   tmp=select(dL,#_1==name);
   if(length(tmp)>0,
     tmp=tmp_1;
     code=tmp_2;
-    code=Colorcmyk2rgb(code);
   ,
     println("    "+name+" not found");
     code=Assign(name); //190323
   );
+);
+////%Colorname2cmyk end////
+
+////%Colorname2rgb start//// 200425
+Colorname2rgb(name):=(
+//help:Colorname2rgb("sepia");
+  regional(code,tmp);
+  tmp=Colorname2cmyk(name);
+  code==Colorcmyk2rgb(tmp);
 );
 ////%Colorname2rgb end////
 

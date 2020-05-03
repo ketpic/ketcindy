@@ -1,3 +1,5 @@
+// 20200502
+//    Changesetting removed, Ketinit changed
 // 20200425
 //    Colorname2cmyk added
 //    Colorname2rgb changed (+name list added)

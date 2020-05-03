@@ -1,0 +1,8 @@
+%%Title: setting.pdf
+%%Creator: extractbb 20160307
+%%BoundingBox: 0 0 752 408
+%%HiResBoundingBox: 0.000000 0.000000 752.000000 408.000000
+%%PDFVersion: 1.4
+%%Pages: 1
+%%CreationDate: Sun May  3 09:14:54 2020
+

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200425] loaded");
+println("ketcindylibbasic1[20200502] loaded");
 
 //help:start();
 
@@ -142,7 +142,6 @@ Ketinit(work,sy,rangex,rangey,strictsep):=(////190831to
       Mackc="bash"; //190222
     );  //181125to
   );
-  Changesetting(); //190128
   Changework(Dircdy+pathsep()+work); //180329to,181001
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
@@ -299,25 +298,6 @@ Readlines(path,file):=(
   out;
 );
 ////%Readlines end////
-
-////%Changesetting start////
-Changesetting():=( //190128
-  regional(dir,fname);
-  dir=Homehead+pathsep()+getname();
-  fname=".ketcindy.conf"; 
-  if(isexists(dir,fname),
-    println("read "+fname+" in "+dir);
-    setdirectory(dir);
-    import(fname);
-  );
-  dir=Dircdy; fname="ketcindy.conf"; 
-  if(isexists(dir,fname),
-    println("read "+fname+" in "+dir);
-    setdirectory(dir);
-    import(fname);
-  );
-);
-////%Changesetting end////
 
 ////%Cindyname start////
 Cindyname():=Getcdyname();

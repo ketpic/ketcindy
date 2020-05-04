@@ -6,7 +6,7 @@
 \usepackage{bm,enumerate}
 \usepackage[dvipdfmx,colorlinks=true,urlcolor=blue]{hyperref}
 
-\setmargin{20}{20}{15}{20}
+\setmargin{20}{15}{15}{15}
 
 \西暦
 
@@ -24,7 +24,7 @@ KeTCindyのインストール
 \hfill 修正日：\today
 
 \begin{enumerate}[\bf\large 1.]
-\item Cinderella, R, Maxima （WindowsではSumatraも）をインストールする．
+\item Cinderella, R, Maxima とSumatra(Windowsのみ)をインストールする．\vspace{-2mm}
 
  \begin{itemize}
  \item \url{https://beta.cinderella.de}  (Cinderella)\\
@@ -35,7 +35,7 @@ KeTCindyのインストール
 \hspace*{6mm}注）Sumatraのインストール先は，オプションでProgram Files（またはx86）を指定する．
 
  \end{itemize}
-\item TeXをインストールしていない場合はインストールする．
+\item TeXをインストールしていない場合はインストールする．\vspace{-2mm}
  \begin{enumerate}[(1)]
  \item TeXLiveを推奨　（２０１８以降ではketcindyが組み込まれている）
  \item KeTTeXはTeXLiveの軽量版
@@ -50,18 +50,18 @@ KeTCindyのインストール
      \item 解凍したkettexの保存先　/Application\ (Mac), C:\textbackslash\ (Windows)\end{itemize}
  \end{enumerate}
 
-\item KeTCindyのインストール
+\item KeTCindyのインストール\vspace{-2mm}
   \begin{enumerate}[(1)]
   \item ketcindyをCTAN(\url{https://ctan.org})からダウンロードする．\\
   \hspace*{10mm}ketcindyで検索 $>$ Package ketcindy $>$ Download（フォルダ名はketcindy）
     \begin{itemize}
     \item Repositoryはgithubサイトにある最新版へのリンク\\
         \hspace*{10mm}Clone or download $>$ Download ZIP（フォルダ名はketcindy-master）        \end{itemize}
-  \item 中に入っているketcindysettings.cdyをダブルクリック
+  \item 中に入っている\verb|ketcindysettings.cdy|をダブルクリック
     \begin{itemize}
     \item 必要なら，実行プログラムをCinderellaに設定する．
+    \item 他のcdyファイルを開いているときは，Cinderellaを一旦終了してからにする．
    \item 画面が狭ければ，右方向に広げる．
-  \item 最初は図が出ないが，設定が完了すると図が表示される．
    \end{itemize}
 
 \vspace{3mm}
@@ -81,27 +81,37 @@ platex\\uplatex\\latex\\xelatex\\pdflatex\\lualatex\end{tabular}}
 \arrowline{83}{20}{13}{90}
 \putnotee{125}{5}{\bf [3]\ 作成と更新}
 \arrowline{110}{20}{20}{45}
-\putnotese{131}{10}{\begin{minipage}[t]{30mm}%
-\underline{Mkinit}\\
-\hspace*{2mm}ketcindy.iniを\\
-\hspace*{2mm}作成する\\
-\hspace*{4mm}(User's home)\\
-\underline{Update}\\
-\hspace*{2mm}ketcindyを更新\\
-\underline{Work}\\
-\hspace*{2mm}作業フォルダ\\
-\hspace*{9mm}ketcindy\\
-\hspace*{2mm}を作成する\\
-\hspace*{4mm}(User's home)\\
-\hspace*{2mm}マニュアルやサン\\
-\hspace*{2mm}プルが入っている
+\putnotese{131}{10}{\underline{Mkinit}}
+\putnotese{133}{15}{\begin{minipage}[t]{32mm}%
+初期設定ファイルをユーザホームに作成\\
+\hfill 名前はketcindy.ini
+\end{minipage}}
+\putnotese{131}{31}{\underline{Update}}
+\putnotese{133}{36}{ketcindyを更新}
+\putnotese{133}{41}{\begin{minipage}[t]{35mm}%
+\begin{itemize}
+\item Errorが出た場合\\
+1) updateを開く\\
+2) バッチを実行
+\end{itemize}
+\end{minipage}}
+\putnotese{131}{57}{\underline{Work}}
+\putnotese{133}{62}{\begin{minipage}[t]{32mm}%
+作業フォルダをユーザホームに作成\\
+\hfill 名前はketcindy\\
+マニュアルやサンプルがコピーされる
 \end{minipage}}
 \end{layer}
 
 \vspace{77mm}
 
-{\bf [4]\ テストラン}\\
-\hspace*{10mm}\verb|Figure|を押す．pdfが表示されれば成功
+{\bf [4]\ テストラン}
+
+\begin{itemize}
+ \item 最初は図が出ないが，設定が完了すると図が表示される．
+\item\verb|Figure|を押して，pdfが表示されれば成功
+\end{itemize}
+
   \end{enumerate}
 
 \end{enumerate}

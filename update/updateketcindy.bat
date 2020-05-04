@@ -1,4 +1,4 @@
-REM 20200504
+REM 20200505
 echo off
 set xcp="\Windows\System32\xcopy"
 
@@ -26,37 +26,38 @@ echo 2. "texlive"
 echo 3. "w32j"
 set /P STR_INPUT="---- Choose no : "
 if "%STR_INPUT%" == "1" (
-  set pathT=C:\kettex\texlive
+  set pathT=C:\kettex\
+  set add=texlive
   set bin=\bin\win32
   set scripts=\texmf-dist\scripts\ketcindy
   set style=\texmf-dist\tex\latex\ketcindy
   set doc=\texmf-dist\doc\support\ketcindy
-  set year=""
  )
+if "%STR_INPUT%" == "2" (
+  set pathT=C:\kettex\texlive\
+  set /P add="Year of TeXLive (ex)2020: "
+  set bin=\bin\win32
+  set scripts=\texmf-dist\scripts\ketcindy
+  set style=\texmf-dist\tex\latex\ketcindy
+  set doc=\texmf-dist\doc\support\ketcindy
+)
 if "%STR_INPUT%" == "3" (
-  set pathT=C:\w32tex
+  set pathT=C:\
+  set add=w32tex
   set bin=\bin
   set scripts=\share\texmf-dist\scripts\ketcindy
   set style=\share\texmf-dist\tex\latex\ketcindy
   set doc=\share\texmf-dist\doc\support\ketcindy
 )
-if "%STR_INPUT%" == "3" (
-  set pathT=C:\kettex\texlive
-  set bin=\bin\win32
-  set scripts=\texmf-dist\scripts\ketcindy
-  set style=\texmf-dist\tex\latex\ketcindy
-  set doc=\texmf-dist\doc\support\ketcindy
-  set /P year="Year of TeXLive (ex)2020: "
-)
 
-echo Copying ketcindy to "%pathT%\%year%%scripts%"
-%xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%\%year%%scripts%\"
-echo Copying doc to "%pathT%\%year%%doc%"
+echo Copying ketcindy to "%pathT%%add%%scripts%"
+%xcp% /Y /Q /S /E /R "scripts\*.*" "%pathT%%add%%scripts%\"
+echo Copying doc to "%pathT%%add%%doc%"
 set docsrc=doc
-%xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%\%year%%doc%\"
-echo Copying ketcindy styles to "%pathT%\%year%%style%"
+%xcp% /Y /Q /S /E /R "%docsrc%\*.*" "%pathT%%add%%doc%\"
+echo Copying ketcindy styles to "%pathT%%add%%style%"
 set stylesrc=style
-%xcp% /Y /Q /S /E /R "%stylesrc%\*.*" "%pathT%\%year%%style%\"
-"%pathT%\%year%%bin%\mktexlsr"
+%xcp% /Y /Q /S /E /R "%stylesrc%\*.*" "%pathT%%add%%style%\"
+"%pathT%%add%%bin%\mktexlsr"
 
 pause

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200329] loaded");
+println("ketcindylibbasic3[20200505] loaded");
 
 //help:start();
 
@@ -106,58 +106,6 @@ Datetime():=(
   tmp=[dt_6+"/"+tmp+"/"+dt_3,dt_4];
 );
 ////%Datetime end////
-
-////%Readcsvsla start////
-Readcsvsla(fname):=Readplotdigdata(fname,[]);
-Readcsvsla(fname,options):=Readplotdigdata(fname,options);
-Readplotdigdata(fname):=Readplotdigdata(fname,[]);
-Readplotdigdata(fname,options):=(
-  regional(fsc,mv,cmdall,dataL,nd,npt,ptdata,ii,tmp,tmp1,tmp2,tmp3);
-  tmp=Divoptions(options);
-  tmp1=tmp_6;
-  sc=1;//10;
-  mv=[0,0];//[5,5];
-  forall(tmp1,
-    if(!islist(#),sc=#,mv=#);
-  );
-  if(indexof(fname,".")>0,
-    tmp=load(fname);
-  ,
-    tmp=load(fname+".txt");
-  );
-  cmdall=tokenize(tmp,"//");
-  dataL=[];
-  forall(2..length(cmdall),ii,
-    tmp1=parse("["+cmdall_ii+"]");
-    dataL=append(dataL,tmp1);
-  );
-  if(length(dataL_(length(dataL)))<2,
-    dataL=dataL_(1..(length(dataL)-1));
-  );
-  nd=length(dataL_1)/2;
-  npt=length(dataL);
-  ptdata=[];
-  forall(1..nd,ii,
-    tmp3=[];
-    forall(1..npt,
-      tmp1=dataL_#_(2*ii-1);
-      tmp2=dataL_#_(2*ii);
-      if(isreal(tmp1),
-        tmp3=append(tmp3,[tmp1,tmp2]);
-      );
-    );
-    ptdata=append(ptdata,tmp3);
-  );
-  tmp1=[];
-  forall(ptdata,
-    tmp=#/sc;
-    tmp=Translatedata("1",[tmp],-mv,["nodata"]);
-    tmp1=append(tmp1,tmp);
-  );
-  ptdata=tmp1;
-  ptdata;
-);
-////%Readcsvsla end////
 
 ////%Writebezier start////
 Writebezier():=Writebezier(Fhead,"all");
@@ -453,8 +401,6 @@ Deffun(name,bodylist):=(
   funstr=name+":=(";
   forall(bodylist,
     tmp1=Removespace(#); //190816from
-//    tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-//    if(tmp!=",", tmp1=tmp1+";");
     tmp1=tmp1+";";
     funstr=funstr+tmp1; //190816to
   );
@@ -630,7 +576,6 @@ WritetoRS(filename,shchoice):=(
     );
     tmp1=RSform(tmp1);
     print(SCEOUTPUT,tmp+"="+tmp1+";"); //17.09.22
-//    tmp=substring(tmp,0,length(tmp)-1);
     println(SCEOUTPUT,"Assignadd"+PaO()+"'"+tmp+"',"+tmp+")");
   );
  forall(FUNLIST,
@@ -1115,8 +1060,6 @@ Makebat(texmainfile,flow):=(
       import("sjis.txt");
     );
   );
-//  tmp=replace(tmp,"\","/"); //180408
-//  println(SCEOUTPUT,"cd "+Dqq(tmp)); //180408
   tmp1=indexof(fname,"Users");//180409from
   tmp2=indexof(fname,Homehead);
   if((tmp1>0)%(tmp2>0),
@@ -1240,8 +1183,6 @@ Usegraphics(gpack):=( //180817
 Viewtex():=(
   regional(texfile,tmp,tmp1,sep);
   texfile=Fhead+"main";
-//  if(iswindows(),sep="\",sep="/"); // 17.04.07
-//  sep="/";
   SCEOUTPUT=openfile(texfile+".tex");
   tmp="\documentclass{article}";
   if(indexof(GPACK,"tikz")>0, //190324from //190615
@@ -1284,15 +1225,11 @@ Viewtex():=(
     println(SCEOUTPUT,"\usepackage"+#); //17.05.25
   );// 16.05.16until
   println(SCEOUTPUT,"");
-//  println(SCEOUTPUT,"\def\ketcindy{{K\kern-.20em%"); // deleted 16.11.27,recovered11.29 redeleted17.04.07
-//  println(SCEOUTPUT,"\lower.5ex\hbox{E}\kern-.125em{TCindy}}}");
-//  println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\setmargin{20}{20}{20}{20}");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\begin{document}");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\verb|"+Fhead+"| by \ketcindy");// 16.01.12, 18, 16.04.08
-//  println(SCEOUTPUT,"\verb|"+Fhead+"| by KeTCindy");// 16.11.29 temporarily
   println(SCEOUTPUT,"\vspace{5mm}");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\input{"+Fhead+".tex}");
@@ -1358,7 +1295,6 @@ Figpdf(fnameorg,optionorg):=(
   tmp=apply(optionorg,if(isstring(#),parse("["+#+"]"),#)); // 16.04.07
   tmp=select(tmp,#!=[]);
   options=optionorg;//16.11.08from
-//  mar=[5,5,5,5];
   dp=[0,-3];
   tmp=select(options,islist(#));
   if(length(tmp)>0,
@@ -1647,11 +1583,6 @@ Setslidehyper(driverorg,options):=(
   LinkPosH=125;
   LinkPosV=73;//180524
   LinkSize=1;
-//  if(length(reL)>0,
-//    LinkPosH=reL_1;
-//    if(length(reL)>1,LinkPosV=reL_2);
-//    if(length(reL)>2,LinkSize=max(reL_3,0.1));
-//  );
   forall(eqL,
     tmp=Indexall(#,"=");//180524from
     if(length(tmp)==1,
@@ -1690,8 +1621,6 @@ Settitle(titleold,cmdL,options):=(
   color="blue";
   size="\Large";
   font="\bf";
-//  tmp=Divoptions(options);
-//  eqL=tmp_5;
   eqL=options; //180602
   forall(eqL,
     tmp1=Toupper(substring(#,0,1));
@@ -1794,11 +1723,7 @@ Maketitle(name):=(
   );
   println(SCEOUTPUT,"\usepackage[usenames]{color}"); //190222
   forall(ADDPACK, 
-//    if(indexof(#,"[")==0, 
-//      println(SCEOUTPUT,"\usepackage{"+#+"}");
-//    ,
       println(SCEOUTPUT,"\usepackage"+#); // 17.07.10
-//    );
   );
   if(indexof(PathT,"platex")>0,tmp="\ketmarginJ",tmp="\ketmarginE"); 
   println(SCEOUTPUT,tmp);
@@ -2024,7 +1949,6 @@ Presentation(texfile,txtfile):=(
   paractr=0; //16.12.31
   if(indexof(texfile,".")==0,file=texfile+".tex",file=texfile);
   if(indexof(txtfile,".")==0,tmp1=txtfile+".txt",tmp1=txtfile);
-//  tmp=load(tmp1); //181125from
   tmp=readfile2str(Dirwork,tmp1);
   tmp=replace(tmp,"////","||||");
   tmp=replace(tmp,"/L"+"F/::","::");
@@ -2035,7 +1959,6 @@ Presentation(texfile,txtfile):=(
   tmp=select(1..length(slideL),length(slideL_#)>0); // 16.07.11from
   slideL=apply(tmp,slideL_#);
   slideorgL=apply(tmp,slideorgL_#);
-//  slideL=select(slideL,length(#)>0); // 16.07.11until
   flg=0; // 16.06.09from
   forall(1..10,
     if(flg==0,
@@ -2082,8 +2005,6 @@ Presentation(texfile,txtfile):=(
   );
   tmp=remove(1..(length(tmp3)),tmp);
   tmp3=tmp3_tmp;//17.06.18until
-//  if(iswindows(),sep="\",sep="/"); // 17.04.08
-//  sep="/";
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
     if(indexof(PathT,"lualatex")>0,
       println(SCEOUTPUT,"\usepackage{luatexja}");
@@ -2189,8 +2110,6 @@ Presentation(texfile,txtfile):=(
   forall(tmp, // 15.07.21
     if(substring(#,0,1)=="\", println(SCEOUTPUT,#));
   );
-//  if(!isstring(PageStyle),PageStyle="headings");//180524from
-//  println(SCEOUTPUT,"\pagestyle{"+PageStyle+"}");
    println(SCEOUTPUT,"\pagestyle{empty}");//180524to
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\begin{document}");
@@ -2232,7 +2151,6 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\color{"+SlideColorList_(15)+"}");
   println(SCEOUTPUT,BodyStyle);//17.01.07
-//  println(SCEOUTPUT,"\thispagestyle{empty}");//180524
   println(SCEOUTPUT,"\addtocounter{page}{-1}");//17.01.29
   println(SCEOUTPUT,"");
   verbflg=0; //16.06.28
@@ -2521,11 +2439,6 @@ Presentation(texfile,txtfile):=(
           println(SCEOUTPUT,"\input{fig/"+wall+".tex}");
         );
         tmp="\sameslide"+NewSlideOption; //17.01.04;
-//        if(substring(tmp2,0,1)=="[",
-//          tmp=tmp+tmp2;
-//          tmp2=tmp3;
-//          tmp3=tmp4;
-//        );
         println(SCEOUTPUT,tmp);
         println(SCEOUTPUT,""); //180524
         println(SCEOUTPUT,"\vspace*{18mm}");
@@ -2663,7 +2576,6 @@ Presentation(texfile,txtfile):=(
          );
        );
     );
-//    println(SCEOUTPUT,"");
   );
   println(SCEOUTPUT,"\label{pageend}\mbox{}"); //180529
   println(SCEOUTPUT,"");
@@ -2951,7 +2863,6 @@ BBdata(fname,optionorg):=(
       println(tmp2);
     );
   );
-//  setdirectory(Dirwork);
   tmp2; // 16.04.25
 );
 ////%BBdata end////
@@ -3407,10 +3318,10 @@ Setketcindyjs(list):=(
 );
 ////%Setketcindyjs end////
 
-////%Ketcindyjsbody start//// 190909
+////%Ketcindyjsbody start//// 190909,200505(remove help)
 Ketcindyjsbody(list1,list2):=(
-//help:Ketcindyjsbody(listfront,listrear);
-//help:Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
+//help :Ketcindyjsbody(listfront,listrear);
+//help :Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
   JSBODY=[list1,list2];
   JSBODY;
 );
@@ -3421,6 +3332,7 @@ Ketcindyjsmain(prelist):=Ketcindyjsmain(prelist,[]);
 Ketcindyjsmain(prelist,postlist):=(
 //help:Ketcindyjsmain(["<pf10/fp>_;Sample"]);
 //help:Ketcindyjsmain(["<pf10/fp>_;Sample"],["<pf5/fpbr>end"]);
+//help:Ketcindyjsmain([<pf10/fp>=<p><font size="10">...</font><p>]);
   JSMAIN=[[],[]];
   if(islist(prelist),JSMAIN_1=prelist,JSMAIN_1=[prelist]);
   if(islist(postlist),JSMAIN_2=postlist,JSMAIN_2=[postlist]);
@@ -3473,12 +3385,6 @@ Findfun(name,lineorg):=(
   rmv=concat(rmv,["ceil","while","dist","det","exp","err","arctan2","fillpoly"]);
   rmv=concat(rmv,["drawtext","mouse","allsegments","createpoint","create"]);
   rmv=concat(rmv,["gsave","connect","draw","grestore","wait"]);
-  
-//  rmv=concat(rmv,["d","list","c","funN","funP","function","for","return"]);  // in string (for R)
-//  rmv=concat(rmv,["gsub","cat"]);  // in string (for R)
-//  rmv=concat(rmv,["options"]); // written for Windows
-//  rmv=concat(rmv,["isexists"]); // java functions
-  
   sep=[""," ",",","=","(","+","-","*","/","^","_","[",".","!","&","%",Dq,";",">","<",unicode("0009")];
   out=[];
   if(substring(line,0,2)!="//",
@@ -3803,6 +3709,63 @@ Setplaybuttons(x,y,font,sporg):=(
 );
 ////%Setplaybuttons end////
 
+////%Tohtmltagpf start//// 200506
+Tohtmltagpf(sentence):=(
+  regional(sent,tag,tmp,tmp1,tmp2,tmp3,tmp4);
+  sent=replace(sentence,"_;","&emsp;");
+  sent=Removespace(sent);
+  tag="";
+  if(substring(sent,0,1)=="<",
+    tmp=indexof(sent,">");
+    tag=substring(sent,1,tmp-1);
+    sent=substring(sent,tmp,length(sent));
+  );
+  if(length(tag)>0,
+    tag=Strsplit(tag,"/");
+  ,
+    tag=[""];
+  );
+  tmp3=tag_1;
+  tmp4=""; 
+  while(length(tmp3)>0,
+    tmp=substring(tmp3,0,1);
+    tmp3=substring(tmp3,1,length(tmp3));
+    if(tmp=="p",
+      tmp4=tmp4+"<p>";
+    );
+    if(tmp=="f",
+      tmp4=tmp4+"<font ";
+      tmp=substring(tmp3,0,1);
+      tmp3=substring(tmp3,1,length(tmp3));
+      if(indexof("0123456789",tmp)>0,
+        tmp4=tmp4+"size="+Dq;
+        while((length(tmp)>0)&(indexof("0123456789",tmp)>0),
+          tmp4=tmp4+tmp;
+          tmp=substring(tmp3,0,1);
+          tmp3=substring(tmp3,1,length(tmp3));
+        );
+        tmp4=tmp4+Dq;
+      );
+      if(length(tmp)>0,
+        tmp3=Removespace(tmp3);
+        tmp4=tmp4+" color="+Dqq(tmp+tmp3);
+      );
+    );
+  );
+  tmp4=tmp4+">"+sent;
+  if(length(tag)>1,
+    tmp3=tag_2;
+    forall(1..(length(tmp3)),
+      tmp=tmp3_#;
+      if(tmp=="f",tmp4=tmp4+"</font>");
+      if(tmp=="p",tmp4=tmp4+"</p>");
+      if(tmp=="b",tmp4=tmp4+"<br>");
+    );
+  );
+  tmp4;
+);
+////%Tohtmltagpf send///
+
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
@@ -3810,7 +3773,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Remove=(list)"]);
 //help:Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)"]);
-  regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,
+  regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,tmp4,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
      figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH);
@@ -3912,7 +3875,7 @@ Mkketcindyjs(options):=( //17.11.18
       );
     );
   );
-  if(substring(color,0,1)=="[",
+  if(indexof(color,"[")>0,  //200505
     tmp=parse(color);
     if(length(tmp)==4,
       colorrgb=Colorcode("cmyk","rgb",tmp); //190504
@@ -3920,7 +3883,8 @@ Mkketcindyjs(options):=( //17.11.18
       colorrgb=color; //190506
     );
   ,
-    colorrgb=Colorname2rgb(color); //190504
+    tmp=Colorname2cmyk(color); //200505[2lines]
+    colorrgb=Colorcode("cmyk","rgb",tmp);
   ); //190503to
   tmp=apply(colorrgb,round(#*255)); //190504
   tmp=text(tmp);
@@ -3936,30 +3900,8 @@ Mkketcindyjs(options):=( //17.11.18
     wait(3000);
   ,
     tmp3=Readlines(Dircdy,Fhead+".html");
-//    tmp=select(1..(length(tmp3)),indexof(tmp3_#,"import")>0);
-//    tmp1=[];
-//    tmp2=select(tmp,indexof(tmp3_#,"ketcindy.ini")==0);
-//    tmp1=[];
-//    forall(tmp2,
-//      tmp=Removespace(tmp3_#);
-//      if(substring(tmp,0,2)!="//",
-//        tmp1=append(tmp1,#);
-//      );
-//    );
     htmorg=[];
     from=1;
-//    forall(tmp1,
-//      htmorg=concat(htmorg,tmp3_(from..(#-2)));
-//      tmp=Bracket(tmp3_(#-1),"()");
-//      dname=substring(tmp3_(#-1),tmp_1_1,tmp_(length(tmp))_1-1);
-//      dname=parse(dname);
-//      tmp=Bracket(tmp3_#,"()");
-//      fname=substring(tmp3_#,tmp_1_1,tmp_(length(tmp))_1-1);
-//      fname=parse(fname);
-//      tmp2=Readlines(dname,fname);
-//      htmorg=concat(htmorg,tmp2);
-//      from=#+2;
-//    );
     upto=length(tmp3);
     htmorg=concat(htmorg,tmp3_(from..upto));
     tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csinit"))>0); //190206from
@@ -4498,94 +4440,53 @@ Mkketcindyjs(options):=( //17.11.18
     ); //190910to
     closefile(SCEOUTPUT);
     if(length(JSMAIN)>0, //200119from
-      SCEOUTPUT = openfile(Fhead+"main.html"); 
+      if(webflg=="Y",tmp="mainon.html",tmp="mainoff.html"); //200506[2lines]
+      SCEOUTPUT = openfile(Fhead+tmp); 
       println(SCEOUTPUT,"<!DOCTYPE html>");
       println(SCEOUTPUT,"<html>");
       println(SCEOUTPUT,"<head>");
       println(SCEOUTPUT,"<meta charset="+Dqq("utf-8")+">");
       println(SCEOUTPUT,"<title>Page of "+Fhead+"</title>");
+//      // for Mathjax
 //      println(SCEOUTPUT,"<script src="+Dqq("https://polyfill.io/v3/polyfill.min.js?features=es6")+"></script>");
 //      tmp=Dqq("MathJax-script")+" async src=";
 //      tmp=tmp+Dqq("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js");
 //      println(SCEOUTPUT,"<script id="+tmp+"></script>");
-      println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/jquery.min.js")+"></script>"); //200122from
-      println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/katex/katex.min.css")+" />");
-      println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/katex/katex.min.js")+"></script>");
-      println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/auto-render.min.js")+"></script>");
+      if(webflg=="Y", //200506from
+        println(SCEOUTPUT,"<script src="+
+            Dqq("https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")+"></script>");
+        println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+
+            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css")+" />");
+        println(SCEOUTPUT,"<script src="+
+            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js")+"></script>");
+        println(SCEOUTPUT,"<script src="+
+            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js")+"></script>");
+      , //200506to
+        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/jquery.min.js")+"></script>"); //200122from
+        println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/katex/katex.min.css")+" />");
+        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/katex/katex.min.js")+"></script>");
+        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/auto-render.min.js")+"></script>");
+      ); 
       tmp="<script>$(document).ready(function(){renderMathInElement(document.body,{delimiters: ";
       tmp=tmp+"[{left: "+Dqq("[[")+", right: "+Dqq("]]")+", display: true},";
       tmp=tmp+"{left: "+Dqq("$")+", right: "+Dqq("$")+", display: false}]})});</script>";
       println(SCEOUTPUT,tmp); //200122to
       println(SCEOUTPUT,"</head>");
       println(SCEOUTPUT,"<body");    
-      println(SCEOUTPUT,"<p></p>");    
+      println(SCEOUTPUT,"<p></p>"); 
       forall(JSMAIN_1,tmp1,
-        tmp2=replace(tmp1,"_;","&emsp;");
-        tmp2=Removespace(tmp2);
-        if(substring(tmp2,0,1)=="<",
-          tmp=indexof(tmp2,">");
-          tmp3=substring(tmp2,1,tmp-1);
-          tmp2=substring(tmp2,tmp,length(tmp2));
-          tmp3=Strsplit(tmp3,"/");
-          tmp=indexof(tmp3_1,"f");
-          if(tmp>0,
-            tmp=substring(tmp3_1,tmp,length(tmp3_1));
-            tmp="<font size="+Dqq(tmp)+">";
-            tmp2=tmp+tmp2;
-          );
-          if(indexof(tmp3_1,"p")>0,
-            tmp2="<p>"+tmp2;
-          );
-          if(length(tmp3)>1,
-            if(indexof(tmp3_2,"f")>0,
-              tmp2=tmp2+"</font>";
-            );
-            if(indexof(tmp3_2,"p")>0,
-              tmp2=tmp2+"</p>";
-            );
-            if(indexof(tmp3_2,"br")>0,
-              tmp2=tmp2+"</br>";
-            );
-          );
-        );
+        tmp2=Tohtmltagpf(tmp1);
         println(SCEOUTPUT,tmp2);
       );
       println(SCEOUTPUT,"<p></p>");    
       tmp="<iframe src="+Dqq(fname)+" width="+Dqq(jssizeW);
       tmp=tmp+" height="+Dqq(jssizeH)+"></iframe>";
       println(SCEOUTPUT,tmp);    
-      println(SCEOUTPUT,"<p></p>");
       forall(JSMAIN_2,tmp1,
-        tmp2=replace(tmp1,"_;","&emsp;");
-        tmp2=Removespace(tmp2);
-        if(substring(tmp2,0,1)=="<",
-          tmp=indexof(tmp2,">");
-          tmp3=substring(tmp2,1,tmp-1);
-          tmp2=substring(tmp2,tmp,length(tmp2));
-          tmp3=Strsplit(tmp3,"/");
-          tmp=indexof(tmp3_1,"f");
-          if(tmp>0,
-            tmp=substring(tmp3_1,tmp,length(tmp3_1));
-            tmp="<font size="+Dqq(tmp)+">";
-            tmp2=tmp+tmp2;
-          );
-          if(indexof(tmp3_1,"p")>0,
-            tmp2="<p>"+tmp2;
-          );
-          if(length(tmp3)>1,
-            if(indexof(tmp3_2,"f")>0,
-              tmp2=tmp2+"</font>";
-            );
-            if(indexof(tmp3_2,"p")>0,
-              tmp2=tmp2+"</p>";
-            );
-            if(indexof(tmp3_2,"br")>0,
-              tmp2=tmp2+"</br>";
-            );
-          );
-        );
+        tmp2=Tohtmltagpf(tmp1);
         println(SCEOUTPUT,tmp2);
       );
+      println(SCEOUTPUT,"<p></p>");
       println(SCEOUTPUT,"</body>");    
       println(SCEOUTPUT,"</html>");
       closefile(SCEOUTPUT);

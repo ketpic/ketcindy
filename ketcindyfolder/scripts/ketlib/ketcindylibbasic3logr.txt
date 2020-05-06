@@ -1,3 +1,9 @@
+// 20200506
+//    Mkketcindyjs changed (for katex online)
+//    Tohtmltagpf added
+//    Mkketcindyjs changed ( for Ketcindyjsmain )
+// 20200505
+//    Mkketcindyjs debugged ( color )
 // 20200329
 //    Fracform changed  (denL, err)
 // 20200127

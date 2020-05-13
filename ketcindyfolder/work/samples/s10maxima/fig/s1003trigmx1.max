@@ -1,0 +1,8 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1003trigmx1.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+ans:trigsimp(cos(x)^2-sin(x)^2)$/*##*/
+disp(ans)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

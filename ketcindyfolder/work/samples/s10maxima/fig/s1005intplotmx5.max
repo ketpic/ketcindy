@@ -1,0 +1,8 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1005intplotmx5.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+ans:integrate(x*sin(x)+4*cos(x),x)$/*##*/
+disp(ans)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

@@ -1,0 +1,9 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) ans:integrate(sin(x)-x*cos(x),x)
+(%i7) disp(ans)
+(-x*sin(x))-2*cos(x)
+
+(%i8) closefile()

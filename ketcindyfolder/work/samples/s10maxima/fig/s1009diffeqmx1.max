@@ -1,0 +1,8 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1009diffeqmx1.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+ans:ode2('diff(x,t)=t*x^3,x,t)$/*##*/
+disp(ans)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

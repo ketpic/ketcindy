@@ -1,0 +1,18 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) out:[]
+(%i7) for j from 0 step 2 thru 10 do (tmp:j^2,out:endcons(tmp,out))
+(%i8) n:length(out)
+(%i9) s:lsum(2*j,j,out)
+(%i10) disp(out)
+[0,4,16,36,64,100]
+
+(%i11) disp(n)
+6
+
+(%i12) disp(s)
+440
+
+(%i13) closefile()

@@ -14,490 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200115] loaded");
+println("ketcindylibout[20200510] loaded");
 
 //help:start();
-
-////%WritetoS start////
-WritetoS(fname,cmdL):=(
-// help:WritetoS("outdata",cmdL);
-  regional(tmp,tmp1,tmp2,filename);
-  if(indexof(fname,".")==0,
-    filename=fname+".sce";
-  ,
-    filename=fname;
-  );
-  SCEOUTPUT = openfile(filename);
-  tmp="cd('"+Dirwork+"');//";
-  println(SCEOUTPUT,tmp);
-//  tmp1=replace(Dirlib,"\","/");
-  tmp="Ketlib=lib("+Dq+LibnameS+Dq+");//"; //17.09.29
-  println(SCEOUTPUT,tmp);
-  tmp="Ketinit();//";
-  println(SCEOUTPUT,tmp);
-  tmp="Setwindow([XMIN,XMAX],[YMIN,YMAX]);"; // 16.06.26from
-  tmp=Assign(tmp,["XMIN",XMIN,"XMAX",XMAX,"YMIN",YMIN,"YMAX",YMAX]);
-  println(SCEOUTPUT,tmp); // 16.06.26until
-  if(iswindows(),  // 17.01.11from
-      println(SCEOUTPUT,"setlanguage('en')");
-  );  // 17.01.11until
-  tmp="pi=%pi;////";
-  println(SCEOUTPUT,tmp);
-  forall(cmdL,
-    println(SCEOUTPUT,#+"//");
-  );
- closefile(SCEOUTPUT);
-);
-////%WritetoS end////
-
-////%kcS start////
-kcS(path,fname):=kcS(path,fname,[]);
-kcS(path,fname,optionorg):=(
-//help:kcS(PathS,"boxdata");
-//help:kcS(options=["r/m"]);
-  regional(options,tmp,tmp1,tmp2,eqL,strL,filename,flg);
-  if(indexof(fname,".")==0,
-    filename=fname+".sce";
-  ,
-    filename=fname;
-  );
-  options=optionorg;
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  strL=tmp_7;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,0,tmp-1);
-    tmp2=substring(#,tmp,length(#));
-  ); 
-  flg=0;
-  forall(strL,
-    if(Toupper(substring(#,0,1))=="R",
-      flg=0;
-      options=remove(options,[#]);
-    );
-    if(Toupper(substring(#,0,1))=="M",
-      flg=1;
-    );
-  );
-  if(flg==0,
-    tmp2=replace(filename,".sce",".txt");
-    tmp1=load(tmp2);
-    if(length(tmp1)==0,
-      flg=1;
-    ); 
-  );
-  if(flg==1,
-    tmp1="";     // 15.10.08 from
-    if(iswindows(),
-      tmp2=Batparent;
-    ,
-      tmp2=Shellparent;
-    );
-    flg=0;
-    forall(reverse(1..length(tmp2)),
-      if(flg==0,
-        tmp=substring(tmp2,#-1,#);
-        if(tmp=="/" % tmp=="\",  // 14.01.15
-          tmp1=substring(tmp2,0,#-1);
-          tmp2=substring(tmp2,#,length(tmp2));
-          flg=1;
-        );
-      );
-    );
-    if(length(tmp1)>0,
-      setdirectory(tmp1);
-    );      // 15.10.08 to
-    if(iswindows(),
-      SCEOUTPUT = openfile("kc.bat");
-      println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
-      tmp=Dq+path+Dq+" -nb -nwni -f  "+filename;
-      println(SCEOUTPUT,tmp); 
-      println(SCEOUTPUT,"exit");
-      closefile(SCEOUTPUT);
-      println(kc(Dirwork+Batparent,Dirlib,Fnametex));// 16.05.29, 0605
-    ,
-      if(ismacosx(), //181125from
-        SCEOUTPUT = openfile("kc.command");
-      ,
-        SCEOUTPUT = openfile("kc.sh");
-      ); //181125to
-      println(SCEOUTPUT,"#!/bin/sh");
-      println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);
-      tmp=Dq+path+Dq+" -nwni -f "+filename;
-      println(SCEOUTPUT,tmp); 
-      println(SCEOUTPUT,"exit 0");
-      closefile(SCEOUTPUT);
-      println(kc(Dirwork+Shellparent,Mackc+Dirlib,Fnametex));// 16.05.29
-    );
-    wait(WaitUnit);
-    setdirectory(Dirwork);
-  );
-);
-////%kcS end////
-
-////%SetpathS start////
-SetpathS():=(
-  regional(tmp,tmp1);
-  if(!isstring(PathS),  // 15.12.11
-    Setdirectory(Dirbin);  // 15.12.07
-    tmp=load(Shellfile);
-    if(iswindows(),
-      tmp=tokenize(tmp," -nb");
-      PathS=tmp_1;
-    ,
-      tmp=tokenize(tmp," -nwni");
-      tmp=tokenize(tmp_1,"/Applications/sci");
-      PathS="/Applications/sci"+tmp_2;
-    );
-    setdirectory(Dirwork);
-  );
-  PathS;
-);
-////%SetpathS end////
-
-////%ErrhandleS start////
-ErrhandleS(fname):=(  // 2016.02.28
-  regional(str); //17.04.14
-  if(indexof(PathS,"-6.")==0,
-    str=["if iserror(-1) then","  error=lasterror()+'????';"];
-    str=append(str,"  errclear(-1);"); // 16.03.14
-    str=append(str,"  Fd=mopen("+Dq+wfile+Dq+",'wt');");
-    str=append(str,"  mfprintf(Fd,'%s','Error: '+error);");
-    str=append(str,"  mclose(Fd);");
-    str=append(str,"  quit();");
-    str=append(str,"end;");
-    str;
-  ,
-    str=[]; //17.04.14
-  );
-);
-////%ErrhandleS end////
-
-////%Testfunstr start////
-Testfunstr(funstr,varx,vary):=(
-  regional(var,val,fun,tmp,tmp1,tmp2);
-  fun=replace(funstr,".x","(1)"); // 16.05.19
-  fun=replace(fun,".y","(2)"); // 16.05.19
-  tmp=indexof(varx,"=");
-  var=substring(varx,0,tmp-1);
-  val=substring(varx,tmp+1,length(varx));
-  tmp=indexof(val,",");
-  val=substring(val,0,tmp-1);
-  tmp1=replace(fun,var,"("+val+")");
-  tmp=indexof(vary,"=");
-  var=substring(vary,0,tmp-1);
-  val=substring(vary,tmp+1,length(vary));
-  tmp=indexof(val,",");
-  val=substring(val,0,tmp-1);
-  tmp1=replace(tmp1,var,"("+val+")");
-  tmp1;
-);
-////%Testfunstr end////
-
-////%CalcbyS start////
-CalcbyS(name,cmd):=CalcbyS(name,SetpathS(),cmd,[]);
-CalcbyS(name,Arg1,Arg2):=(
-  if(isstring(Arg1),
-    CalcbyS(name,Arg1,Arg2,[]);
-  ,
-    CalcbyS(name,SetpathS(),Arg1,Arg2);
-  );
-);
-CalcbyS(name,path,cmd,optionorg):=(
-//help:CalcbyS("a",cmd);
-//help:CalcbyS(options= ["m/r","Wait=10","Cat=middle"]]);
-//help:CalcbyS(options1= ["Ncol=2","File=result","Dig=5"]]);
-  regional(options,tmp,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,
-      ncoL,cat,dig,flg,wflg,file,nc,arg,cmdS,cmdlist,wfile,ext,
-      waiting, errcheck);
-  options=optionorg;
-  tmp=divoptions(options);
-  eqL=tmp_5;
-  realL=tmp_6;
-  strL=tmp_7;
-  cat="M";//16.11.24
-  ncoL=2;
-  ext=".txt";
-  waiting=10;
-  dig=5;
-  wfile="";
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
-    if(tmp1=="C",
-      cat=Toupper(substring(tmp2,0,1));// 16.11.24
-      options=remove(options,[#]);
-    );
-    if(tmp1=="N",
-      ncoL=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="E",
-      if(indexof(tmp2,".")==0,ext="."+tmp2,ext=tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="W",
-      waiting=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="D",
-      dig=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="F",  // 16.06.26from
-      wfile=tmp2;
-      options=remove(options,[#]);
-    ); // 16.06.26until
-  );
-  if(wfile=="",
-    if(cat=="Y",
-      wfile=Fhead+name;
-    ,
-      wfile="resultS";
-    );
-  );
-  if(indexof(wfile,".")==0,// 16.06.26from
-    wfile=wfile+ext; 
-  ); // 16.06.26until
-  wflg=0;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="M",
-      wflg=1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="R",
-      wflg=-1;
-      options=remove(options,[#]);
-    );
-  );
-  if(CONTINUED==0,
-    if((wflg==0) & (cat=="Y"), // 16.11.24
-      tmp=load(wfile);
-      if(length(tmp)==0,wflg=1);
-    );
-  );
-  file=Fhead+name;
-  cmdS=cmd;
-  cmdlist=[];
-  forall(1..floor(length(cmdS)/2),nc, //17.05.18
-    tmp1=cmdS_(2*nc-1);
-    tmp1=replace(tmp1,LFmark,""); // 16.06.12
-    tmp1=replace(tmp1,CRmark,""); // 16.12.13
-    if(nc==length(cmdR)/2, //16.10.23from
-      if(indexof(tmp1,"=")==0,tmp1="="+tmp1);
-    ); //16.10.23from
-    if(substring(tmp1,0,1)=="=",
-//      tmp1=name+tmp1; // 16.12.20
-    );
-    tmp2=cmdS_(2*nc);  // list of argments
-    tmp3="";
-    tmp4="";
-    errcheck=0;
-    forall(tmp2,arg,
-      if(isstring(arg),
-        if(Toupper(arg)=="ERROR",
-          errcheck=1;
-        ,
-          tmp3=tmp3+replace(arg,"'",Dq)+",";
-        );
-      ,
-        if(!islist(arg),
-          tmp3=tmp3+textformat(arg,dig)+",";
-        ,
-          tmp=select(arg,isstring(#) % islist(#));
-          if(length(tmp)>0,
-            tmp3=tmp3+"list(";
-            tmp4=")";
-          ,
-            tmp3=tmp3+"[";
-            tmp4="]";
-          );
-          forall(arg,
-            if(isstring(#),
-              tmp3=tmp3+replace(#,"'",Dq)+",";
-            ,
-              if(!islist(#),   // 15.11.01 from
-                tmp3=tmp3+textformat(#,dig)+",";
-              ,
-                tmp=textformat(#,dig);
-                tmp=replace(tmp,"],[","];[");
-                tmp3=tmp3+tmp+",";
-              ); // 15.11.01 until
-            );
-          );
-          tmp3=substring(tmp3,0,length(tmp3)-1)+tmp4+",";
-        );
-      );
-    );
-    if(length(tmp3)>0,
-      tmp3=substring(tmp3,0,length(tmp3)-1);
-      tmp1=tmp1+"("+tmp3+");";
-    );
-    if(errcheck==1,
-      if(indexof(Dirlib,"sciL5")>0, // 17.03.20
-        cmdlist=append(cmdlist,"errcatch(-1,'continue','nomessage');");
-      ); // 17.03.20
-    );
-    cmdlist=append(cmdlist,tmp1);
-    if(errcheck==1,
-      tmp=ErrhandleS(wfile);
-      cmdlist=concat(cmdlist,tmp);
-    );
-  );
-  if(CONTINUED==1,
-    ComOutList=concat(ComOutList,cmdlist);
-  ,
-    if(cat=="Y",
-      tmp=[];
-      tmp=append(tmp,"Fd=mopen("+Dq+file+".txt"+Dq+",'wt');");
-      // 16.03.11 from
-      tmp=append(tmp,"mfprintf(Fd,'%s',"+name+");");
-      tmp=append(tmp,"mclose(Fd);");
-      cmdlist=concat(cmdlist,tmp);
-//      tmp="fprintfMat("+Dq+file+".txt"+Dq+","+name+")";
-//      cmdlist=append(cmdlist,tmp);  // 16.03.11 until
-    ,
-//      tmp="mputl(['????'],"+Dq+file+".txt"+Dq+");";  // 16.06.2 from
-//      cmdlist=concat(cmdlist,[tmp]); // 16.06.2 until
-    );
-    if(cat!="Y",   // 16.12.18
-      cmdlist=append(cmdlist,"mputl('||||','"+wfile+"')");
-    );
-    cmdlist=append(cmdlist,"quit()");
-    if(wflg==0,
-      tmp1=load(file+".sce");
-      if(length(tmp1)==0,
-        wflg=1;
-      ,
-        tmp1=tokenize(tmp1,"////"); 
-        tmp1=tokenize(tmp1_2,"//");
-        tmp1=tmp1_(1..(length(tmp1)-1));
-        if(length(tmp1)!=length(cmdlist),
-          wflg=1;
-        ,
-          tmp=select(1..length(tmp1),tmp1_#!=cmdlist_#);
-		  if(length(tmp)>0, wflg=1);
-        );
-      );
-    ); 
-    if(wflg==0,wflg=-1); // 15.10.16
-    if(wflg==1,
-      if(length(wfile)>0,   // 15.10.05
-        SCEOUTPUT=openfile(wfile);
-        println(SCEOUTPUT,"");
-        closefile(SCEOUTPUT);
-      );
-      WritetoS(file+".sce",cmdlist);
-      kcS(path,file,concat(options,["m"])); // 15.09.25
-    );
-    flg=0;
-    tmp1=floor(waiting*1000/WaitUnit);
-    repeat(tmp1,
-      if(flg==0,
-        tmp=load(wfile);
-        if(length(tmp)>=4,
-          tmp2=substring(tmp,length(tmp)-4,length(tmp));
-		  if(tmp2=="////" % tmp2=="||||" % tmp2=="????", // 16.08.09
-            if(indexof(Toupper(tmp),"ERROR")>0,
-              println(tmp);
-              flg=2;
-            ,
-              flg=1;
-            );
-          );
-          tmp2=#*WaitUnit/1000;
-        ,
-          if(wflg==-1,
-            flg=-1;
-          ,
-            wait(WaitUnit);
-          );
-        );
-      );
-    );
-    if(flg<=0,
-      ErrFlag=1;
-      if(flg==-1,
-        println(wfile+" does not exist");
-      ,
-        tmp="("+text(waiting)+" s )";
-        println(wfile+" not generated "+tmp);
-      );
-    ,
-      if(flg==1,
-        println("      CalcbyS succeeded "+name+"("+text(tmp2)+" sec)"); //16.06.03
-      ,
-        ErrFlag=1;
-      );
-    );
-  );
-  if(wflg>-1,
-//    wait(WaitUnit);
-  );
-);
-////%CalcbyS end////
-
-////%Scifun start////
-Scifun(name,fun,argL):=Scifun(name,fun,argL,[]);//16.10.22
-Scifun(name,fun,argL,optionorg):=(
-//help:Scifun("1","date()",[]);
-//help:Scifun(options=["Disp=y"]);
-  regional(nm,options,eqL,disp,cmdL,fname,
-     tmp,tmp1,tmp2);
-  nm="sc"+name;
-  fname=Fhead+nm+".txt";
-  options=optionorg;
-  tmp=divoptions(options);
-  precise=6;
-  disp=1;
-  pack=[];
-  set=[];
-  add="";
-  eqL=tmp_5;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1)); //181111
-    tmp2=substring(#,tmp,length(#));
-    if(tmp1=="D" ,
-      tmp=Toupper(substring(tmp2,0,1));
-      if((tmp=="F") % (tmp=="N"),
-        disp=0;
-      );
-      options=remove(options,[#]);
-    );
-  );
-  cmdL=[];
-  cmdL=concat(cmdL,[
-    nm+"="+fun,argL,
-    "Fd=mopen",[Dq+fname+Dq,Dq+"wt"+Dq],
-    "Sla=char(47)+char(47);",[],
-    "mputl",["string("+nm+")+Sla","Fd"],
-    "mputl",["Sla","Fd"],
-    "mclose",["Fd"]
-  ]);
-  options=append(options,"Wait=2");
-  CalcbyS(nm,cmdL,options);
-  if(ErrFlag==0,
-    tmp=load(fname);
-    tmp=replace(tmp,"////","");
-    tmp=tokenize(tmp,"//");
-    tmp=apply(tmp,if(!isstring(#),textformat(#,6),Dq+#+Dq));
-    if(length(tmp)==1,
-      tmp=tmp_1;
-    );
-    tmp=nm+"="+text(tmp);
-    parse(tmp);
-    if(disp==1, // 15.11.24
-      println(nm+" is : ");
-      println(parse(nm));
-    );
-  );
-  parse(nm);
-);
-////%Scifun end////
 
 ////%WritetoR start////
 WritetoR(fname,cmdL):=WritetoR(fname,cmdL,[]);
@@ -525,7 +44,6 @@ WritetoR(fname,cmdL,options):=(
   tmp="setwd("+Dq+tmp1+Dq+")##";
   println(SCEOUTPUT,tmp);
   tmp1=replace(Libname,"\","/"); // 17.09.24from
-//  tmp="load('"+tmp1+".Rdata')"; # 17.10.12
   tmp="source('"+tmp1+".r')##"; // 17.09.24temporarily
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"Ketinit()##"); // 16.07.07
@@ -536,18 +54,6 @@ WritetoR(fname,cmdL,options):=(
     println(SCEOUTPUT,#+"##");
   );
   closefile(SCEOUTPUT);
-//  flg=0;
-//  tmp1=floor(waiting*1000/WaitUnit);
-//  repeat(tmp1,
-//    if(flg==0,
-//      tmp=load(filename);
-//      if(length(tmp)>0,
-//        flg=1;
-//      ,
-//        wait(WaitUnit);
-//      );
-//    );
-//  );
 );
 ////%WritetoR end////
 
@@ -584,7 +90,7 @@ kcR(path,fname,optionorg):=(
   );
   if(flg==0,
     tmp2=replace(filename,".r",".txt");
-    tmp1=load(tmp2);
+    tmp1=Readlines(tmp2); //200509
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -856,7 +362,7 @@ CalcbyR(name,path,cmd,optionorg):=(
   );
   if(CONTINUED==0,
     if((wflg==0) & (cat!="N"), // 16.11.13
-      tmp=load(wfile);
+      tmp=Readlines(wfile); //200509
       if(length(tmp)==0,wflg=1);
     );
   );
@@ -875,9 +381,6 @@ CalcbyR(name,path,cmd,optionorg):=(
   forall(1..floor(length(cmdR)/2),nc, //17.05.18
     tmp1=cmdR_(2*nc-1);
     tmp1=replace(tmp1,LFmark,""); // 16.06.12
-//    if(nc==length(cmdR)/2, //16.10.23from
-//      if(indexof(tmp1,"=")==0,tmp1="="+tmp1);//16.12.20
-//    ); //16.10.23uptp
     if(substring(tmp1,0,1)=="=",
       tmp1=name+tmp1;
     );
@@ -942,10 +445,6 @@ CalcbyR(name,path,cmd,optionorg):=(
       cmdlist=append(cmdlist,"  "+name+"=tmp");
       cmdlist=append(cmdlist,"}");//18.02.01until
       cmdlist=append(cmdlist,"if(is.list("+name+")){");
-//      tmp="  cat(names("+name+"),file='"+wfile+"',sep=',')"; //18.01.27deleted
-//      cmdlist=append(cmdlist,tmp);
-//      tmp="  cat(sharps,file='"+wfile+"',append=TRUE)";
-//      cmdlist=append(cmdlist,tmp);
       cmdlist=append(cmdlist,"  for(ii in Looprange(1,length("+name+"))){");
       cmdlist=append(cmdlist,"    if(is.list("+name+"[[ii]])){");
       tmp="      cat('[',file='"+wfile+"',sep='',append=TRUE)";
@@ -986,20 +485,20 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
     cmdlist=append(cmdlist,"quit()");
     if(wflg==0,
-      tmp1=load(file+".r");
+      tmp1=Readlines(file+".r"); //200509
       if(length(tmp1)==0,
         wflg=1;
       ,
-        tmp1=tokenize(tmp1,"####");  // 15.09.25 from
-        tmp1=tokenize(tmp1_2,"##");
-        tmp1=tmp1_(1..(length(tmp1)-1));
+        tmp=select(1..(length(tmp1)),indexof(tmp1_#,"####")>0); //200509[3lines]
+        tmp1=tmp1_((tmp_1+1)..(length(tmp1)));
+        tmp1=apply(tmp1,replace(#,"##",""));
         if(length(tmp1)!=length(cmdlist),
           wflg=1;
         ,
           tmp=select(1..length(tmp1),tmp1_#!=cmdlist_#);
           if(length(tmp)>0, wflg=1);
         );
-      ); // 15.09.25 to
+      );
     );
     if(wflg==0,wflg=-1); // 15.10.16
     if(wflg==1,
@@ -1018,11 +517,12 @@ CalcbyR(name,path,cmd,optionorg):=(
     tmp1=floor(waiting*1000/WaitUnit);
     repeat(tmp1,
       if(flg==0,
-        tmp=load(wfile);
-        if(length(tmp)>=4,
-          tmp2=substring(tmp,length(tmp)-4,length(tmp));
+        tmp=Readlines(wfile); //200509from
+        if(wflg==1,wait(Waitunit));
+        if(length(tmp)>0,
+          tmp2=tmp_(length(tmp));
           if(tmp2=="////",
-            tmp=substring(tmp,0,length(tmp)-4);
+            tmp=tmp_(1..(length(tmp)-1)); //200509to
             flg=1;
             tmp2=#*WaitUnit/1000;
           );
@@ -1030,9 +530,9 @@ CalcbyR(name,path,cmd,optionorg):=(
           if(wflg==-1,
             flg=-1;
           ,
+            tmp=Readlines("errormessageR.txt"); //200509[2lines]
             wait(WaitUnit);
-            tmp=load("errormessageR.txt");//18.02.20
-            if(length(tmp)>1,
+            if(length(tmp)>0,
               println(tmp);
               flg=-2;
             );//18.02.20
@@ -1053,8 +553,7 @@ CalcbyR(name,path,cmd,optionorg):=(
     ,
       println("      CalcbyR succeeded "+name+" ("+text(tmp2)+" sec)");
       if(cat=="Y", // 16.10.29,11.25
-        tmp1=tokenize(tmp,"##"); //16.10.23from
-        tmp1=tmp1_(1..(length(tmp1)-1));
+        tmp1=apply(tmp,replace(#,"##","")); //200509from
         tmp2=[];
         forall(tmp1,tmp3,
           if(!isstring(tmp3),
@@ -1146,106 +645,6 @@ Rfun(name,fun,argL,optionorg):=(
   parse(nm);
 );
 ////%Rfun end////
-
-////%Readcsv start////
-Readcsv(file):=Readcsv(Dirwork,file);
-Readcsv(Arg1,Arg2):=(  //190301from
-  if(islist(Arg2),
-    Readcsv(Dirwork,Arg1,Arg2);
-  ,
-    Readcsv(Arg1,Arg2,[]); //190317
-  );
-); //190301from
-Readcsv(path,file,options):=(
-// help:Readcsv("ex.csv");
-//help:Readcsv(directory,"ex.csv");
-//help:Readcsv(options=["Head=no"]);
-  regional(dt,eqL,head,from,end,tmp);
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  head="Y"; from=1; //190125from,190818
-  from=2;
-  forall(eqL,
-    tmp=Strsplit(#,"=");
-    if(Toupper(substring(tmp_1,0,1))=="H",
-      head=Toupper(substring(tmp_2,0,1));//190818
-    );
-  );
-  if(head=="N",//190818from
-    from=1;
-  ); //190125,190818to
-  tmp=file;
-  if(indexof(tmp,".csv")==0,tmp=tmp+".csv"); //190301
-  dt=readfile2str(path,tmp);
-  dt=tokenize(dt,"/LF/");
-  end=length(dt);
-  if(dt_(length(dt))=="",
-    end=end-1;
-    dt=dt_(from..end); //190125
-  );
-  dt=apply(dt,tokenize(#,","));
-  if(length(dt)==1, dt=dt_1);  //190125
-  dt;
-);
-////%Readcsv end////
-
-////%Writecsv start////
-Writecsv(nmL,data,file):=Writecsv(nmL,data,file,[]);
-Writecsv(nmL,dataorg,file,optionorg):=(
-// help:Writecsv([],data,"ex.csv");
-// help:Writecsv(["a","b"],data,"ex.csv");
-// help:Writecsv(optins=["Col=1"]);
-  regional(nameL,data,eqL,strL,ncol,nrow,fname,dig,tmp,tmp1,tmp2);
-  ncol=0; // 17.02.09from
-  dig=5;
-  if(isstring(dataorg),data=parse(dataorg),data=dataorg);
-  if(islist(data_1),
-    ncol=length(data_1);
-    data=flatten(data);
-  ); // 17.02.09until
-  options=optionorg;
-  tmp=divoptions(options);
-  eqL=tmp_5;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,0,tmp-1);
-    tmp2=substring(#,tmp,length(#));
-    if(Toupper(substring(tmp1,0,1))=="C",
-      ncol=parse(tmp2);
-      options=remove(options,[#]);
-    );
-  );
-  if(indexof(file,".")==0,fname=file+".csv",fname=file);
-  if(ncol==0,ncol=max(1,length(nmL)));
-  tmp1=mod(length(data),ncol);
-  if(tmp1>0,
-    tmp=apply(1..(ncol-tmp1),-1);
-    data=concat(data,tmp);
-  );
-  nrow=length(data)/ncol;
-  if(length(nmL)<ncol,
-    nameL=apply(1..ncol,"c"+text(#));
-//    tmp=nameL_length(nameL)+"##";//17.02.09
-    tmp=nameL_(length(nameL));//17.02.09
-    nameL_(length(nameL))=tmp;
-  ,
-    nameL=nmL;
-  );
-  SCEOUTPUT=openfile(fname);
-  tmp=text(nameL);
-  println(SCEOUTPUT,substring(tmp,1,length(tmp)-1)); 
-  forall(1..nrow,
-    tmp1=data_(((#-1)*ncol+1)..(#*ncol));
-    tmp2="";
-    forall(tmp1,
-      tmp2=tmp2+textformat(#,5)+",";
-    );
-    tmp2=substring(tmp2,0,length(tmp2)-1);
-    println(SCEOUTPUT,tmp2);
-  );
-  closefile(SCEOUTPUT);
-);
-////%Writecsv end////
 
 ////%HatchdataR start////
 HatchdataR(nm,iostr,pltlist):=HatchdataR(nm,iostr,pltlist,[]);
@@ -1425,10 +824,11 @@ PlotdiscR(nm,fun,varrng,optionorg):=(
          pre,waiting,options,wfile,eqL);
   name="grd"+nm;
   options=optionorg; //191020from
+  options=select(options,length(#)>0);
   tmp=Divoptions(options);
   eqL=tmp_5;
   waiting=5;
-  pre="PVF";
+  pre="VF";  //200509
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -1460,9 +860,8 @@ PlotdiscR(nm,fun,varrng,optionorg):=(
   if(ErrFlag==1,
     println("PlotdiscR not completed");
   ,
-    tmp1=load(wfile);
-    tmp1=substring(tmp1,0,length(tmp1)-4);
-    tmp1=replace(tmp1,"##","");
+    tmp1=Readlines(wfile); //200509from
+    tmp1=replace(tmp1_1,"##",""); //200509to
     pb=tokenize(tmp1,",");
     tmp=apply(range,[#,pb_(#+1)]);
     Listplot("-"+name,tmp,options); //190424
@@ -1473,180 +872,99 @@ PlotdiscR(nm,fun,varrng,optionorg):=(
 ////%Boxplot start////
 Boxplot(nm,dataorg,ypos,dy):=Boxplot(nm,dataorg,ypos,dy,[]);
 Boxplot(nm,dataorg,ypos,dy,optionorg):=(
-//help:Boxplot("1",dt,2,1/2,[""]);
-  regional(options,name,data,bp,cmdL,waiting,tmp,tmp1,tmp2,tmp3,tmp4,
-    out,eqL,strL,pstr,ext,file,flg,wrflg);
+//help:Boxplot("1",dt(or file), 2(ypos), 1/2(dy),[""]);
+  regional(options,name,data,cmdL,
+      bp,pstr,out,flg,tmp,tmp1,tmp2,tmp3,tmp4,);
   name="bp"+nm;
   options=optionorg;
-  tmp=divoptions(options);
-  eqL=tmp_5;
-  strL=tmp_7;
-  waiting=10;
-  wrflg=0;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=substring(#,0,tmp-1);
-    tmp2=substring(#,tmp,length(#));
-    if(Toupper(substring(tmp1,0,1))=="W",
-      waiting=parse(tmp2);
-      options=remove(options,[#]);
-    );
-  );
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="R",
-      wrflg=-1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="M",
-      wrflg=1;
-      options=remove(options,[#]);
-    );
-  );
   data=dataorg;
-  if(isstring(data),
-    if(indexof(data,".")==0,data=data+".dat"); 
-    if(iswindows(),  // 15.11.10
-      data=replace(data,"/","\");
-      flg="\";
+  if(isstring(data), //200510from
+    if(indexof(data,".")==0,
+      tmp=parse(data);
+      data=Textformat(tmp,6);
     ,
       data=replace(data,"\","/");
-      flg="/";
-    );
-    forall(reverse(1..length(data)),
-      if(length(flg)>0,
-        tmp=substring(data,#-1,#);
-        if(tmp==flg,  
-          tmp3=substring(data,0,#-1);
-          tmp4=substring(data,#,length(data));
-          if(indexof(tmp3,":")==0,  // 11.11.10
-            tmp=substring(tmp3,0,1);
-            if(tmp!=flg,
-              tmp3=Dirwork+flg+tmp3;
-            );
-          );
-          flg="";
-        );
+      tmp=Indexall(data,"/");
+      if(length(tmp)>0,
+        tmp=tmp_(length(tmp));
+        tmp1=substring(data,0,tmp-1);
+        tmp2=substring(data,tmp,length(data));
+        data=Readlines(tmp1,tmp2);
+      ,
+        data=Readlines(data);
       );
+      if(length(data)>0,
+        data=data_1;
+      );
+      data=replace(data,"##","");
+      if(substring(data,0,1)!="[",data="["+data+"]");
     );
-    if(length(flg)>0,
-      tmp3=Dirwork;  //15.11.10
-      tmp4=data;
-    );
-    setdirectory(tmp3);
-    tmp=load(tmp4);
-    if(length(tmp)==0, ErrFlag=2); // 15.11.07 until
-    setdirectory(Dirwork);
   ,
-    file=Fhead+name+".dat";
-    tmp=load(file);
-    if(length(tmp)>0,
-      tmp1=tokenize(tmp,",");
-      tmp1=tmp1_(1..(length(tmp1)-1));
-    ,
-       tmp1=[];
-    );
-	flg=0;
-	if(length(tmp1)==length(data),
-      tmp=tmp1-data;
-      tmp=select(tmp,#!=0);
-      if(length(tmp)>0,flg=1);
-    ,
-      flg=1;
-    );
-    if(flg==1,
-	  SCEOUTPUT=openfile(file);
-      forall(data,
-        print(SCEOUTPUT,textformat(#,5)+",");
-      );
-      println(SCEOUTPUT,"////");
-      closefile(SCEOUTPUT);
-//      wait(WaitUnit);
-    );
-    data=file;
+    data=Textformat(data,6);
   );
-  data=replace(data,"\","/");
+  data=RSform(data);
   cmdL=[
-    "tmp=readLines",[Dq+data+Dq, "warn=FALSE"],
-    "tmp=substring",["tmp",1,"nchar(tmp)-4"],
-    "data=strsplit",["tmp",Dq+","+Dq,"fix=TRUE"],
-    "data=data[[1]]",[],
-    "fun=function(s) eval(parse(text=s))",[],
-    "data=sapply",["data","fun"],
-    "data=data[!is.na(data)]",[],
+    "data="+data,[],
     "tmp=boxplot",["data","plot=FALSE"],
     "tmp1=tmp$stat",[],
     "tmp2=tmp$out",[],
     name+"=c(tmp1,tmp2)",[]
   ];
-  file=Fhead+name+".txt";
-  options=append(options,"Wait="+text(waiting));
-  if(wrflg==1,options=append(options,"m"));
-  if(wrflg==-1,options=append(options,"r"));
-  if(ErrFlag==0,
-    CalcbyR(name,cmdL,options);
+  CalcbyR(name,cmdL,options); //200510to
+  bp=parse(name);
+  pstr="[";
+  tmp1=[bp_1,ypos-dy/2];
+  tmp2=[bp_1,ypos+dy/2];
+  Listplot("-"+name+"L",[tmp1,tmp2],[]);
+  pstr=pstr+Dq+"sg"+name+text(1)+Dq+",";
+  tmp1=[bp_2,ypos-dy];
+  tmp2=[bp_2,ypos+dy];
+  tmp3=[bp_4,ypos+dy];
+  tmp4=[bp_4,ypos-dy];
+  Listplot("-"+name+"B",[tmp1,tmp2,tmp3,tmp4,tmp1],[]);
+  pstr=pstr+Dq+"sg"+name+text(2)+Dq+",";
+  tmp1=[bp_5,ypos-dy/2];
+  tmp2=[bp_5,ypos+dy/2];
+  Listplot("-"+name+"R",[tmp1,tmp2],[]);
+  pstr=pstr+Dq+"sg"+name+text(3)+Dq+",";
+  tmp1=[bp_3,ypos-dy];
+  tmp2=[bp_3,ypos+dy];
+  Listplot("-"+name+"C",[tmp1,tmp2],["dr,2"]);
+  pstr=pstr+Dq+"sg"+name+text(4)+Dq+",";
+  tmp1=[bp_1,ypos];
+  tmp2=[bp_2,ypos];
+  Listplot("-"+name+"HL",[tmp1,tmp2],["da"]);
+  pstr=pstr+Dq+"sg"+name+text(5)+Dq+",";
+  tmp1=[bp_4,ypos];
+  tmp2=[bp_5,ypos];
+  Listplot("-"+name+"HR",[tmp1,tmp2],["da"]);
+  pstr=pstr+Dq+"sg"+name+text(6)+Dq+",";
+  out=bp_(6..length(bp));
+  if(length(out)>0,
+    out=apply(out,[#,ypos]);
+    Pointdata(name,out,["Color=green","Size=2","Inside=white"]); //190125
   );
-  if(ErrFlag>0,
-    if(ErrFlag==1,println("Boxplot not completed"));
-    if(ErrFlag==2,println(Dq+data+Dq+" not found"));
-  ,
-    bp=parse(name);
-    pstr="[";
-    tmp1=[bp_1,ypos-dy/2];
-    tmp2=[bp_1,ypos+dy/2];
-    Listplot(name+text(1),[tmp1,tmp2],concat(options,["Msg=no"]));
-    pstr=pstr+Dq+"sg"+name+text(1)+Dq+",";
-    tmp1=[bp_2,ypos-dy];
-    tmp2=[bp_2,ypos+dy];
-    tmp3=[bp_4,ypos+dy];
-    tmp4=[bp_4,ypos-dy];
-    Listplot(name+text(2),[tmp1,tmp2,tmp3,tmp4,tmp1],append(options,"Msg=no"));
-    pstr=pstr+Dq+"sg"+name+text(2)+Dq+",";
-    tmp1=[bp_5,ypos-dy/2];
-    tmp2=[bp_5,ypos+dy/2];
-    Listplot(name+text(3),[tmp1,tmp2],append(options,"Msg=no"));
-    pstr=pstr+Dq+"sg"+name+text(3)+Dq+",";
-    tmp1=[bp_3,ypos-dy];
-    tmp2=[bp_3,ypos+dy];
-    Listplot(name+text(4),[tmp1,tmp2],concat(options,["dr,2","Msg=no"]));
-    pstr=pstr+Dq+"sg"+name+text(4)+Dq+",";
-    tmp1=[bp_1,ypos];
-    tmp2=[bp_2,ypos];
-    Listplot(name+text(5),[tmp1,tmp2],concat(options,["da","Msg=no"]));
-    pstr=pstr+Dq+"sg"+name+text(5)+Dq+",";
-    tmp1=[bp_4,ypos];
-    tmp2=[bp_5,ypos];
-    Listplot(name+text(6),[tmp1,tmp2],concat(options,["da","Msg=no"]));
-    pstr=pstr+Dq+"sg"+name+text(6)+Dq+",";
-    out=bp_(6..length(bp));
-    if(length(out)>0,
-      out=apply(out,[#,ypos]);
-      Pointdata(name+text(1),out,concat(options,[0,"Size=2","Inside=white"])); //190125
-    );
-    pstr=substring(pstr,0,length(pstr)-1)+"]";
-    println("generate totally "+name);
-    tmp=name+"="+pstr;
-    [bp_(1..5),out];
-  );
+  pstr=substring(pstr,0,length(pstr)-1)+"]";
+  println("generate data "+name);
+  tmp=name+"="+pstr;
+  [bp_(1..5),[out]];
 );
 ////%Boxplot end////
 
 ////%Histplot start//
 Histplot(nm,dataorg):=Histplot(nm,dataorg,[]);
 Histplot(nm,dataorg,optionorg):=(
-//help:Histplot("1",data(fillename));
+//help:Histplot("1",data (fillename));
 //help:Histplot(options=["Breaks=","Den=no","Rel=no"]);
-  regional(options,name,data,waiting,hp,cmdL,tmp,tmp1,tmp2,tmp3,tmp4,
-    out,eqL,strL,breaks,bdata,cdata,pstr,file,flg,rwflg,density,relative);
+  regional(options,name,data,hp,cmdL,tmp,tmp1,tmp2,tmp3,tmp4,
+    out,eqL,breaks,bdata,cdata,pstr,flg,density,relative);
   name="hp"+nm;
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
-  strL=tmp_7;
   breaks = "breaks="+Dq+"Sturges"+Dq;
   density=0;
   relative=0;
-  waiting=10; //190125
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -1673,144 +991,69 @@ Histplot(nm,dataorg,optionorg):=(
       );
       options=remove(options,[#]);
     );
-    if(Toupper(substring(#,0,1))=="W",
-      waiting=parse(tmp1);
-      options=remove(options,[#]);
-    );
-  );
-  wrflg=0;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="R",
-      wrflg=-1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="M",
-      wrflg=1;
-      options=remove(options,[#]);
-    );
   );
   data=dataorg;
-  if(isstring(data),
-    if(indexof(data,".")==0,data=data+".csv");
-    if(iswindows(),  // 15.11.10
-      data=replace(data,"/","\");
-      flg="\";
+  if(isstring(data), //200510from
+    if(indexof(data,".")==0,
+      tmp=parse(data);
+      data=Textformat(tmp,6);
     ,
       data=replace(data,"\","/");
-      flg="/";
-    );
-    forall(reverse(1..length(data)),
-      if(length(flg)>0,
-        tmp=substring(data,#-1,#);
-        if(tmp==flg,  
-          tmp3=substring(data,0,#-1);
-          tmp4=substring(data,#,length(data));
-          if(indexof(tmp3,":")==0,  // 11.11.10
-            tmp=substring(tmp3,0,1);
-            if(tmp!=flg,
-              tmp3=Dirwork+flg+tmp3;
-            );
-          );
-          flg="";
-        );
+      tmp=Indexall(data,"/");
+      if(length(tmp)>0,
+        tmp=tmp_(length(tmp));
+        tmp1=substring(data,0,tmp-1);
+        tmp2=substring(data,tmp,length(data));
+        data=Readlines(tmp1,tmp2);
+      ,
+        data=Readlines(data);
       );
+      if(length(data)>0,
+        data=data_1;
+      );
+      data=replace(data,"##","");
+      if(substring(data,0,1)!="[",data="["+data+"]");
     );
-    if(length(flg)>0,
-      tmp3=Dirwork;  //15.11.10
-      tmp4=data;
-    );
-    setdirectory(tmp3);
-    tmp=load(tmp4);
-    if(length(tmp)==0, ErrFlag=2); // 15.11.07 until
-    setdirectory(Dirwork);
   ,
-    file=Fhead+name+".dat";
-    tmp=load(file);
-    if(length(tmp)>0,
-      tmp1=tokenize(tmp,",");
-      tmp1=tmp1_(1..(length(tmp1)-1));
-    ,
-       tmp1=[];
-    );
-	flg=0;
-	if(length(tmp1)==length(data),
-      tmp=tmp1-data;
-      tmp=select(tmp,#!=0);
-      if(length(tmp)>0,flg=1);
-    ,
-      flg=1;
-    );
-    if(flg==1,
-	  SCEOUTPUT=openfile(file);
-      forall(data,
-        print(SCEOUTPUT,textformat(#,5)+",");
-      );
-      println(SCEOUTPUT,"////");
-      closefile(SCEOUTPUT);
-//	  wait(WaitUnit);
-    );
-    data=file;
+    data=Textformat(data,6);
   );
-  data=replace(data,"\","/");
+  data=RSform(data);
   cmdL=[
-    "tmp=readLines",[Dq+data+Dq, "warn=FALSE"],
-    "tmp=substring",["tmp",1,"nchar(tmp)-4"],
-    "data=strsplit",["tmp",Dq+","+Dq,"fix=TRUE"],
-    "data=data[[1]]",[],
-    "fun=function(s) eval(parse(text=s))",[],
-    "data=sapply",["data","fun"],
-    "data=data[!is.na(data)]",[],
+    "data="+data,[],
 	"tmp=hist",["data","plot=FALSE",breaks],
     "tmp1=tmp$breaks",[],
     "tmp2=tmp$count",[],
     "tmp3=tmp$density",[],
     name+"=c(tmp1,tmp2,tmp3)",[]
   ];
-  file=Fhead+name+".txt";
-  options=append(options,"Wait="+text(waiting));
-  if(wrflg==1,options=append(options,"m"));
-  if(wrflg==-1,options=append(options,"r"));
-  if(ErrFlag==0,
-    CalcbyR(name,cmdL,options);
-  );
-  if(ErrFlag>0,
-    if(ErrFlag==1,println("Histplot not completed"));
-    if(ErrFlag==2,println(Dq+data+Dq+" not found"));
+  CalcbyR(name,cmdL,options); //200510to
+  hp=parse(name);
+  tmp1=(length(hp)-1)/3+1;
+  tmp2=tmp1+(length(hp)-1)/3;
+  bdata=hp_(1..tmp1);
+  if(density==0,
+    cdata=hp_((tmp1+1)..tmp2);
   ,
-//    tmp=load(file);
-//    tmp=replace(tmp,"/","");
-//    tmp=tokenize(tmp,",");
-//	tmp=name+"="+textformat(tmp,5)+";";
-//  parse(tmp);
-    hp=parse(name);
-    tmp1=(length(hp)-1)/3+1;
-    tmp2=tmp1+(length(hp)-1)/3;
-    bdata=hp_(1..tmp1);
-    if(density==0,
-      cdata=hp_((tmp1+1)..tmp2);
-    ,
-      cdata=hp_((tmp2+1)..length(hp));
-    );
-    if(relative==1,
-      cdata=cdata/sum(cdata);
-    );
-    options=append(options,"Msg=no"); // 15.10.03
-    pstr="[";
-    forall(1..length(cdata),
-      tmp1=[bdata_#,0];
-      tmp2=[bdata_#,cdata_#];
-      tmp3=[bdata_(#+1),cdata_#];
-      tmp4=[bdata_(#+1),0];
-      Listplot(name+text(#),[tmp1,tmp2,tmp3,tmp4,tmp1],options);
-      pstr=pstr+Dq+"sg"+name+text(#)+Dq+",";
-    );
-    pstr=substring(pstr,0,length(pstr)-1)+"]";
-    println("generate totally "+name); 
-    tmp=name+"="+pstr+";"; //190415
-    parse(tmp);
-    [bdata,cdata];
+    cdata=hp_((tmp2+1)..length(hp));
   );
+  if(relative==1,
+    cdata=cdata/sum(cdata);
+  );
+  options=append(options,"Msg=no"); // 15.10.03
+  pstr="[";
+  forall(1..length(cdata),
+    tmp1=[bdata_#,0];
+    tmp2=[bdata_#,cdata_#];
+    tmp3=[bdata_(#+1),cdata_#];
+    tmp4=[bdata_(#+1),0];
+    Listplot("-"+name+text(#),[tmp1,tmp2,tmp3,tmp4,tmp1],options);
+    pstr=pstr+Dq+"sg"+name+text(#)+Dq+",";
+  );
+  pstr=substring(pstr,0,length(pstr)-1)+"]";
+  println("generate totally "+name); 
+  tmp=name+"="+pstr+";"; //190415
+  parse(tmp);
+  [bdata,cdata];
 );
 ////%Histplot end//
 
@@ -2013,173 +1256,7 @@ Rulerscale(pt,hscale,vscale,tick,options):=(//180722
 );
 ////%Rulerscale end////
 
-MkprecommandS():=MkprecommandS(6);
-MkprecommandS(prec):=(
-  regional(cmdL,Plist,Pnamelist,Pvaluelist,tmp,tmp1,tmp2);
-  cmdL=[];
-  Plist=[];
-  Pnamelist=[];
-  Pvaluelist=[];
-  forall(remove(allpoints(),[SW,NE]),
-    tmp=Lcrd(#);
-    tmp1=format(re(tmp_1),prec);// 15.02.05
-    tmp2=format(re(tmp_2),prec);
-    tmp="["+tmp1+","+tmp2+"]"; 
-    Plist=append(Plist,#.name+"="+tmp);
-    Pnamelist=append(Pnamelist,#.name);
-    Pvaluelist=append(Pvaluelist,tmp);
-  );
-  forall(1..length(Plist),
-    cmdL=concat(cmdL,[Plist_#,[]]);
-    cmdL=concat(cmdL,["Assignrep('"+Pnamelist_#+"',"+Pvaluelist_#+")",[]]);
-  );
-  tmp2=sort(apply(VLIST,#_1)); // 16.02.03 from
-  tmp1=[];
-  forall(tmp2,tmp,
-    tmp1=concat(tmp1,select(VLIST,#_1==tmp));
-  );
-  VLIST=tmp1;// 16.02.03 until
-  forall(VLIST,
-    tmp=Sciform(#_1);
-    tmp1=#_2; // 15.02.06
-    if(!isstring(tmp1), 
-      if(islist(tmp1),
-        if(!isstring(tmp1_1),  // 16.11.14
-          tmp2="[";
-          forall(tmp1,
-            if(abs(#)<10^(-prec),  // 16.01.30
-              tmp2=tmp2+"0,";
-            ,
-              tmp2=tmp2+format(#,prec)+",";
-            );
-          );
-          tmp1=substring(tmp2,0,length(tmp2)-1)+"]";
-        ,
-          tmp2="list(";  // 16.11.14from
-          forall(tmp1,
-             tmp2=tmp2+#+",";
-          );
-          tmp1=substring(tmp2,0,length(tmp2)-1)+")";
-        ); // 16.11.14until
-      ,
-        tmp1=format(tmp1,prec);
-      );
-    );
-    cmdL=concat(cmdL,[tmp+"evstr('"+tmp1+"')",[]]);
-	tmp=substring(tmp,0,length(tmp)-1);
-    cmdL=concat(cmdL,["Assignrep('"+tmp+"',"+tmp1+")",[]]); // 15.01.27
-  );
-  forall(OutFileList,
-    tmp=["tmp=ReadOutData",[Dq+#+Dq],
-    "if length(tmp(1))>8,execstr(tmp),end",[]];
-    cmdL=concat(cmdL,tmp);
-  );
-  forall(FUNLIST,  // 16.02.17 from
-    cmdL=concat(cmdL,[#,[]]);
-  );  // 16.02.17 until
-  forall(GLIST,
-    tmp1=Sciform(#);
-    cmdL=concat(cmdL,[tmp1,[]]);
-  );
-  cmdL;
-);
-
-PlotdataS(name1,func,var):=PlotdataS(name1,func,var,[]);
-PlotdataS(nm,fun,variable,optionorg):=(
-// help:PlotdataS("1","besselj(1,x)","x");
-// help:PlotdataS(options=["m/r","Num=50","Wait=5","Mx=no"]);
-  regional(options,name,varstr,Num,waiting,mxcheck,outreg,
-         eqL,strL,fname,tmp,tmp1,tmp2,tmp3,cmdL,flg,wflg);
-  name="grsc"+nm;
-  fname=Fhead+name+".txt";
-  options=optionorg;
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  strL=tmp_7;
-  Num=50;
-  waiting=5;
-  mxcheck=0; // 16.03.02
-  outreg=0;
-  flg=0;
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=substring(#,tmp,length(#));
-    if(tmp1=="N",
-      Num=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="W",
-      waiting=parse(tmp2);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="O",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="T" % tmp=="Y", outreg=1);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="M",
-      tmp=Toupper(substring(tmp2,0,1));
-      if(tmp=="T" % tmp=="Y", mxcheck=1);
-      options=remove(options,[#]);
-    );
-  );
-  wflg=0;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(length(#)==0,
-      options=remove(options,[#]);
-    );
-    if(tmp=="M",
-      wflg=1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="R",
-      wflg=-1;
-      options=remove(options,[#]);
-    );
-  );
-  tmp=indexof(variable,"=");
-  if(tmp>0,
-    varstr=variable;
-  ,
-    varstr=variable+"="+textformat([XMIN,XMAX],5);
-  );
-  cmdL=MkprecommandS();
-  cmdL=concat(cmdL,[
-    name+"=Plotdata",[Dq+fun+Dq,Dq+varstr+Dq,Dq+"Num="+text(Num)+Dq],
-    "WriteOutData",[Dq+fname+Dq,Dq+name+Dq,name]
-  ]);
-  ErrFlag=0;   // 16.03.02 from
-  if(mxcheck==1, 
-    Mxfun(name,fun,[],["Disp=n"]);
-    tmp=parse("mx"+name);
-    if(!isstring(tmp),ErrFlag=1);
-  ); 
-  options=append(options,"Wait="+text(waiting));
-  if(wflg==1,options=append(options,"m"));
-  if(wflg==-1,options=append(options,"r"));// 16.03.02 until
-  if(ErrFlag==0,
-    CalcbyS(name,cmdL,concat(options,["cat=middle","Wait="+text(waiting)]));
-  );
-  if(ErrFlag==1,
-    println("    PlotdataS not completed");
-  ,
-    if(outreg==1,    // 2016.03.02  ( // )
-      OutFileList=remove(OutFileList,[wfile]);
-      OutFileList=append(OutFileList,wfile);
-    );
-    ReadOutData(fname);  
-    Extractdata(name,options);
-    tmp=parse(name);
-    tmp1=name+"="+textformat(tmp,5)+";"; //190415
-    parse(tmp1);
-//    Addgraph(name);  // 16.04.04
-    tmp2=apply(tmp,Lcrd(#));
-    tmp2;
-  );
-);
-
+////%Dotfilldata start////
 Dotfilldata(nm,iostr,pltlist):=
   Dotfilldata(nm,iostr,pltlist,[]);
 Dotfilldata(nm,iostr,pltlist,optionorg):=(
@@ -2293,6 +1370,7 @@ Dotfilldata(nm,iostr,pltlist,optionorg):=(
     );
   );
 );
+////%Dotfilldata end////
 
 WritetoA(fname,cmdL):=(
 // help:WritetoA("outdata",cmdL);
@@ -2304,8 +1382,6 @@ WritetoA(fname,cmdL):=(
   );
   wfilename=replace(filename,".rr",".txt");
   SCEOUTPUT = openfile(filename);
-//  tmp=replace(Dirlib,"\","/");
-//  tmp="load("+Dq+tmp+"/oshima/os_muldif.rr"+Dq+")$/*####*/";
   tmp="/*####*/"; // 16.03.11
   println(SCEOUTPUT,tmp);  
   tmp="output("+Dq+wfilename+Dq+")$/*##*/"; // 16.05.18from
@@ -2357,6 +1433,10 @@ kcA(fname,optionorg):=(
   if(flg==0,
     tmp2=replace(filename,".rr",".txt");
     tmp1=load(tmp2);
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -2522,6 +1602,10 @@ CalcbyA(name,cmd,optionorg):=(
   cmdlist=append(cmdlist,"quit");
   if(wflg==0,
     tmp1=load(file+".rr");
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if((length(tmp1)==0) % (indexof(tmp1,"/*####*/")==0), //15.11.26
       wflg=1;
     ,
@@ -2554,6 +1638,10 @@ CalcbyA(name,cmd,optionorg):=(
   repeat(tmp1,
     if(flg==0,
       tmp=load(wfile);
+      if(length(tmp)>0, //200509from
+        tmp=replace(tmp,CRmark,"");
+        tmp=replace(tmp,LFmark,"");
+      ); //200509from
       if(length(tmp)>=4,
         tmp2=substring(tmp,length(tmp)-5,length(tmp));
         if(tmp2=="////]",
@@ -2803,6 +1891,10 @@ kcM(fname,optionorg):=(
   if(flg==0,
     tmp2=replace(filename,".max",".txt");
     tmp1=load(tmp2);
+    if(length(tmp)>0, //200509from
+      tmp=replace(tmp,CRmark,"");
+      tmp=replace(tmp,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -3015,24 +2107,19 @@ CalcbyM(name,cmd,optionorg):=(
   cmdlist=append(cmdlist,"closefile()");
   cmdlist=append(cmdlist,"quit()");
   if(wflg==0,
-    tmp1=load(file+".max");
+    tmp1=Readlines(file+".max"); //200509
     if(length(tmp1)==0,
       wflg=1;
     ,
-      if(indexof(tmp1,"/*##*/")==0,  // 15.11.26
+      tmp1=apply(tmp1,replace(#,"/*##*/","")); //200509
+      tmp=select(tmp1,indexof(#,"writefile")>0);
+      tmp1=remove(tmp1,tmp);
+      tmp1=apply(tmp1,substring(#,0,length(#)-1));
+      if(length(tmp1)!=length(cmdlist),  // 15.12.07
         wflg=1;
       ,
-        tmp1=tokenize(tmp1,"/*##*/");
-        tmp1=tmp1_(1..(length(tmp1)-1));
-        tmp=select(tmp1,indexof(#,"writefile")>0);
-        tmp1=remove(tmp1,tmp);
-        tmp1=apply(tmp1,substring(#,0,length(#)-1));
-        if(length(tmp1)!=length(cmdlist),  // 15.12.07
-          wflg=1;
-        ,
-          tmp=select(1..length(tmp1),tmp1_#!=cmdlist_#);
-          if(length(tmp)>0, wflg=1);
-        );
+        tmp=select(1..length(tmp1),tmp1_#!=cmdlist_#);
+        if(length(tmp)>0, wflg=1);
       );
     );
   ); 
@@ -3051,6 +2138,10 @@ CalcbyM(name,cmd,optionorg):=(
   repeat(tmp1,
     if(flg==0,
       tmp1=load(wfile);
+      if(length(tmp1)>0, //200509from
+        tmp1=replace(tmp1,CRmark,"");
+        tmp1=replace(tmp1,LFmark,"");
+      ); //200509from
       if(wflg==1,wait(WaitUnit)); // 2016.02.23
       if(length(tmp1)>0,
         tmp=indexof(tmp1,"error")+indexof(tmp1,"syntax"); //2016.02.23
@@ -3118,7 +2209,11 @@ CalcbyM(name,cmd,optionorg):=(
     ,
       tmp="("+text(waiting)+" s )";
       tmp1=load(wfile);
-      if(length(tmp1)>0,
+      if(length(tmp1)>0, //200509from
+        tmp1=replace(tmp1,CRmark,"");
+        tmp1=replace(tmp1,LFmark,"");
+      ); //200509from
+     if(length(tmp1)>0,
         println(wfile+" incomplete"+tmp); // 2016.02.24
       ,
         println(wfile+" not generated "+tmp);
@@ -3615,6 +2710,10 @@ println([3647,store]);
   if(make==-1,
     setdirectory(pathorg);
     tmp1=load(fname);
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,make=1,make=0);
     setdirectory(Dirwork);
   );
@@ -4368,6 +3467,10 @@ kcF(fname,optionorg):=(
   if(flg==0,
     tmp2=replace(filename,".input",".sfort");
     tmp1=load(tmp2);
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -4529,6 +3632,10 @@ CalcbyF(name,cmd,optionorg):=(
   cmdlist=concat(cmdlist,["111111*1",")quit"]);
   if(wflg==0,
     tmp1=load(file);
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,
       wflg=1;
     ,
@@ -4562,6 +3669,10 @@ CalcbyF(name,cmd,optionorg):=(
   repeat(tmp1,
     if(flg==0,
       tmp1=load(wfile);
+      if(length(tmp1)>0, //200509from
+        tmp1=replace(tmp1,CRmark,"");
+        tmp1=replace(tmp1,LFmark,"");
+      ); //200509from
       if(wflg==1,wait(WaitUnit));
       tmp=indexof(tmp1,"Error")+indexof(tmp1,"find");
       if(tmp>0,
@@ -4624,6 +3735,10 @@ CalcbyF(name,cmd,optionorg):=(
     ,
       tmp="("+text(waiting)+" s )";
       tmp1=load(wfile);
+      if(length(tmp1)>0, //200509from
+        tmp1=replace(tmp1,CRmark,"");
+        tmp1=replace(tmp1,LFmark,"");
+      ); //200509from
       if(length(tmp1)>0,
         println(wfile+" incomplete"+tmp); // 2016.02.24
       ,
@@ -5000,6 +4115,10 @@ kcC(cname):=(
   repeat(floor(10*10000/WaitUnit), //180615
     if(flg==0,
       tmp1=load(wfile);
+      if(length(tmp1)>0, //200509from
+        tmp1=replace(tmp2,CRmark,"");
+        tmp1=replace(tmp2,LFmark,"");
+      ); //200509from
 	  if(substring(tmp1,0,4)=="////",
         flg=1;
       );
@@ -5046,6 +4165,10 @@ ReaddataC(fnameorg):=(
   fname=fnameorg;
   if(indexof(fname,".")==0, fname=fname+".txt");
   data=load(fname);
+  if(length(data)>0, //200509from 
+    data=replace(data,CRmark,"");
+    data=replace(data,LFmark,"");
+  ); //200509from
   data=tokenize(data," -99999");
   out=[];
   tmp1=[];
@@ -5351,6 +4474,10 @@ CalcbyC(name,path,cmd,optionorg):=(
     if(!isexists(Dirwork,hfile),wflg=1);
     if(wflg==0,
       tmp2=load(hfile);
+      if(length(tmp2)>0, //200509from
+        tmp2=replace(tmp2,CRmark,"");
+        tmp2=replace(tmp2,LFmark,"");
+      ); //200509from
       tmp2=tokenize(tmp2,"/**/");
       tmp2=tmp2_(1..(length(tmp2)-1));
       if(length(tmp1)!=length(tmp2),wflg=1);
@@ -5365,6 +4492,10 @@ CalcbyC(name,path,cmd,optionorg):=(
       if(!isexists(Dirwork+"/",mfile),wflg=1);
       if(wflg==0,
         tmp2=load(mfile);
+        if(length(tmp2)>0, //200509from
+          tmp2=replace(tmp2,CRmark,"");
+          tmp2=replace(tmp2,LFmark,"");
+        ); //200509from
         tmp2=tokenize(tmp2,"/**/");
         tmp2=tmp2_(2..(length(tmp2)-1));
         if(length(tmp1)!=length(tmp2),wflg=1);
@@ -5389,6 +4520,10 @@ CalcbyC(name,path,cmd,optionorg):=(
   repeat(tmp1,
     if(flg==0,
       tmp=load(wfile);
+      if(length(tmp)>0, //200509from
+        tmp=replace(tmp,CRmark,"");
+        tmp=replace(tmp,LFmark,"");
+      ); //200509from
       if(indexof(tmp,"////")>0, //180523from
         flg=1;
         tmp2=#*WaitUnit/1000;//180523to
@@ -6586,6 +5721,10 @@ kcW(fname,optionorg):=(
   if(flg==0,
     tmp2=replace(filename,".wl",".txt");
     tmp1=load(tmp2);
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -6758,6 +5897,10 @@ CalcbyW(name,cmd,optionorg):=(
   cmdlist=append(cmdlist,"Quit[]");
   if(wflg==0,
     tmp1=load(file+".wl");
+    if(length(tmp1)>0, //200509from
+      tmp1=replace(tmp1,CRmark,"");
+      tmp1=replace(tmp1,LFmark,"");
+    ); //200509from
     if(length(tmp1)==0,
       wflg=1;
     ,
@@ -6790,12 +5933,20 @@ CalcbyW(name,cmd,optionorg):=(
   repeat(time,nc,
     if(flg==0,
       tmp2=load(wfile);
+      if(length(tmp2)>0, //200509from
+        tmp2=replace(tmp2,CRmark,"");
+        tmp2=replace(tmp2,LFmark,"");
+      ); //200509from
       if(wflg==1,wait(WaitUnit));
       if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999", //////////////
         tm=nc*WaitUnit/1000;
         flg=1;
       ,
         tmp3=load(rfile);
+        if(length(tmp3)>0, //200509from
+          tmp3=replace(tmp3,CRmark,"");
+          tmp3=replace(tmp3,LFmark,"");
+        ); //200509from
         if(substring(tmp3,length(tmp3)-5,length(tmp3))=="99999", //200105from
           tm=nc*WaitUnit/1000;
           flg=2; /////////
@@ -6812,6 +5963,10 @@ CalcbyW(name,cmd,optionorg):=(
   if(flg==2, //200110from
     wait(WaitUnit);
     tmp2=load(wfile);
+    if(length(tmp2)>0, //200509from
+      tmp2=replace(tmp2,CRmark,"");
+      tmp2=replace(tmp2,LFmark,"");
+    ); //200509from
     if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999",
       flg=1;
     ,
@@ -6845,6 +6000,10 @@ CalcbyW(name,cmd,optionorg):=(
   if(flg==0,
     tmp="("+text(waiting)+" s )";
     tmp2=load(wfile);
+    if(length(tmp2)>0, //200509from
+      tmp2=replace(tmp2,CRmark,"");
+      tmp2=replace(tmp2,LFmark,"");
+    ); //200509from
     if(length(tmp2)>0,
       println(wfile+" incomplete"+tmp1);
     ,

@@ -1,0 +1,13 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1012forfr.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+out:[]$/*##*/
+for j from 0 thru 10 step 2 do(     tmp:j^2,     out:endcons(tmp,out)   )$/*##*/
+n:length(out)$/*##*/
+s:lsum(2*j,j,out)$/*##*/
+disp(out)$/*##*/
+disp(n)$/*##*/
+disp(s)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

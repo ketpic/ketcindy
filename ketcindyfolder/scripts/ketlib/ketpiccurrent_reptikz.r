@@ -16,8 +16,11 @@
 
 #########################################
 
-ThisVersion<- "tikzv1_1_1(191126)"
+ThisVersion<- "tikzv1_1_1(200512)"
 
+# 20200512
+#    Drwpt majorly changed
+#    Dottedline debugged
 # 20191126
 #    Drwpt debugged/changed
 # 20191104
@@ -247,8 +250,7 @@ Setpen<-function(Width)
 
 ##################### Dottedline ########################
 
-Dottedline<- function(...)
-{
+Dottedline<- function(...){ #200512
   varargin <- list(...)     
   Nall <- length(varargin)
   Nagasa <- 0.1
@@ -343,7 +345,7 @@ Dottedline<- function(...)
           }
           X=sprintf('%5.5f',P[1])
           Y=sprintf('%5.5f',P[2])
-          Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
+          Str=paste('\\filldraw(',X,',',Y,') circle (',sprintf('%6.6f',Ra/2),');',sep="") #200512
           cat(Str,file=Wfile,append=TRUE)
           Mojisu=Mojisu+nchar(Str)
           if(Mojisu>80){
@@ -476,24 +478,17 @@ Makehasen<- function(Figdata,Sen,Gap,Ptn)
 
 ##################### Drwpt ######################
 
-Drwpt<-function(...) #181230
+Drwpt<-function(...) #200512
 {
   varargin<-list(...)
   Nargs<-length(varargin)
   All=Nargs
-  Same="y"
-  Incolor=""
+  Inside="1"
   Tmp=varargin[[All]]
-  if((is.numeric(Tmp))&&(length(Tmp)>2)){ #190405from
-    if(Tmp[1]==-1){
-      Same="no"
-    }else{
-      Tmp1=sapply(Tmp,as.character)
-      Incolor=paste("{",Tmp1[1],",",Tmp1[2],",",Tmp1[3],"}",sep="")
-      Same="n"
-    }
+  if(is.character(Tmp)){ #
+    if(Tmp=="0"){Inside="0"}
     All=All-1
-  }#190405to
+  }
   Ra=TenSize*1000/2.54/MilliIn
   for (II in Looprange(1,All)){
     MS<- varargin[[II]]
@@ -507,26 +502,14 @@ Drwpt<-function(...) #181230
       P<- Doscaling(P)
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      Str1<- paste("{\\color[rgb]",Incolor,"%\n",sep="")
-      cat(Str1,file=Wfile,append=TRUE)
-      Str=paste('\\fill (',X,',',Y,') circle [radius=',sprintf('%6.6f',Ra/2),'];%\n',sep="") 
-          #191126
-      cat(Str,file=Wfile,append=TRUE)
-      cat("}%\n",file=Wfile,append=TRUE)
-      Str=paste('\\draw [line width=','0.008','in]',sep="")
-      for(J in 0:24){
-        Tmp1=sprintf('%6.6f',P[1]+Ra/2*cos(J*2*pi/24))
-        Tmp2=sprintf('%6.6f',P[2]+Ra/2*sin(J*2*pi/24))
-        Str=paste(Str,"(",Tmp1,",",Tmp2,")",sep="");
-        if(J<24){
-          Str=paste(Str,"--",sep="")
-        }else{
-          Str=paste(Str,";%\n",sep="")
-        }
+      if(inside=="1"){
+        Str=paste('\\fill (',X,',',Y,') circle [radius=',sprintf('%6.6f',Ra/2),'];%\n',sep="") 
+        cat(Str,file=Wfile,append=TRUE)
       }
+      Str=paste('\\draw (',X,',',Y,') circle [radius=',sprintf('%6.6f',Ra/2),'];%\n',sep="") 
       cat(Str,file=Wfile,append=TRUE)
     }
-  } # 190405to
+  }
   cat("\n",file=Wfile,append=TRUE)
 }
 

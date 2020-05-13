@@ -1,0 +1,9 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1011matrixoptx1.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+load("mactex-utilities.lisp")$/*##*/
+tx1:disp(tex(matrix([2,1,1],[1,-1,2],[-1,3,a],[1,-2,3])))$/*##*/
+disp(tx1)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

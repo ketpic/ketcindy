@@ -212,7 +212,7 @@ Readbezier(file,optionorg):=(
 ////%RSform start////
 RSform(str):=RSform(str,3);
 RSform(str,listfrom):=(
-//help:RSform(string,listfrom);
+//help:RSform(string,listfrom(3));
   regional(posL,mxlv,rep1,rep2,rep3,prev,out,
     tmp,tmp1,tmp2);
   rep1="c"+PaO(); rep2="c"+PaO(); rep3="list"+PaO();
@@ -726,6 +726,10 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
    filename=filenameorg;  // 16.04.17
   if(indexof(filename,".")==0,filename=filename+".txt");
   tmp=load(filename);
+  if(length(tmp)>0, //200509from
+    tmp=replace(tmp,CRmark,"");
+    tmp=replace(tmp,LFmark,"");
+  ); //200509from
   cmdall=tokenize(tmp,"//");
   varname=cmdall_1; 
   cmdall=cmdall_(2..length(cmdall)); 
@@ -2787,6 +2791,10 @@ BBdata(fname,optionorg):=(
   );
   if(flg==0,
     tmp=load(fout); //
+    if(length(tmp)>0, //200509from
+      tmp=replace(tmp,CRmark,"");
+      tmp=replace(tmp,LFmark,"");
+    ); //200509from
     if(length(tmp)==0,
       flg=1;
     ,
@@ -2804,6 +2812,10 @@ BBdata(fname,optionorg):=(
   if(flg==1,
     setdirectory(path);
     tmp=load(file);
+    if(length(tmp)>0, //200509from
+      tmp=replace(tmp,CRmark,"");
+      tmp=replace(tmp,LFmark,"");
+    ); //200509from
     setdirectory(Dirwork);
     if(length(tmp)==0,
       println("   => "+file+" not exists");
@@ -2839,6 +2851,10 @@ BBdata(fname,optionorg):=(
       if(tmp1==0,
         wait(10);
         tmp=load(fout);
+        if(length(tmp)>0, //200509from
+          tmp=replace(tmp,CRmark,"");
+          tmp=replace(tmp,LFmark,"");
+        ); //200509from
         if(indexof(tmp,"CreationDate")>0,
           tmp1=1;
         );
@@ -3331,8 +3347,8 @@ Ketcindyjsbody(list1,list2):=(
 Ketcindyjsmain(prelist):=Ketcindyjsmain(prelist,[]);
 Ketcindyjsmain(prelist,postlist):=(
 //help:Ketcindyjsmain(["<pf10/fp>_;Sample"]);
-//help:Ketcindyjsmain(["<pf10/fp>_;Sample"],["<pf5/fpbr>end"]);
-//help:Ketcindyjsmain([<pf10/fp>=<p><font size="10">...</font><p>]);
+//help:Ketcindyjsmain(["<pf10/fbr>_;Sample"],["<f5/fpbr>end"]);
+//help:Ketcindyjsmain([<pf10red/fp>=<p><font size="10" color="red">...</font><p>]);
   JSMAIN=[[],[]];
   if(islist(prelist),JSMAIN_1=prelist,JSMAIN_1=[prelist]);
   if(islist(postlist),JSMAIN_2=postlist,JSMAIN_2=[postlist]);

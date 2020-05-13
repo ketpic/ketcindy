@@ -1,3 +1,7 @@
+// 200512
+//   Shade changed  ("notex","nodisp" supported)
+// 200509
+//   Makehelplist rewrote
 // 200421
 //   Bowdata changed (case of cut==0 )
 // 200420

@@ -1,0 +1,11 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) out:[]
+(%i7) dqL:[['diff(x,t) = 4*t^2*x^2,t = 0,x = 1],['diff(x,t) = x^2+1,t = 0,x = 1],['diff(x,t)+x*sin(t) = exp(cos(t)),t = %pi/2,x = 0]]
+(%i8) for j thru 3 do block(tmp:dqL[j],sol:ode2(tmp[1],x,t),sol2:ic1(sol,tmp[2],tmp[3]),sol3:solve(sol2,x),out:endcons(sol3[1],out))
+(%i9) disp(out)
+[x = -3/(4*t^3-3),x = tan(t+%pi/4),x = ((2*t-%pi)*%e^cos(t))/2]
+
+(%i10) closefile()

@@ -1,0 +1,17 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) load("mactex-utilities.lisp")
+STYLE-WARNING: redefining MAXIMA::TEX-MQUOTIENT in DEFUN
+STYLE-WARNING: redefining MAXIMA::TEX-MATRIX in DEFUN
+(%i7) tx3:disp(tex((6*%pi*n*sin((%pi*n)/2)+(8-%pi^2*n^2)*cos((%pi*n)/2)+(-%pi^2)*n^2*(-1)^n-8)/(%pi^3*n^3)))
+$$\frac{6\,\pi\,n\,\sin \left(\frac{\pi\,n}{2}\right)+\left(8-\pi^2\,
+ n^2\right)\,\cos \left(\frac{\pi\,n}{2}\right)-\pi^2\,n^2\,\left(-1
+ \right)^{n}-8}{\pi^3\,n^3}$$
+false
+
+(%i8) disp(tx3)
+done
+
+(%i9) closefile()

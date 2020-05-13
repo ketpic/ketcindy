@@ -1,0 +1,9 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1010fouriertx3.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+load("mactex-utilities.lisp")$/*##*/
+tx3:disp(tex((6*%pi*n*sin((%pi*n)/2)+(8-%pi^2*n^2)*cos((%pi*n)/2)-%pi^2*n^2*(-1)^n-8)/(%pi^3*n^3)))$/*##*/
+disp(tx3)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

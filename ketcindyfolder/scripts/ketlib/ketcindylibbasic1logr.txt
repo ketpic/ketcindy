@@ -1,3 +1,10 @@
+// 20200511
+//    Changestyle debugged/changed  (mainly for pointdata)
+//    Pointdata changed, debugged 
+// 20200510
+//    Pointdata rewritten
+// 20200509
+//    Ketinit changed (scy,range removed)
 // 20200502
 //    Changesetting removed, Ketinit changed
 // 20200425

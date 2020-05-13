@@ -1,0 +1,8 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1002equationmx1.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+ans:allroots(x^2-x-2)$/*##*/
+disp(ans)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

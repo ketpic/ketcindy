@@ -1,0 +1,9 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) ans:50!
+(%i7) disp(ans)
+30414093201713378043612608166064768844377641568960512000000000000
+
+(%i8) closefile()

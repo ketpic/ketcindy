@@ -1,3 +1,9 @@
+// 20200510
+//    Boxplot,Histplot,Scatterplot rewritten
+// 20200509
+//    Scilab functions removed
+//    load => CRmark,LFmark removed
+//    Reaccsv,Writecsv removed
 // 20200129
 //    TocindyM added
 // 20200115

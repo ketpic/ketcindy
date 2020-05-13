@@ -1,0 +1,9 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) ans:allroots(x^2-x-2)
+(%i7) disp(ans)
+[x = -1.0,x = 2.0]
+
+(%i8) closefile()

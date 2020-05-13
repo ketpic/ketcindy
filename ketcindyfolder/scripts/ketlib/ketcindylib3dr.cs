@@ -2689,6 +2689,10 @@ Readobj(filename,options):=(
     );
   );
   tmp=load(filename);
+  if(length(tmp)>0, //200509from
+    tmp=replace(tmp,CRmark,"");
+    tmp=replace(tmp,LFmark,"");
+  ); //200509from
   tmp=tokenize(tmp,"v");
   tmp1=tmp_(2..(length(tmp)-1));
   tmp2=tmp_(length(tmp));
@@ -2723,6 +2727,10 @@ Readobj(filename,options):=(
   );
   numer="-0123456789";
   tmp=load(filename);
+  if(length(tmp)>0, //200509from
+    tmp=replace(tmp,CRmark,"");
+    tmp=replace(tmp,LFmark,"");
+  ); //200509from
   dtL=tokenize(tmp,"v ");
   vL=[];
   fnL=[];

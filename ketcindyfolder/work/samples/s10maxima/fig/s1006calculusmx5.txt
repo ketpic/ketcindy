@@ -1,0 +1,9 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) ans:taylor(sin(x),x,0,5)
+(%i7) disp(ans)
+x-x^3/6+x^5/120
+
+(%i8) closefile()

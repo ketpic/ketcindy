@@ -16,10 +16,14 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20200420)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20200510)" 
 
 print(ThisVersion)
 
+# 20200512
+#   Drwpt changed ( incolor removed, inside added )
+# 20200510
+#   Drwpt debugged ( duplicate removed )
 # 20200420
 #   Exprrot,Letterrot debugged ( Theta )
 # 20201231
@@ -2453,17 +2457,10 @@ Drwpt<-function(...){
     }  #181231to
   }
   All=Nargs  #181230from
-  Same="y"
-  Incolor=""
+  Inside="1"
   Tmp=varargin[[All]]
-  if((is.numeric(Tmp))&&(length(Tmp)>2)){ #190405from
-    if(Tmp[1]==-1){
-      Same="no"
-    }else{
-      Tmp1=sapply(Tmp,as.character)
-      Incolor=paste("{",Tmp1[1],",",Tmp1[2],",",Tmp1[3],"}",sep="")
-      Same="n"
-    }
+  if(is.character(Tmp)){ #
+    if(Tmp=="0"){Inside="0"}
     All=All-1
   }#190405to
   CL<- c()
@@ -2490,33 +2487,7 @@ Drwpt<-function(...){
       }
       PL<- matrix(PL,nrow=2)
       PL<- t(PL)
-      if(Same!="no"){  #190405
-        if(Same=="n"){ #190405
-          Str1<- paste("{\\special{pn 0}\\color[rgb]",Incolor,"%\n",sep="")
-          cat(Str1,file=Wfile,append=TRUE)
-        }
-        Mojisu<-0
-        for (J in 1:Nrow(PL)){
-          Q<- PL[J,]
-          X<- as.character(round(MilliIn*Q[1]))
-          Y<- as.character(-round(MilliIn*Q[2]))
-          Str<- paste("\\special{pa ",X," ",Y,"}",sep="")
-          cat(Str,file=Wfile,append=TRUE)
-          Mojisu<- Mojisu+nchar(Str)
-          if(Mojisu>80){
-            cat("#\n",file=Wfile,append=TRUE)
-          }
-          Mojisu=0
-        }
-        Str1<- "\\special{sh 1}\\special{fp}" #190405from, 191126
-        if(Same=="n"){
-          Str1<- paste(Str1,"}",sep="")
-        }
-        Str1<- paste(Str1,"%\n",sep="") #190405to
-        cat(Str1,file=Wfile,append=TRUE)
-      }
-      cat("\\special{pn 8}",file=Wfile,append=TRUE) #181231,191126
-      Mojisu=0
+      Mojisu<-0
       for (J in 1:Nrow(PL)){
         Q<- PL[J,]
         X<- as.character(round(MilliIn*Q[1]))
@@ -2529,13 +2500,15 @@ Drwpt<-function(...){
         }
         Mojisu=0
       }
-      if(Same=="y"){
-        Str1<- paste("\\special{sh",Incolor,"}\\special{fp}%\n",sep="")
+      if(Inside=="1"){ #200512from
+        Str1<- "\\special{sh 1}\\special{fp}"
       }else{
-        Str1<- paste("\\special{fp}%\n",sep="")
-      }
-      cat(Str1,file=Wfile,append=TRUE) #181230to
+        Str1<- "\\special{fp}"
+      } #200512to
+      Str1<- paste(Str1,"%\n",sep="") #190405to
+      cat(Str1,file=Wfile,append=TRUE)
     }
+    cat("\\special{pn 8}",file=Wfile,append=TRUE) #181231,191126
   }
 }
 

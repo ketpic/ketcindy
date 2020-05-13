@@ -1,0 +1,9 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1011matrixoptx5.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+load("mactex-utilities.lisp")$/*##*/
+tx5:disp(tex(matrix([1,-2,3],[0,1,-1],[0,0,a+4],[0,5,-5])))$/*##*/
+disp(tx5)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

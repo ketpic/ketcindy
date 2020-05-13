@@ -1,0 +1,23 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) f:3*x^4-8*x^3+6*x^2+1/2
+(%i7) df:diff(f,x)
+(%i8) zero:solve(df = 0,x)
+(%i9) nz:length(zero)
+(%i10) fe(t):=ev(x,t)
+(%i11) xv:map(fe,zero)
+(%i12) xv:sort(xv)
+(%i13) fe(t):=ev(f,x = t)
+(%i14) yv:map(fe,xv)
+(%i15) disp(df)
+12*x^3-24*x^2+12*x
+
+(%i16) disp(xv)
+[0,1]
+
+(%i17) disp(yv)
+[1/2,3/2]
+
+(%i18) closefile()

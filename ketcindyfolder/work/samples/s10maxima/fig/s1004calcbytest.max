@@ -1,0 +1,12 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1004calcbytest.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+a:expand((x^2+2*x+1)*(x^2-2*x+1))$/*##*/
+b:factor(x^4-1)$/*##*/
+c:124521122233333444$/*##*/
+disp(a)$/*##*/
+disp(b)$/*##*/
+disp(c)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

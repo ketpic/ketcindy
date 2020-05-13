@@ -1,0 +1,9 @@
+writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1013incdectxf.txt")$/*##*/
+powerdisp:false$/*##*/
+display2d:false$/*##*/
+linel:1000$/*##*/
+load("mactex-utilities.lisp")$/*##*/
+txf:disp(tex(4*x^3-15*x^2+18*x+3))$/*##*/
+disp(txf)$/*##*/
+closefile()$/*##*/
+quit()$/*##*/

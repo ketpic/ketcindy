@@ -1,0 +1,9 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) ans:trigsimp(cos(x)^2-sin(x)^2)
+(%i7) disp(ans)
+2*cos(x)^2-1
+
+(%i8) closefile()

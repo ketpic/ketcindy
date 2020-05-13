@@ -1,0 +1,15 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) load("mactex-utilities.lisp")
+STYLE-WARNING: redefining MAXIMA::TEX-MQUOTIENT in DEFUN
+STYLE-WARNING: redefining MAXIMA::TEX-MATRIX in DEFUN
+(%i7) txy2:disp(tex(39/4))
+$$\frac{39}{4}$$
+false
+
+(%i8) disp(txy2)
+done
+
+(%i9) closefile()

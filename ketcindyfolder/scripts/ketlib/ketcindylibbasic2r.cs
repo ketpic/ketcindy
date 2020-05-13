@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200421] loaded");
+println("ketcindylibbasic2[20200512] loaded");
 
 //help:start();
 
@@ -1712,6 +1712,10 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
       tmp1="hatch"+nm+".txt";
       if(isexists(Dirwork,tmp1),
         tmp2=load(tmp1);
+        if(length(tmp2)>0, //200509from
+          tmp2=replace(tmp2,CRmark,"");
+          tmp2=replace(tmp2,LFmark,"");
+        ); //200509from
         tmp2=tokenize(tmp2,"//");
         tmp2=tmp2_(1..(length(tmp2)-1));
         if(tmp2==varL,
@@ -1911,16 +1915,12 @@ Shade(nm,plistorg,options):=(
 //help:Shade(["gr1"]);
 // help:Shade(options=["Trim=(n)","Enc=(n)",Rirst=(n)","Color=",Startpoint]);
 //help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
-  regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,
+  regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,Noflg,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
   name="shade"+nm;
   plist=plistorg;
-  if(isstring(plist_1), // 16.01.24
-//    println("output Shade of "+plist);
-  ,
-//    println("output Shade of lists");
-  );
   tmp=Divoptions(options);
+  Noflg=tmp_2; //200512
   eqL=tmp_5; 
   reL=tmp_6;
   color=tmp_(length(tmp)-2);
@@ -1983,9 +1983,6 @@ Shade(nm,plistorg,options):=(
             tmp2=append(tmp2,tmp);
           );
           Listplot("-"+name+text(ctr),tmp2,["nodisp"]); //190520
-//          tmp1=Dqq("-"+name+text(ctr));
-//          tmp2=Textformat(tmp2,6)+",["+Dqq("nodisp")+"]";
-//          tmp=name+text(ctr)+"=Listplot("+tmp1+","+tmp2+");";parse(tmp);
           plist_jj=name+text(ctr);
           ctr=ctr+1;
         );
@@ -1995,43 +1992,46 @@ Shade(nm,plistorg,options):=(
   if(flg==1,
     println("    some data not defined properly");
  ,
-    G2=Joincrvs("1",plist,["nodata"]);
-    G2=apply(G2,Pcrd(#));
-    tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";
-    parse(tmp1);
-  );
-  Str="Shade("; //no ketjs on
-  tmp1="list"+PaO();
-  forall(plist,
-    if(isstring(#),  // from 16.01.24
-      if(length(#)>1,
-        tmp1=tmp1+#+",";
-      ,
-        tmp1=tmp1+Dq+#+Dq+",";
-      );
-    ,
-       tmp1=tmp1+"Listplot("+Textformat(#,5)+"),";
-    ); //16.01.24to
-  );
-  Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929 
-  nn=length(COM2ndlist); //190311from
-  if(first=="Y", //191007from
-    jj=1;
-  ,
-    jj=nn;
-    forall(plist,tmp1,
-      tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
-      jj=min(append(tmp,jj));
+    if(Noflg<2, //200512
+      G2=Joincrvs("1",plist,["nodata"]);
+      G2=apply(G2,Pcrd(#));
+      tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";
+      parse(tmp1);
     );
-    if(jj==0, jj=1); //191008
-  ); //191007to
-  tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color+")",Str,"Texcom("+Dqq("}")+")"];
-  tmp2=COM2ndlist_(1..(jj-1));
-  tmp=COM2ndlist_(jj..(length(COM2ndlist)));
-  if(!islist(tmp),tmp=[tmp]);
-  COM2ndlist=concat(tmp2,tmp1);
-  COM2ndlist=concat(COM2ndlist,tmp); //190311to
-  //no ketjs off
+  );
+  if(Noflg==0, //no ketjs on
+    Str="Shade(";
+    tmp1="list"+PaO();
+    forall(plist,
+      if(isstring(#),  // from 16.01.24
+        if(length(#)>1,
+          tmp1=tmp1+#+",";
+        ,
+          tmp1=tmp1+Dq+#+Dq+",";
+        );
+      ,
+         tmp1=tmp1+"Listplot("+Textformat(#,5)+"),";
+      ); //16.01.24to
+    );
+    Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929 
+    nn=length(COM2ndlist); //190311from
+    if(first=="Y", //191007from
+      jj=1;
+    ,
+      jj=nn;
+      forall(plist,tmp1,
+        tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
+        jj=min(append(tmp,jj));
+      );
+      if(jj==0, jj=1); //191008
+    ); //191007to
+    tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color+")",Str,"Texcom("+Dqq("}")+")"];
+    tmp2=COM2ndlist_(1..(jj-1));
+    tmp=COM2ndlist_(jj..(length(COM2ndlist)));
+    if(!islist(tmp),tmp=[tmp]);
+    COM2ndlist=concat(tmp2,tmp1);
+    COM2ndlist=concat(COM2ndlist,tmp); //190311to
+  );//no ketjs off  
   SHADECTR=SHADECTR+1;
 );
 ////%Shade end////
@@ -4860,6 +4860,10 @@ Makecmdlist(libname):=(
   regional(cmdall,cmd,flg,tmp,tmp1,tmp2,out);
   setdirectory(Dirlib);
   tmp=load(libname+".cs");
+  if(length(tmp)>0, //200509from
+    tmp=replace(tmp,CRmark,"");
+    tmp=replace(tmp,LFmark,"");
+  ); //200509from
   cmdall=tokenize(tmp,":=");
   out=[];
   forall(cmdall,cmd,
@@ -4953,51 +4957,19 @@ Lessstr(st1,st2):=(
 );
 ////%Lessstr end////
 
-////%Makehelplist start////
-Makehelplist(libname):=(
-  regional(cmdall,cmd,flg,lev,tmp,tmp1,out);
-  tmp=load(libname);
-  cmdall=tokenize(tmp,"//help:");
-  cmdall=select(cmdall,substring(#,1,3)!=");");
-  flg=0;
-  forall(1..3,
-    if(flg==0,
-      if(substring(cmdall_#,0,7)=="start"+PPa(""),
-        cmdall=cmdall_((#+1)..length(cmdall));
-        flg=1;
-      );
-    );
+////%Makehelplist start//// //200509
+Makehelplist(dir,libname):=(
+  regional(cmdall,tmp,tmp1);
+  tmp=Readlines(dir,libname); 
+  tmp=select(tmp,indexof(#,"//help:")>0);
+  cmdall=tmp_(2..(length(tmp)-1));
+  forall(1..(length(cmdall)),
+    tmp=cmdall_#;
+    tmp1=indexof(tmp,":");
+    tmp2=indexof(tmp,");");
+    cmdall_#=substring(tmp,tmp1,tmp2+1);
   );
-  flg=0;
-  tmp=length(cmdall);
-  forall(0..2,
-    if(flg==0,
-      if(substring(cmdall_(tmp-#),0,5)=="end"+PPa(""),
-        cmdall=cmdall_(1..(tmp-#-1));
-        flg=1;
-      );
-    );
-  );
-  out=[];
-  forall(cmdall,cmd,
-    tmp1=indexof(cmd,"(");
-    lev=1;
-    flg=0;
-    forall((tmp1+1)..length(cmd),
-      if(flg==0,
-        tmp=substring(cmd,#-1,#);
-        if(tmp=="(",lev=lev+1);
-        if(tmp==")",
-          lev=lev-1;
-          if(lev==0,
-            flg=1;
-            out=append(out,substring(cmd,0,#)+";");
-          );
-        );
-      );
-    );    
-  );
-  sort(out);
+  cmdall;
 );
 ////%Makehelplist end////
 
@@ -5040,14 +5012,11 @@ Helplist(dir,files,help):=(
   ketfiles=apply(ketfiles,replace(#,"+","ketcindylib"));
   ketfiles=apply(ketfiles,#+"r.cs");  // 15.11.05 from
   tmp=apply(files,replace(#,"+","ketcindylib"));
-//  tmp=apply(files,replace(#,"r.cs",""));
-//  tmp=remove(tmp,["ketcindylibout"]); 
-//  tmp=apply(tmp,replace(#,"basic",""));
   tmp=apply(tmp,#+help+".txt"); 
   ketfiles=concat(ketfiles,tmp);// 15.11.05 until
   tmp1=[];
   forall(ketfiles,
-    tmp=Makehelplist(#);
+    tmp=Makehelplist(dir,#); //200509
     tmp1=concat(tmp1,tmp);
   );
   if(!islist(HLIST), // 16.12.31from
@@ -5145,6 +5114,10 @@ Example(exorg,suborg):=(
   sub=replace(suborg,"'",Dq);
   setdirectory(Dirlib);
   tmp=load("examples.txt");
+  if(length(tmp)>0, //200509from
+    tmp=replace(tmp,CRmark,"");
+    tmp=replace(tmp,LFmark,"");
+  ); //200509from
   setdirectory(Dirwork);
   tmp=tokenize(tmp,"//");
   tmp=tmp_(1..(length(tmp)-1));

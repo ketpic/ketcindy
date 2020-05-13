@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(191106)"
+ThisVersion<- "2ev5_2_4(200512)"
 
+# 20200512
+#   Drwpt majorly changed ( Inside )
 # 20191106
 #   Drwline debugged  ( Thick)
 # 20191104
@@ -214,28 +216,21 @@ Drwline<-function(...)
 
 ###########################################
 
-Drwpt<-function(...) #190405
+Drwpt<-function(...) #200512
 {
   varargin<-list(...)
   Nargs<-length(varargin)
   All=Nargs
-  Same="y"
-  Incolor=""
+  Inside="1"
   Tmp=varargin[[All]]
-  if((is.numeric(Tmp))&&(length(Tmp)>2)){ #190405from
-    if(Tmp[1]==-1){
-      Same="no"
-    }else{
-      Tmp1=sapply(Tmp,as.character)
-      Incolor=paste("{",Tmp1[1],",",Tmp1[2],",",Tmp1[3],"}",sep="")
-      Same="n"
-    }
+  if(is.character(Tmp)){ #
+    if(Tmp=="0"){Inside="0"}
     All=All-1
-  }#190405to
+  }
   Ra=TenSize*1000/2.54/MilliIn
   for (II in Looprange(1,All)){
     MS<- varargin[[II]]
-    MS=Flattenlist(MS) #17.10.28
+    MS=Flattenlist(MS)
     if (mode(MS)=="numeric"){
       MS<- list(MS)
     }
@@ -245,24 +240,14 @@ Drwpt<-function(...) #190405
       P<- Doscaling(P)
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      if(Same!="no"){  #190405from
-        Str=paste("{\\linethickness{0 in}%\n",sep="")
-        cat(Str,file=Wfile,append=TRUE)
-        if(Same=="n"){ #190405
-          Str1<- paste("{\\color[rgb]",Incolor,"%\n",sep="")
-          cat(Str1,file=Wfile,append=TRUE)
-        }
+      if(inside=="1"){
         Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}%\n',sep="")
         cat(Str,file=Wfile,append=TRUE)
-        if(Same=="n"){
-          cat("}%\n",file=Wfile,append=TRUE)
-        }
-        cat("}%\n",file=Wfile,append=TRUE)
       }
       Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}%\n',sep="")
       cat(Str,file=Wfile,append=TRUE)
     }
-  } # 190405to
+  } 
   cat("\n",file=Wfile,append=TRUE)
 }
 

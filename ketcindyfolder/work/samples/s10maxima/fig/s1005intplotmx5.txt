@@ -1,0 +1,9 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) ans:integrate(x*sin(x)+4*cos(x),x)
+(%i7) disp(ans)
+5*sin(x)-x*cos(x)
+
+(%i8) closefile()

@@ -1,3 +1,5 @@
+// 2020
+//    Changestyle3d debugged
 // 20190821
 //    Start3d debugged  ( isstring added )
 // 20190818

@@ -1,9 +1,0 @@
-NIL
-(%i3) powerdisp:false
-(%i4) display2d:false
-(%i5) linel:1000
-(%i6) ans:ode2('diff(x,t) = t*x^3,x,t)
-(%i7) disp(ans)
--1/(2*x^2) = t^2/2+%c
-
-(%i8) closefile()

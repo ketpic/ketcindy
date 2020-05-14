@@ -1,8 +1,0 @@
-writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1005diffintmx1.txt")$/*##*/
-powerdisp:false$/*##*/
-display2d:false$/*##*/
-linel:1000$/*##*/
-ans:diff(x^2,x)$/*##*/
-disp(ans)$/*##*/
-closefile()$/*##*/
-quit()$/*##*/

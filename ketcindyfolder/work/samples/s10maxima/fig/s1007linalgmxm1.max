@@ -1,8 +1,0 @@
-writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1007linalgmxm1.txt")$/*##*/
-powerdisp:false$/*##*/
-display2d:false$/*##*/
-linel:1000$/*##*/
-ans:matrix([1, -2],[-3, 4]).matrix([4, 3],[5, 1])$/*##*/
-disp(ans)$/*##*/
-closefile()$/*##*/
-quit()$/*##*/

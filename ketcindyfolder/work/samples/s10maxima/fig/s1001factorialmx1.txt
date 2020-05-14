@@ -1,9 +1,0 @@
-NIL
-(%i3) powerdisp:false
-(%i4) display2d:false
-(%i5) linel:1000
-(%i6) ans:10!
-(%i7) disp(ans)
-3628800
-
-(%i8) closefile()

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20190822] loaded");
+println("ketcindylib3d[20200514] loaded");
 
 //help:start();
 
@@ -2673,44 +2673,6 @@ Mkbezierptcrv3(ptdata,options):=(  //17.10.08 greatly changed
 );
 ////%Mkbezierptcrv3d end////
 
-//////////old version ///////////////////////////////
-
-Readobj(filename):=Readobj(filename,[]);
-Readobj(filename,options):=(
-//help:Readobj("file.obj",["size=-3"]);
-  regional(eqL,size,vL,fnL,tmp,tmp1,tmp2);
-  size=1;
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  forall(eqL,
-    if(Toupper(substring(#,0,1))=="S",
-      tmp=indexof(#,"=");
-      size=parse(substring(#,tmp,length(#)));
-    );
-  );
-  tmp=load(filename);
-  if(length(tmp)>0, //200509from
-    tmp=replace(tmp,CRmark,"");
-    tmp=replace(tmp,LFmark,"");
-  ); //200509from
-  tmp=tokenize(tmp,"v");
-  tmp1=tmp_(2..(length(tmp)-1));
-  tmp2=tmp_(length(tmp));
-  tmp2=tokenize(tmp2,"f");
-  tmp1=append(tmp1,tmp2_1);
-  tmp1=apply(tmp1,Removespace(#));
-  tmp1=apply(tmp1,replace(#,"  "," "));
-  tmp1=apply(tmp1,"["+replace(#," ",",")+"]");
-  vL=apply(tmp1,size*parse(#));
-  tmp2=tmp2_(2..(length(tmp2)));
-  tmp2=apply(tmp2,Removespace(#));
-  tmp2=apply(tmp2,replace(#,"  "," "));
-  tmp2=apply(tmp2,"["+replace(#," ",",")+"]");
-  fnL=apply(tmp2,parse(#));
-  [vL,fnL];
-);
-
-//////////new version ///////////////////////////////
 ////%Readobj start////
 Readobj(filename,options):=(
 //help:Readobj("file.obj",["size=-3"]);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200512] loaded");
+println("ketcindylibbasic2[20200513] loaded");
 
 //help:start();
 
@@ -1916,8 +1916,12 @@ Shade(nm,plistorg,options):=(
 // help:Shade(options=["Trim=(n)","Enc=(n)",Rirst=(n)","Color=",Startpoint]);
 //help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
   regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,Noflg,
-     opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr);
-  name="shade"+nm;
+     opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr,ptshade);
+  if(substring(nm,0,1)=="-", //200513from
+    name=substring(nm,1,length(nm));
+  ,
+    name="shade"+nm;
+  ); //200513to
   plist=plistorg;
   tmp=Divoptions(options);
   Noflg=tmp_2; //200512
@@ -1930,6 +1934,7 @@ Shade(nm,plistorg,options):=(
   if(length(tmp)>0,encflg=1,encflg=0);
   trim="N";
   first="N"; //191007
+  ptshade="N"; //200513
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(tmp_1);
@@ -1947,6 +1952,9 @@ Shade(nm,plistorg,options):=(
     );
     if(substring(tmp1,0,1)=="F",
       first=substring(tmp2,0,1);
+    );
+    if(substring(tmp1,0,1)=="P", //200513[3lines]
+      ptshade=Toupper(substring(tmp2,0,1));
     );
   );
   startpt=[];
@@ -1996,7 +2004,11 @@ Shade(nm,plistorg,options):=(
       G2=Joincrvs("1",plist,["nodata"]);
       G2=apply(G2,Pcrd(#));
       tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";
-      parse(tmp1);
+      if(ptshade=="N", //200513from
+        parse(tmp1);
+      ,
+        PTSHADElist=append(PTSHADElist,[name,tmp1]);
+      ); //200513to
     );
   );
   if(Noflg==0, //no ketjs on
@@ -4725,6 +4737,9 @@ Windispg(gcLorg):=( //190125
   gcL=select(gcL,#_2_1>=0); //190818
   gsave();
   layer(KETPIClayer);
+  forall(PTSHADElist, //200513from
+    parse(#_2);
+  ); //200513to
   forall(gcL,Nj,
     if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
     if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
@@ -4739,7 +4754,8 @@ Windispg(gcLorg):=( //190125
           if(length(Nk)>1,
             tmp3="";
             if(indexof(opcindy,"color")==0, //190122from
-              tmp3=tmp3+",linecolor->"+KCOLOR;
+              tmp=Colorcode("cmyk","rgb",KCOLOR); //200513[2lines]
+              tmp3=tmp3+",linecolor->"+text(tmp);
             );
             tmp3=tmp3+opcindy; 
             if(tmp1==0,  //190126from

@@ -1,3 +1,5 @@
+// 20200514
+//    CalcbyC debugged (case of wflg=0)
 // 20200510
 //    Boxplot,Histplot,Scatterplot rewritten
 // 20200509

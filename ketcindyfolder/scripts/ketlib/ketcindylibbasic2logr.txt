@@ -1,3 +1,6 @@
+// 200513
+//   Shade changed  (ptshade)
+//   Windispg changed (PTSHADElist)
 // 200512
 //   Shade changed  ("notex","nodisp" supported)
 // 200509

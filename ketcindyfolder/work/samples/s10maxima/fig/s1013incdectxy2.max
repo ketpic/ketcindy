@@ -1,9 +1,0 @@
-writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1013incdectxy2.txt")$/*##*/
-powerdisp:false$/*##*/
-display2d:false$/*##*/
-linel:1000$/*##*/
-load("mactex-utilities.lisp")$/*##*/
-txy2:disp(tex(39/4))$/*##*/
-disp(txy2)$/*##*/
-closefile()$/*##*/
-quit()$/*##*/

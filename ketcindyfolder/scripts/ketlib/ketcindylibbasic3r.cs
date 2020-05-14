@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200505] loaded");
+println("ketcindylibbasic3[20200514] loaded");
 
 //help:start();
 
@@ -405,7 +405,6 @@ Deffun(name,bodylist):=(
     funstr=funstr+tmp1; //190816to
   );
   funstr=funstr+");";
-  println([462,funstr]);
   parse(funstr);
   tmp=indexof(name,"("); // no ketjs on //190814
   str=substring(name,0,tmp-1)+"<-function"+PaO();
@@ -700,12 +699,13 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
 //help:Readoutdata();
 //help:Readoutdata("file.txt");
 //help:Readoutdata("/datafolder","file.txt");
-//help:Readoutdata(options=["Disp=n(/y)]");
+//help:Readoutdata(options=["Disp=n(/y)","Read=n(y)"]);
   regional(options,path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
-     nmbr,cmdall,cmd,cmdorg,outdt,goutdt,eqL,dispflg);
+     nmbr,cmdall,cmd,outdt,goutdt,eqL,dispflg,readflg);
   options=optionsorg;
-  dispflg=1;
   tmp=Divoptions(options); //181024from
+  dispflg=1;
+  readflg=0;
   eqL=tmp_5;
   forall(eqL,
     tmp=Strsplit(#,"=");
@@ -715,29 +715,29 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
       if(tmp2=="N",dispflg=0);
       options=remove(options,[#]); //181030
     );
+    if(tmp1=="R",
+      if(tmp2=="Y",readflg=1);
+      options=remove(options,[#]); //181030
+    );
   ); //181024to
+  filename=filenameorg;
+  if(indexof(filename,".")==0,filename=filename+".txt");
   path=pathorg;   //16.03.07 from
   if(length(path)>0,
-    setdirectory(path);
     if(indexof(path,"\")>0,tmp1="\",tmp1="/");
     tmp=substring(path,length(path)-1,length(path));
     if(tmp!=tmp1,path=path+tmp1);
-  );   //16.03.07to
-   filename=filenameorg;  // 16.04.17
-  if(indexof(filename,".")==0,filename=filename+".txt");
-  tmp=load(filename);
-  if(length(tmp)>0, //200509from
-    tmp=replace(tmp,CRmark,"");
-    tmp=replace(tmp,LFmark,"");
-  ); //200509from
-  cmdall=tokenize(tmp,"//");
+    tmp=Readlines(path,filename); //200514
+  ,
+    tmp=Readlines(filename); //200514
+  );
+  cmdall=apply(tmp,replace(#,"//",""));
   varname=cmdall_1; 
   cmdall=cmdall_(2..length(cmdall)); 
   outdt=[];
   varL=[varname];
   ptL=[];
-  forall(cmdall,cmdorg,
-    cmd=replace(cmdorg,LFmark,"");
+  forall(cmdall,cmd, //200514
     if(length(cmd)>0,
       if(cmd=="start" % cmd=="end" % substring(cmd,0,1)=="[",
         if(cmd=="start", 
@@ -793,7 +793,7 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
   parse(varname+"="+tmp+";"); //190415
   outdt=append(outdt,ptL);
   if(path=="",tmp=filename,tmp=path+filename); //16.03.07
-  GOUTLIST=append(GOUTLIST,[tmp,varL]);
+//  GOUTLIST=append(GOUTLIST,[tmp,varL]);
   if(length(path)>0, // 16.03.09
     setdirectory(Dirwork); // 16.03.07
   );
@@ -803,6 +803,9 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
   ,
     println("");
   ); //181024to
+  if(readflg==1, //200514from
+    GLIST=append(GLIST,"Tmpout=ReadOutData("+Dqq(filename)+")");
+  ); //200514to
   varL;
 );
 ////%Readoutdata end////
@@ -2763,6 +2766,7 @@ BBdata(fname,optionorg):=(
   forall(stL,
     tmp=Toupper(substring(#,0,1));
     if(tmp=="M",flg=1);
+    if(tmp=="R",flg=0); //200514
   );
   forall(eqL,
     tmp=indexof(#,"=");
@@ -2790,16 +2794,11 @@ BBdata(fname,optionorg):=(
     );
   );
   if(flg==0,
-    tmp=load(fout); //
-    if(length(tmp)>0, //200509from
-      tmp=replace(tmp,CRmark,"");
-      tmp=replace(tmp,LFmark,"");
-    ); //200509from
+    tmp=Readlines(fout); //200514
     if(length(tmp)==0,
       flg=1;
     ,
-      tmp=tokenize(tmp,"%%");
-      tmp=tmp_2;
+      tmp=tmp_1;
       tmp1=indexof(tmp,":");
       tmp=substring(tmp,tmp1,length(tmp));
       tmp=Removespace(tmp);
@@ -2809,15 +2808,10 @@ BBdata(fname,optionorg):=(
   if(length(path)==0,
     path=Dirwork;
   );
+
+
   if(flg==1,
-    setdirectory(path);
-    tmp=load(file);
-    if(length(tmp)>0, //200509from
-      tmp=replace(tmp,CRmark,"");
-      tmp=replace(tmp,LFmark,"");
-    ); //200509from
-    setdirectory(Dirwork);
-    if(length(tmp)==0,
+    if(!isexists(path,file),
       println("   => "+file+" not exists");
       flg=-1;
     );
@@ -2850,12 +2844,9 @@ BBdata(fname,optionorg):=(
     repeat(floor(waiting*1000/WaitUnit),
       if(tmp1==0,
         wait(10);
-        tmp=load(fout);
-        if(length(tmp)>0, //200509from
-          tmp=replace(tmp,CRmark,"");
-          tmp=replace(tmp,LFmark,"");
-        ); //200509from
-        if(indexof(tmp,"CreationDate")>0,
+        tmp=Readlines(fout); //200514[3lines]
+        tmp2=select(tmp,indexof(#,"CreationDate")>0);
+        if(length(tmp2)>0,
           tmp1=1;
         );
       );
@@ -2863,18 +2854,17 @@ BBdata(fname,optionorg):=(
     if(length(tmp)==0,
       println(fout+" not generated. Maybe "+kcfile+" not run.");
     ,
-      tmp=tokenize(tmp,"%%");
       tmp=select(tmp,indexof(#,"Bounding")>0);
-      tmp=tmp_2; //
+      tmp=tmp_2;
       tmp1=indexof(tmp,":");
       tmp=substring(tmp,tmp1,length(tmp));
       tmp=Removespace(tmp);
-      tmp=tokenize(tmp," ");
+      tmp=Strsplit(tmp," ");
       tmp1="";
       forall(tmp,
         tmp1=tmp1+Sprintf(#,2)+" ";
       );
-      tmp1=Removespace(tmp1)+addop;
+      tmp1=tmp+addop;
       tmp2="\includegraphics[bb="+tmp1+"]{"+file+"}";
       println(tmp2);
     );

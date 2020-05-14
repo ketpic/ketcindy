@@ -1,9 +1,0 @@
-writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1007linalgtx1.txt")$/*##*/
-powerdisp:false$/*##*/
-display2d:false$/*##*/
-linel:1000$/*##*/
-load("mactex-utilities.lisp")$/*##*/
-tx1:disp(tex(matrix([-6,1],[8,-5])))$/*##*/
-disp(tx1)$/*##*/
-closefile()$/*##*/
-quit()$/*##*/

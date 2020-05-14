@@ -499,14 +499,14 @@ In addition, there are options specific to each function.
 %---------Pointdata-----------------------------------
 \begin{cmd}{Pointdata}{pointdata}
 \itemket{Usage}Pointdata(name, point list, options)
-\itemket{Description}Generic function to make a point data.
+\itemket{Description}Generic function to create point data.
 \itemket{Detailse}Options are "Size=", "Color=", "Inside=","notex/nodisp".
 \itemket{Examples}\mbox{}
 
 \verb|Pointdata("1",[[1,2],[-2,3]]); |  // make 2 points (1,2),(-2,3)\\
 \verb|Pointdata("2",[A,B]);          | // A and B are draw by drawing tool.\\
 \verb|Pointdata("3",A,["size=4"]);   | // size of point A is 4.\\
-\verb|Pointdata("4",[A,B],["Inside=0"]);      |  // white circles\\
+\verb|Pointdata("4",[A,B],["Inside=n"]);      |  // white circles\\
 \verb|Pointdata("5",[[3,4],[5,6]],["notex"]); | //not draw in the \TeX  file.\\
 \verb|Pointdata("6",[[3,4],[5,6]],["nodisp"]);| //not draw \TeX  file and Euclidean view.\\
 

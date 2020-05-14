@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200511] loaded");
+println("ketcindylibbasic1[20200514] loaded");
 
 //help:start();
 
@@ -71,7 +71,7 @@ Ketinit(work,strictsep):=( //200509
   YaCut=0.2; //191203
   YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
-  KCOLOR=[0,0,0];
+  KCOLOR=[1,1,1,1]; //200513
   if(!islist(GLISTadd),GLIST=[],GLIST=GLISTadd); //200123
   if(!islist(GCLISTadd),GCLIST=[],GCLIST=GCLISTadd); //200123
 //  GDATALIST=[]; //no ketjs on
@@ -93,6 +93,7 @@ Ketinit(work,strictsep):=( //200509
   CommonMake=0;//180610 //no ketjs on
   WaitUnit=10;
   CONTINUED=0;
+  PTSHADElist=[]; //200513
   OutComList=[];
   OutFileLIst=[];   // 15.10.22
   FigPdfList=[];  // 16.04.08 //no ketjs off
@@ -910,7 +911,7 @@ Changework(dirorg,options):=( //16.10.21
     );
   );
 );
-////%Changework end////
+////Changework end////
 
 ////%Changestyle start////
 Changestyle(nameL,styleorg):=(
@@ -937,37 +938,49 @@ Changestyle(nameL,styleorg):=(
       opcindy=opcindy+",size->"+ptsize;
     );
   );
+  if(length(color)==4,
+    tmp=Colorcmyk2rgb(color);
+  ,
+    tmp=color;
+  );
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   forall(nmL,name,
     tmp=parse(name);
-    while(Measuredepth(tmp)>1,
-      tmp=tmp_1;
+    if(islist(tmp),
+      while(Measuredepth(tmp)>1,
+        tmp=tmp_1;
+      );
+      if(length(tmp)==1,pttype="Y",pttype="N");
+      tmp=select(GCLIST,indexof(#_1,name)>0);
+      GCLIST=remove(GCLIST,tmp);
     );
-    tmp=parse(name);
-    while(Measuredepth(tmp)>1,
-      tmp=tmp_1;
-    );
-    if(length(tmp)==1,pttype="Y",pttype="N");
-    tmp=select(GCLIST,indexof(#_1,name)>0);
-println([952]);
-println(GCLIST);
-println(tmp);
-    GCLIST=remove(GCLIST,tmp);
-println(GCLIST);
     tmp=select(COM2ndlist,indexof(#,name)>0); //no ketjs on
     COM2ndlist=remove(COM2ndlist,tmp); //no ketjs off
     if(Noflg<3,
       if(pttype=="Y",
+        tmp=select(PTSHADElist,indexof(#_1,name)>0);
+        PTSHADElist=remove(PTSHADElist,tmp); 
         tmp=select(GLIST,indexof(#,name)>0);
         tmp1=select(tmp,indexof(#,name+"=Pointdata")>0);
         tmp=remove(tmp,tmp1);
         GLIST=remove(GLIST,tmp);
         tmp1=apply(parse(name),#_1);
         tmp=["Color="+text(color),"Size="+ptsize,"Inside="+inside];
-println([963,name,tmp1,tmp]);
         Pointdata("-"+name,tmp1,tmp);
-println([969,GCLIST]);
-      );
+      ,
+        if(Noflg==2,GCLIST=append(GCLIST,[name,[-1,0],opcindy]));
+        if(Noflg==1,GCLIST=append(GCLIST,[name,[0,1],opcindy]));
+        if(Noflg==0,
+          if(color!=KCOLOR, //no ketjs on
+            Texcom("{");Com2nd("Setcolor("+color+")");
+          ); 
+          Ltype=Getlinestyle(text(Noflg)+Ltype,name); //200514[2Lines]
+          GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+          if(color!=KCOLOR, //180904 //no ketjs on
+            Texcom("}");//180722
+          ); //no ketjs off
+        );
+     );
     );
   );
 );
@@ -1406,7 +1419,7 @@ Divoptions(options):=(
   eqL=[];
   realL=[];
   strL=[];
-  color=KCOLOR; //180603
+  color=Colorcmyk2rgb(KCOLOR); //200513
   opstr="";
   opcindy="";
   forall(options,
@@ -1496,7 +1509,8 @@ Divoptions(options):=(
     );
   );
   if(indexof(opcindy,"color->")==0,// 16.10.07from
-    opcindy=opcindy+",color->"+text(KCOLOR);
+    tmp=Colorcode("cmyk","rgb",KCOLOR); //200513[2lines]
+    opcindy=opcindy+",color->"+text(tmp);
   );
   [Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy];
 );
@@ -4003,7 +4017,7 @@ Pointdata(nm,listorg,optionsorg):=(
   opcindy=tmp_(length(tmp));
   size="1";
   dispflg="Y";
-  inside="1"; //200512
+  inside="Y"; //200512
   border="Y";
   Msg="Y";
   forall(eqL,
@@ -4021,8 +4035,8 @@ Pointdata(nm,listorg,optionsorg):=(
     );
     if(tmp1=="I", //190628from
       inside=Toupper(substring(tmp_2,0,1));
-      if(inside=="N",inside="0"); //200512[2lines]
-      if(inside=="Y",inside="1");
+      if(inside=="0",inside="N"); //200512[2lines]
+      if(inside=="1",inside="Y");
       options=remove(options,[#]);
     );
     if(tmp1=="M", //190206from
@@ -4059,8 +4073,9 @@ Pointdata(nm,listorg,optionsorg):=(
     if(Noflg==2,options=["nodisp"]);
     forall(1..(length(list)),
       Circledata(text(#)+name,[list_#,tmp1],options);
-      if(inside=="1",
-        Shade(["cr"+text(#)+name],options);
+      if(inside=="Y",
+        tmp="cr"+text(#)+name; //200513[2lines]
+        Shade("-"+tmp,[tmp],append(options,"Ptshade=y"));
       );
     );
   );

@@ -1,9 +1,0 @@
-writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1010fouriertx1.txt")$/*##*/
-powerdisp:false$/*##*/
-display2d:false$/*##*/
-linel:1000$/*##*/
-load("mactex-utilities.lisp")$/*##*/
-tx1:disp(tex(5/24))$/*##*/
-disp(tx1)$/*##*/
-closefile()$/*##*/
-quit()$/*##*/

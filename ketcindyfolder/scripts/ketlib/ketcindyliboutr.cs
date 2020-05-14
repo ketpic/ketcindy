@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200510] loaded");
+println("ketcindylibout[20200514] loaded");
 
 //help:start();
 
@@ -1432,11 +1432,7 @@ kcA(fname,optionorg):=(
   );
   if(flg==0,
     tmp2=replace(filename,".rr",".txt");
-    tmp1=load(tmp2);
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(tmp2); //200514
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -1601,17 +1597,13 @@ CalcbyA(name,cmd,optionorg):=(
   );
   cmdlist=append(cmdlist,"quit");
   if(wflg==0,
-    tmp1=load(file+".rr");
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
-    if((length(tmp1)==0) % (indexof(tmp1,"/*####*/")==0), //15.11.26
+    tmp1=Readlines(file+".rr"); //200514from
+    if(length(tmp1)==0,
       wflg=1;
     ,
-      tmp1=tokenize(tmp1,"/*####*/"); 
-      tmp1=tokenize(tmp1_2,"/*##*/");
-      tmp1=tmp1_(1..(length(tmp1)-1));
+      tmp=select(1..(length(tmp1)),indexof(tmp1_#,"/*####*/")>0);
+      tmp1=tmp1_((tmp_1+1)..(length(tmp1)));
+      tmp1=apply(tmp1,replace(#,"/*##*/","")); //200514to
       tmp=select(tmp1,indexof(#,"output")>0);
       tmp1=remove(tmp1,tmp);
       tmp1=apply(tmp1,substring(#,0,length(#)-1));
@@ -1637,18 +1629,12 @@ CalcbyA(name,cmd,optionorg):=(
   tmp1=floor(waiting*1000/WaitUnit);
   repeat(tmp1,
     if(flg==0,
-      tmp=load(wfile);
-      if(length(tmp)>0, //200509from
-        tmp=replace(tmp,CRmark,"");
-        tmp=replace(tmp,LFmark,"");
-      ); //200509from
-      if(length(tmp)>=4,
-        tmp2=substring(tmp,length(tmp)-5,length(tmp));
-        if(tmp2=="////]",
-          tmp=substring(tmp,1,length(tmp)-6);
+      tmp=Readlines(wfile); //200514from
+      if(length(tmp)>0,
+        if(tmp_(length(tmp))=="////]",
+          tmp=tmp_(1..(length(tmp)-1));
           num="1234567890+-.";
-          tmp1=tokenize(","+tmp,",//");
-          tmp3=apply(tmp1,substring(#,1,length(#)));
+          tmp3=apply(tmp,replace(#,"//","")); //200514to
           tmp1="[";
           forall(tmp3,st,
             tmp=select(1..length(st),indexof(num,substring(st,#-1,#))==0);
@@ -1890,11 +1876,7 @@ kcM(fname,optionorg):=(
   );
   if(flg==0,
     tmp2=replace(filename,".max",".txt");
-    tmp1=load(tmp2);
-    if(length(tmp)>0, //200509from
-      tmp=replace(tmp,CRmark,"");
-      tmp=replace(tmp,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(tmp2); //200514
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -4114,12 +4096,8 @@ kcC(cname):=(
   flg=0;
   repeat(floor(10*10000/WaitUnit), //180615
     if(flg==0,
-      tmp1=load(wfile);
-      if(length(tmp1)>0, //200509from
-        tmp1=replace(tmp2,CRmark,"");
-        tmp1=replace(tmp2,LFmark,"");
-      ); //200509from
-	  if(substring(tmp1,0,4)=="////",
+      tmp1=Readlines(wfile); //200514[2Lines]
+ 	  if(tmp1_1=="////",
         flg=1;
       );
       wait(WaitUnit);
@@ -4473,13 +4451,8 @@ CalcbyC(name,path,cmd,optionorg):=(
     tmp1=header;
     if(!isexists(Dirwork,hfile),wflg=1);
     if(wflg==0,
-      tmp2=load(hfile);
-      if(length(tmp2)>0, //200509from
-        tmp2=replace(tmp2,CRmark,"");
-        tmp2=replace(tmp2,LFmark,"");
-      ); //200509from
-      tmp2=tokenize(tmp2,"/**/");
-      tmp2=tmp2_(1..(length(tmp2)-1));
+      tmp2=Readlines(hfile);
+      tmp2=apply(tmp2,replace(#,"/**/",""));
       if(length(tmp1)!=length(tmp2),wflg=1);
     );
     if(wflg==0,
@@ -4491,13 +4464,10 @@ CalcbyC(name,path,cmd,optionorg):=(
       tmp1=body;
       if(!isexists(Dirwork+"/",mfile),wflg=1);
       if(wflg==0,
-        tmp2=load(mfile);
-        if(length(tmp2)>0, //200509from
-          tmp2=replace(tmp2,CRmark,"");
-          tmp2=replace(tmp2,LFmark,"");
-        ); //200509from
-        tmp2=tokenize(tmp2,"/**/");
-        tmp2=tmp2_(2..(length(tmp2)-1));
+        tmp2=Readlines(mfile);
+        tmp2=select(tmp2,indexof(#,"/**/")>0); //200514
+        tmp2=tmp2_(2..(length(tmp2)));
+        tmp2=apply(tmp2,replace(#,"/**/",""));
         if(length(tmp1)!=length(tmp2),wflg=1);
       );
       if(wflg==0,
@@ -4519,12 +4489,8 @@ CalcbyC(name,path,cmd,optionorg):=(
   tmp1=floor(waiting*1000/WaitUnit);
   repeat(tmp1,
     if(flg==0,
-      tmp=load(wfile);
-      if(length(tmp)>0, //200509from
-        tmp=replace(tmp,CRmark,"");
-        tmp=replace(tmp,LFmark,"");
-      ); //200509from
-      if(indexof(tmp,"////")>0, //180523from
+      tmp=Readlines(wfile);
+      if(indexof(tmp_1,"////")>0, //180523from
         flg=1;
         tmp2=#*WaitUnit/1000;//180523to
       ,

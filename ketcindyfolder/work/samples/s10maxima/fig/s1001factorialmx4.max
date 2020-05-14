@@ -1,8 +1,0 @@
-writefile("/ketcindy.git/ketcindyfolder/work/samples/s10maxima/fig/s1001factorialmx4.txt")$/*##*/
-powerdisp:false$/*##*/
-display2d:false$/*##*/
-linel:1000$/*##*/
-ans:100!$/*##*/
-disp(ans)$/*##*/
-closefile()$/*##*/
-quit()$/*##*/

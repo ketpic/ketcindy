@@ -1,3 +1,6 @@
+// 20200515
+//    CalcbyC, CalcbyM changed (to use Readlines)
+//    Mkobjsymbcmd changed (path set to data/fontF)
 // 20200514
 //    CalcbyC debugged (case of wflg=0)
 // 20200510

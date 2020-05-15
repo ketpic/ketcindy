@@ -1,3 +1,5 @@
+// 20200515
+//    Readbezier changed  (path added)
 // 20200514
 //    BBdata debugged/changed  (Readlines)
 // 20200506

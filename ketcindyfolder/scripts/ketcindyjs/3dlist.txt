@@ -48,7 +48,7 @@ Fixpoint3d,3d,2153,2170,Defvar,Parapt,textformat
 Letter3d,3d,2174,2194,Parapt,Letter
 Expr3d,3d,2198,2218,Parapt,Expr
 Perppt,3d,2222,2278,Putperp,Crossprod,IntersectsgpL,Dotprod,Defvar,Putpoint3d,Fixpoint3d,Drawpoint3d
-Perpplane,3d,2282,2332,Divoptions,Toupper,findangle,Cancoordpara,Putpoint3d,Defvar,Pointdata3d
+Perpplane,3d,2282,2332,findangle,Cancoordpara,Putpoint3d,Defvar,Pointdata3d
 Drawpoint3d,3d,2336,2352,Divoptions,Measuredepth,Parapt,Textformat,Parasubpt
 Pointdata3d,3d,2356,2370,Measuredepth,Parapt,Pointdata,Defvar
 Putaxes3d,3d,2374,2385,Putpoint3d

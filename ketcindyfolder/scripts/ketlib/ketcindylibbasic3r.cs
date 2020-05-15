@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200514] loaded");
+println("ketcindylibbasic3[20200515] loaded");
 
 //help:start();
 
@@ -155,7 +155,8 @@ Writebezier(head,seL):=(
 
 ////%Readbezier start////
 Readbezier(file):=Readbezier(file,[]);
-Readbezier(file,optionorg):=(
+Readbezier(file,options):=Readbezier("",file,options);
+Readbezier(path,file,optionorg):=(
 //help:Readbezier("xsr");
 //help:Readbezier(options=["Num=10","nogeo"]);
   regional(nn,options,stL,geo,nc,alpha,out,tmp,tmp1,tmp2,tmp3);
@@ -168,7 +169,11 @@ Readbezier(file,optionorg):=(
     if(tmp=="G",geo=1);
     options=remove(options,[#]);
   );
-  Readoutdata(file);
+  if(length(path)>0,
+    Readoutdata(path,file);
+  ,
+    Readoutdata(file);
+  );
   tmp=file+"n_1_1";
   nn=parse(tmp);
   out=[];

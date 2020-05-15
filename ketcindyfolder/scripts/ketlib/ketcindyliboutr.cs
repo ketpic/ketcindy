@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200514] loaded");
+println("ketcindylibout[20200515] loaded");
 
 //help:start();
 
@@ -2119,39 +2119,25 @@ CalcbyM(name,cmd,optionorg):=(
   tmp1=floor(waiting*1000/WaitUnit);
   repeat(tmp1,
     if(flg==0,
-      tmp1=load(wfile);
-      if(length(tmp1)>0, //200509from
-        tmp1=replace(tmp1,CRmark,"");
-        tmp1=replace(tmp1,LFmark,"");
-      ); //200509from
+      tmp1=Readlines(wfile);
       if(wflg==1,wait(WaitUnit)); // 2016.02.23
       if(length(tmp1)>0,
-        tmp=indexof(tmp1,"error")+indexof(tmp1,"syntax"); //2016.02.23
-        if((tmp>0)&(errchk=="Y"), //190411
+        tmp=select(tmp1,(indexof(#,"error")>0)%(indexof(#,"syntax")>0));
+        if((length(tmp)>0)&(errchk=="Y"), //190411
           println("Some error(s) occurred"); //2016.02.24 from
-          tmp2=tokenize(tmp1,"(%");
-          forall(4..length(tmp2),println(tmp2_#)); //2016.02.24 until
+          forall(1..length(tmp1),println(tmp1_#)); //2016.02.24 until
           flg=2;  //2016.02.23
         ,
-          if(indexof(tmp1,"closefile()")>0,  // 15.11.24
-            tmp=tokenize(tmp1,"disp(");
-            tmp1=tmp_(2..length(tmp));
+          tmp=select(1..(length(tmp1)),indexof(tmp1_#,"closefile()")>0); //200515from
+          if(length(tmp)>0,
+            tmp1=select(tmp1,length(#)>0);
+            tmp2=select(1..(length(tmp1)),indexof(tmp1_#,"disp(")>0);
+            tmp2=append(tmp2,length(tmp1));
             tmp4=[];
-            forall(tmp1,tmp2,
-              tmp=indexof(tmp2,")");
-              tmp3=substring(tmp2,tmp,length(tmp2));
-              indL=Indexall(tmp3,"(%i"); // 16.04.26from
-              tmp0=0;
-              forall(indL,
-                if(tmp0==0,
-                  tmp=substring(tmp3,#+2,#+3);
-                  if(indexof("0123456789",tmp)>0,//16.04.25?
-                    tmp3=removespace(substring(tmp3,0,#-1));
-                    tmp4=append(tmp4,tmp3);
-                    tmp0=1;
-                  );
-                );// 16.04.26until
-              );
+            forall(1..(length(tmp2)-1),tmp3,
+              tmp=tmp1_((tmp2_tmp3+1)..(tmp2_(tmp3+1)-1));
+              if(length(tmp)==1,tmp=tmp_1);
+              tmp4=append(tmp4,tmp);
             );
             num="1234567890+-.";
             tmp1="[";
@@ -2190,12 +2176,8 @@ CalcbyM(name,cmd,optionorg):=(
       println(wfile+" does not exist");
     ,
       tmp="("+text(waiting)+" s )";
-      tmp1=load(wfile);
-      if(length(tmp1)>0, //200509from
-        tmp1=replace(tmp1,CRmark,"");
-        tmp1=replace(tmp1,LFmark,"");
-      ); //200509from
-     if(length(tmp1)>0,
+      tmp1=Readlines(wfile); //200514
+      if(length(tmp1)>0,
         println(wfile+" incomplete"+tmp); // 2016.02.24
       ,
         println(wfile+" not generated "+tmp);
@@ -2639,7 +2621,6 @@ Mkviewobj(pathorg,fnameorg,cmdLorg,optionorg):=(
   regional(path,cmdL,eqL,strL,flg,fname,options,make,view,cmdlist,
       vtx,face,unit,tmp,tmp1,tmp2,store,dt,nn,zax);
   store=Fillblack(); //181128
-println([3647,store]);
   path=replace(pathorg,"\","/");
   if(substring(path,length(path)-1,length(path))!="/",path=path+"/");
   fname=fnameorg;
@@ -2691,11 +2672,7 @@ println([3647,store]);
   );
   if(make==-1,
     setdirectory(pathorg);
-    tmp1=load(fname);
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(fname); //200515
     if(length(tmp1)==0,make=1,make=0);
     setdirectory(Dirwork);
   );
@@ -3312,13 +3289,8 @@ Mkobjsymbcmd(path,symborg,size,rot,dir,pos,optionorg):=(
       );
     );
     if(length(symb)==2,symb=tmp1+substring(symb,1,2));
-    if(length(path)>0,  // 16.04.23from
-      setdirectory(path);
-    ,
-      tmp=Dirhead+"/data/fontF";  // 16.05.10
-      setdirectory(tmp);
-    ); // 16.04.23until
-    dtL=Readbezier(symb,opbez);
+    tmp=Dirhead+"/data/fontF";  // 16.05.10
+    dtL=Readbezier(tmp,symb,opbez);
     dtLstr=dtL; //17.12.23
 	setdirectory(Dirwork);
     forall(dtL,dt,
@@ -3448,11 +3420,7 @@ kcF(fname,optionorg):=(
   );
   if(flg==0,
     tmp2=replace(filename,".input",".sfort");
-    tmp1=load(tmp2);
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(tmp2); //200515
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -3537,6 +3505,7 @@ kcF(fname,optionorg):=(
   );
 );
 
+////%CalcbyF start ////
 CalcbyF(name,cmd):=CalcbyM(name,cmd,[]);
 CalcbyF(name,cmd,optionorg):=(
 //help:CalcbyF("a",cmdL);
@@ -3613,19 +3582,14 @@ CalcbyF(name,cmd,optionorg):=(
   );
   cmdlist=concat(cmdlist,["111111*1",")quit"]);
   if(wflg==0,
-    tmp1=load(file);
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(file); //200515from
     if(length(tmp1)==0,
       wflg=1;
     ,
-      if(indexof(tmp1," --##")==0,  // 15.11.26
+      tmp1=select(tmp1,indexof(#," --##")>0);
+      if(length(tmp1)==0,   //200515to
         wflg=1;
       ,
-        tmp1=tokenize(tmp1," --##");
-        tmp1=tmp1_(1..(length(tmp1)-1));
         if(length(tmp1)!=length(cmdlist),
           wflg=1;
         ,
@@ -3650,19 +3614,15 @@ CalcbyF(name,cmd,optionorg):=(
   tmp1=floor(waiting*1000/WaitUnit);
   repeat(tmp1,
     if(flg==0,
-      tmp1=load(wfile);
-      if(length(tmp1)>0, //200509from
-        tmp1=replace(tmp1,CRmark,"");
-        tmp1=replace(tmp1,LFmark,"");
-      ); //200509from
+      tmp1=Readlines(wfile); //200515
       if(wflg==1,wait(WaitUnit));
-      tmp=indexof(tmp1,"Error")+indexof(tmp1,"find");
-      if(tmp>0,
+      tmp=select(tmp1,(indexof(#,"Error")>0)%(indexof(tmp1,"find")>0));
+      if(length(tmp)>0,
           println("Some error(s) occurred");
-          tmp=tokenize(tmp1," --##");
-          forall(tmp,
+          tmp1=apply(tmp1,replace(#," --##",""));
+          forall(tmp1,
             if(indexof(#,"Error")+indexof(#,"find")>0,
-              println(tmp_(length(tmp)));
+              println(#);
             );
           );
           flg=2;
@@ -3716,11 +3676,7 @@ CalcbyF(name,cmd,optionorg):=(
       println(wfile+" does not exist");
     ,
       tmp="("+text(waiting)+" s )";
-      tmp1=load(wfile);
-      if(length(tmp1)>0, //200509from
-        tmp1=replace(tmp1,CRmark,"");
-        tmp1=replace(tmp1,LFmark,"");
-      ); //200509from
+      tmp1=Readlines(wfile); //200515
       if(length(tmp1)>0,
         println(wfile+" incomplete"+tmp); // 2016.02.24
       ,
@@ -3733,7 +3689,10 @@ CalcbyF(name,cmd,optionorg):=(
     );
   );
 );
+////%CalcbyF end ////
 
+
+////%Frfun start ////
 Frfun(name,fun,argL):=Frifun(name,fun,argL,[]);
 Frfun(name,fun,argL,optionorg):=Frifun(name,fun,argL,optionorg);
 Frifun(name,fun,argL):=Frifun(name,fun,argL,[]);
@@ -4142,15 +4101,11 @@ ReaddataC(fnameorg):=(
   regional(tmp,tmp1,fname,data,out);
   fname=fnameorg;
   if(indexof(fname,".")==0, fname=fname+".txt");
-  data=load(fname);
-  if(length(data)>0, //200509from 
-    data=replace(data,CRmark,"");
-    data=replace(data,LFmark,"");
-  ); //200509from
-  data=tokenize(data," -99999");
+  data=Readlines(fname); //200515[2lines]
+  data=apply(data,replace(#," -99999",""));
   out=[];
   tmp1=[];
-  forall(1..(length(data)-1),
+  forall(1..(length(data)),
     tmp=replace(data_#," ",",");
     if(indexof(tmp,"99999.")==0,
       tmp="["+replace(data_#," ",",")+"]";
@@ -5686,11 +5641,7 @@ kcW(fname,optionorg):=(
   );
   if(flg==0,
     tmp2=replace(filename,".wl",".txt");
-    tmp1=load(tmp2);
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(tmp2); //200515
     if(length(tmp1)==0,
       flg=1;
     ); 
@@ -5862,19 +5813,14 @@ CalcbyW(name,cmd,optionorg):=(
   );
   cmdlist=append(cmdlist,"Quit[]");
   if(wflg==0,
-    tmp1=load(file+".wl");
-    if(length(tmp1)>0, //200509from
-      tmp1=replace(tmp1,CRmark,"");
-      tmp1=replace(tmp1,LFmark,"");
-    ); //200509from
+    tmp1=Readlines(file+".wl"); //200515
     if(length(tmp1)==0,
       wflg=1;
     ,
-      if(indexof(tmp1,"(*##*)")==0,  // 15.11.26
+      if(indexof(tmp1_1,"(*##*)")==0,  // 15.11.26
         wflg=1;
       ,
-        tmp1=tokenize(tmp1,"(*##*)");
-        tmp1=tmp1_(1..(length(tmp1)-1));
+        tmp1=apply(tmp1,replace(#,"(*##*)",""));
         if(length(tmp1)!=length(cmdlist),  // 15.12.07
           wflg=1;
         ,
@@ -5898,27 +5844,17 @@ CalcbyW(name,cmd,optionorg):=(
   time=floor(waiting*1000/WaitUnit);
   repeat(time,nc,
     if(flg==0,
-      tmp2=load(wfile);
-      if(length(tmp2)>0, //200509from
-        tmp2=replace(tmp2,CRmark,"");
-        tmp2=replace(tmp2,LFmark,"");
-      ); //200509from
-      if(wflg==1,wait(WaitUnit));
-      if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999", //////////////
-        tm=nc*WaitUnit/1000;
-        flg=1;
-      ,
-        tmp3=load(rfile);
-        if(length(tmp3)>0, //200509from
-          tmp3=replace(tmp3,CRmark,"");
-          tmp3=replace(tmp3,LFmark,"");
-        ); //200509from
-        if(substring(tmp3,length(tmp3)-5,length(tmp3))=="99999", //200105from
+      tmp3=Readlines(rfile); //200515
+      tmp3=select(tmp3,length(tmp3)>0);
+      if(length(tmp3)>0,
+        if(tmp3_(length(tmp3))=="99999",
+          tmp3=tmp3_(1..(length(tmp3)-1));
           tm=nc*WaitUnit/1000;
-          flg=2; /////////
-        ); //200105to
+          flg=2; 
+        );
       );
-    ,
+    );
+    if(flg==0,
       if(wflg==-1,
         flg=1;
       ,
@@ -5928,48 +5864,43 @@ CalcbyW(name,cmd,optionorg):=(
   );
   if(flg==2, //200110from
     wait(WaitUnit);
-    tmp2=load(wfile);
-    if(length(tmp2)>0, //200509from
-      tmp2=replace(tmp2,CRmark,"");
-      tmp2=replace(tmp2,LFmark,"");
-    ); //200509from
-    if(substring(tmp2,length(tmp2)-5,length(tmp2))=="99999",
-      flg=1;
+    tmp2=Readlines(wfile); //200515
+    tmp2=select(tmp2,length(tmp2)>0);
+    if(length(tmp2)>0,
+      if(tmp2_(length(tmp2))=="99999",
+        tmp2=tmp2_(1..(length(tmp2)-1));
+        flg=1;
+      );
     ,
       tmp3=Readlines(Dirwork,rfile); 
-      tmp3=select(tmp3,(length(#)>0)&(isstring(#)));
+      tmp3=select(tmp3,length(#)>0);
       println(name+" : Installing may not be completed");
       apply(tmp3,println("        "+#));
       flg=0;
     );
   );
   if(flg==1,
-    tmp=Bracket(tmp2,"{}");
-    tmp=select(tmp,#_2==1);
-    tmp=tmp_(length(tmp))_1;
-    tmp2=substring(tmp2,tmp-1,length(tmp2)-5);
-    tmp1=Bracket(tmp2,"{}");
-    tmp1=select(tmp1,abs(#_2)==2);
-    tmp1=apply(tmp1,#_1);
+    tmp1="";
+    forall(tmp2,
+      tmp1=tmp1+#;
+    );
+    tmp=Bracket(tmp1,"{}");
+    tmp2=select(tmp,#_2==2);
+    tmp3=select(tmp,#_2==-2);
     tmp="";
-    forall(1..(length(tmp1)/2),
-      tmp3=tmp1_(2*#-1);
-      tmp4=tmp1_(2*#);  
-      tmp=tmp+Dqq(substring(tmp2,tmp3,tmp4-1))+",";
+    forall(1..(length(tmp2)),
+      tmp=tmp+Dqq(substring(tmp1,tmp2_#_1,tmp3_#_1-1))+",";
     );
     tmp=substring(tmp,0,length(tmp)-1);
     if(length(tmp1)/2>1,
       tmp="["+tmp+"];";
     );
+    tmp=replace(tmp," ","");
     parse(name+"="+tmp);
   ); //200110to
   if(flg==0,
     tmp="("+text(waiting)+" s )";
-    tmp2=load(wfile);
-    if(length(tmp2)>0, //200509from
-      tmp2=replace(tmp2,CRmark,"");
-      tmp2=replace(tmp2,LFmark,"");
-    ); //200509from
+    tmp2=Readlines(wfile); //200515
     if(length(tmp2)>0,
       println(wfile+" incomplete"+tmp1);
     ,
@@ -5977,13 +5908,18 @@ CalcbyW(name,cmd,optionorg):=(
     );
   ,
     tmp3=Readlines(Dirwork,rfile); //200105from
-    tmp3=select(tmp3,(length(#)>0)&(isstring(#)));
+    tmp3=select(tmp3,length(#)>0);
     if(PathW!="wolframscript",
       tmp3=select(tmp3,indexof(#,"::")>0);
     );
     if(length(tmp3)>0,
+      if(tmp3_(length(tmp3))=="99999",
+        tmp3=tmp3_(1..(length(tmp3)-1));
+      );
+    );
+    if(length(tmp3)>0,
       println(name+" : Errors may have occurred");
-      apply(tmp3,println("        "+#));
+      apply(tmp3,println(#));
       flg=0;
     ); //200105to
     if(flg==1,

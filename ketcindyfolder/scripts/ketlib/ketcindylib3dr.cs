@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20200514] loaded");
+println("ketcindylib3d[20200515] loaded");
 
 //help:start();
 
@@ -2281,26 +2281,26 @@ Putperp(name,ptstr,pLstr,option):=(
 ////%Perpplane start////
 Perpplane(name,ptstr,nvec):=
     Perpplane(name,ptstr,nvec,"draw");
-Perpplane(name,ptstr,nstr,optionorg):=(
+Perpplane(name,ptstr,nstr,dummyoptions):=(
 //help:Perpplane("A-B","P",[1,3,2]);
 //help:Perpplane("A-B","P",[1,3,2]);
 //help:Perpplane(options=["Put/Draw"]);
-  regional(Eps,options,eqL,strL,nvec,sgstr,pP,v1,v2,v3,
+  regional(Eps,eqL,strL,nvec,sgstr,pP,v1,v2,v3,
      gptflg,th,ph,pA,pB,tmp,tmp1,tmp2);
   Eps=10^(-4);
-  options=optionorg; //190714from
-  if(!islist(options),options=[options]);
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  strL=tmp_7;
-  gptflg=0;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="P",
-      gptflg=1;
-      options=remove(options,#);
-    );
-  ); //190714to
+//  options=optionorg; //190714from
+//  if(!islist(options),options=[options]);
+//  tmp=Divoptions(options);
+//  eqL=tmp_5;
+//  strL=tmp_7;
+  gptflg=1;
+//  forall(strL,
+//    tmp=Toupper(substring(#,0,1));
+//    if(tmp=="P",
+//      gptflg=1;
+//      options=remove(options,#);
+//    );
+//  ); //190714to
   if(isstring(nstr),nvec=parse(nstr+"3d"),nvec=nstr);
   if(indexof(ptstr,"3d")==0, //181107from
     pP=parse(ptstr+"3d");
@@ -2930,18 +2930,18 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     tmp2=Toupper(substring(tmp_2,0,1));
-    if(tmp1=="P",
-      if(tmp2=="F", fixflg=0);
-      options=remove(options,[#]);
-    );
-    if(tmp1=="V", //180905from
-      vtxflg=tmp2;
-      options=remove(options,[#]);
-    ); //180905to
-    if(tmp1=="E",
-      edgflg=tmp2;
-      options=remove(options,[#]);
-    );
+//    if(tmp1=="P",
+//      if(tmp2=="F", fixflg=0);
+//      options=remove(options,[#]);
+//    );
+//    if(tmp1=="V", //180905from
+//      vtxflg=tmp2;
+//      options=remove(options,[#]);
+//    ); //180905to
+//    if(tmp1=="E",
+//      edgflg=tmp2;
+//      options=remove(options,[#]);
+//    );
     if(tmp1=="L", //190331from
       Lsize=tmp_2;
       if(Lsize=="0",dispflg=0); //190502

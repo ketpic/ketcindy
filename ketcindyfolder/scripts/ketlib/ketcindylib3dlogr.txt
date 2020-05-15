@@ -1,4 +1,8 @@
-// 2020
+// 200515
+//    Readbezier changed  ( path=>Dirhead+"/data/font)
+//    Perpplane changed  ( option dropped (geo))
+//    Vertexedgeface changed ( Set options only for Label,Msg)
+// 200514
 //    Changestyle3d debugged
 // 20190821
 //    Start3d debugged  ( isstring added )

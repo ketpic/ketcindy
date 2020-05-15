@@ -91,7 +91,7 @@ Start3d(ptexception,optionjs):=(//190503to
     );
   );
   Setfiles(Namecdy); //180608 // no ketjs
-  ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]]; // no ketjson
+  ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]]; // no ketjs on
   FuncListC=[];
   CommandListC=[]; //180531
   CutFunList=[];//180601

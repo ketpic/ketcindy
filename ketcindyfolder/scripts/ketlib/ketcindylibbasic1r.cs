@@ -911,7 +911,7 @@ Changework(dirorg,options):=( //16.10.21
     );
   );
 );
-////Changework end////
+////%Changework end////
 
 ////%Changestyle start////
 Changestyle(nameL,styleorg):=(
@@ -976,7 +976,7 @@ Changestyle(nameL,styleorg):=(
           ); 
           Ltype=Getlinestyle(text(Noflg)+Ltype,name); //200514[2Lines]
           GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-          if(color!=KCOLOR, //180904 //no ketjs on
+          if(color!=KCOLOR, //180904 
             Texcom("}");//180722
           ); //no ketjs off
         );

@@ -1913,7 +1913,7 @@ Shade(Arg1,Arg2):=(
 );
 Shade(nm,plistorg,options):=(
 //help:Shade(["gr1"]);
-// help:Shade(options=["Trim=(n)","Enc=(n)",Rirst=(n)","Color=",Startpoint]);
+// help:Shade(options=["Trim=(n)","Enc=(n)",First=(n)","Color=",Startpoint]);
 //help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
   regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,Noflg,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,ctr,ptshade);
@@ -4754,7 +4754,7 @@ Windispg(gcLorg):=( //190125
           if(length(Nk)>1,
             tmp3="";
             if(indexof(opcindy,"color")==0, //190122from
-              tmp=Colorcode("cmyk","rgb",KCOLOR); //200513[2lines]
+              tmp=Colorcmyk2rgb(KCOLOR); //200513[2lines]
               tmp3=tmp3+",linecolor->"+text(tmp);
             );
             tmp3=tmp3+opcindy; 

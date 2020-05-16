@@ -3322,7 +3322,7 @@ Setketcindyjs():=(
 );
 Setketcindyjs(list):=(
 //help:Setketcindyjs();
-//help:Setketcindyjs(["Local=(n)","Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
+//help:Setketcindyjs(["Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
 //help:Setketcindyjs(["Removept=[]"]);
   KETJSOP=list;
   KETJSOP;
@@ -3889,13 +3889,13 @@ Mkketcindyjs(options):=( //17.11.18
   if(indexof(color,"[")>0,  //200505
     tmp=parse(color);
     if(length(tmp)==4,
-      colorrgb=Colorcode("cmyk","rgb",tmp); //190504
+      colorrgb=Colorcmyk2rgb(tmp); //190504
     ,
       colorrgb=color; //190506
     );
   ,
     tmp=Colorname2cmyk(color); //200505[2lines]
-    colorrgb=Colorcode("cmyk","rgb",tmp);
+    colorrgb=Colorcmyk2rgb(tmp);
   ); //190503to
   tmp=apply(colorrgb,round(#*255)); //190504
   tmp=text(tmp);

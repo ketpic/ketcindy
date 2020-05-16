@@ -8264,14 +8264,14 @@ Plotdata("1",str,"x");
 
 \begin{description}
 
-\hypertarget{ketcindyjsbody}{}
-\item[関数]Ketcindyjsbody(prependlist,appendlist)
-\item[機能]KeTJSファイルのbodyの最初と最後にスクリプトを追加する。
+\hypertarget{ketcindyjsmain}{}
+\item[関数]Ketcindyjsmain(prependlist,appendlist)
+\item[機能]KeTJSファイルのhtmlの前後ににスクリプトを追加したhtmlを作成する。
 
 
 \begin{verbatim}
-【例】Ketcindyjsbody(["<p,f10>_;_;Title"],[]);
-　　　   =>     <p><font size="10">&emsp;&emsp;Title</font></p>
+【例】Ketcindyjsmain(["<pf10red/fp>_;_;Title"],[]);
+　　　   =>     <p><font size="10" color="red">&emsp;&emsp;Title</font></p>
 \end{verbatim}
 
 %\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
@@ -8730,7 +8730,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ptpos}{Ptpos(幾何点)}\>幾何点の現在（直前）座標\\
 \hyperlink{setketcindyjs}{Setketcindyjs(options)}\>KeTJSの設定\\
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata(変数名と値のリスト)}\>script "csinit"にデータを書き込む\\
-\hyperlink{ketcindyjsbody}{Ketcindyjsbody(prependlist,appendlist)}\>bodyの最初と最後にスクリプトを追加\\
+\hyperlink{ketcindyjmain}{Ketcindyjsbody(prependlist,appendlist)}\>htmlの前後にスクリプトを追加したhtmlを作成\\
 \hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
 \hyperlink{textedit}{Textedit(識別番号)}\>KeTJSで入力窓に入れた文字列を取得\\
 \hyperlink{movetojs}{Movetojs(要素名,座標,フォントサイズ)}\>Textボタンの位置とフォントサイズを設定\\

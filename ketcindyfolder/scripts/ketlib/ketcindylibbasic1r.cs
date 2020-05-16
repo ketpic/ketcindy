@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.3.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200514] loaded");
+println("ketcindylibbasic1[20200516] loaded");
 
 //help:start();
 
@@ -160,7 +160,7 @@ Ketinit(work,strictsep):=( //200509
   StrictSep=strictsep; //190831
   Setwindow("Msg=n"); // 16.05.31
   forall(remove(allpoints(),[SW,NE]),Strictmove(#.name)); //190917
-  KETJSOP=[]; //190916
+  KETJSOP=["Web=n"]; WebMode=0; //200516
   JSBODY=[[],[]]; JSMAIN=[]; //190916,200119
 // no ketjs on 190122
   // for Presentation
@@ -1509,7 +1509,7 @@ Divoptions(options):=(
     );
   );
   if(indexof(opcindy,"color->")==0,// 16.10.07from
-    tmp=Colorcode("cmyk","rgb",KCOLOR); //200513[2lines]
+    tmp=Colorcmyk2rgb(KCOLOR); //200513[2lines]
     opcindy=opcindy+",color->"+text(tmp);
   );
   [Ltype,Noflg,Inflg,Outflg,eqL,realL,strL,color,opstr,opcindy];
@@ -2482,10 +2482,14 @@ Derivative(Arg1,Arg2,Arg3):=(//1807120
       name=Toupper(substring(tmp_1,0,1));
       v=parse(tmp_2);
       if(name=="X",
-        tmp1=Lineplot("",[[v,0],[v,1]],["nodata"]);
+        p1=[v,0] ; p2=[v,1];  //200516from
+        tmp=100/dist(p1,p2)*(p2-p1);
+        tmp1=Listplot("",[p1-tmp,p2+tmp],["nodata"]);
       ,
-        tmp1=Lineplot("",[[0,v],[1,v]],["nodata"]);
-      );
+        p1=[0,v] ; p2=[1,v]; 
+        tmp=100/dist(p1,p2)*(p2-p1);
+        tmp1=Listplot("",[p1-tmp,p1+tmp],["nodata"]);
+      ); //200516to
       tmp=Intersectcurvespp(pdstr,tmp1);
       if(length(tmp)==0,
          println("    Derivative cannot be found");
@@ -2559,7 +2563,7 @@ Tangentplot(nm,pdstr,ptinfo,optionsorg):=(
 //help:Tangentplot("1",pdstr,"y=3");
 //help:Tangentplot("1",pdstr,[[1,2],20.5]);
 //help:Tangentplot(Options2=[choice(1)]);
-  regional(name,v,pt,par,options,reL,ch,tmp,flg);
+  regional(name,v,pt,par,options,reL,ch,tmp,tmp1,tmp2,flg);
   options=optionsorg; //1807120from
   tmp=Divoptions(options);
   reL=tmp_6;
@@ -3602,28 +3606,28 @@ Getlinestyle(str,name):=(
     if(length(tmp2)==0,tmp2="1"); //190125
     Ltype=[0,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
-      Drwline(name+Dop);
+      Drwline(name+Dop); //no ketjs
     );
   );
   if(tmp1=="DA",
     if(length(tmp2)==0,tmp2="1,1"); //190125
     Ltype=[1,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
-      Dashline(name+Dop);
+      Dashline(name+Dop); //no ketjs
     );
   );
   if(tmp1=="ID",
     if(length(tmp2)==0,tmp2="1,1"); //190125
     Ltype=[2,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
-      Invdashline(name+Dop);
+      Invdashline(name+Dop); //no ketjs
     );
   );
   if(tmp1=="DO",
     if(length(tmp2)==0,tmp2="1,1"); //190125
     Ltype=[3,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
-      Dottedline(name+Dop);
+      Dottedline(name+Dop); //no ketjs
     );
   );
   if(tmp1=="DP",
@@ -3636,7 +3640,7 @@ Getlinestyle(str,name):=(
     );
     tmp2=substring(tmp2,0,length(tmp2)-1);
     if(noflg==0,
-      Drwpt(tmp2+Dop);
+      Drwpt(tmp2+Dop); //no ketjs
     );
   );
   if(tmp1=="NO", //190818from
@@ -4075,7 +4079,10 @@ Pointdata(nm,listorg,optionsorg):=(
       Circledata(text(#)+name,[list_#,tmp1],options);
       if(inside=="Y",
         tmp="cr"+text(#)+name; //200513[2lines]
-        Shade("-"+tmp,[tmp],append(options,"Ptshade=y"));
+        Shade("-"+tmp,[tmp],append(options,"Ptshade=y")); // no ketjs
+//        tmp=parse(tmp); // only ketjs on
+//        tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
+//        parse(tmp); // only ketjs off
       );
     );
   );
@@ -4981,7 +4988,7 @@ Circledata(nm,cenrad,options):=(
       ra=|pA-Ctr|;
       tmp=name+"center="+Textformat(Ctr,5)+";";
       parse(tmp);
-      Defvar(name+"center",re(Ctr));
+      Defvar(name+"center",re(Ctr)); //no ketjs
     );
   );
   if(ra>0,
@@ -4991,7 +4998,8 @@ Circledata(nm,cenrad,options):=(
       Out=append(Out,Ctr+ra*[cos(Th),sin(Th)]);
     );
   ,
-    Out=Lineplot("1",[pA,pB],["nodata"]);
+    tmp=100/dist(pA,pB)*(pB-pA);
+    Out=Listplot("1",[pA-tmp,pB+tmp],["nodata"]);
   );
   if(Noflg<3,
     if(Msg=="Y", //190206

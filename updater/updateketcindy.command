@@ -7,6 +7,8 @@ if [ -e ../ketcindyfolder ]; then
 fi
 
 echo `pwd ` will be used
+sudo spctl --master-enable
+
 echo 1. "/Applications/kettex"
 echo 2. "TeXLive"
 echo 3. Other

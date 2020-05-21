@@ -1,0 +1,108 @@
+\documentclass{ujarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx,colorlinks=true,urlcolor=blue]{hyperref}
+
+\setmargin{20}{20}{20}{20}
+
+\西暦
+
+\renewcommand{\labelitemi}{・}
+\renewcommand{\labelitemii}{・}
+
+\begin{document}
+
+\begin{center}
+KETCindyについての補足 (Windows)
+\end{center}
+
+\hfill 修正日：\today
+
+\begin{enumerate}[\bf\large 1.]
+
+\item インストール
+\begin{itemize}
+\item Cinderella\\
+\hspace*{10mm}インストーラを右クリック「管理者として実行」を選ぶ．\\
+\hspace*{10mm}インストール先をProgram Files（または (x86)）を選ぶ．
+\item Sumatra\\
+\hspace*{10mm}\verb|Option|を選び，インストール先をProgram Files（または (x86)）にする．
+\end{itemize}
+
+\item KeTCindyのインストール
+\begin{itemize}
+\item ketcindysettings.cdyを利用する．
+\begin{enumerate}[(1)]
+\item 左方にあるボタンで，言語，TeXの種類，描画コードを選ぶ．\\
+\hspace*{10mm}ボタンを押すと順に項目が変わる．
+\item 中央にあるボタンでTeXシステムを選ぶ．\\
+\hspace*{10mm}KeTTeX，TeXLive以外の場合は，CindyScriptでパスを設定してから．\verb|Other|を選ぶ．
+\item 右側にあるボタンを順に押す．\\
+\hspace*{10mm}\verb|Mkinit|：初期化ファイルketcindy.iniをユーザホームに作成\\
+\hspace*{10mm}\verb|Update|：TeXに入っているketlib関連のファイルを更新（コピー）\\
+\hspace*{10mm}\verb|Work|：作業フォルダketcindy.iniをユーザホームに作成
+\end{enumerate}
+\item ketcindysettings.cdyのUpdateでエラーが出た場合\\
+\hspace*{10mm}updataフォルダにあるupdateketcindy.batをクリックする．
+\end{itemize}
+
+\item KeTCindyのテストラン
+    \begin{enumerate}[(1)]
+    \item ketcindysettings.cdyを終了してから，作業ディレクトリketcindyを開く．
+    \item ketcindyの中のtemplate1basic.cdyをダブルクリック．\\
+      \hspace*{10mm}画面に白い枠が出れば，ライブラリの読み込みは成功．
+    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．
+  \end{enumerate}
+
+\item TeXWorksの設定（kettexの場合）
+  \begin{itemize}
+ \item KeTTeXでは，\verb|C:\kettex\texlive\bin\win32|にすでに入っている．\\
+ \hspace*{5mm}注）TeXLiveの場合も同様
+  \item TeXworksを立ち上げ，「TeXworks \verb|>| 環境設定 \verb|>| タイプセット」
+  \item 上の欄（パス）に以下を追加\\
+  \hspace*{5mm}\verb|/Applications/kettex/texlive/bin/x86_64-darwin|\\
+  \hspace*{10mm}注) 上の行を上の欄の先頭になるように移動する．
+  \item 下の欄の横にある + をクリック
+    \begin{itemize}
+    \item 名前：uplatex(ptex2pdf)またはplatex(ptex2pdf)
+    \item プログラム : ptex2pdf
+    \item 引数：\\
+    \hspace*{10mm} \verb|-u|（uplatexの場合のみ）\\
+    \hspace*{10mm} \verb|-l|\\
+    \hspace*{10mm} \verb|-ot|\\
+    \hspace*{10mm}  \verb|$synctexoption|\\
+    \hspace*{10mm}  \verb|$fullname|
+    \item[]OKボタンを押し，デフォルトを変更してOKボタンを押す．
+    \end{itemize}
+  \end{itemize}
+
+\item gccのインストール
+  \begin{itemize}
+    \item 曲面描画のためには, gccが必要である．
+    \item minGWのホームページ\url{http://www.mingw.org}から\\
+    \hspace*{10mm}download \verb|>| Install \verb|>| mingw-get-setup.exe\\
+    をダウンロードして実行\\
+    \hspace*{10mm}注) パッケージは，mingw32-base, mingw32-gcc-g++だけでよい．
+  \end{itemize}
+
+\item 手動でインストールする場合（KeTTeX）\\
+\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
+\hspace*{3zw}\verb|C:\kettex\texlive| $=>$ \verb|C:\texlive\2020| など
+  \begin{enumerate}[(1)]
+  \item \verb|ketcindy(-master)\ketcindyfolder|を開いておく．
+  \item scriptsフォルダの中身を以下にコピーする．\\
+　\verb|C:\kettex\texlive\texmf-dist\scripts\ketcindy|
+  \item styleフォルダの中身を以下にコピーする．\\
+　\verb|C:\kettex\texlive\texmf-dist\tex\latex\ketcindy|
+  \item docフォルダの中身を以下にコピーする．\\
+　\verb|C:\kettex\texlive\texmf-dist\doc\supports\ketcindy||
+  \item コマンドプロンプトで以下を実行する\\
+  \hspace*{1zw}\verb|C:\kettex\texlive\bin\win32\mktexlsr|
+  \item \verb|C:\Program files\Cinderella2(.exe)|をダブルクリック
+  \end{enumerate}
+\end{enumerate}
+
+\end{document}

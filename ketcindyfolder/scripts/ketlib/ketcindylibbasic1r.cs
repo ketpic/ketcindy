@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.3.3.1");
+println("KeTCindy V.3.4.1");
 println(ketjavaversion());
 println("ketcindylibbasic1[20200516] loaded");
 
@@ -4003,9 +4003,9 @@ Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,optionsorg):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
-//help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n)"]);
+//help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n,color)"]);
   regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,
-      size,inside,tmp,tmp1,tmp2,tmp3);
+      size,inside,incolor,tmp,tmp1,tmp2,tmp3);
   if(substring(nm,0,1)=="-", //200510[2lines]
     name=substring(nm,1,length(nm));
   ,
@@ -4022,6 +4022,7 @@ Pointdata(nm,listorg,optionsorg):=(
   size="1";
   dispflg="Y";
   inside="Y"; //200512
+  incolor=""; //200519
   border="Y";
   Msg="Y";
   forall(eqL,
@@ -4039,8 +4040,12 @@ Pointdata(nm,listorg,optionsorg):=(
     );
     if(tmp1=="I", //190628from
       inside=Toupper(substring(tmp_2,0,1));
-      if(inside=="0",inside="N"); //200512[2lines]
-      if(inside=="1",inside="Y");
+      if(contains(["0","N","NO","1","Y","YES"],inside), //200519from
+        if(contains(["0","N","NO"],Inside),inside="N",inside="Y");
+      ,
+        inside="N";
+        incolor=tmp_2;
+      ); //200519to
       options=remove(options,[#]);
     );
     if(tmp1=="M", //190206from
@@ -4076,15 +4081,19 @@ Pointdata(nm,listorg,optionsorg):=(
     if(Noflg==1,options=["notex",Ltype,"Color="+text(color),"Num="+format(tmp2,6)]);
     if(Noflg==2,options=["nodisp"]);
     forall(1..(length(list)),
-      Circledata(text(#)+name,[list_#,tmp1],options);
-      if(inside=="Y",
-        tmp="cr"+text(#)+name; //200513[2lines]
-        Shade("-"+tmp,[tmp],append(options,"Ptshade=y")); // no ketjs
-//        tmp=parse(tmp); // only ketjs on
-//        tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
-//        parse(tmp); // only ketjs off
+      if(inside=="N",
+        if(length(incolor)>0, //200519from
+          Circledata(text(#)+name+"i",[list_#,tmp1*0.75],["nodisp"]);
+          tmp="cr"+text(#)+name+"i";
+          Shade("-"+tmp+"i",[tmp],["Color="+incolor,"Ptshade=y"]); 
+        );
+      ,
+        Circledata(text(#)+name,[list_#,tmp1],["nodisp"]);
+        tmp="cr"+text(#)+name;
+        Shade("-"+tmp,[tmp],append(options,"Ptshade=y"));
       );
-    );
+      Circledata(text(#)+name,[list_#,tmp1],options);
+    ); //200519to
   );
   list;
 );

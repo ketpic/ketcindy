@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200513] loaded");
+println("ketcindylibbasic2[20200519] loaded");
 
 //help:start();
 
@@ -4737,9 +4737,6 @@ Windispg(gcLorg):=( //190125
   gcL=select(gcL,#_2_1>=0); //190818
   gsave();
   layer(KETPIClayer);
-  forall(PTSHADElist, //200513from
-    parse(#_2);
-  ); //200513to
   forall(gcL,Nj,
     if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
     if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
@@ -4790,6 +4787,10 @@ Windispg(gcLorg):=( //190125
       );
     );
   );
+  forall(PTSHADElist, //200519from
+    parse(#_2);
+  ); //200519to
+
   grestore(); 
   layer(0);
 );

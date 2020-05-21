@@ -1,18 +1,18 @@
-REM 20200505
+REM 20200520
 echo off
 set xcp="\Windows\System32\xcopy"
 
-NET SESSION > NUL 2>&1
-if %ERRORLEVEL% == 0 (
-  echo Running as administator
-  set admin="y"
-) else (
-  echo Not running as administator, so will quit
-  echo Right-click and rerun as adminstrator
-  set admin="n"
-  pause
-  exit
-)
+rem NET SESSION > NUL 2>&1
+rem if %ERRORLEVEL% == 0 (
+rem   echo Running as administator
+rem   set admin="y"
+rem ) else (
+rem   echo Not running as administator, so will quit
+rem   echo Right-click and rerun as adminstrator
+rem   set admin="n"
+rem   pause
+rem   exit
+rem )
 
 cd %~dp0
 if not exist "ketcindyfolder" (

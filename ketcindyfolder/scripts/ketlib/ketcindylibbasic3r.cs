@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200515] loaded");
+println("ketcindylibbasic3[20200520] loaded");
 
 //help:start();
 
@@ -3273,11 +3273,14 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
     println(SCEOUTPUT,tmp1+"jquery.min.js"+tmp2); //200123[2lines]
     println(SCEOUTPUT,tmp1+"auto-render.min.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"auto-render11.min.js"+tmp2); //200517(trial)
     println(SCEOUTPUT,"cd katex");
     tmp1="%xcp%"+" /Y /Q /S /E /R ";
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\");
     println(SCEOUTPUT,tmp1+"katex.min.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex.min.js"+tmp2);
+    println(SCEOUTPUT,tmp1+"katex11.min.css"+tmp2); //200517(trial)
+    println(SCEOUTPUT,tmp1+"katex11.min.js"+tmp2); //200517(trial)
     tmp1="%xcp%"+" /Y /Q /S /E /R fonts";
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\katex\fonts\");
     println(SCEOUTPUT,tmp1+tmp2);
@@ -3304,6 +3307,7 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,"cp -p webfont.js "+tmp1+"/ketcindyjs"); //190214to
     println(SCEOUTPUT,"cp -p jquery.min.js "+tmp1+"/ketcindyjs"); //200123[2lines]
     println(SCEOUTPUT,"cp -p auto-render.min.js "+tmp1+"/ketcindyjs");
+    println(SCEOUTPUT,"cp -p auto-render11.min.js "+tmp1+"/ketcindyjs"); //200517(trial)
     println(SCEOUTPUT,"exit 0");
     closefile(SCEOUTPUT);
   );
@@ -3517,6 +3521,40 @@ Extractall(name):=(
   Out;
 );
 ////%Extractall end////
+
+////%Setedittext start////
+Setedittext(no,list):=( //200520
+//help:Setedittext(50,["y=",18,100]);
+  regional(size,width,str,tmp);
+  str="=";
+  size=18;
+  width=100;
+  tmp=select(list,isstring(#));
+  if(length(tmp)>0,str=tmp_1);
+  tmp=select(list,isreal(#));
+  if(length(tmp)>0,
+    size=list_1;
+    if(length(tmp)>1,
+      width=list_2;
+    );
+  );
+  tmp="inspect(Text"+text(no)+",";
+  tmp=tmp+Dqq("colorfill")+",0);";
+  parse(tmp);
+  tmp="inspect(Text"+text(no)+",";
+  tmp=tmp+Dqq("fillalpha")+",1);";
+  parse(tmp);
+  tmp="inspect(Text"+text(no)+",";
+  tmp=tmp+Dqq("text.text")+","+Dqq(str)+");";
+  parse(tmp);
+  tmp="inspect(Text"+text(no)+",";
+  tmp=tmp+Dqq("textsize")+","+text(size)+");";
+  parse(tmp);
+  tmp="Text"+text(no)+".minwidth=";
+  tmp=tmp+text(width)+");";
+  parse(tmp);
+);
+////%Setedittext end////
 
 ////%Textedit start//// 190430
 Textedit(no):=(
@@ -4223,6 +4261,16 @@ Mkketcindyjs(options):=( //17.11.18
         );
         flg=1;
       );
+      if(flg==0, //200520from
+        if(indexof(tmp1_jj,"Editable")>0,
+          tmp=tmp1_jj;
+          if(eqflg==1,tmp=replace(tmp,"=",eqrep)); //190604
+          tmp=Movetojsexe(tmp);
+          if(figure>0,tmp=Resizetextsize(tmp,defaulteditsize,scale));
+          out=append(out,tmp);
+          flg=1;
+        );
+      ); //200520to
       if(flg==0,
         if(indexof(tmp1_jj,"Evaluate")>0,
           tmp=replace(tmp1_jj,Dqq("Evaluate"),Dqq("EditableText"));
@@ -4323,7 +4371,7 @@ Mkketcindyjs(options):=( //17.11.18
       out_(tmp-1)=substring(tmp1,0,length(tmp1)-1);
     ); //190201to
     if(figure==0,
-      tmp=select(1..(length(out)),indexof(out_#,"width:")>0);
+      tmp=select(1..(length(out)),indexof(out_#," width:")>0);
       jj=tmp_1;
       tmp1=out_jj;
       flg=0;
@@ -4338,7 +4386,7 @@ Mkketcindyjs(options):=( //17.11.18
       );
       jssizeW=round(scale*parse(tmp2));
       out_jj="    width: "+text(jssizeW)+",";
-      tmp=select(1..(length(out)),indexof(out_#,"height:")>0);
+      tmp=select(1..(length(out)),indexof(out_#," height:")>0);
       jj=tmp_1;
       tmp1=out_jj;
       flg=0;
@@ -4463,20 +4511,20 @@ Mkketcindyjs(options):=( //17.11.18
 //      tmp=Dqq("MathJax-script")+" async src=";
 //      tmp=tmp+Dqq("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js");
 //      println(SCEOUTPUT,"<script id="+tmp+"></script>");
-      if(webflg=="Y", //200506from
+      if(webflg=="Y", 
         println(SCEOUTPUT,"<script src="+
             Dqq("https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")+"></script>");
         println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+
-            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css")+" />");
+            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517(trial)
         println(SCEOUTPUT,"<script src="+
-            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js")+"></script>");
+            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517(trial)
         println(SCEOUTPUT,"<script src="+
-            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js")+"></script>");
-      , //200506to
+            Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517(trial)
+      , 
         println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/jquery.min.js")+"></script>"); //200122from
-        println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/katex/katex.min.css")+" />");
-        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/katex/katex.min.js")+"></script>");
-        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/auto-render.min.js")+"></script>");
+        println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/katex/katex11.min.css")+" />"); //200517(trial)
+        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/katex/katex11.min.js")+"></script>"); //200517(trial)
+        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/auto-render11.min.js")+"></script>"); //200517(trial)
       ); 
       tmp="<script>$(document).ready(function(){renderMathInElement(document.body,{delimiters: ";
       tmp=tmp+"[{left: "+Dqq("[[")+", right: "+Dqq("]]")+", display: true},";

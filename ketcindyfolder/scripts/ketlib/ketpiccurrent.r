@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20200510)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20200519)" 
 
 print(ThisVersion)
 
+# 20200519
+#   class changed to class(dt)[1] ( according to specification of R)
 # 20200512
 #   Drwpt changed ( incolor removed, inside added )
 # 20200510
@@ -614,7 +616,7 @@ Appendrow<- function(...)
   {
     Dt<- varargin[[I]]
     Nc<- max(Nc,Ncol(Dt))
-    if(class(Dt)=="matrix") Dt<-as.numeric(t(Dt))
+    if(class(Dt)[1]=="matrix") Dt<-as.numeric(t(Dt))
     Out<- c(Out,Dt)
   }
   if(Nc>0)
@@ -702,7 +704,7 @@ Member<-function(A,L)
   if(length(N)==0) return(FALSE)
   for (I in 1:N)
   {
-    if(class(L)=="list")
+    if(class(L)[1]=="list")
     {
       Tmp<-L[[I]]
     }
@@ -733,14 +735,14 @@ Norm<-function(V)
 
 Ncol<-function(P)
 {
-  if(class(P)=="matrix") return(ncol(P))
+  if(class(P)[1]=="matrix") return(ncol(P))
   else return(length(P))
 }
 
 Nrow<-function(P)
 {
   if(length(P)==0) return(0)
-  if(class(P)=="matrix") return(nrow(P))
+  if(class(P)[1]=="matrix") return(nrow(P))
   else return(1)
 }
 
@@ -1339,7 +1341,7 @@ Assign<- function(...){
               }
             }
             Tmp3<- paste(Tmp3,")",sep="")
-            if(class(Tmp2)=="matrix"){
+            if(class(Tmp2)[1]=="matrix"){
               Nr<- as.character(nrow(Tmp2))
               Tmp3<- paste("matrix(",Tmp3,"nrow=",Nr,")",sep="")
             }
@@ -1421,7 +1423,7 @@ FlagL<<- 0
       }
       else{
         Rep<-""
-        if(class(Val)=="matrix"){
+        if(class(Val)[1]=="matrix"){
           Rep<- "matrix("
         }
         Rep<- paste(Rep,"c(",sep="")
@@ -1434,7 +1436,7 @@ FlagL<<- 0
             Rep<- paste(Rep,")",sep="")
           }
         }
-        if(class(Val)=="matrix"){
+        if(class(Val)[1]=="matrix"){
           Rep<- paste(Rep,",nrow=",as.character(nrow(Val)),")",sep="")
         }
       }
@@ -1933,7 +1935,7 @@ Dataindex<-function(P)
   {
     Ndm<-Appendrow(Ndm,c(N1,Nrow(P)))
   }
-  if(class(Ndm)=="numeric")
+  if(class(Ndm)[1]=="numeric")
   {
     Tmp<-matrix(Ndm,nrow=1)
     Ndm<- Tmp
@@ -2054,7 +2056,7 @@ Dividetable<- function(Tb)
 Doscaling<- function(G)
 {
   GLg<- G
-  if(class(GLg)=="numeric")
+  if(class(GLg)[1]=="numeric")
   {
     if(LOGX==1) GLg[1]<- log(G[1], base=10)
     if(LOGY==1) GLg[2]<- log(G[2], base=10)
@@ -4426,7 +4428,7 @@ Listplot<-function(...){
   for (I in 1:length(varargin)){
     Data<-varargin[[I]];
     if(mode(Data)=="numeric"){
-      if(class(Data)=="numeric"){
+      if(class(Data)[1]=="numeric"){
         Tmp<- matrix(Data,nrow=2);
         Tmp<- t(Tmp);
         Z<-Appendrow(Z,Unscaling(Tmp)) #181015
@@ -4501,7 +4503,7 @@ MakeBowdata <- function(PA,PB,H)
 MakeCurves<-function(...){        ## Scaling is implemented
   varargin<-list(...)
   Figdata<-varargin[[1]]
-  if(class(Figdata)=="numeric"){
+  if(class(Figdata)[1]=="numeric"){
     Figdata<-matrix(Figdata,nrow=1)
   } 
   Ptout<-1
@@ -4562,7 +4564,7 @@ MakeCurves<-function(...){        ## Scaling is implemented
    }
  }
   Outdata<-Atos[2:Nrow(Atos),]
-  if(class(Outdata)=="numeric")
+  if(class(Outdata)[1]=="numeric")
   {
     Outdata<-matrix(Outdata,nrow=1)
   }
@@ -5030,7 +5032,7 @@ Op<-function(N,Data)
   C <- c()
   if(length(Data)==0) return(C)
   if(mode(Data)=="list"){
-    if(class(Data)=="data.frame"){   # 10.02.23
+    if(class(Data)[1]=="data.frame"){   # 10.02.23
       C<- Data[N,]
     }
     else{ 
@@ -5048,7 +5050,7 @@ Op<-function(N,Data)
     return(C)
   }
   if(mode(Data)=="numeric"){
-    if(class(Data)=="matrix"){
+    if(class(Data)[1]=="matrix"){
       Din<- Dataindex(Data)
       if(nrow(Din)==1){
         C<- Data[N,]
@@ -7831,7 +7833,7 @@ Translatedata<- function(...)
 Unscaling<- function(G)
 {
   GLg<- G
-  if(class(GLg)=="numeric"){
+  if(class(GLg)[1]=="numeric"){
     GLg<-c(G[1]/SCALEX, G[2]/SCALEY)
     Tmp<-GLg
     if(LOGX==1) Tmp[1]<- 10^(GLg[1])

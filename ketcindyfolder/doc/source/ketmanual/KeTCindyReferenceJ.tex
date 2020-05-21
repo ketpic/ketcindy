@@ -570,11 +570,7 @@ optionsは，線種・表示する文字列・解像度・出力の有無など�
 \item[機能]点のデータを作成する。
 \item[説明]与えられた座標の点データを作成する。オプションは"Size=","Color=","Inside="。
 
-Inside オプションは，点の内部についての指定。
-
-0またはn : 白抜き
-
-カラーコードまたは色名 : その色で塗る
+Inside オプションは，点の内部についての指定（n : 内部を塗らない，color：内部色）
 
 \vspace{\baselineskip}
 【例】
@@ -595,15 +591,19 @@ Inside オプションは，点の内部についての指定。
 
 \hspace{10mm} \verb|Pointdata("1",A,["Size=4"]);|
 
-(4) 点データを作り，TeXにオプション（白抜き）で描く
+(4) 点データを作り，オプション（内部を塗らない）で描く
 
 \hspace{10mm}\verb|Pointdata("1",[A,B],["Inside=n"]);|
 
-(5) 点データを作るが，TeXには出力しない
+(5) 点データを作り，オプション（内部を白塗り）で描く
+
+\hspace{10mm}\verb|Pointdata("1",[A,B],["Inside=white"]);|
+
+(6) 点データを作るが，TeXには出力しない
 
 \hspace{10mm}\verb|Pointdata("1",[[3,4],[5,6]],["notex"]);|
 
-(6)点データを作るが，TeXには出力せず画面上にも表示しない。
+(7)点データを作るが，TeXには出力せず画面上にも表示しない。
 
 \hspace{10mm} \verb|Pointdata("1",[[3,4],[5,6]],["nodisp"]);|
 
@@ -8105,29 +8105,6 @@ Cinderellaのファイルメニューから「CindyJSに書き出す」を選ぶ
 <script type="text/javascript" src="ketcindyjs/Cindy.js"></script>
 \end{verbatim}
 
-このとき，関数 \verb|Setketcindyjs() | で，オプションを \verb|"Local=n"| とすると，ランタイムとして，kettex の中にある ketcindyjs を使う。このときはファイル名に jsoff を追加する。
-
-このときのリンク先は，Windowsの場合は
-
-\begin{verbatim}
-<link rel="stylesheet" href="file:///C:/kettex/texlive/texmf-dist/
-scripts/ketcindy/ketcindyjs/CindyJS.css">
-<script type="text/javascript" src="file:///C:/kettex/texlive/
-texmf-dist/scripts/ketcindy/ketcindyjs/Cindy.js"></script>
-\end{verbatim}
-
-Macの場合は
-
-\begin{verbatim}
-<link rel="stylesheet" href="file:////Applications/kettex/texlive/
-texmf-dist/scripts/ketcindy/ketcindyjs/CindyJS.css">
-<script type="text/javascript" src="file:////Applications/kettex/
-texlive/texmf-dist/scripts/ketcindy/ketcindyjs/Cindy.js"></script>
-\end{verbatim}
-
-である。
-
-注）MacOS 10.14 Mojave の場合，Applicationsへのパスが通らないことがある。（2019年2月16日現在）その場合は，\verb|Setketcindyjs() | のオプションを \verb|"Local=n"| としない。
 
 \vspace{\baselineskip}
 {\bf ファイル名について}
@@ -8158,7 +8135,6 @@ Cinderellaのファイルメニューから「CindyJSに書き出す」ときの
 
 \begin{tabbing}
 012345678\=3433778901234567\=890090666612345\=\kill
-Local \> y/n \>動作環境の設定。 \>初期値は y\\
 Scale \> 実数 \> 拡大・縮小　\>初期値は 1\\
 Grid \> 実数 \> グリッドサイズ（mm）\\
 Nolabel \> 点のリスト \> ラベルを表示しない点を指定する。"No"だけでも可。\\
@@ -8210,7 +8186,7 @@ Listplot("3",[B,D]);
 \hypertarget{setketcindy}{}
 \item[KeTJSだけで有効] only ketjs
 \item[機能] KeTJSだけに書き込む
-\item[説明] コマンドの先頭に　\verb|//| につけて，行の最後に続けて書くと，その行はKeTJSだけで有効となる。
+\item[説明] コマンドの先頭に　\verb|//| をつけて，行の最後に続けて書くと，その行はKeTJSだけで有効となる。
 ブロック単位で有効化するには，ブロックを \verb|only ketjs on|，\verb|only ketjs off| ではさむ。
 
 【例】KeTJSだけで入力窓を作る。
@@ -8299,22 +8275,28 @@ Plotdata("1",str,"x");
 
 \begin{description}
 
+\hypertarget{setedittextt}{}
+\item[関数]Setedittext(識別番号,[初期文字列，文字サイズ，幅])
+\item[機能]\verb|"Editable Text"|を設定する。
+\item[説明]Editable Textの作り方
+
+\begin{itemize}
+\item[(1)]「モード/特別/文字列入力」を選び，適当な初期値を入れる。
+\item[(2)]「要素を動かす」に戻り，shift-clickすると動かすことができる。
+\item[(3)]インスペクトで識別番号を確認（修正）する。
+\end{itemize}
+
+【例】Setedittext(0,["y=",18,300]); Text0の表示文字\verb|"y="|，文字サイズ18pt，幅300pt
+
+\end{description}
+
+\begin{description}
+
 \hypertarget{textedit}{}
 \item[関数]Textedit(識別番号)
 \item[機能]KeTJSで入力窓に入れた文字列を取得する。
-\item[説明]KeTJSでの入力窓の作り方
 
-\begin{itemize}
-\item[(1)]CindyScreenの"f(x)"を選び，適当な初期値を入れてEvaluateを押す。\\
-　注）"="だけを入れて，Setketcindyjsのオプションに\\
-　　　　"Equal="\\
-　　を追加すると，KeTJSの入力窓は空欄になる。
-\item[(2)]"要素を動かす"に戻り，(1)を選んでインスペクタを開く。
-\item[(3)]識別番号を確認（修正）して，フォントサイズを変える。
-
-\end{itemize}
-
-【例】識別番号を0とする。
+【例】
 
 \begin{verbatim}
 str="x^2"; //no ketjs
@@ -8732,6 +8714,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata(変数名と値のリスト)}\>script "csinit"にデータを書き込む\\
 \hyperlink{ketcindyjmain}{Ketcindyjsbody(prependlist,appendlist)}\>htmlの前後にスクリプトを追加したhtmlを作成\\
 \hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
+\hyperlink{setedittext}{Setedittext(識別番号, 文字サイズ, 幅)}\>\verb|"Editable Text"|を設定する。\\
 \hyperlink{textedit}{Textedit(識別番号)}\>KeTJSで入力窓に入れた文字列を取得\\
 \hyperlink{movetojs}{Movetojs(要素名,座標,フォントサイズ)}\>Textボタンの位置とフォントサイズを設定\\
 \hyperlink{setplaybuttons}{Setplaybuttons(座標,サイズ [, スペース])}\>Playなどのボタンの位置とフォントサイズを設定\\

@@ -44,21 +44,22 @@ Tocindyform,basic3,3153,3191,Bracket,Indexall,Tocindyformpart
 Getcindystr,basic3,3195,3218,Strsplit,Tocindyform
 Animepar,basic3,3222,3222,Animationparam
 Animationparam,basic3,3226,3245,seconds,stopanimation
-Copyketcindyjs,basic3,3249,3311,iswindows,Dqq,kc
-Ketjsoption,basic3,3315,3316,Setketcindyjs
-Setketcindyjs,basic3,3320,3329
-Ketcindyjsbody,basic3,3333,3338
-Ketcindyjsmain,basic3,3342,3351
-Ketcindyjsdata,basic3,3355,3379,Dqq,set
-Findfun,basic3,3383,3444,Removespace,Indexall
-Extractfun,basic3,3448,3465,Indexall,Findfun
-Extractall,basic3,3474,3518
-Textedit,basic3,3522,3528
-Textedit2value,basic3,3532,3574,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3578,3631, unicode
-Resizetextsize,basic3,3635,3659,Parsejson
-Movetojs,basic3,3663,3671
-Movetojsexe,basic3,3675,3691,Dqq,Parsejson
-Setplaybuttons,basic3,3695,3720,Movetojs
-Tohtmltagpf,basic3,3724,3777,Strsplit,Removespace,Dqq
-Mkketcindyjs,basic3,3781,4510, 12px/10pt = 12px/,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,Dqq,Tohtmltagpf
+Copyketcindyjs,basic3,3249,3315,iswindows,Dqq,200517,kc
+Ketjsoption,basic3,3319,3320,Setketcindyjs
+Setketcindyjs,basic3,3324,3333
+Ketcindyjsbody,basic3,3337,3342
+Ketcindyjsmain,basic3,3346,3355
+Ketcindyjsdata,basic3,3359,3383,Dqq,set
+Findfun,basic3,3387,3448,Removespace,Indexall
+Extractfun,basic3,3452,3469,Indexall,Findfun
+Extractall,basic3,3478,3522
+Setedittext,basic3,3526,3556,Dqq
+Textedit,basic3,3560,3566
+Textedit2value,basic3,3570,3612,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3616,3669, unicode
+Resizetextsize,basic3,3673,3697,Parsejson
+Movetojs,basic3,3701,3709
+Movetojsexe,basic3,3713,3729,Dqq,Parsejson
+Setplaybuttons,basic3,3733,3758,Movetojs
+Tohtmltagpf,basic3,3762,3815,Strsplit,Removespace,Dqq
+Mkketcindyjs,basic3,3819,4558, 12px/10pt = 12px/,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517,200517,Dqq,Tohtmltagpf

@@ -506,7 +506,8 @@ In addition, there are options specific to each function.
 \verb|Pointdata("1",[[1,2],[-2,3]]); |  // make 2 points (1,2),(-2,3)\\
 \verb|Pointdata("2",[A,B]);          | // A and B are draw by drawing tool.\\
 \verb|Pointdata("3",A,["size=4"]);   | // size of point A is 4.\\
-\verb|Pointdata("4",[A,B],["Inside=n"]);      |  // white circles\\
+\verb|Pointdata("4",[A,B],["Inside=n"]);      |  // only circles\\
+\verb|Pointdata("4",[A,B],["Inside=white"]);      |  // inside painted with white\\
 \verb|Pointdata("5",[[3,4],[5,6]],["notex"]); | //not draw in the \TeX  file.\\
 \verb|Pointdata("6",[[3,4],[5,6]],["nodisp"]);| //not draw \TeX  file and Euclidean view.\\
 
@@ -5789,20 +5790,30 @@ Find on the screen (not in the space) intersection points (\verb|tmp_1|, \verb|t
 
 \end{cmd}
 
+%--------------Setedittext-----------------------------
+
+\begin{cmd}{Setedittext}{setedittext}
+
+\itemket{Usage}Setedittextt(number of identifier,[character string,character size, box width])
+\itemket{Description} Function to set Editable Text.
+\itemket{Remark}To create Editable Text,
+\begin{enumerate}[(1)]
+\item Select "Mode/Special/Editable Text".
+\item Move with shift-clicking
+\item With the inspector, confirm/change the number of identifier.
+\end{enumerate}
+
+\itemket{Examples}Let the number of identifier be 50.\\
+\verb|Setedit(50,["y=",18,200]);|\\
+
+\end{cmd}
+
 %--------------Textedit-----------------------------
 
 \begin{cmd}{Textedit}{textedit}
 
 \itemket{Usage}Texedit(number of identifier)
 \itemket{Description} Function to get a string from an input box in HTML.
-\itemket{Remark}To create the input box,
-\begin{enumerate}[(1)]
-\item Use button "Define function".
-\item Input a string into "text" and press "Evaluation".\\
-\hspace*{3mm}Rem)To create a blank box, input only "=", and add "Equal=" to Setketcindyjs.
-\item With the inspector, confirm the number of identifier and change styles.
-\end{enumerate}
-
 \itemket{Examples}Let the number of identifier be 50.\\
 \verb|str="x^2";|\\
 \verb|//str=Textedit(50); //only ketjs|\\
@@ -6157,6 +6168,7 @@ Rem) lightgray\ [0,0,0,0.15],\ offwhite\ [0,0,0,0.3],\ cindycolor\ [0.66,0,69,0.
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata}\>Write into csinit\\
 \hyperlink{ketcindyjsmain}{Ketcindyjsbody}\>Add scripts to the first/last of body tag\\
 \hyperlink{animationparam}{Animationparam}\>Get parmeter value of animation\\
+\hyperlink{setedittext}{Setedittext}\>Set Editable Text\\
 \hyperlink{textedit}{Textedit}\>Get string from input box of KeTCindyJS\\
 \hyperlink{movetojs}{Movetojs}\>Set position and fontsize of text box in HTML\\
 \hyperlink{setplaybuttons}{Setplaybuttons}\>Set position of play buttons in HTML\\

@@ -1,3 +1,5 @@
+// 20200519
+//    Pointdata changed  (Inside=color supported)
 // 20200516
 //    Pointdata changed  (fillpoly used for ketcindyjs)
 // 20200514

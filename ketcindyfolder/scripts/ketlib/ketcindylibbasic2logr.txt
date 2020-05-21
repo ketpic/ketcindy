@@ -1,3 +1,5 @@
+// 200519
+//   Windispg changed (PTSHADElist put at the end)
 // 200513
 //   Shade changed  (ptshade)
 //   Windispg changed (PTSHADElist)

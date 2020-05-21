@@ -1,3 +1,8 @@
+// 20200520
+//    Mkketcindyjs changed  ( Editable Text)
+//    Setedittext added
+// 20200517
+//    Copyketcindyjs, Mkketcindyjs changed  ( trial of 0.11.1 for main)
 // 20200515
 //    Readbezier changed  (path added)
 // 20200514

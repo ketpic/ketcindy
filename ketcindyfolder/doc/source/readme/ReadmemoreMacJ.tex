@@ -1,0 +1,130 @@
+\documentclass{ujarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx,colorlinks=true,urlcolor=blue]{hyperref}
+
+\setmargin{20}{20}{20}{20}
+
+\西暦
+
+\renewcommand{\labelitemi}{・}
+\renewcommand{\labelitemii}{・}
+
+\begin{document}
+
+\begin{center}
+KETCindyについての補足(Mac)
+\end{center}
+
+\hfill 修正日：\today
+
+\begin{enumerate}[\bf\large 1.]
+
+\item KeTTeXのインストール（Catalinaの場合）
+\begin{itemize}
+\item \TeX の実行ファイルがセキュリティの制限によって実行できない場合がある．
+\begin{enumerate}[(1)]
+\item 管理者権限で次を実行して，すべてのアプリの実行を許可しておく．\\
+\hspace*{10mm}\verb|sudo spctl --master-enable|
+\item ketcindysettings.cdyを立ち上げて\verb|Update|を実行すれば，(1)も実行される．
+\item アプリの実行を不許可にするには\\
+\hspace*{10mm}\verb|sudo spctl --master-disable|
+
+\end{enumerate}
+\end{itemize}
+
+\item KeTCindyのインストール
+\begin{itemize}
+\item ketcindysettings.cdyを利用する．
+\begin{enumerate}[(1)]
+\item 必要なら，「情報を見る」でアプリをCinderella.appを選び，「すべてを変更」
+\item 左方にあるボタンで，言語，TeXの種類，描画コードを選ぶ．\\
+\hspace*{10mm}ボタンを押すと順に項目が変わる．
+\item 中央にあるボタンでTeXシステムを選ぶ．\\
+\hspace*{10mm}KeTTeX，TeXLive以外の場合は，CindyScriptでパスを設定してから．\verb|Other|を選ぶ．
+\item 右側にあるボタンを順に押す．\\
+\hspace*{10mm}\verb|Mkinit|：初期化ファイルketcindy.iniをユーザホームに作成\\
+\hspace*{10mm}\verb|Update|：TeXに入っているketlib関連のファイルを更新（コピー）\\
+\hspace*{10mm}\verb|Work|：作業フォルダketcindy.iniをユーザホームに作成
+\end{enumerate}
+\item ketcindysettings.cdyのUpdateでエラーが出た場合\\
+\hspace*{10mm}updataフォルダにあるupdateketcindy.commandをコントロールクリックする．
+\end{itemize}
+
+  \item KeTCindyのテストラン
+    \begin{enumerate}[(1)]
+    \item ketcindysettings.cdyを終了してから，作業ディレクトリketcindyを開く．
+    \item ketcindyの中のtemplate1basic.cdyをダブルクリック．\\
+      \hspace*{10mm}画面に白い枠が出れば，ライブラリの読み込みは成功．
+    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．
+    \item PDFの表示後，ターミナル画面を閉じるようにするには
+       \begin{itemize}
+        \item アプリケーション \verb|/| ユーティリティ \verb|/| ターミナルを開く
+        \item トップメニューから\\
+          \hspace*{5mm}ターミナル＞環境設定 \verb|>|（プロファイル）\verb|>| シェル\\
+          \hspace*{10mm}「シェルが正常に終了した場合閉じる」を選択
+        \end{itemize}
+  \end{enumerate}
+
+\item TeXWorksの設定（kettexの場合）
+  \begin{itemize}
+  \item \url{https://github.com/TeXworks/texworks/releases/} からダウンロードできる．\\
+\hspace*{10mm}注）KeTTeXの場合，TeXworksのバージョンは 0.6.2の方がよい．
+  \item TeXworksを立ち上げ，「TeXworks \verb|>| 環境設定 \verb|>| タイプセット」
+  \item 上の欄（パス）に以下を追加\\
+  \hspace*{5mm}\verb|/Applications/kettex/texlive/bin/x86_64-darwin|\\
+  \hspace*{10mm}注) 上の行を上の欄の先頭になるように移動する．
+  \item 下の欄の横にある + をクリック
+    \begin{itemize}
+    \item 名前：uplatex(ptex2pdf)またはplatex(ptex2pdf)
+    \item プログラム : ptex2pdf
+    \item 引数：\\
+    \hspace*{10mm} \verb|-u|（uplatexの場合のみ）\\
+    \hspace*{10mm} \verb|-l|\\
+    \hspace*{10mm} \verb|-ot|\\
+    \hspace*{10mm}  \verb|$synctexoption|\\
+    \hspace*{10mm}  \verb|$fullname|
+    \item[]OKボタンを押し，デフォルトを変更してOKボタンを押す．
+    \end{itemize}
+  \end{itemize}
+
+\item TeXShopの設定（kettexの場合）
+  \begin{itemize}
+  \item \verb|/Applications/TeX/TexShop.app|がなければ，以下からダウンロードする．\\
+  \hspace*{5mm}\url{https://pages.uoregon.edu/koch/texshop/obtaining.html}
+  \item TeXShopを立ち上げ，「TeXShop \verb|>| 環境設定 |」
+  \item 「書類\verb|>|設定プロファイル」　ptex(ptex2pdf)かuptex(uptex2pdf)を選ぶ
+  \item 「内部設定\verb|>|パス設定」\verb|/Applications/kettex/texlive/bin/x86_64-darwin|を入れる．
+  \end{itemize}
+
+\item gccのインストール
+  \begin{itemize}
+    \item 曲面描画のためには, gccが必要である．
+    \item Xcodeがインストールされていなければ，インストールする．\\
+    \hspace*{5mm}注) ターミナルで次を実行すれば，gccだけがインストールされる．\\
+    \hspace*{20mm}\verb|sudo xcode-select --install|
+  \end{itemize}
+
+\item 手動でコピーする場合（KeTTeX）\\
+\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
+\hspace*{3zw}\verb|/Applications/kettex/texlive| $=>$ \verb|/Library/TeX/Root| など
+  \begin{enumerate}[(1)]
+  \item ketcindy(-master)/ketcindyfolderを開いておく．
+  \item scriptsフォルダの中身を以下にコピーする．\\
+　\verb|/Applications/kettex/texlive/texmf-dist/scripts/ketcindy|
+  \item styleフォルダの中身を以下にコピーする．\\
+　\verb|/Applications/kettex/texlive/texmf-dist/tex/latex/ketcindy|
+  \item docフォルダの中身を以下にコピーする．\\
+　\verb|/Applications/kettex/texlive/texmf-dist/doc/support/ketcindy|
+  \item ターミナルで以下を実行する\\
+  \hspace*{1zw}\verb|sudo /Applications/kettex/texlive/bin/x86_64-darwin/mktexlsr|
+  \item workをユーザホームなど適当な場所にコピーして，名前（例えばketcindy）を変更する．
+  \item 上の作業ディレクトリ(ketcindy)に doc/ketmanual のマニュアルをコピーする．
+  \end{enumerate}
+
+\end{enumerate}
+
+\end{document}

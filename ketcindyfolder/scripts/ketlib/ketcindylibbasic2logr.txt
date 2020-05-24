@@ -1,3 +1,7 @@
+// 200523
+//   Letter debugged (color changed cmyk to rgb on CindyScreen)
+//   Tlistplot changed  ( option as Listplot)
+//   Tabledata changed  ( Tlistplot with "Msg=n" )
 // 200519
 //   Windispg changed (PTSHADElist put at the end)
 // 200513

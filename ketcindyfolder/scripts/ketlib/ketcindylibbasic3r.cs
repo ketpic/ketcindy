@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200520] loaded");
+println("ketcindylibbasic3[20200524] loaded");
 
 //help:start();
 
@@ -2813,8 +2813,6 @@ BBdata(fname,optionorg):=(
   if(length(path)==0,
     path=Dirwork;
   );
-
-
   if(flg==1,
     if(!isexists(path,file),
       println("   => "+file+" not exists");
@@ -2869,7 +2867,10 @@ BBdata(fname,optionorg):=(
       forall(tmp,
         tmp1=tmp1+Sprintf(#,2)+" ";
       );
-      tmp1=tmp+addop;
+      tmp1=substring(tmp1,0,length(tmp1)-1);
+      if(length(addop)>0,
+        tmp1=tmp1+addop;
+      );
       tmp2="\includegraphics[bb="+tmp1+"]{"+file+"}";
       println(tmp2);
     );
@@ -3522,23 +3523,34 @@ Extractall(name):=(
 );
 ////%Extractall end////
 
-////%Setedittext start////
-Setedittext(no,list):=( //200520
-//help:Setedittext(50,["y=",18,100]);
-  regional(size,width,str,tmp);
+////%Seteditable start////
+Seteditable(no):=Seteditable(no,[]); //200524
+Seteditable(no,optionorg):=(
+//help:Seteditable(50,["y=","Size=18","Width=100"]);
+//help:Seteditable( Width is no availabe yet);
+  regional(options,size,width,str,eqL,tmp,tmp1);
+  options=optionorg;
   str="=";
-  size=18;
-  width=100;
-  tmp=select(list,isstring(#));
-  if(length(tmp)>0,str=tmp_1);
-  tmp=select(list,isreal(#));
-  if(length(tmp)>0,
-    size=list_1;
-    if(length(tmp)>1,
-      width=list_2;
+  size="18";
+  width="100";
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="S",
+      size=tmp_2;
+      options=remove(options,[#]);
+    );
+    if(tmp1=="W",
+      width=tmp_2;
+      options=remove(options,[#]);
     );
   );
-  tmp="inspect(Text"+text(no)+",";
+  forall(options,
+    if(isstring(#),str=#);
+  );
+ tmp="inspect(Text"+text(no)+",";
   tmp=tmp+Dqq("colorfill")+",0);";
   parse(tmp);
   tmp="inspect(Text"+text(no)+",";
@@ -3548,13 +3560,13 @@ Setedittext(no,list):=( //200520
   tmp=tmp+Dqq("text.text")+","+Dqq(str)+");";
   parse(tmp);
   tmp="inspect(Text"+text(no)+",";
-  tmp=tmp+Dqq("textsize")+","+text(size)+");";
+  tmp=tmp+Dqq("textsize")+","+size+");";
   parse(tmp);
-  tmp="Text"+text(no)+".minwidth=";
-  tmp=tmp+text(width)+");";
+  tmp="inspect(Text"+text(no)+",";
+  tmp=tmp+Dqq("minwidth")+","+width+");";
   parse(tmp);
 );
-////%Setedittext end////
+////%Seteditable end////
 
 ////%Textedit start//// 190430
 Textedit(no):=(

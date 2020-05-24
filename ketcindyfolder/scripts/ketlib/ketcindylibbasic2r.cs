@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200519] loaded");
+println("ketcindylibbasic2[20200523] loaded");
 
 //help:start();
 
@@ -2944,8 +2944,9 @@ Letter(list,options):=(
 //        Ymv=round(Ymv*Ketcindyjsscale);
 //      ); // only ketjs off
       Str=list_(Nj+2);  //17.10.17
+      if(length(color)==4,color=Colorcmyk2rgb(color)); //200523
       drawtext(Pcrd(Pos),Str,offset->[Off+Xmv,Off+Ymv],
-         size->sz,color->color,align->aln,bold->bld,italics->ita);//16.10.09
+         size->sz,color->color,align->aln,bold->bld,italics->ita);
     );
     Nj=Nj+3;
   );
@@ -4194,13 +4195,13 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     if(length(rmvL)>=0,
       tmp1="r"+text(0);
       tmp2="r"+text(n);
-      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);
+      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],append(options,"Msg=n")); //200523
       tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
     ,
       forall(0..(n-1),
         tmp1="r"+text(#);
         tmp2="r"+text(#+1);
-        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],options);
+        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],append(options,"Msg=n")); //200523
         tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
       );
     );  //190507to
@@ -4215,13 +4216,13 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     if(length(rmvL)>=0,
       tmp1="c"+text(0);
       tmp2="c"+text(m);
-      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],options);
+      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],append(options,"Msg=n"));
       tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
     ,
       forall(0..(m-1),
         tmp1="c"+text(#);
         tmp2="c"+text(#+1);
-        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],options);
+        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp1+tmp3,tmp2+tmp3],append(options,"Msg=n"));
         tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
       );
     );
@@ -4235,7 +4236,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   tmp1=parse(tbstr);
   tmp=name+"str="+tbstr+";";
   parse(tmp); //101008to
-  Changetablestyle(rmvL,["nodisp"]); //190428
+  Changetablestyle(rmvL,["nodisp","Msg=n"]); //200523
   Addax(0);
   Eps=10^(-3);
   tmp1=clist_(length(clist));
@@ -4353,18 +4354,10 @@ Tlistplot(Ag1,Ag2):=(
 Tlistplot(nm,ptL,options):=(
 //help:Tlistplot(["c0r0","c0r4"]);
 //help:Tlistplot("1",["c0r0","c0r4"]);
-//help:Tlistplot([options2="Msg=y"]);
+//help:Tlistplot([options : same as Listplot]);
   regional(tmp,tmp1);
-  tmp1=divoptions(options);//180404from
-  tmp1=tmp1_5;
-  tmp1=apply(tmp1,Toupper(substring(#,0,1)));
-  if(contains(tmp1,"M"),
-    tmp1=options;
-  ,
-    tmp1=append(options,"Msg=n");
-  );//180404to
   tmp=apply(ptL,Tgrid(#)); // 15.06.03
-  Listplot(nm,tmp,tmp1);
+  Listplot(nm,tmp,options); //200523
 );
 ////%Tlistplot end////
 

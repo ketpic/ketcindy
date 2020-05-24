@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200516] loaded");
+println("ketcindylibbasic1[20200524] loaded");
 
 //help:start();
 
@@ -4066,7 +4066,7 @@ Pointdata(nm,listorg,optionsorg):=(
   list=apply(list,if(ispoint(#),Lcrd(#),#));
   if(Measuredepth(list)==0,list=[list]);
   tmp1=Textformat(list,6);
-  tmp2=apply(list,[#]);
+  if(length(list)>1,tmp2=apply(list,[#]),tmp2=list); //200524
   tmp2=Textformat(tmp2,6);
   tmp=name+"="+tmp2+";"; //190415
   parse(tmp);
@@ -4083,16 +4083,16 @@ Pointdata(nm,listorg,optionsorg):=(
     forall(1..(length(list)),
       if(inside=="N",
         if(length(incolor)>0, //200519from
-          Circledata(text(#)+name+"i",[list_#,tmp1*0.75],["nodisp"]);
+          Circledata(text(#)+name+"i",[list_#,tmp1*0.75],["nodisp","Msg=n"]); //200523
           tmp="cr"+text(#)+name+"i";
           Shade("-"+tmp+"i",[tmp],["Color="+incolor,"Ptshade=y"]); 
         );
       ,
-        Circledata(text(#)+name,[list_#,tmp1],["nodisp"]);
+        Circledata(text(#)+name,[list_#,tmp1],["nodisp","Msg=n"]); //200523
         tmp="cr"+text(#)+name;
         Shade("-"+tmp,[tmp],append(options,"Ptshade=y"));
       );
-      Circledata(text(#)+name,[list_#,tmp1],options);
+      Circledata(text(#)+name,[list_#,tmp1],append(options,"Msg=n")); //200523
     ); //200519to
   );
   list;

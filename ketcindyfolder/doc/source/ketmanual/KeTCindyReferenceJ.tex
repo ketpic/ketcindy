@@ -8275,8 +8275,8 @@ Plotdata("1",str,"x");
 
 \begin{description}
 
-\hypertarget{setedittextt}{}
-\item[関数]Setedittext(識別番号,[初期文字列，文字サイズ，幅])
+\hypertarget{seteditable}{}
+\item[関数]Seteditable(識別番号,[初期文字列，"Size=文字サイズ"，"Width=幅"])
 \item[機能]\verb|"Editable Text"|を設定する。
 \item[説明]Editable Textの作り方
 
@@ -8286,7 +8286,7 @@ Plotdata("1",str,"x");
 \item[(3)]インスペクトで識別番号を確認（修正）する。
 \end{itemize}
 
-【例】Setedittext(0,["y=",18,300]); Text0の表示文字\verb|"y="|，文字サイズ18pt，幅300pt
+【例】Setedittext(0,["y=","Size=18","Width=100"]); Text0の表示文字\verb|"y="|，文字サイズ18pt，幅100pt
 
 \end{description}
 
@@ -8714,7 +8714,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata(変数名と値のリスト)}\>script "csinit"にデータを書き込む\\
 \hyperlink{ketcindyjmain}{Ketcindyjsbody(prependlist,appendlist)}\>htmlの前後にスクリプトを追加したhtmlを作成\\
 \hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
-\hyperlink{setedittext}{Setedittext(識別番号, 文字サイズ, 幅)}\>\verb|"Editable Text"|を設定する。\\
+\hyperlink{seteditable}{Seteditable(識別番号, 文字サイズ, 幅)}\>\verb|"Editable Text"|を設定する。\\
 \hyperlink{textedit}{Textedit(識別番号)}\>KeTJSで入力窓に入れた文字列を取得\\
 \hyperlink{movetojs}{Movetojs(要素名,座標,フォントサイズ)}\>Textボタンの位置とフォントサイズを設定\\
 \hyperlink{setplaybuttons}{Setplaybuttons(座標,サイズ [, スペース])}\>Playなどのボタンの位置とフォントサイズを設定\\

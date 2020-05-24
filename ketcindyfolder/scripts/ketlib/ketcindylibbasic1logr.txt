@@ -1,3 +1,7 @@
+// 20200524
+//    Pointdata changed  (change [[A]] to [A] for the single point))
+// 20200523
+//    Pointdata changed  (Draw circle with "Msg=n"))
 // 20200519
 //    Pointdata changed  (Inside=color supported)
 // 20200516

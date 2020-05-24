@@ -59,7 +59,17 @@ KETCindyについての補足(Mac)
     \item ketcindysettings.cdyを終了してから，作業ディレクトリketcindyを開く．
     \item ketcindyの中のtemplate1basic.cdyをダブルクリック．\\
       \hspace*{10mm}画面に白い枠が出れば，ライブラリの読み込みは成功．
-    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．
+    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．\\
+     「開けない」のエラーが出た場合．
+   \begin{itemize}
+   \item キャンセルを押す．（ゴミ箱を選ばない）
+   \item システム環境設定＞セキュリティとプライバシー　を開く．
+   \item 「このまま許可」をクリックする．
+   \item 別の方法\\
+\hspace*{10mm}ターミナルで \verb|sudo stctl --master-disable| を実行\\
+\hspace*{10mm}システム環境設定＞セキュリティとプライバシー を開く\\
+\hspace*{10mm}実行の許可が「すべてを許可」になっているかを確認する
+   \end{itemize}
     \item PDFの表示後，ターミナル画面を閉じるようにするには
        \begin{itemize}
         \item アプリケーション \verb|/| ユーティリティ \verb|/| ターミナルを開く
@@ -68,6 +78,8 @@ KETCindyについての補足(Mac)
           \hspace*{10mm}「シェルが正常に終了した場合閉じる」を選択
         \end{itemize}
   \end{enumerate}
+
+\newpage
 
 \item TeXWorksの設定（kettexの場合）
   \begin{itemize}

@@ -1,3 +1,8 @@
+// 20200524
+//    Seteditable changed  ( "Size=","Width=")
+// 20200523
+//    BBdata debugged
+//    Setedittext => Seteditable
 // 20200520
 //    Mkketcindyjs changed  ( Editable Text)
 //    Setedittext added

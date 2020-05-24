@@ -3527,7 +3527,6 @@ Extractall(name):=(
 Seteditable(no):=Seteditable(no,[]); //200524
 Seteditable(no,optionorg):=(
 //help:Seteditable(50,["y=","Size=18","Width=100"]);
-//help:Seteditable( Width is no availabe yet);
   regional(options,size,width,str,eqL,tmp,tmp1);
   options=optionorg;
   str="=";
@@ -3562,8 +3561,8 @@ Seteditable(no,optionorg):=(
   tmp="inspect(Text"+text(no)+",";
   tmp=tmp+Dqq("textsize")+","+size+");";
   parse(tmp);
-  tmp="inspect(Text"+text(no)+",";
-  tmp=tmp+Dqq("minwidth")+","+width+");";
+  tmp="Text"+text(no)+".minwidth=";
+  tmp=tmp+width+";";
   parse(tmp);
 );
 ////%Seteditable end////

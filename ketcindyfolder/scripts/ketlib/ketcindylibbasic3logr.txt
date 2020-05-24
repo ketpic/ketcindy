@@ -1,5 +1,6 @@
 // 20200524
 //    Seteditable changed  ( "Size=","Width=")
+//    Seteditable debugged (width)
 // 20200523
 //    BBdata debugged
 //    Setedittext => Seteditable

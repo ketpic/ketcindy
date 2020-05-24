@@ -53,13 +53,13 @@ Ketcindyjsdata,basic3,3360,3384,Dqq,set
 Findfun,basic3,3388,3449,Removespace,Indexall
 Extractfun,basic3,3453,3470,Indexall,Findfun
 Extractall,basic3,3479,3523
-Seteditable,basic3,3527,3568,Divoptions,Strsplit,Toupper,Dqq
-Textedit,basic3,3572,3578
-Textedit2value,basic3,3582,3624,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3628,3681, unicode
-Resizetextsize,basic3,3685,3709,Parsejson
-Movetojs,basic3,3713,3721
-Movetojsexe,basic3,3725,3741,Dqq,Parsejson
-Setplaybuttons,basic3,3745,3770,Movetojs
-Tohtmltagpf,basic3,3774,3827,Strsplit,Removespace,Dqq
-Mkketcindyjs,basic3,3831,4570, 12px/10pt = 12px/,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517,200517,Dqq,Tohtmltagpf
+Seteditable,basic3,3527,3567,Divoptions,Strsplit,Toupper,Dqq
+Textedit,basic3,3571,3577
+Textedit2value,basic3,3581,3623,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3627,3680, unicode
+Resizetextsize,basic3,3684,3708,Parsejson
+Movetojs,basic3,3712,3720
+Movetojsexe,basic3,3724,3740,Dqq,Parsejson
+Setplaybuttons,basic3,3744,3769,Movetojs
+Tohtmltagpf,basic3,3773,3826,Strsplit,Removespace,Dqq
+Mkketcindyjs,basic3,3830,4569, 12px/10pt = 12px/,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517,200517,Dqq,Tohtmltagpf

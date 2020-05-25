@@ -53,7 +53,7 @@ Ketcindyjsdata,basic3,3360,3384,Dqq,set
 Findfun,basic3,3388,3449,Removespace,Indexall
 Extractfun,basic3,3453,3470,Indexall,Findfun
 Extractall,basic3,3479,3523
-Seteditable,basic3,3527,3567,Divoptions,Strsplit,Toupper,Dqq
+Seteditable,basic3,3527,3567
 Textedit,basic3,3571,3577
 Textedit2value,basic3,3581,3623,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
 Parsejson,basic3,3627,3680, unicode

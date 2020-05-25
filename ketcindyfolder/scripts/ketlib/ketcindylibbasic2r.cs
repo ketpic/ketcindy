@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200523] loaded");
+println("ketcindylibbasic2[20200526] loaded");
 
 //help:start();
 
@@ -33,7 +33,7 @@ Drawfigures(nm,figlistorg,optionlistorg,commonops):=(
   regional(figlist,name,figL,optionlist,nn,kk,fig,eqL,msg,tmp,tmp1,tmp2);
   tmp=Divoptions(commonops);
   eqL=tmp_5;
-  msg="Y";
+  msg="N";
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -2839,8 +2839,14 @@ Expr(listorg,options):=( //16.10.09
   list=listorg;
   forall(1..round(length(list)/3),
     str=list_(3*#);
-    if(!isstring(str),str=format(str,5));
-    str="$"+str+"$";
+    if(isstring(str), //200526from
+      if(!iswindows(),
+        str=replace(str,"¥","\");
+      ); 
+    ,
+      str=format(str,5)
+    ); //200526to
+    str="$"+str+"$"; //200526
     list_(3*#)=str;
   );
   Letter(list,options);
@@ -2987,10 +2993,12 @@ Letterrot(pt,dir,movstrorg,str,options):=( //200101renewal
   if(length(tmp2)>0,nmov=parse(tmp2),nmov=0); //200420to
   Letterrot(pt,dir,tmov,nmov,rev,str,options);
 );
-Letterrot(pt,dir,tmov,nmov,rev,str,options):=(
-  regional(tmp,color);
+Letterrot(pt,dirorg,tmov,nmov,rev,str,options):=(
+  regional(dir,tmp,color);
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
+  dir=dirorg; //200526[2lines]
+  if(isreal(dir),dir=[cos(dir),sin(dir)]);
   Letter(LLcrd(pt),"c",str,append(options,"notex"));
   tmp=replace(str,"\","\\"); // no ketjs on
   if(color!=KCOLOR, //
@@ -3037,10 +3045,16 @@ Exprrot(pt,dir,movstrorg,str,options):=( //200101renewal
   if(length(tmp2)>0,nmov=parse(tmp2),nmov=0); //200420to
   Exprrot(pt,dir,tmov,nmov,rev,str,options);
 );
-Exprrot(pt,dir,tmov,nmov,rev,str,options):=(
-  regional(tmp,color);
+Exprrot(pt,dirorg,tmov,nmov,rev,strorg,options):=(
+  regional(dir,str,tmp,color);
   tmp=Divoptions(options);
   color=tmp_(length(tmp)-2);
+  dir=dirorg; //200526[2lines]
+  if(isreal(dir),dir=[cos(dir),sin(dir)]);
+  str=strorg; //200526from
+  if(!iswindows(),
+    str=replace(str,"¥","\");
+  ); //200526to
   Expr(LLcrd(pt),"c",str,append(options,"notex"));
   tmp=replace(str,"\","\\"); // no ketjs on
   if(color!=KCOLOR, //180904

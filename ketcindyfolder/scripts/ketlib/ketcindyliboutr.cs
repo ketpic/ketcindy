@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200515] loaded");
+println("ketcindylibout[20200526] loaded");
 
 //help:start();
 
@@ -4019,7 +4019,7 @@ kcC(cname):=(
     SCEOUTPUT = openfile("kc.bat");
     println(SCEOUTPUT,"set path="+Dirwork);
     tmp=Indexall(PathC,"\");
-    if(length(tmp)==0, tmp=ndexall(PathC,"/"));
+    if(length(tmp)==0, tmp=Indexall(PathC,"/"));
     tmp1=substring(PathC,0,tmp_(length(tmp))-1);
     println(SCEOUTPUT,"cd "+tmp1);
     tmp=PathC+" %path%\"+cname+".c";

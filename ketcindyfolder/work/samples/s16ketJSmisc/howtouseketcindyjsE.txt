@@ -1,24 +1,24 @@
-How to use ketcindyjs    2019.02.26
+How to use ketcindyjs    2020.05.27
 
 1. Process flow
 
-  1) cdyファイルを開く．
-        Rem) In the case of no KeTJS,KeTJSoff buttons:
-            (i) open template2allbuttons.cdy
-            (ii) Copy KeTJS,KeTJSoff button using shift key.
+  1) Open a cdy file．
+        Rem) In the case of no Ketjson,Ketjsoff buttons:
+            (i) Open template2allbuttons.cdy
+            (ii) Copy Ketjson,Ketjsoff button using shift key.
             (iii) Paste them to the cdy file.
             (iv) Close once the file.
             (v) Open the file again
   2) Select 
         File > Export to CindyJA
-  3) Press KeTJS(online mode) or KeTJSoff(offline mode)
+  3) Press Ketjson(online mode) or Ketjsoff(offline mode)
   4) Open the html file
         Rem) Use GoogleChrome or Firefox in the case of Windows.
 
 2. Setting the option of ketcindyjs
          Setketcindyjs([options list);
-            "Scale=(ratio)"
+           "Scale=(ratio)"
            "Nolabel=[list of geometric elements]"
-               ex) ”Nolabel="+allpoints()
            "Grid=(interval of grid)"
            "Color=(back ground color)"
+               ex) Setketcindyjs([”Nolabel=all","Color=offwhite"]);

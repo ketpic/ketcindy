@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200524] loaded");
+println("ketcindylibbasic3[20200527] loaded");
 
 //help:start();
 
@@ -3325,13 +3325,13 @@ Ketjsoption(list):=Setketcindyjs(list);
 Setketcindyjs():=(
   KETJSOP;
 );
-Setketcindyjs(list):=(
+Setketcindyjs(list):=(  // no ketjs on
 //help:Setketcindyjs();
 //help:Setketcindyjs(["Scale=(1)","Nolabel=[](or all)","Color=","Grid="]);
 //help:Setketcindyjs(["Removept=[]"]);
   KETJSOP=list;
   KETJSOP;
-);
+);  // no ketjs off
 ////%Setketcindyjs end////
 
 ////%Ketcindyjsbody start//// 190909,200505(remove help)
@@ -3344,16 +3344,16 @@ Ketcindyjsbody(list1,list2):=(
 ////%Ketcindyjsbody end////
 
 ////%Ketcindyjsmain start//// 200119
-Ketcindyjsmain(prelist):=Ketcindyjsmain(prelist,[]);
-Ketcindyjsmain(prelist,postlist):=(
-//help:Ketcindyjsmain(["<pf10/fp>_;Sample"]);
+Ketcindyjsmain(prelist):=Ketcindyjsmain(prelist,[]); // no ketjs on
+Ketcindyjsmain(prelist,postlist):=( 
+//help:Ketcindyjsmain(["<pf10/fp>_;Sample"]); // no ketjs on
 //help:Ketcindyjsmain(["<pf10/fbr>_;Sample"],["<f5/fpbr>end"]);
 //help:Ketcindyjsmain([<pf10red/fp>=<p><font size="10" color="red">...</font><p>]);
   JSMAIN=[[],[]];
   if(islist(prelist),JSMAIN_1=prelist,JSMAIN_1=[prelist]);
   if(islist(postlist),JSMAIN_2=postlist,JSMAIN_2=[postlist]);
-  JSMAIN;
-);
+  JSMAIN; // no ketjs off
+); 
 ////%Ketcindyjsmain end////
 
 ////%Ketcindyjsdata start////  //190421
@@ -3526,8 +3526,8 @@ Extractall(name):=(
 ////%Seteditable start////
 Seteditable(no):=Seteditable(no,[]); //200524
 Seteditable(no,optionorg):=(
-//help:Seteditable(50,["y=","Size=18","Width=100"]);
-  regional(options,size,width,str,eqL,tmp,tmp1);
+//help:Seteditable(50,["y=","Size=18","Width=100"]);  //no ketjs on
+  regional(options,size,width,str,eqL,tmp,tmp1); 
   options=optionorg;
   str="=";
   size="18";
@@ -3563,7 +3563,7 @@ Seteditable(no,optionorg):=(
   parse(tmp);
   tmp="Text"+text(no)+".minwidth=";
   tmp=tmp+width+";";
-  parse(tmp);
+  parse(tmp);   //no ketjs off
 );
 ////%Seteditable end////
 
@@ -4259,7 +4259,7 @@ Mkketcindyjs(options):=( //17.11.18
     forall(from..(length(tmp1)),jj,
       flg=0; //190126from
       tmp2=["Figure","Parent","ParaF","Anime","Flip","Title","Slide","Digest",
-                 "KeTJS","KeTJSoff","Objview"];
+                 "KeTJS","KeTJSoff","Ketjson","Ketjsoff","Objview"]; //200527
       if(indexof(tmp1_jj,"type: "+Dqq("Button"))>0,
         nn=indexof(tmp1_jj,"text: ");
         tmp=substring(tmp1_jj,nn-1,length(tmp1_jj));

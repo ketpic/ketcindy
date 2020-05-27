@@ -14,88 +14,31 @@
 \begin{document}
 
 \begin{center}
-How to install KeTCindy(Mac)
+Additional explanations (Mac)
 \end{center}
 
 \hfill modified\ :\ \today
 
 \begin{enumerate}[\bf\large 1.]
 
-\item Install Cinderella, R and Maxima.
- \begin{itemize}
- \item \url{https://beta.cinderella.de}  (Cinderella)
- \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
- \end{itemize}
-\hspace*{5mm}Rem) Check they start correctly.
 
-\item Install TeX if any TeX has not been installed.
-  \begin{enumerate}[(1)]
-  \item TeXLive is recommended.
-    \begin{itemize}
-    \item Files necessary for KeTCindy are already implemented (2018 or later).
-    \end{itemize}
-  \item kettex is a light-weight TeXLive.
-    \begin{itemize}
-    \item Download kettex.zip from\\
-    \hspace*{10mm}\url{https://www.dropbox.com/s/dc4inuk06t07g26/kettex.dmg?dl=0}
-    \item Double-click it and move kettex to \verb|/Applications|.
-    \end{itemize}
-  \item In case of other TeX, see {\bf 3.}(2).
- \end{enumerate}
+\item If 'cannot execute' error occurs occurs in KeTTeX (capitan in particular):
+    \begin{enumerate}[(1)]
+    \item Press 'Cancel'.
+    \item Open System preference > Security and Privacy.
+    \item Press 'Execute as it is'.
+    \end{enumerate}
 
 
 \item Install KeTCdindy
-  \begin{enumerate}[(1)]
-  \item Download ketcindy from CTAN(\url{https://ctan.org})\\
-  \hspace*{10mm}Search ketcindy \verb|>| Pack­age ketcindy \verb|>| download
-    \begin{itemize}
-    \item[Rem)]The latest version can be download from Repository:\\
-        \hspace*{5mm}\url{https://github.com/ket­pic/ketcindy}\\
-        \hspace*{10mm}Clone or Download \verb|>| Download ZIP
-    \end{itemize}
-  \item Open ketcindy(-master)/forMac.
-    \begin{itemize}
-    \item[Rem)]If the folder name includes spaces, remove them.
-    \item[Rem)]If you use TeX other than TeXLIve/KeTTeX,
-      \begin{itemize}
-      \item Open setketcindy.command with a text editor.
-      \item Edit paths in it.
-      \end{itemize}
-    \end{itemize}
-  \item Double-click setketcindy.command.
-    \begin{itemize}
-    \item Password of an administrator is required.
-    \item Control-click and select Terminal if necessary. 
-    \item Contents of scripts will be copied into TeX.
-    \item ketcindystyle files will be copied and mktexlsr will be executed.
-    \item In Cinderella/PlugIns\\
-    \hspace*{5mm}KetcindyPluign.jar will be copied.\\
-    \hspace*{5mm}ketcindy.ini will be generated or remade(if selected).
-    \item TeX(typeset) will be usually latex,xelatex or pdflatex.
-    \end{itemize}
-    \item Double-click setwork.command.
-    \begin{itemize}
-    \item[Rem)]Control-click and select Terminal if necessary. 
-    \end{itemize}
-    \begin{itemize}
-    \item Work directory "ketcindy" will be generated in User's home.
-    \item Contents of “work” will be copied into "ketcindy"
-    \item \verb|.ketcindy.conf| will be also generated in User's home.\\
-    \hspace*{10mm}You can change the setting of PasthT, Mackc, etc.
-    \item Template of "ketcindy.conf" will be also copied to work directory.
-    \item Configuration files are read in order of 
-      \begin{enumerate}[1)]
-      \item ketoutset.txt
-      \item ketcindy.conf in User's home
-      \item ketcindy.conf in the work folder.
-      \end{enumerate}
-    \end{itemize}
-  \end{enumerate}
+  \begin{itemize}
+  \item Use \verb|ketcindysettings.cdy|
+  \item if an error occurs in 'Update', carry out steps of  {\bf 1.}
+  \end{itemize}
 
 \item Test run of KeTCindy
  \begin{enumerate}[(1)]
-  \item Double-click "template1basic.cdy" in work directory "ketcindy".\\
+  \item Once Quit Cinderella and Double-click 'testrun.cdy.\\
   \hspace*{10mm}Then a frame in white appear on the screen.  
   \item Press "Figure" button at the top left, then the final PDF output is displayed. 
 

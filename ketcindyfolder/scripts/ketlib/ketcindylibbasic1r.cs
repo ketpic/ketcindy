@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200524] loaded");
+println("ketcindylibbasic1[20200527] loaded");
 
 //help:start();
 
@@ -87,7 +87,7 @@ Ketinit(work,strictsep):=( //200509
   AXSTYLE=[["l","x","e","y","n","O","sw","","",""],[]]; //190901
   AXCOUNT=1; //181215
   SHADECTR=1; //190222
-  LFmark=unicode("000a");
+  LFmark=unicode("000a"); Bs=unicode("005c");
   CRmark=unicode("000d");//16.12.13
   Dq=unicode("0022");
   CommonMake=0;//180610 //no ketjs on
@@ -102,6 +102,8 @@ Ketinit(work,strictsep):=( //200509
   if(!isstring(GPACK),GPACK="tpic",Usegraphics(GPACK)); //180817//191002
   ErrFlag=0;
   KETJSOP=[]; //190129
+//  KETJSOP=["Web=y"]; WebMode=0; //200516,0526
+  JSBODY=[[],[]]; JSMAIN=[]; //190916,200119
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
 //  MOVETOJSLIST=[]; //190802
 //  KetcindyjsDataList=[]; //190801
@@ -160,8 +162,6 @@ Ketinit(work,strictsep):=( //200509
   StrictSep=strictsep; //190831
   Setwindow("Msg=n"); // 16.05.31
   forall(remove(allpoints(),[SW,NE]),Strictmove(#.name)); //190917
-  KETJSOP=["Web=n"]; WebMode=0; //200516
-  JSBODY=[[],[]]; JSMAIN=[]; //190916,200119
 // no ketjs on 190122
   // for Presentation
   letterc=[0.98,0.13,0,0.43]; boxc=[0.2,0,0,0];//190307 [0,0.32,0.52,0];
@@ -218,7 +218,7 @@ Fillstore():=(
     ["Figure",[1,0.29,0.29]],["Parent",[1,1,0]],
     ["ParaF",[1,0.93,0.6]],["Flip",[0,0,1]],["Anime",[0.51,0.95,1]],
     ["Title",[0,1,0]],["Slide",[0.47,0,0.72]],["Digest",[1,0.74,0.47]],
-    ["KeTJS",[0,1,1]],["KeTJSoff",[0,1,1]],
+    ["KeTJS",[0,1,1]],["KeTJSoff",[0,1,1]],["Ketjson",[0,1,1]],["Ketjsoff",[0,1,1]], //200527
     ["Objview",[0,1,0]],
     ["Play",[1.0, 0.741, 0.467]],["Pause",[1.0, 0.741, 0.467]], //190426[2lines]
     ["Rev",[1.0, 0.741, 0.467]],["Stop",[1.0, 0.741, 0.467]],
@@ -894,7 +894,7 @@ Changework(dirorg,options):=( //16.10.21
     ); //180618to
   ,
     if(length(subdir)>0,  //180605
-      if(makesub==1,//180606from
+      if((makesub==1)&(!isexists(dir,subdir)),//180606from,200527
         println(makedir(dir,subdir));
       );//180606
       Dirwork=dir+pathsep()+subdir;

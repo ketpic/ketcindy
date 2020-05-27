@@ -1,16 +1,16 @@
-ketcindyjsの使い方　　2019.02.26
+ketcindyjsの使い方　　2020.05.27
 
 １．作成の流れ
 
 　１）cdyファイルを開く．
-　　　　注）KeTJS,KeTJSoffのボタンがない場合
+　　　　注）Ketjson,Ketjsoffのボタンがない場合
 　　　　　　(1) template2allbuttons.cdyを同時に開く
-　　　　　　(2) KeTJS,KeTJSoffのボタンをShiftを押しながら選んでコピー
+　　　　　　(2) Ketjson,KetjsoffのボタンをShiftを押しながら選んでコピー
 　　　　　　(3) cdyファイルにコピー
 　　　　　　(4) ファイルを一旦保存して終了する．
 　　　　　　(5) 再びファイルを開く
 　２）ファイル＞「Cindyjsに書き出す」を実行
-　３）KeTJS（オンライン）またはKeTJSoff（オフライン）を押す．
+　３）Ketjson（オンライン）またはKetjsoff（オフライン）を押す．
 　４）htmlファイルを開く．
 　　　　注）Windowsの場合，GoogleChromeかFirefoxで開く
 
@@ -19,6 +19,6 @@ ketcindyjsの使い方　　2019.02.26
 　Setketcindyjs([オプションリスト]); をKetinit() の下に入れる．
 　　　"Scale=(倍率)"
 　　　"Nolabel=[幾何要素のリスト]"
-　　　　　例）”Nolabel="+allpoints()
 　　　"Grid=(グリッドの間隔)"
 　　　"Color=(背景色)"
+　　　　　例）Setketcindyjs([”Nolabel=all","Color=white"]);

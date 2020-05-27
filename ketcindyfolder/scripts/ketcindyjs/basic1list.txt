@@ -34,7 +34,7 @@ Strsplit,basic1,711,722,Indexall
 Parlevel,basic1,726,726,Bracket
 Bracket,basic1,729,751,Indexall
 Pardiagram,basic1,755,851,Divoptions,Toupper,Bracket,Listplot,Letter,Expr
-Changework,basic1,855,913,Divoptions,Strsplit,Toupper,Indexall,isexists,Dqq,makedir,pathsep,iswindows,iskcexists,setexec
+Changework,basic1,855,913,Divoptions,Strsplit,Toupper,Indexall,Dqq,isexists,makedir,pathsep,iswindows,iskcexists,setexec
 Changestyle,basic1,917,986,Divoptions,Strsplit,Toupper,Colorcmyk2rgb,Measuredepth,Pointdata
 Op,basic1,990,1002
 Ptselected,basic1,1006,1022,|mouse

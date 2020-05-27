@@ -23,18 +23,15 @@ KETCindyについての補足(Mac)
 
 \begin{enumerate}[\bf\large 1.]
 
-\item KeTTeXのインストール（Catalinaの場合）
-\begin{itemize}
-\item \TeX の実行ファイルがセキュリティの制限によって実行できない場合がある．
-\begin{enumerate}[(1)]
-\item 管理者権限で次を実行して，すべてのアプリの実行を許可しておく．\\
-\hspace*{10mm}\verb|sudo spctl --master-enable|
-\item ketcindysettings.cdyを立ち上げて\verb|Update|を実行すれば，(1)も実行される．
-\item アプリの実行を不許可にするには\\
-\hspace*{10mm}\verb|sudo spctl --master-disable|
+\item KeTTeXでの初期エラー（特にCatalina）
 
-\end{enumerate}
-\end{itemize}
+\hspace*{2mm}最初の実行時，セキュリティの制限によって実行不可のエラーが出る場合がある．
+    \begin{itemize}
+   \item キャンセルを押す．（ゴミ箱を選ばない）
+   \item システム環境設定＞セキュリティとプライバシー　を開く．
+   \item 「このまま許可」をクリックする．
+   \end{itemize}
+
 
 \item KeTCindyのインストール
 \begin{itemize}
@@ -51,35 +48,17 @@ KETCindyについての補足(Mac)
 \hspace*{10mm}\verb|Work|：作業フォルダketcindy.iniをユーザホームに作成
 \end{enumerate}
 \item ketcindysettings.cdyのUpdateでエラーが出た場合\\
-\hspace*{10mm}updataフォルダにあるupdateketcindy.commandをコントロールクリックする．
+\hspace*{10mm}{\bf 1.}を実行する．
 \end{itemize}
 
   \item KeTCindyのテストラン
     \begin{enumerate}[(1)]
-    \item ketcindysettings.cdyを終了してから，作業ディレクトリketcindyを開く．
-    \item ketcindyの中のtemplate1basic.cdyをダブルクリック．\\
+    \item ketcindysettings.cdyを終了してから，testrun.cdyを開く．\\
       \hspace*{10mm}画面に白い枠が出れば，ライブラリの読み込みは成功．
     \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．\\
-     「開けない」のエラーが出た場合．
-   \begin{itemize}
-   \item キャンセルを押す．（ゴミ箱を選ばない）
-   \item システム環境設定＞セキュリティとプライバシー　を開く．
-   \item 「このまま許可」をクリックする．
-   \item 別の方法\\
-\hspace*{10mm}ターミナルで \verb|sudo stctl --master-disable| を実行\\
-\hspace*{10mm}システム環境設定＞セキュリティとプライバシー を開く\\
-\hspace*{10mm}実行の許可が「すべてを許可」になっているかを確認する
-   \end{itemize}
-    \item PDFの表示後，ターミナル画面を閉じるようにするには
-       \begin{itemize}
-        \item アプリケーション \verb|/| ユーティリティ \verb|/| ターミナルを開く
-        \item トップメニューから\\
-          \hspace*{5mm}ターミナル＞環境設定 \verb|>|（プロファイル）\verb|>| シェル\\
-          \hspace*{10mm}「シェルが正常に終了した場合閉じる」を選択
-        \end{itemize}
-  \end{enumerate}
-
-\newpage
+\hspace*{10mm}KeTTeXでエラーが出た場合は{\bf 1.}を実行する．
+\end{enumerate}
+%\newpage
 
 \item TeXWorksの設定（kettexの場合）
   \begin{itemize}
@@ -136,6 +115,25 @@ KETCindyについての補足(Mac)
   \item workをユーザホームなど適当な場所にコピーして，名前（例えばketcindy）を変更する．
   \item 上の作業ディレクトリ(ketcindy)に doc/ketmanual のマニュアルをコピーする．
   \end{enumerate}
+
+\item その他
+
+\begin{itemize}
+ \item 「すべての実行を許可」を表示させる
+\begin{enumerate}[(1)]
+\item ターミナルで \verb|sudo stctl --master-disable| を実行
+\item システム環境設定＞セキュリティとプライバシー を開く
+\item 実行の許可が「すべてを許可」になっているかを確認する
+   \end{enumerate}
+
+    \item PDFの表示後，ターミナル画面を閉じるようにする
+       \begin{enumerate}[(1)]
+        \item アプリケーション \verb|/| ユーティリティ \verb|/| ターミナルを開く
+        \item トップメニューから\\
+          \hspace*{5mm}ターミナル＞環境設定 \verb|>|（プロファイル）\verb|>| シェル\\
+          \hspace*{10mm}「シェルが正常に終了した場合閉じる」を選択
+        \end{enumerate}
+\end{itemize}
 
 \end{enumerate}
 

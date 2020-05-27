@@ -14,92 +14,28 @@
 \begin{document}
 
 \begin{center}
-How to install KeTCindy(Windows)
+Additonal explanations of KeTCindy(Windows)
 \end{center}
 
 \hfill modified\ :\ \today
 
 \begin{enumerate}[\bf\large 1.]
+\item Install of softwares
 
-\item Install Cinderella, R,Maxima and Sumatra.
- \begin{itemize}
- \item \url{https://beta.cinderella.de}  (Cinderella)
- \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
- \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} (Sumatra)\\
-\hspace*{5mm}Rem) Select 'Option' of Sumatra and change the destination to Program Files or Program Files (x86).
+\begin{itemize}
+\item Cinderella\\
+\hspace*{5mm}Right-click and select 'Run as an administrator'.
+\item Sumatra\\
+\hspace*{5mm}Select 'Option' of Sumatra and change the destination to Program Files or Program Files (x86).
  \end{itemize}
 
-\item Install TeX if any TeX has not been installed.
-  \begin{enumerate}[(1)]
-  \item TeXLive is recommended.
-    \begin{itemize}
-    \item Files necessary for KeTCindy are already implemented (2018 or later).
-    \end{itemize}
-  \item kettex is a light-weight TeXLive.
-    \begin{itemize}
-    \item Download kettex.zip from\\
-    \hspace*{10mm}\url{https://www.dropbox.com/s/fthw4btjqqs33tc/kettex.exe?dl=0}
-    \item Double-click it and move kettex to \verb|C:\|.
-    \end{itemize}
-  \item In case of other TeX, see {\bf 3.}(2).
- \end{enumerate}
 
-
-\item Install KeTCdindy
-  \begin{enumerate}[(1)]
-  \item Download ketcindy from CTAN(\url{https://ctan.org})\\
-  \hspace*{10mm}Search ketcindy \verb|>| Pack­age ketcindy \verb|>| download
-    \begin{itemize}
-    \item[Rem)]The latest version can be download from Repository:\\
-        \hspace*{5mm}\url{https://github.com/ket­pic/ketcindy}\\
-        \hspace*{10mm}Clone or Download \verb|>| Download ZIP
-    \item[Rem)]Move the extracted folder to Desktop.
-    \end{itemize}
-  \item Open ketcindy(-master)/forWindows.
-    \begin{itemize}
-   \item[Rem)]If you use TeX other than TeXLIve/KeTTeX,
-      \begin{itemize}
-      \item Open setketcindy.bat with a text editor.
-      \item Edit paths in it.
-      \end{itemize}
-    \end{itemize}
-  \item Right click a following batch file setketcindy.bat and select "Run as adiministrator".\\
-  \hspace*{10mm}\Ltab{15mm}{KeTTeX} setketcindy.bat\\
-  \hspace*{10mm}\Ltab{15mm}{TeXLive} setketcindytexlive.bat\\
-  \hspace*{10mm}\Ltab{15mm}{Others} edited setketcindy.bat
-   \item[Rem)]In the case of Windows10, unblock the security block.    \begin{itemize}
-    \item Contents of scripts will be copied into TeX.
-    \item ketcindystyle files will be copied and mktexlsr will be executed.
-    \item In Cinderella/PlugIns\\
-    \hspace*{5mm}KetcindyPluign.jar will be copied.\\
-    \hspace*{5mm}ketcindy.ini will be generated (if make/remake is chosen).   
-    \item TeX(typeset) will be usually latex,xelatex or pdflatex.
-    \item Input the version numbers of R, Maxima, for example 3.4.2,\ 5.37.3.
-
-    \end{itemize}
-    \item Double-click setwork.bat.
-    \begin{itemize}
-    \item[Rem)]Control-click and select Terminal if necessary. 
-    \end{itemize}
-    \begin{itemize}
-    \item Work directory "ketcindy" will be generated in User's home.
-    \item Contents of “work” will be copied into "ketcindy"
-    \item \verb|.ketcindy.conf| will be also generated in User's home.\\
-    \hspace*{10mm}You can change the setting of PasthT, Mackc, etc.
-    \item Template of "ketcindy.conf" will be also copied to work directory.
-    \item Configuration files are read in order of 
-      \begin{enumerate}[1)]
-      \item ketoutset.txt
-      \item ketcindy.conf in User's home
-      \item ketcindy.conf in the work folder.
-      \end{enumerate}
-    \end{itemize}
-  \end{enumerate}
+\item Install KeTCdindy\\
+\hspace*{5mm}Use \verb|ketcindysettings.cdy|
 
 \item Test run of KeTCindy
  \begin{enumerate}[(1)]
-  \item Double-click "template1basic.cdy" in work directory "ketcindy".\\
+  \item Once quit Cinderella and double-click \verb|testrun.cdy|.\\
   \hspace*{10mm}Then a frame in white appear on the screen.  
   \item Press "Figure" button at the top left, then the final PDF output is displayed. 
     \begin{itemize}

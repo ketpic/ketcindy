@@ -1,3 +1,6 @@
+// 20200529
+//    Ketinit changed  ( Ptpos )
+//    Pointdata debugged (for js)
 // 20200527
 //    Fillstore changed (Ketjson,Ketjsoff)
 // 20200524

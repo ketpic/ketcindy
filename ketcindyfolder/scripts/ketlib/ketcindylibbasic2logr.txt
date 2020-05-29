@@ -1,3 +1,7 @@
+// 20200529
+//    Putpoint debugged  ( case the 3rd argument exists )
+// 20200528
+//    Bezier changed ("Msg=n")
 // 20200526
 //    Expr, Exprrot changed (¥ is available)
 //    Exprrot,Letterrot changed  ( angle supported )

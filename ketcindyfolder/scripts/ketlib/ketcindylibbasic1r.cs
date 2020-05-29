@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200527] loaded");
+println("ketcindylibbasic1[20200529] loaded");
 
 //help:start();
 
@@ -161,7 +161,10 @@ Ketinit(work,strictsep):=( //200509
   YMAX=5;
   StrictSep=strictsep; //190831
   Setwindow("Msg=n"); // 16.05.31
-  forall(remove(allpoints(),[SW,NE]),Strictmove(#.name)); //190917
+  forall(remove(allpoints(),[SW,NE]),
+    Strictmove(#.name);
+    Ptpos(#,#.xy); //200529
+  ); //190917
 // no ketjs on 190122
   // for Presentation
   letterc=[0.98,0.13,0,0.43]; boxc=[0.2,0,0,0];//190307 [0,0.32,0.52,0];
@@ -4018,7 +4021,7 @@ Pointdata(nm,listorg,optionsorg):=(
   eqL=tmp_5;
   opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
-  opcindy=tmp_(length(tmp));
+  opcindy=""; //tmp_(length(tmp));
   size="1";
   dispflg="Y";
   inside="Y"; //200512
@@ -4085,12 +4088,23 @@ Pointdata(nm,listorg,optionsorg):=(
         if(length(incolor)>0, //200519from
           Circledata(text(#)+name+"i",[list_#,tmp1*0.75],["nodisp","Msg=n"]); //200523
           tmp="cr"+text(#)+name+"i";
-          Shade("-"+tmp+"i",[tmp],["Color="+incolor,"Ptshade=y"]); 
+          Shade("-"+tmp+"i",[tmp],["Color="+incolor,"Ptshade=y"]); // no ketjs
+//          if(isstring(incolor),incolor=Colorname2cmyk(incolor)); // only ketjs on
+//          if(length(incolor)==4,incolor=Colorcmyk2rgb(incolor));
+//          opcindy=opcindy+",color->"+text(incolor);
+//          tmp=parse(tmp);
+//          tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
+//          parse(tmp); // only ketjs off
         );
       ,
         Circledata(text(#)+name,[list_#,tmp1],["nodisp","Msg=n"]); //200523
         tmp="cr"+text(#)+name;
-        Shade("-"+tmp,[tmp],append(options,"Ptshade=y"));
+        Shade("-"+tmp,[tmp],append(options,"Ptshade=y")); // no ketjs
+//          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on
+//          opcindy=opcindy+",color->"+text(color);
+//        tmp=parse(tmp); // only ketjs on
+//        tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
+//        parse(tmp); // only ketjs off
       );
       Circledata(text(#)+name,[list_#,tmp1],append(options,"Msg=n")); //200523
     ); //200519to

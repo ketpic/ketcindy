@@ -1,2 +1,0 @@
-join1=Joincrvs(part1,part2)//
-reL=[]//

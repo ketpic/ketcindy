@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200526] loaded");
+println("ketcindylibbasic2[20200529] loaded");
 
 //help:start();
 
@@ -3175,9 +3175,10 @@ Putpoint(name,Ptinit,Pt):=(
   if(!contains(ptstr,name),
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
     Ptpos(name,Pcrd([Ptinit_1,Ptinit_2])); //191005
-    ,  //no ketjs off  //191030
+  ,  //no ketjs off  //191030
     ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
     parse(ptstr);
+    Ptpos(name,Pcrd([Pt_1,Pt_2])); //200529
   ); //no ketjs  //191030
 );
 ////%Putpoint end////
@@ -3232,7 +3233,7 @@ Beziercurve(nm,ptlist,ctrlist):=Beziercurve(nm,ptlist,ctrlist,[]);
 Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
 //help:Bezier("1",[A,D],[B,C]);
 //help:Bezier(options=["Num=10"]);
-  regional(name,Ltype,Noflg,opstr,opcindy,Num,
+  regional(name,Ltype,Noflg,opstr,opcindy,Num,msgflg,
     ptlist,ctrlist,tmp,tmp1,tmp2,ii,st,out,list,color);
   name="bz"+nm;
   tmp=Divoptions(options);
@@ -3242,6 +3243,7 @@ Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Num=10;
+  msgflg="Y";
   tmp1=tmp_5;
   forall(tmp1,     // 14.12.31
     if(substring(#,0,1)=="N",
@@ -3249,7 +3251,10 @@ Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
       Num=parse(substring(#,tmp2,length(#)));
       opstr=opstr+","+Dq+#+Dq;
     );
-  );
+    if(substring(#,0,1)=="M",
+      tmp2=indexof(#,"=");
+      msgflg=Toupper(substring(#,tmp2,tmp2+1));
+    );  );
   ptlist=apply(ptlistorg,Lcrd(#)); // 16.08.16
   ctrlist=[];  // 14.12.31
   if(length(ctrlistorg)==length(ptlist)-1,
@@ -3279,7 +3284,7 @@ Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
     );
   );
   if(Noflg<3,
-    println("generate Bezier "+name);
+    if(msgflg=="Y",println("generate Bezier "+name));
     out=apply(list,Pcrd(#));
     tmp=name+"="+Textformat(out,5)+";"; //190415
     parse(tmp);

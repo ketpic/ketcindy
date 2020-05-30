@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200526] loaded");
+println("ketcindylibout[20200530] loaded");
 
 //help:start();
 
@@ -2104,7 +2104,7 @@ CalcbyM(name,cmd,optionorg):=(
         if(length(tmp)>0, wflg=1);
       );
     );
-  ); 
+  );
   if(wflg==0,wflg=-1); // 15.10.16
   if(wflg==1,
     if(length(wfile)>0,   // 15.10.05
@@ -2135,14 +2135,16 @@ CalcbyM(name,cmd,optionorg):=(
             tmp2=append(tmp2,length(tmp1));
             tmp4=[];
             forall(1..(length(tmp2)-1),tmp3,
-              tmp=tmp1_((tmp2_tmp3+1)..(tmp2_(tmp3+1)-1));
-              if(length(tmp)==1,tmp=tmp_1);
+              tmp="";
+              forall((tmp2_tmp3+1)..(tmp2_(tmp3+1)-1),
+                tmp=tmp+tmp1_#;
+              );
               tmp4=append(tmp4,tmp);
             );
             num="1234567890+-.";
             tmp1="[";
             forall(tmp4,st,
-              tmp=select(1..length(st),indexof(num,substring(st,#-1,#))==0);
+              tmp=select(1..(length(st)),indexof(num,substring(st,#-1,#))==0);
               if((length(tmp)==0) & (length(st)<4), // 16.05.10 16=>4
                 tmp1=tmp1+st+",";
               ,

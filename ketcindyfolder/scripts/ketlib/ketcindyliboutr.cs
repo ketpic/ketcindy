@@ -4155,7 +4155,7 @@ DisplayC():=DisplayC(DispC);
 DisplayC(name,options):=DisplayC([name,options]);
 DisplayC(dispc):=(
 //help:DisplayC("out",["Color=[1,0,0]");
-//help:DispC(options=["dr", "Color=[0,0,0]"])
+//help:DispC(options=["dr", "Color=[0,0,0]"]);
   regional(tmp,tmp1,cflg,var, file,options,eqL,opcindy,color);
   forall(1..(floor(length(dispc)/2)), //17.05.18
     var=dispc_(2*#-1); // 17.05.24

@@ -1,3 +1,6 @@
+// 20200531
+//    Makehelpfile added
+//    Help list changed (for "read");
 // 20200529
 //    Putpoint debugged  ( case the 3rd argument exists )
 // 20200528

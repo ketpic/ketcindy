@@ -2261,7 +2261,7 @@ Collectsameseg(ptdL):=(
 Intersectcurvespp(crv1org,crv2org):=Intersectcurvespp(crv1org,crv2org,[]);
 Intersectcurvespp(crv1org,crv2org,options):=(
 //help:Intersectcurvespp(crv1,crv2);
-//help:Intersectcurvespp(options=[Eps1(0.01),Eps2(0.1),Dist(2)])
+//help:Intersectcurvespp(options=[Eps1(0.01),Eps2(0.1),Dist(2)]);
   regional(Eps,Eps1,Eps2,Dist,crv1,crv2,ii,jj,seg1,seg2,self,loopL,out,
           flg,tmp,tmp1,tmp2);
   Eps=10^(-4);
@@ -2371,7 +2371,7 @@ Intersectcurvespp(crv1org,crv2org,options):=(
 Intersectcurves(crv1org,crv2org):=Intersectcurves(crv1org,crv2org,[]);
 Intersectcurves(crv1org,crv2org,options):=(
 //help:Intersectcurves(crv1,crv2);
-//help:Intersectcurves(options=[Eps1(0.1),Dist(2)])
+//help:Intersectcurves(options=[Eps1(0.1),Dist(2)]);
   regional(tmp);
   tmp=Intersectcurvespp(crv1org,crv2org,options); //190917(debugged)
   tmp=apply(tmp,#_1);
@@ -5301,7 +5301,7 @@ Parabolaplot(nm,ptlist,Arg):=(
   Parabolaplot(nm,ptlist,rng,options);
 );
 Parabolaplot(nm,ptlist,rng,options):=(
-//help:Parabolaplot("1",[A,B,C]):
+//help:Parabolaplot("1",[A,B,C]);
 //help:Parabolaplot("1",[A,B,C],"[-5,5]");
   regional(pA,pB,pC,angle,tmp,tmp1,tmp2);
   tmp1=Lcrd(ptlist_1);
@@ -5392,7 +5392,7 @@ Hyperbolaplot(nm,ptlist,Arg):=(
   Hyperbolaplot(nm,ptlist,rng,options);
 );
 Hyperbolaplot(nm,ptlist,rng,optionsorg):=(
-//help:Hyperbolaplot("1",[A,B,C],["Num=200"]):
+//help:Hyperbolaplot("1",[A,B,C],["Num=200"]);
 //help:Hyperbolaplot("1",[A,B,C],"[-5,5]",["Asy=do"]);
   regional(pA,pB,d,angle,f,a,b,pM,eqL,options,opasy,tmp,tmp1,tmp2);
   tmp=Divoptions(optionsorg);

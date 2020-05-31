@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200529] loaded");
+println("ketcindylibbasic2[20200531] loaded");
 
 //help:start();
 
@@ -2519,7 +2519,7 @@ Mksegments(options):=(
 ////%Mkcircles start////
 Mkcircles():=Mkcircles([]);
 Mkcircles(options):=(
-//help:Mkcircles():
+//help:Mkcircles();
   regional(str,ctr,tmp,tmp1,tmp2);
   ctr=1;
   forall(allcircles(),cir,
@@ -4014,7 +4014,7 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
 
 ////%Mkcstable start////
 Mkcstable(nterm,num):=( //190523
-//help:Mkcstable(number of terms, division number)
+//help:Mkcstable(number of terms, division number);
   regional(cosL,sinL,dL,jj,x,tmp);
   cosL=[];
   sinL=[];
@@ -4986,6 +4986,28 @@ Lessstr(st1,st2):=(
 );
 ////%Lessstr end////
 
+////%Makehelpfile start//// //200531
+Makehelpfile():=(
+  regional(fileL,dir,out,flh,tmp,tmp1);
+  fileL=["basic1","basic2","basic3","3d","mv","out"];
+  fileL=apply(fileL,"ketcindylib"+#+"r.cs");
+  dir=Dirhead+"/ketlib";
+  out=[];
+  forall(fileL,
+    tmp=Readlines(dir,#);
+    tmp=select(tmp,indexof(#,"//help:")>0);
+    tmp=tmp_(2..(length(tmp)-1));
+    tmp=apply(tmp,substring(#,7,indexof(#,");")+1));
+    out=concat(out,tmp);
+  );
+  setdirectory(dir);
+  flh=openfile("ketcindyhelp.txt");
+  forall(out,println(flh,#));
+  closefile(flh);
+  setdirectory(Dirwork);
+);
+////%Makehelpfile end////
+
 ////%Makehelplist start//// //200509
 Makehelplist(dir,libname):=(
   regional(cmdall,tmp,tmp1);
@@ -5030,23 +5052,35 @@ Helplist(Arg1,Arg2):=(
 Helplist(dir,files,help):=(
 //help:Helplist();
 //help:Helplist("helpE");
-  regional(ketfiles,tmp,tmp1,tmp2);
-  setdirectory(dir);
-  if(contains(files,"+"),
-    tmp=remove(files,["+"]);
-    ketfiles=concat(["+basic1","+basic2","+basic3","+out"],tmp); //190414
+  regional(ketfiles,fileL,tmp,tmp1,tmp2);
+  fileL=["","3d","mv","out"]; //200531[3lines]
+  fileL=apply(fileL,"ketcindylib"+#);
+  if(indexof(dir,"read")==0,
+    setdirectory(dir);
+    if(contains(files,"+"),
+      tmp=remove(files,["+"]);
+      ketfiles=concat(["+basic1","+basic2","+basic3","+out"],tmp); //190414
+    ,
+      ketfiles=files;
+    );
+    ketfiles=apply(ketfiles,replace(#,"+","ketcindylib"));
+    ketfiles=apply(ketfiles,#+"r.cs");  // 15.11.05 from
+    tmp=apply(files,replace(#,"+","ketcindylib"));
+    tmp=apply(tmp,#+help+".txt"); 
+    ketfiles=concat(ketfiles,tmp);// 15.11.05 until
+    tmp1=[];
+    forall(ketfiles,
+      tmp=Makehelplist(dir,#); //200509
+      tmp1=concat(tmp1,tmp);
+    );
   ,
-    ketfiles=files;
-  );
-  ketfiles=apply(ketfiles,replace(#,"+","ketcindylib"));
-  ketfiles=apply(ketfiles,#+"r.cs");  // 15.11.05 from
-  tmp=apply(files,replace(#,"+","ketcindylib"));
-  tmp=apply(tmp,#+help+".txt"); 
-  ketfiles=concat(ketfiles,tmp);// 15.11.05 until
-  tmp1=[];
-  forall(ketfiles,
-    tmp=Makehelplist(dir,#); //200509
-    tmp1=concat(tmp1,tmp);
+    tmp=Dirhead+"/ketlib"; //200531from
+    tmp1=Readlines(tmp,"ketcindyhelp.txt");
+    forall(fileL,
+      tmp2=Readlines(tmp,#+help+".txt");
+      tmp2=apply(tmp2,replace(#,"//help:",""));
+      tmp1=concat(tmp1,tmp2);
+    ); //200531to
   );
   if(!islist(HLIST), // 16.12.31from
     HLIST=sort(tmp1);

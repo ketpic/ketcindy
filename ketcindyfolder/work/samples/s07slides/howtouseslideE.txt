@@ -1,4 +1,4 @@
-Presentation with ketslide    2018.03.30
+Presentation with ketslide    2020.05.31
 
 0. Flow of making slides.
 
@@ -12,33 +12,29 @@ Presentation with ketslide    2018.03.30
   5) Press button "Slide".
 
 1.  Editing the .txt file.
-
-  1) Put // at the last of every lines.
-           Rm) Use |||| for //.
-		              http::||||.... //
-  2) Use :: for separators of each command.
-  3) Commands
-          title::titleslidename(::wallpaper)//
+  1) Use :: for separators of each command.
+  2) Commands
+          title::titleslidename(::wallpaper)
                 Rm) Put the first line.
-          main::mainttitlename//
-          new::pagetitlename//
-          enumerate//
+          main::mainttitlename
+          new::pagetitlename
+          enumerate
                 =\begin{enumerate}
-          itemize//
+          itemize
                 =\begin{itemize}
-          layer::{xsize}{ysize}//
+          layer::{xsize}{ysize}
                 =\begin{layer}{xsize}{ysize}
-          item::sentence//
+          item::sentence
                 =\item sentence
-          putnote::dir{xpos}{ypos}::filename(,scale)//
+          putnote::dir{xpos}{ypos}::filename(,scale)
                 =putnotedir{xpos}{ypos}{\input{fig/filename}}
-          end//
+          end
                 =\end{itemize,enumerate,layer}
         Rm) Any other TeX command is available.
-  4) Use ...// for inserting a blank line.
-  5) To display a page step by step
+  3) Use ... for inserting a blank line.
+  4) To display a page step by step
           Put just after new,
-               %repeat=number of steps//
+               %repeat=number of steps
           Put at the head of each line as
              %[2,-]::sentence
                    display at all steps from 2
@@ -49,9 +45,13 @@ Presentation with ketslide    2018.03.30
           Use %thin to display with thin letters.
                   %thin::[2,-]::sentence
              Rm) the dencity can be changed with Setslidebody.
-  6) To display all figures in the sub folder in folder "fig"
-          %repeat=//
-          %para=subfig:{0}:s{60}{10}:input(:scale)//
+  5) To display all figures in the sub folder in folder "fig"
+          %repeat=
+          %para=subfig:{0}:s{60}{10}:input(:scale)
+  6) To display page numbers
+          Case of main  \slidepage[m]
+          Case of slide  \slidepage (after the line of %repeat)
+        Rem) Compile twice with TeX to obtain total pages.
 
 2. Setting commands described in the cdy file.
           Setslidemain([letterc,boxc,boxd,framec,xpos,size]); 
@@ -60,7 +60,6 @@ Presentation with ketslide    2018.03.30
           Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue",90,70,1]);
 
 3. Making flip animation
-
   1) Define Mf(s) the state at s.
   2) Add Setpara as
           Setpara(foldername,funcitonstr,range,options); 
@@ -70,7 +69,6 @@ Presentation with ketslide    2018.03.30
   5) Press button Slide.
 
 4. Making animation.
-
   1) Add in the .cdy file
          Addpackage(["[dvipdfmx]{animate}"]);
   2) Add in the option of Setpara,

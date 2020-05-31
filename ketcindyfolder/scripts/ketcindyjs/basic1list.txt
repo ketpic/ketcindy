@@ -131,7 +131,7 @@ AddGraph,basic1,3696,3796,Divoptions,Flattenlist,Pcrd,Measuredepth,PaO,Textforma
 Joincrvs,basic1,3800,3896,LLcrd,Divoptions,Numptcrv,Ptstart,Ptend,Pcrd,Textformat,Getlinestyle
 Partcrv,basic1,3900,3989,Measuredepth,Divoptions,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Getlinestyle
 Opcrvs,basic1,3993,4001,Listplot
-Pointdata,basic1,4005,4113,Divoptions,tmp_,tmp_(length,Strsplit,Toupper,Lcrd,Measuredepth,RSform,Colorname2cmyk,Colocmyk2rgb,Textformat,Circledata
+Pointdata,basic1,4005,4113,Divoptions,tmp_,tmp_(length,Strsplit,Toupper,Lcrd,Measuredepth,RSform,Colorname2cmyk,Colorcmyk2rgb,Textformat,Circledata
 Listplot,basic1,4117,4198,Divoptions,Strsplit,Toupper,Pcrd,Textformat,Getlinestyle,Lcrd
 Lineplot,basic1,4202,4285,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Getlinestyle
 Plotdata,basic1,4289,4494,Divoptions,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Getlinestyle

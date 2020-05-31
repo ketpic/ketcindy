@@ -22,7 +22,7 @@ println("ketcindylibbasic3[20200527] loaded");
 Tenkeybrd(pLB):=Tenkeybrd(pLB,[]);
 Tenkeybrd(pLB,options):=(
 //help:Tenkeybrd([2,1],"Size=1.5");
-//help: Tenkeybrd(Buttons shoud be given)
+//help: Tenkeybrd(Buttons shoud be given);
   regional(axes,xL,yL,size,shade,color,tmp,tmp1);
   size="Size=1.5";
   shade="Y";
@@ -58,7 +58,7 @@ Tenkeybrd(pLB,options):=(
 Keyaction(key):=(
   regional(kL,kstr,endflg,sign);
 //help:Keyaction(key);
-//help:Getkey(Tenkeys should be given in advance)
+//help:Getkey(Tenkeys should be given in advance);
   endflg=0;
   sign=1;
   if(indexof(Tenkeys,"-")>0,

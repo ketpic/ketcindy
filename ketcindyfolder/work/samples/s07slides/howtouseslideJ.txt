@@ -1,4 +1,4 @@
-ketslideによるプレゼンテーション　　2018.12.25
+ketslideによるプレゼンテーション　　2020.05.31
 
 ０．作成の流れ
 
@@ -17,57 +17,54 @@ ketslideによるプレゼンテーション　　2018.12.25
 
 １．txtファイルの編集
 
-　１）すべての行の最後につける．
-　　　　注）urlの指定で//を用いるとき，||||とすると//に変換される．
-　２）各ブロックの引数の区切りは ::
-　３）コマンド
-　　　　・タイトル(またはtitle)::読込ファイル名(::壁紙ファイル)//
+　１）各ブロックの引数の区切りは ::
+　２）コマンド
+　　　　・タイトル(またはtitle)::読込ファイル名(::壁紙ファイル)
 　　　　　　　タイトルページを作成（１行目におく）
 　　　　　　注）壁紙(例えばwallpaperとする）を背景に入れるとき
 　　　　　　　　・例えばwallpaper.texを作成してfigフォルダに入れる．
 　　　　　　　　　　（figにあるサンプルwallpaper.texを参照）
-　　　　　　　　・タイトル(title)::slide0::wallpaper//
+　　　　　　　　・タイトル(title)::slide0::wallpaper
 　　　　　　注）preambleに追加するとき
-　　　　　　　　　１行目の//を外す．
-　　　　　　　　　次の行から，::区切りで書き加え，最後に//をおく．
+　　　　　　　　　次の行から，::区切りで書き加える．
 　　　　　　注）タイトル画面が不要の場合は，
-　　　　　　　　　タイトル(またはtitle)::（//をつけてもよい）
-　　　　・main::段落タイトル名//
-　　　　　　注）ページ番号を表示するときは，直後に\slidepage[1]//を入れる．
-　　　　・new(::行下げ)::タイトル((::位置)::読み込みファイル)//
-　　　　　　例）new::[10]::最初に::{50}{20}::figure//
+　　　　　　　　　タイトル(またはtitle)::
+　　　　・main::段落タイトル名
+　　　　　　注）ページ番号を表示するときは，直後に\slidepage[1]を入れる．
+　　　　・new(::行下げ)::タイトル((::位置)::読み込みファイル)
+　　　　　　例）new::[10]::最初に::{50}{20}::figure
 　　　　　　注）読み込みファイルのサイズ変更するとき
-　　　　　　　　　new::[10]::最初に::{50}{20}::figure,0.8//
+　　　　　　　　　new::[10]::最初に::{50}{20}::figure,0.8
 　　　　　　　　他も同様
-　　　　　　注）ページ番号を表示するときは，repeat文(5)の後に\slidepage//を入れる．
-　　　　・enumerate/
+　　　　　　注）ページ番号を表示するときは，repeat文(5)の後に\slidepageを入れる．
+　　　　・enumerate
 　　　　　　enumerate環境の始まり
-　　　　・itemize//
+　　　　・itemize
 　　　　　　itemize環境の始まり
-　　　　・layer(::範囲)//
+　　　　・layer(::範囲)
 　　　　　　layer環境の始まり
-　　　　・item::文//
+　　　　・item::文
 　　　　　　itemを追加
-　　　　・putnote::方向と位置::読み込みファイル//
+　　　　・putnote::方向と位置::読み込みファイル
 　　　　　　layer環境の中に図を入れる
-　　　　　　例）putonote::se{30}{10}::figure( , 倍率)//（inputのとき）
+　　　　　　例）putonote::se{30}{10}::figure( , 倍率)（inputのとき）
 　　　　　　　　　　figの中のfigure.texを表示
-　　　　　　例）putonote::se{30}{10}::include[width=5cm]::figure.pdf//
+　　　　　　例）putonote::se{30}{10}::include[width=5cm]::figure.pdf
 　　　　　　　　　　（includegraphicsのとき）
 　　　　　　注）図はすべてfigに入れる．
-　　　　・end//
+　　　　・end
 　　　　　　enumerate,itemize,layer環境の終わり
-　　　　・上記以外//
+　　　　・上記以外
 　　　　　　そのままTeXに書き出す．
 　　　　・コマンドをコメントアウトするときは，%%とする．
 
-　４）空白行を入れたいときは，...// とする．
+　３）空白行を入れたいときは，... とする．
 
-　５）newの後，ページを段階的に表示するとき，
+　４）newの後，ページを段階的に表示するとき，
 　　　・newの次の行に
-　　　　　%repeat=（newを含むスライドの枚数）,para//
+　　　　　%repeat=（newを含むスライドの枚数）,para
 　　　・表示したいページは
-　　　　　　%[2,-]::本文//
+　　　　　　%[2,-]::本文
 　　　　のように書く．
 　　　　　注）[2,- ]は2ページ以降全部
 　　　　　　　[-, 2]は2ページまで表示
@@ -76,23 +73,22 @@ ketslideによるプレゼンテーション　　2018.12.25
 　　　・指定以外のページで薄文字にしたいときは　%thin[2]::本文
 　　　　　注）薄文字の濃さのデフォルトは0.1だが，Setslidebodyで変更可能
 　　　　　注）txtファイルに以下を記述すれば，以降の濃さが変わる．
-　　　　　　　　　　\setthin{濃さ}//
+　　　　　　　　　　\setthin{濃さ}
 
-　６）figの中にあるサブフォルダ（例えばsubfig）の図ファイルすべてを順に表示するとき
+　５）figの中にあるサブフォルダ（例えばsubfig）の図ファイルすべてを順に表示するとき
 　　　・newの次の行に
-　　　　　%repeat=//
-　　　　　%para=subfig:{0}:s{60}{10}:input(:倍率)//
+　　　　　%repeat=
+　　　　　%para=subfig:{0}:s{60}{10}:input(:倍率)
 　　　　　　 ＝＞ layer{120}{0}, \putnotes{60}{10}{\input...}
 　　　　注）%repeat=,para=...と続けて書いてもよい．
 　　　　注）一時的に無効にするときは，%%とする．
 
-　７）page番号を表示するとき
-　　　　mainの場合　\slidepage[m]//
-　　　　slideの場合　%repeatの後に　\slidepage//
+　６）page番号を表示するとき
+　　　　mainの場合　\slidepage[m]
+　　　　slideの場合　%repeatの後に　\slidepage
 　　注）総ページ数を取得するため，TeXを２度通すことが必要である．
 
 ２．スライドの設定
-
 　１）cdyのfigureに記述する．
 　２）コマンド
 　　　・Setslidemain([letterc,boxc,boxd,framec,xpos,size]); 
@@ -110,7 +106,6 @@ ketslideによるプレゼンテーション　　2018.12.25
 　　　　　注）数字は，ページ移動ボタン列について，右端の水平位置，垂直サイズ，倍率
 
 ３．パラパラ動画の作成
-
 　　（１）mf(s)にパラメータ値sのときの図を記述する．
 　　（２）パラパラの設定
 　　　　Setpara(foldername,funcitonstr,range,options,optionsanime); 
@@ -128,7 +123,6 @@ ketslideによるプレゼンテーション　　2018.12.25
 　　（５）Slideボタンを押す．
 
 ４．animationの作成
-
 　　　注）PathAdにAdobeReaderのデフォルトのパスが設定されている．
 　　　　　　println(PathAd)により，パスが確認できる．
 　　　　　変更するときは，changesetting.txtにパスを記述する．

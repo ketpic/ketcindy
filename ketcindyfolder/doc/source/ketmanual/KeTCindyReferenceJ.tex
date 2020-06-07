@@ -4366,12 +4366,22 @@ Cindyscriptの アンダーバーの演算子 (list\_n , str\_n) と同様。
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \vspace{\baselineskip}
+\hypertarget{tonormalform}{}
+\item[関数]Tonormalform(簡易TeX-like文字列)
+\item[機能]\verb|*|を省略した文字列に\verb|*|を補った文字列を返す。
+
+\vspace{\baselineskip}
+【例】\verb|Tonormalform("fr(1,3)xsin(x)")); => \verb|fr(1,3)*x*sin(x)|
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\vspace{\baselineskip}
 \hypertarget{totexform}{}
 \item[関数]Totexform(簡易TeX-like書式)
 \item[機能]TeX書式の文字列を返す。
 
 \vspace{\baselineskip}
-【例】\verb|Totexform(fr(1,3)); => frac{1}{3}|
+【例】\verb|Totexform("fr(1,3)"); => frac{1}{3}|
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -8602,6 +8612,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{textformat}{Textformat(数,桁数)} \>小数点以下の桁数を指定して数値を文字列化する\\
 \hyperlink{windispg}{Windispg()}\>定義されたプロットデータを描画面に描く\\
 \hyperlink{fracform}{Fracform(数,分母リスト)}\>簡易TeX-like書式の文字列を返す\\
+\hyperlink{tonormalform}{Tonoralform(TeX-like書式)}\>TeX書式の文字列に\verb|*|を補う\\
 \hyperlink{totexform}{Totexform(TeX-like書式)}\>TeX書式の文字列を返す\\
 \hyperlink{tocindyform}{Tocindyform(TeX-like書式}\>Cindy書式の文字列を返す\\
 \vspace{\baselineskip}

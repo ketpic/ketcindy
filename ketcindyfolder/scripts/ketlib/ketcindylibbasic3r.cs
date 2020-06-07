@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200527] loaded");
+println("ketcindylibbasic3[20200605] loaded");
 
 //help:start();
 
@@ -2938,6 +2938,104 @@ Fracform(x,denorg,deg):=(
   [out,"err="+format(err,10),mm,nn]; //190914
 );
 ////%Fracform end////
+
+////%Tonormalform start//// //200605
+//help::Tonormalform("2x^2sin(x)");
+Tonormalform(fun0org):=(
+  regional(fun0,num,alp,ope,par,sgn,tmp,tmp1,tmp2,
+    nn,str,flg,pre,Pre,fun);
+  pre=["fr","sq","log","sin","cos","tan","pi"];
+  Pre=["F","Q","L","S","C","T","P"];
+  fun0=replace(fun0org," ","*");
+  forall(1..(length(pre)),
+    fun0=replace(fun0,pre_#,Pre_#);
+  );
+  num=apply(0..9,text(#));
+  num=append(num,".");
+  tmp1=apply(1..26,unicode(text(#+96),base->10));
+  tmp2=apply(1..26,unicode(text(#+64),base->10));
+  alp=concat(tmp1,tmp2);
+  ope=["-","+","*","/","^"];
+  par=["(",")"];
+  sgn=["-","+"];
+  tmp=substring(fun0,0,1);
+  if(contains(sgn,tmp),
+    fun=tmp; nn=2;
+  ,
+    fun=""; nn=1;
+  );
+  str=substring(fun0,nn-1,nn);
+  nn=nn+1;
+  if(contains(num,str),flg="n");
+  if(contains(alp,str),flg="a");
+  if(contains(ope,str),flg="o");
+  if(contains(par,str),flg="p");
+  while(nn<=length(fun0),
+    tmp1=substring(fun0,nn-1,nn);
+    if(contains(num,tmp1),tmp2="n");
+    if(contains(alp,tmp1),tmp2="a");
+    if(contains(ope,tmp1),tmp2="o");
+    if(contains(par,tmp1),tmp2="p");
+    if(flg==tmp2,
+      str=str+tmp1;
+    ,
+      if(flg=="n",
+        if((tmp2=="a"),
+          fun=fun+str+"*";
+        );
+        if((tmp2=="o")%(tmp2=="p"),
+          fun=fun+str;
+        );
+        if(tmp1=="(",
+          fun=fun+"*";
+        );
+      );
+      if(flg=="a",
+        tmp="";
+        forall(1..(length(str)),
+          tmp=tmp+str_#+"*";
+        );
+        if((tmp2=="n"),
+          fun=fun+tmp;
+        );
+        if((tmp2=="o")%(tmp2=="p"),
+          fun=fun+substring(tmp,0,length(tmp)-1);
+        );
+      );
+      if((flg=="o"),
+        fun=fun+str;
+      );
+      if(flg=="p",
+        if((str=="("),
+          if((tmp2=="n")%(tmp2=="a"),
+            fun=fun+str;
+          );
+          if((tmp2=="o")%(tmp2=="p"),
+            fun=fun+str;
+          );
+        );
+        if((str==")"),
+          if((tmp2=="n")%(tmp2=="a"),
+            fun=fun+str+"*";
+          );
+          if((tmp2=="o")%(tmp2=="p"),
+            fun=fun+str;
+          );
+        );
+      );
+      str=tmp1;
+    );
+    flg=tmp2;
+    nn=nn+1;
+  );
+  fun=fun+str;
+  forall(1..(length(Pre)),
+    fun=replace(fun,Pre_#,pre_#);
+  );
+  fun=replace(fun,")(",")*(");
+  fun;
+);
+////%Tonormalform end////
 
 ////%Totexformpart start////
 Totexformpart(str):=( //190514

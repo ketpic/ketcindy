@@ -37,29 +37,30 @@ Mkslidesummary,basic3,2668,2733,Fillblack,pathsep,ismacosx,setexec,PPa,PaO,Calcb
 BBdata,basic3,2737,2879,Divoptions,Toupper,ismacosx,isexists,Dqq,iswindows,kc,Readlines,Removespace,Strsplit,Sprintf
 Gcd,basic3,2883,2895
 Fracform,basic3,2899,2939
-Totexformpart,basic3,2943,3011,Bracket,Strsplit,Assign
-Totexform,basic3,3015,3078,Totexformpart,Indexall,Bracket
-Tocindyformpart,basic3,3082,3150,Bracket,Strsplit,Assign
-Tocindyform,basic3,3154,3192,Bracket,Indexall,Tocindyformpart
-Getcindystr,basic3,3196,3219,Strsplit,Tocindyform
-Animepar,basic3,3223,3223,Animationparam
-Animationparam,basic3,3227,3246,seconds,stopanimation
-Copyketcindyjs,basic3,3250,3316,iswindows,Dqq,200517,kc
-Ketjsoption,basic3,3320,3321,Setketcindyjs
-Setketcindyjs,basic3,3325,3334
-Ketcindyjsbody,basic3,3338,3343
-Ketcindyjsmain,basic3,3347,3356
-Ketcindyjsdata,basic3,3360,3384,Dqq,set
-Findfun,basic3,3388,3449,Removespace,Indexall
-Extractfun,basic3,3453,3470,Indexall,Findfun
-Extractall,basic3,3479,3523
-Seteditable,basic3,3527,3567
-Textedit,basic3,3571,3577
-Textedit2value,basic3,3581,3623,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
-Parsejson,basic3,3627,3680, unicode
-Resizetextsize,basic3,3684,3708,Parsejson
-Movetojs,basic3,3712,3720
-Movetojsexe,basic3,3724,3740,Dqq,Parsejson
-Setplaybuttons,basic3,3744,3769,Movetojs
-Tohtmltagpf,basic3,3773,3826,Strsplit,Removespace,Dqq
-Mkketcindyjs,basic3,3830,4569, 12px/10pt = 12px/,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517,200517,Dqq,Tohtmltagpf
+Tonormalform,basic3,2943,3037
+Totexformpart,basic3,3041,3109,Bracket,Strsplit,Assign
+Totexform,basic3,3113,3176,Totexformpart,Indexall,Bracket
+Tocindyformpart,basic3,3180,3248,Bracket,Strsplit,Assign
+Tocindyform,basic3,3252,3290,Bracket,Indexall,Tocindyformpart
+Getcindystr,basic3,3294,3317,Strsplit,Tocindyform
+Animepar,basic3,3321,3321,Animationparam
+Animationparam,basic3,3325,3344,seconds,stopanimation
+Copyketcindyjs,basic3,3348,3414,iswindows,Dqq,200517,kc
+Ketjsoption,basic3,3418,3419,Setketcindyjs
+Setketcindyjs,basic3,3423,3432
+Ketcindyjsbody,basic3,3436,3441
+Ketcindyjsmain,basic3,3445,3454
+Ketcindyjsdata,basic3,3458,3482,Dqq,set
+Findfun,basic3,3486,3547,Removespace,Indexall
+Extractfun,basic3,3551,3568,Indexall,Findfun
+Extractall,basic3,3577,3621
+Seteditable,basic3,3625,3665
+Textedit,basic3,3669,3675
+Textedit2value,basic3,3679,3721,Toupper,Textedit,Removespace,Tocindyform,Totexform,Tomaxform,Strsplit
+Parsejson,basic3,3725,3778, unicode
+Resizetextsize,basic3,3782,3806,Parsejson
+Movetojs,basic3,3810,3818
+Movetojsexe,basic3,3822,3838,Dqq,Parsejson
+Setplaybuttons,basic3,3842,3867,Movetojs
+Tohtmltagpf,basic3,3871,3924,Strsplit,Removespace,Dqq
+Mkketcindyjs,basic3,3928,4667, 12px/10pt = 12px/,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,isexists,Cdyname,Extractfun,Extractall,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,Strsplit,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517,200517,Dqq,Tohtmltagpf

@@ -1,3 +1,5 @@
+// 20200605
+//    Tonormalform added
 // 20200527
 //    Mkketcindyjs changed (Ketjson, Ketjsoff);
 // 20200524

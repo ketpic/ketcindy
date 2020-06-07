@@ -10,9 +10,9 @@ getdirhead();
 gedirhead("/Applications");
 gedirhead("C:\Users\(username)");
 setpath();
-:Ketinit();
-:Ketinit("");
-:Ketinit(0.3);
+Ketinit();
+Ketinit("");
+Ketinit(0.3);
 Initglist();
 Setglist();
 Addglist();
@@ -74,9 +74,9 @@ Intersectcrvspp("gr1","pa1");
 Intersectcrvspp(options=[Eps2(0.1),"Dif=0.05"]);
 Intersectcrvs("gr1","pa1");
 Intersectcurvespp(crv1,crv2);
-
+Intersectcurvespp(options=[Eps1(0.01),Eps2(0.1),Dist(2)]);
 Intersectcurves(crv1,crv2);
-
+Intersectcurves(options=[Eps1(0.1),Dist(2)]);
 Nearestptcrv(A,"gr1");
 Nearestpt("gr1","gr2");
 Derivative(plotdata,"x=2");
@@ -160,11 +160,11 @@ Ovaldata(optios=[size]);
 Segmark("1",[A,B]);
 Segmark("1",[A,B],["Type=seg,2"]);
 Segmark(options=["Type=seg(,n)/cir/poly(,n)/","Width=1","Size=1"]);
-
+Parabolaplot("1",[A,B,C]);
 Parabolaplot("1",[A,B,C],"[-5,5]");
 Ellipseplot("1",[A,B,3]);
 Ellipseplot("1",[A,B,C],"[0,pi]",[options]);
-
+Hyperbolaplot("1",[A,B,C],["Num=200"]);
 Hyperbolaplot("1",[A,B,C],"[-5,5]",["Asy=do"]);
 Polygonplot("1",[A,B],12);
 Polygonplot("1",[A,B],12,["Geo=n"]);
@@ -215,7 +215,7 @@ Scaledata("1",["crAB","pt1"],3,2,[[0,0]]);
 Scaledata("1",["crAB","pt1"],2,[[0,0]]);
 Reflectdata("1",["crAB"],[C]);
 Mksegments();
-
+Mkcircles();
 Htickmark([1,"1",2,"sw","2"]);
 Vtickmark([1,"1",2,"sw","2"]);
 Vtick(1,0.1,options);
@@ -269,7 +269,7 @@ Periodfun("1",defL,"x=range",options);
 Periodfun(defL=[function string,range(with equal option),devision number,...]);
 Periodfun(equal option "l","r","b","n");
 Periodfun(options=["Connect)=da,Color=red"]);
-
+Mkcstable(number of terms, division number);
 Fourierseries("1",[c0,cn,sn],period,numterm,"x=range",options);
 Fourierseries("1","[c0,cn,sn]",period,numterm,"x=range",options);
 Fourierseries(options2=["Table=n/y"]);
@@ -301,6 +301,7 @@ Makecmdlist("ketcindylib");
 elect(tmp,indexof(#,"//help:")>0);
 Helplist();
 Helplist("helpE");
+mp2=apply(tmp2,replace(#,"//help:",""));
 Help("Plot");
 Help("*");
 Helpkey(keyword);
@@ -310,9 +311,9 @@ Tikzptseq([A,B,[3,1]]);
 Tikzline([A,B,C,"cycle"],["Join=round"]);
 Tikzline(options=["Join=(round,bevel)","Width=(1)","Color="]);
 Tenkeybrd([2,1],"Size=1.5");
-
+ Tenkeybrd(Buttons shoud be given);
 Keyaction(key);
-
+Getkey(Tenkeys should be given in advance);
 Datetime();
 Writebezier(file);
 Writebezier(file,"acd");
@@ -358,6 +359,7 @@ Gcd(xlist,max<100>);
 Fracform(1.33);
 Fracform(1.33,1..100 (,err(-5)));
 Fracform(1.33,200 (,err(-5)));
+:Tonormalform("2x^2sin(x)");
 Totexform("frac(2,3)");
 Tocindyform("frac(2,3)");
 Getcindystr("val=sq(3)");
@@ -587,7 +589,7 @@ Startsurf([50],[1500,500],[0.01,0.1]);
 Contsurf();
 WritedataC(filename, 3ddata);
 DisplayC("out",["Color=[1,0,0]");
-
+DispC(options=["dr", "Color=[0,0,0]"]);
 ExeccmdC("1",options1,options2);
 ExeccmdC(options1=["dr(/da/do)","m/r","Wait=30"]);
 ExeccmdC(options2=["do(/nodisp/da/do)"]);

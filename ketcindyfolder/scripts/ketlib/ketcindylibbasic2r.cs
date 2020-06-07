@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200531] loaded");
+println("ketcindylibbasic2[20200607] loaded");
 
 //help:start();
 
@@ -4115,9 +4115,11 @@ Tabledata(Arg1,Arg2,Arg3,Arg4):=(
 Tabledata(nm,xL,yL,rmvL,optionorg):=(
 //help:Tabledata(xL,yL,rmvL,["Geo=y(n)"]);
 //help:Tabledata(options=[2(tick,0 for no tick),"Setwin=y","Move=[0,0]"]); //190428
-  regional(options,geo,tmp,tmp1,tmp2);
+  regional(options,rmL,Noflg,geo,tmp,tmp1,tmp2);
   options=optionorg;
   tmp=Divoptions(options);
+  Noflg=tmp_2;
+  if(Noflg>=1,rmL=[],rmL=rmvL); //200607
   eqL=tmp_5;
   geo="N"; //191008from
   forall(eqL,
@@ -4129,9 +4131,9 @@ Tabledata(nm,xL,yL,rmvL,optionorg):=(
     );
   );
   if(geo=="Y", //191008to
-    Tabledatageo(nm,xL,yL,rmvL,options);
+    Tabledatageo(nm,xL,yL,rmL,options);
   ,
-    Tabledatalight(nm,xL,yL,rmvL,options);
+    Tabledatalight(nm,xL,yL,rmL,options);
   );
 );
 ////% Tabledata end////

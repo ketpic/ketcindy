@@ -159,12 +159,14 @@ for i in LICENSE README tl-integration/README.TeXLive ; do
 done
 mv ketcindy/HowToInstallE.pdf doc/support/ketcindy
 mv ketcindy/HowToInstallJ.pdf doc/support/ketcindy
+mv ketcindy/Readmemore doc/support/ketcindy/
+mv ketcindy/updater doc/support/ketcindy/
 rmdir ketcindy/ketcindyfolder/doc
 
 # CTAN doesn't like it if files are not in TDS that are in
 # the uploaded zip, so move them somewhere into the doc hierarchy
 #rm -rf ketcindy/forLinux ketcindy/forMac ketcindy/forWindows
-mv ketcindy/forLinux ketcindy/forMac ketcindy/forWindows doc/support/ketcindy/
+#mv ketcindy/forLinux ketcindy/forMac ketcindy/forWindows doc/support/ketcindy/
 
 
 # work stuff
@@ -174,12 +176,16 @@ mv ketcindy/ketcindyfolder/work/template0.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template3Dfigure.cdy scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/template4ketcindyjs.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/ketcindy.conf scripts/ketcindy/
+#mv ketcindy/ketcindyfolder/work/ketcindy.conf scripts/ketcindy/
 mv ketcindy/ketcindyfolder/work/Scriptkelib.txt doc/support/ketcindy/
 rmdir ketcindy/ketcindyfolder/work
 
 # now the ketcindyfolder dir should be empty
 rmdir ketcindy/ketcindyfolder
+
+# other toplevel files? Where should they go
+mv ketcindy/ketcindysettings.cdy scripts/ketcindy/
+mv ketcindy/ketcindytestrun.cdy scripts/ketcindy/
 
 # use our TeX Live ketcindy.ini
 mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/

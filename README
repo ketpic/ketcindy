@@ -1,7 +1,7 @@
 KeTCindy
 ========
 
-Version: 20191225.0
+Version: 20200608.0
 
 KeTCindy combines a plugin to Cinderella with free mathematical software
 (R, Maxima, ...) to produce high-quality LaTeX graphics.
@@ -30,7 +30,7 @@ https://github.com/ketpic/ketcindy
 
 License and Copyright
 ---------------------
-Copyright 2014-2019 Setsuo Takato
+Copyright 2014-2020 Setsuo Takato
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

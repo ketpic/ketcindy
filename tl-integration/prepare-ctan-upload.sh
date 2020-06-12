@@ -145,7 +145,6 @@ rmdir ketcindy/ketcindyfolder/style
 
 # scripts
 # thinks that we should not have in the scripts folder in texlive
-mv ketcindy/ketcindyfolder/scripts/ketcindyjs doc/support/ketcindy/
 mv ketcindy/ketcindyfolder/scripts/* scripts/ketcindy/
 chmod 0755 scripts/ketcindy/ketcindy.sh
 rmdir ketcindy/ketcindyfolder/scripts
@@ -161,6 +160,8 @@ mv ketcindy/HowToInstallE.pdf doc/support/ketcindy
 mv ketcindy/HowToInstallJ.pdf doc/support/ketcindy
 mv ketcindy/Readmemore doc/support/ketcindy/
 mv ketcindy/updater doc/support/ketcindy/
+mv ketcindy/ketcindysettings.cdy doc/support/ketcindy/
+mv ketcindy/ketcindytestrun.cdy doc/support/ketcindy/
 rmdir ketcindy/ketcindyfolder/doc
 
 # CTAN doesn't like it if files are not in TDS that are in
@@ -182,10 +183,6 @@ rmdir ketcindy/ketcindyfolder/work
 
 # now the ketcindyfolder dir should be empty
 rmdir ketcindy/ketcindyfolder
-
-# other toplevel files? Where should they go
-mv ketcindy/ketcindysettings.cdy scripts/ketcindy/
-mv ketcindy/ketcindytestrun.cdy scripts/ketcindy/
 
 # use our TeX Live ketcindy.ini
 mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/

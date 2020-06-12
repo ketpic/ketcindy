@@ -248,9 +248,9 @@ Parafolder(fstr,sL,optionorg):=(
       "source('all.r')",[]
   ];
   if(ErrFlag!=-1,
-    waiting=min([waiting,8])*length(ParaSL); //180610
+    waiting=min([waiting,4])*length(ParaSL); //180610
     if(!isexists(Dirworksubbkup,Fnametex) % mktex=="Y",
-      CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waitingR)]);
+      CalcbyR("",cmdL,["Cat=n","m","Wait="+text(waiting)]);
     ,
       println("Parafolder finished");
     );

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200605] loaded");
+println("ketcindylibbasic3[20200612] loaded");
 
 //help:start();
 
@@ -3940,7 +3940,7 @@ Mkketcindyjs(options):=( //17.11.18
   localflg="Y"; //190209,0215
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
-  color="lightgray"; //190503
+  color="offwhite"; //200611
   eqflg=0; //190603
   figure=0;
   dpi=86.4; // 12px/10pt = 12px/(10/72)in = 86.4dpi
@@ -3963,7 +3963,7 @@ Mkketcindyjs(options):=( //17.11.18
     );
     if(tmp1=="L",
       if(length(tmp2)>0, //190209
-        localflg=Toupper(substring(tmp2,0,1));
+//        localflg=Toupper(substring(tmp2,0,1)); //200612
       );
     );
     if(tmp1=="S",

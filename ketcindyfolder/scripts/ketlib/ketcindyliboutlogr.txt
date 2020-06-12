@@ -1,3 +1,5 @@
+// 20200610
+//    CalcbyR debugged  (positon of check of errormessageR )
 // 20200530
 //    CalcbyM debugged  ( for multi lines )
 // 20200526

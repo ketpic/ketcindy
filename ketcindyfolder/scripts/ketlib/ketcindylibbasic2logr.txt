@@ -1,3 +1,5 @@
+// 20200610
+//    Anglemark debugged  (mdag)
 // 20200607
 //    Tabledata changed ( rm=> [] when "nodisp" or "notex")
 // 20200531

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200530] loaded");
+println("ketcindylibout[20200610] loaded");
 
 //help:start();
 
@@ -516,6 +516,14 @@ CalcbyR(name,path,cmd,optionorg):=(
     flg=0;
     tmp1=floor(waiting*1000/WaitUnit);
     repeat(tmp1,
+      if(flg==0, //200610from
+        tmp=load("errormessageR.txt");
+        if(length(tmp)>0,
+          println("Error in R");
+          println(tmp);
+          flg=-2;
+        );
+      ); //200610to
       if(flg==0,
         tmp=Readlines(wfile); //200509from
         if(wflg==1,wait(Waitunit));
@@ -529,13 +537,6 @@ CalcbyR(name,path,cmd,optionorg):=(
         ,
           if(wflg==-1,
             flg=-1;
-          ,
-            tmp=Readlines("errormessageR.txt"); //200509[2lines]
-            wait(WaitUnit);
-            if(length(tmp)>0,
-              println(tmp);
-              flg=-2;
-            );//18.02.20
           );
         );
       );
@@ -544,12 +545,15 @@ CalcbyR(name,path,cmd,optionorg):=(
       ErrFlag=1;
       if(flg==-1,
         println(wfile+" does not exist");
-      ,
-        if(flg==0,
-          tmp="("+text(waiting)+" s )";
-          println(wfile+" not generated "+tmp);
-        );
+        ErrFlag=-1; //200610
+      ); //200610from
+      if(flg==-2,
+        ErrFlag=-1; //200610
       );
+      if(flg==0,
+        tmp="("+text(waiting)+" s )";
+        println(wfile+" not generated "+tmp);
+      ); //200610to
     ,
       println("      CalcbyR succeeded "+name+" ("+text(tmp2)+" sec)");
       if(cat=="Y", // 16.10.29,11.25

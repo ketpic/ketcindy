@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200607] loaded");
+println("ketcindylibbasic2[20200610] loaded");
 
 //help:start();
 
@@ -573,7 +573,6 @@ Anglemark(nm,plist,options):=(
   regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,
        Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg,scaley);
   name="ag"+nm;
-  Bpos="md"+name;
   ra=0.5;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -635,7 +634,7 @@ Anglemark(nm,plist,options):=(
     Th=(Rg_1+Rg_2)/2; //16.10.31from[moved]
     if(Noflg<3,
       if(Msg=="Y", //190206
-        println("generate anglemark "+name+" and "+Bpos);
+        println("generate anglemark "+name+" and m"+name); //200610
       );
       tmp1=apply(Out,Pcrd(#));
       tmp=name+"="+Textformat(tmp1,5)+";";
@@ -665,6 +664,7 @@ Anglemark(nm,plist,options):=(
   Bpos=LLcrd(tmp1);
   if(Bname=="L",Letter(Bpos,"c",Bstr));
   if(Bname=="E",Expr(Bpos,"c",Bstr));
+  parse("m"+name+"="+Textformat(Bpos,6)+";"); //200610
   Out;
 );
 ////%Anglemark end////

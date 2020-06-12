@@ -65,7 +65,7 @@ Presentation with ketslide    2020.05.31
           Setpara(foldername,funcitonstr,range,options); 
               options=["m/r", "Div=25"];
   3) Press button Flip
-  4) Describe in the .txt file as 1. 6).
+  4) Describe in the .txt file as 1. 5).
   5) Press button Slide.
 
 4. Making animation.

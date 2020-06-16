@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20200519)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20200616)" 
 
 print(ThisVersion)
 
+# 20200616
+#   Plotdata,Paramplot debugged  ( E=,sort)
 # 20200519
 #   class changed to class(dt)[1] ( according to specification of R)
 # 20200512
@@ -5340,14 +5342,13 @@ Paramplot<- function(...)
     return(P)
   }
   P<-c()
-  if(length(E)>0)
-  {
+  if(length(E)>0){
     E<-sort(E)
-    E<E[length(E):1]
+#    E<E[length(E):1] #200616
   }
   E<- c(E, Inf)
   Tmp<- sort(E)
-  E<- E[length(Tmp):1]
+#  E<- E[length(Tmp):1]  #200616
   Ke<- 1
   for(jj in 1:(N+1)){
     t=T1+(jj-1)*Dt/N #180929
@@ -5553,11 +5554,11 @@ Plotdata<- function(...)
   P<-c()
   if(length(E)>0){
     E<-sort(E)
-    E<E[length(E):1]
+#    E<E[length(E):1] #200616
   }
   E<- c(E, Inf)
   Tmp<- sort(E)
-  E<- E[length(Tmp):1]
+#  E<- E[length(Tmp):1] #200616
   Ke<- 1
   for (J in 0:N){ #180929
     x=X1+dx*J/N #180929

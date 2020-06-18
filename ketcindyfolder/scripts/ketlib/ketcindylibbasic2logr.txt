@@ -1,3 +1,7 @@
+// 20200618
+//    Shade,Letter,etc changed  (color4)
+// 20200617
+//    Bowdata,Anglemark debugged  (for "E=r=1")
 // 20200610
 //    Anglemark debugged  (mdag)
 // 20200607

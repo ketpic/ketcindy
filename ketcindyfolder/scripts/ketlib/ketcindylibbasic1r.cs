@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200529] loaded");
+println("ketcindylibbasic1[20200618] loaded");
 
 //help:start();
 
@@ -47,9 +47,9 @@ Ketinit(Arg):=(//181001from
   );
 );
 Ketinit(work,strictsep):=( //200509
- //help:Ketinit();
- //help:Ketinit("");
- //help:Ketinit(0.3); //190831
+//help:Ketinit();
+//help:Ketinit("");
+//help:Ketinit(0.3); //190831
  regional(pt,tmp,tmp1,tmp2,letterc,boxc,shadowc,mboxc);
   PenThickInit=8;
   ULEN="1cm";
@@ -71,7 +71,7 @@ Ketinit(work,strictsep):=( //200509
   YaCut=0.2; //191203
   YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
-  KCOLOR=[1,1,1,1]; //200513
+  KCOLOR=[0,0,0,1]; //200513,200618
   if(!islist(GLISTadd),GLIST=[],GLIST=GLISTadd); //200123
   if(!islist(GCLISTadd),GCLIST=[],GCLIST=GCLISTadd); //200123
 //  GDATALIST=[]; //no ketjs on
@@ -3287,14 +3287,18 @@ Setcolor(parorg):=(  //180603renew
 Colorrgb2cmyk(clr):=(
 // help:ColorRgb([0.2,0.5,0.1]);
   regional(clrnew,tmp,black);
-  tmp=apply(clr,1-#);
-  black=min(tmp);
-  if(black!=1, //181112from
-    tmp=apply(clr,(1-#-black)/(1-black));
-    clrnew=append(tmp,black);
+  if(length(clr)==3, //200618
+    tmp=apply(clr,1-#);
+    black=min(tmp);
+    if(black!=1, //181112from
+      tmp=apply(clr,(1-#-black)/(1-black));
+      clrnew=append(tmp,black);
+    ,
+      clrnew=[0,0,0,1];  //200618
+    ); //181112to
   ,
-    clrnew=[0,0,0,1];
-  ); //181112to
+    clrnew=clr;
+  );
   clrnew;
 );
 ////%Colorrgb2cmyk end////
@@ -3303,9 +3307,13 @@ Colorrgb2cmyk(clr):=(
 Colorcmyk2rgb(clr):=(
 // help:ColorRgb([0.2,0.5,0.1,0.2]);
   regional(clrnew,tmp,black);
-  black=clr_4;
-  tmp=apply(clr,1-min(1,#*(1-black)+black));
-  clrnew=tmp_(1..3);
+  if(length(clr)==4,  //200618
+    black=clr_4;
+    tmp=apply(clr,1-min(1,#*(1-black)+black));
+    clrnew=tmp_(1..3);
+  ,
+    clrnew=clr;  //200618
+  );
   clrnew;
 );
 ////%Colorcmyk2rgb end////
@@ -4136,7 +4144,7 @@ Listplot(nm,list,options):=(
 // help:Listplot(["A","B"]);
 //help:Listplot("1",[[2,1],[3,3]]);
 //help:Listplot(options2=["Msg=y","Cutend=n"]);//180719
-  regional(name,cutend,tmp,tmp1,tmp2,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color);
+  regional(name,cutend,tmp,tmp1,tmp2,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color,color4);
   if(substring(nm,0,1)=="-",  // 16.01.27 from
     name=substring(nm,1,length(nm));
   ,
@@ -4146,7 +4154,7 @@ Listplot(nm,list,options):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   Msg="Y";  //190206
   cutend=[0,0];//180719
@@ -4181,11 +4189,11 @@ Listplot(nm,list,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180711
+      if((Noflg==0)&(color4!=KCOLOR), //181020,200618[2lines] //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180711
      ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020,200618 //no ketjs on
         Texcom("}");//180711
       ); //no ketjs off
     ,
@@ -4293,7 +4301,7 @@ Plotdata(name1,func,variable,options):=(
 //help:Plotdata("3","Fout(x)","x",["out"]);
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
          PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,Msg,
-         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
+         Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color,color4);
   if(substring(name1,0,1)!="-",  //190420from
     name="gr"+name1;
   ,
@@ -4305,7 +4313,7 @@ Plotdata(name1,func,variable,options):=(
   Inflg=tmp_3;
   Outflg=tmp_4;
   opstr=tmp_(length(tmp)-1);
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); //color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   Num=50;
@@ -4476,11 +4484,11 @@ Plotdata(name1,func,variable,options):=(
   , 
     if(Noflg<3, //190818
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
         ); //no ketjs off
         Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
       ,
@@ -4500,7 +4508,7 @@ Paramplot(nm,funstr,variable,options):=(
 //help:Paramplot("1","[2*cos(t),sin(t)]","t=[0,2*pi]");
   regional(name,Out,tmp,tmp1,tmp2,vname,func,str,Rng,Num,Msg,
         Ec,Exfun,Dc,eqL,Fntmp,Vatmp,t1,t2,dt,tt,pa,ke, pt, //190103
-        Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color);
+        Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color,color4);
   if(substring(nm,0,1)=="-",  // 180928from
     name=substring(nm,1,length(nm));
   ,
@@ -4512,7 +4520,7 @@ Paramplot(nm,funstr,variable,options):=(
   Noflg=tmp_2;
   Inflg=tmp_3;
   Outflg=tmp_4;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
@@ -4636,11 +4644,11 @@ Paramplot(nm,funstr,variable,options):=(
     );
     if(Noflg<3, //190818
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
         ); //no ketjs off
         Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
       ,
@@ -4755,7 +4763,7 @@ Implicitplot(name1,func,xrngorg,yrngorg,optionsorg):=(
 //help:Implicitplot("1","x^2+x*y+y^2=1","x=[-3,3]","y=[-3,3]");
 //help:Implicitplot(options=["Num=[50,50]","Msg=y(n)","Bisection=y(n)]);
   regional(name,options,Fn,xrng,yrng,varx,vary,rngx,rngy,Mdv,Ndv,tmp,tmp1,tmp2,
-      Eps,Ltype,Noflg,eqL,color,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,biflg,flg,
+      Eps,Ltype,Noflg,eqL,color,color4,opsr,opcindy,dx,dy,out,jj,ii,kk,msg,biflg,flg,
       yval1,yval2,xval1,xval2,eval11,eva12,eval21,eval22,pL,vL,qL);
   name="imp"+name1;
   xrng=xrngorg; yrng=yrngorg; //190622from
@@ -4771,7 +4779,7 @@ Implicitplot(name1,func,xrngorg,yrngorg,optionsorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1); //190406
   Mdv=50;Ndv=50;
@@ -4920,11 +4928,11 @@ Implicitplot(name1,func,xrngorg,yrngorg,optionsorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-     if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+     if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name); 
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722 
       ); //no ketjs off
     ,
@@ -4957,14 +4965,14 @@ Circledata(para1,para2):=(
   Circledata(name,cenrad,options);
 );
 Circledata(nm,cenrad,options):=(
-  regional(name,Out,Ctr,Ptcir,ra,Num,Rg,opstr,opcindy,color,Msg,
+  regional(name,Out,Ctr,Ptcir,ra,Num,Rg,opstr,opcindy,color,color4,Msg,
       tmp,tmp1,tmp2,Th,Ltype,Noflg,eqL,pA,pB,pC,d1,d2,Eps);  
   name="cr"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Num=50;
@@ -5044,11 +5052,11 @@ Circledata(nm,cenrad,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -5148,12 +5156,12 @@ Ovaldata(nm,Pdata,options):=(
 //help:Ovaldata("1",[A,B]);
 //help:Ovaldata(optios=[size]);
   regional(name,Graph,Ctr,Dx,Dy,Rc,Out,Point,Graph,
-      opstr,opcindy,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color);  
+      opstr,opcindy,tmp,tmp1,tmp2,tmp3,Ltype,Noflg,color,color4);  
   name="ov"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1);
   Rc=0.2;
@@ -5196,11 +5204,11 @@ Ovaldata(nm,Pdata,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -5232,7 +5240,7 @@ Segmark(nm,ptlist,options):=(
   tp=["s",1];
   tmp1=Divoptions(options);
   eqL=tmp1_5;
-  color=tmp1_(length(tmp1)-2);//180704
+  color=tmp1_(length(tmp1)-2);
   forall(eqL,
     tmp=Strsplit(#,"="); //200422[2lines]
     tmp1=Toupper(substring(tmp_1,0,1));

@@ -36,28 +36,20 @@
 //help:Setcolor*(色を指定);
 //help:Joincrvs*(曲線をつなげる);
 //help:Partcrv*(部分曲線を作る);
-//help:Pointdata*(点データを表示／作成
-//追加オプション : "Size=");
+//help:Pointdata*(点データを表示／作成, 追加オプション : "Size=");
 //help:Listplot*(線分や折れ線データを作成);
 //help:Lineplot*(直線データを作成);
-//help:Plotdata*(関数のグラフを作成
-//追加オプション : "Num=", "Exc=", "Dis=");
-//help:Paramplot*(媒介変数の関数のグラフを作成
-//追加オプション : "Num=", "Exc=", "Dis=");
-//help:Circledata*(円のデータを作成
-//追加オプション : "Num=", "Rng=");
+//help:Plotdata*(関数のグラフを作成, 追加オプション : "Num=", "Exc=", "Dis=");
+//help:Paramplot*(媒介変数の関数のグラフを作成, 追加オプション : "Num=", "Exc=", "Dis=");
+//help:Circledata*(円のデータを作成, 追加オプション : "Num=", "Rng=");
 //help:Framedata*(長方形のデータを作成);
 //help:Ovaldata*(オーバルデータを作成);
-//help:Arrowhead*(鏃を作成
-//オプション : 大きさ，開き角，形状と位置);
-//help:Arrowdata*(矢印を作成
-//オプション : 大きさ，開き角，矢じり位置);
+//help:Arrowhead*(鏃を作成, オプション : 大きさ，開き角，形状と位置);
+//help:Arrowdata*(矢印を作成, オプション : 大きさ，開き角，矢じり位置);
 //help:Anglemark*(角度マークを作成.   オプション : 角の印の大きさ);
 //help:Paramark*(垂直マークを作成.   オプション : 角の印の大きさ);
-//help:Bowdata*(弓形を描く
-//オプション : 曲がり，空白サイズ，文字);
-//help:Deqplot*(微分方程式の解曲線を作成
-//追加オプション : "Num=");
+//help:Bowdata*(弓形を描く, オプション : 曲がり，空白サイズ，文字);
+//help:Deqplot*(微分方程式の解曲線を作成, 追加オプション : "Num=");
 //help:Hatchdata*(斜線塗り.   オプション : 傾き（度），間隔);
 //help:Enclosing*(複数曲線をつなげて閉曲線を作成);
 //help:Shade*(シェーディング.   オプション : 色, トリミング(y/n));
@@ -90,8 +82,7 @@
 //help:PtonSeg*(線分上に点をとる);
 //help:PutonCurve*(曲線上に点をとる);
 //help:Setscaling*(縦方向の倍率を指定);
- //help:Tabledata*(表データ作成
- //追加オプション : ラベルのとび，描画領域を表に合わせるか，幾何点を用いるか);
+//help:Tabledata*(表データ作成, 追加オプション : ラベルのとび，描画領域を表に合わせるか，幾何点を用いるか);
  //help:Tgrid*(表のセルの座標を返す);
  //help:Tlistplot*(表の2格子点を結ぶ線分);
 ////help:ChangeTablestyle*(表の罫線のスタイル変更);

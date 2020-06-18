@@ -30,42 +30,33 @@
 //help:Setmarklen*(specify the unit length of the tickmarks on coordinate axis);
 //help:Setorigin*(specify the position the origin);
 //help:Fontsize*(specify the size of font);
- //help:Setpen*(specify the thickness of line);
+//help:Setpen*(specify the thickness of line);
 //help:Setpt*(specify the size of point);
 //help:Definecolor*(define the color for user's own use);
 //help:Setcolor*(specify the color);
 //help:Joincrvs*(join curves);
 //help:Partcrv*(cut out some part of the curve);
-//help:Pointdata*(generate the plot data of point
-//additional option : "Size=");
+//help:Pointdata*(generate the plot data of point, additional option : "Size=");
 //help:Listplot*(generate the plot data of a polyline);
 //help:Lineplot*(generate the plot data of line);
-//help:Plotdata*(generate the plot data of function
-//additional option : "Num=", "Exc=", "Dis=");
-//help:Paramplot*(generate the plot data of parametric function
-//additional option : "Num=", "Exc=", "Dis=");
-//help:Circledata*(generate the plot data of circle
-//additional option : "Num=", "Rng=");
+//help:Plotdata*(generate the plot data of function, additional option : "Num=", "Exc=", "Dis=");
+//help:Paramplot*(generate the plot data of parametric function, additional option : "Num=", "Exc=", "Dis=");
+//help:Circledata*(generate the plot data of circle, additional option : "Num=", "Rng=");
 //help:Framedata*(generate the plot data of rectangle);
 //help:Ovaldata*(generate the plot data of oval shape);
-//help:Arrowhead*(generate the plot data of arrowhead
-//option : size, sharpness, shape and position in the arrow);
-//help:Arrowdata*(generate the plot data of arrow line
-//option : size of arrowhead, sharpness(angle)，position of arrowhead);
+//help:Arrowhead*(generate the plot data of arrowhead, option : size, sharpness, shape and position in the arrow);
+//help:Arrowdata*(generate the plot data of arrow line, option : size of arrowhead, sharpness(angle)，position of arrowhead);
 //help:Anglemark*(generate the plot data of angle mark  option : size);
 //help:Paramark*(generate the plot data of right angle mark   option : size);
-//help:Bowdata*(generate the plot data of bow arched curve
-//option : curvatute, size of the blank space, letter);
-//help:Deqplot*(generate the solution curve of differential equation
-//additional option : "Num=");
-//help:Hatchdata*(add hatching into some region
-// option : slope, degree, space betwen lines));
+//help:Bowdata*(generate the plot data of bow arched curve, option : curvatute, size of the blank space, letter);
+//help:Deqplot*(generate the solution curve of differential equation, additional option : "Num=");
+//help:Hatchdata*(add hatching into some region, option : slope, degree, space betwen lines));
 //help:Enclosing*(generate the plot data of closed curve connecting some curves);
 //help:Shade*(add shading into some region   option : color,trimming(y/n));
 //help:Rotatepoint*(rotate the point,   option : center);
 //help:Translatepoint*(pararell transport of the point);
 //help:Scalepoint*(magnify or reduce the position of point   option : center);
- //help:Reflectpoint*(reflect the point);
+//help:Reflectpoint*(reflect the point);
 //help:Rotatedata*(rotate the plot data   option : center);
 //help:Scaledata*(magnify or reduce the plot data  option : center);
 //help:Reflectdata*(reflect the plot data);
@@ -90,13 +81,12 @@
 //help:PtonSeg*(put a point on a specific segment);
 //help:PutonCurve*(put a point on a specific curve);
 //help:Setscaling*(specify the rate of magnification in the vertical direction);
- //help:Tabledatalight*(generate the plot data of table without geometric points
- //additional option : rules to be removed);
- //help:Tgrid*(return the coordinates of a cell in the table);
- //help:Tlistplot*(draw segment connecting two lattice points in the table);
+//help:Tabledatalight*(generate the plot data of table without geometric points
+//additional option : rules to be removed);
+//help:Tgrid*(return the coordinates of a cell in the table);
+//help:Tlistplot*(draw segment connecting two lattice points in the table);
 //help:ChangeTablestyle*(change the style for drawing rules in the table);
-//help:Tabledata*(generate the plot data of table with geometric points
- //option : usual options＋rules to be removed);
+//help:Tabledata*(generate the plot data of table with geometric points, option : usual options＋rules to be removed);
 //help:Tabledata*(xLst=apply(1..5,10);yLst=apply(1..4,8);rmvL=[];);
 //help:Findcell*(return the information of a cell in the table);
 //help:Putcell*(write letters in a specific cell of the table);

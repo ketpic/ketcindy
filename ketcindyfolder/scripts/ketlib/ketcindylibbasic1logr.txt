@@ -1,3 +1,7 @@
+// 20200618
+//    Colorrgb2cmyk, Colorcmyk2rgb changed (length checked)
+//    Listplot changed  ( color4)
+//    Ketinit changed  ( KCOLOR=[0,0,0,1])
 // 20200529
 //    Ketinit changed  ( Ptpos )
 //    Pointdata debugged (for js)

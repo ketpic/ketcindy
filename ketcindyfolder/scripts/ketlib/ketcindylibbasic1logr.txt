@@ -1,3 +1,5 @@
+// 20200619
+//    Msg="N" for ketcindyjs
 // 20200618
 //    Colorrgb2cmyk, Colorcmyk2rgb changed (length checked)
 //    Listplot changed  ( color4)

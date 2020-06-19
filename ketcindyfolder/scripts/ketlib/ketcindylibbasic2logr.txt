@@ -1,3 +1,7 @@
+// 20200619
+//    Msg="N" for ketcindyjs
+//    Anglemark,Paramark changed ("Size=");
+//    Letter changed  ( "s2w3" supported in CindyScreen )
 // 20200618
 //    Shade,Letter,etc changed  (color4)
 // 20200617

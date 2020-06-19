@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200612] loaded");
+println("ketcindylibbasic3[20200619] loaded");
 
 //help:start();
 
@@ -4254,9 +4254,9 @@ Mkketcindyjs(options):=( //17.11.18
             if(substring(tmp,0,2)!="//",
               println(SCEOUTPUT,#);
             ,
-              tmp1=indexof(tmp,"only ketjs"); //190430from
-              if((tmp1>0)%(onlyflg=="on"), //190502
-                if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
+              tmp4=indexof(tmp,"only ketjs"); //190430from, //200619[tmp4]
+              if((tmp4>0)%(onlyflg=="on"), //190502
+                if(tmp4>0,tmp=substring(tmp,0,tmp4-1)); //190502,200619debugged
                 println(SCEOUTPUT,substring(tmp,2,length(tmp)));
               ); //190430to
             );

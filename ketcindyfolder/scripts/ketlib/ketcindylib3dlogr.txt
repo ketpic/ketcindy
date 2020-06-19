@@ -1,3 +1,5 @@
+// 200619
+//    Msg="N" for ketcindyjs
 // 200515
 //    Readbezier changed  ( path=>Dirhead+"/data/font)
 //    Perpplane changed  ( option dropped (geo))

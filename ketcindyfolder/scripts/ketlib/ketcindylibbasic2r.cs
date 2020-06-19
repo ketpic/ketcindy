@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200618] loaded");
+println("ketcindylibbasic2[20200619] loaded");
 
 //help:start();
 
@@ -564,15 +564,16 @@ Anglemark(Arg1,Arg2):=( // 2015.04.28 from
     nm=substring(tmp,1,length(tmp)-1);
     Anglemark(nm,plist,options);
   );
-);                    // to
-Anglemark(nm,plist,options):=(
+);// to
+Anglemark(nm,plist,optionsorg):=(
 //help([A,B,C],["E=\theta",2]);
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
 // help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=[size,"E/L=(sep,)letter"]);
-  regional(name,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,
+  regional(name,options,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,
        Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg,scaley);
   name="ag"+nm;
+  options=optionsorg; //200619
   ra=0.5;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -585,6 +586,7 @@ Anglemark(nm,plist,options):=(
   Brat=1.2; //180530
   Num=20;
   Msg="Y";
+  // Msg="N"; //only ketjs
   opstr="";
   if(length(realL)>0,
     ra=realL_1*ra;
@@ -606,6 +608,7 @@ Anglemark(nm,plist,options):=(
         tmp1=parse(substring(tmp2,0,tmp-1));
         Brat=tmp1*Brat;
       );
+      options=remove(options,[#]); //200619
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
@@ -663,8 +666,9 @@ Anglemark(nm,plist,options):=(
   SCALEY=scaley;  //191231
   tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
   Bpos=LLcrd(tmp1);
-  if(Bname=="L",Letter(Bpos,"c",Bstr));
-  if(Bname=="E",Expr(Bpos,"c",Bstr));
+  options=remove(options,realL); //200619[3lines]
+  if(Bname=="L",Letter(Bpos,"c",Bstr,options)); 
+  if(Bname=="E",Expr(Bpos,"c",Bstr,options));
   parse("m"+name+"="+Textformat(Bpos,6)+";"); //200610
   Out;
 );
@@ -687,12 +691,13 @@ Paramark(Arg1,Arg2):=( // 17.03.27 from
     Paramark(nm,plist,options);
   );
 );// to
-Paramark(nm,plist,options):=(
+Paramark(nm,plist,optionsorog):=(
 //help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
-  regional(name,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,,
+  regional(name,options,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,,
          Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color,sc,Msg,scaley);
   name="pm"+nm;
+  options=optionsorg; //200619
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -703,6 +708,7 @@ Paramark(nm,plist,options):=(
   realL=tmp_6;
   ra=0.5;
   Msg="Y";
+  // Msg="N"; //only ketjs
   Brat=1.2;
   if(length(realL)>0,
     tmp=realL_1;
@@ -724,6 +730,7 @@ Paramark(nm,plist,options):=(
         tmp1=parse(substring(tmp2,0,tmp-1));
         Brat=tmp1*Brat;
       );
+      options=remove(options,[#]); //200619
     );
     if(tmp1=="M", //190206from
       Msg=Toupper(substring(tmp_2,0,1));
@@ -767,8 +774,9 @@ Paramark(nm,plist,options):=(
   SCALEY=scaley;  //191231
   tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
   Bpos=LLcrd(tmp1);
-  if(Bname=="L",Letter(Bpos,"c",Bstr));
-  if(Bname=="E",Expr(Bpos,"c",Bstr));
+  options=remove(options,realL); //200619[3lines]
+  if(Bname=="L",Letter(Bpos,"c",Bstr,options));
+  if(Bname=="E",Expr(Bpos,"c",Bstr,options));
   Out;
 );
 ////%Paramark end////
@@ -832,6 +840,7 @@ Bowdata(nm,plist,options):=(
   tcolor="";
   Bname="";
   Msg="Y";  //190206
+  // Msg="N"; //only ketjs
   if(length(realL)>0,
     Hgt=realL_1*Hgt; // 15.04.12
     if(length(realL)>1,Cut=realL_2);
@@ -2897,13 +2906,6 @@ Letter(list,options):=(
   while(Nj+2<=length(list),
     Pos=list_Nj;
     Dir=list_(Nj+1);
-    tmp=indexof(Dir,"s")+indexof(Dir,"n");//16.10.19from
-    if(tmp>0, 
-      tmp=indexof(Dir,"w")+indexof(Dir,"e");
-      if(tmp==0,
-        Dir="c"+Dir;//16.10.08
-      );
-    );//16.10.19until
     Str=list_(Nj+2);
     if(!isstring(Str),Str=format(Str,5)); // 16.09.30,10.09
     tmp=replace(Str,".xy","");
@@ -2924,21 +2926,43 @@ Letter(list,options):=(
     if(Noflg<2,
       Xmv=0;//16.10.13
       Ymv=-4;
+      tmp1=[]; //200619from
+      forall(1..10,
+        tmp=substring(Dir,#-1,#);
+        if(contains(["n","s","e","w"],tmp),
+          tmp1=append(tmp1,[tmp,#]);
+        );
+      );
+      tmp1=append(tmp1,["",length(Dir)+1]);
+      tmp2=[];
+      forall(1..(length(tmp1)-1),
+        tmp=substring(Dir,tmp1_#_2,tmp1_(#+1)_2-1);
+        if(length(tmp)>0,tmp=MARKLEN*parse(tmp),tmp=0);
+        tmp2=append(tmp2,[tmp1_#_1,tmp]);
+      );
       if(indexof(Dir,"n")>0,
         Ymv=Dmv/2;
-      );
+        tmp=select(tmp2,#_1=="n"); //200619[2lines]
+        Pos=Pos+[0,tmp_1_2];
+      ); //200619to
       if(indexof(Dir,"s")>0,
-        Ymv=-Dmv*3/2;//16.10.13
+        Ymv=-Dmv*3/2;
+        tmp=select(tmp2,#_1=="s"); //200619[2lines]
+        Pos=Pos-[0,tmp_1_2];
       );
       if(indexof(Dir,"e")>0,
         Xmv=Dmv/2;
         Off=0;
         aln="left"; 
+        tmp=select(tmp2,#_1=="e"); //200619[2lines]
+        Pos=Pos+[tmp_1_2,0];
       );
       if(indexof(Dir,"w")>0, 
         Xmv=-Dmv/2;
         Off=0; // 16.09.30from
         aln="right"; 
+        tmp=select(tmp2,#_1=="w"); //200619[2lines]
+        Pos=Pos-[tmp_1_2,0];
       );
       if(indexof(Dir,"c")>0,
         Xmv=0;//16.10.13

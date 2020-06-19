@@ -20,6 +20,7 @@ Helplist
 Invdashline
 Ketcindyjsbody
 Ketcindyjsdata
+Ketcindyjsmain
 Ketjsoption
 Parsejson
 Resizetextsize

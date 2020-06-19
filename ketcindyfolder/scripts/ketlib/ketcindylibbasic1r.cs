@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200618] loaded");
+println("ketcindylibbasic1[20200619] loaded");
 
 //help:start();
 
@@ -4036,6 +4036,7 @@ Pointdata(nm,listorg,optionsorg):=(
   incolor=""; //200519
   border="Y";
   Msg="Y";
+  // Msg="N"; //only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -4157,6 +4158,7 @@ Listplot(nm,list,options):=(
   color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   Msg="Y";  //190206
+  // Msg="N"; //only ketjs
   cutend=[0,0];//180719
   forall(eqL,
     tmp=Strsplit(#,"=");
@@ -4217,6 +4219,7 @@ Lineplot(nm,list,optionorg):=(
   Mag=100;
   Semi="";
   Msg="Y";
+  // Msg="N"; //only ketjs
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
@@ -4321,6 +4324,7 @@ Plotdata(name1,func,variable,options):=(
   Exfun="";
   Dc=1000;
   Msg="Y";
+  // Msg="N"; //only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(#,0,1));
@@ -4525,6 +4529,7 @@ Paramplot(nm,funstr,variable,options):=(
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   Msg="Y"; //190322
+  // Msg="N"; //only ketjs
   Num=50;
   Ec=[];
   Exfun="";
@@ -4784,6 +4789,7 @@ Implicitplot(name1,func,xrngorg,yrngorg,optionsorg):=(
   opstr=tmp_(length(tmp)-1); //190406
   Mdv=50;Ndv=50;
   msg="Y";
+  // msg="N"; //only ketjs
   biflg="Y";
   forall(eqL,
     tmp=Strsplit(#,"=");
@@ -4978,6 +4984,7 @@ Circledata(nm,cenrad,options):=(
   Num=50;
   Rg=[0,2*pi];
   Msg="Y";
+  // Msg="N"; //only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));

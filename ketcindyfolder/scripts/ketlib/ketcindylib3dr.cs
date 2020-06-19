@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20200515] loaded");
+println("ketcindylib3d[20200619] loaded");
 
 //help:start();
 
@@ -680,6 +680,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Msg=1;
+  //Msg=0; // only ketjs
   forall(eqL,
     tmp=substring(#,0,1);
     if(Toupper(tmp)=="M",
@@ -762,6 +763,7 @@ Spacecurve(nm,funstr,variable,optionorg):=(
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Msg=1;
+  //Msg=0; //only ketjs
   forall(eqL,
     tmp=substring(#,0,1);
     if(Toupper(tmp)=="M",
@@ -1095,6 +1097,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,optionorg):=(
   options=remove(options,reL);
   options=remove(options,strL);
   msgflg="Y";  //190506from
+  //msgflg="N";  //only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -2926,6 +2929,7 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   dispflg=1; //181106
   Lsize="8"; //190331
   msgflg="Y"; //190506
+  // msgflg="N" // only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -3403,6 +3407,7 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
   color=tmp_(length(tmp)-2);
   Eps=10^(-2);
   msgflg="Y";
+  // msgflg="N" // only ketjs
   forall(eqL, //180815from
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));

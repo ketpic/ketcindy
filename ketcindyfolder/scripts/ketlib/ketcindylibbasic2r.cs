@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200619] loaded");
+println("ketcindylibbasic2[20200620] loaded");
 
 //help:start();
 
@@ -4769,7 +4769,7 @@ Windispg():=(
   Windispg(GCLIST); //190125
 );
 Windispg(gcLorg):=( //190125
-  regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,opcindy);
+  regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,typeL,opcindy);
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);
@@ -4783,9 +4783,11 @@ Windispg(gcLorg):=( //190125
       tmp=Measuredepth(Dt);
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
-      tmp=Nj_2; //190119from
-      if(!islist(tmp),tmp=[tmp,""]); //190123
-      if(tmp_1<0,tmp1=0,tmp1=tmp_1); //190119from
+      typeL=Nj_2; //200620from
+      tmp=tokenize(typeL_2,",");
+      typeL=prepend(typeL_1,tmp); //200620from
+      if(typeL_1<0,typeL_1=0);
+      tmp1=typeL_1;
       if(tmp1<10,
         forall(Dt,Nk,
           if(length(Nk)>1,
@@ -4794,26 +4796,34 @@ Windispg(gcLorg):=( //190125
               tmp=Colorcmyk2rgb(KCOLOR); //200513[2lines]
               tmp3=tmp3+",linecolor->"+text(tmp);
             );
-            tmp3=tmp3+opcindy; 
+            tmp3=tmp3+opcindy;
             if(tmp1==0,  //190126from
-              if((length(tmp_2)>0)&(indexof(opcindy,"size")==0), 
-                tmp3=tmp3+",size->"+tmp_2;
+              if(indexof(opcindy,"size")==0, 
+                tmp3=tmp3+",size->"+text(typeL_2);
               ); //190124to
               tmp="connect("+Textformat(Nk,5)+tmp3+");";//190125
               parse(tmp);
-            ,
-              if(tmp1==1,
-                tmp=tokenize(Nj_2_2,",");tmp4=Dashlinedata(Nk,tmp_1,tmp_2,0); //190512
-                forall(tmp4,
-                  tmp="connect("+Textformat(#,5)+tmp3+");";
-                  parse(tmp);
-                );
-              ,
-                tmp3=",dashtype->"+text(tmp1)+tmp3;
-                forall(1..(length(Nk)-1),
-                  tmp="draw("+Textformat([Nk_#,Nk_(#+1)],5)+tmp3+");";
-                  parse(tmp);
-                );
+            );
+            if((tmp1==1)%(tmp1==2),
+              tmp4=Dashlinedata(Nk,typeL_2,typeL_3,0); //190512
+              forall(tmp4,
+                tmp="connect("+Textformat(#,5)+tmp3+");";
+                parse(tmp);
+              );
+            );
+            if(tmp1==3,
+              if(typeL_3!=1,
+                tmp="linesize("+text(typeL_3)+")";
+                parse(tmp);
+              );
+              tmp3=",dashtype->3"+tmp3;
+              forall(1..(length(Nk)-1),
+                tmp="draw("+Textformat([Nk_#,Nk_(#+1)],5)+tmp3+");";
+                parse(tmp);
+              );
+              if(typeL_3!=1,
+                tmp="linesize(1)";
+                parse(tmp);
               );
             );
           ,
@@ -5013,28 +5023,6 @@ Lessstr(st1,st2):=(
   out;
 );
 ////%Lessstr end////
-
-////%Makehelpfile start//// //200531
-Makehelpfile():=(
-  regional(fileL,dir,out,flh,tmp,tmp1);
-  fileL=["basic1","basic2","basic3","3d","mv","out"];
-  fileL=apply(fileL,"ketcindylib"+#+"r.cs");
-  dir=Dirhead+"/ketlib";
-  out=[];
-  forall(fileL,
-    tmp=Readlines(dir,#);
-    tmp=select(tmp,indexof(#,"//help:")>0);
-    tmp=tmp_(2..(length(tmp)-1));
-    tmp=apply(tmp,substring(#,7,indexof(#,");")+1));
-    out=concat(out,tmp);
-  );
-  setdirectory(dir);
-  flh=openfile("ketcindyhelp.txt");
-  forall(out,println(flh,#));
-  closefile(flh);
-  setdirectory(Dirwork);
-);
-////%Makehelpfile end////
 
 ////%Makehelplist start//// //200509
 Makehelplist(dir,libname):=(

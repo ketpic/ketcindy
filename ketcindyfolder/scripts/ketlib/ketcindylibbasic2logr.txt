@@ -1,3 +1,6 @@
+// 20200620
+//    Makehelpfile moved to mkfunlist.cdy
+//    Windispg debugged  ( for "do,1,2",etc )
 // 20200619
 //    Msg="N" for ketcindyjs
 //    Anglemark,Paramark changed ("Size=");

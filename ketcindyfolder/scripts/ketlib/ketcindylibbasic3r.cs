@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200619] loaded");
+println("ketcindylibbasic3[20200622] loaded");
 
 //help:start();
 
@@ -2940,12 +2940,12 @@ Fracform(x,denorg,deg):=(
 ////%Fracform end////
 
 ////%Tonormalform start//// //200605
-//help::Tonormalform("2x^2sin(x)");
 Tonormalform(fun0org):=(
   regional(fun0,num,alp,ope,par,sgn,tmp,tmp1,tmp2,
     nn,str,flg,pre,Pre,fun);
-  pre=["fr","sq","log","sin","cos","tan","pi"];
-  Pre=["F","Q","L","S","C","T","P"];
+  pre=["fr","po","sq","log","sin","cos","tan","pi"];
+  Pre=["FR","PO","SQ","LO","Si","CO","TA","PI"]; //200922[2lines]
+  Pre=apply(Pre,substring(#,0,1)+"*"+substring(#,1,2));
   fun0=replace(fun0org," ","*");
   forall(1..(length(pre)),
     fun0=replace(fun0,pre_#,Pre_#);
@@ -3033,9 +3033,13 @@ Tonormalform(fun0org):=(
     fun=replace(fun,Pre_#,pre_#);
   );
   fun=replace(fun,")(",")*(");
+  forall(1..(length(Pre)), //200622from
+    fun=replace(fun,Pre_#,pre_#);
+  );
+  fun=replace(fun,"*,*",","); //200622to
   fun;
 );
-////%Tonormalform end////
+////%Tonormalform end//// //200605
 
 ////%Totexformpart start////
 Totexformpart(str):=( //190514

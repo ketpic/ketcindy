@@ -1,3 +1,5 @@
+// 20200622
+//    Tonormalform changed ( "po" supported )
 // 20200612
 //    Mkketcindyjs changed (oprion 'local' omitted)
 // 20200611

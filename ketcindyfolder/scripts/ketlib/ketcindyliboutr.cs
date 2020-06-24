@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200610] loaded");
+println("ketcindylibout[20200624] loaded");
 
 //help:start();
 
@@ -4595,6 +4595,9 @@ ExeccmdC(nm,optionorg,optionhorg):=(
 	forall(tmp1,parse(#));
     tmp="";
     if(length(optionsh)>0,
+      forall(1..(length(StyleListC)/4), //200624from
+        StyleListC_(4*#)=optionsh;
+      ); //200624to
       forall(optionsh,
         tmp=tmp+Dqq(#)+",";
       );

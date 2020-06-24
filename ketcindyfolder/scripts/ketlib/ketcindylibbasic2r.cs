@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200620] loaded");
+println("ketcindylibbasic2[20200623] loaded");
 
 //help:start();
 
@@ -4784,7 +4784,7 @@ Windispg(gcLorg):=( //190125
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
       typeL=Nj_2; //200620from
-      tmp=tokenize(typeL_2,",");
+      if(isstring(typeL_2),tmp=tokenize(typeL_2,","),tmp=[typeL_2]); //200623
       typeL=prepend(typeL_1,tmp); //200620from
       if(typeL_1<0,typeL_1=0);
       tmp1=typeL_1;

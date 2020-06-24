@@ -1,3 +1,5 @@
+// 20200624
+//    Readoutdata changed ("Disp"=>"Msg")
 // 20200622
 //    Tonormalform changed ( "po" supported )
 // 20200612

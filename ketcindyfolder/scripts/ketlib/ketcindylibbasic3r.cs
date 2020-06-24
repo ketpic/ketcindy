@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200622] loaded");
+println("ketcindylibbasic3[20200624] loaded");
 
 //help:start();
 
@@ -704,20 +704,21 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
 //help:Readoutdata();
 //help:Readoutdata("file.txt");
 //help:Readoutdata("/datafolder","file.txt");
-//help:Readoutdata(options=["Disp=n(/y)","Read=n(y)"]);
+//help:Readoutdata(options=["Msg=y(n)"]);
   regional(options,path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
-     nmbr,cmdall,cmd,outdt,goutdt,eqL,dispflg,readflg);
+     nmbr,cmdall,cmd,outdt,goutdt,eqL,msg,readflg);
   options=optionsorg;
   tmp=Divoptions(options); //181024from
-  dispflg=1;
+  msg="Y";
+  //msg="N"; //only ketjs
   readflg=0;
   eqL=tmp_5;
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=substring(tmp_1,0,1); tmp1=Toupper(tmp1);
     tmp2=substring(tmp_2,0,1); tmp2=Toupper(tmp2);
-    if(tmp1=="D",
-      if(tmp2=="N",dispflg=0);
+    if(tmp1=="M",
+      msg=tmp2;;
       options=remove(options,[#]); //181030
     );
     if(tmp1=="R",
@@ -802,12 +803,10 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
   if(length(path)>0, // 16.03.09
     setdirectory(Dirwork); // 16.03.07
   );
-  print("readoutdata from "+tmp+" : ");
-  if(dispflg==1, //181024from
+  if(msg=="Y", //200624from
+    print("readoutdata from "+tmp+" : ");
     println(varL);
-  ,
-    println("");
-  ); //181024to
+  );  //200624to
   if(readflg==1, //200514from
     GLIST=append(GLIST,"Tmpout=ReadOutData("+Dqq(filename)+")");
   ); //200514to

@@ -1,3 +1,5 @@
+// 20200624
+//    ExeccmdC debugged  (for optionsh
 // 20200610
 //    CalcbyR debugged  (positon of check of errormessageR )
 // 20200530

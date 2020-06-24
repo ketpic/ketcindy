@@ -1,3 +1,5 @@
+// 200625
+//    Projcurve,Projpara debugged
 // 200619
 //    Msg="N" for ketcindyjs
 // 200515

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20200619] loaded");
+println("ketcindylib3d[20200625] loaded");
 
 //help:start();
 
@@ -483,7 +483,7 @@ Projpara(ptdata,optionsorg):=(
 //help:Projpara("sf3d1");
 //help:Projpara(options=["Msg=no"]);
   regional(options,name2,name3,Ltype,Noflg,eqL,opcindy,
-     dtL,ptL,tmp,tmp1,Out,color,msgflg);
+     dtL,ptL,tmp,tmp1,Out,color,msg);
   options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -491,13 +491,14 @@ Projpara(ptdata,optionsorg):=(
   eqL=tmp_5;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
-  msgflg=0; //180602from
+  msg="Y"; //180602from
+  //msg="N"; //only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1)); //181111
     if(tmp=="M",
       tmp=substring(tmp_2,0,1);
-      if(Toupper(tmp)=="Y", msgflg=1);
+      msg=Toupper(tmp);
       options=remove(options,[#]);
     );
   );//180602to

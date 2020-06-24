@@ -1,3 +1,5 @@
+// 20200623
+//    Windispg debugged (for typeL)
 // 20200620
 //    Makehelpfile moved to mkfunlist.cdy
 //    Windispg debugged  ( for "do,1,2",etc )

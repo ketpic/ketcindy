@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200619] loaded");
+println("ketcindylibbasic1[20200626] loaded");
 
 //help:start();
 
@@ -919,7 +919,7 @@ Changework(dirorg,options):=( //16.10.21
 ////%Changestyle start////
 Changestyle(nameL,styleorg):=(
 //help:Changestyle(["sgAB"],["da"]);
-  regional(nmL,name,style,Ltype,Noflg,color,opcindy,
+  regional(nmL,name,style,Ltype,Noflg,color,color4,opcindy,
       reL,eqL,ptsize,pttype,dtlist,inside,tmp,tmp1,tmp2,tmp3);
   style=styleorg; //191203from
   style=apply(style,
@@ -928,7 +928,7 @@ Changestyle(nameL,styleorg):=(
   tmp=Divoptions(style);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   ptsize="";
@@ -974,12 +974,12 @@ Changestyle(nameL,styleorg):=(
         if(Noflg==2,GCLIST=append(GCLIST,[name,[-1,0],opcindy]));
         if(Noflg==1,GCLIST=append(GCLIST,[name,[0,1],opcindy]));
         if(Noflg==0,
-          if(color!=KCOLOR, //no ketjs on
-            Texcom("{");Com2nd("Setcolor("+color+")");
+          if(color4!=KCOLOR, //no ketjs on
+            Texcom("{");Com2nd("Setcolor("+color4+")");
           ); 
           Ltype=Getlinestyle(text(Noflg)+Ltype,name); //200514[2Lines]
           GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-          if(color!=KCOLOR, //180904 
+          if(color4!=KCOLOR, //180904 
             Texcom("}");//180722
           ); //no ketjs off
         );
@@ -3910,7 +3910,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
 //help:Partcrv("1",A,B,"sgABC");
 //help:Partcrv("1",1.3,2.5,"sgABC");
   regional(PkL,Ans,Eps,Npt,Out1,Out2,tmp,tmp1,Flg,nS,nE,PPL,pP,
-        opcindy,Ta,Tb,name,Ltype,Noflg,DepthFlg,color);
+        opcindy,Ta,Tb,name,Ltype,Noflg,DepthFlg,color,color4);
   name="part"+nm;
   if(isstring(PkLstr),PkL=parse(PkLstr),PkL=PkLstr);
   DepthFlg=0;
@@ -3922,7 +3922,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   Eps=10^(-3);
   Flg=0;
@@ -3981,11 +3981,11 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -4213,7 +4213,7 @@ Lineplot(nm,list,optionorg):=(
 //help:Lineplot([A,B]);
 //help:Lineplot("1",[[2,1],[3,3]]);
   regional(name,Out,tmp,tmp1,tmp2,opstr,opcindy,Mag,Semi,
-      Vec,pA,pB,options,Ltype,Noflg,color,Msg,eqL);
+      Vec,pA,pB,options,Ltype,Noflg,color,Msg,eqL,color4);
   name="ln"+nm;
   options=optionorg;
   Mag=100;
@@ -4223,7 +4223,7 @@ Lineplot(nm,list,optionorg):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1);
   eqL=tmp_5;
@@ -4263,11 +4263,11 @@ Lineplot(nm,list,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,

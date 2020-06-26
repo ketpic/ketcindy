@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200623] loaded");
+println("ketcindylibbasic2[20200626] loaded");
 
 //help:start();
 
@@ -2136,7 +2136,7 @@ Rotatedata(nm,plist,angle,optionorg):=(
 //help:Rotatedata("1",["crAB","pt1"],pi/3,[[1,5],"dr,2"]);
 //help:Rotatedata("1",[[A.xy],[B.xy]],pi/3,[[1,5],"dr,2"]);
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdLL,PdL,options,
-    opcindy,eqL,msgflg,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
+    opcindy,eqL,msgflg,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color,color4);
   name="rt"+nm;
   options=optionorg;
   Pt=[0,0];
@@ -2144,7 +2144,7 @@ Rotatedata(nm,plist,angle,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Pt=Lcrd(tmp1_1));
@@ -2204,11 +2204,11 @@ Rotatedata(nm,plist,angle,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -2225,14 +2225,14 @@ Translatedata(nm,plist,mov):=Translatedata(nm,plist,mov,[]);
 Translatedata(nm,plist,mov,optionorg):=(
 //help:Translatedata("1",["gr1","pt1"],[1,2]);
   regional(options,tmp,tmp1,tmp2,pdata,Cx,Cy,PdL,Nj,Njj,Kj,eqL,
-           opcindy,X2,Y2,Ltype,Noflg,name,color,leveL,msgflg);
+           opcindy,X2,Y2,Ltype,Noflg,name,color,color4,leveL,msgflg);
   name="tr"+nm;
   options=optionorg; //190425
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5; //190424
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   msgflg="Y"; //190425from
   forall(eqL,
@@ -2286,11 +2286,11 @@ Translatedata(nm,plist,mov,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -2326,7 +2326,7 @@ Scaledata(nm,plist,Arg1,Arg2):=(
 );
 Scaledata(nm,plist,rx,ry,optionorg):=(
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdL,options,eqL,
-      opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name,color,msgflg);
+      opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name,color,color4,msgflg);
   name="sc"+nm;
   options=optionorg;
   Pt=[0,0];
@@ -2334,7 +2334,7 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,
@@ -2392,11 +2392,11 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -2413,7 +2413,7 @@ Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
 Reflectdata(nm,plist,symL,optionorg):=(
 //help:Reflectdata("1",["crAB"],[C]);
   regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,options,eqL,
-      opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color);
+      opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color,color4);
   name="re"+nm;
   options=optionorg;
   Pt=[0,0];
@@ -2421,7 +2421,7 @@ Reflectdata(nm,plist,symL,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   msgflg="Y"; //190425from
   forall(eqL,
@@ -2490,11 +2490,11 @@ Reflectdata(nm,plist,symL,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,

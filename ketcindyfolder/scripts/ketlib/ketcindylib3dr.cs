@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20200625] loaded");
+println("ketcindylib3d[20200626] loaded");
 
 //help:start();
 
@@ -483,13 +483,13 @@ Projpara(ptdata,optionsorg):=(
 //help:Projpara("sf3d1");
 //help:Projpara(options=["Msg=no"]);
   regional(options,name2,name3,Ltype,Noflg,eqL,opcindy,
-     dtL,ptL,tmp,tmp1,Out,color,msg);
+     dtL,ptL,tmp,tmp1,Out,color,color4,msg);
   options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   msg="Y"; //180602from
   //msg="N"; //only ketjs
@@ -527,11 +527,11 @@ Projpara(ptdata,optionsorg):=(
     );
     if(Noflg<3, //190818
       if(isstring(Ltype),
-        if(color!=KCOLOR, //180904
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+        if(color4!=KCOLOR, //180904
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
         );
 		Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-        if(color!=KCOLOR, //180904
+        if(color4!=KCOLOR, //180904
           Texcom("}");//180722
         );
 	  ,
@@ -657,7 +657,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
 //help:Spaceline([A,B]);
 //help:Spaceline(options=["Msg=y(n)"]);
   regional(name2,name3,options,Out,tmp,tmp1,tmp2,
-        opstr,opcindy,Ltype,Noflg,eqL,ptlist, Msg,color);
+        opstr,opcindy,Ltype,Noflg,eqL,ptlist, Msg,color,color4);
   ptlist=apply(ptlistorg,if(ispoint(#),parse(#.name+"3d"),#)); // 190505
   ptlist=apply(ptlist,if(isstring(#),parse(#),#)); //190330
   if(substring(nm,0,2)=="bz",
@@ -678,7 +678,7 @@ Spaceline(nm,ptlistorg,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   Msg=1;
   //Msg=0; // only ketjs
@@ -718,11 +718,11 @@ Spaceline(nm,ptlistorg,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
 	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
 	,
@@ -742,7 +742,7 @@ Spacecurve(nm,funstr,variable):=Spacecurve(nm,funstr,variable,[]);
 Spacecurve(nm,funstr,variable,optionorg):=(
 //help:Spacecurve("1","[cos(t),sin(t),0.5*t]","t=[0,4*pi]",["Num=200"]);
   regional(name2,name3,options,Out,tmp,tmp1,tmp2,vname,tmpfn,str,Rng,Num,Msg,
-     Ec,Exfun,Dc,opstr,opcindy,Fntmp,Vatmp,Ltype,Noflg,eqL,t1,t2,dt,tt,pa,ke,color);
+     Ec,Exfun,Dc,opstr,opcindy,Fntmp,Vatmp,Ltype,Noflg,eqL,t1,t2,dt,tt,pa,ke,color,color4);
   if(substring(nm,0,2)=="bz",
     name2=replace(nm,"bz","bz2d");
     name3=replace(nm,"bz","bz3d");
@@ -760,7 +760,7 @@ Spacecurve(nm,funstr,variable,optionorg):=(
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Msg=1;
@@ -886,11 +886,11 @@ Spacecurve(nm,funstr,variable,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
 	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
 	,
@@ -953,7 +953,7 @@ Joincrvs3d(nm,plotstrL):=Joincrvs3d(nm,plotstrL,[]);//16.10.06
 Joincrvs3d(nm,plotstrL,options):=(
 //help:Joincrvs3d("1",["bz3da1","bz3da1"]);
   regional(PtL,Eps,QdL,Flg,Ni,Qd,pP,pS,pQ,pR,rMN,
-        opcindy,tmp,tmp1,tmp2,str,name2,name3,Ltype,Noflg,color);
+        opcindy,tmp,tmp1,tmp2,str,name2,name3,Ltype,Noflg,color,color4);
   name2="join2d"+nm;
   name3="join3d"+nm;
   QdL=[];
@@ -969,7 +969,7 @@ Joincrvs3d(nm,plotstrL,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Eps=tmp1_1);
@@ -1025,11 +1025,11 @@ Joincrvs3d(nm,plotstrL,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
 	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
 	,
@@ -1054,7 +1054,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,optionorg):=(
 //help:Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]");
 //help:Xyzax3data(Options2=["a1,18","Osw"]);
   regional(name2,name3,Out,tmp,tmp1,tmp2,ops,eqL,reL,strL,msgflg,
-    options,opstr,opcindy,Ltype,Noflg,Axname,Arrow,Origin,color);
+    options,opstr,opcindy,Ltype,Noflg,Axname,Arrow,Origin,color,color4);
   name2="ax2d"+nm;
   name3="ax3d"+nm;
   options=optionorg;
@@ -1064,7 +1064,7 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,optionorg):=(
   eqL=tmp_5;
   reL=tmp_6;
   strL=tmp_7;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   Axname=1;
   Arrow=[];  // 190505
@@ -1145,11 +1145,11 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,optionorg):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
 	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
 	,
@@ -1254,7 +1254,7 @@ Embed(nm,Pd2str,funstr,varstr):=
 Embed(nm,Pd2str,funstr,varstr,options):=(
 //help:Embed("1",["gr1"],"A3d+x*(B3d-A3d)+y*(C3d-A3d)","[x,y]");
   regional(name2,name3,Pd2L,Pd2,tmp,tmp1,xstr,ystr,
-     Ltype,Noflg,opstr,opcindy,Out,color);
+     Ltype,Noflg,opstr,opcindy,Out,color,color4);
   name2="em2d"+nm;
   name3="em3d"+nm;
   if(!islist(Pd2str),Pd2L=[Pd2str],Pd2L=Pd2str); // 15.03.06
@@ -1319,11 +1319,11 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
 	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
 	,
@@ -1439,14 +1439,14 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
 //help:Rotatedata3d("1",["sl3d1","sc3d2"],[0,0,1],pi/3);
 //help:Rotatedata3d(options=[center,...]);
   regional(name3,name2,center,pdata,Pd3,Pd,Out,tmp,tmp1,
-       Ltype,Noflg,opcindy,opstr,color);
+       Ltype,Noflg,opcindy,opstr,color,color4);
   name3="rot3d"+nm;
   name2="rot2d"+nm;
   center=[0,0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
@@ -1488,11 +1488,11 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
     ,
@@ -1543,13 +1543,13 @@ Translatedata3d(nm,P3data,w1):=Translatedata3d(nm,P3data,w1,[]);
 Translatedata3d(nm,P3data,w1,options):=(
 //help:Translatedata3d("1",["sl3d1"],[1,2,3]);
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
-      Ltype,Noflg,opcindy,color);
+      Ltype,Noflg,opcindy,color,color4);
   name3="tra3d"+nm;
   name2="tra2d"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   if(islist(P3data) & isstring(P3data_1),Pd3=P3data,Pd3=[P3data]);
   Out=[];
@@ -1585,11 +1585,11 @@ Translatedata3d(nm,P3data,w1,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
 	  Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
 	,
@@ -1639,13 +1639,13 @@ Reflectdata3d(nm,P3data,vecL,options):=(
 //help:Reflectdata3d("1",["sl3d1"],[v1,v2]);
 //help:Reflectdata3d("1",["sl3d1"],[v1]);
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
-      Ltype,Noflg,opcindy,color);
+      Ltype,Noflg,opcindy,color,color4);
   name3="ref3d"+nm;
   name2="ref2d"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   if(islist(P3data) & isstring(P3data_1),Pd3=P3data,Pd3=[P3data]);
   Out=[];
@@ -1682,11 +1682,11 @@ Reflectdata3d(nm,P3data,vecL,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
     ,
@@ -1729,14 +1729,14 @@ Scaledata3d(nm,P3data,ratio):=Scaledata3d(nm,P3data,ratio,[]);
 Scaledata3d(nm,P3data,ratio,options):=(
 //help:Scaledata3d("1",["sl3d1"],[v1,v2,v3]);
   regional(name3,name2,pdata,Pd3,Pd,Out,tmp,tmp1,
-      reL,Ltype,Noflg,opcindy,color,center);
+      reL,Ltype,Noflg,opcindy,color,color4,center);
   name3="ref3d"+nm;
   name2="ref2d"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   reL=tmp_6;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   center=[0,0,0];
   if(length(reL)>0,
@@ -1778,11 +1778,11 @@ Scaledata3d(nm,P3data,ratio,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if(color!=KCOLOR, //180904
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if(color4!=KCOLOR, //180904
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       );
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(color!=KCOLOR, //180904
+      if(color4!=KCOLOR, //180904
         Texcom("}");//180722
       );
     ,

@@ -35,7 +35,7 @@ Parlevel,basic1,729,729,Bracket
 Bracket,basic1,732,754,Indexall
 Pardiagram,basic1,758,854,Divoptions,Toupper,Bracket,Listplot,Letter,Expr
 Changework,basic1,858,916,Divoptions,Strsplit,Toupper,Indexall,Dqq,isexists,makedir,pathsep,iswindows,iskcexists,setexec
-Changestyle,basic1,920,989,Divoptions,Strsplit,Toupper,Colorcmyk2rgb,Measuredepth,Pointdata
+Changestyle,basic1,920,989,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Colorcmyk2rgb,Measuredepth,Pointdata
 Op,basic1,993,1005
 Ptselected,basic1,1009,1025,|mouse
 Finddef,basic1,1029,1048
@@ -129,11 +129,11 @@ Getlinestyle,basic1,3596,3661,Toupper,Textformat
 Chunderscore,basic1,3665,3700,PaO
 AddGraph,basic1,3704,3804,Divoptions,Flattenlist,Pcrd,Measuredepth,PaO,Textformat,Getlinestyle
 Joincrvs,basic1,3808,3904,LLcrd,Divoptions,Numptcrv,Ptstart,Ptend,Pcrd,Textformat,Getlinestyle
-Partcrv,basic1,3908,3997,Measuredepth,Divoptions,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Getlinestyle
+Partcrv,basic1,3908,3997,Measuredepth,Divoptions,Colorrgb2cmyk,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Getlinestyle
 Opcrvs,basic1,4001,4009,Listplot
 Pointdata,basic1,4013,4122,Divoptions,tmp_,tmp_(length,Strsplit,Toupper,Lcrd,Measuredepth,RSform,Colorname2cmyk,Colorcmyk2rgb,Textformat,Circledata
 Listplot,basic1,4126,4208,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Pcrd,Textformat,Getlinestyle,Lcrd
-Lineplot,basic1,4212,4296,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Getlinestyle
+Lineplot,basic1,4212,4296,Colorrgb2cmyk,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Getlinestyle
 Plotdata,basic1,4300,4506,Divoptions,color4=Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Getlinestyle
 Paramplot,basic1,4510,4683,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Getlinestyle
 Polarplot,basic1,4687,4696,Strsplit,Paramplot

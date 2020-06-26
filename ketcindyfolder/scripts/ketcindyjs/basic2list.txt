@@ -24,10 +24,10 @@ Rotatepoint,basic2,2063,2073,Lcrd
 Translatepoint,basic2,2077,2087,Lcrd
 Scalepoint,basic2,2091,2101,Lcrd
 Reflectpoint,basic2,2105,2130,Lcrd
-Rotatedata,basic2,2134,2220,Divoptions,Lcrd,Strsplit,Toupper,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
-Translatedata,basic2,2224,2302,Divoptions,Strsplit,Toupper,Lcrd,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
-Scaledata,basic2,2306,2408,Divoptions,Lcrd,Strsplit,Toupper,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
-Reflectdata,basic2,2412,2506,Divoptions,Strsplit,Toupper,Lcrd,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
+Rotatedata,basic2,2134,2220,Divoptions,Colorrgb2cmyk,Lcrd,Strsplit,Toupper,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
+Translatedata,basic2,2224,2302,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Lcrd,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
+Scaledata,basic2,2306,2408,Divoptions,Colorrgb2cmyk,Lcrd,Strsplit,Toupper,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
+Reflectdata,basic2,2412,2506,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Lcrd,Measuredepth,LLcrd,Pcrd,Textformat,Getlinestyle
 Mksegments,basic2,2511,2526,Listplot
 Mkcircles,basic2,2531,2551,Strsplit,Circledata
 MakeRarg,basic2,2555,2568,RSslash,Textformat

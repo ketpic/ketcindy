@@ -1,3 +1,5 @@
+// 200626
+//    color4 added
 // 200625
 //    Projcurve,Projpara debugged
 // 200619

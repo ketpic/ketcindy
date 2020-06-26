@@ -1,3 +1,5 @@
+// 20200626
+//    Lineplot debugged  ( color4)
 // 20200619
 //    Msg="N" for ketcindyjs
 // 20200618

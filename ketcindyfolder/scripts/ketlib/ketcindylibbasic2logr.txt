@@ -1,3 +1,7 @@
+// 20200629
+//    Paramark debugged  (options : cause unknown)
+// 20200627
+//    Windispg changed ("da" for js)
 // 20200626
 //    Rotatedata,Translatedata,Reflectdata,Scaledata debugged (color4)
 // 20200623

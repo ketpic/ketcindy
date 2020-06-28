@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200626] loaded");
+println("ketcindylibbasic2[20200629] loaded");
 
 //help:start();
 
@@ -691,18 +691,17 @@ Paramark(Arg1,Arg2):=( // 17.03.27 from
     Paramark(nm,plist,options);
   );
 );// to
-Paramark(nm,plist,optionsorog):=(
+Paramark(nm,plist,optionsrog):=(
 //help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
-  regional(name,options,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,,
+  regional(name,options,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,
          Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color,sc,Msg,scaley);
   name="pm"+nm;
-  options=optionsorg; //200619
+  options=optionsrog; //200619
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   color=tmp_(length(tmp)-2);
-  opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   realL=tmp_6;
@@ -748,7 +747,7 @@ Paramark(nm,plist,optionsorog):=(
   Bpos=pA+Brat*ra*(pB-pA)/|pB-pA|+Brat*ra*(pC-pA)/|pC-pA|;
   if(Noflg<3,
     if(Msg=="Y", //190206
-      println("generate paramark "+name+" and "+Bpos);
+      println("generate paramark "+name+" and "+"m"+name);
     );
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,5)+";"; //190415
@@ -772,11 +771,13 @@ Paramark(nm,plist,optionsorog):=(
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
   SCALEY=scaley;  //191231
-  tmp1=Ctr+Brat*ra*[cos(Th),sin(Th)];
+  tmp1=Out_2; //200629
   Bpos=LLcrd(tmp1);
   options=remove(options,realL); //200619[3lines]
   if(Bname=="L",Letter(Bpos,"c",Bstr,options));
   if(Bname=="E",Expr(Bpos,"c",Bstr,options));
+  println([779,Bpos,"m"+name+"="+Textformat(Bpos,6)+";"]);
+  parse("m"+name+"="+Textformat(Bpos,6)+";"); //200629
   Out;
 );
 ////%Paramark end////
@@ -4805,11 +4806,25 @@ Windispg(gcLorg):=( //190125
               parse(tmp);
             );
             if((tmp1==1)%(tmp1==2),
-              tmp4=Dashlinedata(Nk,typeL_2,typeL_3,0); //190512
+              tmp4=Dashlinedata(Nk,typeL_2,typeL_3,0); //no ketjs on
               forall(tmp4,
                 tmp="connect("+Textformat(#,5)+tmp3+");";
                 parse(tmp);
-              );
+              ); //no ketjs off
+//              if(length(typeL)<4,typeL=append(typeL,1)); //only ketjs on
+//              if(typeL_(-1)!=1,
+//                tmp="linesize("+text(typeL_4)+")";
+//                parse(tmp);
+//              );
+//              tmp3=",dashtype->1"+tmp3;
+//              forall(1..(length(Nk)-1),
+//                tmp="draw("+Textformat([Nk_#,Nk_(#+1)],5)+tmp3+");";
+//                parse(tmp);
+//              );
+//              if(typeL_(-1)!=1,
+//                tmp="linesize(1)";
+//                parse(tmp);
+//              );  //only ketjs off
             );
             if(tmp1==3,
               if(typeL_3!=1,

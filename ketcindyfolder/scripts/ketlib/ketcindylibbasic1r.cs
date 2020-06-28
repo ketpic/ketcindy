@@ -5365,12 +5365,12 @@ Ellipseplot(nm,ptlist,rng,options):=(
   regional(pA,pB,dd,angle,f,a,b,pM,tmp,tmp1,tmp2);
   pA=Lcrd(ptlist_1);
   tmp1=Lcrd(ptlist_2);
-  if((ispoint(ptlist_3))%(length(ptlist_3)>1), //191027
+  if((ispoint(ptlist_3))%(length(ptlist_3)>1), //no ketjs  //200627
     tmp2=Lcrd(ptlist_3);
     dd=|tmp2-pA|+|tmp2-tmp1|;
-  ,
+  , //no ketjs on
     dd=ptlist_3;
-  );
+  ); //no ketjs off  //200627
   tmp=(tmp1-pA)/|tmp1-pA|;
   if(tmp_2>=0,
     angle=arccos(tmp_1);
@@ -5423,12 +5423,12 @@ Hyperbolaplot(nm,ptlist,rng,optionsorg):=(
   );
   pA=Lcrd(ptlist_1);
   tmp1=Lcrd(ptlist_2);
-  if((ispoint(ptlist_3))%(length(ptlist_3)>1), //191027
+  if((ispoint(ptlist_3))%(length(ptlist_3)>1), //no ketjs //200627
     tmp2=Lcrd(ptlist_3);
     d=abs(|tmp2-pA|-|tmp2-tmp1|);
-  ,
+  ,  //no ketjs on
     d=ptlist_3;
-  );
+  );  //no ketjs off //200627
   tmp=(tmp1-pA)/|tmp1-pA|;
   if(tmp_2>=0,
     angle=arccos(tmp_1);

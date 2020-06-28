@@ -703,6 +703,7 @@ Paramark(nm,plist,optionsrog):=(
   Noflg=tmp_2;
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
+  opstr=tmp_(length(tmp)-1); //200629
   eqL=tmp_5;
   realL=tmp_6;
   ra=0.5;
@@ -712,7 +713,6 @@ Paramark(nm,plist,optionsrog):=(
   if(length(realL)>0,
     tmp=realL_1;
     ra=tmp*ra;
-    opstr=opstr+","+text(tmp);
   );
   forall(eqL,
     tmp=Strsplit(#,"=");
@@ -776,7 +776,6 @@ Paramark(nm,plist,optionsrog):=(
   options=remove(options,realL); //200619[3lines]
   if(Bname=="L",Letter(Bpos,"c",Bstr,options));
   if(Bname=="E",Expr(Bpos,"c",Bstr,options));
-  println([779,Bpos,"m"+name+"="+Textformat(Bpos,6)+";"]);
   parse("m"+name+"="+Textformat(Bpos,6)+";"); //200629
   Out;
 );

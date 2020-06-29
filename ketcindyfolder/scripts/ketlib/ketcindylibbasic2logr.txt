@@ -1,5 +1,6 @@
 // 20200629
 //    Paramark debugged  (options : cause unknown)
+//    Anglemark,Bowdata,Deqplot,Enclosing,Hatchdata,Extractdata   (color4)
 // 20200627
 //    Windispg changed ("da" for js)
 // 20200626

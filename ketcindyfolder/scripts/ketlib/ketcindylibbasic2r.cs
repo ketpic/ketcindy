@@ -570,7 +570,7 @@ Anglemark(nm,plist,optionsorg):=(
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
 // help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=[size,"E/L=(sep,)letter"]);
-  regional(name,options,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,
+  regional(name,options,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,color4,
        Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg,scaley);
   name="ag"+nm;
   options=optionsorg; //200619
@@ -578,7 +578,7 @@ Anglemark(nm,plist,optionsorg):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   realL=tmp_6;
@@ -650,11 +650,11 @@ Anglemark(nm,plist,optionsorg):=(
     );
     if(Noflg<3, //190818
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
         ); //no ketjs off
         Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
       ,
@@ -695,13 +695,13 @@ Paramark(nm,plist,optionsrog):=(
 //help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
   regional(name,options,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,
-         Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color,sc,Msg,scaley);
+         Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color,color4,sc,Msg,scaley);
   name="pm"+nm;
   options=optionsrog; //200619
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
   opstr=tmp_(length(tmp)-1); //200629
   eqL=tmp_5;
@@ -758,11 +758,11 @@ Paramark(nm,plist,optionsrog):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -826,7 +826,7 @@ Bowdata(nm,plist,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
@@ -941,11 +941,11 @@ Bowdata(nm,plist,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722 
       ); //no ketjs off
     ,
@@ -1103,13 +1103,13 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
 //help:Deqplot("1","y''=-y","x",0, [1,0]);
 //help:Deqplot("3","[x,y]'=[x*(1-y),0.3*y*(x-1)]","t=[0,20]",0,[1,0.5]);
   regional(deq,rng,Ltype,Noflg,eqL,opcindy,Num,name,nn,pdL,phase,
-                  sel,tmp,tmp1,tmp2,tmp3,color);
+                  sel,tmp,tmp1,tmp2,tmp3,color,color4);
   name="de"+nm;
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
   Num=50;
   forall(eqL,
@@ -1216,11 +1216,11 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   ); //no ketjs off
   if((nn>0)&(Noflg<3), //190211
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -1240,7 +1240,7 @@ Enclosing2(nm,plistorg,options):=(
 //help:Enclosing(options=[startpoint,epspara(1)]);
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
-      tmp,tmp1,tmp2,color,p1,p2);
+      tmp,tmp1,tmp2,color,color4,p1,p2);
   name="en"+nm;
   plist=plistorg;
   tmp=Divoptions(options);
@@ -1248,7 +1248,7 @@ Enclosing2(nm,plistorg,options):=(
   Noflg=tmp_2;
   eqL=tmp_5;
   realL=tmp_6;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   Eps=10^(-5); // 16.12.05
@@ -1381,11 +1381,11 @@ Enclosing2(nm,plistorg,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -1554,7 +1554,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
 //help:Hatchdata(options=["Not=pointlist","File=y(/m/n)","Max=50","Check=",angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,
     options,eqL,maxnum,startP,angle,interval,vec,nvec,ctr,pt,kk,delta,sha,AnsL,
-    color,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2, //180717
+    color,color4,tmp,tmp1,tmp2,tmp3,namep,x1,y1,x2,y2,p1,p2, //180717
     fname,fileflg,mkflg,vaL,pL,nL,nn,str,is,ie); //181102
   name="ha"+nm;
   fname=Fhead+name+".txt";
@@ -1627,7 +1627,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
   Noflg=tmp_2;
   eqL=tmp_5;
   reL=tmp_6;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   angle=45;
@@ -1790,11 +1790,11 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
   );
   if((Noflg<3)&(mkflg>-1), //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -4873,11 +4873,11 @@ Extractdata(Arg1,Arg2):=(
 Extractdata(number,name,options):=(
 //help:ExtractData("ha1");
 // help:ExtractData(1,"ha1");
-  regional(dlist,tmp,tmp1,tmp2,tmp3,File,Ltype,Noflg,opstr,opcindy,color);
+  regional(dlist,tmp,tmp1,tmp2,tmp3,File,Ltype,Noflg,opstr,opcindy,color,color4);
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
   tmp1=[];
@@ -4905,11 +4905,11 @@ Extractdata(number,name,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //180904 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,

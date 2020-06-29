@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200626] loaded");
+println("ketcindylibbasic1[20200629] loaded");
 
 //help:start();
 
@@ -3706,7 +3706,7 @@ AddGraph(nm,pltdata,options):=(
 //help:AddGraph("1","imp1"); // 16.04.04
 //help:Addgraph("1",["[pt1]","gr1"],["nodisp"]);
   regional(name,Ltype,Noflg,opcindy,pdata,fname,flg,
-    tmp,tmp1,tmp2,tmp3,color);
+    tmp,tmp1,tmp2,tmp3,color,color4);
   if(substring(nm,0,1)=="-",
     name=substring(nm,1,length(nm));
   ,
@@ -3715,7 +3715,7 @@ AddGraph(nm,pltdata,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
   if(isstring(pltdata),
     pdata=parse(pltdata)
@@ -3789,11 +3789,11 @@ AddGraph(nm,pltdata,options):=(
   );  // 16.04.04 until
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -3809,7 +3809,7 @@ Joincrvs(nm,plotstrL):=Joincrvs(nm,plotstrL,[]);
 Joincrvs(nm,plotstrL,options):=(
 //help:Joincrvs("1",["sgAB","sgDCB"]);
   regional(plotlist,PtL,Eps,QdL,Flg,Ni,Qd,pP,pS,pQ,pR,rMN,
-        opcindy,tmp,tmp1,tmp2,str,name,Ltype,Noflg,color);
+        opcindy,tmp,tmp1,tmp2,str,name,Ltype,Noflg,color,color4);
   name="join"+nm;
   plotlist=[];
   forall(plotstrL,str,
@@ -3825,7 +3825,7 @@ Joincrvs(nm,plotstrL,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,Eps=tmp1_1);
@@ -3888,11 +3888,11 @@ Joincrvs(nm,plotstrL,options):=(
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color+")");//180722
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
       ); //no ketjs off
       Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+      if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
         Texcom("}");//180722
       ); //no ketjs off
     ,
@@ -4316,7 +4316,7 @@ Plotdata(name1,func,variable,options):=(
   Inflg=tmp_3;
   Outflg=tmp_4;
   opstr=tmp_(length(tmp)-1);
-  color=tmp_(length(tmp)-2); //color4=Colorrgb2cmyk(color); //200618
+  color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   Num=50;
@@ -4472,11 +4472,11 @@ Plotdata(name1,func,variable,options):=(
     );
     if(Noflg<3, //190818
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
         ); //no ketjs off
         Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
      ,
@@ -4665,11 +4665,11 @@ Paramplot(nm,funstr,variable,options):=(
   , 
     if(Noflg<3, //190818
       if(isstring(Ltype),
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
-          Texcom("{");Com2nd("Setcolor("+color+")");//180722
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
         ); //no ketjs off
         Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-        if((Noflg==0)&(color!=KCOLOR), //181020 //no ketjs on
+        if((Noflg==0)&(color4!=KCOLOR), //181020 //no ketjs on
           Texcom("}");//180722
         ); //no ketjs off
       ,

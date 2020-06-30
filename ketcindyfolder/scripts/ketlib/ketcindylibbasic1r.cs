@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200629] loaded");
+println("ketcindylibbasic1[20200701] loaded");
 
 //help:start();
 
@@ -301,6 +301,48 @@ Readlines(path,file):=(
   out;
 );
 ////%Readlines end////
+
+////%Readcsv start//// //200701
+Readcsv(file):=Readcsv(Dirwork,file);
+Readcsv(Arg1,Arg2):=(  //190301from
+  if(islist(Arg2),
+    Readcsv(Dirwork,Arg1,Arg2);
+  ,
+    Readcsv(Arg1,Arg2,[]); //190317
+  );
+); //190301from
+Readcsv(path,fileorg,options):=(
+//help:Readcsv("ex.csv");
+//help:Readcsv(directory,"ex.csv");
+//help:Readcsv(options=["Head=no"]);
+  regional(file,dt,eqL,from,tmp,nn);
+  file=fileorg; //200701[2lines]
+  if(indexof(file,".csv")==0,file=file+".csv"); 
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  from=2; //200701
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    if(Toupper(substring(tmp_1,0,1))=="H",
+      tmp=Toupper(substring(tmp_2,0,1));//190818
+      if(tmp=="N",from=1);
+    );
+  );
+  dt=Readlines(path,file);
+  dt=apply(dt,tokenize(#,","));
+  forall(1..(length(dt)),nn, //200701from
+    tmp=dt_nn;
+    forall(1..(length(tmp)),
+      if(isstring(tmp_#),
+        tmp_#=replace(tmp_#,Dq,"");
+      );
+    );
+    dt_nn=tmp;
+  ); //200701to
+  if(length(dt)==1, dt=dt_1);  //190125
+  dt;
+);
+////%Readcsv end
 
 ////%Cindyname start////
 Cindyname():=Getcdyname();

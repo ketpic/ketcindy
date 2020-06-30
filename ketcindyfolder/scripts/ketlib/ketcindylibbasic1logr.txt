@@ -1,3 +1,5 @@
+// 20200701
+//    Readcsv readded/changed (from out)
 // 20200629
 //    Plotdata,Addgraph, Joincrvs debugged  ( color4)
 // 20200626

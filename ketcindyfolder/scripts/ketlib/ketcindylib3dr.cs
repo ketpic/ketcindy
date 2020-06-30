@@ -1455,6 +1455,7 @@ Rotatedata3d(nm,P3data,w1,w2,options):=(
   );
   if(islist(P3data) & isstring(P3data_1),Pd3=P3data,Pd3=[P3data]);
   Out=[];
+
   forall(Pd3,Pd,
     if(isstring(Pd),Pd=parse(Pd));
 //    if(Measuredepth(Pd)==1,Pd=[Pd]);

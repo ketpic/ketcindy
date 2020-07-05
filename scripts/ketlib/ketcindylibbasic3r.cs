@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200624] loaded");
+println("ketcindylibbasic3[20200704] loaded");
 
 //help:start();
 
@@ -2733,44 +2733,34 @@ Mkslidesummary(inputfile,outputfile,options):=(
 ////%Mkslidesummary end////
 
 ////%BBdata start////
-BBdata():=BBdata(BBTarget,0);
-BBdata(fname):=BBdata(fname,0); // 16.04.09
-BBdata(fname,optionorg):=(
+BBdata(fname):=BBdata(fname,[]); //200704from
+BBdata(Arg1,Arg2):=(
+  if(islist(Arg2),
+    BBdata(Dirwork,Arg1,Arg2);
+  ,
+    BBdata(Arg1,Arg2,[]);
+  );
+);
+BBdata(path,fname,optionorg):=(
 //help:BBdata(filename);
-//help:BBdata(options=0(automatic),1(make),"w=","h=");
-  regional(fout,flg,path,file,kcfile,options,eqL,reL,stL,
+//help:BBdata(path,filename);
+//help:BBdata(options="r","w=","h=");
+  regional(fout,flg,file,kcfile,options,eqL,stL,
       waiting,addop,tmp,tmp1,tmp2);
-  path="";
   file=fname;
   flg=0;
   waiting=2;
-  forall(reverse(1..length(fname)),
-    if(flg==0,
-      tmp=substring(fname,#-1,#);
-      if(tmp=="/" % tmp=="\",  // 14.01.15
-        path=substring(fname,0,#-1);
-        file=substring(fname,#,length(fname));
-        flg=1;
-      );
-    );
-  );
-  if(path=="",path=Dirwork);//16.10.05
   if(indexof(file,".")==0,file=file+".pdf");
-  if(islist(optionorg),options=optionorg,options=[optionorg]);
+  options=optionorg;
   tmp=Divoptions(options);
   eqL=tmp_5;
-  reL=tmp_6;
   stL=tmp_7;
-  flg=0;
+  flg=1;
   addop="";
-  if(length(reL)>0,
-    tmp=reL_1;
-    if(tmp==1,flg=1);
-  );
   forall(stL,
     tmp=Toupper(substring(#,0,1));
     if(tmp=="M",flg=1);
-    if(tmp=="R",flg=0); //200514
+    if(tmp=="R",flg=0); 
   );
   forall(eqL,
     tmp=indexof(#,"=");
@@ -2809,12 +2799,9 @@ BBdata(fname,optionorg):=(
       if(tmp!=file,flg=1);
     );
   );
-  if(length(path)==0,
-    path=Dirwork;
-  );
   if(flg==1,
     if(!isexists(path,file),
-      println("   => "+file+" not exists");
+      println("   => "+file+" not exists in "+path);
       flg=-1;
     );
   );
@@ -2875,7 +2862,7 @@ BBdata(fname,optionorg):=(
     );
   );
   tmp2; // 16.04.25
-);
+); //200704to
 ////%BBdata end////
 
 ////%Gcd start//// //190623

@@ -10,6 +10,8 @@
 //    Tonormalform added
 // 20200527
 //    Mkketcindyjs changed (Ketjson, Ketjsoff);
+// 20200704
+//    BBdata changed  ( path)
 // 20200524
 //    Seteditable changed  ( "Size=","Width=")
 //    Seteditable debugged (width)

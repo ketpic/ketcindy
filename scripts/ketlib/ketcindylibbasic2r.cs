@@ -86,10 +86,10 @@ Drawfigures(nm,figlistorg,optionlistorg,commonops):=(
           tmp1=fig_#;
           tmp2=name+"n"+text(kk)+"p"+text(#);
           if(length(tmp1)==1,
-            Pointdata(tmp2,tmp1,optionlist_kk); 
+            Pointdata(tmp2,tmp1,append(optionlist_kk,"Msg=n")); //200701
             figL=append(figL,"pt"+tmp2);
           ,
-            Listplot("-"+tmp2,tmp1,optionlist_kk);
+            Listplot("-"+tmp2,tmp1,append(optionlist_kk,"Msg=n")); //200701
             figL=append(figL,tmp2); //190427
           );
         ); //190531to

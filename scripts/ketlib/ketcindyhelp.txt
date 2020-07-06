@@ -303,7 +303,6 @@ Makecmdlist("ketcindylib");
 elect(tmp,indexof(#,"//help:")>0);
 Helplist();
 Helplist("helpE");
-mp2=apply(tmp2,replace(#,"//help:",""));
 Help("Plot");
 Help("*");
 Helpkey(keyword);

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200701] loaded");
+println("ketcindylibbasic1[20200706] loaded");
 
 //help:start();
 
@@ -290,15 +290,20 @@ Readlines(file):=Readlines(Dirwork,file); //181126
 Readlines(path,file):=(
 //help:Readlines(path,file);
   regional(tmp,out);
-  out=readfile2str(path,file);
-  out=tokenize(out,"/L"+"F/"); //190129
-  tmp=out_(length(out));
-  if(length(tmp)==0,
-    out=out_(1..(length(out)-1));
+  if(!isexists(path,file), //200706from
+    println(file+" not found in "+path);
+    out=[];//200706to
+  ,
+    out=readfile2str(path,file);
+    out=tokenize(out,"/L"+"F/"); //190129
+    tmp=out_(length(out));
+    if(length(tmp)==0,
+      out=out_(1..(length(out)-1));
+    );
+    tmp=out; //200423[2lines]
+    out=apply(tmp,if(!isstring(#),text(#),#));
+    out;
   );
-  tmp=out; //200423[2lines]
-  out=apply(tmp,if(!isstring(#),text(#),#));
-  out;
 );
 ////%Readlines end////
 

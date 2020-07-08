@@ -1,3 +1,5 @@
+// 20200707
+//    BBdata changed/debugged (dir added, Readlines)
 // 20200624
 //    Readoutdata changed ("Disp"=>"Msg")
 // 20200622

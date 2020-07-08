@@ -1,3 +1,5 @@
+// 20200708
+//    Pointdata debugged/changed ( inside=="N", COM2ndlist, ratio)
 // 20200706
 //    Readlines changed ( isexists added )
 // 20200701

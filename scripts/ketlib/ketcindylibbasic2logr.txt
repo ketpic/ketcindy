@@ -1,3 +1,6 @@
+// 20200710
+//    Shade debugged  (KCOLOR)
+//    Bowdata,Anglemark,Paramark changed  ( for \, )
 // 20200706
 //    Helplist changed ( for "read")
 // 20200629

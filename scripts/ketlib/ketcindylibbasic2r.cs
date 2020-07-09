@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200706] loaded");
+println("ketcindylibbasic2[20200710] loaded");
 
 //help:start();
 
@@ -601,7 +601,7 @@ Anglemark(nm,plist,optionsorg):=(
       if(tmp1=="E",Bname="E");
       tmp2=tmp_2;
       tmp=indexof(tmp2,",");
-      if(tmp==0,
+      if((tmp==0)%(substring(tmp2,tmp-2,tmp-1)=="\"), //200710
         Bstr=tmp2;
       ,
         Bstr=substring(tmp2,tmp,length(tmp2)); //200201
@@ -722,7 +722,7 @@ Paramark(nm,plist,optionsrog):=(
       if(tmp1=="E",Bname="E");
       tmp2=tmp_2;
       tmp=indexof(tmp2,",");
-      if(tmp==0,
+      if((tmp==0)%(substring(tmp2,tmp-2,tmp-1)=="\"), //200710
         Bstr=tmp2;
       ,
         Bstr=substring(tmp2,tmp,lenght(tmp2));
@@ -866,7 +866,7 @@ Bowdata(nm,plist,options):=(
       );
       tmp2=tmp_2;
       tmp=indexof(tmp2,",");
-      if(tmp==0,
+      if((tmp==0)%(substring(tmp2,tmp-2,tmp-1)=="\"), //200710
         Bops="";
         Bstr=tmp2;
       ,
@@ -2048,7 +2048,11 @@ Shade(nm,plistorg,options):=(
       );
       if(jj==0, jj=1); //191008
     ); //191007to
-    tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color4+")",Str,"Texcom("+Dqq("}")+")"];
+    if(color4!=KCOLOR, //200710from
+      tmp1=["Texcom("+Dqq("{")+")","Setcolor("+color4+")",Str,"Texcom("+Dqq("}")+")"];
+    ,
+      tmp1=[Str];
+    ); //200710to
     tmp2=COM2ndlist_(1..(jj-1));
     tmp=COM2ndlist_(jj..(length(COM2ndlist)));
     if(!islist(tmp),tmp=[tmp]);

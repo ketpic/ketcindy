@@ -301,7 +301,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
               tmp1=tmp1_2;
               Partcrv(direction,1,tmp1,direction,["Msg=n"]); //191207
               Changestyle("part"+direction,[tmp_2,tmp_3]);
-              Changestyle(direction,["nodisp"]);
+//              Changestyle(direction,["nodisp"]); //200710(removed)
             );
           );  //191202to
           Listplot("-arh"+nm,list,["dr,0.1","Color="+text(color),"Msg=n"]);//191202

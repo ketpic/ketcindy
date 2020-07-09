@@ -1,6 +1,7 @@
 // 20200710
 //    Shade debugged  (KCOLOR)
 //    Bowdata,Anglemark,Paramark changed  ( for \, )
+//    Arrowhead debugged  ( direction should not removed )
 // 20200706
 //    Helplist changed ( for "read")
 // 20200629

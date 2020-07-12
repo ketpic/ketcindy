@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200709] loaded");
+println("ketcindylibbasic3[20200713] loaded");
 
 //help:start();
 
@@ -2868,18 +2868,34 @@ BBdata(path,fname,optionorg):=(
 ////%BBdata end////
 
 ////%Gcd start//// //190623
-Gcd(xL):=Gcd(xL,100);
-Gcd(xL,nmx):=(
-//help:Gcd([12,18,24]);
-//help:Gcd(xlist,max<100>);
-  regional(mL,ng,tmp);
-  ng=nmx;
-  mL=apply(xL,mod(abs(#),ng));
-  while(sum(mL)>0,
-    ng=ng-1;
-    mL=apply(xL,mod(abs(#),ng));
+Euclidalg(x,y):=(
+ regional(u,v,r);
+ if(x>y,
+  u=x; v=y;
+ ,
+  u=y; v=x;
+ );
+ r=v;
+ while(r!=0,
+  r=mod(u,v);
+  if(r!=0,
+    u=v; v=r;
   );
-  ng;
+ );
+ v;
+);
+Gcd(x1,x2):=Gcd([x1,x2]);
+Gcd(xL):=(
+//help:Gcd([12,18,24]);
+  regional(sL,tmp);
+  sL=xL;
+  while(length(sL)>1,
+    sL=sort(sL,[-#]);
+    tmp=Euclidalg(sL_1,sL_2);
+    sL=sL_(3..(length(sL)));
+    sL=prepend(tmp,sL);
+  );
+  sL_1;
 );
 ////%Gcd end////
 

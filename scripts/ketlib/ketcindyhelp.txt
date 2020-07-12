@@ -357,7 +357,6 @@ BBdata(filename);
 BBdata(path,filename);
 BBdata(options="r","w=","h=");
 Gcd([12,18,24]);
-Gcd(xlist,max<100>);
 Fracform(1.33);
 Fracform(1.33,1..100 (,err(-5)));
 Fracform(1.33,200 (,err(-5)));

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20200626] loaded");
+println("ketcindylib3d[20200716] loaded");
 
 //help:start();
 
@@ -95,8 +95,8 @@ Start3d(ptexception,optionjs):=(//190503to
   FuncListC=[];
   CommandListC=[]; //180531
   CutFunList=[];//180601
-  EraseList=[];//180601
-  ADDPACK=[]; //180606  // no ketjs off
+  EraseList=[];//180601 // no ketjs off
+//  ADDPACK=[]; //180606 //no ketjs
   GCLIST=[];
   GLIST=[];   // no ketjs on
   FUNLIST=[];

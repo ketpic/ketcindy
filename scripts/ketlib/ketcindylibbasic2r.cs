@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200710] loaded");
+println("ketcindylibbasic2[20200715] loaded");
 
 //help:start();
 
@@ -2016,7 +2016,16 @@ Shade(nm,plistorg,options):=(
       G2=apply(G2,Pcrd(#));
       tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";
       if(ptshade=="N", //200513from
-        parse(tmp1);
+        tmp=select(1..(length(GCLIST)),contains(plist,GCLIST_#_1)); //200715from
+        if(length(tmp)>0,
+          nn=min(tmp);
+        ,
+          nn=length(GCLIST)+1;
+        );
+        tmp2=GCLIST_(1..(nn-1));
+        tmp2=append(tmp2,[tmp1,[5,0]]);
+        GCLIST=concat(tmp2,GCLIST_(nn..(length(GCLIST))));
+//        parse(tmp1);  //200715to
       ,
         PTSHADElist=append(PTSHADElist,[name,tmp1]);
       ); //200513to
@@ -2044,7 +2053,11 @@ Shade(nm,plistorg,options):=(
       jj=nn;
       forall(plist,tmp1,
         tmp=select(1..nn,indexof(COM2ndlist_#,tmp1)>0);
-        jj=min(append(tmp,jj));
+        if(length(tmp)>0, //200715from
+          jj=min(append(tmp,jj));
+        ,
+          jj=nn+1;
+        ); //200715to
       );
       if(jj==0, jj=1); //191008
     ); //191007to
@@ -4773,7 +4786,7 @@ Windispg():=(
   Windispg(GCLIST); //190125
 );
 Windispg(gcLorg):=( //190125
-  regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,typeL,opcindy);
+  regional(gcL,Nj,Nk,Dt,Vj,tmp,tmp1,tmp2,tmp3,tmp4,typeL,opcindy,flg);
   gcL=gcLorg; //190125from
   if(length(gcL)>0,
     if(!islist(gcL_1),gcL=[gcL]);
@@ -4782,8 +4795,18 @@ Windispg(gcLorg):=( //190125
   gsave();
   layer(KETPIClayer);
   forall(gcL,Nj,
-    if(isstring(Nj_1),Dt=parse(Nj_1),Dt=Nj_1);  // 11.17
-    if(islist(Dt) & length(Dt)>0,  // 12.19,12.22
+    flg=0;
+    if(isstring(Nj_1),
+      if(Nj_2_1>4, //200716from
+        parse(Nj_1);
+        flg=1; 
+      ,
+        Dt=parse(Nj_1);
+      );  //200716to
+    ,
+      Dt=Nj_1
+    );  // 11.17
+    if((flg==0)&(islist(Dt))&(length(Dt)>0),  // 12.19,12.22,200716
       tmp=Measuredepth(Dt);
       if(tmp==1,Dt=[Dt]);
       opcindy=Nj_3;
@@ -4863,7 +4886,6 @@ Windispg(gcLorg):=( //190125
   layer(0);
 );
 ////%Windispg end////
-
 
 ////%Extractdata start////
 Extractdata(name):=Extractdata(1,name,[]);

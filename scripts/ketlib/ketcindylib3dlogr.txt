@@ -1,3 +1,5 @@
+// 200716
+//    Start3d changed  (ADDPACK not reset)
 // 200626
 //    color4 added
 // 200625

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200708] loaded");
+println("ketcindylibbasic1[20200716] loaded");
 
 //help:start();
 
@@ -4396,7 +4396,7 @@ Plotdata(name1,func,variable,options):=(
         tmp1=replace(tmp1,"]",".0)");
         opstr=opstr+","+Dqq("Exc="+tmp1); //180817to
       ,
-        Exfun=tmp1;
+        Exfun=tmp_2; //200716
         opstr=opstr+","+Dqq(#);
       );
     );
@@ -4605,7 +4605,7 @@ Paramplot(nm,funstr,variable,options):=(
         tmp1=replace(tmp1,"]",".0)");
         opstr=opstr+","+Dqq("Exc="+tmp1); //180817to
       ,
-        Exfun=tmp1;
+        Exfun=tmp_2; //200716
         opstr=opstr+","+Dqq(#);
       );
     );

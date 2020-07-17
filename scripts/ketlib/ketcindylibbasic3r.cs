@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200716] loaded");
+println("ketcindylibbasic3[20200717] loaded");
 
 //help:start();
 
@@ -1170,7 +1170,11 @@ Addpackage(packorg):=(
       packL_#="{"+tmp+"}";
     );
   );
-  ADDPACK=set(concat(ADDPACK,packL)); //17.06.25to,200716
+  forall(packL, //20070717from
+    if(!contains(ADDPACK,#),
+      ADDPACK=append(ADDPACK,#); 
+    );
+  ); //200717to
 );
 ////%Addpackage end////
 

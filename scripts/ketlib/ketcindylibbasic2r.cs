@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200715] loaded");
+println("ketcindylibbasic2[20200718] loaded");
 
 //help:start();
 
@@ -2429,6 +2429,7 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
 Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
 Reflectdata(nm,plist,symL,optionorg):=(
 //help:Reflectdata("1",["crAB"],[C]);
+//help:Reflectdata("1",["crAB"],[pt1,pt2]);
   regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,options,eqL,
       opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color,color4);
   name="re"+nm;

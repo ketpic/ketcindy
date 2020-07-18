@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200624] loaded");
+println("ketcindylibout[20200718] loaded");
 
 //help:start();
 
@@ -5706,7 +5706,11 @@ kcW(fname,optionorg):=(
       if(PathW=="wolframscript", //200105from
         tmp=Dqq("wolframscript")+" -file "+Dqq(filename)+" > "+Dqq(rfile);
       ,
-        tmp=Dqq(PathW)+" < "+Dqq(filename)+" > "+Dqq(rfile);
+        if(indexof(PathW,"MathematicaScript")>0, //200718from
+          tmp=Dqq(PathW)+" -script "+Dqq(filename);
+        ,
+          tmp=Dqq(PathW)+" < "+Dqq(filename)+" > "+Dqq(rfile);
+        ); //200718to
       );  //200105to
       println(SCEOUTPUT,tmp); 
       println(SCEOUTPUT,"echo 99999 >>"+Dqq(rfile)); 

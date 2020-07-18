@@ -217,6 +217,7 @@ Translatedata("1",["gr1","pt1"],[1,2]);
 Scaledata("1",["crAB","pt1"],3,2,[[0,0]]);
 Scaledata("1",["crAB","pt1"],2,[[0,0]]);
 Reflectdata("1",["crAB"],[C]);
+Reflectdata("1",["crAB"],[pt1,pt2]);
 Mksegments();
 Mkcircles();
 Htickmark([1,"1",2,"sw","2"]);

@@ -1,3 +1,5 @@
+// 20200717
+//    Reflectdata changed ( help added )
 // 20200715
 //    Shade,Windispg changed ( display order changed , "nodisp" supported)
 // 20200710

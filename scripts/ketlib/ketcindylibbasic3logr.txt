@@ -1,4 +1,6 @@
 // 20200717
+Tohtmltagpf changed  ( tag only for "<p")
+// 20200717
 //    Addpackage debugged ('set' not used)
 // 20200716
 //    Addpackage changed  ('set' used)

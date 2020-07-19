@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200717] loaded");
+println("ketcindylibbasic3[20200719] loaded");
 
 //help:start();
 
@@ -3885,12 +3885,12 @@ Tohtmltagpf(sentence):=(
   sent=replace(sentence,"_;","&emsp;");
   sent=Removespace(sent);
   tag="";
-  if(substring(sent,0,1)=="<",
+  if(substring(sent,0,2)=="<p", //200719
     tmp=indexof(sent,">");
     tag=substring(sent,1,tmp-1);
     sent=substring(sent,tmp,length(sent));
   );
-  if(length(tag)>0,
+  if(indexof(tag,"/")>0, //200719
     tag=Strsplit(tag,"/");
   ,
     tag=[""];
@@ -3922,7 +3922,7 @@ Tohtmltagpf(sentence):=(
       );
     );
   );
-  tmp4=tmp4+">"+sent;
+  if(length(tmp4)>0,tmp4=tmp4+">"+sent,tmp4=sent); //200719
   if(length(tag)>1,
     tmp3=tag_2;
     forall(1..(length(tmp3)),

@@ -4651,6 +4651,10 @@ Mkketcindyjs(options):=( //17.11.18
       tmp=tmp+"[{left: "+Dqq("[[")+", right: "+Dqq("]]")+", display: true},";
       tmp=tmp+"{left: "+Dqq("$")+", right: "+Dqq("$")+", display: false}]})});</script>";
       println(SCEOUTPUT,tmp); //200122to
+      if(isexists(Dircdy,Cdyname()+".css"), //200727from
+        tmp="<link rel="+Dqq("stylesheet")+" type="+Dqq("text/css")+" href="+Dqq(Cdyname()+".css")+"/>";
+        println(SCEOUTPUT,tmp);
+      );  //200727to
       println(SCEOUTPUT,"</head>");
       println(SCEOUTPUT,"<body");    
       println(SCEOUTPUT,"<p></p>"); 

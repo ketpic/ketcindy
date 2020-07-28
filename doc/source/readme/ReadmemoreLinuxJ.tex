@@ -22,87 +22,64 @@
 \hfill 修正日：\today
 
 \begin{enumerate}[\bf\large 1.]
-\item Cinderella, R, Maxima, Evince をインストールする．
-    \begin{enumerate}[(1)]
-    \item 次に行き，Unix Installをダウンロードして，例えばユーザホームにおく．\\
-       \hspace*{10mm}\url{https://beta.cinderella.de} 
-    \item setcindyetc.shを例えばユーザホームにおき，テキストエディタで編集する．\\
-      \hspace*{5mm}注）setcindyetc.shは\verb|ketcindyfolder/forLinux|にある．
-    \item 以下を実行する．\\
-       \hspace*{10mm}\verb|sudo bash ~/setcindyetc.sh|
-    \end{enumerate}
+\item Linux (Ubnutu 20.04 LTS) へのインストール手順
 
-\item \TeX をインストールしていない場合はインストールする．
- \begin{enumerate}[(1)]
- \item TeXLiveを推奨
-    \begin{itemize}
-    \item ２０１８以降ではketcindyが既に入っている.
-    \end{itemize}
-\item KeTTeXはTeXLiveの軽量版で，以下からダウンロードできる．\\
-    \hspace*{6mm}\url{https://www.dropbox.com/s/i6g64d897xr72nj/kettex.tar.gz?dl=0}
+\begin{enumerate}[(1)]
 
-    \begin{itemize}
-    \item どこか（例えばホーム）に置いて解凍する．
-    \item ターミナルで以下を実行する．\\
-　　　\verb|sudo bash ~/kettex/setkettex.sh|（ホームの場合）
-    \end{itemize}
+\item 作業用フォルダを作成して移動する
 
-% \item 他のTeXの場合は，{\bf 3.}(2)を参照する．
- \end{enumerate}
+※ 作業用フォルダは \textasciitilde/tmp とする
 
-\item KeTCindyのインストール
-  \begin{enumerate}[(1)]
-  \item ketcindyをCTAN(\url{https://ctan.org})からダウンロードする．\\
-  \hspace*{10mm}ketcindyで検索 \verb|>| Package ketcindy \verb|>| download
-    \begin{itemize}
-    \item[*]最新版は，Repositoryのサイト\\
-        \hspace*{10mm}\url{https://github.com/ket­pic/ketcindy}\\
-       から以下のようにダウンロードできる．\\
-        \hspace*{10mm}Clone or download \verb|>| Download ZIP
-    \item[*]この場合は，ketcindy-masterになる．
-    \end{itemize}
-  \item ketcindy(-master)/forLinuxを開く．
-  \item setketcindy.shをテキストエディタで開いて，パスを確認，修正する．
-    \begin{itemize}
-    \item ターミナルで以下を実行する．\\
-　　　\verb|sudo bash setketcindy.sh|
-    \item scriptsの中身が\TeX にコピーされる
-    \item ketcindyのstyleファイルが\TeX にコピーされmktexlsrが実行される．
-    \item CinderellaのPluginsにKetcindyPlugin.jarがコピーされる．
-    \item Pluginsにketcindy.iniが作成される（新規または再作成の場合）
-    \item タイプセットの方法（TeXの種類）\\
-    \hspace*{10mm}通常は，platex (p)またはuplatex(u)を選ぶ．
-    \end{itemize}
-  \item setwork.shをテキストエディタで開いて，パスを確認，修正する．
-    \begin{itemize}
-    \item ターミナルで以下を実行する．\\
-　　　\verb|bash setketwork.sh|
-    \item 作業ディレクトリketcindyがユーザホームに作成される．
-     \item ketcindyフォルダにworkフォルダの中身がコピーされる．
-    \item \verb|.ketcindy.conf|（不可視ファイルだが編集可能）がユーザホームに作成される．\\
-    \hspace*{10mm}注）\TeX を切り替えるときなどはこのファイルを修正する．
-    \item マニュアルもコピーされる．
-    \item 作業ディレクトリにketincy.confの雛形がコピーされる．
-    \item KeTCindyを立ち上げたとき，設定ファイルは次の順に読み込まれる．
-      \begin{enumerate}[1)]
-      \item ketoutset.txt
-      \item ユーザホームの\verb|.ketcindy.conf|
-      \item 作業ディレクトリketcindyの ketcindy.conf
-      \end{enumerate}
-    \end{itemize}
-  \end{enumerate}
+\begin{verbatim}
+$ cd
+$ mkdir tmp
+$ cd tmp
+\end{verbatim}
 
-  \item KeTCindyのテストラン
-    \begin{enumerate}[(1)]
-    \item 作業ディレクトリketcindyにあるtemplate1basic.cdyを実行してみる．
-      \begin{itemize}
-      \item ターミナルで以下を実行\\
-　　　\verb|cd (ketcindyのパス）|\\
-　　　\verb|Cinderella2 template1basic.cdy|
-      \item 画面に白い枠が出れば，ライブラリの読み込みは成功．
-      \end{itemize}
-    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．
-  \end{enumerate}
+\item TexLive 2020 のインストール
+
+※ デフォルトのフォルダ( /usr/local/texlive/2020/ )にインストールする
+
+\begin{verbatim}
+$ wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+$ tar xvfz install-tl-unx.tar.gz
+$ sudo ./install-tl-(日時)/install-tl
+\end{verbatim}
+
+※ 選択肢が表示されたら I + Enter を入力
+
+\verb|$ sudo /usr/local/texlive/2020/bin/x86_64-linux/tlmgr path add|
+
+\item JDK のインストール
+
+\verb|$ sudo apt install default-jdk|
+
+\item Rのインストール
+
+\verb|$ sudo apt install r-base-core|
+
+\item git のインストール
+
+\verb|$ sudo apt install git|
+
+\item Cinderella3 のインストール
+
+※ /opt/cinderella/ にインストールする
+
+\begin{verbatim}
+$ wget https://beta.cinderella.de/Cinderella-3.0b.1952.tar.gz
+$ tar xvfz Cinderella-3.0b.1952.tar.gz
+$ sudo mv cinderella/ /opt
+\end{verbatim}
+
+\item Github から最新版をクローンして \verb|ketcindysettings.cdy| を開く
+\begin{verbatim}
+$ git clone https://github.com/ketpic/ketcindy.git
+$ /opt/cinderella/Cinderella ~/tmp/ketcindy/doc/ketcindysettings.cdy &
+\end{verbatim}
+
+\end{enumerate}
+
 
 \item TeXworksを設定する．
   \begin{itemize}

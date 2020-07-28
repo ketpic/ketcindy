@@ -1,4 +1,4 @@
-タイトル::slide0::%wallpaper
+タイトル::slide1
 
 %%%%%%%%%%%%%%%%
 main::メインスライド１
@@ -6,31 +6,31 @@ main::メインスライド１
 
 %%%%%%%%%%%%%%%%
 new::itemize環境の使い方
-%repeat=2,para
+%repeat=3
 \slidepage
 
 itemize
 item::内容
-%[2,-]::item::結論
+%[2,-]::item::結論は
+%[3,-]::次のとおりです
 end
 
 %%%%%%%%%%%%%%%%
 new::enumerate環境の使い方
-%repeat=3,para
+%repeat=2
 \slidepage
 
 enumerate::[(1)]
-%thin[2,-]::item::番号を変えるには，例えば [(1)]
-%thin[3,-]::item::後は同じ
+item::番号を変えるには，例えば [(1)]
+%thin[2,-]::item::後は同じ
 end
 
 %%%%%%%%%%%%%%%%
-new::グラフとrepeat
-%repeat=2,para
+new::図の段階的表示
+%repeat=2
 \slidepage
 
-layer::{100}{0}
-%[1]::putnote::se{10}{15}::sine,0.8
-%[2]::putnote::se{30}{40}::sine,0.8
+layer::{120}{0}
+%[1]::putnote::s{65}{5}::fig1
+%[2,-]::putnote::s{65}{5}::fig2
 end
-

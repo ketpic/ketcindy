@@ -22,7 +22,11 @@
 \hfill 修正日：\today
 
 \begin{enumerate}[\bf\large 1.]
-\item Linux (Ubnutu 20.04 LTS) へのインストール手順
+\item Linux へのインストール手順
+
+\begin{itemize}
+\item {\bf Ubnutu 20.04 LTS の場合}
+\end{itemize}
 
 \begin{enumerate}[(1)]
 
@@ -70,6 +74,94 @@ $ sudo ./install-tl-(日時)/install-tl
 $ wget https://beta.cinderella.de/Cinderella-3.0b.1952.tar.gz
 $ tar xvfz Cinderella-3.0b.1952.tar.gz
 $ sudo mv cinderella/ /opt
+\end{verbatim}
+
+\item Github から最新版をクローンして \verb|ketcindysettings.cdy| を開く
+\begin{verbatim}
+$ git clone https://github.com/ketpic/ketcindy.git
+$ /opt/cinderella/Cinderella ~/tmp/ketcindy/doc/ketcindysettings.cdy &
+\end{verbatim}
+
+\end{enumerate}
+
+\vspace{\baselineskip}
+
+\begin{itemize}
+\item {\bf CentOS 8.2 の場合}
+\end{itemize}
+
+\begin{enumerate}[(1)]
+
+\item 作業用フォルダを作成して移動する
+
+※ 作業用フォルダは \textasciitilde/tmp とする
+
+\begin{verbatim}
+$ cd
+$ mkdir tmp
+$ cd tmp
+\end{verbatim}
+
+\item EPEL のインストール
+
+\begin{verbatim}
+$ su
+# dnf install epel-release
+# exit
+\end{verbatim}
+
+\item TexLive 2020 のインストール
+
+※ デフォルトのフォルダ( /usr/local/texlive/2020/ )にインストールする
+
+\begin{verbatim}
+$ wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+$ tar xvfz install-tl-unx.tar.gz
+$ su
+# ./install-tl-(日時)/install-tl
+\end{verbatim}
+
+※ 選択肢が表示されたら I + Enter を入力
+
+\begin{verbatim}
+# /usr/local/texlive/2020/bin/x86_64-linux/tlmgr path add
+# exit
+\end{verbatim}
+
+\item JDK のインストール
+
+\begin{verbatim}
+$ su
+# dnf install java-11-openjdk
+# exit
+\end{verbatim}
+
+\item Rのインストール
+
+\begin{verbatim}
+$ su
+# dnf install R
+# exit
+\end{verbatim}
+
+\item git のインストール
+
+\begin{verbatim}
+$ su
+# dnf install git
+# exit
+\end{verbatim}
+
+\item Cinderella3 のインストール
+
+※ /opt/cinderella/ にインストールする
+
+\begin{verbatim}
+$ wget https://beta.cinderella.de/Cinderella-3.0b.1952.tar.gz
+$ tar xvfz Cinderella-3.0b.1952.tar.gz
+$ su
+# mv cinderella/ /opt
+# exit
 \end{verbatim}
 
 \item Github から最新版をクローンして \verb|ketcindysettings.cdy| を開く

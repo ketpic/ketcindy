@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200719] loaded");
+println("ketcindylibbasic3[20200730] loaded");
 
 //help:start();
 
@@ -3054,13 +3054,13 @@ Totexformpart(str):=( //190514
   regional(plv,funL,repL,flg,flgf,nall,nn,fun,funf,
       frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
-    ["frac",["","\frac{xx}{yy}"]],
-    ["log",["\log{xx}","\log_{xx} yy"]],
-    ["sqrt",["\sqrt{xx}","\sqrt[xx]{yy}"]],
+    ["frac",["","{\frac{xx}{yy}}"]], //200730from
+    ["log",["{\log{xx}}","{\log_{xx} yy}"]],
+    ["sqrt",["{\sqrt{xx}}","{\sqrt[xx]{yy}}"]],
     ["pow",["","{xx}^{yy}"]],
-    ["sin",["\sin{xx}","\sin^{xx}{yy}"]], //190522from
-    ["cos",["\cos{xx}","\cos^{xx}{yy}"]],
-    ["tan",["\tan{xx}","\tan^{xx}{yy}"]] //190522to
+    ["sin",["{\sin{xx}}","{\sin^{xx}{yy}}"]], 
+    ["cos",["{\cos{xx}}","{\cos^{xx}{yy}}"]],
+    ["tan",["{\tan{xx}}","{\tan^{xx}{yy}}"]]  //200730to
   ];
   funL=apply(repL,substring(#_1,0,2)); //190515to
   out="";

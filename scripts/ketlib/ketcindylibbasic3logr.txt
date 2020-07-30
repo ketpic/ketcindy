@@ -1,3 +1,5 @@
+// 20200730
+//Totexformpart changed  ( { } added )
 // 20200717
 //Tohtmltagpf changed  ( tag only for "<p")
 // 20200717

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200730] loaded");
+println("ketcindylibbasic3[20200803] loaded");
 
 //help:start();
 
@@ -2732,7 +2732,7 @@ Mkslidesummary(inputfile,outputfile,options):=(
   );
   kc();
   Changework(dirworkorg);//17.04.10
-  Fillstore(store);//181125
+  Fillrestore(store);//181125
 );
 ////%Mkslidesummary end////
 
@@ -4662,9 +4662,9 @@ Mkketcindyjs(options):=( //17.11.18
         tmp2=Tohtmltagpf(tmp1);
         println(SCEOUTPUT,tmp2);
       );
-      println(SCEOUTPUT,"<p></p>");    
-      tmp="<iframe src="+Dqq(fname)+" width="+Dqq(jssizeW);
-      tmp=tmp+" height="+Dqq(jssizeH)+"></iframe>";
+      println(SCEOUTPUT,"<p></p>");
+      tmp="<p align="+Dqq("center")+"><iframe src="+Dqq(fname)+" width="+Dqq(jssizeW); //200802[2lines]
+      tmp=tmp+" height="+Dqq(jssizeH)+"></iframe></p>";
       println(SCEOUTPUT,tmp);    
       forall(JSMAIN_2,tmp1,
         tmp2=Tohtmltagpf(tmp1);

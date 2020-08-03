@@ -1,7 +1,11 @@
+/ 20200803
+//    Mkslidesummary debugged (Fillstore > Fillrestore)
+// 20200802
+//    Mkketcindyjs changed  ( align center for .js )
 // 20200730
-//Totexformpart changed  ( { } added )
+//    Totexformpart changed  ( { } added )
 // 20200717
-//Tohtmltagpf changed  ( tag only for "<p")
+//    Tohtmltagpf changed  ( tag only for "<p")
 // 20200717
 //    Addpackage debugged ('set' not used)
 // 20200716

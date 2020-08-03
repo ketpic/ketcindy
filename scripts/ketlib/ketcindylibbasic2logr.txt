@@ -1,3 +1,5 @@
+// 20200803
+//    Enclosing debugged  (Case of Fdata //Gdata )
 // 20200717
 //    Reflectdata changed ( help added )
 // 20200715

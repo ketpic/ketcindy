@@ -33,7 +33,7 @@ Maketitle,basic3,1693,1784,iswindows,Makebat,Makeshell,kc,Cindyname,isexists,PaO
 Repeatsameslide,basic3,1788,1943,Indexall
 Presentation,basic3,1947,2599,readfile2str,isexists,Removespace,fileslist,Repeatsameslide
 Mkslides,basic3,2603,2667,Fillblack,Changework,Setdirectory,setexec,isexists,Presentation,iswindows,Makebat,Makeshell,kc,pathsep,Fillrestore
-Mkslidesummary,basic3,2671,2736,Fillblack,pathsep,ismacosx,setexec,PPa,PaO,CalcbyR,iswindows,Makebat,Makeshell,kc,Changework,Fillstore
+Mkslidesummary,basic3,2671,2736,Fillblack,pathsep,ismacosx,setexec,PPa,PaO,CalcbyR,iswindows,Makebat,Makeshell,kc,Changework,Fillrestore
 BBdata,basic3,2740,2871,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,isexists,Readlines,Removespace,Strsplit,Sprintf
 Gcd,basic3,2875,2903,Euclidalg
 Fracform,basic3,2907,2947

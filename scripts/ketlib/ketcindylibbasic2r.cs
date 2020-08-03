@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200718] loaded");
+println("ketcindylibbasic2[20200803] loaded");
 
 //help:start();
 
@@ -1320,50 +1320,54 @@ Enclosing2(nm,plistorg,options):=(
       Fdata=plist_nn;
       if(nn==length(plist),nxtno=1,nxtno=nn+1);
       Gdata=plist_nxtno;
-      KL=Intersectcurvespp(Fdata,Gdata);
-      if(length(KL)==0,
-        tmp1=parse(Fdata); //18.02.02from
-        tmp2=parse(Gdata); 
-        tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
-        Gdata=replace(Gdata,"(","");
-        Gdata=replace(Gdata,")","");
-        tmp=Gdata+"="+Textformat(tmp2,6)+";"; //190415
-        parse(tmp);
-        plist_nxtno=Gdata;
-        t2=Length(tmp1);
-        p2=Pointoncurve(t2,Fdata); //180713
-        ss=1; //18.02.02to
-      ,
-        KL=sort(KL,[#_2]);//180706
-        tmp=parse(Fdata);
-        tmp1=t1+Eps;
-        KL=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //180713,16
-        t2=KL_1_2;
-        ss=KL_1_3;
-        if(abs(t2-t1)<Eps,//180707
-          if(length(KL)>1,
-            t2=KL_2_2;
-            ss=KL_2_3;
-          ,
-            println(text(nn)+" and "+text(nxtno)+" not intersect");
-            flg=1;
+      tmp1=parse(Fdata); //200803from
+      tmp2=parse(Gdata);
+      if(|tmp2_1-tmp1_(-1)|<Eps,
+        AnsL=concat(AnsL,tmp1);
+      ,  //200803to
+        KL=Intersectcurvespp(Fdata,Gdata);
+        if(length(KL)==0,
+          tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
+          Gdata=replace(Gdata,"(","");
+          Gdata=replace(Gdata,")","");
+          tmp=Gdata+"="+Textformat(tmp2,6)+";"; //190415
+          parse(tmp);
+          plist_nxtno=Gdata;
+          t2=Length(tmp1);
+          p2=Pointoncurve(t2,Fdata); //180713
+          ss=1; //18.02.02to
+        ,
+          KL=sort(KL,[#_2]);//180706
+          tmp=parse(Fdata);
+          tmp1=t1+Eps;
+          KL=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //180713,16
+          t2=KL_1_2;
+          ss=KL_1_3;
+          if(abs(t2-t1)<Eps,//180707
+            if(length(KL)>1,
+              t2=KL_2_2;
+              ss=KL_2_3;
+            ,
+              println(text(nn)+" and "+text(nxtno)+" not intersect");
+              flg=1;
+            );
           );
         );
-      );
-      if(flg==0,
-        tmp=Partcrv("",t1,t2,Fdata,["nodata"]);
-        if(nn==1,
-          AnsL=tmp;
-        ,
-          AnsL=concat(AnsL,tmp_(2..(length(tmp))));
+        if(flg==0,
+          tmp=Partcrv("",t1,t2,Fdata,["nodata"]);
+          if(nn==1,
+            AnsL=tmp;
+          ,
+            AnsL=concat(AnsL,tmp_(2..(length(tmp))));
+          );
         );
+        t1=ss;//180706
+        p1=Pointoncurve(t1,Gdata); //180713
       );
-      t1=ss;//180706
-      p1=Pointoncurve(t1,Gdata); //180713
     );
-  );
-  if(flg==0,
-    AnsL=apply(AnsL,Pcrd(#));
+    if(flg==0,
+      AnsL=apply(AnsL,Pcrd(#));
+    );
   );
   if(Noflg<3,
     println("generate Enclosing "+name);

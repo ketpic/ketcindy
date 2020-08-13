@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200716] loaded");
+println("ketcindylibbasic1[20200813] loaded");
 
 //help:start();
 
@@ -4062,7 +4062,7 @@ Pointdata(nm,listorg,optionsorg):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
 //help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n/color(,rasiio))"]);
-  regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,
+  regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,color4,
       size,inside,incolor,ratio,tmp,tmp1,tmp2,tmp3);
   if(substring(nm,0,1)=="-", //200510[2lines]
     name=substring(nm,1,length(nm));
@@ -4148,12 +4148,9 @@ Pointdata(nm,listorg,optionsorg):=(
     forall(1..(length(list)),
       if(inside=="N",
         if(length(incolor)>0, //200519from
-          tmp2=COM2ndlist; //200708 //no ketjs
           Circledata(text(#)+name+"i",[list_#,tmp1*ratio],["nodisp","Msg=n"]); //200523,0708
           tmp="cr"+text(#)+name+"i";
-          Shade("-"+tmp+"i",[tmp],["Color="+incolor,"Ptshade=y"]); // no ketjs on
-          tmp3=remove(COM2ndlist,tmp2); //200707[2lines]
-          COM2ndlist=concat(tmp2,tmp3); //  no ketjs off
+          Shade([tmp],["Color="+incolor]); // no ketjs //[2lines removed]
 //          if(isstring(incolor),incolor=Colorname2cmyk(incolor)); // only ketjs on
 //          if(length(incolor)==4,incolor=Colorcmyk2rgb(incolor));
 //          opcindy=opcindy+",color->"+text(incolor);
@@ -4164,7 +4161,7 @@ Pointdata(nm,listorg,optionsorg):=(
       ,
         Circledata(text(#)+name,[list_#,tmp1],["nodisp","Msg=n"]); //200523
         tmp="cr"+text(#)+name;
-        Shade("-"+tmp,[tmp],append(options,"Ptshade=y")); // no ketjs
+        Shade([tmp],options); // no ketjs   //200813
 //          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on
 //          opcindy=opcindy+",color->"+text(color);
 //        tmp=parse(tmp); // only ketjs on

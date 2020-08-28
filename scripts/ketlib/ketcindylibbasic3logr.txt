@@ -1,4 +1,6 @@
-/ 20200803
+// 20200823
+//    Totexform changed  (sin^n, cos^n ,tan^n  \! added)
+// 20200803
 //    Mkslidesummary debugged (Fillstore > Fillrestore)
 // 20200802
 //    Mkketcindyjs changed  ( align center for .js )

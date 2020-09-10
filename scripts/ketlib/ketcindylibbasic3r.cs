@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200823] loaded");
+println("ketcindylibbasic3[20200911] loaded");
 
 //help:start();
 
@@ -4570,52 +4570,17 @@ Mkketcindyjs(options):=( //17.11.18
         if(indexof(tmp1,"<body>")>0,
           forall(JSBODY_1,
             tmp2=replace(#,"_;","&emsp;");
-            tmp2=Removespace(tmp2);
-            tmp=indexof(tmp2,">");
-            tmp3=substring(tmp2,1,tmp-1);
-            if(indexof(tmp3,"p")>0,
-              tmp2=substring(tmp2,tmp,length(tmp2));
-            );
-            tmp3=Strsplit(tmp3,",");
-            forall(reverse(1..(length(tmp3))),nn,
-              tmp=tmp3_nn;
-              if(substring(tmp,0,1)=="f",
-                tmp="<font size="+Dqq(substring(tmp,1,length(tmp)))+">";
-                tmp2=tmp+tmp2+"</font>";
-              );
-              if(substring(tmp,0,1)=="p",
-                tmp2="<p>"+tmp2+"</p>";
-              );
-            );
-            tmp2=replace(tmp2,"''",Dq);
-            tmp2="    "+replace(tmp2,"`","'");
+            tmp2=Removespace(tmp2); //200911(next block removed)
             println(SCEOUTPUT,tmp2);
           );
         );
       ,
         forall(JSBODY_2,
           tmp2=replace(#,"_;","&emsp;");
-          tmp2=Removespace(tmp2);
-          tmp=indexof(tmp2,">");
-          tmp3=substring(tmp2,1,tmp-1);
-          if(indexof(tmp3,"p")>0,
-            tmp2=substring(tmp2,tmp,length(tmp2));
-          );
-          tmp3=Strsplit(tmp3,",");
-          forall(reverse(1..(length(tmp3))),nn,
-            tmp=tmp3_nn;
-            if(substring(tmp,0,1)=="f",
-              tmp="<font size="+Dqq(substring(tmp,1,length(tmp)))+">";
-              tmp2=tmp+tmp2+"</font>";
-            );
-            if(substring(tmp,0,1)=="p",
-              tmp2="<p>"+tmp2+"</p>";
-            );
-          );
-          tmp2=replace(tmp2,"''",Dq);
-          tmp2="    "+replace(tmp2,"`","'");
+          tmp2=Removespace(tmp2);  //200911(next block removed)
           println(SCEOUTPUT,tmp2);
         );
+        println(SCEOUTPUT,tmp1); //200911
       ); 
     ); //190910to
     closefile(SCEOUTPUT);

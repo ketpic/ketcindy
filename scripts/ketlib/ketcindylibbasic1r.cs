@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200813] loaded");
+println("ketcindylibbasic1[20200911] loaded");
 
 //help:start();
 
@@ -3669,6 +3669,7 @@ Getlinestyle(str,name):=(
   );
   if(tmp1=="DA",
     if(length(tmp2)==0,tmp2="1,1"); //190125
+    if(indexof(tmp2,",")==0,tmp2=tmp2+",1"); //200911
     Ltype=[1,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Dashline(name+Dop); //no ketjs
@@ -3676,6 +3677,7 @@ Getlinestyle(str,name):=(
   );
   if(tmp1=="ID",
     if(length(tmp2)==0,tmp2="1,1"); //190125
+    if(indexof(tmp2,",")==0,tmp2=tmp2+",1"); //200911
     Ltype=[2,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Invdashline(name+Dop); //no ketjs
@@ -3683,6 +3685,7 @@ Getlinestyle(str,name):=(
   );
   if(tmp1=="DO",
     if(length(tmp2)==0,tmp2="1,1"); //190125
+    if(indexof(tmp2,",")==0,tmp2=tmp2+",1"); //200911
     Ltype=[3,tmp2];  //190119
     if(noflg==0 & subflg==0, // 16.02.29
       Dottedline(name+Dop); //no ketjs

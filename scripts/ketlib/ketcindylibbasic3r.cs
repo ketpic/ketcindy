@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200911] loaded");
+println("ketcindylibbasic3[20200914] loaded");
 
 //help:start();
 
@@ -799,7 +799,7 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
   parse(varname+"="+tmp+";"); //190415
   outdt=append(outdt,ptL);
   if(path=="",tmp=filename,tmp=path+filename); //16.03.07
-//  GOUTLIST=append(GOUTLIST,[tmp,varL]);
+  GOUTLIST=append(GOUTLIST,[tmp,varL]); // 200914recoverd
   if(length(path)>0, // 16.03.09
     setdirectory(Dirwork); // 16.03.07
   );

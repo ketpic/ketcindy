@@ -1,3 +1,5 @@
+// 20200914
+//    Readoutdata debugged  (GOUTLIST recovered)
 // 20200911
 //    Mkketcindyjs debugged (</body>)
 //                         changed(JSBODY_1,2)

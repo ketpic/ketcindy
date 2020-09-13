@@ -1,3 +1,5 @@
+// 20200911
+//    Getlinestyle debugged  (case of no comma in tmp2)
 // 20200813
 //    Pointdata debugged  (Inside)
 // 20200716

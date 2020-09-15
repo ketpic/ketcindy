@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200718] loaded");
+println("ketcindylibout[20200915] loaded");
 
 //help:start();
 
@@ -4024,9 +4024,9 @@ kcC(cname):=(
   if(iswindows(),
     SCEOUTPUT = openfile("kc.bat");
     println(SCEOUTPUT,"set path="+Dirwork);
-    tmp=Indexall(PathC,"\");
-    if(length(tmp)==0, tmp=Indexall(PathC,"/"));
-    tmp1=substring(PathC,0,tmp_(length(tmp))-1);
+    tmp1=replace(PathC,"/","\"); // 20200914from
+    tmp=Indexall(tmp1,"\");
+    tmp1=substring(tmp1,0,tmp_(length(tmp))-1); // 20200914from
     println(SCEOUTPUT,"cd "+tmp1);
     tmp=PathC+" %path%\"+cname+".c";
     tmp=tmp+" -o %path%\main.exe"; 

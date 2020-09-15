@@ -1,26 +1,21 @@
-REM 20200520
+REM 20200915
 echo off
 set xcp="\Windows\System32\xcopy"
 
-rem NET SESSION > NUL 2>&1
-rem if %ERRORLEVEL% == 0 (
-rem   echo Running as administator
-rem   set admin="y"
-rem ) else (
-rem   echo Not running as administator, so will quit
-rem   echo Right-click and rerun as adminstrator
-rem   set admin="n"
-rem   pause
-rem   exit
-rem )
+ NET SESSION > NUL 2>&1
+ if %ERRORLEVEL% == 0 (
+   echo Running as administator
+   set admin="y"
+ ) else (
+   echo Not running as administator, so will quit
+   echo Right-click and rerun as adminstrator
+   set admin="n"
+   pause
+   exit
+ )
 
 cd %~dp0
-if not exist "ketcindyfolder" (
-  cd ../ketcindyfolder
-)
-echo ketcindyfolder is
-cd
-
+cd ..\..
 set scripts=\scripts\ketcindy
 set style=\tex\latex\ketcindy
 set doc=\doc\support\ketcindy

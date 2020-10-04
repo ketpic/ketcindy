@@ -3890,15 +3890,49 @@ nelarrow,nerarrow,selarrow,serarrow,NELarrow,NERarrow,SELarrow,SERrarrow があ�
 \hypertarget{filemanip}{}
 
 以下で，小文字から始まるコマンドは\verb|KeTCindyplugin.jar|で定義されているものである。
+\begin{description}
 
-\hypertarget{tikzptseq}{}
-\item[関数]Tikzptseq(点リスト）
-\item[機能]\ketcindy の点リストをTikzの点列に変換して，文字列として返す。
+\hypertarget{isexists}{}
+\item[関数]isexists(dir,file)
+\item[機能]dirにfileが存在するか
+\vspace{\baselineskip}
 
-\vspace{3mm}
-【例】\verb|A.xy=[-4,-3], B.xy=[4,3]|のとき\\
-\hspace*{5mm}\verb|Tikzptseq([A,B,[4,-3]]);|\\
-\hspace*{10mm}$\Rightarrow$\ \verb|(-4.00000,-3.00000)--(4.00000,3.00000)--(4.00000,-3.00000)|
+\hypertarget{makedir}{}
+\item[関数]makedir(path,dirname)
+\item[機能]pathにdirnameのdirを作成する。
+\vspace{\baselineskip}
+
+\hypertarget{filelist}{}
+\item[関数]Filelist([mainpath,]dirname)
+\item[機能](mainpathにある)dirnameのファイル一覧をリストとして返す。
+\vspace{\baselineskip}
+
+\hypertarget{readlines}{}
+\item[関数]Readlines([path,]filename)
+\item[機能](pathにある)filernameの各行を読み込みリストとして返す。
+\item[説明]pathのデフォルトはDirwork。
+
+\vspace{\baselineskip}
+
+\hypertarget{gethome}{}
+\item[関数]gethome()
+\item[機能]ユーザホームを返す。
+\vspace{\baselineskip}
+
+\hypertarget{ismacos}{}
+\item[関数]ismacos()
+\item[機能]Mac OSか。
+\vspace{\baselineskip}
+
+\hypertarget{iswindows}{}
+\item[関数]ismacos()
+\item[機能]Windows OSか。
+\vspace{\baselineskip}
+
+\hypertarget{islinux}{}
+\item[関数]islinux()
+\item[機能]Linux OSか。
+\vspace{\baselineskip}
 
 \end{description}
 
@@ -8601,6 +8635,15 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{viewtex}{Viewtex()}\>\TeX のソースファイルを書き出す。引数なし\\
 \hyperlink{workprocess}{Workprocess()}\>作図の経過を取得する\\
 \hyperlink{writeoutdata}{WriteOutData()}\>PDデータを書き出す\\
+\vspace{\baselineskip}
+【ファイル操作】\\
+\hyperlink{isexists}{isexists}\>dirにfileが存在するか\\
+\hyperlink{makedir}{makedir}\>pathにdirnameのdirを作成する\\
+\hyperlink{filelist}{Filelist}\>(mainpathにある)dirnameのファイル一覧をリストとして返す\\
+\hyperlink{readlines}{Readlines}\>(pathにある)filernameの各行を読み込みリストとして返す\\\hyperlink{gethome}{gethome()}\>ユーザホームを返す\\
+\hyperlink{ismacos}{ismacos()}\>Mac OSか\\
+\hyperlink{iswindows}{iswindows()}\>Windows OSか\\
+\hyperlink{islinux}{islinux()}\>Linux OSか\\
 \vspace{\baselineskip}
 【その他】\\
 \hyperlink{assign}{Assign(文字列)}\>文字列中のある文字を値で置き換える\\

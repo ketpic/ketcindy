@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200923] loaded");
+println("ketcindylibbasic1[20201004] loaded");
 
 //help:start();
 
@@ -286,8 +286,8 @@ Fillrestore(store):=(
 ////%Fillrestore end////
 
 ////%Filelist start//// 200922
-Filelist():=Filelist(Dirwork);
-Filelist(path):=Filelist(Dircdy,path);
+Filelist():=Filelist("",Dirwork); //201004[2lines]
+Filelist(path):=Filelist("",path);
 Filelist(main,path):=(
 //help:Filelist(path(=Dircdy+path));
 //help:Filelist(main,path);

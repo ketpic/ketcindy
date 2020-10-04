@@ -3000,8 +3000,8 @@ Letter(list,options):=(
       Str=list_(Nj+2);  //17.10.17
       if(length(color)==4,color=Colorcmyk2rgb(color)); //200523
       tmp="drawtext("+format(Pcrd(Pos),5)+","+Dqq(Str)+",offset->"+format([Off+Xmv,Off+Ymv],5)+","; //201004from
-      tmp1="size->sz,color->color,align->aln,bold->bld,italics->ita";
-      tmp1=Assign(tmp1,["sz",text(sz),"color",text(color),"aln",Dqq(aln),"bld",text(bld),"ita",text(ita)]);
+      tmp1="size->sz,color->colornow,align->aln,bold->bld,italics->ita";
+      tmp1=Assign(tmp1,["sz",text(sz),"colornow",text(color),"aln",Dqq(aln),"bld",text(bld),"ita",text(ita)]);
       tmp=tmp+tmp1+");";
       GCLIST=append(GCLIST,[tmp,[6,0]]); //201004to
     );

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20200911] loaded");
+println("ketcindylibbasic1[20200923] loaded");
 
 //help:start();
 
@@ -284,6 +284,26 @@ Fillrestore(store):=(
   );
 );
 ////%Fillrestore end////
+
+////%Filelist start//// 200922
+Filelist():=Filelist(Dirwork);
+Filelist(path):=Filelist(Dircdy,path);
+Filelist(main,path):=(
+//help:Filelist(path(=Dircdy+path));
+//help:Filelist(main,path);
+  regional(tmp,tmp1,out);
+  if(length(main)==0,
+    tmp1=path;
+  ,
+    tmp1=replace(main,"\","/");
+    if(tmp1_(-1)!="/", tmp1=tmp1+"/");
+    tmp1=replace(tmp1+path,"//","/");
+  );
+  tmp=fileslist(tmp1);
+  out=Strsplit(tmp,",");
+  out;
+);
+////%Filelist end////
 
 ////%Readlines start////
 Readlines(file):=Readlines(Dirwork,file); //181126
@@ -800,6 +820,35 @@ Bracket(str,br):=(
   out;
 );
 ////%Bracket end////
+
+////%Getlevel start////  200925
+Getlevel(str):=Getlevel(str,",");
+Getlevel(str,Arg1):=(
+  regional(tmp);
+  if(isstring(Arg1),
+    tmp=Indexall(str,Arg1);
+    Getlevel(str,tmp,Arg1);
+  ,
+    Getlevel(str,Arg1,",");    
+  );
+);
+Getlevel(str,nL,key):=(
+//help::Getlevel(string,indexlist [,key=","]);
+  regional(parL,n,tmp,tmp1,tmp2,out);
+  if(!islist(nL),nL=[nL]);
+  parL=Bracket(str,"()");
+  if(length(parL)==0,parL=[[0,0]]);
+  out=[];
+  forall(nL,n,
+    tmp2=select(parL,#_1<n);
+    tmp2=tmp2_(-1);
+    if(tmp2_2>=0,tmp=tmp2_2,tmp=-tmp2_2-1);
+    out=append(out,[n,tmp]);
+  );
+//  if(length(out)==1,out=out_1);
+  out;
+);
+////%Getlevel end////
 
 ////%Pardiagram start////
 Pardiagram(str):=Pardiagram(str,[20]);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20200803] loaded");
+println("ketcindylibbasic2[20201004] loaded");
 
 //help:start();
 
@@ -2999,8 +2999,11 @@ Letter(list,options):=(
 //      ); // only ketjs off
       Str=list_(Nj+2);  //17.10.17
       if(length(color)==4,color=Colorcmyk2rgb(color)); //200523
-      drawtext(Pcrd(Pos),Str,offset->[Off+Xmv,Off+Ymv],
-         size->sz,color->color,align->aln,bold->bld,italics->ita);
+      tmp="drawtext("+format(Pcrd(Pos),5)+","+Dqq(Str)+",offset->"+format([Off+Xmv,Off+Ymv],5)+","; //201004from
+      tmp1="size->sz,color->color,align->aln,bold->bld,italics->ita";
+      tmp1=Assign(tmp1,["sz",text(sz),"color",text(color),"aln",Dqq(aln),"bld",text(bld),"ita",text(ita)]);
+      tmp=tmp+tmp1+");";
+      GCLIST=append(GCLIST,[tmp,[6,0]]); //201004to
     );
     Nj=Nj+3;
   );

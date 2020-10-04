@@ -3885,6 +3885,24 @@ nelarrow,nerarrow,selarrow,serarrow,NELarrow,NERarrow,SELarrow,SERrarrow があ�
 \end{description}
 
 %===================================================
+\subsection{ファイル操作}
+
+\hypertarget{filemanip}{}
+
+以下で，小文字から始まるコマンドは\verb|KeTCindyplugin.jar|で定義されているものである。
+
+\hypertarget{tikzptseq}{}
+\item[関数]Tikzptseq(点リスト）
+\item[機能]\ketcindy の点リストをTikzの点列に変換して，文字列として返す。
+
+\vspace{3mm}
+【例】\verb|A.xy=[-4,-3], B.xy=[4,3]|のとき\\
+\hspace*{5mm}\verb|Tikzptseq([A,B,[4,-3]]);|\\
+\hspace*{10mm}$\Rightarrow$\ \verb|(-4.00000,-3.00000)--(4.00000,3.00000)--(4.00000,-3.00000)|
+
+\end{description}
+
+%===================================================
 \subsection{Tikzコマンドの利用}
 
 \hypertarget{tikztexcom}{}

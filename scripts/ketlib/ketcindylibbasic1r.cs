@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20201004] loaded");
+println("ketcindylibbasic1[20201005] loaded");
 
 //help:start();
 
@@ -72,8 +72,8 @@ Ketinit(work,strictsep):=( //200509
   YasenStyle="dr,1"; Yajiristyle="tf";
   KETPICCOUNT=1;
   KCOLOR=[0,0,0,1]; //200513,200618
-  if(!islist(GLISTadd),GLIST=[],GLIST=GLISTadd); //200123
-  if(!islist(GCLISTadd),GCLIST=[],GCLIST=GCLISTadd); //200123
+  GLIST=[]; //201005rechanged
+  GCLIST=[]; //201005rechanged
 //  GDATALIST=[]; //no ketjs on
   GOUTLIST=[];
   POUTLIST=[]; // no ketjs off

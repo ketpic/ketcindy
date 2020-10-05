@@ -1,4 +1,6 @@
 // 20201005
+//    Ketinit changed  ( for Addglist)
+// 20201004
 //    Filelist debugged
 // 20200923
 //    Getlevel added

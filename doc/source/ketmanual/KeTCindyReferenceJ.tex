@@ -3984,7 +3984,7 @@ Texcom("\shadedraw (1,1) rectangle +(2,2);");
 \vspace{-15mm}
 
 \begin{center}
-\input{Fig/tikzline}
+\scalebox{0.5}{\input{Fig/tikzline}}
 \end{center}
 
 
@@ -4223,6 +4223,29 @@ Lineplot("1",[[2,1],[3,3]]);
 \verb|Indexall(str,"b")| では，[2,5,8]が返る。
 
 \vspace{\baselineskip}
+
+\hypertarget{bracket}{}
+\item[関数]Bracket(str [,bracketpair]);
+\item[機能]文字列 strから bracketpair を検索しその位置と階層レベルのリストを返す。
+\item[説明]bracketpairのデフォルトは"()"。
+
+\vspace{\baselineskip}
+
+【例】Bracket("(abc(de)fg)")では，[[1,1],[5,2],[8,-2],[11,-1]]が返る。
+
+\vspace{\baselineskip}
+
+\hypertarget{getlevel}{}
+\item[関数]Getlevel(str [,poslistまたはsep,key]);
+\item[機能]文字列 strから sepの位置と階層レベルのリストを返す。
+\item[説明]sep, keyのデフォルトはコンマと()。sepを与えたとき，poslistはsepのindexlistになる。
+
+\vspace{\baselineskip}
+
+【例】Getlevel("(a,(b,c),d)"では，[[3,1],[6,2],[9,1]]が返る。
+
+\vspace{\baselineskip}
+
 \hypertarget{isptselected}{}
 \item[関数]Isptselected(点名）または Ptselected(点名)
 \item[機能]点が選択されていれば true,そうでなければ false を返す。
@@ -8648,7 +8671,8 @@ Cinderellaで使っている用語に次のものがある。
 【その他】\\
 \hyperlink{assign}{Assign(文字列)}\>文字列中のある文字を値で置き換える\\
 \hyperlink{bbdata}{BBdata(ファイル名)}\>画像のサイズを求める\\
-%\hyperlink{com0th}{Com0th(コマンド)} \>RのOpenfileの前に置くコマンドを定義する\\
+\hyperlink{bracket}{Bracket(str)}\>strから bracketpair を検索し位置と階層レベルのリストを返す\\\hyperlink{getlevel}{Getlevel(str)}\>strから sepの位置と階層レベルのリストを返す\\
+\hyperlink{com0th}{Com0th(コマンド)} \>RのOpenfileの前に置くコマンドを定義する\\
 %\hyperlink{com1st}{Com1st(コマンド)} \>RのOpenfileの前に置くコマンドを定義する\\
 %\hyperlink{com2nd}{Com2nd(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\
 %\hyperlink{com2ndpre}{Com2ndpre(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20201005] loaded");
+println("ketcindylibbasic1[20201006] loaded");
 
 //help:start();
 
@@ -821,22 +821,20 @@ Bracket(str,br):=(
 );
 ////%Bracket end////
 
-////%Getlevel start////  200925
+////%Getlevel start////  201006(modified)
 Getlevel(str):=Getlevel(str,",");
-Getlevel(str,Arg1):=(
-  regional(tmp);
-  if(isstring(Arg1),
-    tmp=Indexall(str,Arg1);
-    Getlevel(str,tmp,Arg1);
+Getlevel(str,Arg):=Getlevel(str,Arg,"()");
+Getlevel(str,Arg,bra):=(
+//help::Getlevel(string,","]);
+//help::Getlevel(string,poslist]);
+//help::Getlevel(string,poslist,bracket]);
+  regional(nL,parL,n,tmp,tmp1,tmp2,out);
+  if(islist(Arg),
+    nL=Arg;
   ,
-    Getlevel(str,Arg1,",");    
+    nL=Indexall(str,Arg);
   );
-);
-Getlevel(str,nL,key):=(
-//help::Getlevel(string,indexlist [,key=","]);
-  regional(parL,n,tmp,tmp1,tmp2,out);
-  if(!islist(nL),nL=[nL]);
-  parL=Bracket(str,"()");
+  parL=Bracket(str,bra);
   if(length(parL)==0,parL=[[0,0]]);
   out=[];
   forall(nL,n,
@@ -845,7 +843,6 @@ Getlevel(str,nL,key):=(
     if(tmp2_2>=0,tmp=tmp2_2,tmp=-tmp2_2-1);
     out=append(out,[n,tmp]);
   );
-//  if(length(out)==1,out=out_1);
   out;
 );
 ////%Getlevel end////

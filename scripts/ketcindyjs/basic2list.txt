@@ -93,9 +93,9 @@ Savecmdlist,basic2,5011,5017
 Quicksort,basic2,5021,5041
 Lessstr,basic2,5045,5072
 Makehelplist,basic2,5076,5088,Readlines
-Helplist,basic2,5092,5151,Makehelplist,Readlines
-Help,basic2,5155,5206
-Helpkey,basic2,5210,5228,Help
-Example,basic2,5232,5260
-Tikzptseq,basic2,5264,5280,Sprintf,Pcrd
-Tikzline,basic2,5284,5320,Divoptions,Strsplit,Tikzptseq,Textformat,Texcom
+Helplist,basic2,5092,5157,Makehelplist,Readlines
+Help,basic2,5161,5212
+Helpkey,basic2,5216,5234,Help
+Example,basic2,5238,5266
+Tikzptseq,basic2,5270,5286,Sprintf,Pcrd
+Tikzline,basic2,5290,5326,Divoptions,Strsplit,Tikzptseq,Textformat,Texcom

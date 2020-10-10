@@ -1,3 +1,5 @@
+// 20201010
+//    Helplist,Helpkey debugged  ( for helpj(E))
 // 20201004
 //    Letter changed  ( to GCLIST)
 // 20200803

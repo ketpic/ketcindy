@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201004] loaded");
+println("ketcindylibbasic2[20201010] loaded");
 
 //help:start();
 
@@ -5140,7 +5140,13 @@ Helplist(dir,files,help):=(
   ,
     tmp=Dirhead+"/ketlib"; 
     tmp1=Readlines(tmp,"ketcindyhelp.txt");
-    // 200706(removed)
+    tmp2="ketcindylib"+help+".txt";  //201010from
+    tmp2=Readlines(tmp,tmp2);
+    forall(1..(length(tmp2)),
+      tmp=indexof(tmp2_#,":");
+      tmp2_#=substring(tmp2_#,tmp,length(tmp2_#));
+    );
+    tmp1=concat(tmp1,tmp2);  //201010to
   );
   if(!islist(HLIST), // 16.12.31from
     HLIST=sort(tmp1);

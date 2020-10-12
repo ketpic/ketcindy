@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201010] loaded");
+println("ketcindylibbasic2[20201012] loaded");
 
 //help:start();
 
@@ -2728,7 +2728,7 @@ Drwxy(add,optionsorg):=(
   //tmp2=min([org_2+YMAX,YMAX]);
   yrng=[YMIN,YMAX];  //190103
   ax=AXSTYLE_1; //190901from
-  labelsize="Size=1";
+  labelsize="Size=1.5"; //201012
   forall(AXSTYLE_2,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));

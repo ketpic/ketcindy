@@ -4369,7 +4369,7 @@ Mkketcindyjs(options):=( //17.11.18
     forall(from..(length(tmp1)),jj,
       flg=0; //190126from
       tmp2=["Figure","Parent","ParaF","Anime","Flip","Title","Slide","Digest",
-                 "KeTJS","KeTJSoff","Ketjson","Ketjsoff","Objview"]; //200527
+                 "KeTJS","KeTjsoff","Ketjson","Ketjsoff","Objview"]; //200527
       if(indexof(tmp1_jj,"type: "+Dqq("Button"))>0,
         nn=indexof(tmp1_jj,"text: ");
         tmp=substring(tmp1_jj,nn-1,length(tmp1_jj));

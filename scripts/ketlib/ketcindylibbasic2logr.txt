@@ -1,3 +1,5 @@
+// 20201012
+//    Drwxy changed  ( size=1.5)
 // 20201010
 //    Helplist,Helpkey debugged  ( for helpj(E))
 // 20201004

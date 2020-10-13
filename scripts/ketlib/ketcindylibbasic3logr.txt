@@ -1,3 +1,5 @@
+// 20201013
+//    BBdata debugged  (path => Dirwork)
 // 20200914
 //    Readoutdata debugged  (GOUTLIST recovered)
 // 20200911

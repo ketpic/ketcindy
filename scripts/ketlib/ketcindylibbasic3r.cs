@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20200914] loaded");
+println("ketcindylibbasic3[20201013] loaded");
 
 //help:start();
 
@@ -2792,7 +2792,7 @@ BBdata(path,fname,optionorg):=(
     );
   );
   if(flg==0,
-    tmp=Readlines(path,fout); //200514
+    tmp=Readlines(Dirwork,fout); //201013
     if(length(tmp)==0,
       flg=1;
     ,
@@ -2837,8 +2837,8 @@ BBdata(path,fname,optionorg):=(
     repeat(floor(waiting*1000/WaitUnit),
       if(tmp1==0,
         wait(100);
-        if(isexists(path,fout), //200709
-          tmp=Readlines(path,fout); //200514[3lines]
+        if(isexists(Dirwork,fout), //201013[2lines]
+          tmp=Readlines(Dirwork,fout); 
           tmp2=select(tmp,indexof(#,"CreationDate")>0);
           if(length(tmp2)>0,
             tmp1=1;

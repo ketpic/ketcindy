@@ -248,6 +248,7 @@ Setangle(theta,phi):=( //16.12.24
 ////%Getangle start////
 Getangle():=getangle(["Disp=y"]); //180613from
 Getangle(option):=(
+//help:Getangle();
   regional(tmp,tmp1,dispflg,eqL);
   tmp=divoptions(option);
   dispflg="Y";
@@ -2204,8 +2205,8 @@ Expr3d(dtlist):=Expr3d(dtlist,[]); //181218from
 Expr3d(pt3d,dir,name):=Expr3d([pt3d,dir,name],[]); //181218from
 Expr3d(pt3d,dir,name,options):=Expr3d([pt3d,dir,name],options);
 Expr3d(dtlist,options):=(
-//help:Expr3d(point3d,,direction,name);
-//help:Expr3d([point3d,,direction,name],options]);
+//help:Expr3d( point3d,direction,name);
+//help:Expr3d([point3d,direction,name],options]);
   regional(dt,nall,jj);
   dt=dtlist;
   if(mod(length(dt),3)!=0,

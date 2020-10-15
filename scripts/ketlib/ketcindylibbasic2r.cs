@@ -258,8 +258,8 @@ Arrowhead(Arg1,Arg2,Arg3):=(
 );
 Arrowhead(nm,point,direction,optionsorg):=(//191129remade
 //help:Arrowhead("1",B,B-A);
-//help:Arrowhead("1",[1,2],"gr1");
-//help:Arrowhead("1",0.5,"gr1");
+//help:Arrowhead("2",[1,2],"gr1");
+//help:Arrowhead("3",0.5,"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
    regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
          options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
@@ -321,7 +321,7 @@ Arrowdata(ptlist):=Arrowdataseg(ptlist);
 Arrowdata(Arg1,Arg2):=Arrowdataseg(Arg1,Arg2);
 Arrowdata(nm,ptlistorg,optionsorg):=(
 //help:Arrowdata("1",[A,B]);
-//help:Arrowdata("1",[p1,p2]);
+//help:Arrowdata("2",[p1,p2]);
 //help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
 //help:Arrowdata(optionsadded=["line"]);
   Arrowdataseg(nm,ptlistorg,optionsorg);
@@ -463,8 +463,8 @@ Arrowdataseg(Arg1,Arg2):=(
   );
 );  //181110from
 Arrowdataseg(nm,ptlistorg,optionsorg):=(
-//help:Arrowdataseg("1",[pt1,pt2]);
-//help:Arrowdataseg(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=n(y)"]);
+//  help:Arrowdataseg("1",[pt1,pt2]);
+//  help:Arrowdataseg(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Line=n(y)"]);
   regional(options,Ltype,Noflg,opstr,opcindy,eqL,reL,strL,color,size,lineflg,
       flg,cutend,tmp,tmp1,tmp2,pA,pB,pC,angle,segpos,cut,scaley,Ev,Nv,pP,ptlist);
   scaley=SCALEY; //190412
@@ -814,9 +814,9 @@ Bowdata(plist,options):=(
   ); // 16.12.04until
 );
 Bowdata(nm,plist,options):=(
-//help:Bowdata([C,A],[2,1.2,"Expr=10","da"]);
-//help:Bowdata([A,B],["Expr=t0n3,a"]);
-//help:Bowdata([A,B],["Exprrot=t0n2r,a"]);
+//help:Bowdata("1",[C,A],[2,1.2,"Expr=10","da"]);
+//help:Bowdata("2",[A,B],["Expr=t0n3,a"]);
+//help:Bowdata("3",[A,B],["Exprrot=t0n2r,a"]);
 //help:Bowdata(options1=["Num=(24)"]);
 //help:Bowdata(options2=["Size=","Textcolor="]);
   regional(name,Out,pB,pA,pC,ra,tmp,tmp1,tmp2,Ltype,eqL,realL,
@@ -1540,7 +1540,7 @@ Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
         outflg=1;
         option=remove(options,[#]);
         if((tmp2=="m")%(tmp2=="r"),
-          options=append(options,tmp2);;
+          options=append(options,tmp2);
         );
       );
     );
@@ -1554,7 +1554,7 @@ Hatchdata(nm,iostr,bdylist,optionsorg):=( //181003from
 ); //181003to
 Hatchdatacindy(nm,iostr,bdylist):=Hatchdata(nm,iostr,bdylist,[]);
 Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
- //help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
+//help:Hatchdata("1",["ii"],[["ln1","Invert(gr1)"],["gr2","n"]]);
 //help:Hatchdata(options=["Not=pointlist","File=y(/m/n)","Max=50","Check=",angle,width]);
   regional(name,bdylist,bdynameL,bname,Ltype,Noflg,opstr,opcindy,reL,
     options,eqL,maxnum,startP,angle,interval,vec,nvec,ctr,pt,kk,delta,sha,AnsL,
@@ -2712,7 +2712,6 @@ Drwxy(Arg):=( //190901from
 Drwxy(add,optionsorg):=(
 //help:Drwxy();
 //help:Drwxy(1[the last axis will be drawn],oprions);
-//help:Drwxy(options);
 //help:Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,...","Size="]);
   regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,labelsize,
   linesty,colorax,colorla,tmp,tmp1,tmp2);
@@ -3439,10 +3438,10 @@ Bezierstart(n):=( // 2016.02.26
 ////%Mkbezierptcrv start////
 Mkbezierptcrv(ptdata):=Mkbezierptcrv(ptdata,[]);
 Mkbezierptcrv(ptdata,options):=(
- //help:Mkbezierptcrv([A,B,C,D]);
- //help:Mkbezierptcrv([[A,B],[C,D]]);
- //help:Mkbezierptcrv(options=["Num=10"]);
- //  global BezierNumber
+//help:Mkbezierptcrv([A,B,C,D]);
+//help:Mkbezierptcrv([[A,B],[C,D]]);
+//help:Mkbezierptcrv(options=["Num=10"]);
+//  global BezierNumber
   regional(ptlist,Out,tmp,tmp1,tmp2);
   if(isstring(ptdata), //no ketjs on
     ptlist=Readcsvsla(ptdata,options);
@@ -3469,7 +3468,7 @@ Mkbezierptcrv(ptdata,options):=(
 ////%Mkbeziercrv start////
 Mkbeziercrv(nm,ptctrL):=Mkbeziercrv(nm,ptctrL,[]);
 Mkbeziercrv(nm,ptctrL,options):=(
- //help:Mkbeziercrv("1",[[A,B,C,D],[[P,Q],[R,S],T]]);
+//help:Mkbeziercrv("1",[[A,B,C,D],[[P,Q],[R,S],T]]);
   regional(ptctrLL,name,ptlist,ctrlist,tmp,tmp1,tmp2);
   if(Measuredepth(ptctrL)==2,ptctrLL=[ptctrL],ptctrLL=ptctrL);
   forall(1..length(ptctrLL),
@@ -4905,8 +4904,8 @@ Extractdata(Arg1,Arg2):=(
   );
 );
 Extractdata(number,name,options):=(
-//help:ExtractData("ha1");
-// help:ExtractData(1,"ha1");
+//help:Extractdata("ha1");
+// help:Extractdata(1,"ha1");
   regional(dlist,tmp,tmp1,tmp2,tmp3,File,Ltype,Noflg,opstr,opcindy,color,color4);
   tmp=Divoptions(options);
   Ltype=tmp_1;

@@ -1,3 +1,5 @@
+// 20201015
+//    CalcbyM,CalbyW debugged (Readlines)
 // 20200915
 //    kcc debugged (for windows)
 // 20200624

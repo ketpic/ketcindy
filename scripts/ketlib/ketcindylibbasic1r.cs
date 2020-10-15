@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20201006] loaded");
+println("ketcindylibbasic1[20201014] loaded");
 
 //help:start();
 
@@ -485,7 +485,7 @@ Dqq(str):=DqDq(str); //18.02.11
 ////%Dqq end////
 ////%DqDq start////
 DqDq(str):=(
-//help(Dqq("ab"); => Dq+"ab"+Dq)
+//help:Dqq("ab");
   unicode("0022")+str+unicode("0022");
 );
 ////%DqDq end////
@@ -703,6 +703,7 @@ Binomlist(n):=(
   out;
 );
 Binomial(n,m):=(
+//help:Binomial(5,2);
   regional(tmp);
   tmp=Binomlist(n);
   tmp_(m+1);
@@ -825,9 +826,9 @@ Bracket(str,br):=(
 Getlevel(str):=Getlevel(str,",");
 Getlevel(str,Arg):=Getlevel(str,Arg,"()");
 Getlevel(str,Arg,bra):=(
-//help::Getlevel(string,","]);
-//help::Getlevel(string,poslist]);
-//help::Getlevel(string,poslist,bracket]);
+//help:Getlevel(string,","]);
+//help:Getlevel(string,poslist]);
+//help:Getlevel(string,poslist,bracket]);
   regional(nL,parL,n,tmp,tmp1,tmp2,out);
   if(islist(Arg),
     nL=Arg;
@@ -1390,9 +1391,9 @@ Assign(funstr,Arg1,Arg2):=( //190813from
   );
   out;
 ); //190813to
-Assign(funstr,varname,rep,precise):=(
+Assign(funstr,varname,rep,precision):=(
 //help:Assign("a*x^2+b*x",["a",1,"b",2]);
-//help:Assign("a*x^2+b*x",["a",aa,"b",bb],10(def=6));
+//help:Assign("a*x^2+b*x",["a",aa,"b",bb],10(precision,default=6));
   regional(repstr,ii,jj,tmp,tmp1,tmp2,Notvar,Flg);
   if(isstring(rep),repstr=rep,repstr="("+Textformat(rep,precise)+")"); //190811to
         // 15.02.09, 07.06,17.08.24
@@ -2843,7 +2844,7 @@ IntegrateO(p0org,p1org,p2org,p3org):=(
   tmp=tmp/20;
 );
 IntegrateO(pltdata,rangeorg):=(
-//help:IntegrateO("gr1",[0,2]);
+// help:IntegrateO("gr1",[0,2]);
   regional(tmp,tmp1,tmp2,pdata,va1,va2,list,Bzk,Bzc,range,pmflg,
     Sm,p0,p1,p2,p3,pQ,pR,cc,p01,p02,p11,p12,p21,p22,p31,p32);
   if(isstring(pltdata),
@@ -2993,6 +2994,7 @@ Findlength(pdstr):=(
 
 ////%Inversefun start////
 Inversefun(fnstr,rngstr,value):=(
+//help:Inversefun(funstr,rangestr,value);
   regional(tmp,varstr,range,x1,x2,x3,va1,va2);
   tmp=indexof(rngstr,"=");
   varstr=substring(rngstr,0,tmp-1);
@@ -3020,6 +3022,7 @@ Inversefun(fnstr,rngstr,value):=(
 
 ////%Com0th start////
 Com0th(String):=(
+//help:Com0th(str);
     regional(str);
     str=replace(String,LFmark,"");
     COM0thlist=append(COM0thlist,str);
@@ -3028,6 +3031,7 @@ Com0th(String):=(
 
 ////%Com1st start////
 Com1st(String):=(
+//help:Com1st(str);
     regional(str);
     str=replace(String,LFmark,"");
     GLIST=append(GLIST,str);  // 15.05.27
@@ -3037,7 +3041,7 @@ Com1st(String):=(
 
 ////%Com2nd start////
 Com2nd(String):=(
-// help:Com2nd(str);
+//help:Com2nd(str);
   regional(str,tmp);
   str=replace(String,LFmark,"");
   COM2ndlist=append(COM2ndlist,str);
@@ -3046,6 +3050,7 @@ Com2nd(String):=(
 
 ////%Com2ndpre start////
 Com2ndpre(String):=(
+//help:Com2ndpre(str);
     regional(str);
     str=replace(String,LFmark,"");
     COM2ndlist=prepend(str,COM2ndlist);
@@ -3065,7 +3070,7 @@ Texcom(strorg):=(  //17.09.22
 
 ////%Ketcindylogo start////
 Ketcindylogo():=(
-//help:Ketcindylogo();
+// help:Ketcindylogo();
   Com2nd("Texcom("+Dq+"\def\ketcindy{{K\kern-.20em
           \lower.5ex\hbox{E}\kern-.125em{TCindy}}}"+Dq+")");
 );
@@ -3796,11 +3801,11 @@ Chunderscore(str):=(
 );
 ////%Chunderscore end////
 
-////%AddGraph start////
-AddGraph(nm,pltdata):=AddGraph(nm,pltdata,[]);
-AddGraph(nm,pltdata,options):=(
-//help:AddGraph("1","imp1"); // 16.04.04
-//help:Addgraph("1",["[pt1]","gr1"],["nodisp"]);
+////%Addgraph start////
+Addgraph(nm,pltdata):=Addgraph(nm,pltdata,[]);
+Addgraph(nm,pltdata,options):=(
+//help:Addgraph("1","imp1"); // 16.04.04
+//help:Addgraph("2",["[pt1]","gr1"],["nodisp"]);
   regional(name,Ltype,Noflg,opcindy,pdata,fname,flg,
     tmp,tmp1,tmp2,tmp3,color,color4);
   if(substring(nm,0,1)=="-",
@@ -4096,7 +4101,7 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
 ////%Opcrvs start////
 Opcrvs(num,Fig):=Opcrvs(num,Fig,["nodisp"]);
 Opcrvs(num,Fig,options):=(
-  //help:Subgraph(2,"grfs");
+//help:Opcrvs(2,"grfs");
   regional(name,tmp,tmp1);
   name="-"+Fig+text(num);
   tmp=Fig+"_"+text(num);
@@ -4243,9 +4248,8 @@ Listplot(Arg1,Arg2):=(
   );
 );
 Listplot(nm,list,options):=(
-//help:Listplot([A,B]);
-// help:Listplot(["A","B"]);
-//help:Listplot("1",[[2,1],[3,3]]);
+//help:Listplot("1",[A,B,C]);
+//help:Listplot("2",[[2,1],[3,3]]);
 //help:Listplot(options2=["Msg=y","Cutend=n"]);//180719
   regional(name,cutend,tmp,tmp1,tmp2,ptlist,Ltype,opcindy,Noflg,eqL,Msg,color,color4);
   if(substring(nm,0,1)=="-",  // 16.01.27 from
@@ -5055,8 +5059,9 @@ Implicitplot(name1,func,xrngorg,yrngorg,optionsorg):=(
 ////%Circledata start////
 Circledata(cenrad):=Circledata(cenrad,[]);
 Circledata(para1,para2):=(
-//help:Circledata([A,B],["Rng=[0,pi/2]"]);
-//help:Circledata([A,B,C]);
+//help:Circledata("1",[A,r]); //201014
+//help:Circledata("2",[A,B],["Rng=[0,pi/2]"]);
+//help:Circledata("3",[A,B,C]);
   regional(name,cenrad,options,str,n); 
   if(isstring(para1), 
     name=para1;
@@ -5208,8 +5213,8 @@ Framedata(Arg1,Arg2):=(
 Framedata(nm,list,optionsorg):=( //190424modified
 //help:Framedata();
 //help:Framedata("1",[C,A]);
-//help:Framedata("1",[C,dx,dy]);
-//help:Framedata("1",[p1,p2],["corner"]);
+//help:Framedata("2",[C,dx,dy]);
+//help:Framedata("3",[p1,p2],["corner"]);
   regional(name,options,Out,tmp,tmp1,x1,x2,y1,y2,dx,dy,
       Ltype,Noflg,strL,cent,dx,dy,color,strL,corner);
   name="fr"+nm;
@@ -5251,7 +5256,7 @@ Framedata(nm,cent,dx,dy,options):=Framedata(nm,[cent,dx,dy],options);
 ////%Framedata2 start////
 Framedata2(nm,list):=Framedata2(nm,list,[]);
 Framedata2(nm,list,options):=(
-//help:Framedata2("1",[A,B]);
+// help:Framedata2("1",[A,B]);
   regional(tmp,tmp1,pC,pB);
   pC=(Lcrd(list_1)+Lcrd(list_2))/2;
   pB=Lcrd(list_2);

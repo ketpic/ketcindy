@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20200915] loaded");
+println("ketcindylibout[20201015] loaded");
 
 //help:start();
 
@@ -278,7 +278,7 @@ CalcbyR(name,Arg1,Arg2):=(
 );
 CalcbyR(name,path,cmd,optionorg):=(
 //help:CalcbyR(name,cmd);
-//help:CalcbyR(options=["m/r","Wait=2","Out=y/n","Dig=8","Pre=PVFG"]);
+//help:CalcbyR(options1=["m/r","Wait=2","Out=y/n","Dig=8","Pre=PVFG"]);
 //help:CalcbyR(options2=["Pre=!G" ]);
   regional(options,tmp,tmp1,tmp2,tmp3,realL,strL,eqL,
        cat,dig,prestr,flg,wflg,file,nc,arg,cmdR,cmdlist,wfile,waiting);
@@ -2123,7 +2123,11 @@ CalcbyM(name,cmd,optionorg):=(
   tmp1=floor(waiting*1000/WaitUnit);
   repeat(tmp1,
     if(flg==0,
-      tmp1=Readlines(wfile);
+      if(isexists(Dirwork,wfile), //201015from
+        tmp1=Readlines(wfile);
+      ,
+        tmp1=[];
+      ); //201015to
       if(wflg==1,wait(WaitUnit)); // 2016.02.23
       if(length(tmp1)>0,
         tmp=select(tmp1,(indexof(#,"error")>0)%(indexof(#,"syntax")>0));
@@ -3977,7 +3981,7 @@ StartsurfC(Arg):=(
 StartsurfC(restr,Nplist,Dsizelist,Epslist):=(//180501
 //help:Startsurf();
 //help:Startsurf("reset");
-//help::Startsurf([0.01,0.1]);
+//help:Startsurf([0.01,0.1]);
 //help:Startsurf([50,50],[1500,500,200],[0.01,0.1]);
 //help:Startsurf([50],[1500,500],[0.01,0.1]);
   regional(divL,sizeL,epsL);
@@ -5857,7 +5861,11 @@ CalcbyW(name,cmd,optionorg):=(
   time=floor(waiting*1000/WaitUnit);
   repeat(time,nc,
     if(flg==0,
-      tmp3=Readlines(rfile); //200515
+      if(isexists(Dirwork,rfile), //201015from
+        tmp3=Readlines(rfile); //200515
+      ,
+        tmp3=[];
+      ); //201015to
       tmp3=select(tmp3,length(tmp3)>0);
       if(length(tmp3)>0,
         if(tmp3_(length(tmp3))=="99999",

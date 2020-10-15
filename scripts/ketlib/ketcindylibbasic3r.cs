@@ -22,7 +22,7 @@ println("ketcindylibbasic3[20201013] loaded");
 Tenkeybrd(pLB):=Tenkeybrd(pLB,[]);
 Tenkeybrd(pLB,options):=(
 //help:Tenkeybrd([2,1],"Size=1.5");
-//help: Tenkeybrd(Buttons shoud be given);
+//help:Tenkeybrd(Buttons shoud be given);
   regional(axes,xL,yL,size,shade,color,tmp,tmp1);
   size="Size=1.5";
   shade="Y";
@@ -477,7 +477,7 @@ WritetoRS(Arg):=(
 );
 WritetoRS(filename,shchoice):=(
   regional(Plist,Pos,GrL,str,tmp,tmp1,tmp2,cmd,ns,spos,epos);
-  //help:WritetoRS(2);
+//help:WritetoRS(2);
   println("Write to R "+filename);
   Plist=[];
   Pnamelist=[];
@@ -3446,7 +3446,7 @@ Setketcindyjs(list):=(  // no ketjs on
 
 ////%Ketcindyjsbody start//// 190909,200505(remove help)
 Ketcindyjsbody(list1,list2):=(
-//help :Ketcindyjsbody(listfront,listrear);
+//help:Ketcindyjsbody(listfront,listrear);
 //help :Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
   JSBODY=[list1,list2];
   JSBODY;

@@ -3024,7 +3024,8 @@ Translatedata("3","crAB",D,["da"]);
 
 %\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
-%\vspace{\baselineskip}
+\vspace{\baselineskip}
+
 \hypertarget{intersectcrvs}{}
 \item[関数]Intersectcrvs(プロットデータ1, プロットデータ2)
 \item[機能]2曲線の交点リストを取得する。
@@ -3053,8 +3054,9 @@ Q.xy=tmp_2;
 注）交点の算出は，数式処理によるのではなく，プロットデータからの数値探索のアルゴリズムによっている。
 
 \vspace{\baselineskip}
+
 \hypertarget{intersectcrvspp}{}
-\item[関数]IntersectcrvsPp(プロットデータ1, プロットデータ2)
+\item[関数]Intersectcrvspp(プロットデータ1, プロットデータ2)
 \item[機能]2曲線の交点のパラメータリストを取得する。
 \item[説明]2曲線の交点の座標とパラメータのリストを返す。
 
@@ -3068,7 +3070,7 @@ Intersectcrvs() との違いは，パラメータがあるかどうかである�
 Plotdata("1","x^2","x");
 Lineplot([A,B]);
 p1=Intersectcrvs("gr1","lnAB");
-p2=IntersectcrvsPp("gr1","lnAB");
+p2=Intersectcrvspp("gr1","lnAB");
 println("p1="+p1);
 println("p2="+p2);
 \end{verbatim}
@@ -3079,8 +3081,15 @@ p2=[[[-1,1],17.68,1],[[2,4],42.66,1]]
 \end{verbatim}
 と表示される。
 %\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+\vspace{\baselineskip}
+
+\hypertarget{intersectcurves}{}
+\item[関数]Intersectcurves(プロットデータ1, プロットデータ2)
+\item[関数]Intersectcurvespp(プロットデータ1, プロットデータ2)
+\item[機能]2曲線の交点リストを取得する。接点があるとき，時間はかかるがより精密な値を返す。
 
 \vspace{\baselineskip}
+
 \hypertarget{nearestpt}{}
 \item[関数]Nearestpt(PD1，PD2)
 \item[機能]2曲線に対し，最も近い点とそのパラメータ，距離のリストを返す
@@ -4113,11 +4122,13 @@ println([str,str2]);
 \end{verbatim}
 
 \vspace{\baselineskip}
+
 \hypertarget{factorial}{}
 \item[関数]Factorial(n)
 \item[機能]正の整数$n$の階乗を計算する。
 
 \vspace{\baselineskip}
+
 \hypertarget{binomial}{}
 \item[関数]Binomial(n,r)
 \item[機能]2項係数${}_n\mathrm{C}_r$を計算する。
@@ -4126,11 +4137,22 @@ println([str,str2]);
 【例】Binomial(60,30) $\Rightarrow$ 118264581564861424
 
 \vspace{\baselineskip}
+
+\hypertarget{gcd}{}
+\item[関数]Gcdl(numberlist)
+\item[機能]numberlistの最大公約数を計算する。
+
+\vspace{\baselineskip}
+【例】Binomial(60,30) $\Rightarrow$ 118264581564861424
+
+\vspace{\baselineskip}
+
 \hypertarget{norm}{}
 \item[関数]Norm(ベクトル), Norm(ベクトル1, ベクトル2)
 \item[機能]ベクトル（2つのベクトルの場合は差の大きさ）の大きさを計算する。
 
 \vspace{\baselineskip}
+
 \hypertarget{figpdf}{}
 \item[関数]Figpdf(option）
 \item[機能]出力枠サイズのPDFを作る。
@@ -8097,6 +8119,14 @@ Partcrv3d("1",p1,p2,"sc3d1");
  \begin{center}\scalebox{0.8}{ \input{Fig/invparapt}} \end{center}
  
 ここで，sl2d1,sc2d1 は線分と螺旋の描画面上での（平面の）プロットデータである。Intersectcrvs() で平面上の交点の座標（複数あるのでリストが返る）を求め，Invparapt() で対応する螺旋上の点の座標を求めて部分曲線を描いている。実際に交わる点での部分曲線ではないことに注意。
+
+%------------------- Projpara -----------------------------------------------
+\vspace{\baselineskip}
+
+\hypertarget{projpara}{}
+\item[関数]Projpara(空間曲線)
+\item[機能]空間曲線を投影した平面曲線を返す。
+
 %------------------- Expr3d -----------------------------------------------
 \vspace{\baselineskip}
 \hypertarget{expr3d}{}
@@ -8327,7 +8357,7 @@ Plotdata("1",str,"x");
 
 \hypertarget{ketcindyjsmain}{}
 \item[関数]Ketcindyjsmain(prependlist,appendlist)
-\item[機能]KeTJSファイルのhtmlの前後ににスクリプトを追加したhtmlを作成する。
+\item[機能]KeTJSファイルのhtmlを読み込み，前後にスクリプトを追加したhtmlを作成する。
 
 
 \begin{verbatim}
@@ -8525,16 +8555,19 @@ Cinderellaで使っている用語に次のものがある。
 \begin{tabbing}
 12345678901234567890123456789012345678\=\kill
 【設定・定義】\\
+%command list from here
 \hyperlink{addax}{Addax(0/1)}\>座標軸を描くかどうかを定める\\
 \hyperlink{addpackage}{Addpackage(package)}\>プレビュー用のパッケージを追加\\
 \hyperlink{changework}{Changework(パス)}\>作業ディレクトリを変更する\\
-\hyperlink{deffun}{Deffun(関数名 , 定義list )}\>関数を定義する\\
+\hyperlink{deffun}{Deffun(関数名 , 定義list )}\>Rと共有する関数を定義する\\
 \hyperlink{definecolor}{Definecolor(色名 , 定義list )}\>ユーザー定義色の設定\\
-\hyperlink{defvar}{Defvar(文字列)} \>変数を定義する\\
-\hyperlink{drwxy}{Drwxy()} \>座標軸を先に描く\\
+\hyperlink{defvar}{Defvar(文字列)} \>Rと共有する変数を定義する\\
+\hyperlink{drwxy}{Drwxy()} \>Addax(0のとき座標軸を先に描く\\
 \hyperlink{fontsize}{Fontsize(記号)}\>フォントサイズを設定する\\
 \hyperlink{ketinit}{Ketinit(options)}\>\ketcindy を初期化する\\
-\hyperlink{initglist}{Initglist} \> ketlib スロットの描画データを追加する\\
+\hyperlink{initglist}{Initglist()} \> ketlib スロットで描画データを作るときの初期化\\
+\hyperlink{inittglist}{Setglist()} \> ketlib スロットの描画データを登録する\\
+\hyperlink{initglist}{Addglist()} \> ketlib スロットで定義された描画データを追加する\\
 \hyperlink{ptsize}{Ptsize(数)} \>表示する点の大きさを設定する\\
 \hyperlink{setarrow}{Setarrow(size,angle,pos,cut,style}\>矢線の形状を設定する\\
 \hyperlink{setax}{Setax(list)}\>座標軸の書式を設定する\\
@@ -8551,10 +8584,10 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{usegraphics}{Usegraphics()} \>グラフィクスパッケージを\verb|"pict2e"| に変更する\\
 【描画】\\
 \hyperlink{drawfigures}{Drawfigures(name ,figlist,optionlist)} \>複数のデータのスタイルをリストで与えて描画する\\
-%\hyperlink{addgraph}{Addgraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
+\hyperlink{addgraph}{Addgraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
 \hyperlink{anglemark}{Anglemark(点list, options)}\>角の印を入れる\\
-\hyperlink{setarrow}{Setarrow(options)}\>矢線をスタイルを設定する\\
-\hyperlink{arrowdata}{Arrowdata(name.[始点,終点],options)}\>2点間を結ぶ矢線を描く\\
+%\hyperlink{setarrow}{Setarrow(options)}\>矢線をスタイルを設定する\\
+\hyperlink{arrowdata}{Arrowdata(name,options)}\>2点間を結ぶ矢線を描く\\
 \hyperlink{arrowhead}{Arrowhead(点,方向,options)}\>点に矢じりだけを描く\\
 \hyperlink{bezier}{Bezier(name, list,list,options )} \>単独のベジェ曲線を描く\\
 \hyperlink{beziersmooth}{Beziersmooth(name , list,options )} \>なめらかなベジェ曲線を描く。その１\\
@@ -8566,7 +8599,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{crspline}{CRspline(name，list，options )} \>単独のCatmull-Rom スプライン曲線を描く\\
 \hyperlink{deqplot}{Deqplot(name,式,変数名,初期値,options])}\>微分方程式の解曲線を描く\\
 \hyperlink{dotfilldata}{Dotfilldata(name , 方向, PD , options)}\>領域に点を敷き詰める\\
-\hyperlink{drawsegmark}{Drawsegmark(name,list,options)}\>線分に印をつける\\
+\hyperlink{drawsegmark}{Segmark(name,list,options)}\>線分に印をつける\\
 %\hyperlink{drwpt}{Drawpoint([点,options])}\>点を表示する\\
 %\hyperlink{drwpt}{Drwpt([点,options])}\>点を表示する\\
 \hyperlink{ellipseplot}{Ellipseplot(name,list,str,options)}\>楕円を描く\\
@@ -8574,13 +8607,13 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{expr}{Expr([座標,位置,文字列],options)}\>\TeX 数式を書く\\
 \hyperlink{exprrot}{Exprrot(位置，向き，文字列)}\>傾いた\TeX 数式を書く\\
 \hyperlink{fourierseries}{Fourierseries(name,係数,周期,項数)}\>フーリエ級数を描く\\
-\hyperlink{framedata}{Framedata(name , list)}\>矩形を描く\\
+\hyperlink{framedata}{Framedata(name , list)}\>矩形を描く(空のときは描画領域)\\
 \hyperlink{hatchdata}{Hatchdata(name , 方向, PD , options)}\>領域に斜線を引く\\
 \hyperlink{htickmark}{Htickmark([横座標 , 方向 , 文字])}\>横軸に目盛りを描く\\
 \hyperlink{hyperbolaplot}{Hyperbolaplot(name,list,str,options)}\>双曲線を描く\\
 \hyperlink{implicitplot}{Implicitplot(name,str,,str,str,options)}\>陰関数のグラフを描く\\
 \hyperlink{invert}{Invert(PD)}\>プロットデータの点を逆順にする（reverseと同じ）\\
-\hyperlink{joincrvs}{Joincrvs（name, PDlist, options)}\>2つのプロットデータをつなげたデータを作る\\
+\hyperlink{joincrvs}{Joincrvs(name, PDlist, options)}\>2つのプロットデータをつなげたデータを作る\\
 \hyperlink{letter}{Letter([座標,位置,文字列],options)}\>文字列を表示する\\
 \hyperlink{letterrot}{Letterrot(座標,方向,移動量,文字列)}\>文字列を回転して表示する\\
 \hyperlink{lineplot}{Lineplot(name,2点のlist,options)}\>2点を結ぶ直線を描く\\
@@ -8594,7 +8627,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{parabolaplot}{Parabolaplot(name,list,str,options)}\>放物線を描く\\
 \hyperlink{paramark}{Paramark(点list,options)}\>角の印を入れる\\
 \hyperlink{paramplot}{Paramplot(name,式,変数と定義域,options)}\>媒介変数で表された曲線を描く\\
-\hyperlink{polarplot}{Polarplot(name,式,変数と定義域,options)}\>極座標表示の曲線を描く\\\hyperlink{partcrv}{Partcrv(name,点1,点2,PD)}\>部分曲線を描く\\
+\hyperlink{polarplot}{Polarplot(name,式,変数と定義域,options)}\>極座標表示の曲線を描く\\
+\hyperlink{partcrv}{Partcrv(name,点1,点2,PD)}\>部分曲線を描く\\
 \hyperlink{periodfun}{Periodfun(定義式,周期,options)}\>周期関数のグラフを描く\\
 \hyperlink{plotdata}{Plotdata(name,式,変数と定義域,options)}\>関数のグラフを描く\\
 \hyperlink{pointdata}{Pointdata(name,点list,options)}\>点データを作る\\
@@ -8612,7 +8646,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{scaledata}{Scaledata(name,PD,x,y,中心,options)} \>点を拡大・縮小する\\
 \hyperlink{scalepoint}{Scalepoint(点,比率ベクトル,中心)} \>点の位置を拡大・縮小する\\
 \hyperlink{segmark}{Segmark(name,list,options)}\>線分に印をつける\\
-\hyperlink{shade}{Shade（PDlist , 数)}\>閉曲線の内部にシェードをかける\\
+\hyperlink{shade}{Shade(PDlist , 数)}\>閉曲線の内部にシェードをかける\\
 \hyperlink{tangentplot}{Tangentplot(name,PD, 位置)}\>曲線の接線を引く\\
 \hyperlink{translatedata}{Translatedata(name,PD,ベクトル,options)}\>プロットデータを平行移動する\\
 \hyperlink{translatepoint}{Translatepoint(点,ベクトル)}\>点を平行移動する\\
@@ -8620,18 +8654,21 @@ Cinderellaで使っている用語に次のものがある。
 【作表】\\
 \hyperlink{changetablestyle}{Changetablestyle(罫線list, options)}\>Table の罫線の描画オプションを変更する。\\
 \hyperlink{findcell}{Findcell(列番号, 行番号)}\>セルの情報listを返す\\
-\hyperlink{putcell}{Putcell (列番号, 行番号, 位置, 文字)} \>セルに文字列を入れる\\
-\hyperlink{putcell}{Putcellexpr (列番号, 行番号, 位置, 文字)} \>セルに数式を入れる\\\hyperlink{putcol}{Putcol (列番号, 位置，文字列list)} \>１列に順に文字を書き入れる\\
-\hyperlink{putcolexpr}{Putcolexpr (列番号, 位置，文字列list)}\>１列に順に\TeX 書式の文字を書き入れる\\
-\hyperlink{putrow}{Putrow (行番号, 位置，文字列list)} \>１行に順に文字を書き入れる\\
-\hyperlink{putrowexpr}{Putrowexpr (行番号, 位置，文字列list)} \>１行に順に\TeX 書式の文字を書き入れる\\
+\hyperlink{putcell}{Putcell(列番号, 行番号, 位置, 文字)} \>セルに文字列を入れる\\
+\hyperlink{putcell}{Putcellexpr(列番号, 行番号, 位置, 文字)} \>セルに数式を入れる\\
+\hyperlink{putcol}{Putcol(列番号, 位置，文字列list)} \>１列に順に文字を書き入れる\\
+\hyperlink{putcolexpr}{Putcolexpr(列番号, 位置，文字列list)}\>１列に順に\TeX 書式の文字を書き入れる\\
+\hyperlink{putrow}{Putrow(行番号, 位置，文字列list)} \>１行に順に文字を書き入れる\\
+\hyperlink{putrowexpr}{Putrowexpr(行番号, 位置，文字列list)} \>１行に順に\TeX 書式の文字を書き入れる\\
 \hyperlink{tabledata}{Tabledata("" , 縦横 ,除外 , options)}\>表の枠を作成する\\
 \hyperlink{tabledatalight}{Tabledatalight("" , 縦横 ,除外 , options)}\>幾何点を持たない表の枠を作成する\\
 \hyperlink{tgrid}{Tgrid(セルラベル)} \>セル（格子点）の座標を返す\\
 \hyperlink{tlistplot}{Tlistplot(セルラベル1,セルラベル2)} \>セルに斜線を引く\\
 \vspace{\baselineskip}
 【値の取得と入出力】\\
-\hyperlink{asin}{Asin(real),Acos(real) }\>逆三角関数の値を返す\\
+\hyperlink{asin}{Asin(real)}\>逆正弦三角関数の値を返す\\
+\hyperlink{asin}{Acos(real) }\>逆余弦三角関数の値を返す\\
+\hyperlink{asin}{Atan(real) }\>逆正接三角関数の値を返す\\
 \hyperlink{crossprod}{Crossprod(list,list)}\>ベクトルの外積を計算する\\
 \hyperlink{derivative}{Derivative(関数式,変数,値)}\>関数の微分係数を求める\\
 \hyperlink{dotprod}{Dotprod(list,list)}\>ベクトルの内積を計算する\\
@@ -8640,18 +8677,21 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{findlength}{Findlength(PD)}\>プロットデータで描く曲線の長さを求める\\
 \hyperlink{integrate}{Integrate(関数式,変数,範囲,options)} \>関数の定積分値を求める\\
 \hyperlink{intersectcrvs}{Intersectcrvs(PD1,PD2)}\>プロットデータの交点の座標listを返す\\
-\hyperlink{intersectcrvspp}{IntersectcrvsPp(PD1,PD2)}\>プロットデータの交点のパラメータlistを返す\\
+\hyperlink{intersectcrvespp}{Intersectcrvs(PD1,PD2)}\>プロットデータの交点のパラメータlistを返す\\
+\hyperlink{intersectcurves}{Intersectcurves(PD1,PD2)}\>より精密な交点のlistを返す\\
+\hyperlink{intersectcurves}{Intersectcurvespp(PD1,PD2)}\>より精密な交点のパラメータlistを返す\\
 \hyperlink{inversefun}{Inversefun(関数式,範囲,値)}\>逆関数値を求める\\
 %\hyperlink{makeshell}{Makeshell(ファイル名)}\>Macのシェルスクリプトを書き出す\\
 %\hyperlink{makeshell}{Makebat(ファイル名)} \>Windowsのバッチファイルを書き出す\\
 \hyperlink{nearestpt}{Nearestpt(PD,PD)}\>2曲線間の最も近い点を取得する\\
 \hyperlink{nearestptcrv}{Nearestptcrv(点,PD)}\>点に一番近い曲線上の点を取得する\\
 \hyperlink{numptcrv}{Numptcrv(PD)}\>曲線PD の節点データの個数を取得する\\
-\hyperlink{paramoncrv}{ParamonCurve(PD,n,PtL)}\>PD上にある点P のデータを取得する\\
-\hyperlink{pointoncrv}{Pointoncrv(数,PD)}\>パラメータ値をもつプロットデータ上の点\\
+\hyperlink{paramoncrv}{Paramoncurve(PD,n,PtL)}\>PD上にある点P のデータを取得する\\
+\hyperlink{pointoncrv}{Pointoncurve(数,PD)}\>パラメータ値をもつプロットデータ上の点\\
 \hyperlink{ptcrv}{Ptcrv(n,PD)}\>曲線PD のn 番目の節点を取得する\\
-\hyperlink{ptstart}{Ptstart(PD)}\>プロットデータの始点・終点を取得する\\
-\hyperlink{readoutdata}{ReadOutData(ファイル名)}\>外部データをPDとして読み込む\\
+\hyperlink{ptstart}{Ptstart(PD)}\>プロットデータの始点を取得する\\
+\hyperlink{ptstart}{Ptend(PD)}\>プロットデータの終点を取得する\\
+\hyperlink{readoutdata}{Readoutdata(ファイル名)}\>外部データをPDとして読み込む\\
 \hyperlink{readcsv}{Readcsv(name,filename,option)}\>csvファイルを読む\\
 \hyperlink{readlines}{Readlines(name,filename,option)}\>テキストファイルを1行ずつ読む\\
 \hyperlink{sqr}{Sqr(real)}\>平方根を返す\\
@@ -8660,27 +8700,31 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{writeoutdata}{WriteOutData()}\>PDデータを書き出す\\
 \vspace{\baselineskip}
 【ファイル操作】\\
-\hyperlink{isexists}{isexists}\>dirにfileが存在するか\\
-\hyperlink{makedir}{makedir}\>pathにdirnameのdirを作成する\\
-\hyperlink{filelist}{Filelist}\>(mainpathにある)dirnameのファイル一覧をリストとして返す\\
-\hyperlink{readlines}{Readlines}\>(pathにある)filernameの各行を読み込みリストとして返す\\\hyperlink{gethome}{gethome()}\>ユーザホームを返す\\
+\hyperlink{isexists}{isexists(dir,file)}\>dirにfileが存在するか\\
+\hyperlink{makedir}{makedir(path,dirname)}\>pathにdirnameのdirを作成する\\
+\hyperlink{filelist}{Filelist(mainpath,dirname)}\>(mainpathにある)dirnameのファイル一覧をリストとして返す\\
+\hyperlink{readlines}{Readlines(path,filename)}\>(pathにある)filernameの各行を読み込みリストとして返す\\
+\hyperlink{gethome}{gethome()}\>ユーザホームを返す\\
 \hyperlink{ismacos}{ismacos()}\>Mac OSか\\
 \hyperlink{iswindows}{iswindows()}\>Windows OSか\\
 \hyperlink{islinux}{islinux()}\>Linux OSか\\
 \vspace{\baselineskip}
 【その他】\\
 \hyperlink{assign}{Assign(文字列)}\>文字列中のある文字を値で置き換える\\
-\hyperlink{bbdata}{BBdata(ファイル名)}\>画像のサイズを求める\\
-\hyperlink{bracket}{Bracket(str)}\>strから bracketpair を検索し位置と階層レベルのリストを返す\\\hyperlink{getlevel}{Getlevel(str)}\>strから sepの位置と階層レベルのリストを返す\\
+\hyperlink{bbdata}{BBdata(ファイル名)}\>画像のサイズ(bounding box)を求める\\
+\hyperlink{bracket}{Bracket(str)}\>strから bracketpair を検索し位置と階層レベルのリストを返す\\
+\hyperlink{getlevel}{Getlevel(str)}\>strから sepの位置と階層レベルのリストを返す\\
 \hyperlink{com0th}{Com0th(コマンド)} \>RのOpenfileの前に置くコマンドを定義する\\
-%\hyperlink{com1st}{Com1st(コマンド)} \>RのOpenfileの前に置くコマンドを定義する\\
-%\hyperlink{com2nd}{Com2nd(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\
-%\hyperlink{com2ndpre}{Com2ndpre(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\
+\hyperlink{com1st}{Com1st(コマンド)} \>RのOpenfileの前に置くコマンドを定義する\\
+\hyperlink{com2nd}{Com2nd(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\
+\hyperlink{com2ndpre}{Com2ndpre(コマンド)} \>RのOpenfileのあとに置くコマンドを定義する\\
 \hyperlink{cindyname}{Cindyname()}\>作図しているファイル名を取得する。\\
 \hyperlink{colorcode}{Colorcode(文字1，文字2,color)}\>カラーコードの変換\\
+\hyperlink{colorcode}{Colorname2cmyk(文字1，文字2,color)}\>カラー名のcmykを返す\\
 \hyperlink{dqq}{Dqq(文字列)}\>文字列の前後に\verb|"|をつける。\\
 \hyperlink{factorial}{Factorial(n)}\>nの階乗を計算する。\\
 \hyperlink{binomial}{Binomial(n,r)}\>2項係数を計算する。\\
+\hyperlink{gcd}{Gcd(numberlist)}\>最大公約数を計算する。\\
 \hyperlink{norm}{Norm(ベクトル)}\>ベクトルの大きさを計算する。\\
 \hyperlink{figpdf}{Figpdf(option)} \>出力枠サイズのPDFを作る\\
 \hyperlink{help}{Help(str)}\>コマンドヘルプを表示する\\
@@ -8718,7 +8762,8 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{mxtex}{Mxtex(num,式)}\>式をTeX書式にする\\
 \vspace{\baselineskip}
 【Wolfram Engineとの連携】\\
-\hyperlink{calcbyW}{CalcbyW(name,list,option)}\>Wolfram 言語のスクリプトを実行する\\\hyperlink{wlfun}{Wlfun(name,式,list,option)}\>Wolfram 言語の1つの関数を実行する\\
+\hyperlink{calcbyW}{CalcbyW(name,list,option)}\>Wolfram 言語のスクリプトを実行する\\
+\hyperlink{wlfun}{Wlfun(name,式,list,option)}\>Wolfram 言語の1つの関数を実行する\\
 \hyperlink{mxtex}{Wltex(name,式)}\>式をTeX書式にする\\
 \vspace{\baselineskip}
 【Risa/Asirとの連携】\\
@@ -8746,52 +8791,55 @@ Cinderellaで使っている用語に次のものがある。
 \vspace{\baselineskip}
 【アニメーション】\\
 %\hyperlink{moviedata}{Moviedata(str1,str2,options)}\>動画データの作成\\
-\hyperlink{setpara}{Setpata(str)}\>パラパラ動画のタイトル指定\\
+\hyperlink{setpara}{Setpara(str)}\>パラパラ動画のタイトル指定\\
 【スライド】\\
 \hyperlink{settitle}{Settitle(タイトルlist,options)}\>スライドのタイトル設定\\
 【KeTCindy3D設定・定義】\\
 \hyperlink{ketinit3d}{Ketinit3d()}\>KeTCindy3Dの使用宣言\\
-\hyperlink{isangle}{Isangle}\>角度スライダが選択されているか\\
+\hyperlink{isangle}{Isangle()}\>角度スライダが選択されているか\\
 \hyperlink{start3d}{Start3d()}\>3Dの開始\\
-\hyperlink{setangle}{Setangle} \>回転角の設定\\
-\hyperlink{getangle}{Getangle}\>回転角の取得\\
-\hyperlink{startsurf}{Startsurf}\>曲面描画の初期化\\
+\hyperlink{setangle}{Setangle(theta,phi)} \>回転角の設定\\
+\hyperlink{getangle}{Getangle()}\>回転角の取得\\
+\hyperlink{startsurf}{Startsurf()}\>曲面描画の初期化\\
 \vspace{\baselineskip}
 【KeTCindy3D描画】\\
 \hyperlink{bezier3d}{Bezier3d(name, list, list)}\>空間ベジェ曲線を描く\\
-\hyperlink{changestyle3d}{Changestyle3d(list, list)}\>3dプロットデータの属性を変更\\
+\hyperlink{changestyle3d}{Changestyle3d(list, list)}\>空間プロットデータの属性を変更\\
 \hyperlink{concatobj}{Concatobj(list,option)}\>いくつかのobjデータを結合\\
+\hyperlink{crvsfparadata}{Crv2onsfparadata(name,PD,PD2,式,opt,opt)}\>曲面上の曲線(媒介変数)の陰線処理\\
+\hyperlink{crvsfparadata}{Crv3onsfparadata(name,PD,PD2,式,opt,opt)}\>曲面上の曲線の陰線処理\\
 \hyperlink{crvsfparadata}{Crvsfparadata(name,PD,PD2,式,opt,opt)}\>曲線の曲面による陰線処理\\
 \hyperlink{datalist}{Datalist2d()}\>画面に描かれているすべてのプロットデータ\\
-\hyperlink{datalist}{Datalist3d()}\>画面に描かれているすべてのプロットデータ\\
+\hyperlink{datalist}{Datalist3d()}\>画面に描かれているすべての空間プロットデータ\\
 \hyperlink{dist3d}{Dist3d(点名,点名)}\>空間の2点の距離\\
-%\hyperlink{drawpoint3d}{Drawpoint3d(座標)}\>空間点を描く\\
+\hyperlink{drawpoint3d}{Drawpoint3d(座標)}\>空間点を描く\\
 \hyperlink{embed}{Embed(name,PD,式)}\>埋め込みデータ作成\\
 \hyperlink{execcmdc}{ExeccmdC(name,options1,options2)}\>C言語で命令実行\\
-\hyperlink{expr3d}{Expr3D([座標,位置,文字列],options)}\>文字列を表示する\\
+\hyperlink{expr3d}{Expr3d([座標,位置,文字列],options)}\>空間の数式文字列を表示する\\
 \hyperlink{intersectcrvsf}{Intersectcrvsf(name,PD,式)}\>曲線と曲面の交点を求める\\
 \hyperlink{intersectsgpL}{IntersectsgpL(点名,線分,面,描画方法)}\>空間の直線と平面の交点\\
 \hyperlink{invparapt}{Invparapt(座標,PD)}\>描画面座標に対応する曲線上の座標\\
-\hyperlink{letter3d}{Letter3D([座標,位置,文字列],options)}\>文字列を表示する\\
+\hyperlink{letter3d}{Letter3d([座標,位置,文字列],options)}\>空間文字列を表示する\\
 \hyperlink{mkbezierptcrv3d}{Mkbezierptcrv3d(点list)}\>制御点を自動的にとる空間ベジェ曲線\\
 \hyperlink{nohiddenbyfaces}{Nohiddenbyfaces(name,PD,PD,opt1,opt2)}\>多面体と空間曲線を陰線処理\\
-\hyperlink{parapt}{Parapt(座標)}\>点の投影面での座標\\
-\hyperlink{partcrv3d}{Partcrv3d(name,始点,終点,PD)}\>曲線PDの部分曲線を作る\\
+\hyperlink{parapt}{Parapt(座標)}\>空間点の投影面での座標\\
+\hyperlink{partcrv3d}{Partcrv3d(name,始点,終点,PD)}\>空間曲線PDの部分曲線を作る\\
 \hyperlink{perpplane}{Perpplane(点名, 点, ベクトル,option)}\>点を通り垂直な平面上の基準点\\
 \hyperlink{perppt}{Perppt(点名,点,点list,option)}\>平面に下ろした垂線の足\\
 \hyperlink{phparadata}{Phparadata(name,name2,options)}\>多面体を陰線処理して描く\\
 \hyperlink{pointdata3d}{Pointdata3d(名前,点list,options)} \>空間点のデータを作成する\\
-\hyperlink{putaxes3d}{Putaxes3d([x,y,z])}\>軸上に幾何点をとる\\
+\hyperlink{projpara}{Projpara(空間曲線)}\>空間曲線を投影した平面曲線を求める\\
+\hyperlink{putaxes3d}{Putaxes3d([x,y,z])}\>空間の軸上に幾何点をとる\\
 \hyperlink{putonCurve3d}{Putoncurve3d(点名,PD)}\>空間曲線上に点をとる\\
-\hyperlink{putonseg3d}{Putonseg3d(点名,点1,点2)}\>線分上に点をとる\\
+\hyperlink{putonseg3d}{Putonseg3d(点名,点1,点2)}\>空間線分上に点をとる\\
 \hyperlink{putpoint3d}{Putpoint3d(list,option)}\>空間点をとる\\
 \hyperlink{readobj}{Readobj(ファイル名)}\>objファイルを読み込む\\
-\hyperlink{reflectdata3d}{Reflectdata3d(点,PDlist,list,options)}\>PDを鏡映\\
-\hyperlink{reflectpoint3d}{Reflectpoint3d(点,list)}\>点を鏡映\\
-\hyperlink{rotatedata3d}{Rotatedata3d(name,PD,vec,角度,点)}\>プロットデータを回転\\
-\hyperlink{rotatepoint3d}{Rotatepoint(点 , vec , 角度 , 点)}\>点を回転\\
+\hyperlink{reflectdata3d}{Reflectdata3d(点,PDlist,list,options)}\>空間PDを鏡映\\
+\hyperlink{reflectpoint3d}{Reflectpoint3d(点,list)}\>空間点を鏡映\\
+\hyperlink{rotatedata3d}{Rotatedata3d(name,PD,vec,角度,点)}\>空間プロットデータを回転\\
+\hyperlink{rotatepoint3d}{Rotatepoint3d(点 , vec , 角度 , 点)}\>空間点を回転\\
 \hyperlink{scaledata3d}{Scaledata3d(点, vec, 中心)}\>プロットデータを拡大/縮小\\
-\hyperlink{scalepoint3d}{Scalepoint3d(点, vec, 中心)}\>点の位置を拡大/縮小\\
+\hyperlink{scalepoint3d}{Scalepoint3d(点, vec, 中心)}\>空間点の位置を拡大/縮小\\
 \hyperlink{sf3data}{Sf3data(name, list,options)}\>陰線処理なしの空間曲面を描く\\
 \hyperlink{sfbdparadata}{Sfbdparadata(name, 式,options)}\>曲面を陰線処理して描く\\
 \hyperlink{sfcutparadatacdy}{Sfcutparadatacdy(name,面,曲面,options)} \>平面と曲面の交線を求める。\\
@@ -8802,18 +8850,19 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{translatepoint3d}{Translatepoint3d(座標,平行移動量)}\>空間点を平行移動\\
 \hyperlink{vertexedgeface}{VertexEdgeFace(面データ,option)}\>頂点と面から辺を求め，辺を描く\\
 \hyperlink{wireparadata}{Wireparadata(name,PD,式,int,int,opt,opt)}\>曲面のワイヤフレームを陰線処理\\
-\hyperlink{xyzax3data}{Xyzax3data(name,文字,文字,文字,options)}\>座標軸の表示\\
-\hyperlink{xyzcoord}{Xyzcoord(P.x,P.y,Pz.y)}\>主副画面で決まる点の座標\\
+\hyperlink{xyzax3data}{Xyzax3data(name,文字,文字,文字,options)}\>空間座標軸の表示\\
+\hyperlink{xyzcoord}{Xyzcoord(P.x,P.y,Pz.y)}\>主副画面で決まる空間点の座標\\
 【KeTJS】\\
 \hyperlink{ptpos}{Ptpos(幾何点)}\>幾何点の現在（直前）座標\\
 \hyperlink{setketcindyjs}{Setketcindyjs(options)}\>KeTJSの設定\\
 \hyperlink{ketcindyjsdata}{Ketcindyjsdata(変数名と値のリスト)}\>script "csinit"にデータを書き込む\\
-\hyperlink{ketcindyjmain}{Ketcindyjsbody(prependlist,appendlist)}\>htmlの前後にスクリプトを追加したhtmlを作成\\
+\hyperlink{ketcindyjsmain}{Ketcindyjsmain(prependlist,appendlist)}\>ketcindyjsのhtmlの前後にスクリプトを追加したhtmlを作成\\
 \hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
 \hyperlink{seteditable}{Seteditable(識別番号, 文字サイズ, 幅)}\>\verb|"Editable Text"|を設定する。\\
 \hyperlink{textedit}{Textedit(識別番号)}\>KeTJSで入力窓に入れた文字列を取得\\
 \hyperlink{movetojs}{Movetojs(要素名,座標,フォントサイズ)}\>Textボタンの位置とフォントサイズを設定\\
 \hyperlink{setplaybuttons}{Setplaybuttons(座標,サイズ [, スペース])}\>Playなどのボタンの位置とフォントサイズを設定\\
+%command list to here
 \end{tabbing}
 
 \end{document}

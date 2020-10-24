@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20201013] loaded");
+println("ketcindylibbasic3[20201018] loaded");
 
 //help:start();
 
@@ -2947,6 +2947,96 @@ Fracform(x,denorg,deg):=(
 );
 ////%Fracform end////
 
+////%Sla2fra start//// 202010017
+Sla2fra(str):=(
+//help::Sla2fra("x/y+(a/b)/c+(pi/2)/(3/4)");
+  regional(out,subL,nn,sub,numer,ctr,sla,par,nstr,dstr,
+       tmp,tmp1,tmp2,tmp3,tmp4);
+  numer=".0123456789";
+  numer=apply(1..(length(numer)),numer_#);
+  subL=Strsplit(str,"//");
+  forall(2..(length(subL)),
+    tmp=subL_#;
+    if(substring(tmp,0,1)=="/",
+      subL_#=substring(tmp,1,length(tmp))
+    );
+  ); 
+  forall(1..(length(subL)),nn,
+    sub="("+subL_nn+")";
+    sla=Getlevel(sub,"/");
+    sla=sort(sla,[-#_2,#_1]);
+    if(length(sla)>0,sla=sla_1_1,sla=0);
+    ctr=0;
+    while((sla>0)&(ctr<20),
+      par1=Bracket(sub,"()");
+      par2=Bracket(sub,"{}");
+      tmp1=sla-1;
+      tmp=sub_(tmp1);
+      if((tmp==")")%(tmp=="}"),
+        if(tmp==")",par=par1,par=par2);
+        tmp=select(par,#_1==tmp1);
+        tmp=tmp_1_2;
+        tmp2=select(par,(#_1<tmp1)&(#_2==-tmp));
+        tmp2=tmp2_(-1)_1;
+        nstr=substring(sub,tmp2,tmp1-1);
+        tmp2=tmp2-1;
+      ,
+        if(contains(numer,sub_(tmp1)),
+          tmp2=select(1..(tmp1),!contains(numer,sub_#));
+          if(length(tmp2)>0,tmp2=tmp2_(-1),tmp2=0);
+          nstr=substring(sub,tmp2,tmp1);
+        ,
+          if(substring(sub,tmp1-2,tmp1)=="pi",
+            nstr="pi";
+            tmp2=tmp1-2;
+          ,
+            nstr=sub_(tmp1);
+            tmp2=tmp1-1;
+          );
+        );
+      );
+      tmp3=sla+1;
+      tmp=sub_(tmp3);
+      if((tmp=="(")%(tmp=="{"),
+        if(tmp=="(",par=par1,par=par2);
+        tmp=select(par,#_1==tmp3);
+        tmp=tmp_1_2;
+        tmp4=select(par,(#_1>tmp3)&(#_2==-tmp));
+        tmp4=tmp4_1_1;
+        dstr=substring(sub,tmp3,tmp4-1);
+      ,
+        if(contains(numer,sub_(tmp3)),
+          tmp4=select((tmp3)..(length(sub)),
+            !contains(numer,sub_#));
+          if(length(tmp4)>0,tmp4=tmp4_1-1,tmp4=length(sub));
+          dstr=substring(sub,tmp3-1,tmp4);
+        ,
+          if(substring(sub,tmp3-1,tmp3+1)=="pi",
+            dstr="pi";
+            tmp4=tmp3+1;
+          ,
+            tmp4=tmp3;
+            dstr=sub_(tmp4);
+          );
+        );
+      );
+      sub=substring(sub,0,tmp2)+"fr("+nstr+","+dstr+")"+substring(sub,tmp4,length(sub));
+      sla=Getlevel(sub,"/");
+      sla=sort(sla,[-#_2,#_1]);
+      if(length(sla)>0,sla=sla_1_1,sla=0);
+      ctr=ctr+1;
+    );
+    subL_nn=substring(sub,1,length(sub)-1);
+  );
+  out="";
+  forall(subL,
+    out=out+#+"//";
+  );
+  out=substring(out,0,length(out)-2);
+  out;
+);
+////%Sla2fra end////
+
 ////%Tonormalform start//// //200605
 Tonormalform(fun0org):=(
   regional(fun0,num,alp,ope,par,sgn,tmp,tmp1,tmp2,
@@ -3137,7 +3227,7 @@ Totexform(str):=( //190514
     );
   );
   out=replace(out,"$","\cdot ");
-  out=replace(out,"%",""); //190915to
+  out=replace(out,"%"," "); //190915to,201018
   out=replace(out,"  ","\;");
   plv=Bracket(out,"()"); //190515from
   flg=0; //190521from

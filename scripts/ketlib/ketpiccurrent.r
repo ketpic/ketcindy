@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20200616)" 
+ThisVersion<- "KeTpic for R  v5_2_4(2021024)" 
 
 print(ThisVersion)
 
+# 20201024
+#   Texif, Texendif changed  ("}" removed)
 # 20200616
 #   Plotdata,Paramplot debugged  ( E=,sort)
 # 20200519
@@ -7476,7 +7478,7 @@ Texendfor<- function(I){
 Texendif<- function(){
   Texcom("")
   Texcom("\\fi")
-  Texcom("}")
+#  Texcom("}")
 }
 
 ###############################################
@@ -7509,9 +7511,9 @@ Texif<- function(...){
     Tp<- varargin[[2]]
   }
   Texcom("")
-  Texcom("{")
+#  Texcom("{")
   if(Tp==0){
-    Texcom("\\ifnum")
+    Texcom("\\ifnum ")
   }
   else{
     Texcom("\\ifdim ")

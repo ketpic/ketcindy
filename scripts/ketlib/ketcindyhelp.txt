@@ -368,6 +368,7 @@ Gcd([12,18,24]);
 Fracform(1.33);
 Fracform(1.33,1..100 (,err(-5)));
 Fracform(1.33,200 (,err(-5)));
+:Sla2fra("x/y+(a/b)/c+(pi/2)/(3/4)");
 Totexform("frac(2,3)");
 Tocindyform("frac(2,3)");
 Getcindystr("val=sq(3)");

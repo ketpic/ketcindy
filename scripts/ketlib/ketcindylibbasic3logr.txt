@@ -1,3 +1,6 @@
+// 20201018
+//    Sla2fra added
+//    Totexform changed  ("%" -> " ")
 // 20201013
 //    BBdata debugged  (path => Dirwork)
 // 20200914

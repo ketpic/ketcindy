@@ -16,8 +16,10 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(200512)"
+ThisVersion<- "2ev5_2_4(201022)"
 
+# 20201022
+#   Drwpt debugged (inside=>Inside )
 # 20200512
 #   Drwpt majorly changed ( Inside )
 # 20191106
@@ -240,7 +242,7 @@ Drwpt<-function(...) #200512
       P<- Doscaling(P)
       X=sprintf('%5.5f',P[1])
       Y=sprintf('%5.5f',P[2])
-      if(inside=="1"){
+      if(Inside=="1"){
         Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}%\n',sep="")
         cat(Str,file=Wfile,append=TRUE)
       }

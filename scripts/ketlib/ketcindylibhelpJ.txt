@@ -225,6 +225,7 @@
 //help:Sfcutparadatacdy*(平面と曲面の交線を求める。);
 //help:Shade*(閉曲線の内部にシェードをかける);
 //help:Skeletonparadata*(スケルトン処理のデータ作成);
+//help:Sla2fra*(文字列の中の / を簡易TeX-like書式の分数に直す);
 //help:Slider*(スライダを作る);
 //help:Spacecurve*(空間曲線のデータ作成);
 //help:Spaceline*(空間の折線データ作成);

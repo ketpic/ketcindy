@@ -250,6 +250,7 @@
 //help:Translatedata3d*(空間プロットデータを平行移動);
 //help:Translatepoint*(点を平行移動する);
 //help:Translatepoint3d*(空間点を平行移動);
+//help:Unscaling*(scalingされたデータを論理値化する);
 //help:Usegraphics*(グラフィクスパッケージを\verb|"pict2e"| に変更する);
 //help:VertexEdgeFace*(頂点と面から辺を求め，辺を描く);
 //help:Viewtex*(\TeX のソースファイルを書き出す。引数なし);

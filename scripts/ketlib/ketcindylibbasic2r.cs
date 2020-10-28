@@ -2711,7 +2711,7 @@ Drwxy(Arg):=( //190901from
 );
 Drwxy(add,optionsorg):=(
 //help:Drwxy();
-//help:Drwxy(1[the last axis will be drawn],oprions);
+//help:Drwxy(1[the last axis will be drawn],options);
 //help:Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,...","Size="]);
   regional(options,color,eqL,strL,org,xrng,yrng,ax,st,nn,size,labelsize,
   linesty,colorax,colorla,tmp,tmp1,tmp2);

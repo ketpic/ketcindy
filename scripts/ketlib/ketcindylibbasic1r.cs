@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20201014] loaded");
+println("ketcindylibbasic1[20201027] loaded");
 
 //help:start();
 
@@ -3305,6 +3305,7 @@ Doscaling(pltdata):=(
 
 ////%Unscaling start////
 Unscaling(pltdata):=(
+//help:Unscaling(gr1);
   regional(Level,Out,gL,gr,tmp);
    if(ispoint(pltdata) % isreal(pltdata_1),
     gL=[[pltdata]];
@@ -3666,7 +3667,7 @@ Colorname2cmyk(name):=( //181212
     ["sepia",[0,0.83,1,0.7]],["brown",[0,0.81,1,0.6]],
     ["tan",[0.14,0.42,0.56,0]],["gray",[0,0,0,0.5]],
     ["lightgray",[0,0,0,0.15]], //190429,0809
-    ["cindycolor",[0.66,0,69,0.71]], //190504
+    ["cindycolor",[0.125,0.083,0,0.247]], //201027
     ["black",[0,0,0,1]],["white",[0,0,0,0]],
     ["offwhite",[0,0,0,0.03]] //190809
   ];
@@ -4115,7 +4116,7 @@ Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,optionsorg):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
-//help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n/color(,rasiio))"]);
+//help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n/color(,ratio))"]);
   regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,color4,
       size,inside,incolor,ratio,tmp,tmp1,tmp2,tmp3);
   if(substring(nm,0,1)=="-", //200510[2lines]
@@ -4153,17 +4154,21 @@ Pointdata(nm,listorg,optionsorg):=(
       options=remove(options,[#]);
     );
     if(tmp1=="I", //190628from
-      inside=Toupper(substring(tmp_2,0,1));
-      tmp2=indexof(tmp_2,","); //200708from
-      if(tmp2>0,
-        ratio=parse(substring(tmp_2,tmp2,length(tmp_2)));
-        tmp_2=substring(tmp_2,0,tmp2-1);
-      ); //200708to
-      if(contains(["0","N","NO","1","Y","YES"],inside), //200519from
-        if(contains(["0","N","NO"],Inside),inside="N",inside="Y");
+      inside=tmp_2; //201027from
+      if(substring(inside,0,1)!="[",
+        tmp2=indexof(tmp_2,",");
+        if(tmp2>0,
+          ratio=parse(substring(tmp_2,tmp2,length(tmp_2)));
+          inside=substring(tmp_2,0,tmp2-1); //201027
+        ,
+          inside=tmp_2; 
+        ); 
+      ); //201027to
+      if(contains(["0","N","NO","1","Y","YES"],Toupper(inside)), //200519from
+        if(contains(["0","N","NO"],Toupper(inside)),inside="N",inside="Y");
       ,
+        incolor=inside;
         inside="N";
-        incolor=tmp_2;
       ); //200519to
       options=remove(options,[#]);
     );
@@ -4194,17 +4199,16 @@ Pointdata(nm,listorg,optionsorg):=(
     GLIST=append(GLIST,name+"=Pointdata("+tmp+")"); //no ketjs
   );
   if(Noflg<3, //190818
-    tmp1=parse(size)*TenSizeInit; //200512from
-    tmp2=round(10*sqrt(parse(size)));
-    if(Noflg==0,options=[Ltype,"Color="+text(color),"Num="+format(tmp2,6)]);
-    if(Noflg==1,options=["notex",Ltype,"Color="+text(color),"Num="+format(tmp2,6)]);
-    if(Noflg==2,options=["nodisp"]);
+    tmp1=parse(size)*TenSizeInit;
     forall(1..(length(list)),
+      tmp2=text(#)+name;
+      tmp3=[list_#,tmp1*ratio];
+      Circledata(tmp2,[list_#,tmp1*ratio],["nodisp","Msg=n"]);//201025
       if(inside=="N",
         if(length(incolor)>0, //200519from
-          Circledata(text(#)+name+"i",[list_#,tmp1*ratio],["nodisp","Msg=n"]); //200523,0708
-          tmp="cr"+text(#)+name+"i";
-          Shade([tmp],["Color="+incolor]); // no ketjs //[2lines removed]
+          Scaledata(tmp2+"i",["cr"+tmp2],1,1/SCALEY,[tmp3_1,"nodisp","Msg=n"]);
+          tmp="sc"+tmp2+"i";
+          Shade([tmp],["Color="+incolor]); // no ketjs 201025
 //          if(isstring(incolor),incolor=Colorname2cmyk(incolor)); // only ketjs on
 //          if(length(incolor)==4,incolor=Colorcmyk2rgb(incolor));
 //          opcindy=opcindy+",color->"+text(incolor);
@@ -4213,8 +4217,8 @@ Pointdata(nm,listorg,optionsorg):=(
 //          parse(tmp); // only ketjs off
         );
       ,
-        Circledata(text(#)+name,[list_#,tmp1],["nodisp","Msg=n"]); //200523
-        tmp="cr"+text(#)+name;
+        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,[tmp3_1,"nodisp","Msg=n"]);
+        tmp="sc"+tmp2;
         Shade([tmp],options); // no ketjs   //200813
 //          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on
 //          opcindy=opcindy+",color->"+text(color);
@@ -4222,7 +4226,12 @@ Pointdata(nm,listorg,optionsorg):=(
 //        tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
 //        parse(tmp); // only ketjs off
       );
-      Circledata(text(#)+name,[list_#,tmp1],append(options,"Msg=n")); //200523
+      tmp=round(10*sqrt(parse(size))); //201027from (moved)
+      if(Noflg==0,options=[Ltype,"Color="+text(color),"Num="+format(tmp,6)]);
+      if(Noflg==1,options=["notex",Ltype,"Color="+text(color),"Num="+format(tmp2,6)]);
+      if(Noflg==2,options=["nodisp"]);
+      options=concat(options,[tmp3_1,"Msg=n"]);
+      Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,options); //201027to
     ); //200519to
   );
   list;

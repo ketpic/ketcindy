@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20201018] loaded");
+println("ketcindylibbasic3[20201101] loaded");
 
 //help:start();
 
@@ -3556,10 +3556,10 @@ Ketcindyjsmain(prelist,postlist):=(
 ); 
 ////%Ketcindyjsmain end////
 
-////%Ketcindyjsdata start////  //190421
+////%Ketcindyjsdata start////  //201101
 Ketcindyjsdata(datalistorg):=(
 //help:Ketcindyjsdata(["ans1",ans1,"ans2",ans2]);
-  regional(nn,tmp,tmp1,tmp2,tmp3);
+  regional(nn,tmp,tmp1,tmp2,tmp3,tmp4);
   if(!islist(KetcindyjsDataList),KetcindyjsDataList=[]); //190801
   datalist=datalistorg;
   forall(1..(length(datalist)/2), nn, //190423from
@@ -3568,7 +3568,21 @@ Ketcindyjsdata(datalistorg):=(
     if(islist(tmp2),
       tmp3=[];
       forall(tmp2,
-        if(isstring(#),tmp=Dqq(#),tmp=format(#,12));
+        if(isstring(#),
+          tmp=Dqq(#)
+        ,
+          tmp4=#;
+          tmp=#_1;
+          while(islist(tmp),
+            tmp4=tmp;
+            tmp=tmp_1;
+          );
+//          if(length(tmp4)==2,
+//            tmp=format(Unscaling(#),12);
+//          ,
+            tmp=format(#,12)
+//          );
+        );
         tmp3=append(tmp3,tmp);
        );
     ,

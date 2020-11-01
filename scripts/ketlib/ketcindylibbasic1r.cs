@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20201027] loaded");
+println("ketcindylibbasic1[20201101] loaded");
 
 //help:start();
 
@@ -2497,60 +2497,38 @@ Nearestptcrv(point,plist):=(
 );
 ////%Nearestptcrv end////
 
-////%Nearestpt start////
-Nearestpt(point,PL2):=(
-  regional(PL1,PL,Ans,Flg,Eps,pA,Pm,Im,Sm,Nn,Ni,
-      a1,b1,a2,b2,v1,v2,x1,x2,Tmp,rT,pP,sS,Lm,Pm,Sm,Flg);
-//help:Nearestpt("gr1","gr2");
-  if(isstring(point),PL1=parse(point),PL1=point);
-  if(Measuredepth(PL1)==2,PL1=PL1_1);
-  if(!islist(PL1_1),
-    PL1=[PL1];
-    Flg=0;
-  ,
-    Flg=1;
-  );
-  if(isstring(PL2),PL=parse(PL2),PL=PL2);
-  if(Measuredepth(PL)==2,PL=PL_1);
+////%Nearestpt start////  201031renewed
+Nearestpt(pt,plotstr):=(
+  regional(ptL,Eps,dtL,dt,nn,pt1,pt2,dv,nv,tmp,tmp1,tmp2);
+//  regional(PL1,PL,Ans,Flg,Eps,pA,Pm,Im,Sm,Nn,Ni,
+//      a1,b1,a2,b2,v1,v2,x1,x2,Tmp,rT,pP,sS,Lm,Pm,Sm,Flg);
+//help:Nearestpt(point,"gr2");
+  if(isstring(plotstr),ptL=parse(plotstr),ptL=plotstr);
   Eps=10^(-6);
-  Ans=[PL1_1,1,PL_1,1,|PL1_1-PL_1|];
-  forall(1..(length(PL1)),Nn, // 16.05.04
-    pA=PL1_Nn;
-    Pm=PL_1;
-    Im=1;
-    Sm=|Pm-pA|;
-    forall(1..(length(PL)-1),Ni,
-      a1=PL_Ni_1; a2=PL_Ni_2;
-      b1=PL_(Ni+1)_1; b2=PL_(Ni+1)_2;
-      v1=b1-a1; v2=b2-a2;
-      x1=pA_1; x2=pA_2;
-      Tmp=v2^2+v1^2;
-      if(abs(Tmp)>Eps,
-        rT=(-a2*v2-v1*a1+v1*x1+x2*v2)/Tmp;
-        if(rT<-Eps,
-          pP=[a1,a2];
+  dtL=[];
+  forall(1..(length(ptL)-1),nn,
+    pt1=ptL_nn;
+    pt2=ptL_(nn+1);
+    if(|pt2-pt1|<Eps,
+      dt=[pt1,nn,|pt1-pt|];
+    ,
+      dv=pt2-pt1;
+      nv=[-dv_2,dv_1];
+      tmp1=Intersectline(pt1,dv,pt,nv);
+      if((tmp1_2>=0)&(tmp1_2<=1),
+        dt=[tmp1_1,nn+tmp1_2,|tmp1_1-pt|];
+      ,
+        if(tmp1_2<0,
+          dt=[pt1,nn,|pt1-pt|];
         ,
-          if(rT>1+Eps,
-            pP=[b1,b2];
-          ,
-            pP=[a1+rT*v1,a2+rT*v2];
-          );
-        );
-        sS=|pP-pA|;
-        if(sS<Sm-Eps,
-          Tmp=Paramoncurve(pP,Ni,PL);
-          Pm=pP; Lm=Tmp; Sm=sS;
+          dt=[pt2,nn+1,|pt2-pt|];
         );
       );
-      if(Sm<Ans_5,  // 16.05.03from
-        Ans=[pA,Nn,Pm,Lm,Sm];
-      );
-    );  // 16.05.03until
+    );
+    dtL=append(dtL,dt);
   );
-  if(Flg==0,
-    Ans=Ans_(3..5);
-  );
-  Ans;
+  dtL=sort(dtL,[#_3,#_2]);
+  dtL_1;
 );
 ////%Nearestpt end////
 
@@ -3272,64 +3250,33 @@ LLcrd(pt):=(
 );
 ////%LLcrd end////
 
-////%Doscaling start////
-Doscaling(pltdata):=(
-  regional(Level,Out,gL,gr,tmp);
-  if(ispoint(pltdata) % isreal(pltdata_1),
-    gL=[[pltdata]];
-    Level=0;
-  ,
-    if(ispoint(pltdata_1) % isreal(pltdata_1_1),
-      gL=[pltdata];
-      Level=1;
-    ,
-      gL=pltdata;
-      Level=2;
-    );
-  );
+////%Doscaling start//// //201029changed
+Doscaling(pdata):=(
+//help:Dscaling(pdlist);
+  regional(Level,Out);
   Out=[];
-  forall(gL,gr,
-    tmp=apply(gr,Lcrd(#));
-    tmp=apply(tmp,LLcrd(#));
-    Out=concat(Out,[tmp]);
-  );
-  if(Level==0,
-    Out=Out_1_1;
-  );
-  if(Level==1,
-    Out=Out_1;
+  if(!islist(pdata_1),
+    Out=[pdata_1*SCALEX,pdata_2*SCALEY];
+  ,
+    forall(pdata,
+      Out=append(Out,Doscaling(#))
+    );
   );
   Out;
 );
 ////%Doscaling end////
 
-////%Unscaling start////
-Unscaling(pltdata):=(
+////%Unscaling start//// //201029changed
+Unscaling(pdata):=(
 //help:Unscaling(gr1);
-  regional(Level,Out,gL,gr,tmp);
-   if(ispoint(pltdata) % isreal(pltdata_1),
-    gL=[[pltdata]];
-    Level=0;
-  ,
-    if(ispoint(pltdata_1) % isreal(pltdata_1_1),
-      gL=[pltdata];
-      Level=1;
-    ,
-      gL=pltdata;
-      Level=2;
-    );
-  );
+  regional(Level,Out);
   Out=[];
-  forall(gL,gr,
-    tmp=apply(gr,Lcrd(#));
-    tmp=apply(tmp,LLcrd(#));
-    Out=concat(Out,[tmp]);
-  );
-  if(Level==0,
-    Out=Out_1_1;
-  );
-  if(Level==1,
-    Out=Out_1;
+  if(!islist(pdata_1),
+    Out=[pdata_1/SCALEX,pdata_2/SCALEY];
+  ,
+    forall(pdata,
+      Out=append(Out,Unscaling(#))
+    );
   );
   Out;
 );
@@ -3819,16 +3766,15 @@ Addgraph(nm,pltdata,options):=(
   Noflg=tmp_2;
   color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200629
   opcindy=tmp_(length(tmp));
-  if(isstring(pltdata),
-    pdata=parse(pltdata)
+  if(isstring(pltdata), //201101from
+    pdata=parse(pltdata);
   ,
-    if(!islist(pltdata),pdata=[pltdata],pdata=pltdata);
-    pdata=apply(pdata,parse(#));
+    pdata=apply(pltdata,if(isstring(#),parse(#),#)); //201101to
   ); // 15.01.22
   pdata=Flattenlist(pdata);
   tmp1=[];
   forall(pdata,tmp2,
-    tmp=apply(tmp2,Pcrd(#));
+    tmp=Doscaling(tmp2); //201101
     tmp1=append(tmp1,tmp);
   );
   if(length(tmp1)==1,tmp1=tmp1_1);
@@ -4008,25 +3954,36 @@ Joincrvs(nm,plotstrL,options):=(
 
 ////%Partcrv start////
 Partcrv(nm,pA,pB,PkLstr):=Partcrv(nm,pA,pB,PkLstr,[]);
-Partcrv(nm,pA,pB,PkLstr,options):=(
+Partcrv(nm,pAorg,pBorg,PkLstr,options):=(
 //help:Partcrv("1",A,B,"sgABC");
-//help:Partcrv("1",1.3,2.5,"sgABC");
-  regional(PkL,Ans,Eps,Npt,Out1,Out2,tmp,tmp1,Flg,nS,nE,PPL,pP,
-        opcindy,Ta,Tb,name,Ltype,Noflg,DepthFlg,color,color4);
+//help:Partcrv("1",1.3,2.5,"sgABC");p
+  regional(pA,pB,PkL,PkLL,Ans,Eps,Npt,Out1,Out2,tmp,tmp1,tmp2,Flg,nS,nE,
+        PPL,pP,opcindy,Ta,Tb,name,Ltype,Noflg,eqL,msg,DepthFlg,color,color4);
   name="part"+nm;
+  pA=pAorg; pB=pBorg; //201031
   if(isstring(PkLstr),PkL=parse(PkLstr),PkL=PkLstr);
   DepthFlg=0;
   if(Measuredepth(PkL)==2,
     PkL=PkL_1;
     DepthFlg=1;
   );
-  PkL=apply(PkL,LLcrd(#));
+  PkLL=apply(PkL,LLcrd(#)); //201031
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
+  eqL=tmp_5;
   color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
-  Eps=10^(-3);
+  msg="Y";
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=Toupper(substring(tmp_2,0,1));
+    if(tmp1=="M",
+      msg=tmp2;
+    );
+  );
+  Eps=10^(-4);
   Flg=0;
   if(isreal(pA),
     if(pA>pB+Eps,
@@ -4059,19 +4016,21 @@ Partcrv(nm,pA,pB,PkLstr,options):=(
     );
   );
   if(Flg==0,
-    tmp=Nearestpt(LLcrd(Pcrd(pA)),PkL);
+    pA=Pcrd(pA); //201031from
+    pB=Pcrd(pB); 
+    tmp=Nearestpt(LLcrd(pA),PkLL); //201031to
     Ta=tmp_2;
-    tmp=Nearestpt(LLcrd(Pcrd(pB)),PkL); // 15.09.12
+    tmp=Nearestpt(LLcrd(pB),PkLL); // 15.09.12
     Tb=tmp_2;
     Ans=Partcrv("",Ta,Tb,PkL,["nodata"] );
-    Ans=apply(Ans,Pcrd(#));
   );
   if(Noflg<3,
-    println("generate partcrv "+name);
-    tmp1=apply(Ans,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    if(msg=="Y",  // no ketjs on
+      println("generate "+name);
+    ); // no ketjs off
+    tmp1=apply(Ans,Pcrd(#)); //201030
+    tmp=name+"="+Textformat(Ans,5)+";"; //190415
     parse(tmp);
-//    GLIST=append(GLIST,  // 16.04.03
     if(DepthFlg==0,
       tmp=PkLstr;
     ,

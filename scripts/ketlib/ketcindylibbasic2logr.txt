@@ -1,3 +1,7 @@
+// 20201031
+//    Drwpt changed (=Drawpoint)
+// 20201029
+//    Shade changed (encflg=>n as default)
 // 20201012
 //    Drwxy changed  ( size=1.5)
 // 20201010

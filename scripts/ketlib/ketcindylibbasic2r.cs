@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201012] loaded");
+println("ketcindylibbasic2[20201031] loaded");
 
 //help:start();
 
@@ -1929,7 +1929,7 @@ Shade(Arg1,Arg2):=(
 Shade(nm,plistorg,options):=(
 //help:Shade(["gr1"]);
 // help:Shade(options=["Trim=(n)","Enc=(n)",First=(n)","Color=",Startpoint]);
-//help:Shade(["gr2","Invert(sg1)"],["Enc=y",(Startpoint)]);
+//help:Shade(["gr2","Invert(sg1)"],["Enc=n",(Startpoint)]);
   regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,Noflg,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,color4,ctr,ptshade);
   if(substring(nm,0,1)=="-", //200513from
@@ -1945,8 +1945,8 @@ Shade(nm,plistorg,options):=(
   color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opstr=tmp_(length(tmp)-1);
   opcindy=tmp_(length(tmp));
+  encflg=0; //201029
   tmp=select(plist,indexof(#,"Invert")>0); //180929from
-  if(length(tmp)>0,encflg=1,encflg=0);
   trim="N";
   first="N"; //191007
   ptshade="N"; //200513
@@ -1957,9 +1957,6 @@ Shade(nm,plistorg,options):=(
     if(substring(tmp1,0,1)=="E",
       if(substring(tmp2,0,1)=="Y",
         encflg=1;
-      );
-      if(substring(tmp2,0,1)=="N",
-        encflg=0;
       );
     );
     if(substring(tmp1,0,1)=="T",
@@ -2810,19 +2807,11 @@ Drwxy(add,optionsorg):=(
 ////%Drwxy end////
 
 ////%Drwpt start////
-Drwpt(pstr):=Drwpt(pstr,1); //181231
-Drwpt(ptlist,nn):=(  // 16.03.05 from
-//help:Drwpt(A);
-//help:Drwpt([1,2],0);
-  if(!isreal(DrwPtCtr), //181231from
-    DrwPtCtr=1;
-  );
-  Pointdata(text(DrwPtCtr),ptlist,["Inside="+text(nn)]);
-  DrwPtCtr=DrwPtCtr+1; //181231to
-);
+Drwpt(pstr):=Drawpoint(pstr); //201031
 ////%Drwpt end////
 ////%Drawpoint start////
 Drawpoint(pstr):=(
+//help:Drawpoint(pstr);
   if(isstring(pstr),
     println("Drwpt : "+pstr);
     Com2nd("Drwpt("+pstr+")");

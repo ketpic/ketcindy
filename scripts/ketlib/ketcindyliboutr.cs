@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20201015] loaded");
+println("ketcindylibout[20201105] loaded");
 
 //help:start();
 
@@ -961,12 +961,13 @@ Histplot(nm,dataorg,optionorg):=(
 //help:Histplot("1",data (fillename));
 //help:Histplot(options=["Breaks=","Den=no","Rel=no"]);
   regional(options,name,data,hp,cmdL,tmp,tmp1,tmp2,tmp3,tmp4,
-    out,eqL,breaks,bdata,cdata,pstr,flg,density,relative);
+    out,eqL,breaks,right,bdata,cdata,pstr,flg,density,relative);
   name="hp"+nm;
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
   breaks = "breaks="+Dq+"Sturges"+Dq;
+  right="right=TRUE"; //201105
   density=0;
   relative=0;
   forall(eqL,
@@ -981,6 +982,11 @@ Histplot(nm,dataorg,optionorg):=(
       breaks="breaks="+tmp1;
       options=remove(options,[#]);
     );
+    if(tmp1=="R", //201105from
+      tmp2=Toupper(substring(tmp_2,0,1));
+      if(tmp2=="F",right="right=FALSE");
+      options=remove(options,[#]);
+    ); //201105to
     if(Toupper(substring(#,0,1))=="D",
       tmp2=Toupper(substring(tmp1,0,1));
       if(tmp2=="T" % tmp2=="Y",
@@ -1024,7 +1030,7 @@ Histplot(nm,dataorg,optionorg):=(
   data=RSform(data);
   cmdL=[
     "data="+data,[],
-	"tmp=hist",["data","plot=FALSE",breaks],
+	"tmp=hist",["data","plot=FALSE",breaks,right], //201105
     "tmp1=tmp$breaks",[],
     "tmp2=tmp$count",[],
     "tmp3=tmp$density",[],
@@ -1051,7 +1057,7 @@ Histplot(nm,dataorg,optionorg):=(
     tmp3=[bdata_(#+1),cdata_#];
     tmp4=[bdata_(#+1),0];
     Listplot("-"+name+text(#),[tmp1,tmp2,tmp3,tmp4,tmp1],options);
-    pstr=pstr+Dq+"sg"+name+text(#)+Dq+",";
+    pstr=pstr+Dq+name+text(#)+Dq+",";  //201105
   );
   pstr=substring(pstr,0,length(pstr)-1)+"]";
   println("generate totally "+name); 

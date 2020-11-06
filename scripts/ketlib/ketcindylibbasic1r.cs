@@ -3959,7 +3959,11 @@ Partcrv(nm,pAorg,pBorg,PkLstr,options):=(
 //help:Partcrv("1",1.3,2.5,"sgABC");p
   regional(pA,pB,PkL,PkLL,Ans,Eps,Npt,Out1,Out2,tmp,tmp1,tmp2,Flg,nS,nE,
         PPL,pP,opcindy,Ta,Tb,name,Ltype,Noflg,eqL,msg,DepthFlg,color,color4);
-  name="part"+nm;
+  if(substring(nm,0,1)=="-", //201106from
+    name=substring(nm,1,length(nm));
+  ,
+    name="part"+nm;
+  ); //201106to
   pA=pAorg; pB=pBorg; //201031
   if(isstring(PkLstr),PkL=parse(PkLstr),PkL=PkLstr);
   DepthFlg=0;

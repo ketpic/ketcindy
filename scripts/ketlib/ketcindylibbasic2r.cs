@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201031] loaded");
+println("ketcindylibbasic2[20201106] loaded");
 
 //help:start();
 
@@ -260,6 +260,7 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
 //help:Arrowhead("1",B,B-A);
 //help:Arrowhead("2",[1,2],"gr1");
 //help:Arrowhead("3",0.5,"gr1");
+//help:Arrowhead("4",1,"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
    regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
          options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
@@ -294,16 +295,14 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
         fillpoly(apply(list,Pcrd(#)),color->color);
         if(Noflg==0,
           if((point==1)&(isstring(direction)), //191202from
-            if(Norm(Ptend(direction)-Ptstart(direction))>Eps, //191203from
-              tmp=select(GCLIST,#_1==direction);
-              tmp=tmp_1;
-              tmp1=Nearestpt(list_4,direction);
-              tmp1=tmp1_2;
-              Partcrv(direction,1,tmp1,direction,["Msg=n"]); //191207
-              Changestyle("part"+direction,[tmp_2,tmp_3]);
-//              Changestyle(direction,["nodisp"]); //200710(removed)
-            );
-          );  //191202to
+            if(Norm(Ptend(direction)-Ptstart(direction))>Eps,
+              tmp=select(GCLIST,#_1==direction); //201106from
+              tmp1=tmp_1;
+              tmp2=Nearestpt(list_4,direction);
+              tmp2=tmp2_2;
+              Partcrv("-"+direction,1,tmp2,direction,["nodisp","Msg=n"]);
+            ); //201106
+          );
           Listplot("-arh"+nm,list,["dr,0.1","Color="+text(color),"Msg=n"]);//191202
           Shade(["arh"+nm],["Color="+text(color)]);
         );
@@ -316,6 +315,17 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
 );
 ////%Arrowhead end////
 
+////%Arrowdata start//// 191119 (Arrowdataseg,Arrowdatacrv)
+Arrowdata(ptlist):=Arrowdataseg(ptlist);
+Arrowdata(Arg1,Arg2):=Arrowdataseg(Arg1,Arg2);
+Arrowdata(nm,ptlistorg,optionsorg):=(
+//help:Arrowdata("1",[A,B]);
+//help:Arrowdata("2",[p1,p2]);
+//help:Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
+//help:Arrowdata(optionsadded=["line"]);
+  Arrowdataseg(nm,ptlistorg,optionsorg);
+);
+////%Arrowdata end////
 ////%Arrowdata start//// 191119 (Arrowdataseg,Arrowdatacrv)
 Arrowdata(ptlist):=Arrowdataseg(ptlist);
 Arrowdata(Arg1,Arg2):=Arrowdataseg(Arg1,Arg2);

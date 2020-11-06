@@ -51,7 +51,7 @@ Ketjsoption,basic3,3520,3521,Setketcindyjs
 Setketcindyjs,basic3,3525,3534
 Ketcindyjsbody,basic3,3538,3543
 Ketcindyjsmain,basic3,3547,3556
-Ketcindyjsdata,basic3,3560,3598,Unscaling,Dqq,set
+Ketcindyjsdata,basic3,3560,3598,Dqq,set
 Findfun,basic3,3602,3663,Removespace,Indexall
 Extractfun,basic3,3667,3684,Indexall,Findfun
 Extractall,basic3,3693,3737

@@ -132,23 +132,23 @@ Getlinestyle,basic1,3642,3710,Toupper,Textformat
 Chunderscore,basic1,3714,3749,PaO
 Addgraph,basic1,3753,3852,Divoptions,Colorrgb2cmyk,Flattenlist,Doscaling,Measuredepth,PaO,Textformat,Getlinestyle
 Joincrvs,basic1,3856,3952,LLcrd,Divoptions,Colorrgb2cmyk,Numptcrv,Ptstart,Ptend,Pcrd,Textformat,Getlinestyle
-Partcrv,basic1,3956,4058,Measuredepth,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Getlinestyle
-Opcrvs,basic1,4062,4070,Listplot
-Pointdata,basic1,4074,4197,Divoptions,tmp_,tmp_(length,Strsplit,Toupper,Lcrd,Measuredepth,RSform,Circledata,Colorname2cmyk,Colorcmyk2rgb,Textformat,201027from ,Scaledata
-Listplot,basic1,4201,4282,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Pcrd,Textformat,Getlinestyle,Lcrd
-Lineplot,basic1,4286,4370,Colorrgb2cmyk,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Getlinestyle
-Plotdata,basic1,4374,4580,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Getlinestyle
-Paramplot,basic1,4584,4757,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Getlinestyle
-Polarplot,basic1,4761,4770,Strsplit,Paramplot
-Connectseg,basic1,4774,4836,Norm
-Implicitplot,basic1,4840,5024,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Getlinestyle
-Circledata,basic1,5028,5150,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Lcrd,Listplot,Pcrd,Textformat,Getlinestyle
-Framedata,basic1,5154,5221,Measuredepth,LLcrd,Divoptions,Toupper,Lcrd,Listplot
-Framedata2,basic1,5225,5232,Lcrd,Framedata
-Ovaldata,basic1,5236,5306,Divoptions,Colorrgb2cmyk,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Getlinestyle,Pcrd,Textformat
-Segmark,basic1,5310,5377,Divoptions,Toupper,Strsplit,Listplot,Circledata,Polygonplot
-Parabolaplot,basic1,5381,5421,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
-Ellipseplot,basic1,5425,5468,Lcrd,Rotatepoint,Paramplot,Rotatedata
-Hyperbolaplot,basic1,5472,5536,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
-Polygonplot,basic1,5540,5585,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
-Putintersect,basic1,5589,5617,Intersectcrvs,Putpoint
+Partcrv,basic1,3956,4062,Measuredepth,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Numptcrv,Ptstart,Ptend,Joincrvs,Nearestpt,LLcrd,Pcrd,Textformat,Lcrd,Getlinestyle
+Opcrvs,basic1,4066,4074,Listplot
+Pointdata,basic1,4078,4201,Divoptions,tmp_,tmp_(length,Strsplit,Toupper,Lcrd,Measuredepth,RSform,Circledata,Colorname2cmyk,Colorcmyk2rgb,Textformat,201027from ,Scaledata
+Listplot,basic1,4205,4286,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Pcrd,Textformat,Getlinestyle,Lcrd
+Lineplot,basic1,4290,4374,Colorrgb2cmyk,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Getlinestyle
+Plotdata,basic1,4378,4584,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Getlinestyle
+Paramplot,basic1,4588,4761,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Getlinestyle
+Polarplot,basic1,4765,4774,Strsplit,Paramplot
+Connectseg,basic1,4778,4840,Norm
+Implicitplot,basic1,4844,5028,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Getlinestyle
+Circledata,basic1,5032,5154,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Lcrd,Listplot,Pcrd,Textformat,Getlinestyle
+Framedata,basic1,5158,5225,Measuredepth,LLcrd,Divoptions,Toupper,Lcrd,Listplot
+Framedata2,basic1,5229,5236,Lcrd,Framedata
+Ovaldata,basic1,5240,5310,Divoptions,Colorrgb2cmyk,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Getlinestyle,Pcrd,Textformat
+Segmark,basic1,5314,5381,Divoptions,Toupper,Strsplit,Listplot,Circledata,Polygonplot
+Parabolaplot,basic1,5385,5425,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
+Ellipseplot,basic1,5429,5472,Lcrd,Rotatepoint,Paramplot,Rotatedata
+Hyperbolaplot,basic1,5476,5540,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
+Polygonplot,basic1,5544,5589,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
+Putintersect,basic1,5593,5621,Intersectcrvs,Putpoint

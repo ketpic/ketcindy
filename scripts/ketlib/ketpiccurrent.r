@@ -20,6 +20,8 @@ ThisVersion<- "KeTpic for R  v5_2_4(2021024)"
 
 print(ThisVersion)
 
+# 20211111
+#   Nearestpt changed according to that of KeTCindy
 # 20201024
 #   Texif, Texendif changed  ("}" removed)
 # 20200616
@@ -5001,6 +5003,41 @@ Nearestpt<- function(...){
     }
   }
   return(Ans)
+}
+
+##### new 201111 ####
+Nearestpt<- function(pt,ptL){
+  pt=Unscaling(pt)
+  Eps=10^(-6)
+  dtL=list()
+  rk=c()
+  for(nn in Looprange(1,Length(ptL)-1)){
+    pt1=Op(nn,ptL)
+    pt2=Op(nn+1,ptL)
+    if(Norm(pt2-pt1)<Eps){
+      dt=list(pt1,nn,Norm(pt1-pt)); rk=c(rk,dt[[3]])
+    }else{
+      dv=pt2-pt1
+      nv=c(-Op(2,dv),Op(1,dv))
+      tmp1=Intersectline(pt1,dv,pt,nv);
+      if((Op(2,tmp1)>=0)&&(Op(2,tmp1)<=1)){
+        dt=list(Op(1,tmp1),nn+Op(2,tmp1),Norm(Op(1,tmp1)-pt)); rk=c(rk,dt[[3]])
+      }else{
+        if(Op(2,tmp1)<0){
+          dt=list(pt1,nn,Norm(pt1-pt)); rk=c(rk,dt[[3]])
+        }else{
+          dt=list(pt2,nn+1,Norm(pt2-pt)); rk=c(rk,dt[[3]])
+        }
+      }
+    }
+    dtL=c(dtL,list(dt))
+  }
+  rk=order(rk)
+  dtL=dtL[rk]
+  dtL=dtL[[1]]
+ tmp=dtL[[1]]
+  dtL[[1]]=Doscaling(tmp)
+  return(dtL)
 }
 
 #########################################

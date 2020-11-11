@@ -1,3 +1,5 @@
+// 20201111
+//    Mkketcindyjs changed   ( definition of "Invert" added )
 // 20201018
 //    Sla2fra added
 //    Totexform changed  ("%" -> " ")

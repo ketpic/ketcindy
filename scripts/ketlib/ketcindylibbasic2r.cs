@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201106] loaded");
+println("ketcindylibbasic2[20201110] loaded");
 
 //help:start();
 
@@ -1251,7 +1251,11 @@ Enclosing2(nm,plistorg,options):=(
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
       tmp,tmp1,tmp2,color,color4,p1,p2);
-  name="en"+nm;
+  if(substring(nm,0,1)=="-",  //201110from
+    name=substrin(nm,1,length(nm));
+  ,
+    name="en"+nm;
+  );  //201110to
   plist=plistorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -1379,6 +1383,7 @@ Enclosing2(nm,plistorg,options):=(
       AnsL=apply(AnsL,Pcrd(#));
     );
   );
+  AnsL=Unscaling(AnsL); //201110
   if(Noflg<3,
     println("generate Enclosing "+name);
     tmp=name+"="+Textformat(AnsL,5)+";"; //190415
@@ -1407,8 +1412,7 @@ Enclosing2(nm,plistorg,options):=(
     );
     GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
-  tmp=apply(AnsL,LLcrd(#));//16.10.20
-  tmp;
+  AnsL; //201110
 );
 ////%Enclosing end////
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20201101] loaded");
+println("ketcindylibbasic3[20201111] loaded");
 
 //help:start();
 
@@ -4337,6 +4337,7 @@ Mkketcindyjs(options):=( //17.11.18
     tmp="<script id="+Dqq("csinit")+" type=";
     tmp=tmp+Dqq("text/x-cindyscript")+">";
     println(SCEOUTPUT,tmp);
+    println(SCEOUTPUT,"Invert(x):=reverse(x);"); //201111
 //    tmp=Readlines(Dirhead+pathsep()+"ketcindyjs","commonused.txt");
 //    forall(tmp,
 //     println(SCEOUTPUT,#);

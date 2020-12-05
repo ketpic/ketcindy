@@ -1299,7 +1299,7 @@ Draw A, B , C by drawing tool.
 
 \verb|  th=arctan2(B-A);| \\
 \verb|  C.xy=Rotatepoint(B,pi/3,A);|\\
-\verb|  Circledata([A,B],[Assign("Rng=[th,th+pi/3]","th",th)]);|\\
+\verb|  Circledata([A,B],[Assign("Rng=[th,th+pi/3]",["th",th])]);|\\
 \verb|  Listplot([B,A,C]);|\\
 \verb|  Letter([A,"s","A",B,"e","B",C,"nw","C"]);|
 

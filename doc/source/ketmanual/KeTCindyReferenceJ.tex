@@ -1609,7 +1609,7 @@ optionsは以下のものをリストで与える。省略した場合は実線�
 \begin{verbatim}
 th=arctan2(B-A);
 C.xy=Rotatepoint(B,pi/3,A);
-Circledata([A,B],[Assign("Rng=[th,th+pi/3]","th",th)]);
+Circledata([A,B],[Assign("Rng=[th,th+pi/3]",["th",th])]);
 Listplot([B,A,C]); 
 Letter([A,"s","A",B,"e","B",C,"nw","C"]);
 \end{verbatim}

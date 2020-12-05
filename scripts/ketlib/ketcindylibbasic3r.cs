@@ -3750,12 +3750,12 @@ Seteditable(no,optionorg):=(
   eqL=tmp_5;
   forall(eqL,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,1));
-    if(tmp1=="S",
+    tmp1=Toupper(tmp_1); //201205
+    if(tmp1=="SIZE",  //201205
       size=tmp_2;
       options=remove(options,[#]);
     );
-    if(tmp1=="W",
+    if(tmp1=="WIDTH",  //201205
       width=tmp_2;
       options=remove(options,[#]);
     );

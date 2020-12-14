@@ -1,0 +1,1425 @@
+\documentclass[a4j]{ujarticle}
+
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{enumerate}
+%\usepackage{emathE}
+
+\newcommand{\tab}[2][12zw]{%
+\noindent
+\hspace*{2zw}\Ltab{#1 }{#2}%
+}
+
+\newcommand{\chuu}[1][15zw]{%
+\Ltab{#1}{}※ %
+}
+
+\newcommand{\rei}[1][18zw]{%
+\Rtab{#1}{例)\ }}%
+
+\newcommand{\reicr}[1][18zw]{%
+\Rtab{#1}{　 }}%
+
+\newcommand{\prompt}[1][+]{%
+$>$ \verb#1}
+
+\newcommand{\dq}[1]{
+{\unitlength$<$- 0.0012in%
+\begin{picture}%
+(26.30,94.50)(2.40,0.00)%
+\special{pn 8}%
+\special{pa 3 -113}\special{pa 6 -78}\special{pa 12 -78}\special{pa 15 -113}\special{pa 3 -113}%
+\special{sh 1}\special{ip}%
+\special{pa 22 -113}\special{pa 25 -78}\special{pa 31 -78}\special{pa 34 -113}\special{pa 22 -113}%
+\special{sh 1}\special{ip}%
+\end{picture}}%
+\,#1\,%
+{\unitlength$<$- 0.0012in%
+\begin{picture}%
+(26.30,94.50)(2.40,0.00)%
+\special{pn 8}%
+\special{pa 3 -113}\special{pa 6 -78}\special{pa 12 -78}\special{pa 15 -113}\special{pa 3 -113}%
+\special{sh 1}\special{ip}%
+\special{pa 22 -113}\special{pa 25 -78}\special{pa 31 -78}\special{pa 34 -113}\special{pa 22 -113}%
+\special{sh 1}\special{ip}%
+\end{picture}}%
+}
+
+\newcommand{\bq}{
+\hspace*{-2pt}%
+{\unitlength=1pt%
+\begin{picture}%
+(1.80,7.00)(-0.90,0.00)%
+\special{pn 8}%
+%
+\special{pn 12}%
+\special{pa -11 -94}\special{pa 11 -72}%
+\special{fp}%
+\special{pn 8}%
+\end{picture}}%
+}
+
+\newenvironment{mini}[1]%
+{\begin{minipage}[t]{#1}}%
+{\end{minipage}%
+}
+
+
+%\enumSep{\narrowenumsep}
+
+\setmargin{15}{15}{15}{20}
+
+\begin{document}
+
+\begin{flushright}
+2014年1月2日
+\end{flushright}
+
+\begin{center}
+{\bf \huge \ketpic\ v4.3.1 ltd コマンド一覧}\vspace{3mm}\\
+{\bf \huge for R}
+\end{center}
+
+\hfill
+\begin{minipage}{4cm}
+\Ltab{1.5cm}{PD}プロットデータ\\
+\end{minipage}
+
+%\vspace*{-2zw}
+
+\section{R についての注意}
+
+\begin{enumerate}[1.]
+
+\item KETpicの読込みには次を実行する．\\
+\hspace*{2zw}load("C:/work/ketpic.Rdata")　（C:/work/は作業フォルダ名）\\\hspace*{-12zw}\chuu ディレクトリの変更は setwd("c:/work")
+
+\item 文字列は　 "（ダブル）で囲む\\
+\chuu 文字列の中に文字列を入れるときは ' と " を入れ子に使う．
+
+\item 関数などを引数とするときは，文字列とする．\\
+\hspace*{2zw}例）G$<$- Plotdata( "x\verb|^|2", "x=c(0,1)")
+%\hspace*{2zw}注）プログラミングでは文字列を実行するコマンド evstr, execstr が重要である．
+%\item 
+%数リスト，文字列，行列が混ざったデータ（基本データ）のリストはできない．
+%Mixは混合リストを扱う．
+%\hspace*{3zw}基本データ$\longrightarrow$混合列$\longrightarrow$混合リスト%
+%$\longrightarrow$混合リスト$\longrightarrow\cdots$
+
+\item \verb|\|（バックスラッシュ）を出力するには２つ並べてかく．
+
+
+\item 注釈は \verb|#|
+
+%\item 実行の中断は　abort
+
+
+%\item 数値微分は derivative, 数値積分は integrate（またはintg）
+
+%\chuu Derivative, Integrate 参照
+
+\item 数と文字列の変換\\
+\hspace*{2zw}as.character(数)\\
+\hspace*{2zw}as.numeric(文字列)\\
+\hspace*{2zw}eval(parse(text=文字列)))\\
+\hspace*{2zw}sprintf(書式,\ 数) 書式付き文字列
+
+\item 異なる型のデータからリストを作るにはlistを用いる．\\
+\hspace*{2zw}作成　　　L\verb|<-| list(... , ... );\\
+\hspace*{2zw}取り出し　A\verb|<-| L[[i]]\\
+\hspace*{2zw}部分リスト　L[V]\ (V はベクトル)\\
+\hspace*{2zw}置き換え　L[[i]]\verb|<-| ...\\
+%\hspace*{2zw}消去　　　L[[i]]<- NULL\\
+\hspace*{2zw}長さ　　　length(L)\\
+\hspace*{2zw}追加　　　L\verb|<-|  c(L1, L2)\\
+\hspace*{2zw}結合　　　c(L1,L2,...)\\
+\hspace*{2zw}空リスト　list()\\
+\hspace*{2zw}タイプを見る　is.list(L)（論理値）または mode(L)
+
+\end{enumerate}
+
+\section{Rのための追加コマンド}
+
+\tab{Member(D, L)}DがLの要素であればtrue，そうでなければfalseを返す．\\
+\chuu Lはベクトルまたは list
+
+\tab{Flattenlist(L)}Lを平準化して単層のリストを作る
+
+%\tab{Mix(D1, D2, $\cdots$)}FD列，MS，MLから（１段上の）MSまたはMLを作成
+
+%\tab{Mixadd(L, D)}L（MSまたはML)にDを要素として加える
+
+\tab{Mixdisp({\it list})}listの要素を画面に簡易表示
+
+%\tab{Mixjoin(L1, L2, ...)}要素を合併したlistを作る\\
+%\rei L1$<$- list(G1,G2,3); L2$<$- list(G3, "a")\\
+%\reicr L$<$- Mixjoin(L1,L2, c(3,6))\\
+%\reicr \hspace{2cm}LはG1, G2, 3, G3, "a", c(3, 6)のlist\\
+%\chuu \verb|c() , list()| は無視される
+
+%\tab{MixL(D1,D2, $\cdots$)}MS, MLから（１段上の）MLを作成
+
+%\tab{Mixlength(L)}L（MSまたはML)の要素の個数
+
+%\tab{Mixop(N, Data)}DataのN番目の要素（DataはMS, ML)
+
+%\tab{MixS(D1,D2, $\cdots$)}基本データ列からMSを作成
+
+%\tab{Mixsub（範囲，L)}Lの範囲（リスト）の要素からなる部分MSまたはML\\
+%\rei S$<$- Mixsub( 2; 5, L);
+
+%\tab{Mixtype(Data)}Dataが基本データなら１，MSなら２，MLなら３を返す
+
+\tab{Op(N,\ Data)}DataのN番目の要素（Dataは文字列，ベクトル，list）
+
+\tab{Assign(式, 変数名, 値, ・・・)}\\
+\tab{}変数名（文字列）に値を割り当てた文字列を返す\\
+\chuu 値は，数，文字列，数行列，Scilablist\\
+\rei A$<$- 0.4; B$<$- c(2,1)\\
+\reicr Fn$<$- Assign("A*x\^{}2+B(1)*y\^{}2","A", A, "B", B)
+
+\tab{Assignset(変数名, 値, ・・・)}%
+割り当て変数テーブルをセットする\\
+\rei Assignset("A", 0.4, "B", c(2,1), "C", list(...), "D", "string")
+
+%\tab{Assign(式)}式文字列の変数に割り当て変数リストを割り当てた文字列を返す\\
+%\rei Assign("A", 0.4, "B", c(2,1))\\
+%\reicr Fn$<$- Assign("A*x\^{}2+B(1)*y\^{}2")
+
+\tab{Assignset("?"+変数名)}変数名の値を返す\\
+\rei Assignset("?A")
+
+\tab{Assignset()}割り当て変数テーブルを初期化\\
+%\rei Assign("A", 0.4, "B", c(2,1))\\
+%\reicr Assign()
+
+\tab{Assignadd(変数名, 値, ・・・)}\\
+\tab{}割り当て変数テーブルに追加する\\
+\rei Assignadd("C", 0.4, "D", c(2,1))
+
+\tab{Assignrep(変数名, 値, ・・・)}\\
+\tab{}割り当て変数テーブルを置き換える\\
+\rei Assignrep("C", 0.8)
+
+\tab{Prime(文字列)}文字列の最後に " をつける\\
+\rei Prime("A")\\
+\rei Prime()  （" だけを出力）\\
+\chuu Assign("A\bq ") としてもよい．
+
+
+%\tab{Strop(N,\ 文字列)}文字列のN番目の文字
+
+%\tab{Subs(代入式,\ 有理式)}有理式に代入式で与えられる数値を代入した値を返す\\
+%\rei X$<$- poly(0,"X")\\
+%\reicr F$<$- X\verb|^|2+3\verb|*|X+3\\
+%\reicr V$<$- Subs("X$<$- 5",\ F)
+
+\tab{XMIN, XMAX, YMIN, YMAX}\\
+\tab{}ウィンドウ範囲
+（デフォルト$-5\leqq x\leqq 5,\ -5\leqq y\leqq 5$）
+
+\tab{Ptne(),Ptnw(),Ptsw(),Ptse()}\\
+\tab{}フレーム枠の各点
+
+\tab{ThisVersion}Ketpicのバージョン
+
+\tab{Fracform(x\{, 分母の最大値\})}\\
+\tab{}xに近い分数（文字列）を返す\\
+\chuu 分母の最大値のデフォルトは100000\\\
+\rei Fracform(c(2.36))
+
+\tab{Dotprod(v1,v2)}内積
+
+\tab{Crossprod(v1,v2)}外積
+
+\tab{Derivative(関数文字列，変数名，\{値ベクトル\}}\\
+\tab{}関数の微分係数を求める．\\
+\rei Derivative("x\verb|^|2+y", c("x","y"),c(2, 3))\\
+%\rei Assign("A", 3)\\
+%\reicr Derivative(Assign("x\verb|^|2+A*y"), "c(x,y)", c(2, 3), 2)\\
+%\chuu 変数の番号を指定しないときは，列ベクトルで返す．
+
+\tab{Integrate(関数文字列，変数文字列，積分区間（数リスト）)}\\
+\tab{}関数の定積分を求める．\\
+\rei Integrate("sin(x)","x",c(0,pi))\\
+\chuu 区間（リスト）は積分を分けて計算するときに指定\\
+%\reicr Fn(x)","if x>0,Y$<$- 1,else,Y$<$- -1,end")|\\
+\reicr \verb|Integrate("Fn(x)","x",c(-2,0,3))|\\
+
+%\tab{Thetadegree()}平行投影で$\theta$（度）
+
+%\tab{Phidegree()}平行投影で$\varphi$（度）
+
+%\vspace{-2zw}
+
+\section{設定コマンド}
+
+\subsection{基本}
+
+\tab{Setwindow(c(xmin, xmax), c(ymin, ymax))}\\
+\tab{}ウィンドウ範囲を設定\\
+\rei Setwindow(c(-pi, pi),\ $c(-1.5,1.5)$\,)\\
+\chuu XMIN , XMAX , YMIN , YMAX で値を得られる．
+
+\tab{Setscaling({\it ratio})}\\
+\tab{}縦の横に対する比を{\it ratio}に設定（デフォルトは 1）\\
+\rei Setscaling(2)\\
+\chuu ウィンドウも連動
+
+\tab{Setax(線種, 横軸名, 位置, 縦軸名, 位置, 原点名, 位置)}\\
+\tab{}座標軸を設定（引数 7 個）\\
+\rei Setax("a", "t", "s", "u", "w", "O", "nw")\\
+\chuu 線種は　d :  line , a : arrow\\
+\chuu arrowのとき　"a0.5" のように，矢印の大きさを指定できる．\\
+\chuu ""とすると，現在の設定を変更しない．\\
+\chuu 以降が "" のとき省略できる．また途中からも指定できる\\
+\rei Setax("a"\,)\\
+\rei Setax(6, "O", "se"\,)　（6番目から指定）\\
+\chuu 位置は"n", "s", "e", "w", "ne", "nw", "se", "sw"\\
+\chuu "s2w3"のように微小移動量を付加してよい．\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Setorigin(\,点\,)}座標軸の原点を指定（デフォルトは$(0,\ 0)$）\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Setpen( 倍率 )}線の太さを指定（標準からの倍率で）\\
+\rei Setpen(1.5)\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Setpt( 倍率 )}Drwptの点の大きさを指定（標準からの倍率で）\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Setmarklen( 倍率 )}目盛りの大きさを指定（標準からの倍率で）\\
+\chuu 目盛りの大きさは微小移動量の単位としても用いられる．\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Setunitlen("単位長")}単位長を指定する\\
+\chuu Beginpicture("")とすると指定された単位長が使われる.\\
+\chuu 空引数のとき，現在の設定値を表示
+%\tab(13zw){resetunitlen()}コード書き出しを終える
+
+\tab{Setarrow(鏃の大きさ \{, 開き角 \{, 鏃位置 \{, 太さ\}\}\} \{, 形と位置\})}\\
+\tab{}矢印の形状を指定する\\
+\rei Setarrow(0.5, 1, 1, 0.7, "tf"\,)\\
+\chuu デフォルト　大きさ１ ，角度 18°，位置は終点\\
+\chuu 5以下の開き角を指定したときは，18°からの倍率とする\\
+\chuu 形状\ "l" ：ライン　"f" ：塗り（デフォルト）\\
+\chuu 位置微調整\ "c"：中央　"b"：下　"t"：トップ(〃）\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Ketinit(\,)}定数をデフォルトに初期化
+
+\subsection{空間（平行投影）}
+
+\tab{Setangle(\,$\theta, \varphi$\,)}角度（°）を指定\\
+\chuu デフォルト値は $\theta$<$- 60,\ \varphi$<$- 30$\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{Initangle(\,)}デフォルト値に戻す
+
+\subsection{空間（一点投影）}
+
+\tab{Setpers(\,注視点，視点\,)}一点投影のFocusPoint,\ EyePoint を指定\\
+\chuu デフォルト値は FocusPoint$<$- c(0,0,0),\ EyePoint$<$- c(5,5,5)
+
+\tab{Setpers()}現在のFocusPoint,\ EyePoint を表示\\
+\chuu 空引数のとき，現在の設定値を表示
+
+\tab{SetstereoL(\,$R,\ \theta,\ \varphi,\ \varDelta$\,)}%
+原点を注視点として，空間極座標により定まる左目の位置を\\
+\tab{}視点にセット（$\varDelta$は目の間隔）
+
+\tab{SetstereoR(\,$R,\ \theta,\ \varphi,\ \varDelta$\,)}%
+原点を注視点として，空間極座標により定まる右目の位置を\\
+\tab{}視点にセット（$\varDelta$は目の間隔）
+
+\section{プロットデータの作成}
+
+\subsection{平面図形}
+
+\tab{Plotdata(関数,範囲,オプション)}\\
+\tab{}関数のグラフのPDを作成\\
+\rei G1$<$- Plotdata(\,"sin(x)",\ "x= c($-2$*pi,\ 2*pi)")\\
+\chuu 範囲を "x" とすると，XMINからXMAXにとる．\\
+\chuu x 以外の変数を使うときは関数に使われていないかを注意．\\
+\chuu オプション\\
+\hspace*{16zw}\tab[6zw]{"N=$\cdots$"}点の個数\\
+\hspace*{16zw}\tab[6zw]{"E=c($\cdots$)"}除外点のリスト\\
+\hspace*{16zw}\tab[6zw]{"E=関数"}関数の０点は除外\\
+\hspace*{16zw}\tab[6zw]{"D=$\cdots$"}連続限界値（これ以上離れたら結ばない）\\
+\chuu デフォルトはN=50,  D=Inf \\
+%\chuu 関数は function で与えてもよい．\\
+\rei G1$<$- Plotdata("1/x", "x","N=200", "E=c(0)", "D=1")\\
+\rei G2$<$- Plotdata("1/((x-1)*(x+2))", "x", "E=(x-1)*(x+2)")\\
+
+\tab{Listplot(点のベクトルまたは列またはlist)}\\
+\tab{}折れ線のPDを作成. ただし、点は線分で結ぶ. \\
+\rei G2$<$- Listplot(c(c(3,2),c(5,4)))\\
+\rei G2$<$- Listplot(c(3,2),c(5,4))
+
+\tab{Lineplot(点A, 点B\{ , 長さ，半直線\})}\\
+\tab{}線分ABを延長した線分のPDを作成 \\
+\rei G3$<$- Lineplot(c(3,2),c(5,4))\\
+\rei G4$<$- Lineplot(A, B, "+")\\
+\reicr  半直線AB（B側に延長）\\
+\chuu 長さのデフォルトは片側100
+
+\tab{Paramplot(パラメトリック関数,範囲,オプション)}\\
+\tab{}パラメトリック関数のグラフのPDを作成\\
+\chuu t 以外の変数を使うときは関数に使われていないかを注意\\
+%\chuu 関数は function で与えてもよい．\\
+\rei G3$<$- Paramplot(\,"c(cos(t),\ sin(t))",\ "t=c(0, 2*\%pi)")\\
+%\rei G4$<$- Paramplot(Fnx, Fny, "t=c(0, 1)")
+
+\tab{Rotatedata(PDまたは点,角度\{,中心\})}\\
+\tab{}平面のPDを回転したPDを作成 \\
+\rei G4$<$- Rotatedata(G1,pi/4)
+
+\tab{Translatedata(PD,\ x方向 y方向)}\\
+\tab{}PDを平行移動したPDを作成 \\
+\rei G5$<$- Translatedata(\,G1,\ 3,\ $-1$\,)
+
+\tab{Scaledata(PD, x方向, y方向\{,中心\})}\\
+\tab{}PDを拡大(縮小)したPDを作成 \\
+\rei G6$<$- Scaledata(\,G1,\ 2,\ 1/3\,)
+
+\tab{Reflectdata(PD,点)}点対称移動したPDを作成\\
+\tab{Reflectdata(PD, c(\,点1,点2\,))}\\
+\tab{}線対称移動したPDを作成\\
+\rei G7$<$- Reflectdata(\,G1,\ c(0,0)\,)\\
+\rei G8$<$- Reflectdata(\,G1,\ c(\,c(0,0),\ c(0,1)\,)\,)
+
+\tab{Pointdata(PD,\ $\cdots$)}PDの節点のlistを作成\\
+\rei G9=Pointdata(G1)\\
+\chuu Drwpt(G9)などで，点のプロットができる．
+
+\tab[21zw]{Circledata(中心,\ 半径\ \{,\ オプション\}\})}円のPDを作成\\
+\rei G10$<$- Circledata(\,c(3,1),\ 2\,) \\
+\chuu オプション\\
+\hspace*{16zw}\tab[5zw]{"R=..."}$\theta$の範囲\\
+\hspace*{16zw}\tab[5zw]{"N=..."}点の個数\\
+\rei G10a$<$- Circledata(\,c(3,1),\ 2,\ "R=c(0,\ pi/2)"\,)\\
+\rei G10b$<$- Circledata(\,c(3,1),\ 2,\ "N=100"\,)  
+
+\tab{\,Framedata(P,\ dx\{,\ dy\})\,}%
+点Pを中心に$\pm$dx,\ $\pm$dyの矩形（dyを省略するとdy$<$- dx）\\
+\rei G3$<$- Framedata(c(3,\ 1),\ 0.5\,) 
+
+\tab[12zw]{\,Framedata(${\rm c}(x_1,\ x_2),\ {\rm c}(y_1,\ y_2)$)\,\\}%
+\tab{}$x_1 \leqq x \leqq x_2,\ y_1 \leqq y \leqq y_2$の矩形のPDを作成（右上から反時計）\\
+\chuu 引数が空のとき，Setwindowで指定した枠\\
+\rei G1$<$- Framedata(${\rm c}(-2,\ 3)$,\ ${\rm c}(1,\ 4)$\,) \\
+\rei G2$<$- Framedata()
+
+\tab{Hatchdata( パターン文字(list)\{, 開始点\}, (閉)曲線の列\{,kaku\{,haba\}\,\}\,)}\\
+\tab{}パターンと一致する領域を斜線塗りするPDを作成\\
+\rei G1$<$- Hatchdata(list("io"),\ list(g1,g2),\ list(g3)\,)\\
+\mbox{}\hfill（i : 内部，o: 外部）\\
+\chuu 開始点が指定されたとき\\
+\hfill（仮想的に）その点を通る斜線から描き始める\\
+%\chuu パターンがリストのとき，どれかと一致する領域を斜線塗り\\
+\chuu%
+\begin{mini}{23zw}
+kakuは斜線の傾き(def=45)，habaは間隔（def=1）
+\end{mini}\vspace{1mm}\\
+\rei G2$<$- Hatchdata(\,list("ii"),\ O,\ list(G1),\ $-45$,\ 1.5\,)\\
+\chuu 曲線リスト内のPDは隣接の順に指定\\
+\chuu 閉じていないとき\\
+\hspace*{18zw}(1)方向 "s","n","w","e" を指定する\\
+\hspace*{18zw}(2)窓枠とちょうど2点で交わる場合、領域の点を指定\\
+\hspace*{18zw}(3)指定しなければ端点を直線で結ぶ.\\
+\rei G3$<$- Hatchdata(list("ii),\ list(g1,"s"),\ list(g2,\ c(3,0))\,)
+
+\tab{Hatchdata( 領域の点）\{, 開始点\}, (閉)曲線listの列\{,kaku\{,haba\}\,\}\,)}\\
+\tab{}点（のどれか）が含まれる領域を斜線塗り\\
+\rei F4$<$- Hatchdata(list(A,B,C),\ \ list(G1),\ list(G2,G3)\,)\\
+\hspace*{4zw}\chuu %
+\begin{mini}{23zw}
+包含パターンが点A, B, Cのどれかと一致する領域を斜線塗り（領域は隣接するものとする）
+\end{mini}\vspace{2mm}
+
+%\tab{enclosing( P,  PDリスト )}PD列からPを囲む閉曲線となる部分曲線のPD列を作成\\
+%\rei G1$<$- enclosing(\,c(1,0),\ c(g1,\ g2,\ invert(g3))\,)\\
+%\chuu PD列は隣接順に指定する（向きが一致するようにする）
+
+%\tab{enclosing( n,  PDリスト )}%
+%PD列からできる閉曲線のうちn番目のPD列を作成\\
+%\rei G2$<$- enclosing(\,1,\ c(g1,\,g2,\,invert(g3))\,)\\
+%\chuu 0を指定すると，全ての閉曲線のリストを返す．
+
+\tab{Enclosing( PDリスト\{, 始点の近くの点\} )}\\
+\tab{}PD列の直近の交点を結んで閉曲線を作成\\
+\rei G2$<$- Enclosing(list(G1,\,invert(G2),\,G3),\,c(2,1)\,)\\
+\tab[14zw]{}G1と (最後の)G3の交点のうち，c(2,1)に近い点から始める\\
+\chuu 交点が１個の場合は，点を省略してよい．
+
+\tab{Dotfilldata( パターン文字列（リスト）\{, 開 始点\}, 
+(閉)曲線PDリストの列\{,濃さ\})}\\
+\tab{}パターンと一致する領域を点描するPDを作成\\
+\rei Fd$<$- Dotfilldata("ii",list(G1),list(G2),0.7)\\
+\chuu 濃さ$d$は　$0< d \leqq 1$（デフォルトは$0.5$）\\
+\chuu 書き出しは，Drwptを用いる．
+
+\tab{Arrowdata}矢印のPDを作成（Arrowline参照）\\
+\chuu やじりは塗りつぶさず，線データのみ
+
+\tab{Arrowheaddata}やじりだけのPDを作成（Arrowhead参照）
+
+\tab[20zw]{Bowdata(\,$\mbox{点A},\ \mbox{点B}$\{,\ 曲がり\{,\ 切り\}\,\}\,)}\\
+\tab{}弓形のPDを作成\\
+\chuu 曲がり：弧の曲がり（デフォルトは1）\\
+\chuu 切り：中央に入れる切りの長さ（デフォルトは0）\\
+\chuu 点AからBに反時計まわりに弧をかく\\
+\rei G$<$- Bowdata(\,c(2,\ 1),\ c(3,\ 4),\ 0.8,\ 0.5\,)
+
+%\tab{Bowmiddle(\,$\mbox{点A},\ \mbox{点B}$\{,\ 曲がり\})}\\
+%\tab{}弓形の中点と角のlistを返す
+
+\tab{Bowmiddle(\,弧データ\ )}弓形の中点を返す
+
+\tab{Splinedata(点データ\{, オプション\}\})}\\
+\tab{}spline曲線のPDを作成\\
+%\chuu ファイルは，space, comma, tab 区切りのtextファイル\\
+%\chuu 開始位置：ファイルの読込み開始行と列．defaultはc(2,\ 1)\\
+\chuu 点データはリストまたはPD\\
+\chuu オプション：\\
+\hspace*{18zw}"N$<$- 点の個数" （デフォルトは50）\\
+\hspace*{18zw}"C" （閉曲線でスムーズにつなぐ）\\
+%\rei Fs$<$- Splinedata("c:/data.txt",\ c(2,4),\ "N$<$- 100")\\
+\rei Fs$<$- Splinedata(PL, "N$<$- 200", "C")（PLは点データ）
+
+%\tab{Skeleton2data(\,平面曲線list1，平面曲線list2\{,大きさ%
+%\{,\ 遠近の閾値\}\}\,)}\\
+%\tab{}list2で隠されるlist1のスケルトンデータを作成
+
+\tab{Anglemark(A, B, C \{, サイズ \})}\\
+\tab{}$\angle \mathrm{ABC}$の間の角度記号を作成\\
+\chuu BAからBCへ反時計回りに描く\\
+\chuu サイズのデフォルトは0.5
+
+\tab{Paramark(A, B, C \{, サイズ\})}\\
+\tab{}$\angle \mathrm{ABC}$の間の角度記号（平行四辺形）を作成
+
+%\tab{Sumfun(\{ 定数項, \}一般項,  添字のリスト，変数の範囲，\{ 点の個数 \})}\\
+%\tab{} $\displaystyle c+\sum_{k= a}^{b}f(x,\ k)$のPDを作成（{\bf Scilabに追加}）\\
+%\chuu 定数項が0のときは省略できる．\\
+%\chuu 点の個数は "N$<$- 個数" で指定（デフォルトは終わりまで）\\
+%\rei G1$<$- Sumfun(1, "x\verb|^|n/factorial(n)", "n$<$- 1:5", "x$<$- c($-2,\ 2)$")
+
+%\tab{Implicitplot(関数，x範囲，y範囲\{, 分割数\})}\\
+%\tab{Implicitplot(Zvalue, Xvalue, Yvalue) }\\
+%\tab{}陰関数のPDを作成\\
+%\chuu 分割数のデフォルトは　c(50, 50)\\
+%\rei \verb|G1$<$- Implicitplot("x^2+y^2-1","x$<$- c(-1,1)","y$<$- c(-1,1)")|
+
+%\tab{Deqplot(方程式，x範囲，x0，y0\{, 分割数\})}\\
+%\tab{}微分方程式の解曲線のPDを作成\\
+%\chuu $y"$は y\bq と書く．\\
+%\chuu xの範囲を省略すると，描画範囲全体\\
+%\rei \verb|G1$<$- Deqplot("y|\bq \verb|$<$- y*(1-y)","x",0,0.2,"N$<$- 100")|\\
+%\rei \verb|G2$<$- Deqplot"("y|\bq\bq \verb|$<$- -0.4*y`-3*y","x$<$- c(0,5)",0,c(0,2))|
+%\rei \verb|G3$<$- Deqplot("c(x,y)|\bq \verb|$<$- c(x*(1-y),0.3*y*(x-1))",...|\\
+%\reicr \verb|    "t$<$- c(0,20)",0,c(1,0.5),"N$<$- 200")|
+
+%
+
+\subsection{空間図形}
+
+\tab{Spaceline(\,空間点のベクトルまたはlist\,)}\\
+\tab{}空間点を結ぶ線分のPD3dを作成\\
+\rei G1$<$- Spaceline(\,c(c(3,\ 2,\ 1),\ c(5,\ 6,\ 6))\,)
+
+\tab{Spacecurve(\,関数,範囲,オプション\,)}\\
+\tab{}空間曲線のPD3dを作成\\
+\rei G2$<$- Spacecurve( "c(cos(t),\ sin(t),\ t)",\ "t$<$- c(0, 2*\%pi)" )
+
+\tab{Rotate3data(PD3, v1, v2\ \{, 中心\})}\\
+\tab{}PD3をv1がv2に重なるように回転したPD3dを作成\\
+\rei G2$<$- Rotate3data(\,G1, c(1, 0, 0), c(1, 2, 3)\,)\\
+\chuu PD3はlistでもよい（この場合はlistを返す）
+
+\tab{Rotate3datac(PD3, 回転軸, 角度\ \{, 中心\})}\\
+\tab{}PD3を回転軸のまわりに回転したPD3dを作成\\
+\rei G2$<$- Rotate3datac(\,G1, c(0, 0, 1), \%pi/4\,)\\
+\chuu PD3はlistでもよい（この場合はlistを返す）
+
+\tab{Translata3data(PD3, 移動ベクトルv)}\\
+\tab{}PD3をvだけ移動したPD3dを作成\\
+\rei G2$<$- Translate3datac(\,G1, c(3, 2, 1)\,)\\
+\rei G2$<$- Translate3datac(\,G1, 3, 2, 1\,)\\
+\chuu PD3はlistでもよい（この場合はlistを返す）
+
+\tab{Xyzax3data(\,$x$範囲, $y$範囲, $z$範囲\,)}\\
+\tab{}座標軸のPD3dのlistを作成
+
+\tab{Projpara(\,PD3列またはlist\,)}\\
+\tab{}空間曲線の平行投影による射影PD( 2d )を作成
+
+\tab{Projpers(\,PD3列またはlist\,)}\\
+\tab{}空間曲線の一点投影による射影PD( 2d )を作成
+
+\tab{Skeletonparadata(\,空間曲線list1，空間曲線list2\{,大きさ%
+\{,\ 遠近の閾値\}\}\,)}\\
+\tab{}\begin{mini}{30zw}
+平行投影でlist1からlist2により隠される部分を除いた残りの平面PD列
+（スケルトンデータ）を作成\vspace*{2mm}
+\end{mini}
+
+\tab{Skeletonpara3data(\,空間曲線list1，空間曲線list2\{,大きさ%
+\{,\ 遠近の閾値\}\}\,)}\\
+\tab{}\begin{mini}{30zw}
+平行投影でlist1からlist2により隠される部分を除いた残りの空間PD列
+（スケルトンデータ）を作成\vspace*{2mm}
+\end{mini}
+
+\tab{Skeletonpersdata(\,空間曲線list1，空間曲線list2\{,大きさ%
+\{,\ 遠近の閾値\}\}\,)}\\
+\tab{}一点投影でlist2によるlist1のスケルトンデータ(2D)を作成
+
+\tab{Skeletonpers3data(\,空間曲線list1，空間曲線list2\{,大きさ%
+\{,\ 遠近の閾値\}\}\,)}\\
+\tab{}一点投影でlist2によるlist1のスケルトンデータ(3D)を作成
+
+\tab{Embed(\,平面曲線（リスト），埋め込み関数\,)}\\
+\tab{}埋め込み関数により空間曲線を作成\\
+\rei \verb|deff("Out$<$- Fun(x,y)","Out$<$- c(x,y,0)")|\\
+\reicr \verb|G1$<$- Listplot(c(0,0),c(3,2))|\\
+\reicr \verb|G1_3d$<$- Embed(G1,Fun)|
+
+%
+\subsection{多面体の描画}
+
+\tab{Phcutdata(頂点リストVL, 面添字リストFL, 平面データPlaneD)}\\
+\tab{}多面体を平面で切ったときの多面体と切断面の3dリストを作成\\
+\chuu PlaneD（平面）の形式\\%
+\hspace*{18zw}\begin{mini}{20zw}
+"a*x+b*y+c*z-d",\ "a*x+b*y+c*z$<$- d"\\
+\hspace*{2zw}（x,\ y,\ zをクリアしておく）\\
+または　"c(a, b, c, d)"\\
+\hspace*{4zw} "list(a, b, c, P)"（点Pを通る）
+\end{mini}\vspace{2mm}\\
+\chuu 切断面はリストの最後の要素\\
+\rei VL$<$- list(c(0, 0, 0), c(1, 0, 0), c(0, 1, 0), c(0, 0, 1))\\
+\reicr FL$<$- list(c(1, 2, 3), c(1, 2, 4), c(1, 3, 4), c(2, 3, 4))\\
+\reicr PL$<$- Phcutdata(VL, FL, "c(1, 1, 1, 3)")\\
+\reicr Windisp(PL)
+
+\tab{Phcutoffdata(VL, FL, PlaneD, 符号)}\\
+\tab{}PlaneDで切断された部分多面体の3dデータリストを作成\\
+\chuu 符号は　\verb|"+"| または \verb|"-"|\\
+\rei PL$<$- Phpcutoffdata(VL, FL, "x+y+(z-1/2)", "+")\\
+\chuu PhVertexL(), PhFaceL()で頂点，面リストを取り出せる．
+
+\tab{Phparadata(VL, FL)}陰線処理をした多面体のPD3d（平行投影）を作成\\
+\tab{Phpersdata(VL, FL)}陰線処理をした多面体のPD3d（一点投影）を作成\\
+\chuu PhHiddenData()で陰線のPDを取り出せる．
+
+\tab{Phsparadata(面datalist)}複数の多面体のPD3d（平行投影）を作成（陰線処理）\\
+\tab{Phspersdata(面datalists)}複数多面体のPD3d（一点投影）を作成（陰線処理）\\
+\chuu 面datalistはlist(VL, FL)，または，そのlist\\
+\chuu 面を点で直接指定するときには VL$<$- list()とする．\\
+\rei Fd$<$- list(list(),list(c(3,2,1),c(0,0,0),c(c(1,2,4)))\\
+\chuu PhHiddenData()で陰線のPDを取り出せる．
+
+\tab{Phsrawparadata(面datalist), Phsrawpersdata(面datalist)}\\
+\tab{}複数の多面体のPD3dを作成（陰線処理をしない）
+
+\tab{Facesdata(面datalist \{ ,追加曲線PDlist \}, 射影のタイプ)}\\
+\tab{}面の辺（と追加曲線）を面により陰線処理\\
+\chuu 射影のタイプは "para"，"pers"，"rawpara’，"rawpers"
+
+\tab{Faceremovaldata(面datalist，曲線PDlist, 射影のタイプ)}\\
+\tab{}曲線を面により陰線処理
+
+\section{データの書き出し}
+
+\subsection{基本コマンド}
+
+\tab{Windisp( PD列またはlist )}\\
+\tab{}画面を開き，PD列を表示（確認のため）\\
+\rei Windisp(\,G1,\ G2\,)\\
+\rei Windisp(list(G1,G2))
+
+\tab{WindispT( PD列またはlist \{, オプション\} )}\\
+\tab{}画面を開き，PD列を表示（確認のため）図を重ねて表示する．事前にWindispT()\\
+\rei WindispT(\,G1,\ G2\,color="red",width=1,new=TRUE\,)\\
+\rei WindispT(list(col="blue",border="white",G1),new=TRUE) \\
+\hspace*{18zw}(閉曲線G1を塗る)\\
+\rei WindispT(list(col="blue",border="white",density=200,G1,G2),new=TRUE)\\
+\hspace*{18zw} (閉曲線G1,G2を塗る.densityは内側を線分で塗りつぶす場合のパラメータ)
+
+\tab{Openfile("ファイル名"\{, "単位長", "SF=ソースファイル名"\}) }\\
+\tab{}書き出し用ファイルを開く（デフォルトは画面）\\
+\rei cd('C:/TeXF/'); \\
+\reicr Openfile(\,'fig.tex'\,);\\
+\reicr Openfile(\,'fig.tex',\,'fig.r'\,);\\
+\chuu 単位長を指定すると Beginpicture("単位長")まで書き出す\\
+\chuu ソースが同一フォルダにあるときは，SFの指定は不要
+
+\tab{Beginpicture("単位長"\,)}picture 環境を始める．\\
+\rei Beginpicture("1cm"\,)\\
+\rei Beginpicture("2*10/12cm"\,)
+
+\tab{Endpicture(\,1\,)}picture 環境を終える（座標軸をかく）\\
+\tab{Endpicture(\,0\,)}picture 環境を終える（座標軸をかかない）
+
+\tab{Closefile(\{"1"または "0"\})}書き出し用ファイルを閉じる（デフォルト＝画面に戻す）\\
+\chuu "1"または"0"の文字列を指定\\
+\hspace{20zw}Endpicture(1または0)を書き出す
+
+\subsection{プロットデータ}
+
+\tab{Drwline(\,PD列またはlist\{, 太さ\}\,)}\\
+\tab{}PD列またはを実線で書き出す\\
+\rei Drwline(\,G1,\ G2\,)\\
+\rei Drwline(\,G3,\ 0.5\.)
+
+\tab{Dashline(\,PD列またはlist\{, len \{, gap\}\,\}\,)}\\
+\tab{}PD列またはlistを破線で書き出す（実線部から始まる）\\
+\rei Dashline(\,G1,\ G2\,)\\
+\rei Dashline(\,G1,\ 1.5\,)\hfill（実線部，ギャップとも 1.5倍）\\
+\rei Dashline(\,G1,\ G2,\ 1.5,\ 0.5\,)\\
+\hfill（実線部 1.5倍，ギャップ 0.5倍） 
+
+\tab{Invdashline(\,PD列またはlist\{, len\{, gap\}\,\}\ )}\\
+\tab{}破線を書き出す（ギャップから始まる）
+
+\tab{Dottedline(\,PD列またはlist\{, len \{, size\}\,\}\,)}\\
+\tab{}点線を書き出す\\
+\rei Dottedline(\,G1,\ G2\,)\\
+\rei Dottedline(\,G1,\ 1.5\,)　（間隔 1.5倍）\\
+\rei Dottedline(\,G1,\ G2,\ 1,\ 0.5\,)（点の大きさ 0.5倍）
+
+\tab{Arrowline(\,A, B \{, 鏃の大きさ \{, 開き角 \{, 鏃位置 \{, 太さ\}\,\}\,\} \{, \\
+\hspace*{20zw}形と位置
+,\ "Cut=切り込み率"\}\,\}\,)}\\
+
+\tab{}点AからBに向けて矢印をかくコードを書き出す\\
+\rei Arrowline(\,A,\ B\,)\\
+\rei Arrowline(\,A,\ B,\ 2,\ 10,"l"\,)\\
+\rei Arrowline(\,A,\ B,\ 1,\ 18,\ 0.5,\ 2,"lc"\,)\\
+\hspace*{6zw}\chuu ABの中点の位置に鏃をかく
+
+
+\tab{Arrowhead(\,位置,\ 方向\{,\ 大きさ\{,\ 角度\},\ 形状と位置,\ "Cut=切り込み率"\}\,)}
+
+\tab{}鏃だけを書き出す\\
+\rei Arrowhead(\,c(0,\ 0),\ c(2,\ 1),\ "cl"\,)
+
+\tab{Arrowhead(\,P,\ PD\{,\ 大きさ\{,\ 角度\},\ 形状と位置\}\,)}\\
+\tab{}PD上の点Pに矢印を描く\\
+\rei Arrowhead(\,c(1,\ 1),\ Plotdata("x\^{}2","x"\,))\\
+\chuu 鏃はライン
+
+\tab{Drwpt(点の列 \{, 塗り\})}点を書き出す（大きさは Setptで指定，塗りのデフォルトは1）\\
+\rei Drwpt(\,c(2,\ 3),\ c(5,\ 7)\,)
+
+\tab{Drwxy(\,)}座標軸を書き出す
+
+\tab{Htickmark( 座標, 方向, 数式 , $\cdots$ )}\\
+\tab{}横軸上に目盛りをつける（方向のデフォルトは"s"\,）
+
+\tab{Vtickmark( 座標, 方向, 数式 , $\cdots$ )}\\
+\tab{}縦軸上に目盛りをつける（方向のデフォルトは"w"\,）\\
+\rei Htickmark(\,$-1$,"$-1$",\ 1,"1",\ pi,"$\backslash$pi"\,)\\
+\rei Vtickmark(\ $-1$,"e","$-1$",\ 1,"ne","1"\,)\\
+\rei Htickmark(c(2,1),\ "a"\,)\\
+\chuu 数式を省略すると目盛りだけをつける
+
+\tab{Htickmark("m..n..r..")}横軸全体に目盛りをつける
+
+\tab{Vtickmark("m..n..r.."\,)}縦軸全体に目盛りをつける\\
+\chuu m（目盛りの間隔），n（文字を何目盛り毎に），r（数の倍率）\\
+\rei Htickmark("mn")（目盛りと数を１間隔でつける）\\
+\rei Vtickmark("m1n2r1.5")（1.5倍した数を１つとびに）
+
+\tab[13zw]{Shade(\,PD列またはlist\{, 濃さ\}\,)\mbox{}}\\
+\tab{}閉曲線の内部を塗りつぶし　濃さ: 0 〜 1（デフォルトは１）
+
+\subsection{文字の書き入れ}
+
+\tab{Letter(\ 点, 方向, 文字列 ，・・・)}\\
+\tab{}点の位置の「方向」に文字列をかく（複数可）\\
+\rei Letter(\,c(4,\ 3),"n","文字")\\
+\chuu 位置は"n", "s", "e", "w", "ne", "nw", "se", "sw", "c"\\
+\chuu "n1"　nの方向にさらに1目盛長だけ離す．\\
+\chuu "s-1w2"　s方向に-1目盛長，w方向に2目盛長だけ離す．
+
+\tab{Expr(\ 点, 方向, 数式，・・・)}点の位置の「方向」に数式をかく（\$\$は不要）\\
+\rei Expr(c(4, 3),"s","y=f(x)")
+
+\tab{Letterrot(\ 点, 方向\ \{, 接線方向\ \{, 法線方向\}\}, 文字列)}\\
+\tab{Exprrot(\ 点, 方向\ \{, 接線方向\ \{, 法線方向\}\}, 文字列)}\\
+\tab{}「点」の位置に「方向」を右横方向にするように文字を傾けて書く\\
+\chuu 「接線方向」，「法線方向」はそれぞれの微少移動量\\
+\chuu graphicxパッケージが必要
+
+\tab{Texletter(\ 点(list形式), 方向, 文字列 ，・・・)}\\
+\tab{}点の位置の「方向」に文字列をかく（複数可）\\
+\rei Texletter(\,list(4,,\ "\#1"),"n","文字")\\
+\chuu 位置は"n", "s", "e", "w", "ne", "nw", "se", "sw", "c"\\
+\chuu 点の位置はリスト形式で，\TeX の文字列を渡すことができる．
+
+\tab{Openphr(\,ユーザーコマンド名\,)，Closephr(\,)}\\
+\tab{}$\backslash$defのコマンド定義\\
+\rei Openphr("$\backslash$p"\,)\\
+\reicr 　Texcom("$\backslash$begin\{array\}\{cc\}"\,)\\
+\reicr 　Texcom("5 \& 3$\backslash\backslash$"\,)\\
+\reicr 　Texcom("8 \& 7"\,)\\
+\reicr 　Texcom("$\backslash$end\{array\}\$"\,)\\
+\reicr Closephr(\,)
+
+\tab{Openpar(\,ユーザーコマンド名，幅 \{ 縦方向 \}\,), Closepar(\,)}\\
+\tab{}minipage環境を含む$\backslash$def コマンド定義\\
+\rei Openpar("$\backslash$s","5cm", "t"\,)\\
+\reicr 　Texcom("$\backslash$input\{rei\}"\,)\\
+\reicr Closepar(\,)\\
+\reicr Letter(\,c(2,\ 3),"se","$\backslash$s"\,)\\
+\chuu 縦方向のデフォルトは c
+
+\tab{Fontsize("記号"\,)}文字サイズの変更コマンドを書き出す\\
+\tab[13zw]{}"n", "s", "f",%
+ "ss", "t", \\
+\tab[13zw]{}"la", "La", %
+"LA", "h", "H"（""\,のとき"n"\,）\\
+\rei Fontsize("s")
+
+\tab{Texcom("コマンド"\,)}\TeX コマンドのコードを書き出す\\
+\rei Texcom("$\backslash$newcounter\{tmpct\}")\\
+\chuu "newline" のとき，空白行を挿入
+
+\tab{Bowname(弓形，数式\{,\ 方向\} )}\\
+\tab{}弓形PDの「方向」に式を書き入れる\\
+\chuu 方向のデフォルトは　"c"\\
+\rei Gb=Bowdata( A, B, 1, 0.5);\\
+\reicr Bowname(Gb, 'd');
+
+\tab{Bownamerot( 弓形\{, 接線方向\{, 法線方向\}\}, 数式\{，向き\} )}\\
+\tab{}弓形PDの中央に式を傾けて書き入れる\\
+\chuu graphicxパッケージが必要\\
+\chuu 向きに $-1$を指定すると向きが反対になる
+
+\tab{Xyzaxparaname(\,軸データ \{, 各軸のラベル名 \}\{，離れ\}\,)}\\
+\tab{}平行投影で，各軸のラベルを書き入れる\\
+\rei Gax$<$- Xyzax3data( "x$<$- c(0,1)", "y$<$- c(0,1)", "z$<$- c(0,2)" )\\% ($x,y,z$を書く）\\
+\reicr Xyzaxparaname(Gax)\\% ($x,y,z$を書く）\\
+\chuu "\yen sin x" など文字列で指定することもできる
+
+\tab{Xyzaxpersname(\,軸データ \{, 各軸のラベル名 \}\{，離れ\}\,)}\\
+\tab{}一点投影で，各軸のラベルを書き入れる\\
+\rei Xyzaxpersname(Gax, "", "", "w")
+
+%\vspace*{-0.5zw}
+
+%\vspace*{-2zw}
+
+\section{プロットデータの操作}
+
+\subsection{平面}
+
+\tab{Joingraphics(PD1,PD2,・・・\{ , "L" \})}\\
+\tab{}複数のPDを１つのPDに合併 \\
+\reicr G11$<$- Joingraphics(\,F9,\ G10\,)\\
+\chuu "L"を指定したときは，結果をリストで返す
+
+\tab{Dividegraphics(PD)}PDを要素に分けたlistを作成\\
+\rei FL$<$- Dividegraphics(G1)\\
+\rei G1$<$- Op(1, FL)
+
+\tab{Joincrvs(\,PD列\,)}複数の曲線をつなげたPDを作成（2D, 3D共通）\\
+\rei G3$<$- Joincrvs(\,G1,\ Invert(G2)\,)\\
+\chuu 曲線は隣接する順番で指定する
+
+\tab{Invert( PD )}PDの点列を逆順にしたPDを作成（2D, 3D共通）
+
+%\tab{connectseg(PD)}細切れの線分を結ぶPDリストを作成\\
+%\hspace*{-4zw}\rei connectseg(implicitplot(x\textasciicircum 2+y\textasciicircum 2$<$- 1,x$<$- -2..2,y$<$- -2..2))
+
+\tab{Partcrv(\,s1,\ s2, PD\,)}曲線PD上のパラメータ値s1, s2を両端とするPDを作成\\
+\chuu s1 $>$ s2 の場合\\
+\hspace*{180pt}s2から終点，始点からs1までのPDのリストを出力\\
+\hspace*{180pt}PDが閉曲線のときは上の２つのPDをつなげる．
+
+\tab{Partcrv(\,A, B, PD\,)}曲線PD上の点A, Bの間の部分曲線のPDを作成\\
+\chuu 
+\begin{mini}{23zw}%
+A, Bの順序が逆転しているとき，Bから終点，始点からAまでのPDのリスト（閉のとき接続）を出力
+\end{mini}\vspace{2mm}\\
+\rei G1$<$- Plotdata(\,"x\textasciicircum 2",\ "x=c(XMIN, XMAX)"\,)\\
+\reicr G2$<$- Partcrv(\,c(0,0),\ c(1,1),\ G1)\\
+\reicr G3$<$- Partcrv(\,c(1,1),\ c(0,0),\ G1)
+
+
+\tab{Intersectcrvs(PD1, PD2)}２曲線PD1, PD2の交点リストを作成\\
+\rei G1$<$- Paramplot("c(cos(t),\ sin(t))",\ "t=c(0, 2*\%pi)")\\
+\reicr G2$<$- Plotdata("x+1/2",\ "x")\\
+\reicr PL$<$- Intersectcrvs(\,G1,G2\,)
+
+\tab{IntersectcrvsPp(PD1, PD2)}\\
+\tab{}２曲線PD1, PD2の交点とパラメータのリストを作成
+
+\tab{Intersectlines(L1, L2)}２直線の交点を返す\\
+\rei L1$<$- Lineplot(A, B)\\
+\reicr L2$<$- Lineplot(C, D)\\
+\reicr P$<$- Intersectcrvs(\,L1,L2\,)
+
+\tab{Nearestpt(\ P, PD\ )}点Ｐに最も近い曲線PD上の点とパラメータ値のリストを返す\\
+\rei Pp$<$- Nearestpt(\,c(0,\ 1),\ G1\,)\\
+\reicr A$<$- Op(1,Pp)
+
+\tab{Nearestpt(\,PD1,\ PD2\,)}%
+PD1の節点のうち、PD2に最も近い点データのリストを返す\\
+\rei Pp$<$- Nearestpt(\,G1,\ G2)\\
+\reicr A$<$- Op(1,Pp)
+
+\tab{Ptstart(\,PD\,), Ptend(\,PD)\,}曲線PDの始点（終点）を返す
+
+
+%\tab{Ptlistcrv(\,PD)\,}曲線PDの節点データリストを返す
+
+\tab{Numptcrv(\,PD)\,}曲線PDの節点データの個数を返す
+
+\tab{Ptcrv(\,n,\,PD)\,}曲線PDのn番目の節点を返す
+
+\tab{Pointoncrv(\,s,\ PD\,)}PD上の点でパラメータ値sをもつ点を返す\\
+\rei Pointoncrv(5.3,\ G1)\\
+\reicr 　（5番目の線分上で0.3の位置にある点）
+
+\tab[13zw]{Paramoncrv(P \{,\ n \},\ PD)}%
+PD（のn番目の線分）上にある点Pのパラメータを返す\\
+\rei Paramoncrv( c(3,\ 2), G1)\\
+\rei Paramoncrv(c(2,\ 4), 5, G1)
+
+%\tab[13zw]{Droppoint(PD \{, 限界値\})} 限界値以下の隣接点を落として点を少なくする．\\
+%\chuu 限界値のデフォルト値は0.02
+
+%\tab{Powersum(\,係数リスト（list）, 変数値x \{, 中心c\} \,)}\\
+%\tab{}$\displaystyle \sum_{k= 0}^n a_n (x-c)^k$の値を返す．（Plotdataで使用）\\
+%\chuu 係数リストは list( 添字リスト，係数リスト)の形\\
+%\rei Tmp1$<$- 0:20\\
+%\reicr Tmp2$<$- ones(length(Tmp1))./factorial(Tmp1)\\
+%\reicr CL$<$- list(Tmp1, Tmp2)\\
+%\reicr G1$<$- Plotdata( "Powersum( CL, x)", "x")
+
+%\tab{FouriercoeffL(関数F, 周期T, 項数N )}\\
+%\tab{}FのN項までのフーリエ係数リスト(list）を求める．\\
+%\chuu list( 定数項, 余弦係数（行）, 正弦係数（行）, 周期 ) の形\\
+%\chuu Fouriersumで用いる．
+
+%\tab{Fouriersum( フーリエ係数リスト, 変数値)}\\
+%\tab{}フーリエ級数の値を返す．（Plotdataで使用）\\
+%\rei deff( "Out$<$- Fun(x)", "Out$<$- abs(x)")\\
+%\reicr CL$<$- FouriercoeffL(Fun, 2, 30)\\
+%\reicr G2$<$- Plotdata("Fouriersum(CL, x)", "x", "N$<$- 300" )
+
+\subsection{空間}
+
+\tab{Partcrv3(\,S1,\ S2, PD\,)}曲線PD上のパラメータ値S1,S2を両端とするPDを作成
+
+\tab{Rotate3pt(点, V1, V2\{, C\})}\\
+\tab{}回転移動した点を返す（Rotate3data参照）
+
+\tab{Rotate3ptc(点, 軸, 角度\{, C\})}\\
+\tab{}回転移動した点を返す（Rotate3data参照）
+
+
+\tab{Parapt(\,点\,)\ ,\ \ Perspt(\,点\,)}\\
+\tab{}空間の点を投影した点を返す
+
+\tab{Zparapt(\,点\,)\ ,\ \ Zperspt(\,点\,)}\\
+\tab{}投影した平面を$X,\ Y$としたときの$Z$座標
+
+\tab{Invparapt(\,P,\ PD3d\,)\ ,\ \ Invperspt(\,P,\ PD3d\,)}\\
+\tab{}PD3dを投影したPD上の点Pに対応するPD3d上の点\\
+\chuu Pd3dが線分のときは，延長線上の点でもよい．
+
+\tab{Invperspt(\,s,\ PD2d,\ PD3d\,)\ ,\ \ Invperspt(\,s,\ PD2d,\ PD3d\,)}\\
+\tab{}PD2d上のパラメータ値sの点に対応するPD3d上の点
+
+\tab{Cancoordpers(\,投影座標\,)}一点投影で「投影座標」で表される点の標準座標
+
+\tab{Viewfrom(Vec, 曲線3D \{, 非表示オプション\})}\\
+\tab{}一時的にVec方向からみた射影データを返す\\
+\rei Out1$<$- Viewfrom(c(0,0,1), G1) （表示してデータを作成）\\
+\rei Out1$<$- Viewfrom(c(0,0,1), G1, 0) （データのみを作成）
+
+
+%\section{曲面の描画}
+
+%%
+%\subsection{関数データリストの定義}
+
+%\begin{enumerate}[\hspace*{1zw}(1)]
+%\item
+%$z$<$- f(x,\ y)\ \ (a \leqq x \leqq b,\ c \leqq y \leqq d)$のとき\vspace{1mm}\\
+%\hspace*{4zw}list(\,関数,\ xの範囲,\ yの範囲\,)\\
+%\hspace*{-6zw}\reicr \verb|Fd$<$- list("z$<$- x^2+y","x$<$- c(-1,2)","y$<$- c(-2,1)")|\\
+%\hspace*{-4zw}\chuu 変数名 x, y が関数名にある文字と重ならないようにする．
+
+%\item
+%$z$<$- f(x,\ y)\ ,x$<$- x(u,\ v),\ ,y$<$- y(u,\ v)\ \  (a \leqq u \leqq b,\ c \leqq v \leqq d)$のとき\vspace{1mm}\\
+%\hspace*{4zw}list(\,関数z,\ 関数x,\ 関数y,\ uの範囲,\ vの範囲\{,\ 境界の指定\}\,)\\
+%\hspace*{-6zw}\rei \verb|Fd$<$- list("z$<$- sin(2*sqrt(abs(x^2+y^2))","x$<$- R*cos(T)",|\\
+%\hspace*{-6zw}\reicr \verb|  "y$<$- R*sin(T)","R$<$- c(0,4)","T$<$- c(0,2*%pi)","e")|\\
+%\hspace*{-4zw}\chuu "e"は$r$<$- 1,\ 0\leqq t\leqq 2\pi$で定まる閉曲線を表す．\\
+%\hspace*{-4zw}\chuu sqrtの中はabsをつける（計算誤差のため）．
+
+%\item
+%$x$<$- x(u,\ v),\ y$<$- y(u,\ v),\ z$<$- z(u,\ v)\  (a \leqq u \leqq b,\ c \leqq v \leqq d)$のとき\\
+%\hspace*{4zw}list(\,"p",\ 関数x\ 関数y,\ 関数z,\ Uの範囲,\ Vの範囲\{,\ 境界の指定\}\,)\\
+%\hspace*{-6zw}\rei \verb|Fd$<$- list("p","x$<$- sin(U)*cos(V)","y$<$- sin(U)*sin(V)",|\\
+%\hspace*{-6zw}\reicr \verb|  "z$<$- cos(U)","U$<$- c(0,%pi)","V$<$- c(0,2*%pi),"")|
+
+%\end{enumerate}
+
+%\subsection{曲面のワイヤーフレーム図}
+
+%\tab{Sf3data(FD,\ \{,曲線の点の個数(リスト)\{,横方向の分割数,縦方向の分割数\}\})}\\
+%\tab{}曲面データリストFDの３次元ワイヤフレームデータを生成\\
+%\chuu デフォルトは　点の個数＝c(50,\ 50)，分割数$<$- 25\\
+%\chuu 点の個数を数nで指定したときは２方向ともnになる\\
+%\rei Out$<$- Sf3data(Fd)
+
+%\tab{Sfparadata(〃)}FDのワイヤフレームデータを平行投影した２次元データ
+
+%\tab{Sfpersdata(〃)}FDのワイヤフレームデータを平行投影した２次元データ
+
+%\subsection{輪郭線データの作成}
+
+%\tab{Sfbdparadata(関数データ\{,各方向の分割数,限界値1,限界値2\})}\\
+%\tab{Sfbdpersdata(関数データ\{,各方向の分割数,限界値1,限界値2\})}
+
+%\noindent
+%\hspace*{3zw}\Ltab{10zw}{各方向の分割数}曲線，陰関数のグリッド数\\
+%\hspace*{3zw}\Ltab{14zw}{}デフォルトは50\\
+%\hspace*{3zw}\Ltab{10zw}{}リストか単独の数で与える\\
+%\hspace*{3zw}\Ltab{10zw}{限界値1}同一点と見なす限界（デフォルトは0.05）\\
+%\hspace*{3zw}\Ltab{10zw}{限界値2}交点の余裕幅（デフォルトは0.2）
+
+%
+%\rei \verb|Out1$<$- Sfbdparadata(Fd,c(50,50))|\\
+%\reicr \verb|  Windisp(Projpara(Out1))|
+
+%\noindent
+%\chuu 曲面上の３次元データとして得られる．\\
+%\chuu BorderHiddenData()で
+%陰線の３次元データが得られる．\\
+%\chuu CuspData()で輪郭線の３次元データが
+%得られる．\\
+%\chuu CuspPt()でcusp点の２次元データが
+%得られる．\\
+%\chuu BorderPt()で輪郭線の交点の２次元データが
+%得られる．
+
+%\subsection{ワイヤーデータの作成}
+
+%\tab{Wireparadata(輪郭のリスト,関数データ,横の線数,縦の線数\{.分割数, 限界値1.限界値2\})}
+
+%\tab{Wirepersdata(輪郭,関数データ \{ ,横の線数,縦の線数\{.分割数, 限界値1.限界値2\}\})}
+
+%\noindent
+%\hspace*{3zw}\Ltab{10zw}{輪郭}Sfbdpersdata( Sfbdparadata ) で作成したデータ\\
+%\hspace*{3zw}\Ltab{10zw}{線}個数か値のリストで与える\\
+%\hspace*{3zw}\Ltab{10zw}{限界値1}デフォルトは0.05\\
+%\hspace*{3zw}\Ltab{10zw}{限界値2}デフォルトは0.2
+
+%
+%\rei \verb|Out2$<$- Wireparadata(Out1,Fd1,5,5)|\\
+%\reicr \verb|  Windisp(Projpara(Out1,Out2))|\\
+%\chuu WireHiddenData()で
+%陰線の３次元データが得られる．\\
+%\chuu WirePt()で輪郭線との交点の２次元データが
+%得られる．
+
+%\subsection{曲面と曲線}
+
+%\subsubsection{パラメータ平面上の曲線}
+
+%\tab{Crvonsfparadata(平面上の曲線2Dデータ,輪郭,関数データ \{,オプション\})}
+
+%\tab{Crvonsfpersdata(平面上の曲線2Dデータ,輪郭,関数データ \{,オプション\})}
+
+%\rei \verb|Fg$<$- Parametricplot("c(T, 0)","T$<$- c(0,2*\%pi)")|\\
+%\reicr \verb|  Out4$<$- Crvonsfpersdata(Fg,Out1,Fd)|\\
+%\chuu CrvonsfHiddenData()で陰線の３次元データが得られる．
+
+%
+%\subsubsection{曲面上の曲線}
+
+%\tab{Crv3onsfparadata(曲面上の曲線3Dデータ,輪郭,関数データ\{,オプション\})}
+
+%\tab{Crv3onsfpersdata(曲面上の曲線3Dデータ,輪郭,関数データ \{,オプション\})}
+
+%\rei \verb|Out5$<$- Crv3onsfparadata(Fg,Out1,Fd)|\\
+%\chuu Crv3onsfHiddenData()で陰線の３次元データが得られる．
+
+%\subsubsection{曲面外の曲線}
+
+%\tab{Crvsfparadata(曲線3D,輪郭,関数データ\{,オプション\})}
+
+%\tab{Crvsfpersdata(曲線3D,輪郭,関数データ \{,オプション\})}
+
+%\rei \verb|G2$<$- Xyzax3data("x$<$- c(-5,5)","y$<$- c(-5,5)",...|\\
+%\reicr \verb|     "z$<$- c(-5,5)")|\\
+%\reicr \verb|  Out2$<$- Crvsfparadata(G2,Out1,Fd)|\\
+%\chuu CrvsfHiddenData()で陰線の３次元データが得られる．\\
+%\chuu 曲線と曲面が交わらないときは，引数の最後に $-1$をつける．
+
+%\subsubsection{その他のコマンド}
+
+%\tab{Intersectcrvsf(曲線3D, 関数データ\{,分割数\{,限界値\}\})}\\
+%\tab{}曲線と曲面との交点（MD）を求める．
+
+%\subsection{曲面の切断}
+
+%%\tab{polarcoordx()}極座標$r,\ t$の$x$座標を与える関数を返す
+
+%%\tab{polarcoordx()}極座標$r,\ t$の$x$座標を与える関数を返す
+
+%\tab{Sfcutdata(曲面データ, 切断面データ \{, 分割数\} )}\\
+%\tab{}曲面を切ったときの切り口の3dデータを作成\\
+%\chuu 切断面は，$x,\ y,\ z$などの方程式で与える．\\
+%\hspace*{15zw}（平面の場合は，Phcutdataのように与えてもよい）\\
+%\rei \verb|Fd$<$- c("p","R*cos(T)","R*sin(T)","2*(1-R)",|\\
+%\reicr \verb|           "R$<$- c(0,1)","T$<$- c(0,2*%pi)","se")|\\
+%\reicr \verb|Out$<$- Sfcutdata(Fd,"x^2+(z-1/2)^2$<$- 1/4")|
+
+%\tab{Sfcutoffparadata(関数データ, 切断面, 符号 \{ , 分割数\} )}
+
+%\tab{Sfcutoffrawparadata(関数データ, 切断面, 符号 \{ , 分割数\} )}
+
+%\tab{Sfcutoffpersdata(関数データ, 切断面, 符号 \{ , 分割数\} )}
+
+%\tab{Sfcutoffrawpersdata(関数データ, 切断面, 符号 \{ , 分割数\} )}
+
+%\tab{}切断面で切った曲面をリッジライン法で返す
+
+%
+%\rei \verb|Fd$<$- list("z$<$- 2*(1-sqrt(abs(x^2+y^2)))","x$<$- R*cos(T)",|\\
+%\reicr \verb|      "y$<$- R*sin(T)","R$<$- c(0,1)","T$<$- c(0,2*%pi)","e")|\\
+%\reicr \verb|  Out$<$- Sfcutoffparadata(Fd,"z$<$- 1+2*x","-")|
+
+
+\section{その他}
+
+%\tab{bksl("コマンド}\,)}コマンドに$\backslash$をつけた文字列を作る\\
+%\rei　str$<$- bksl("sin x}\,)
+
+\tab{Readtextdata(ファイル名，\{開始位置\{,オプション\}\})}\\
+\tab{}%
+\begin{mini}{30zw}
+ファイルからコンマ，スペース，タブ区切りのテキストを読込み，
+データ行列を返す\vspace{2mm}
+\end{mini}\\
+\chuu オプション：\\
+\hspace*{18zw}"R=読み込み行数" （デフォルトはすべて）\\
+\hspace*{18zw}"C=読み込み列数"（デフォルトはすべて） \\
+\hspace*{18zw}"Cna=論理値"　１行を列名にするか（デフォルトTRUE） \\
+\hspace*{18zw}"Rna=論理値"　１列を行名にするか（デフォルトFALSE） \\
+\rei DL$<$- Readtextdata("dt.csv",\ c(2,\ 1),\ "R=1000",\ "C=2")
+
+\tab{Writetextdata(データフレーム，ファイル名)}\\
+\tab{}データフレームを .csvファイルに書き出す\\
+\chuu 列名は１行目におき，NAはblankにする\\
+\rei Writetextdata(Df, "ex.csv")
+
+\tab{Tonumeric(\,文字列からなるデータ行列 \{, 開始位置 \{ , 終了位置\}\}\.)}\\
+\tab{}行列の成分を数値に変換（変換できる行と列からなる部分行列）\\
+\rei Dn$<$- Tonumeric(DL)
+
+%\tab{Newlength(\,)}%
+%\begin{mini}{30zw}
+%距離変数 \verb+ \Width, \Height, \Depth +を定義する\TeX コマンドを画面に表示
+%\end{mini}
+%\\
+%\rei \prompt newlength()+\\
+%\hspace*{6zw}\reicr \verb+\newlength{\Width}+\\%
+%\hspace*{6zw}\reicr \verb+\newlength{\Height}+\\%
+%\hspace*{6zw}\reicr \verb+\newlength{\Depth}+%
+
+%\tab{Mawarikomi("幅"\,)}%
+%\begin{mini}{28zw}
+%emathのmawarikomi環境のコードを生成表示
+%\end{mini}\\
+%\rei Mawarikomi("5cm"\,)
+
+\subsection{作表}
+
+\tab{Tabledata(\{大きさ,\}\ 縦線相対幅,\ 横線相対高さ\,)}\\%
+\tab{}表のデータlistを返す\\
+\tab{}\hspace{-2zw}戻り値：PD，縦線添字，横線添字，枠縦PD，枠横PD，外枠PD\\
+\hspace*{10zw}大きさは次のベクトル\\
+\hspace*{12zw}横，縦（,\ 左margin,\ 右margin（,\ 上margin,\ 下margin))\\
+\chuu 横（縦）を -1 としたときは，縦（横）線のデータから\\
+\hspace*{16.3zw}自動的に計算される（デフォルト）\\
+\hspace*{10zw}縦線相対位置は左の罫線からの幅list（縦方向の始点，終点）\\
+\hspace*{10zw}横線相対位置は上の罫線からの幅list（横方向の始点，終点）\\
+\chuu 描画領域は自動的に設定される
+
+\rei Tmp1$<$- list(20, 30,list(30,0,10), list(0,15,20), 40)\\
+\reicr Tmp2$<$- list(15)\\
+\reicr Out$<$- Tabledata(c(150,20),Tmp1,Tmp)\\
+\reicr Tb$<$- Tabledata(Tmp1,Tmp2)
+
+\tab{Dividetable(表データ)}枠，縦罫線，横罫線を成分とするリストを返す\\
+\rei G$<$- Dividetable(Tb)（G[[1]],G[[2]],G[[3]]が枠，縦，横）
+
+\tab{Partframe(表データ,\ 開始位置，終了位置)}\\
+\tab{}枠の一部のPD\\
+\chuu 位置はそれぞれ，c(列番号,\ 行番号)\\
+\chuu 開始位置から終了位置までの反時計回りのPD\\
+\rei G$<$- Parframe(Tb,\ c(4,1),c(1,2))
+
+\tab{Findcell(表データ,\ 列番号,\ 行番号\,)}\\%
+\tab{}セルの情報list（中心，横幅／２，縦幅／２）を返す\\
+\chuu 番号は左上の位置\\
+\rei Out$<$- Findcell(Out,2,1)\\
+\chuu 番号がベクトルのときは，その範囲のセル\\
+\rei Out$<$- Findcell(Out,c(2,4),1)\\
+\chuu 番号がベクトルのときは，その範囲のセル\\
+\rei Out$<$- Findcell(Out,c(2,4),1)\\
+\tab{Findcell(表データ,\ 左セル，\{ 右セル\} )}\\
+\rei Out$<$- Findcell(Out,"A2")
+
+\tab{Diagcelldata(表データ，列番号，行番号)}\\
+\tab{}セルの対角線PDのリストを返す
+
+\tab{Putcell(表データ,\ 列番号,\ 行番号,\ 位置,\ 文字データ)}\\%
+\tab{}セルに文字列を入れるコードを出力\\
+\chuu 位置は"c", "r", "l", "u", "d", "b" \\
+\chuu u : up , d : down, b : baseline （微小移動量を付加できる）\\
+\rei Putcell(Out,2,1,"c","221")\\
+\rei Putcell(Out,"B3","l","\$ab\$")
+
+\tab{Putrow(表データ,\  行番号,\ 文字データの列)}\\%
+\tab{}１行に順に文字を書き入れる\\
+\rei Putrow(TbL, 2, "a", "b", "c" )\\
+\chuu デフォルト位置は "c"　それ以外のときはlist内で指定\\
+\chuu 複数列にわたるときは，列数を list 内で指定\\
+\rei Putrow(TbL, 2, list("r","a"), list(2, "b"), "c")\\
+\hspace*{20zw}（rの位置にa，2列とってbをおく）
+
+\tab{Putrowexpr(表データ,\  行番号,\ 文字位置,\ 文字データの列)}\\%
+\tab{}１行に順に数式を書き入れる
+
+\tab{PutcoL(表データ,\  列番号（名前）（,\ 文字データの列)}\\%
+\tab{}１列に順に文字を書き入れる\\
+\rei PutcoL(TbL, "C", "a", "b", "c" )
+
+\tab{PutcoLexpr(表データ,\  列番号(名前),\ 文字位置，文字データの列}\\%
+\tab{}１列に順に数式を書き入れる
+
+\tab{Putrowstr(表データ,\  行番号，文字位置，文字列}\\%
+\tab{}１行に文字列の文字を１つずつ書き入れる\\
+\rei Putrowstr(TbL, 1, "c", "xyz" )
+
+\tab{PutcoL(表データ,\  列番号（名前），文字位置，文字列}\\%
+\tab{}１列に文字列の文字を１つずつ書き入れる
+
+\subsection{\TeX のコマンド書き出し（メタコマンド）}
+
+\tab{Texcom("コマンド"\,)}\TeX コマンドのコードを書き出す\\
+\rei Texcom("$\backslash\backslash$begin\{minipage\}\{3cm\}")\\
+\chuu "newline" のとき，空白行を挿入
+
+
+\tab{Openphr(\,ユーザーコマンド名\,)，Closephr(\,)}\\
+\tab{}$\backslash$defのコマンド定義を始める\\
+\rei Openphr("$\backslash\backslash$p"\,)\\
+\reicr Texcom("$\backslash\backslash$begin\{array\}\{cc\}"\,)\\
+\reicr Texcom("5 \& 3$\backslash\backslash\backslash\backslash$"\,)\\
+\reicr Texcom("8 \& 7"\,)\\
+\reicr Texcom("$\backslash$end\{array\}\$"\,)\\
+\reicr Closephr(\,)
+
+\tab{Openpar(\,ユーザーコマンド名，幅\ \{,\  位置 \}\,), Closepar(\,)}\\
+\tab{}minipage環境を含む$\backslash$def コマンド定義を始める\\
+\chuu 位置のデフォルトは "c"\\
+\rei Openpar("$\backslash\backslash$s","5cm"\,)\\
+\reicr Texcom("$\backslash\backslash$input\{rei\}"\,)\\
+\reicr Closepar(\,)\\
+\reicr Letter(\,c([2,3),"se","$\backslash\backslash$s"\,)
+
+\tab{Texletter(\ 点(list形式), 方向, 文字列 ，・・・)}\\
+\tab{}点の位置の「方向」に文字列をかく（複数可）\\
+\rei Texletter(\,list(4,"\#1"),"n","文字")\\
+\chuu 位置は"n", s", "e", "w", "ne", "nw", "se", "sw", "c"\\
+\chuu 点の位置はリスト形式で，\TeX の形式で渡すことができる．
+
+\tab{Texnewctr(番号または番号のベクトル)}\\
+\tab{}\ketpic で使うカウンタ(ketpicctra,...)を定義
+
+\tab{Texctr(番号またはカウンタ名)}\\
+\tab{}番号のカウンタ名またはカウンタ名を返す
+
+\tab{Texthectr(番号)} \verb|\|the+カウンタ名の文字列を返す
+
+\tab{Texvalctr(番号)} \verb|\|value\{カウンタ名\}の文字列を返す
+
+\tab{Texsetctr(番号，文字列)}カウンタに値をセットする\TeX コマンド列を出力\\
+\rei Texsetctr(2, "1*2/3");\\
+\rei Texsetctr(2, "(-\verb|#|1)+2");
+
+\tab{Texletter(位置（list），方向，文字列)}\\
+\tab{}位置listで表される点に文字列をかく\TeX コマンド列を出力\\
+\rei Texletter(list(10,paste("-",Texvctr(2),sep="")),"ne","\verb|\|content");\\
+\rei Texletter(list(0, "\verb|#|1"), "c", "A");
+
+\tab{Texnewcmd(コマンド名，引数の個数，オプション値)}\\
+\tab{}\verb|\|newcommand を始める\TeX コマンドを出力
+
+\tab{Texrenewcmd(コマンド名，引数の個数，オプション値)}\\
+\tab{}\verb|\|renewcommand を始める\TeX コマンドを出力
+
+\tab{Texend()}\TeX のコマンド定義を終わる\TeX コマンドを出力
+
+\tab{Texfor(カウンタ番号，初期値，終了値)}\\
+\tab{}\TeX のループ構造を始める．\\
+\chuu   初期値，終了値は文字列で与える．\\
+\rei Texfor(1,"1","\verb|#|1");
+
+\tab{Texendfor(カウンタ番号)}\TeX のループ構造を終える．\\
+\rei Texendfor(1);
+
+\tab{Texforinit()}\TeX のループ構造を初期化
+
+\tab{Texif(数値条件\ \{ ,1 \})}\TeX のif構造を始める．（ifnumまたは ifdim）\\
+\chuu 条件は文字列で与える．\\
+\chuu 1を追加したときは　ifdim\\
+\rei Texif("Texctr(1)\verb|<#|2");
+
+\tab{Texelse()}\TeX のelseブロック．
+
+\tab{Texendif()}\TeX のif構造を終える．
+%\tab{Setmark()}マークシート用マークのコードを出力
+
+%\tab{Putdashmark(表データ,\ 列番号,\ 行番号,文字列or番号)}\\
+%\rei Putdashmark(Out,2,1,0:9);
+
+%\tab{Putcirmark(表データ,\ 列番号,\ 行番号)}
+
+%\tab{Putrecmark(表データ,\ 列番号,\ 行番号}
+
+\subsection{カラー設定}
+
+\tab{Setcolor(色 \{, 濃さ\})}色を設定\\
+\chuu colorパッケージ必要\\
+\hspace*{2zw} 色は，次の文字列または [c,m,y,k]のベクトル\\
+\hspace*{2.5zw}"greenyellow"[0.15,0,0.69,0],
+"yellow"[0,0,1,0],
+"goldenrod"[0,0.1,0.84,0],
+"dandelion"[0,0.29,0.84,0]\\
+\hspace*{2.5zw}"apricot"[0,0.32,0.52,0],
+"peach"[0,0.5,0.7,0],
+"melon"[0,0.46,0.5,0],
+"yelloworange"[0,0.42,1,0]\\
+\hspace*{2.5zw}""orange"[0,0.61,0.87,0],
+"burntorange"[0,0.51,1,0],
+"bittersweet"[0,0.75,1,0.24],\\
+\hspace*{2.5zw}"redorange"[0,0.77,0.87,0]\\
+\hspace*{2.5zw}"mahogany"[0,0.85,0.87,0.35],
+"maroon"[0,0.87,0.68,0.32],
+"brickred"[0,0.89,0.94,0.28],
+"red"[0,1,1,0]\\
+\hspace*{2.5zw}"orangered"[0,1,0.5,0],
+"rubinered"[0,1,0.13,0],
+"wildstrawberry"[0,0.96,0.39,0],\\
+\hspace*{2.5zw}"salmon"[0,0.53,0.38,0]\\
+\hspace*{2.5zw}"carnationpink"[0,0.63,0,0],
+"magenta"[0,1,0,0],
+"violetred"[0,0.81,0,0],
+"rhodamine"[0,0.82,0,0]\\
+\hspace*{2.5zw}"mulberry"[0.34,0.9,0,0.02],
+"redviolet"[0.07,0.9,0,0.34],
+"fuchsia"[0.47,0.91,0,0.08],\\
+\hspace*{2.5zw}"lavender"[0,0.48,0,0]\\
+\hspace*{2.5zw}"thistle"[0.12,0.59,0,0],
+"orchid"[0.32,0.64,0,0],
+"darkorchid"[0.4,0.8,0.2,0],
+"purple"[0.45,0.86,0,0]\\
+\hspace*{2.5zw}"plum"[0.5,1,0,0],
+"violet"[0.79,0.88,0,0],
+"royalpurple"[0.75,0.9,0,0],
+"blueviolet"[0.86,0.91,0,0.04]\\
+\hspace*{2.5zw}"periwinkle"[0.57,0.55,0,0],
+"cadetblue"[0.62,0.57,0.23,0],
+"cornflowerblue"[0.65,0.13,0,0],\\
+\hspace*{2.5zw}"midnightblue"[0.98,0.13,0,0.43]\\
+\hspace*{2.5zw}"navyblue"[0.94,0.54,0,0],
+"royalblue"[1,0.5,0,0],
+"blue"[1,1,0,0],
+"cerulean"[0.94,0.11,0,0]\\
+\hspace*{2.5zw}"cyan"[1,0,0,0],
+"processblue"[0.96,0,0,0],
+"skyblue"[0.62,0,0.12,0],
+"turquoise"[0.85,0,0.2,0]\\
+\hspace*{2.5zw}"tealblue"[0.86,0,0.34,0.02],
+"aquamarine"[0.82,0,0.3,0],
+"bluegreen"[0.85,0,0.33,0],\\
+\hspace*{2.5zw}"emerald"[1,0,0.5,0]\\
+\hspace*{2.5zw}"junglegreen"[0.99,0,0.52,0],
+"seagreen"[0.69,0,0.5,0],
+"green"[1,0,1,0],
+"forestgreen"[0.91,0,0.88,0.12]\\
+\hspace*{2.5zw}"pinegreen"[0.92,0,0.59,0.25],
+"limegreen"[0.5,0,1,0],
+"yellowgreen"[0.44,0,0.74,0],\\
+\hspace*{2.5zw}"springgreen"[0.26,0,0.76,0]\\
+\hspace*{2.5zw}"olivegreen"[0.64,0,0.95,0.4],
+"rawsienna"[0,0.72,1,0.45],
+"sepia"[0,0.83,1,0.7],
+"brown"[0,0.81,1,0.6]\\
+\hspace*{2.5zw}"tan"[0.14,0.42,0.56,0],
+"gray"[0,0,0,0.5],
+"black"[0,0,0,1],
+"white"[0,0,0,0]
+
+\end{document}
+
+\newpage
+
+\section{内部コマンド}
+
+\tab{CalcHeight}
+
+\tab{CalcWidth}
+
+\tab{Dataindex}
+
+\tab{Gaiseki}
+
+\tab{InWindow}
+
+\tab{Kouten}
+
+\tab{KoutenList}
+
+\tab{Koutenseg}
+
+\tab{Kyoukai}
+
+\tab{MakeBowdata}
+
+\tab{MakeCurves}
+
+\tab{Makehasen}
+
+\tab{Makeshasen}
+
+\tab{MeetWindow}
+
+\tab{Mixmake}
+
+\tab{Naigai}
+
+\tab{Naiseki}
+
+\tab{Vecnagasa(A, B)}$<$- norm(B-A)
+
+\tab{Makevaltable}
+
+\tab{Connectseg}
+
+
+
+\end{document}

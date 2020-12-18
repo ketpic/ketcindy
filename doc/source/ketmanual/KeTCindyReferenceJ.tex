@@ -4518,7 +4518,7 @@ Cindyscriptの アンダーバーの演算子 (list\_n , str\_n) と同様。
 
 Rは主に統計解析のためのソフトウェアで，binorm（二項分布），pois（ポアソン），unif（一様分布），chisq（カイ2乗），f（F分布），t（t分布）など，多くの確率分布をサポートしている。
 
-\ketcindy では，kc.bat/shによってコマンドをRに渡し，結果をテキストファイルで受け取る。このとき，Rとのやりとりで，次のようなファイルが作業ディレクトリに作成される。
+\ketcindy では，kc.bat/command/sh によってコマンドをRに渡し，結果をテキストファイルで受け取る。このとき，Rとのやりとりで，次のようなファイルが作業ディレクトリに作成される。
 
 拡張子 r ：r用のファイル
 
@@ -4536,7 +4536,11 @@ ii) データファイルが既にあればそれを読み込む
 
 "r" のとき，すでにあるデータファイルを読み込む。
 
+注）\verb|\|は\verb|\\|と書く。
+
 \vspace{\baselineskip}
+
+\subsubsection{Rの関数の利用}
 
 \begin{description}
 
@@ -4846,6 +4850,154 @@ Rulerscale([0,0],["r",0,7,1],["r",1,7,1]);
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 \vspace{\baselineskip}
 %\newpage
+
+\subsubsection{\TeX のコマンド書き出し（メタコマンド）}
+
+\newcommand{\tab}[2][12zw]{%
+\noindent
+\hspace*{2zw}\Ltab{#1 }{#2}%
+}
+
+\newcommand{\chuu}[1][15zw]{%
+\Ltab{#1}{}※ %
+}
+
+\newcommand{\rei}[1][18zw]{%
+\Rtab{#1}{例)\ }}%
+
+\newcommand{\reicr}[1][18zw]{%
+\Rtab{#1}{　 }}%
+
+\newcommand{\prompt}[1][+]{%
+$>$ \verb#1}
+
+\tab{Wfile='ファイル名'\,}書き出しファイル名を設定
+
+\tab{cat('',file=Wfile,append=FALSE)\,}\\
+\tab{}書き出しファイルを初期化
+
+\tab{Texcom("コマンド"\,)}\TeX コマンドのコードを書き出す\\
+\rei Texcom("$\backslash\backslash$begin\{minipage\}\{3cm\}")\\
+\chuu "newline" のとき，空白行を挿入
+
+\tab{Openphr(\,ユーザーコマンド名\,)，Closephr(\,)}\\
+\tab{}$\backslash$defのコマンド定義を始める\\
+\rei Openphr("$\backslash\backslash$p"\,)\\
+\reicr Texcom("$\backslash\backslash$begin\{array\}\{cc\}"\,)\\
+\reicr Texcom("5 \& 3$\backslash\backslash\backslash\backslash$"\,)\\
+\reicr Texcom("8 \& 7"\,)\\
+\reicr Texcom("$\backslash$end\{array\}\$"\,)\\
+\reicr Closephr(\,)
+
+\tab{Openpar(\,ユーザーコマンド名，幅\ \{,\  位置 \}\,), Closepar(\,)}\\
+\tab{}minipage環境を含む$\backslash$def コマンド定義を始める\\
+\chuu 位置のデフォルトは "c"\\
+\rei Openpar("$\backslash\backslash$s","5cm"\,)\\
+\reicr Texcom("$\backslash\backslash$input\{rei\}"\,)\\
+\reicr Closepar(\,)\\
+\reicr Letter(\,c([2,3),"se","$\backslash\backslash$s"\,)
+
+\tab{Texletter(\ 点(list形式), 方向, 文字列 ，・・・)}\\
+\tab{}点の位置の「方向」に文字列をかく（複数可）\\
+\rei Texletter(\,list(4,"\#1"),"n","文字")\\
+\chuu 位置は"n", s", "e", "w", "ne", "nw", "se", "sw", "c"\\
+\chuu 点の位置はリスト形式で，\TeX の形式で渡される。
+
+\tab{Texnewctr(番号または番号のベクトル)}\\
+\tab{}\ketpic で使うカウンタ(ketpicctra,...)を定義
+
+\tab{Texctr(番号またはカウンタ名)}\\
+\tab{}番号のカウンタ名またはカウンタ名を返す
+
+\tab{Texthectr(番号)} \verb|\|the+カウンタ名の文字列を返す
+
+\tab{Texvalctr(番号)} \verb|\|value\{カウンタ名\}の文字列を返す
+
+\tab{Texsetctr(番号，文字列)}カウンタに値をセットする\TeX コマンド列を出力\\
+\rei Texsetctr(2, "1*2/3");\\
+\rei Texsetctr(2, "(-\verb|#|1)+2");
+
+\tab{Texletter(位置（list），方向，文字列)}\\
+\tab{}位置listで表される点に文字列をかく\TeX コマンド列を出力\\
+\rei Texletter(list(10,paste("-",Texvctr(2),sep="")),"ne","\verb|\|content");\\
+\rei Texletter(list(0, "\verb|#|1"), "c", "A");
+
+\tab{Texnewcmd(コマンド名，引数の個数，オプション値)}\\
+\tab{}\verb|\|newcommand を始める\TeX コマンドを出力
+
+\tab{Texrenewcmd(コマンド名，引数の個数，オプション値)}\\
+\tab{}\verb|\|renewcommand を始める\TeX コマンドを出力
+
+\tab{Texend()}\TeX のコマンド定義を終わる\TeX コマンドを出力
+
+\tab{Texfor(カウンタ番号，初期値，終了値)}\\
+\tab{}\TeX のループ構造を始める．\\
+\chuu   初期値，終了値は文字列で与える．\\
+\rei Texfor(1,"1","\verb|#|1");
+
+\tab{Texendfor(カウンタ番号)}\TeX のループ構造を終える．\\
+\rei Texendfor(1);
+
+\tab{Texforinit()}\TeX のループ構造を初期化
+
+\tab{Texif(数値条件\ \{ ,1 \})}\TeX のif構造を始める．（ifnumまたは ifdim）\\
+\chuu 条件は文字列で与える．\\
+\chuu 1を追加したときは　ifdim\\
+\rei Texif("Texctr(1)\verb|<#|2");
+
+\tab{Texelse()}\TeX のelseブロック．
+
+\tab{Texendif()}\TeX のif構造を終える．
+
+\subsection{\ketcindy でのメタコマンドの利用例}
+
+\begin{enumerate}[(1)]
+\item 次のコマンドを実行すると，マクロファイル hdash.tex ができる。
+\begin{verbatim}
+ cmdL=[
+  "Wfile='hdash.tex'",[],
+  "cat('',file=Wfile,append=FALSE)",[],
+  "Texnewcmd",["'\\hdash'",2],
+  "Texcom",["'{\\unitlength=1mm'"],
+  "Texcom",["'\\begin{picture}(#1,#2)(0,0)'"],
+  "Texsetctr",[1,"'#1/2'"],
+  "Texfor",[2,1,"Texthectr(1)"],
+  "Texsetctr",[3,"'2*Texctr(2)-2'"],
+  "tmp1=Texthectr(3)",[],
+  "tmp=paste('\\put(',tmp1,',#2){\\line(1,0){1}}',sep='')",[],
+  "Texcom(tmp)",[],
+  "Texendfor",[2],
+  "Texcom",["'\\end{picture}}'"],
+  "Texend()",[]
+ ];
+ CalcbyR("ans",cmdL,["Out=n"]);
+\end{verbatim}
+
+注）上の例ではpict2eのコマンドを使っている．
+
+\item 親ファイル（例えば\verb|dashtest.tex|）を作っておく。
+\begin{verbatim}
+\documentclass{ujarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{pict2e} % pict2eの読み込み
+\input{hdash.tex}
+\begin{document}
+\hdash{20}{14}
+\end{document}
+\end{verbatim}
+
+\begin{layer}{140}{0}
+\putnotese{100}{0}{%
+\includegraphics[bb=0.00 0.00 193.00 108.00,width=40mm]{Fig/dashlinefig.pdf}}
+\end{layer}
+
+\item CindyScriptに\\
+\hspace*{1zw}Setfiles("dashtest");\\
+を追加して，\verb|Parent|ボタンを押す．
+
+\end{enumerate}
+
+\newpage
 
 %Maximaとの連携==================================
 \subsection{Maximaとの連携}

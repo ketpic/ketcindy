@@ -77,9 +77,9 @@ WireparadataR,3d,4228,4329,Divoptions,Toupper,Select,MkprecommandR,RSform,textfo
 IntersectcrvsfR,3d,4333,4421,Intersectcrvsf,Divoptions,Toupper,RSform,textformat,Rsform,Dqq,CalcbyR,ReadOutData
 SfcutparadataR,3d,4425,4522,Strsplit,Changestyle,Divoptions,Toupper,RSform,Select,MkprecommandR,textformat,Rsform,Dqq,CalcbyR,ReadOutData,Extractdata,Projpara
 Skeletonparadata,3d,4528,4532,Skeletondatacindy
-Skeletondatacindy,3d,4536,4725,Datalist3d,Divoptions,Flattenlist,Projcoordcurve,Makeskeletondata,Norm,Ptcrv,Invparapt,Projcurve,textformat,Changestyle3d,Getlinestyle,Com2nd,Subgraph
-Makeskeletondata,3d,4729,4931,Columnlist,Intersectcrvspp,Op,column,Dotprod,Norm,Kukannozoku,Pointoncurve,Listplot
-Kukannozoku,3d,4935,4986
-Projcoordcurve,3d,4992,5006
-Divnohidhid,3d,5010,5073,Divoptions,Toupper,assign,Dotprod,Changestyle3d,Spaceline,textformat
-Beziersurf,3d,5077,5132,factorial,Deffun,Op,Bterm,Defvar
+Skeletondatacindy,3d,4536,4727,Datalist3d,Divoptions,Flattenlist,Projcoordcurve,Makeskeletondata,Norm,Ptcrv,Invparapt,Projcurve,textformat,Changestyle3d,Getlinestyle,Com2nd,Subgraph
+Makeskeletondata,3d,4731,4933,Columnlist,Intersectcrvspp,Op,column,Dotprod,Norm,Kukannozoku,Pointoncurve,Listplot
+Kukannozoku,3d,4937,4988
+Projcoordcurve,3d,4994,5008
+Divnohidhid,3d,5012,5075,Divoptions,Toupper,assign,Dotprod,Changestyle3d,Spaceline,textformat
+Beziersurf,3d,5079,5134,factorial,Deffun,Op,Bterm,Defvar

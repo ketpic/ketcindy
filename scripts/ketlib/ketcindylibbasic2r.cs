@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201206] loaded");
+println("ketcindylibbasic2[20201230] loaded");
 
 //help:start();
 
@@ -1946,7 +1946,7 @@ Shade(Arg1,Arg2):=(
 Shade(nm,plistorg,options):=(
 //help:Shade(["gr1"]);
 // help:Shade(options=["Trim=(n)","Enc=(n)",First=(n)","Color=",Startpoint]);
-//help:Shade(["gr2","Invert(sg1)"],["Enc=n",(Startpoint)]);
+//help:Shade(["gr2","Invert(sg1)"],["Enc=n","First=n","Ptshade=N"]); //201230
   regional(name,plist,jj,nn,trim,first,tmp,tmp1,tmp2,Noflg,
      opstr,opcindy,eqL,reL,Str,G2,flg,encflg,startpt,color,color4,ctr,ptshade);
   if(substring(nm,0,1)=="-", //200513from

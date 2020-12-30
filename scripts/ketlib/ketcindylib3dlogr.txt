@@ -1,3 +1,5 @@
+// 200730
+//    Skeletonnparadata debugged  (case of plt is not a list)
 // 200716
 //    Start3d changed  (ADDPACK not reset)
 // 200626

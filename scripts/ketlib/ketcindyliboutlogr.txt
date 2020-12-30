@@ -1,5 +1,5 @@
-// 20201105
-//    Histplot changed/debugged  (right, "sg")
+// 20201230
+//    ExeccmdC debugged (optionsh)
 // 20201015
 //    CalcbyM,CalbyW debugged (Readlines)
 // 20200915

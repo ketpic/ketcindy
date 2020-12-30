@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20201105] loaded");
+println("ketcindylibout[20201230] loaded");
 
 //help:start();
 
@@ -4506,7 +4506,7 @@ Gccexists():=( //190124
 
 ////%ExeccmdC start////
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
-ExeccmdC(nm,options):=ExeccmdC(nm,options,["do"]);
+ExeccmdC(nm,options):=ExeccmdC(nm,options,[]); //201230[optionsh removed]
 ExeccmdC(nm,optionorg,optionhorg):=( 
 //help:ExeccmdC("1",options1,options2);
 //help:ExeccmdC(options1=["dr(/da/do)","m/r","Wait=30"]);
@@ -4517,7 +4517,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   options=optionorg;
   optionsh=optionhorg;
   optionsh=select(optionsh,length(#)>0);
-  if(length(optionsh)==0,optionsh=["do"]);
+//  if(length(optionsh)==0,optionsh=["do"]); //201230[comment]
   tmp=Divoptions(options);
   eqL=tmp_5;
   reL=tmp_6;
@@ -4606,7 +4606,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     tmp="";
     if(length(optionsh)>0,
       forall(1..(length(StyleListC)/4), //200624from
-        StyleListC_(4*#)=optionsh;
+        StyleListC_(4*#)=optionsh; 
       ); //200624to
       forall(optionsh,
         tmp=tmp+Dqq(#)+",";
@@ -4649,6 +4649,7 @@ SfbdparadataC(nm,fd,options):=
     SfbdparadataC(nm,fd,options,["do"]);
 SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
 //help:Sfbdparadata("1",Fd,nohiddenoptions,hiddenoptions);
+//help:Sfbdparadata("1",Fd,["dr","Color=black"],["do","Color=red"]);
   regional(funnm,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,cmdflg);
   if(ChNumber==0,ChNumber=Ch);

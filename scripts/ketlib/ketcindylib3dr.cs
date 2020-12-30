@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20200716] loaded");
+println("ketcindylib3d[20201230] loaded");
 
 //help:start();
 
@@ -4685,9 +4685,11 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     if(fileflg!="Y", //181102
       println("generate skeleton :"+name3);
       tmp1=text(pltdata1org);
-      tmp1="list("+substring(tmp1,1,length(tmp1)-1)+")";
+      if(tmp1_1=="[",tmp1=substring(tmp1,1,length(tmp1)-1)); //201230[2lines]
+      tmp1="list("+tmp1+")";
       tmp2=text(pltdata2org);
-      tmp2="list("+substring(tmp2,1,length(tmp2)-1)+")";
+      if(tmp2_1=="[",tmp2=substring(tmp2,1,length(tmp2)-1)); //201230[2lines]
+      tmp2="list("+tmp2+")";
       tmp=name3+"=Skeletonpara3data("+tmp1+","+tmp2+",";
       tmp=tmp+text(size)+")";
       GLIST=append(GLIST,tmp);  

@@ -1,3 +1,6 @@
+// 20210104
+//    Reflectpoint debugged  ( case that sym is not a list )
+//    Reflectdata changed  (New Reflectpoint used )
 // 20201230
 //    Shade  ( help added )
 // 20201214

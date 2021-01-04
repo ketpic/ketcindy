@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20201230] loaded");
+println("ketcindylibbasic2[20210104] loaded");
 
 //help:start();
 
@@ -2138,18 +2138,29 @@ Scalepoint(point,ratio,center):=(
 
 ////%Reflectpoint start////
 Reflectpoint(point,symL):=(
-//help:Reflectpoint(A,B);
+//help:Reflectpoint(A,B or [B]);
 //help:Reflectpoint(A,[[2,3]]);
 //help:Reflectpoint(A,[C,E]);
-  regional(X1,X2,Y1,Y2,Us,Vs,Pt1,Pt2,Cx,Cy,tmp);
+  regional(X1,X2,Y1,Y2,Us,Vs,Pt1,Pt2,Cx,Cy,flg,tmp);
   tmp=Lcrd(point);
   X1=tmp_1; Y1=tmp_2;
-  Pt1=Lcrd(symL_1);
-  if(length(symL)==1,
+  if(!islist(symL), //210104from
+    Pt1=Lcrd(symL);
     Pt2=Pt1;
   ,
-    Pt2=Lcrd(symL_2);
-  );
+    if(length(symL)==1,
+      Pt1=Lcrd(symL_1);
+      Pt2=Pt1;
+    ,
+      if(isreal(symL_1),
+        Pt1=Lcrd(symL);
+        Pt2=Pt1;
+      ,
+        Pt1=Lcrd(symL_1);
+        Pt2=Lcrd(symL_2);
+      );
+    );
+  ); //210104to
   Us=Pt2_1-Pt1_1;
   Vs=Pt2_2-Pt1_2;
   if(Pt1==Pt2,
@@ -2473,14 +2484,6 @@ Reflectdata(nm,plist,symL,optionorg):=(
   if(!isstring(pdata_1) & Measuredepth(pdata)==1,
       pdata=[pdata];
   );
-  Pt1=Lcrd(symL_1);
-  if(length(symL)==1,
-    Pt2=Pt1;
-  ,
-    Pt2=Lcrd(symL_2);
-  );
-  Us=Pt2_1-Pt1_1;
-  Vs=Pt2_2-Pt1_2;
   PdL=[];
   forall(pdata,Njj,
     if(isstring(Njj),Kj=parse(Njj),Kj=Njj);
@@ -2489,21 +2492,10 @@ Reflectdata(nm,plist,symL,optionorg):=(
     forall(Kj,Nj,
       tmp1=[];
       forall(Nj,
-      tmp=LLcrd(#);
-        X1=tmp_1;         
-        Y1=tmp_2;    
-        if(Pt1==Pt2,
-          X2=2*Pt1_1-X1;
-          Y2=2*Pt1_2-Y1;
-        ,
-          X2=(Us^2-Vs^2)/(Us^2+Vs^2)*X1+2*Us*Vs/(Us^2+Vs^2)*Y1
-                -2*Vs*(Us*Pt1_2-Vs*Pt1_1)/(Us^2+Vs^2);
-          Y2=2*Us*Vs/(Us^2+Vs^2)*X1-(Us^2-Vs^2)/(Us^2+Vs^2)*Y1
-                +2*Us*(Us*Pt1_2-Vs*Pt1_1)/(Us^2+Vs^2);
-        );
-        tmp1=concat(tmp1,[[X2,Y2]]);
+        tmp=Reflectpoint(#,symL);
+        tmp1=append(tmp1,tmp);
       );
-      tmp2=concat(tmp2,[tmp1]);
+      tmp2=append(tmp2,tmp1);
     );
     PdL=concat(PdL,tmp2);
   );
@@ -2521,7 +2513,8 @@ Reflectdata(nm,plist,symL,optionorg):=(
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,5))+")";//17.12.23
+    tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,5))+")";
+     //171223
     GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<3, //190818

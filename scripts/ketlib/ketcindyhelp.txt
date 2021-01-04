@@ -223,7 +223,7 @@ Shade(["gr2","Invert(sg1)"],["Enc=n","First=n","Ptshade=N"]);
 Rotatepoint(A,2*pi/3,B);
 Translatepoint(A,[2,3]);
 Scalepoint(A,[3,2],[0,0]);
-Reflectpoint(A,B);
+Reflectpoint(A,B or [B]);
 Reflectpoint(A,[[2,3]]);
 Reflectpoint(A,[C,E]);
 Rotatedata("1",["crAB","pt1"],pi/3,[[1,5],"dr,2"]);

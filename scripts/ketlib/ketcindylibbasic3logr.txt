@@ -1,3 +1,5 @@
+// 20210105
+//    Mkketcindyjs changed   ("Label=" added)
 // 20201205
 //    Seteditable changed   ( Size, Width  not accepted in abbreviation ))
 // 20201111

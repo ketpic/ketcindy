@@ -401,7 +401,7 @@ Movetojs(Text51,[1,2],12);
 Setplaybuttons(-2,-6,14);
 Setplaybuttons([-2,-6],14,[1,1,1]);
 Mkketcindyjs();
-Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
+Mkketcindyjs(options=["Scale=(1)","Lablel=[]","Nolabel=[]","Color=(offwhite)","Grid="]);
 Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Remove=(list)"]);
 Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)"]);
 Ketinit3d();

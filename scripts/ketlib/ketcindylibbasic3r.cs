@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20201111] loaded");
+println("ketcindylibbasic3[20210105] loaded");
 
 //help:start();
 
@@ -4044,18 +4044,19 @@ Tohtmltagpf(sentence):=(
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
-//help:Mkketcindyjs(options=["Local=(y)","Scale=(1)","Nolabel=[]","Color=","Grid="]);
+//help:Mkketcindyjs(options=["Scale=(1)","Lablel=[]","Nolabel=[]","Color=(offwhite)","Grid="]);
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Remove=(list)"]);
 //help:Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,tmp4,
       libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
-     figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH);
+     figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH,label);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
   scale=1; //190129
   nolabel=["SW","NE"]; //190129
+  label=[]; //210105
   color="offwhite"; //200611
   eqflg=0; //190603
   figure=0;
@@ -4068,6 +4069,7 @@ Mkketcindyjs(options):=( //17.11.18
   path=Dircdy;
   igno=[];
   rmptL=REMOVEPTJS;
+  flg=0; //210105
   forall(options,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -4075,11 +4077,6 @@ Mkketcindyjs(options):=( //17.11.18
     if(tmp1=="W",
       if(length(tmp2)>0, //190209
         webflg=Toupper(substring(tmp2,0,1));
-      );
-    );
-    if(tmp1=="L",
-      if(length(tmp2)>0, //190209
-//        localflg=Toupper(substring(tmp2,0,1)); //200612
       );
     );
     if(tmp1=="S",
@@ -4100,6 +4097,15 @@ Mkketcindyjs(options):=( //17.11.18
         tmp=tokenize(tmp,",");
         nolabel=concat(nolabel,tmp);
       );
+      flg=1; //210105
+    );
+    if(tmp1=="L",
+        tmp=tmp2; //210105from
+        if(indexof(tmp2,"[")>0,
+          tmp=substring(tmp2,1,length(tmp2)-1);
+        );
+        tmp=tokenize(tmp,",");
+        label=concat(label,tmp);  //210105to
     );
     if(tmp1=="C", //190209
       if(length(tmp2)>0,
@@ -4149,6 +4155,11 @@ Mkketcindyjs(options):=( //17.11.18
       );
     );
   );
+  if(flg==0, //210105from
+    tmp=apply(allpoints(),text(#));
+    nolabel=remove(tmp,label);
+  ); //210105to
+println([4161,nolabel]);
   if(indexof(color,"[")>0,  //200505
     tmp=parse(color);
     if(length(tmp)==4,

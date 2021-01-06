@@ -18,7 +18,7 @@ How to use ketcindyjs    2020.05.27
 2. Setting the option of ketcindyjs
          Setketcindyjs([options list);
            "Scale=(ratio)"
-           "Nolabel=[list of geometric elements]"
+           "Label=[list of geometric elements]"
            "Grid=(interval of grid)"
            "Color=(back ground color)"
                ex) Setketcindyjs([”Nolabel=all","Color=offwhite"]);

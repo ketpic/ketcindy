@@ -1,3 +1,8 @@
+// 210112
+//    Rotatepoint3d changed  ( Rodrigues used )
+//    Mkpointlist debugged  ( typo )
+// 210109
+//    Setangle debugged  ( case ptz not exist )
 // 200730
 //    Skeletonnparadata debugged  (case of plt is not a list)
 // 200716

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20201230] loaded");
+println("ketcindylib3d[20210112] loaded");
 
 //help:start();
 
@@ -196,11 +196,13 @@ Setangle(theta,phi):=( //16.12.24
       tmp1=pt;
       tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
       if(tmp!="z",
-        tmp=parse(tmp1+"z.xy"); //181028[2lines];
-        pt3=Xyzcoord(pt.xy,tmp);
-        Defvar(tmp1+"3d",pt3);
-        pt2=Parapt(pt3);  // 16.05.28from
-        Defvar(tmp1+"2d",pt2);  // 16.05.28to
+        tmp=parse(tmp1+"z.xy"); //181028
+        if(ispoint(tmp), //200109
+          pt3=Xyzcoord(pt.xy,tmp); //181028
+          Defvar(tmp1+"3d",pt3);
+          pt2=Parapt(pt3);  // 16.05.28from
+          Defvar(tmp1+"2d",pt2);  // 16.05.28to
+        ); //200109
       );
     );
   ,
@@ -1345,90 +1347,45 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
 ////%Rotate3pt end////
-////%Rotatepoint3d start////
 Rotatepoint3d(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);//180809
 Rotatepoint3d(point,w1org,w2org,center):=(
 //help:Rotatepoint3d(pt3d,[0,0,1],pi/2);
 //help:Rotatepoint3d(pt3d,[0,0,1],pi/2,[1,1,1]);
-  regional(Eps,w1,w2,ct,st,v3,v1,v2,Ans,ns,PtL,num,
-    pt,tmp,tmp1,tmp2,Retflg,x,y,z,xx,yy,zz,flg);
-  Eps=10^(-4);
-  w1=w1org; w2=w2org; //190709
-  Retflg=0;
+  regional(Eps,w1,w2,ct,st,PtL,x,y,z,Mat,Ans,ang,tmp);
+  Eps=10^(-5);
+  w1=w1org;
+  w1=w1/Norm(w1);
+  w2=w2org; //190709
+  if(Measuredepth(point)>0,
+    PtL=point;
+  ,
+    PtL=[point];
+  );
+  Ans=[];
   if(!islist(w2), //190709
+    PtL=apply(PtL,#-center);
     ct=cos(w2);
     st=sin(w2);
-    v3=1/|w1|*w1;
-    if(v3_1==0,
-      tmp=[1,0,0];
-    ,
-      tmp=[0,1,0];
+    x=w1_1; y=w1_2; z=w1_3;
+    Mat=(1-ct)*[[x^2,x*y,z*x],[x*y,y^2,y*z],[z*x,y*z,z^2]];
+    Mat=Mat+[[ct,-z*st,y*st],[z*st,ct,-x*st],[-y*st,x*st,ct]];
+    forall(PtL,
+      tmp=Mat*#+center;
+      Ans=append(Ans,tmp);
     );
-    w1=[tmp_2*v3_3-tmp_3*v3_2,
-         tmp_3*v3_1-tmp_1*v3_3,
-         tmp_1*v3_2-tmp_2*v3_1];
-    v1=1/|w1|*w1;
-    v2=[v3_2*v1_3-v3_3*v1_2,
-         v3_3*v1_1-v3_1*v1_3,
-         v3_1*v1_2-v3_2*v1_1];
   ,
-    tmp=[w1_2*w2_3-w1_3*w2_2,
-          w1_3*w2_1-w1_1*w2_3,
-          w1_1*w2_2-w1_2*w2_1];
-    if(|tmp|<Eps,
-      Ans=point;
-      Retflg=1;
-    );
-    if(Retflg==0,
-      v1=1/|w1|*w1;
-      ns=v1_1*w2_1+v1_2*w2_2+v1_3*w2_3;
-      tmp=w2-ns*v1;
-      v2=1/|tmp|*tmp;
-      tmp=[v1_2*v2_3-v1_3*v2_2,
-                 v1_3*v2_1-v1_1*v2_3,
-                 v1_1*v2_2-v1_2*v2_1];
-      v3=1/|tmp|*tmp;
-      ct=ns/|w2|;
-      st=sqrt(1-ct^2);
-    );
-  );
-  if(Retflg==0,
-    if(|tmp|<Eps,
-      Ans=point;
-      Retflg=1;
-    );
-  );
-  if(Retflg==0,
-    if(Measuredepth(point)>0,
-      PtL=point;
+    w2=w2/Norm(w2);
+    tmp=Dotprod(w1,w2);
+    ang=arccos(tmp);
+    if(abs(ang)<Eps,
+      Ans=PtL;
     ,
-      PtL=[point];
+      w1=Crossprod(w1,w2);
+      Ans=Rotatepoint3d(PtL,w1,ang,center);
     );
-    Ans=[];
-    flg=0;
-    forall(1..length(PtL),num,
-      pt=PtL_num;
-      if(pt_1=="inf",
-        Ans=append(Ans,["inf"]);
-        flg=1;
-      );
-      if(flg==0,
-        x=pt_1-center_1; y=pt_2-center_2; z=pt_3-center_3;
-        xx=((v1_1*ct+v2_1*st)*v1_1+ (-v1_1*st+v2_1*ct)*v2_1+v3_1^2)*x
-            +((v1_1*ct+v2_1*st)*v1_2+(-v1_1*st+v2_1*ct)*v2_2+v3_1*v3_2)*y
-            +((v1_1*ct+v2_1*st)*v1_3+(-v1_1*st+v2_1*ct)*v2_3+v3_1*v3_3)*z; 
-        yy=((v1_2*ct+v2_2*st)*v1_1+(-v1_2*st+v2_2*ct)*v2_1+v3_1*v3_2)*x
-            +((v1_2*ct+v2_2*st)*v1_2+(-v1_2*st+v2_2*ct)*v2_2+v3_2^2)*y
-            +((v1_2*ct+v2_2*st)*v1_3+(-v1_2*st+v2_2*ct)*v2_3+v3_2*v3_3)*z;
-        zz=((v1_3*ct+v2_3*st)*v1_1+(-v1_3*st+v2_3*ct)*v2_1+v3_1*v3_3)*x
-            +((v1_3*ct+v2_3*st)*v1_2+(-v1_3*st+v2_3*ct)*v2_2+v3_2*v3_3)*y
-            +((v1_3*ct+v2_3*st)*v1_3+(-v1_3*st+v2_3*ct)*v2_3+v3_3^2)*z;
-        Ans=append(Ans,center+[xx,yy,zz]);
-      );
-    );
-    if(length(Ans)==1,
-      Ans=Ans_1;
-    );
+  );
+  if(length(Ans)==1,
+    Ans=Ans_1;
   );
   Ans;
 );
@@ -1877,7 +1834,7 @@ Mkpointlist(options):=( //181030
           ,
             tmp=Parasubpt([0,pt.x/cos(PHI),pt.y]);
           );
-          Putpoint(ptz,tmp,[parse(ptz+".x"),pt.y]);//181029t
+          Putpoint(ptz,tmp,[parse(ptz+".x"),pt.y]);//181029
           pt3=Mainsubpt3d(pt.xy,parse(ptz+".xy"));
         );
       ); //181028to
@@ -1906,7 +1863,7 @@ Mkpointlist(options):=( //181030
       tmp1=tmp_1_2;
       tmp=Parasubpt(tmp1); //181108from
       if(abs(cos(THETA))>Eps,
-        tmp=tptz.name+".x="+format(tmp_1,6)+";"; //190505
+        tmp=ptz.name+".x="+format(tmp_1,6)+";"; //210112
         parse(tmp);
         tmp=Parapt([tmp1_1,tmp1_2,ptz.y]);
         Putpoint(pt.name,tmp); //190505
@@ -1941,7 +1898,7 @@ Mkpointlist(options):=( //181030
       Defvar(pt.name+"3d",pt3); //190505
     ); //181030to
     if(Ptselected(pt) % Ptselected(ptz),
-      drawtext(pos,pt3.xy,size->12); // no ketjs //190505
+      drawtext(pos,pt3,size->12); // no ketjs //210112
     );
     if(!contains(["p","q"],pt.name), //190505
       ptL=append(ptL,pt);

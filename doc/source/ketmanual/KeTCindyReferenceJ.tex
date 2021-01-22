@@ -8355,21 +8355,21 @@ Letter3d(M3d,"sw","M",["Color=blue"]);
 
 \subsection{CindyJSとKeTJS}
 
-CindyJS は，Cinderellaの作品をHTMLにしてWeb上で動かせるようにしたものである。Cinderellaのファイルメニューには，「CindyJSに書き出す」があり，これにより，HTML ファイルができる。できたHTMLファイルをそのままダブルクリックすると，JavaScript で記述されたプログラムが走る。
+CindyJS は，Cinderellaの作品をHTMLにしてWeb上で動かせるようにしたものである。Cinderellaのファイルメニューには，「HTMLに書き出す」があり，これにより，HTML ファイルができる。できたHTMLファイルをそのままダブルクリックすると，JavaScript で記述されたプログラムが走る。
 
 現在のところはCinderellaと完全互換ではなく，Web上ではMouseスロットなどが使えなかったり，線種が指定できなかったりする。それでも，自作のボタンは有効なので，これでWeb上のアプリケーションを作ることができる。
 
 KeTJSでは，CindyScriptにはないKeTCindyの関数（コマンド）を使って，作図アプリケーションを作ることができる。CindyJSの拡張版ともいえる。
 
-ただし，CindyJSがCinderellaと完全互換でないように，KeTJSもKeTCindyと完全互換ではない。たとえば，いまのところ空間図形は描けない。それでも，KeTCindyのシステムが入っていない環境でもWebブラウザで教材が使えることのメリットは大きいだろう。なお，HTMLなので，TeXのファイルへの書き出し機能はない。
+ただし，CindyJSがCinderellaと完全互換でないように，KeTJSもKeTCindyと完全互換ではない。たとえば，Maximaの呼び出しなどはできない。それでも，KeTCindyのシステムが入っていない環境でもWebブラウザで教材が使えることのメリットは大きいだろう。なお，HTMLなので，TeXのファイルへの書き出し機能はない。
 
-KeTJSでHTMLを作成するには，いったんCinderellaのファイルメニューから「CindyJSに書き出す」を選んでHTMLを作成した後，「KeTJS」ボタンをクリックする。「CindyJSに書き出す」で書き出されたHTMLは，実行のための環境設定しか書かれていない。これに，作図プログラムを追加するのが「KeTJS」「KeTJSoff」ボタンである。この２つのボタンの違いについては，次節「動作環境」を参照のこと。
+KeTJSでHTMLを作成するには，いったんCinderellaのファイルメニューから「HTMLに書き出す」を選んでHTMLを作成した後，「KeTJS(on,off)」ボタンをクリックする。「HTMLに書き出す」で書き出されたHTMLは，実行のための環境設定しか書かれていない。これに，作図プログラムを追加するのが「KeTJSon」「KeTJSoff」ボタンである。この２つのボタンの違いについては，次節「動作環境」を参照のこと。
 
-また，ひな形として，template2slide.cdy または samplesフォルダの s16 に入っているものを使うとよい。「KeTJS」「KeTJSoff」ボタンが設定してある。
+また，ひな形として，template4ketcindyjs.cdy または samplesフォルダの s06, s16 に入っているものを使うとよい。「KeTJSon」「KeTJSoff」ボタンが設定してある。
 
 \subsection{KeTJSの動作環境}
 
-Cinderellaのファイルメニューから「CindyJSに書き出す」を選ぶと，CSSとランタイムへのリンク，およびJavaScriptのコードが書かれたHTMLファイルが書き出される。CSSとランタイムへのリンクは
+Cinderellaのファイルメニューから「HTMLに書き出す」を選ぶと，CSSとランタイムへのリンク，およびJavaScriptのコードが書かれたHTMLファイルが書き出される。CSSとランタイムへのリンクは
 
 \begin{verbatim}
 <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
@@ -8383,7 +8383,7 @@ Cinderellaのファイルメニューから「CindyJSに書き出す」を選ぶ
 
 また，JavaScriptのコードの方は，これだけではKeTCindyのコマンドでの作図はできない。
 
-そこで，KeTJS ボタンをクリックすると，リンク先はそのままで，JavaScriptのコードを追加して，ファイル名に json を追加したHTMLファイルを作る。
+そこで，KeTJSon ボタンをクリックすると，リンク先はそのままで，JavaScriptのコードを追加して，ファイル名に json を追加したHTMLファイルを作る。
 
 また，KeTJSoff ボタン（オフラインで使う）をクリックすると，ランタイムをダウンロードして，Cinderellaのファイルと同じフォルダに ketcindyjs フォルダを作る。リンク先は次のようにketcindyjsに変え，JavaScriptのコードを追加して，ファイル名に jsoffL を追加したHTMLファイルを作る。
 
@@ -8396,9 +8396,9 @@ Cinderellaのファイルメニューから「CindyJSに書き出す」を選ぶ
 \vspace{\baselineskip}
 {\bf ファイル名について}
 
-Cinderellaのファイルメニューから「CindyJSに書き出す」ときのファイル名は，初期設定では作図中のファイル名と同じ。このファイル名は書き出すときに指定できる。
+Cinderellaのファイルメニューから「HTMLに書き出す」ときのファイル名は，初期設定では作図中のファイル名と同じ。このファイル名は書き出すときに指定できる。
 
-「KeTJS」ボタンで書き出すときのファイル名は，\verb|Setfiles()| でファイル名が指定されていなければ，作図中のファイル名と同じ。これが「CindyJSに書き出す」で書き出したときのファイル名で同じでないと，KeTJSのHTMLは作成されない。したがって，次のいずれかでファイル名を決める。
+「KeTJSon」ボタンで書き出すときのファイル名は，\verb|Setfiles()| でファイル名が指定されていなければ，作図中のファイル名と同じ。これが「CindyJSに書き出す」で書き出したときのファイル名で同じでないと，KeTJSのHTMLは作成されない。したがって，次のいずれかでファイル名を決める。
 
 (1) ファイル名は作図中のCinderellaのファイル名と同じにする。\\
 　　このときは，\verb|Setfiles()| を使わない。
@@ -8416,28 +8416,52 @@ Cinderellaのファイルメニューから「CindyJSに書き出す」ときの
 \hypertarget{setketcindyjs}{}
 \item[関数]Setketcindyjs(options)
 \item[機能] KeTJSの設定
-\item[説明] オプションを設定しない場合（ Setketcindyjs() ）は，初期値が使われる。
+\item[説明] オプションを設定しない場合（ Setketcindyjs() ）は，デフォルト値が使われる。
 
 オプションは次の通り。
 
 \begin{tabbing}
 012345678\=3433778901234567\=890090666612345\=\kill
-Scale \> 実数 \> 拡大・縮小　\>初期値は 1\\
-Grid \> 実数 \> グリッドサイズ（mm）\\
+Scale \> 実数 \> 拡大・縮小　\>デフォルト値は 1\\
+Grid \> 実数 \> グリッドサイズ\>デフォルト値は 1（mm）\\
 Nolabel \> 点のリスト \> ラベルを表示しない点を指定する。"No"だけでも可。\\
 \hspace*{10mm}"Nolabel=all"とすると，すべての点のラベルが表示されない。\\
-Color \>  色名またはコード\> 背景色の指定。初期値はlightgray([0,0,0,0.17])\\
+Label \> 点のリスト \> ラベルを表示する点を指定する。他は表示されない。\\
+\hspace*{10mm}"Label"か"Nolabel"のいずれかを用いる。\\
+Color \>  背景色\> 背景色の指定。\>デフォルト値は offwhite\\
 Figure \> y \>書き出す範囲をNE,SWの範囲にする。\\
-Axes \> false \>CindyJSが表示している座標軸を非表示にする。 \\
+Axes \> false \>CindyJSが表示している座標軸を非表示にする。
 \end{tabbing}
-【例】すべて設定するとき，次のように記述する。
+【例】次のように記述する。
 
-\verb|  Setketcindyjs(["Local=n","Scale=1.5","No=[A,B]","Color=lightgray"]) |
+\verb|  Setketcindyjs(["Scale=1.5","Label=[A]","Color=lightgray"]) |
 
 \vspace{\baselineskip}
-注１）Cinderellaの画面に背景の方眼が描かれているとき，「CindyJSに書き出す」で，この方眼も表示される。方眼を消したい場合は，画面下の「グリッドを描く」ツールで非表示にしておく。
+注１）\begin{minipage}[t]{110mm}%
+Cinderellaの画面に背景の方眼が描かれているとき，「CindyJSに書き出す」で，この方眼も表示される。方眼を消したい場合は，画面下の「グリッドを描く」ツールで非表示にしておく。
+\end{minipage}\vspace{2mm}
 
-注２）HTMLなので，画面に説明文などを表示したい場合は，HTMLファイルを開き，下の方の \verb|<body>| と \verb|</body>| の間，\verb|<div id="CSCanvas"></div>| の前後に書けば表示される。改行などは，HTMLのタグを用いる。
+注２）\begin{minipage}[t]{110mm}%
+HTMLなので，画面に説明文などを表示したい場合は，HTMLファイルを開き，下の方の \verb|<body>| と \verb|</body>| の間，\verb|<div id="CSCanvas"></div>| の前後に書けば表示される。改行などは，HTMLのタグを用いる。
+\end{minipage}\vspace{2mm}
+
+%\begin{description}
+
+\vspace{\baselineskip}
+
+\hypertarget{ketcindyjsmain}{}
+\item[関数]Ketcindyjsmain(prependlist,appendlist)
+\item[機能]KeTJSファイルのhtmlを読み込み，前後にスクリプトを追加した親htmlを作成する。
+\item[説明]親ファイル名は，cdyファイル名+main+(on,off) となる。\\
+タグは，冒頭に\verb|<pf5/fbr>|などと指定する。\\
+\verb|_;|は\verb|&emsp;| と変換される。
+
+【例】\verb|Ketcindyjsmain(["<pf10red/fp>_;_;Title"],[]);|\\
+　　　  \verb|=>|     \verb|<p><font size="10" color="red">&emsp;&emsp;Title</font></p>|
+
+%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+%\end{description}
 
 \vspace{\baselineskip}
 \hypertarget{setketcindy}{}
@@ -8519,22 +8543,6 @@ Plotdata("1",str,"x");
 【例】Mxfun("1","integrate",["x*sin(x)","x"]);// no ketjs
 　　　Ketcindyjsdata(["mx1",mx1]); 
 　　　Plotdata("1",mx1,"x");
-\end{verbatim}
-
-%\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
-
-\end{description}
-
-\begin{description}
-
-\hypertarget{ketcindyjsmain}{}
-\item[関数]Ketcindyjsmain(prependlist,appendlist)
-\item[機能]KeTJSファイルのhtmlを読み込み，前後にスクリプトを追加したhtmlを作成する。
-
-
-\begin{verbatim}
-【例】Ketcindyjsmain(["<pf10red/fp>_;_;Title"],[]);
-　　　   =>     <p><font size="10" color="red">&emsp;&emsp;Title</font></p>
 \end{verbatim}
 
 %\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}

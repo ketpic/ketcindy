@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210105] loaded");
+println("ketcindylibbasic3[20210122] loaded");
 
 //help:start();
 
@@ -3989,7 +3989,7 @@ Tohtmltagpf(sentence):=(
   sent=replace(sentence,"_;","&emsp;");
   sent=Removespace(sent);
   tag="";
-  if(substring(sent,0,2)=="<p", //200719
+  if(substring(sent,0,1)=="<", //210122
     tmp=indexof(sent,">");
     tag=substring(sent,1,tmp-1);
     sent=substring(sent,tmp,length(sent));
@@ -4159,7 +4159,6 @@ Mkketcindyjs(options):=( //17.11.18
     tmp=apply(allpoints(),text(#));
     nolabel=remove(tmp,label);
   ); //210105to
-println([4161,nolabel]);
   if(indexof(color,"[")>0,  //200505
     tmp=parse(color);
     if(length(tmp)==4,
@@ -4485,7 +4484,7 @@ println([4161,nolabel]);
     forall(from..(length(tmp1)),jj,
       flg=0; //190126from
       tmp2=["Figure","Parent","ParaF","Anime","Flip","Title","Slide","Digest",
-                 "KeTJS","KeTjsoff","Ketjson","Ketjsoff","Objview"]; //200527
+                 "KeTJS","KeTjsoff","Ketjson","KeTJSoff","Ketjsoff","Objview"]; //210122
       if(indexof(tmp1_jj,"type: "+Dqq("Button"))>0,
         nn=indexof(tmp1_jj,"text: ");
         tmp=substring(tmp1_jj,nn-1,length(tmp1_jj));

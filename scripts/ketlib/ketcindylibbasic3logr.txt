@@ -1,3 +1,7 @@
+// 20210122
+//    Tohtmltagpf changed  ( tag )
+// 20210120
+//    Setketcindyjs debugged  ( println for debug removed )
 // 20210105
 //    Mkketcindyjs changed   ("Label=" added)
 // 20201205

@@ -1,0 +1,92 @@
+///////////////////////
+Figure, Text1
+Viewtex();
+kc();
+
+///////////////////////
+Parent, Text2
+if(length(Shellparent)>0,
+  Makeshell(),Makebat();
+);
+if(indexof(Libname,"sci")>0,
+  writetosci(2),writetoRS(2)
+);
+kc();
+
+///////////////////////
+ParaF, Text3
+Parafolder();
+
+///////////////////////
+Anime, Text4
+Mkanimation();
+
+///////////////////////
+Flip, Text5
+Mkflipanime();
+
+///////////////////////
+Title,Text11
+Maketitle();
+
+//////////////////////
+Slide,Tex12
+Mkslides();
+
+//////////////////////
+Digest,Tex13
+Mkslidesummary();
+
+///////////////////////
+Ketjson, Text21
+Mkketcindyjs(append(KETJSOP,"Web=y"));
+
+///////////////////////
+Ketjsoff, Text22
+Mkketcindyjs(append(KETJSOP,"Web=n"));
+
+///////////////////////
+Objview, Text31
+Mkviewobj(OCNAME,OBJCMD,OCOPTION);
+
+///////////////////////
+Skele,Text50
+skeleflg=1;
+
+///////////////////////
+Nohid,Text51
+nohidflg=1;
+
+///////////////////////
+Play, Text71
+resetclock();
+playanimation();
+Animeflg=1;
+Dirflg=1;
+sorg=Current;
+
+///////////////////////
+Pause, Text72
+Animeflg=1-Animeflg;
+if(Animeflg==0,
+  pauseanimation();
+  sorg=sstart;
+,
+  resetclock();
+  playanimation();
+);
+
+///////////////////////
+Rev, Text73
+sorg=sstart;
+Dirflg=-Dirflg;
+Animeflg=1;
+resetclock();
+playanimation();
+
+///////////////////////
+Stop, Text74
+stopanimation();
+Animeflg="";
+sstart=Current;
+

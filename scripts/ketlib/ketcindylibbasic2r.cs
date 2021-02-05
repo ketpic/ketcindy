@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210205] loaded");
+println("ketcindylibbasic2[20210206] loaded");
 
 //help:start();
 
@@ -4176,7 +4176,7 @@ Tabledata(nm,xL,yL,rmvL,optionorg):=(
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="G",
       geo=Toupper(substring(tmp_2,0,1));
-      options=remove(options,[#]); //210203
+      options=remove(options,#);
     );
   );
   if(geo=="Y", //191008to
@@ -4199,7 +4199,7 @@ Tabledatalight(Arg1,Arg2,Arg3,Arg4):=(
 Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 //help:Tabledatalight(xLst,yLst,rmvL,[0(notick)]);
 //help:Tabledatalight(xLst,yLst,rmvL,[2,"Setwindow=y","Move=[0,0]"]); //190428
-  regional(options,rng,msg,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
+  regional(options,rng,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
     rlist,clist,Tb,jj,kk,tmp,tmp1,tmp2,tmp3,Eps,tbstr);
   // TableMove is global for Table
   TABLECOUNT=TABLECOUNT+1; //190428from
@@ -4210,7 +4210,6 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   eqL=tmp_5; //16.12.16from
   reL=tmp_6;
   rng="Y";
-  msg="Y";
   forall(eqL,
     tmp=Strsplit(#,"="); //190428from
     tmp1=Toupper(substring(tmp_1,0,2));
@@ -4218,13 +4217,9 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       rng=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
-    if(tmp1=="MS",
-      msg=tmp_2;
-      options=remove(options,[#]);
-    );
     if(tmp1=="MO",
       TableMove=parse(tmp_2);
-//      rng="N"; //190429>210205
+      rng="N"; //190429
       options=remove(options,[#]);
     );
     if(tmp1=="SE",
@@ -4245,9 +4240,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   tmp=sum(yLst);
   upleft=[0,tmp];
   TableOptions=options; // 16.11.28
-  if(msg=="Y", //210205from
-    println("generate Tabledatalight "+name);  //190428
-  ); //210205to
+  println("generate Tabledatalight "+name);  //190428
   ul=upleft/10;
   m=length(xLst);
   n=length(yLst);
@@ -4272,15 +4265,13 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     if(length(rmvL)>=0,
       tmp1="r"+text(0);
       tmp2="r"+text(n);
-      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],append(options,"Msg=n"));
-          //200523
+      Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],append(options,"Msg=n")); //200523
       tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
     ,
       forall(0..(n-1),
         tmp1="r"+text(#);
         tmp2="r"+text(#+1);
-        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],append(options,"Msg=n"));
-           //200523
+        Tlistplot("-"+name+tmp3+tmp1+tmp2,[tmp3+tmp1,tmp3+tmp2],append(options,"Msg=n")); //200523
         tbstr=tbstr+Dqq(name+tmp3+tmp1+tmp2)+"," //191008
       );
     );  //190507to
@@ -4318,12 +4309,11 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   Changetablestyle(rmvL,["nodisp","Msg=n"]); //200523
   Addax(0);
   Eps=10^(-3);
-  tmp=TableMove_1;
-  tmp1=TableMove+clist_(length(clist));
-  tmp2=TableMove+rlist_1;
-  tmp3=TableMove+rlist_(length(rlist));
+  tmp1=clist_(length(clist));
+  tmp2=rlist_1;
+  tmp3=rlist_(length(rlist));
   if(rng=="Y", // 16.12.16
-    Setwindow([tmp-Eps,tmp1_1+Eps],[tmp3_2-Eps,tmp2_2+Eps]);
+    Setwindow([0-Eps,tmp1_1+Eps],[tmp3_2-Eps,tmp2_2+Eps]);
   );
   Tb;
 );
@@ -4399,7 +4389,7 @@ Tgrid(ptstr):=(
     tmp2=substring(ptstr,tmp,length(ptstr));
     tmp2=parse(tmp2);
     tb=parse("tb"+text(TABLECOUNT)); //190428
-    [tb_1_(tmp1+1)_1,tb_2_(tmp2+1)_2]+tm; //190428
+    [tb_1_(tmp1+1)_1,tb_2_(tmp2+1)_2]+TableMove; //190428
   );
 );
 ////%Tgrid end////

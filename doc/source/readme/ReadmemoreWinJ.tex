@@ -33,16 +33,16 @@ KeTCindyについての補足 (Windows)
 \item Sumatraのインストール
 \begin{itemize}
 \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} からダウンロードする．
-\item \verb|Option|を選び，インストール先をProgram Files（または (x86)）にする．
+\item {\color{red}\verb|Option|を選び}，インストール先をProgram Files（または (x86)）にする．
 \end{itemize}
 
 \item KeTTeXのインストール
 
 \begin{enumerate}[(1)]
-\item 以下から\verb|kettex.exe|をダウンロードする．\\
-    \hspace*{10mm}\url{https://www.dropbox.com/s/fthw4btjqqs33tc/kettex.exe?dl=0}
-\item 自己解凍ファイルになっているので，クリック（必要なら右クリック）して解凍する．
-\item 解凍してできるkettexフォルダを\verb|C:\|(\verb|\|は\yen の意味) に入れる．
+\item 以下から\verb|kettex|の圧縮ファイル(tar.xz)をダウンロードして\verb|C:\|(\verb|\|は\yen の意味) に移動する．\\
+    \hspace*{10mm}\url{https://github.com/ketpic/kettex/releases}
+\item \verb|7-Zip|，または\verb|w32tex|の\verb|texinstwin|にある\verb|tar.exe|と\verb|xz.exe|で解凍する．
+\item 解凍してできるkettexフォルダを\verb|C:\| に入れる．
 \end{enumerate}
 
 \item KeTCindyのインストール
@@ -56,7 +56,7 @@ KeTCindyについての補足 (Windows)
 \item 右側にあるボタンを順に押す．\\
 \hspace*{10mm}\verb|Mkinit|：初期化ファイルketcindy.iniをユーザホームに作成\\
 \hspace*{10mm}\verb|Update|：TeXに入っているketlib関連のファイルを更新（コピー）\\
-\hspace*{10mm}\verb|Work|：作業フォルダketcindy.iniをユーザホームに作成
+\hspace*{10mm}\verb|Work|：作業フォルダketcindy(+日付)をユーザホームに作成
 \end{enumerate}
 \item ketcindysettings.cdyのUpdateでエラーが出た場合\\
 \hspace*{10mm}updaterフォルダにあるupdateketcindy.batを右クリックして管理者として実行する．
@@ -64,17 +64,16 @@ KeTCindyについての補足 (Windows)
 
 \item KeTCindyのテストラン
     \begin{enumerate}[(1)]
-    \item ketcindysettings.cdyを終了してから，作業ディレクトリketcindyを開く．
-    \item ketcindyの中のtemplate1basic.cdyをダブルクリック．\\
+    \item ketcindysettings.cdyを終了してから，作業ディレクトリketcindy(+日付)を開く．
+    \item \verb|templates|の1つのcdyファイルをダブルクリック．\\
       \hspace*{10mm}画面に白い枠が出れば，ライブラリの読み込みは成功．
-    \item スクリーンの左上部にあるFigureボタンを押して，PDFが表示されれば成功．
+    \item スクリーンの左上部にあるFigureボタンを押す．
+    \item \TeX コンパイラが動いて，PDFが表示されれば成功．
   \end{enumerate}
 
 \item TeXWorksの設定（kettexの場合）
   \begin{itemize}
- \item KeTTeXでは，\verb|C:\kettex\texlive\bin\win32|にすでに入っている．\\
- \hspace*{5mm}注）TeXLiveの場合は\verb|C:\texlive\(西暦年)\bin\win32|
-  \item TeXworksを立ち上げ，「TeXworks \verb|>| 環境設定 \verb|>| タイプセット」
+   \item TeXworksを立ち上げ，「TeXworks \verb|>| 環境設定 \verb|>| タイプセット」
   \item 上の欄（パス）に以下を追加\\
   \hspace*{5mm}\verb|C:\kettex\texlive\bin\win32|\\
   \hspace*{10mm}注) 上の行を上の欄の先頭になるように移動する．

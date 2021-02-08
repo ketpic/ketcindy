@@ -3789,6 +3789,15 @@ Textedit(no):=(
   tmp1=parse(tmp);
   tmp1;
 );
+Textedit(n0,str):=( //210208from
+  regional(tmp,tmp1,tmp2,out);
+  tmp1=str;
+  //tmp1=Textedit(n0); //only ketjs
+  tmp=Strsplit("="+tmp1,"=");
+  tmp2=tmp_(-1);
+  if(length(tmp2)==0,out=str,out=tmp2);
+  out;
+); //210208to
 ////%Textedit end////
 
 ////%Textedit2value start//// 190521

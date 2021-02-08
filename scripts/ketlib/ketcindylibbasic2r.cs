@@ -4200,7 +4200,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
 //help:Tabledatalight(xLst,yLst,rmvL,[0(notick)]);
 //help:Tabledatalight(xLst,yLst,rmvL,[2,"Setwindow=y","Move=[0,0]"]); //190428
   regional(options,rng,name,upleft,ul,flg,tick,eqL,reL,n,m,xsize,ysize,
-    rlist,clist,Tb,jj,kk,tmp,tmp1,tmp2,tmp3,Eps,tbstr);
+    rlist,clist,Tb,jj,kk,tmp,tmp1,tmp2,tmp3,Eps,tbstr,msg);
   // TableMove is global for Table
   TABLECOUNT=TABLECOUNT+1; //190428from
   TableMove=GENTEN; //190428to
@@ -4210,6 +4210,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   eqL=tmp_5; //16.12.16from
   reL=tmp_6;
   rng="Y";
+  msg="Y";
   forall(eqL,
     tmp=Strsplit(#,"="); //190428from
     tmp1=Toupper(substring(tmp_1,0,2));
@@ -4217,6 +4218,10 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
       rng=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
+    if(tmp1=="MS", //210208from
+      msg=Toupper(tmp_2);
+      options=remove(options,[#]);
+    ); //210208to
     if(tmp1=="MO",
       TableMove=parse(tmp_2);
       rng="N"; //190429
@@ -4240,7 +4245,9 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
   tmp=sum(yLst);
   upleft=[0,tmp];
   TableOptions=options; // 16.11.28
-  println("generate Tabledatalight "+name);  //190428
+  if(msg=="Y", //210208
+    println("generate Tabledatalight "+name);  //190428
+  ); //210208
   ul=upleft/10;
   m=length(xLst);
   n=length(yLst);

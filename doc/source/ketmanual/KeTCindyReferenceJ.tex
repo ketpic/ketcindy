@@ -8581,23 +8581,21 @@ Plotdata("1",str,"x");
 \item[(3)]インスペクトで識別番号を確認（修正）する。
 \end{itemize}
 
-【例】Setedittext(0,["y=","Size=18","Width=100"]); Text0の表示文字\verb|"y="|，文字サイズ18pt，幅100pt
+【例】Setedittext(0,["y=","Size=18","Width=100"]);\\
+　　　　Text0の表示文字\verb|"y="|，文字サイズ18pt，幅100pt
 
 \end{description}
 
 \begin{description}
 
 \hypertarget{textedit}{}
-\item[関数]Textedit(識別番号)
-\item[機能]KeTJSで入力窓に入れた文字列を取得する。
+\item[関数]Textedit(識別番号[,デフォルト値])
+\item[機能]KeTJSで入力窓に入れた文字列（＝があるときは，その右側）を返す。\\
+文字列が空ならデフォルト値を返す。
 
-【例】
-
-\begin{verbatim}
-str="x^2"; //no ketjs
-//str=Textedit(0); //only ketjs
-Plotdata("1",str,"x");
-\end{verbatim}
+【例】\\
+\verb|str=Textedit(0,"x^2");|\\
+\verb|Plotdata("1",str,"x");|
 
 \end{description}
 

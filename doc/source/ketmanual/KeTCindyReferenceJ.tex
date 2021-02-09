@@ -1,4 +1,4 @@
-\documentclass[papersize,a4paper,12pt,uplatex]{jsarticle}
+\documentclass[papersize,a4paper,10pt,uplatex]{jsarticle}
 \usepackage{ketpic,ketlayer}
 \usepackage{amsmath}
 % \usepackage{amsmath,newtxmath}
@@ -8593,9 +8593,19 @@ Plotdata("1",str,"x");
 \item[機能]KeTJSで入力窓に入れた文字列（＝があるときは，その右側）を返す。\\
 文字列が空ならデフォルト値を返す。
 
-【例】\\
+【例】
+
 \verb|str=Textedit(0,"x^2");|\\
 \verb|Plotdata("1",str,"x");|
+
+\hypertarget{subsedit}{}
+\item[関数]Subsedit(識別番号,文字列)
+\item[機能]文字列を識別番号の入力窓に入れる。
+
+【例】
+
+\verb|Subsedit(0,"x^2");|
+
 
 \end{description}
 
@@ -8618,12 +8628,30 @@ Plotdata("1",str,"x");
 注）Play,Pause,Rev,Stopの識別番号が71,72,73,74であることを確認しておく。\\
 注）スペース増加量の単位はmm，リストで個々に指定することもできる。
 
-
 \begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
 
+\subsection{入力窓の利用}
+
+\begin{itemize}
+\item 入力窓(Editable Text)の作成
+  \begin{enumerate}[(1)]
+  \item モード \verb|>| 特別 \verb|>| 文字列入力（終わったら「要素を動かす」ボタンに戻しておく）
+  \item Shiftキーを押しながら選択，編集 \verb|>| インスペクタを開いて，識別番号を取得する。
+  \item コマンド\verb|Seteditable|で窓の形状を設定する。\\
+  \hspace*{10mm}\verb|Seteditable(0,["=","Size=18","Width=200"]);|
+  \item 位置を動かすには，Shiftキーを押しながら選択する．
+  \end{enumerate}
+\item 入力窓からの文字列の取得\\
+\hspace*{10mm}\verb|str=Textedit(0,空のときまたは=の右辺が空のときに返す文字列);|
+\item 入力窓に文字列を代入\\
+\hspace*{10mm}\verb|Subsedit(0,文字列);|
+
+\end{itemize}
+
 \newpage
+
 %付録==================================
 \section{付録}
 
@@ -9040,6 +9068,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
 \hyperlink{seteditable}{Seteditable(識別番号, 文字サイズ, 幅)}\>\verb|"Editable Text"|を設定する。\\
 \hyperlink{textedit}{Textedit(識別番号)}\>KeTJSで入力窓に入れた文字列を取得\\
+\hyperlink{subsedit}{Textedit(識別番号,文字列)}\>文字列を識別番号の入力窓に入れる\\
 \hyperlink{movetojs}{Movetojs(要素名,座標,フォントサイズ)}\>Textボタンの位置とフォントサイズを設定\\
 \hyperlink{setplaybuttons}{Setplaybuttons(座標,サイズ [, スペース])}\>Playなどのボタンの位置とフォントサイズを設定\\
 %command list to here

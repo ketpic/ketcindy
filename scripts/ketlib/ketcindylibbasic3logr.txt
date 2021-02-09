@@ -1,5 +1,6 @@
 // 210208
 //   Textedit changed  ( 2nd arg is the default )
+//   Subsedit added
 // 20210122
 //    Tohtmltagpf changed  ( tag )
 // 20210120

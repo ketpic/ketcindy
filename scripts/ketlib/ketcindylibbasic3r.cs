@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210122] loaded");
+println("ketcindylibbasic3[20210208] loaded");
 
 //help:start();
 
@@ -3783,7 +3783,7 @@ Seteditable(no,optionorg):=(
 
 ////%Textedit start//// 190430
 Textedit(no):=(
-//help:Textedit(50);
+//help:Textedit(50[,str]);
   regional(tmp,tmp1,tmp2);
   tmp="Text"+text(no)+".currenttext";
   tmp1=parse(tmp);
@@ -3799,6 +3799,20 @@ Textedit(n0,str):=( //210208from
   out;
 ); //210208to
 ////%Textedit end////
+
+////%Subsedit start////
+Subsedit(no,str):=(
+//help:Subsedit(50,str);
+ regional(tmp,tmp1);
+ if(isstring(str),
+   tmp1=str;
+ ,
+   tmp1=text(str);
+ );
+ tmp="Text"+text(no)+".currenttext="+tmp1+";";
+ parse(tmp);
+);
+////%Subsedit end////
 
 ////%Textedit2value start//// 190521
 Textedit2value(no):=Textedit2value(no,[]);
@@ -3845,6 +3859,7 @@ Textedit2value(no,options):=(
   str;
 );
 ////%Textedit2value end////
+
 
 ////%Parsejson start////
 Parsejson(json):=(

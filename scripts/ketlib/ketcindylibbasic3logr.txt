@@ -1,3 +1,5 @@
+// 210211
+//   Subsedit debugged  ( parse )
 // 210208
 //   Textedit changed  ( 2nd arg is the default )
 //   Subsedit added

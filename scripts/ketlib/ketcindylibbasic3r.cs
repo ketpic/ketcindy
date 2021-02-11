@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210208] loaded");
+println("ketcindylibbasic3[20210211] loaded");
 
 //help:start();
 
@@ -3809,8 +3809,8 @@ Subsedit(no,str):=(
  ,
    tmp1=text(str);
  );
- tmp="Text"+text(no)+".currenttext="+tmp1+";";
- parse(tmp);
+ tmp="Text"+text(no); //210211[2lines]
+ parse(tmp).currenttext=tmp1;
 );
 ////%Subsedit end////
 

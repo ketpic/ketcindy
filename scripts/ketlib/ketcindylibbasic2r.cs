@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210206] loaded");
+println("ketcindylibbasic2[20210215] loaded");
 
 //help:start();
 
@@ -294,18 +294,20 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
       if(line=="N",
         fillpoly(apply(list,Pcrd(#)),color->color);
         if(Noflg==0,
-          if(ispoint(point) % islist(point), //201214from
-            if(|point-Ptend(direction)|<Eps,point=1);
-          );  //201214to
-          if((point==1)&(isstring(direction)), //191202from
-            if(Norm(Ptend(direction)-Ptstart(direction))>Eps,
-              tmp=select(GCLIST,#_1==direction); //201106from
-              tmp1=tmp_1;
-              tmp2=Nearestpt(list_4,direction);
-              tmp2=tmp2_1; //201214[2lines]
-              Partcrv("-"+direction,Ptstart(direction),tmp2,direction,["nodisp","Msg=n"]);
-            ); //201106
-          );
+          if(isstring(directory), //210215
+            if(ispoint(point) % islist(point), //201214from
+              if(|point-Ptend(direction)|<Eps,point=1);
+            );  //201214to
+            if(point==1, //191202from
+              if(Norm(Ptend(direction)-Ptstart(direction))>Eps,
+                tmp=select(GCLIST,#_1==direction); //201106from
+                tmp1=tmp_1;
+                tmp2=Nearestpt(list_4,direction);
+                tmp2=tmp2_1; //201214[2lines]
+                Partcrv("-"+direction,Ptstart(direction),tmp2,direction,["nodisp","Msg=n"]);
+              ); //201106
+            );
+          );  //210215
           Listplot("-arh"+nm,list,["dr,0.1","Color="+text(color),"Msg=n"]);//191202
           Shade(["arh"+nm],["Color="+text(color)]);
         );

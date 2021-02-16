@@ -485,12 +485,12 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
     cmdlist=append(cmdlist,"quit()");
     if(wflg==0,
-      tmp=file+".r"; //210516from
+      tmp=file+".r"; //210216from
       if(!isexists(Dirwork,tmp),
         tmp1=""
       ,
         tmp1=Readlines(tmp);
-      ); //210516to
+      ); //210216to
       if(length(tmp1)==0,
         wflg=1;
       ,
@@ -2104,12 +2104,12 @@ CalcbyM(name,cmd,optionorg):=(
   cmdlist=append(cmdlist,"closefile()");
   cmdlist=append(cmdlist,"quit()");
   if(wflg==0,
-    tmp=file+".max"; //210516from
+    tmp=file+".max"; //210216from
     if(!isexists(Dirwork,tmp),
       tmp1=""
     ,
       tmp1=Readlines(tmp);
-    );  //210516to
+    );  //210216to
     if(length(tmp1)==0,
       wflg=1;
     ,

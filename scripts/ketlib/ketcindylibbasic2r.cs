@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210215] loaded");
+println("ketcindylibbasic2[20210216] loaded");
 
 //help:start();
 
@@ -256,17 +256,18 @@ Arrowhead(Arg1,Arg2,Arg3):=(
     Arrowhead(text(ArrowheadNumber),Arg1,Arg2,Arg3);
   );
 );
-Arrowhead(nm,point,direction,optionsorg):=(//191129remade
+Arrowhead(nm,pointorg,direction,optionsorg):=(//191129remade
 //help:Arrowhead("1",B,B-A);
 //help:Arrowhead("2",[1,2],"gr1");
 //help:Arrowhead("3",0.5,"gr1");
 //help:Arrowhead("4",1,"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
    regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
-         options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
+         point,options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
   Eps=10^(-4);
   name="arh"+nm; //181018
   ArrowheadNumber=ArrowheadNumber+1;
+  point=Lcrd(pointorg); //210216
   options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -284,9 +285,9 @@ Arrowhead(nm,point,direction,optionsorg):=(//191129remade
      );
   );
   list=Arrowheaddata(point,direction,options);
-  if((ispoint(point))%(islist(point)),
+//  if((ispoint(point))%(islist(point)),  //210216[removed]
     if(!Inwindow(point),Noflg=2);
-  );
+//  );  //210216[removed]
   if(Noflg<3,
     tmp=name+"="+Textformat(list,5)+";"; 
     parse(tmp);

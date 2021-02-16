@@ -1,3 +1,5 @@
+// 20210216
+//    CalcbyM,CalcbyR debugged  ( case that file(M,R) not exists )
 // 20201230
 //    ExeccmdC debugged (optionsh)
 // 20201015

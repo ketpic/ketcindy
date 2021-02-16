@@ -1,5 +1,6 @@
 drawimage([0,0],"picture.png",scale->2,alpha->0.4);
 drawtext((2,1),"Text",size->2);
+isexists(dir,file);
 system(list=append(list,"a");
 system(list=concat(list,["a","b"]);
 system(arccos,arcsin,arctan);

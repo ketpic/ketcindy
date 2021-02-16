@@ -16,12 +16,13 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20201101] loaded");
+println("ketcindylibbasic1[20210216 loaded");
 
 //help:start();
 
 //help:drawimage([0,0],"picture.png",scale->2,alpha->0.4);
 //help:drawtext((2,1),"Text",size->2);
+//help:isexists(dir,file);
 //help:system(list=append(list,"a"););
 //help:system(list=concat(list,["a","b"]););
 //help:system(arccos,arcsin,arctan);

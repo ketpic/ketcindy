@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20201230] loaded");
+println("ketcindylibout[20210216] loaded");
 
 //help:start();
 
@@ -485,7 +485,12 @@ CalcbyR(name,path,cmd,optionorg):=(
     );
     cmdlist=append(cmdlist,"quit()");
     if(wflg==0,
-      tmp1=Readlines(file+".r"); //200509
+      tmp=file+".r"; //210516from
+      if(!isexists(Dirwork,tmp),
+        tmp1=""
+      ,
+        tmp1=Readlines(tmp);
+      ); //210516to
       if(length(tmp1)==0,
         wflg=1;
       ,
@@ -2099,7 +2104,12 @@ CalcbyM(name,cmd,optionorg):=(
   cmdlist=append(cmdlist,"closefile()");
   cmdlist=append(cmdlist,"quit()");
   if(wflg==0,
-    tmp1=Readlines(file+".max"); //200509
+    tmp=file+".max"; //210516from
+    if(!isexists(Dirwork,tmp),
+      tmp1=""
+    ,
+      tmp1=Readlines(tmp);
+    );  //210516to
     if(length(tmp1)==0,
       wflg=1;
     ,

@@ -1,3 +1,5 @@
+// 210224
+//   Addasterisk added
 // 210211
 //   Subsedit debugged  ( parse )
 // 210208

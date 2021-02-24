@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210211] loaded");
+println("ketcindylibbasic3[20210224] loaded");
 
 //help:start();
 
@@ -3036,6 +3036,85 @@ Sla2fra(str):=(
   out;
 );
 ////%Sla2fra end////
+
+////%Addasterisk start//// 210222
+Addasterisk(strorg):=(
+//help:Addasterisk("ax^2+bx+c");
+  regional(pL,sL,funL,sgnL,numL,alphaL,
+    f,k,n1,n2,sub,res,tmp,tmp1,tmp2,ctr,out);
+  str=replace(strorg,"  ","*");
+  str=replace(str," ","*");
+  str=replace(str,"pi","%");
+  funL=["sin","cos","tan","log","fr","sq"];
+  sgnL=["+","-","*","/","^"];
+  numL=apply(0..9,text(#));
+  tmp1=32..126;
+  tmp=(65..90)++(97..122);
+  tmp1=remove(tmp1,tmp);
+  alphaL=apply(tmp,unicode(text(#),base->10));
+  alphaL=concat(alphaL,["%"]);
+  str="$"+str;
+  pL=Bracket(str);
+  pL=concat(pL,[[length(str),0]]);
+  pL=concat([[1,0]],pL);
+  out=[];
+  forall(1..(length(pL)-1),k,
+    tmp=pL_k; n1=tmp_1; l1=tmp_2;
+    tmp=pL_(k+1); n2=tmp_1; l2=tmp_2;
+    sub=substring(str,n1-1,n2);
+    out=append(out,sub);
+  );
+  forall(1..(length(pL)-1),k,
+    sub=out_k;
+    sub=substring(sub,1,length(sub));
+    if(length(sub)>0,
+      res=sub_(-1);
+      sub=substring(sub,0,length(sub)-1);
+    ,
+      res=""
+    );
+    forall(funL,f,
+      tmp=indexof(sub,f);
+      if(tmp>0,
+        res=substring(f,0,length(f))+"(";
+        sub=substring(sub,0,tmp-1);
+      );
+    );
+    ctr=1;
+    while((length(sub)>0)&(ctr<200),
+      tmp1=sub_(-1);
+      tmp2=res_1;
+      sub=substring(sub,0,length(sub)-1);
+      if(contains(["$","#"],tmp1),
+        tmp1="";
+      );
+      if(contains(alphaL,tmp2),
+        tmp=concat(alphaL,numL);
+        tmp=concat(tmp,[")"]);
+        if(contains(tmp,tmp1),
+          res="*"+res;
+        );
+      );
+      if(contains(numL,tmp2),
+        tmp=concat(aphaL,[")"]);
+        if(contains(tmp,tmp1),
+          res="*"+res;
+        );
+      );
+      res=tmp1+res;
+      ctr=ctr+1;
+    );
+    out_k=res;
+  );
+  res="";
+  forall(out,
+    res=res+#;
+  );
+  out=replace(res,"%","pi");
+  out=replace(out,"$","");
+  out;
+);
+////%Addasterisk end////
 
 ////%Tonormalform start//// //200605
 Tonormalform(fun0org):=(

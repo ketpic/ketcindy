@@ -4380,7 +4380,7 @@ Plotdata(name1,func,variable):=Plotdata(name1,func,variable,[]);
 Plotdata(name1,func,variable,options):=(
 //help:Plotdata("1","sin(x)","x",["Num=100"]);
 //help:Plotdata("2","x^2","x=[-1,1]");
-//help:Plotdata("3","Fout(x)","x",["out"]);
+//help:Plotdata("Options=[Num,Exc,Dis]");
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
          PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,Msg,
          Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color,color4);

@@ -1347,6 +1347,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
 Rotate3pt(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);
 Rotate3pt(point,w1,w2,center):=Rotatepoint3d(point,w1,w2,center);
 ////%Rotate3pt end////
+////%Rotatepoint3d start////
 Rotatepoint3d(point,w1,w2):=Rotatepoint3d(point,w1,w2,[0,0,0]);//180809
 Rotatepoint3d(point,w1org,w2org,center):=(
 //help:Rotatepoint3d(pt3d,[0,0,1],pi/2);

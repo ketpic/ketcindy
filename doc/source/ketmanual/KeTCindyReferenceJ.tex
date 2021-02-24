@@ -4482,9 +4482,21 @@ Cindyscriptの アンダーバーの演算子 (list\_n , str\_n) と同様。
 
 \vspace{\baselineskip}
 
+\hypertarget{addasterisk}{}
+\item[関数]Addasterisk(文字列)
+\item[機能]数式文字列に\verb|*|を追加する。
+
+\vspace{\baselineskip}
+
+【例】\verb|Addasterisk("fr(1,2)x^2+3sin(x)");| => \verb|"fr(1,2)*x^2+3*sin(x)" |
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\vspace{\baselineskip}
+
 \hypertarget{sla2fra}{}
 \item[関数]Sla2fra(文字列)
-\item[機能]文字列の中の / を簡易TeX-like書式の分数に直す．
+\item[機能]文字列の中の / を簡易TeX-like書式の分数に直す。
 
 \vspace{\baselineskip}
 
@@ -8950,6 +8962,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{fracform}{Fracform(数,分母リスト)}\>簡易TeX-like書式の文字列を返す\\
 \hyperlink{tonormalform}{Tonoralform(TeX-like書式)}\>TeX書式の文字列に\verb|*|を補う\\
 \hyperlink{sla2fra}{Sla2fra(文字列)}\>文字列の中の / を簡易TeX-like書式の分数に直す\\
+\hyperlink{addasterisk}{Addasterisk(文字列)}\>数式文字列に\verb|*|を追加する\\
 \hyperlink{totexform}{Totexform(TeX-like書式)}\>TeX書式の文字列を返す\\
 \hyperlink{tocindyform}{Tocindyform(TeX-like書式}\>Cindy書式の文字列を返す\\
 \vspace{\baselineskip}

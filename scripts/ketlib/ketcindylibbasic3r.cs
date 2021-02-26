@@ -5,7 +5,7 @@
 // the Free Software Foundation; either version 3 of the License, or
 // (at your option) any later version.
 // 
-// This program is distributed in the hope that it will be useful,
+// This is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210224] loaded");
+println("ketcindylibbasic3[20210225] loaded");
 
 //help:start();
 
@@ -3066,7 +3066,6 @@ Addasterisk(strorg):=(
   );
   forall(1..(length(pL)-1),k,
     sub=out_k;
-    sub=substring(sub,1,length(sub));
     if(length(sub)>0,
       res=sub_(-1);
       sub=substring(sub,0,length(sub)-1);
@@ -3085,9 +3084,6 @@ Addasterisk(strorg):=(
       tmp1=sub_(-1);
       tmp2=res_1;
       sub=substring(sub,0,length(sub)-1);
-      if(contains(["$","#"],tmp1),
-        tmp1="";
-      );
       if(contains(alphaL,tmp2),
         tmp=concat(alphaL,numL);
         tmp=concat(tmp,[")"]);
@@ -3104,7 +3100,7 @@ Addasterisk(strorg):=(
       res=tmp1+res;
       ctr=ctr+1;
     );
-    out_k=res;
+    out_k=substring(res,1,length(res));
   );
   res="";
   forall(out,

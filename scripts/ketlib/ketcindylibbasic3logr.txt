@@ -1,3 +1,6 @@
+// 210227
+//   Addasterisk changed (e -> exp(1))
+//   Totexform changed  (exp(1)->e)
 // 210225
 //   Addasterisk debugged
 // 210224

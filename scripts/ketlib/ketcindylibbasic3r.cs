@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210225] loaded");
+println("ketcindylibbasic3[20210227] loaded");
 
 //help:start();
 
@@ -3045,9 +3045,22 @@ Addasterisk(strorg):=(
   str=replace(strorg,"  ","*");
   str=replace(str," ","*");
   str=replace(str,"pi","%");
-  funL=["sin","cos","tan","log","fr","sq"];
+  str=replace(str,"ex(","exp("); //210227from
+  tmp=Indexall(str,"e");
+  if(length(tmp)>0,
+    tmp1=substring(str,0,tmp_1-1);
+    forall(tmp,
+      if(!substring(str,#,#+3)!="xp(",
+        tmp1=tmp1+"exp(1)";
+      ,
+        tmp1=tmp1+"e";
+      );
+    );
+    str=tmp1+substring(str,tmp_(-1),length(str));;
+  );
+  funL=["sin","cos","tan","log","fr","sq","exp"]; //210227to
   sgnL=["+","-","*","/","^"];
-  numL=apply(0..9,text(#));
+  numL=append(apply(0..9,text(#)),"."); //210226
   tmp1=32..126;
   tmp=(65..90)++(97..122);
   tmp1=remove(tmp1,tmp);
@@ -3215,7 +3228,7 @@ Tonormalform(fun0org):=(
 ////%Tonormalform end//// //200605
 
 ////%Totexformpart start////
-Totexformpart(str):=( //190514
+Totexformpart(str):=( //190515from
   regional(plv,funL,repL,flg,flgf,nall,nn,fun,funf,
       frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
@@ -3291,6 +3304,7 @@ Totexform(str):=( //190514
 //help:Totexform("frac(2,3)");
   regional(out,plv,flg,nn,tmp,tmp1,tmp2);
   out=replace(str,"pi","\pi"); //190715
+  out=replace(out,"exp(1)","e"); //210227
   tmp1=apply(0..9,text(#));  //190915from
   tmp2=Indexall(out,"*");
   forall(tmp2,

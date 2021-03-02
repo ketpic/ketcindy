@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210227] loaded");
+println("ketcindylibbasic3[20210303] loaded");
 
 //help:start();
 
@@ -3037,12 +3037,59 @@ Sla2fra(str):=(
 );
 ////%Sla2fra end////
 
-////%Addasterisk start//// 210222
+////%Addasterisk start//// 210301
 Addasterisk(strorg):=(
 //help:Addasterisk("ax^2+bx+c");
-  regional(pL,sL,funL,sgnL,numL,alphaL,
-    f,k,n1,n2,sub,res,tmp,tmp1,tmp2,ctr,out);
-  str=replace(strorg,"  ","*");
+  regional(pL,sL,funL,fn,sgnL,numL,alphaL,
+      str0,str,f,k,n1,n2,sub,res,tmp,tmp1,tmp2,ctr,out,s,flg);
+  str0=replace(strorg,"  ","*");
+  funL=["sin","cos","tan","log"]; 
+  sgnL=["+","-"];
+  forall(funL,f,
+    str="";
+    res=str0;
+    ctr=1;
+    while((indexof(res,f)>0)&(ctr<100),
+      tmp1=indexof(res,f);
+      str=str+substring(res,0,tmp1+2);
+      res=substring(res,tmp1+2,length(res));
+      if(res_1==" ",
+        str=str+"(";
+        res=substring(res,1,length(res));
+        tmp=indexof(res," ");
+        if(tmp>0,
+          str=str+substring(res,0,tmp-1)+")";
+          res=substring(res,tmp,length(res));
+        ,
+          str=str+res+")";
+          res="";
+        );
+      );
+      if(res_1=="(",
+        tmp1=bracket(res,"()");
+        tmp1=select(tmp1,#_2==-1);
+        if(length(tmp1)>0,tmp1=tmp1_1_1,tmp1=0);
+        flg=0;
+        forall(sgnL,s,
+          if(flg==0,
+            tmp2=Getlevel(res,s);
+            if(length(tmp2)>0,
+              tmp2=select(tmp2,#_2==1);
+              if(length(tmp2)>0,tmp2=tmp2_1_1,tmp2=0);
+              if(tmp2<tmp1, //210302
+                res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res));
+                str=str+"((";
+                flg=1;
+              );
+            );
+          );
+        );
+      );
+      ctr=ctr+1;
+    );
+    str0=str+res;
+  );
+  str=str0;
   str=replace(str," ","*");
   str=replace(str,"pi","%");
   str=replace(str,"ex(","exp("); //210227from
@@ -3232,13 +3279,13 @@ Totexformpart(str):=( //190515from
   regional(plv,funL,repL,flg,flgf,nall,nn,fun,funf,
       frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
-    ["frac",["","{\frac{xx}{yy}}"]], //200730from
-    ["log",["{\log{xx}}","{\log_{xx} yy}"]],
-    ["sqrt",["{\sqrt{xx}}","{\sqrt[xx]{yy}}"]],
+    ["frac",["","\frac{xx}{yy}"]], //210228from
+    ["log",["\log{xx}","\log_{xx} yy"]],
+    ["sqrt",["\sqrt{xx}","\sqrt[xx]{yy}"]],
     ["pow",["","{xx}^{yy}"]],
-    ["sin",["{\sin{xx}}","{\sin^{xx}\!{yy}}"]], //200823[3lines]
-    ["cos",["{\cos{xx}}","{\cos^{xx}\!{yy}}"]],
-    ["tan",["{\tan{xx}}","{\tan^{xx}\!{yy}}"]]  //200730to
+    ["sin",["\sin{xx}","\sin^{xx}\!{yy}"]], //200823[3lines]
+    ["cos",["\cos{xx}","\cos^{xx}\!{yy}"]],
+    ["tan",["\tan{xx}","\tan^{xx}\!{yy}"]]  //210228to
   ];
   funL=apply(repL,substring(#_1,0,2)); //190515to
   out="";
@@ -3302,9 +3349,29 @@ Totexformpart(str):=( //190515from
 ////%Totexform start////
 Totexform(str):=( //190514
 //help:Totexform("frac(2,3)");
-  regional(out,plv,flg,nn,tmp,tmp1,tmp2);
+  regional(funL,f,out,plv,flg,nn,tmp,tmp1,tmp2);
   out=replace(str,"pi","\pi"); //190715
   out=replace(out,"exp(1)","e"); //210227
+  funL=["cos","sin","tan"]; //210303from
+  forall(funL,f,
+    tmp2="";
+    tmp1=indexof(out,f+"((-1,");
+    flg=1;
+    while((tmp1>0)&(flg<100),
+      if(tmp1>1,tmp=substring(out,0,tmp1-1),tmp="");
+      tmp2=tmp2+tmp+"\"+f+"^(-1)"; // 210303[2lines]
+      out="("+substring(out,tmp1+length(f+"((-1,")-1,length(out));
+      tmp=Bracket(out,"()");
+      tmp=select(tmp,#_2==-1);
+      tmp=tmp_1_1;
+      tmp2=tmp2+substring(out,0,tmp);
+      out=substring(out,tmp+1,length(out));
+      tmp1=indexof(out,f+"((-1,");
+      flg=flg+1;
+    );
+    if(length(tmp2)>0,out=tmp2+out);
+  ); //210303to
+  out=replace(out,f+"(-1,",f+"^(-1)(");
   tmp1=apply(0..9,text(#));  //190915from
   tmp2=Indexall(out,"*");
   forall(tmp2,
@@ -3442,8 +3509,13 @@ Tocindyformpart(str):=( //190521
 ////%Tocindyform start////
 Tocindyform(str):=( //190521
 //help:Tocindyform("frac(2,3)");
-  regional(out,plv,flg,nn,tmp,tmp1);
+  regional(funL,out,plv,flg,nn,tmp,tmp1);
   out=str;
+  funL=["cos","sin","tan"]; //210302from
+  forall(funL,
+    out=replace(out,#+"((-1,","arc"+#+"((");
+    out=replace(out,#+"(-1,","arc"+#+"(");
+  ); //210302to
   out=replace(out,"\",""); //190712[4lines]
   out=replace(out,"   "," ");
   out=replace(out,"  "," "); 

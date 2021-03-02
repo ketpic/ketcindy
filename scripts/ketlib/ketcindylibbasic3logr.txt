@@ -1,3 +1,9 @@
+// 210303
+//   Totexform changed ('substring(str,1,0)' differs between Cindy and CindyJS)
+// 210302
+//   Addasterisk,Tocindyform,Totexform changed ( for sin(-1,x) )
+// 210301
+//   Addasterisk changed ( sin(x+y)=>sin((x+y)) )
 // 210227
 //   Addasterisk changed (e -> exp(1))
 //   Totexform changed  (exp(1)->e)

@@ -829,7 +829,7 @@ Getlevel(str,Arg):=Getlevel(str,Arg,"()");
 Getlevel(str,Arg,bra):=(
 //help:Getlevel(string,","]);
 //help:Getlevel(string,poslist]);
-//help:Getlevel(string,poslist,bracket]);
+//help:Getlevel(string,"+","()"]);
   regional(nL,parL,n,tmp,tmp1,tmp2,out);
   if(islist(Arg),
     nL=Arg;

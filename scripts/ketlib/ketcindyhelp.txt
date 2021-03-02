@@ -48,7 +48,7 @@ Strsplit(string,"=");
 Bracket(string,"()");
 Getlevel(string,","]);
 Getlevel(string,poslist]);
-Getlevel(string,poslist,bracket]);
+Getlevel(string,"+","()"]);
 Pardiagram(exprstr);
 Pardiagram(options=[20,"Disp=y","Fig=y"]);
 Changework(directory);

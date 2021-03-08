@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210216 loaded");
+println("ketcindylibbasic1[20210308 loaded");
 
 //help:start();
 
@@ -115,6 +115,7 @@ Ketinit(work,strictsep):=( //200509
     Slidename=Fhead; //17.10.24
   );//17.11.12
   Dircdy=replace(Dircdy,"%E3%80%80",unicode("3000"));//190416
+  Dircdy=replace(Dircdy,"%20"," ");//210308
   Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,

@@ -1,3 +1,5 @@
+// 20210308
+//    Ketinit() changed  ( Dircdy, %20=>" " )
 // 20210216
 //    help of 'isexists' added
 // 20201106

@@ -4043,7 +4043,7 @@ kcC(cname):=(
   rfile=cname+"end.txt"; //180517
   if(iswindows(),
     SCEOUTPUT = openfile("kc.bat");
-    println(SCEOUTPUT,"set path="+Dirwork);
+    println(SCEOUTPUT,"set path="+Dqq(Dirwork)); //210311
     tmp1=replace(PathC,"/","\"); // 20200914from
     tmp=Indexall(tmp1,"\");
     tmp1=substring(tmp1,0,tmp_(length(tmp))-1); // 20200914from

@@ -1,3 +1,5 @@
+// 20210311
+//    format, textformat => 10
 // 20210308
 //    Ketinit() changed  ( Dircdy, %20=>" " )
 // 20210216

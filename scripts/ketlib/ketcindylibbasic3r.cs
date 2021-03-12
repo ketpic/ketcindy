@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210303] loaded");
+println("ketcindylibbasic3[20210312] loaded");
 
 //help:start();
 
@@ -314,7 +314,7 @@ Defvar(name,value):=(
     );
     tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
   ,
-    tmp1=format(value,5);
+    tmp1=format(value,10);
   );
   tmp=name+"="+tmp1+";"; // 15.02.06//190415
   parse(tmp);
@@ -484,8 +484,8 @@ WritetoRS(filename,shchoice):=(
   forall(remove(allpoints(),[SW,NE]),
     if(indexof(#.name,"[")==0, //181106
       tmp=Lcrd(#);
-      tmp1=format(re(tmp_1),6);// 15.02.05
-      tmp2=format(re(tmp_2),6);
+      tmp1=format(re(tmp_1),10);// 15.02.05
+      tmp2=format(re(tmp_2),10);
       tmp=#.name+"="+"c("+tmp1+","+tmp2+");";
       tmp=tmp+"Assignadd('"+#.name+"',"+#.name+")";
       Plist=append(Plist,tmp);
@@ -571,11 +571,11 @@ WritetoRS(filename,shchoice):=(
       if(islist(tmp1),
         tmp2="[";
         forall(tmp1,
-          tmp2=tmp2+Textformat(#,6)+",";
+          tmp2=tmp2+Textformat(#,10)+",";
         );
         tmp1=substring(tmp2,0,length(tmp2)-1)+"]";
       ,
-        tmp1=format(tmp1,6);
+        tmp1=format(tmp1,10);
       );
     );
     tmp1=RSform(tmp1);
@@ -763,11 +763,11 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
         if(length(ptL)>0,
           if(length(ptL)==1,
             ptL=ptL_1;
-            tmp=apply(ptL,Textformat(#,6));
+            tmp=apply(ptL,Textformat(#,10));
           ,
             tmp="[";
             forall(ptL,tmp1,
-              tmp=tmp+apply(tmp1,Textformat(#,6))+",";
+              tmp=tmp+apply(tmp1,Textformat(#,10))+",";
             );
             tmp=substring(tmp,0,length(tmp)-1)+"]";
           );
@@ -785,11 +785,11 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
   if(length(ptL)>0,
     if(length(ptL)==1,
       ptL=ptL_1;
-      tmp=apply(ptL,Textformat(#,6));
+      tmp=apply(ptL,Textformat(#,10));
     ,
       tmp="[";
       forall(ptL,tmp1,
-        tmp=tmp+apply(tmp1,Textformat(#,6))+",";
+        tmp=tmp+apply(tmp1,Textformat(#,10))+",";
       );
       tmp=substring(tmp,0,length(tmp)-1)+"]";
     );
@@ -852,12 +852,12 @@ Writeoutdata(filename,ptlist):=(
         if(length(Str)>0,
           Str=Str+","
         );
-        Str=Str+"["+format(Pt_1,5)+",";
-        Str=Str+format(Pt_2,5);
+        Str=Str+"["+format(Pt_1,10)+",";
+        Str=Str+format(Pt_2,10);
         if(length(Pt)<3,
           Str=Str+"]";
         ,
-          Str=Str+","+format(Pt_3,5)+"]";
+          Str=Str+","+format(Pt_3,10)+"]";
         );
         if(length(Str)>80,
           println(SCEOUTPUT,"["+Str+"]//");
@@ -1066,13 +1066,11 @@ Makebat(texmainfile,flow):=(
     println(SCEOUTPUT,drive);
   );
   tmp=Dirwork;//180408form
-  if(iswindows(),
-    if((isincludefull(Dirwork))&(isexists(Dirwork,"sjis.txt")),
-      import("sjis.txt");
-    );
-  );
   tmp1=indexof(fname,"Users");//180409from
-  tmp2=indexof(fname,Homehead);
+  tmp2=""; //210312from
+  if(length(Homehead)>0,
+    tmp2=indexof(fname,Homehead);
+  ); //210312to
   if((tmp1>0)%(tmp2>0),
     if(tmp1>0,
       fname=substring(fname,tmp1+length("Users")-1,length(fname));

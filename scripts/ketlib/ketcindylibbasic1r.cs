@@ -115,7 +115,7 @@ Ketinit(work,strictsep):=( //200509
     Slidename=Fhead; //17.10.24
   );//17.11.12
   Dircdy=replace(Dircdy,"%E3%80%80",unicode("3000"));//190416
-  Dircdy=replace(Dircdy,"%20"," ");//210308
+//  Dircdy=replace(Dircdy,"%20"," ");//210308
   Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
@@ -5125,15 +5125,15 @@ Circledata(nm,cenrad,options):=(
       println("generate Circledata "+name);
     );
     tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415,210311
     parse(tmp);
     if(length(cenrad)==2, //no ketjs on
-      tmp=name+"=Circledata("+cenrad+opstr+")";
+      tmp=name+"=Circledata("+format(cenrad,10)+opstr+")"; //210311
     ,
       if(ra>0,
-        tmp=name+"=Circledata(["+Ctr+","+cenrad_1+"]"+opstr+")";
+        tmp=name+"=Circledata(["+Ctr+","+format(cenrad_1,10)+"]"+opstr+")"; //210311
       ,
-        tmp=name+"=Lineplot("+cenrad_1+","+cenrad_2+")";
+        tmp=name+"=Lineplot("+format(cenrad_1,10)+","+cenrad_2+")"; //210311
       );
     );
     GLIST=append(GLIST,tmp);  //no ketjs off

@@ -1,3 +1,7 @@
+// 210312
+//   makebat debugged  (for Homehead=="")
+// 210311
+//   format,textformat  =>10
 // 210303
 //   Totexform changed ('substring(str,1,0)' differs between Cindy and CindyJS)
 // 210302

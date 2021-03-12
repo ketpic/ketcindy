@@ -6,7 +6,7 @@
 \usepackage{bm,enumerate}
 \usepackage[colorlinks=true,urlcolor=blue]{hyperref}
 
-\setmargin{20}{15}{15}{15}
+\setmargin{15}{15}{15}{15}
 
 \renewcommand{\labelitemi}{$\cdot$}
 
@@ -20,42 +20,46 @@ To Use KeTCindy
 
 \hfill Modified\ :\ \today
 
-\begin{enumerate}[\bf\large 1.]
-\item Install Cinderella, R, Maxima (and Sumatra only for Windows)
+\begin{enumerate}[\bf\large 1.]\vspace{-1mm}
+\item Install Cinderella, R, Maxima (and Sumatra only for Windows)\vspace{-1mm}
  \begin{itemize}
- \item \url{https://beta.cinderella.de}  (Cinderella)
- \item \url{https://cran.r-project.org}   (R)
- \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)
+ \item \url{https://beta.cinderella.de}  (Cinderella)\\
+\hspace*{6mm}Rem) In case of Windows, save first and right cliick to select 'Administrato'.\vspace{-1mm}
+ \item \url{https://cran.r-project.org}   (R)\vspace{-1mm}
+ \item \url{https://sourceforge.net/projects/maxima/files}  (Maxima)\vspace{-1mm}
  \item \url{https://www.sumatrapdfreader.org/download-free-pdf-viewer.html} (Sumatra)\\
-\hspace*{5mm}Rem) Sumatra should be installed in Program Files (or x86).
+\hspace*{5mm}Rem) Sumatra should be installed in Program Files (or x86).\vspace{-1mm}
  \end{itemize}
-\item Install a TeX system if no one has been installed.
+\item Install a TeX system if no one has been installed.\vspace{-1mm}
  \begin{enumerate}[(1)]
- \item TeXLive is recommended.
+ \item TeXLive is recommended.\vspace{-1mm}
     \begin{itemize}
-    \item KeTCindy has been implemented (2018 or later).
+    \item KeTCindy has been implemented (2018 or later). Update first \verb|ketcindy|.\vspace{-1mm}
     \end{itemize}
  \item KeTTeX is a light-weighted TeXLive.\\
+\hspace*{3mm}\url{https://github.com/ketpic/kettex/releases}\\
+    \hspace*{6mm}Rem) See \verb|readmemore.pdf| in verb|doc>readmemore|,\vspace{-1mm}
+
 \hspace*{3mm}\url{https://drive.google.com/drive/folders/1h_HDcKSp3S6qarbTSiUn9U5brgOGbU93?usp=sharing}\\
 \hspace*{12mm}Mac (kettex.dmg)\hspace{3mm}Windows (kettex.exe)\hspace*{3mm}Linux (kettex.tar.xz)\\
 \hspace*{3mm}Rem)Move unzipped kettex into the folder /Applications for Mac and C:\textbackslash\ for Windows.
  \end{enumerate}
 
-\item Install KeTCindy
+\item Install KeTCindy as follows.\vspace{-1mm}
   \begin{enumerate}[(1)]
   \item Download ketcindy from CTAN(\url{https://ctan.org}).\\
-  \hspace*{10mm}Search ketcindy $>$ Pack­age ketcindy $>$ Download\ \ ('ketcindy')
+  \hspace*{10mm}Search ketcindy $>$ Pack­age ketcindy $>$ Download\ \ ('ketcindy')\vspace{-1mm}
     \begin{itemize}
     \item[$\cdot$]The {\color{red}latest version} is downloadable from Repository:\\
-         \hspace*{10mm}Clone or download $>$ Download ZIP\ \ ('ketcindy-master')\\
-        \hspace*{5mm}Rem)Remove the hyphen| when you want to keep open the window of \verb|command prompt| of Windows.
+         \hspace*{10mm}Code $>$ Download ZIP\ \ ('ketcindy-master')\\
+        \hspace*{5mm}Rem) Case of Windows, move it to \verb|C:\|.\vspace{-1mm}
     \end{itemize}
-  \item Double click \verb|ketcindysettings.cdy| in the folder.
+  \item Double click \verb|ketcindysettings.cdy| in the folder.\vspace{-1mm}
     \begin{itemize}
-   \item  Select (1),(2) in the following figure, and execute (3) in order.
-    \item Set Cinderella as the executive program if necessary.
-    \item Reboot Cinderella if other cdy files are open.
+    \item Set Cinderella as the executive program if necessary.\vspace{-1mm}
+    \item Reboot Cinderella if other cdy files are open.\vspace{-1mm}
    \end{itemize}
+  \item Select (1)(2) in the following figure, and execute (3) in the order left to right.
   \end{enumerate}
 
 %\vspace{2mm}
@@ -78,32 +82,35 @@ platex\\uplatex\\latex\\xelatex\\pdflatex\\lualatex\end{tabular}}
 \putnotese{121}{10}{\fbox{Mkinit}}
 \putnotese{123}{17}{\begin{minipage}[t]{52mm}%
 Create initialization file in user's home(Home).\hfill Name: ketcindy.ini\\
-{\small Rm)\ If the file is moved into\\
-\hspace*{10mm} Cinderella/Plugins, \\
-\hspace*{1mm} Change CindyScript/ketlib to\\
-\hspace*{6mm} setdirectory(plugindirectory)}
+%{\small Rm)\ If the file is moved into\\
+%\hspace*{10mm} Cinderella/Plugins, \\
+%\hspace*{1mm} Change CindyScript/ketlib to\\
+%\hspace*{6mm} setdirectory(plugindirectory)}
 \end{minipage}}
-\putnotese{121}{43}{\fbox{Update}}
-\putnotese{123}{50}{Update ketcindy in \TeX\ system}
+\putnotese{121}{30}{\fbox{Update}}
+\putnotese{123}{37}{Update ketcindy in \TeX\ system}
 %%\putnotese{126}{39}{Press Help for Run-time error}
-\putnotese{121}{55}{\fbox{Work}}
-\putnotese{123}{62}{\begin{minipage}[t]{52mm}%
+\putnotese{121}{48}{\fbox{Work}}
+\putnotese{123}{56}{\begin{minipage}[t]{52mm}%
 Create folder 'ketcindy' in Home.\\
 Manuals, samples will be copied.
 \end{minipage}}
 \end{layer}
 
-\vspace{72mm}
+\vspace{70mm}
 
-\item Test run
+\item Test run\vspace{-1mm}
 \begin{itemize}
-\item Quit once Cinderella and double click a file in the User's home\verb|/ketcindy/templtates|.
-\item Press \verb|Figure| button, and the pdf will be displayed.
+\item Quit once Cinderella and double click a file in the User's home\verb|/ketcindy/templtates|.\vspace{-1mm}
+\item Press \verb|Figure| button, and the pdf will be displayed.\vspace{-1mm}
 \end{itemize}
 
-\item Others
+\item Others\vspace{-1mm}
 \begin{itemize}
-\item See Readmemore for more informations.
+\item \verb|ketcindy.ini| will be generatede in the User's home as default.\\
+\hspace*{5mm}$\cdot$\ Write \verb|setdirectory(gethome());| on the 3rd line in \verb|CindyScripts>ketlib|.\\
+\hspace*{5mm}$\cdot$\ Write \verb|setdirectory(plugindirectory);| if \verb|ketincy.ini| is moved to Plugins in Cinderella.\vspace{-1mm}
+\item See Readmemore for more informations.\vspace{-1mm}
 \end{itemize}
 
   \end{enumerate}

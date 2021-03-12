@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210216] loaded");
+println("ketcindylibbasic2[20210311] loaded");
 
 //help:start();
 
@@ -289,7 +289,7 @@ Arrowhead(nm,pointorg,direction,optionsorg):=(//191129remade
     if(!Inwindow(point),Noflg=2);
 //  );  //210216[removed]
   if(Noflg<3,
-    tmp=name+"="+Textformat(list,5)+";"; 
+    tmp=name+"="+Textformat(list,10)+";"; //210311
     parse(tmp);
     if(isstring(Ltype),
       if(line=="N",
@@ -575,7 +575,7 @@ Anglemark(Arg1,Arg2):=( // 2015.04.28 from
   ,
     plist=Arg1;
     options=Arg2;
-    tmp=Textformat(plist,5);
+    tmp=Textformat(plist,10);
     tmp=replace(tmp,",","");
     nm=substring(tmp,1,length(tmp)-1);
     Anglemark(nm,plist,options);
@@ -657,9 +657,9 @@ Anglemark(nm,plist,optionsorg):=(
         println("generate anglemark "+name+" and m"+name); //200610
       );
       tmp1=apply(Out,Pcrd(#));
-      tmp=name+"="+Textformat(tmp1,5)+";";
+      tmp=name+"="+Textformat(tmp1,10)+";";
       parse(tmp);
-      tmp=Textformat(plist,5); //no ketjs on
+      tmp=Textformat(plist,10); //no ketjs on
       tmp1=substring(tmp,1,length(tmp)-1);
       tmp=name+"=Anglemark("+tmp1+opstr+")";
       GLIST=append(GLIST,tmp); //no ketjs off
@@ -685,7 +685,7 @@ Anglemark(nm,plist,optionsorg):=(
   options=remove(options,realL); //200619[3lines]
   if(Bname=="L",Letter(Bpos,"c",Bstr,options)); 
   if(Bname=="E",Expr(Bpos,"c",Bstr,options));
-  parse("m"+name+"="+Textformat(Bpos,6)+";"); //200610
+  parse("m"+name+"="+Textformat(Bpos,10)+";"); //200610
   Out;
 );
 ////%Anglemark end////
@@ -701,7 +701,7 @@ Paramark(Arg1,Arg2):=( // 17.03.27 from
   ,
     plist=Arg1;
     options=Arg2;
-    tmp=Textformat(plist,5);
+    tmp=Textformat(plist,10);
     tmp=replace(tmp,",","");
     nm=substring(tmp,1,length(tmp)-1);
     Paramark(nm,plist,options);
@@ -766,9 +766,9 @@ Paramark(nm,plist,optionsrog):=(
       println("generate paramark "+name+" and "+"m"+name);
     );
     tmp1=apply(Out,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
     parse(tmp);
-    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,5))-1); //no ketjs on
+    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,10))-1); //no ketjs on
     tmp=name+"=Paramark("+tmp1+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
@@ -792,7 +792,7 @@ Paramark(nm,plist,optionsrog):=(
   options=remove(options,realL); //200619[3lines]
   if(Bname=="L",Letter(Bpos,"c",Bstr,options));
   if(Bname=="E",Expr(Bpos,"c",Bstr,options));
-  parse("m"+name+"="+Textformat(Bpos,6)+";"); //200629
+  parse("m"+name+"="+Textformat(Bpos,10)+";"); //200629
   Out;
 );
 ////%Paramark end////
@@ -819,7 +819,7 @@ Bowdata(plist):=Bowdata(plist,[]);
 Bowdata(plist,options):=(
   regional(nm,tmp);
   if(islist(plist), // 16.12.04from
-    tmp=Textformat(plist,5);
+    tmp=Textformat(plist,10);
     tmp=replace(tmp,",","");
     nm=substring(tmp,1,length(tmp)-1);
     Bowdata(nm,plist,options);
@@ -948,9 +948,9 @@ Bowdata(nm,plist,options):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1); //200421
-    tmp=name+"="+Textformat(tmp1,5)+";";
+    tmp=name+"="+Textformat(tmp1,10)+";";
     parse(tmp);
-    tmp=Textformat(plist,5);
+    tmp=Textformat(plist,10);
     tmp1=substring(tmp,1,length(tmp)-1); //no ketjs on
     tmp=name+"=Bowdata("+tmp1+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs off
@@ -1139,7 +1139,7 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
   );
   rng=rngorg;
   if(indexof(rng,"=")==0,
-    rng=rng+"="+Textformat([XMIN,XMAX],6);
+    rng=rng+"="+Textformat([XMIN,XMAX],10);
   );
   deq=replace(deqorg,unicode("2018"),"`"); //190296//0416
   deq=replace(deq,"'","`"); //180527
@@ -1218,14 +1218,14 @@ Deqplot(nm,deqorg,rngorg,initt,initf,options):=( //17.10.06
       pdL=apply(pdL,#_(2..3));
     );
     tmp1=apply(pdL,Pcrd(#));
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
     parse(tmp);
   );
   if((nn>0)&(Noflg<1), //190211 //no ketjs on
     tmp=Assign(deq);
     tmp=replace(deq,"'","`");
     tmp=name+"=Deqplot('"+tmp+"','"+rng+"',";
-    tmp=tmp+format(initt,6)+","+Textformat(initf,6);
+    tmp=tmp+format(initt,10)+","+Textformat(initf,10);
     tmp=tmp+","+text(sel)+",'Num="+text(Num)+"')";
     tmp=RSform(tmp);
     GLIST=append(GLIST,tmp);
@@ -1350,7 +1350,7 @@ Enclosing2(nm,plistorg,options):=(
           tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
           Gdata=replace(Gdata,"(","");
           Gdata=replace(Gdata,")","");
-          tmp=Gdata+"="+Textformat(tmp2,6)+";"; //190415
+          tmp=Gdata+"="+Textformat(tmp2,10)+";"; //190415
           parse(tmp);
           plist_nxtno=Gdata;
           t2=Length(tmp1);
@@ -1392,7 +1392,7 @@ Enclosing2(nm,plistorg,options):=(
   AnsL=Unscaling(AnsL); //201110
   if(Noflg<3,
     println("generate Enclosing "+name);
-    tmp=name+"="+Textformat(AnsL,5)+";"; //190415
+    tmp=name+"="+Textformat(AnsL,10)+";"; //190415
     parse(tmp);
     tmp=name+"=Enclosing2(";//16.11.07from
     tmp1="list"+PaO();
@@ -1400,7 +1400,7 @@ Enclosing2(nm,plistorg,options):=(
       tmp1=tmp1+#+",";
     );
     tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from //no ketjs on
-    if(length(Start)>0,tmp=tmp+","+Textformat(Start,6));
+    if(length(Start)>0,tmp=tmp+","+Textformat(Start,10));
     tmp=tmp+","+text(Eps1)+")";//18.0706to,180707
     GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
   );
@@ -1736,10 +1736,10 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
       if(!contains(pL,#),pL=append(pL,#));
     );
     forall(pL,
-      tmp=#+"="+Textformat(parse(#+".xy"),5);
+      tmp=#+"="+Textformat(parse(#+".xy"),10);
       varL=append(varL,tmp);
     );
-    tmp="reL="+Textformat(reL,5);
+    tmp="reL="+Textformat(reL,10);
     varL=append(varL,tmp);
     if(fileflg=="M",
       fileflg="Y";
@@ -1758,7 +1758,7 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
           if(isexists(Dirwork,fname),
             mkflg=0;
             ReadOutData(fname);
-            tmp=name+"="+Textformat(parse(name),5)+";"; //190415
+            tmp=name+"="+Textformat(parse(name),10)+";"; //190415
             parse(tmp);
           );
         );
@@ -1787,14 +1787,14 @@ Hatchdatacindy(nm,iostr,bdylistorg,optionsorg):=(
         AnsL=concat(AnsL,sha);
       );
     );
-    tmp1=apply(AnsL,Textformat(#,5));
+    tmp1=apply(AnsL,Textformat(#,10));
     tmp=name+"="+tmp1+";"; //190415
     parse(tmp);
   );
   if((Noflg<3)&(mkflg>-1),
     if(fileflg!="Y", //181102
       println("generate Hatchdata "+name);
-      tmp=name+"="+Textformat(AnsL,5)+";"; //190415
+      tmp=name+"="+Textformat(AnsL,10)+";"; //190415
       parse(tmp);
       if(!islist(iostr),tmp1=[iostr],tmp1=iostr); //no ketjs on
       tmp="c"+PaO();
@@ -2035,7 +2035,7 @@ Shade(nm,plistorg,options):=(
     if(Noflg<2, //200512
       G2=Joincrvs("1",plist,["nodata"]);
       G2=apply(G2,Pcrd(#));
-      tmp1="fillpoly("+Textformat(G2,5)+opcindy+");";
+      tmp1="fillpoly("+Textformat(G2,10)+opcindy+");";
       if(ptshade=="N", //200513from
         tmp=select(1..(length(GCLIST)),contains(plist,GCLIST_#_1)); //200715from
         if(length(tmp)>0,
@@ -2063,7 +2063,7 @@ Shade(nm,plistorg,options):=(
           tmp1=tmp1+Dq+#+Dq+",";
         );
       ,
-         tmp1=tmp1+"Listplot("+Textformat(#,5)+"),";
+         tmp1=tmp1+"Listplot("+Textformat(#,10)+"),";
       ); //16.01.24to
     );
     Str=Str+substring(tmp1,0,length(tmp1)-1)+")"+")"; //180929 
@@ -2243,12 +2243,12 @@ Rotatedata(nm,plist,angle,optionorg):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
     tmp=name+"=Rotatedata("+tmp1+","
-    +Textformat(angle,5)+","+RSform(Textformat(Pt,5))+")"; //17.12.23
+    +Textformat(angle,10)+","+RSform(Textformat(Pt,10))+")"; //17.12.23
     GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<3, //190818
@@ -2326,11 +2326,11 @@ Translatedata(nm,plist,mov,optionorg):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,5))+")";
+    tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,10))+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<3, //190818
@@ -2431,12 +2431,12 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415,210311
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1); // 180602
     tmp=name+"=Scaledata("+tmp1+","
-      +Textformat(rx,5)+","+Textformat(ry,5)+","+RSform(Textformat(Pt,5))+")";
+      +Textformat(rx,10)+","+Textformat(ry,10)+","+RSform(Textformat(Pt,10))+")"; //210311
     GLIST=append(GLIST,tmp); //no ketjs off
   );
   if(Noflg<3, //190818
@@ -2512,11 +2512,11 @@ Reflectdata(nm,plist,symL,optionorg):=(
       tmp1=append(tmp1,tmp);
     );
     if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,5)+";"; //190415
+    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
     parse(tmp);
     tmp1=text(plist); //no ketjs on
     tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,5))+")";
+    tmp=name+"=Reflectdata("+tmp1+","+RSform(Textformat(symL,10))+")";
      //171223
     GLIST=append(GLIST,tmp); //no ketjs off
   );
@@ -2591,7 +2591,7 @@ MakeRarg(arglist):=(
     if(isstring(#),
       tmpstr=Dq+RSslash(#)+Dq;
     ,
-      tmpstr=Textformat(#,6);
+      tmpstr=Textformat(#,10);
     );
     str=str+tmpstr+",";
   );
@@ -2848,7 +2848,7 @@ Drawpoint(ptlistorg,nn):=(
   tmp1=max(TenSize/TenSizeInit,1)/8; 
   Setpen(tmp1); // 16.04.09 until
   forall(ptlist,
-    tmp=Textformat(#,5)+","+text(nn);
+    tmp=Textformat(#,10)+","+text(nn);
     Com2nd("Drwpt("+tmp+")"); // 16.04.09
   );
   Setpen(thick); // 16.04.09
@@ -2878,7 +2878,7 @@ Expr(listorg,options):=( //16.10.09
         str=replace(str,"¥","\");
       ); 
     ,
-      str=format(str,5)
+      str=format(str,10)
     ); //200526to
     str="$"+str+"$"; //200526
     list_(3*#)=str;
@@ -2930,7 +2930,7 @@ Letter(list,options):=(
     Pos=list_Nj;
     Dir=list_(Nj+1);
     Str=list_(Nj+2);
-    if(!isstring(Str),Str=format(Str,5)); // 16.09.30,10.09
+    if(!isstring(Str),Str=format(Str,10)); // 16.09.30,10.09
     tmp=replace(Str,".xy","");
     tmp=replace(tmp,".x","(1)");
     Str=replace(tmp,".y","(2)");
@@ -3000,7 +3000,7 @@ Letter(list,options):=(
 //      ); // only ketjs off
       Str=list_(Nj+2);  //17.10.17
       if(length(color)==4,color=Colorcmyk2rgb(color)); //200523
-      tmp="drawtext("+format(Pcrd(Pos),5)+","+Dqq(Str)+",offset->"+format([Off+Xmv,Off+Ymv],5)+","; //201004from
+      tmp="drawtext("+format(Pcrd(Pos),10)+","+Dqq(Str)+",offset->"+format([Off+Xmv,Off+Ymv],10)+","; //201004from
       tmp1="size->sz,color->colornow,align->aln,bold->bld,italics->ita";
       tmp1=Assign(tmp1,["sz",text(sz),"colornow",text(color),"aln",Dqq(aln),"bld",text(bld),"ita",text(ita)]);
       tmp=tmp+tmp1+");";
@@ -3056,7 +3056,7 @@ Letterrot(pt,dirorg,tmov,nmov,rev,str,options):=(
   if(color4!=KCOLOR, //
     Texcom("{");Com2nd("Setcolor("+color4+")");
   );
-  Com2nd("Letterrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rev+","+Dqq(tmp)+")");
+  Com2nd("Letterrot("+Textformat(pt,10)+","+dir+","+tmov+","+nmov+","+rev+","+Dqq(tmp)+")");
   if(color4!=KCOLOR, 
     Texcom("}");
   ); // no ketjs off
@@ -3112,7 +3112,7 @@ Exprrot(pt,dirorg,tmov,nmov,rev,strorg,options):=(
   if(color4!=KCOLOR, //180904
     Texcom("{");Com2nd("Setcolor("+color4+")");
   );
-  Com2nd("Exprrot("+Textformat(pt,6)+","+dir+","+tmov+","+nmov+","+rev+","+Dqq(tmp)+")");
+  Com2nd("Exprrot("+Textformat(pt,10)+","+dir+","+tmov+","+nmov+","+rev+","+Dqq(tmp)+")");
   if(color4!=KCOLOR, 
     Texcom("}");
   ); // no ketjs off
@@ -3204,7 +3204,7 @@ Slider(ptstr,p1,p2,options):=(//190120
       tmp2=parse(pC).xy;
       if(|tmp2-p1|<0.1,tmp2=p1+0.1*(p2-p1)/|p2-p1|);
       if(|tmp2-p2|<0.1,tmp2=p2+0.1*(p1-p2)/|p1-p2|);
-      tmp=tmp1+"="+textformat(tmp2,6)+";";
+      tmp=tmp1+"="+textformat(tmp2,10)+";";
       parse(tmp);
       parse(pC).xy=tmp2;
     ); //190827to
@@ -3228,7 +3228,7 @@ Putpoint(name,Ptinit,Pt):=(
     createpoint(name,Pcrd([Ptinit_1,Ptinit_2]));
     Ptpos(name,Pcrd([Ptinit_1,Ptinit_2])); //191005
   ,  //no ketjs off  //191030
-    ptstr=name+".xy="+Textformat(Pcrd(Pt),5)+";";
+    ptstr=name+".xy="+Textformat(Pcrd(Pt),10)+";";
     parse(ptstr);
     Ptpos(name,Pcrd([Pt_1,Pt_2])); //200529
   ); //no ketjs  //191030
@@ -3338,11 +3338,11 @@ Beziercurve(nm,ptlistorg,ctrlistorg,options):=(
   if(Noflg<3,
     if(msgflg=="Y",println("generate Bezier "+name));
     out=apply(list,Pcrd(#));
-    tmp=name+"="+Textformat(out,5)+";"; //190415
+    tmp=name+"="+Textformat(out,10)+";"; //190415
     parse(tmp);
-    tmp1=Textformat(ptlist,5); //no ketjs on
+    tmp1=Textformat(ptlist,10); //no ketjs on
     tmp1=RSform(tmp1,2); //17.12.23
-    tmp2=Textformat(ctrlist,5);
+    tmp2=Textformat(ctrlist,10);
     tmp2=RSform(tmp2,3); //17.12.23
     GLIST=append(GLIST,name+"=Bezier("+tmp1+","+tmp2+opstr+")"); //no ketjs off
   );
@@ -3858,14 +3858,14 @@ Putonseg(name,p1org,p2org,options):=(
   p=parse(name+".xy");
   if(abs(dx)>abs(dy), //190120from
     if(p1_1>p2_1,tmp=p1;p1=p2;p2=tmp);
-    if(p_1<p1_1,parse(name+".xy="+Textformat(p1,5));p=p1);
-    if(p_1>p2_1,parse(name+".xy="+Textformat(p2,5));p=p2);
+    if(p_1<p1_1,parse(name+".xy="+Textformat(p1,10));p=p1);
+    if(p_1>p2_1,parse(name+".xy="+Textformat(p2,10));p=p2);
     tmp=(p2_2-p1_2)/(p2_1-p1_1)*(p_1-p1_1)+p1_2;
     parse(name+".y="+tmp+";"); //190415
   ,
     if(p1_2>p2_2,tmp=p1;p1=p2;p2=tmp);
-    if(p_2<p1_2,parse(name+".xy="+Textformat(p1,5));p=p1);
-    if(p_2>p2_2,parse(name+".xy="+Textformat(p2,5));p=p2);
+    if(p_2<p1_2,parse(name+".xy="+Textformat(p1,10));p=p1);
+    if(p_2>p2_2,parse(name+".xy="+Textformat(p2,10));p=p2);
     tmp=(p2_1-p1_1)/(p2_2-p1_2)*(p_2-p1_2)+p1_1;
     parse(name+".x="+tmp+";"); //190415
   ); //190120to
@@ -3899,7 +3899,7 @@ Putoncurve(pn,crvorg,options):=(
       p2=crv_1;
       Putonseg(pn,p1,p2);
     ,
-      parse(pn+".xy="+Textformat(Ptend(crv),5)+";"); //190415
+      parse(pn+".xy="+Textformat(Ptend(crv),10)+";"); //190415
     );
   );
 );
@@ -4000,7 +4000,7 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
       interval=interval_(1..2);
     );
     tmp=apply(interval,if(isstring(#),parse(#),#));
-    tmp1=var+"="+Textformat(tmp,5);
+    tmp1=var+"="+Textformat(tmp,10);
     tmp2="Num="+text(defL_(3*nn));
     tmp=Plotdata("",fun,tmp1,[tmp2,"nodata","Msg=n"]);
     cL=append(cL,tmp);
@@ -4053,9 +4053,9 @@ Periodfun(nm,defL,rng,optionorg):=( //190420[new]
       );
     );
   );
-  tmp=name+"="+Textformat(sL,5)+";";
+  tmp=name+"="+Textformat(sL,10)+";";
   parse(tmp);
-  tmp=name+"dc="+Textformat(sdL,5)+";";
+  tmp=name+"dc="+Textformat(sdL,10)+";";
   parse(tmp);
   println("   generate "+name+","+name+"dc");
   mxfun=substring(mxfun,4,length(mxfun)-1);
@@ -4077,9 +4077,9 @@ Mkcstable(nterm,num):=( //190523
     dL=apply(1..nterm,sin(#*x));
     sinL=append(sinL,dL);
   );
-  tmp="Costable="+Textformat(cosL,6);
+  tmp="Costable="+Textformat(cosL,10);
   parse(tmp);
-  tmp="Sintable="+Textformat(sinL,6);
+  tmp="Sintable="+Textformat(sinL,10);
   parse(tmp);
 );
 ////%Mkcstable end////
@@ -4123,7 +4123,7 @@ Fourierseries(nm,coefforg,per,nterm,range,optionorg):=(
     coeff=tokenize(tmp,",");
   );
   coeff=apply(coeff,
-    if(isstring(#),replace(#,"%pi","pi"),format(#,5))
+    if(isstring(#),replace(#,"%pi","pi"),format(#,10))
   );
   c0=coeff_1;
   cn=coeff_2;
@@ -4832,13 +4832,13 @@ Windispg(gcLorg):=( //190125
               if(indexof(opcindy,"size")==0, 
                 tmp3=tmp3+",size->"+text(typeL_2);
               ); //190124to
-              tmp="connect("+Textformat(Nk,5)+tmp3+");";//190125
+              tmp="connect("+Textformat(Nk,10)+tmp3+");";//190125
               parse(tmp);
             );
             if((tmp1==1)%(tmp1==2),
               tmp4=Dashlinedata(Nk,typeL_2,typeL_3,0); //no ketjs on
               forall(tmp4,
-                tmp="connect("+Textformat(#,5)+tmp3+");";
+                tmp="connect("+Textformat(#,10)+tmp3+");";
                 parse(tmp);
               ); //no ketjs off
 //              if(length(typeL)<4,typeL=append(typeL,1)); //only ketjs on
@@ -4848,7 +4848,7 @@ Windispg(gcLorg):=( //190125
 //              );
 //              tmp3=",dashtype->1"+tmp3;
 //              forall(1..(length(Nk)-1),
-//                tmp="draw("+Textformat([Nk_#,Nk_(#+1)],5)+tmp3+");";
+//                tmp="draw("+Textformat([Nk_#,Nk_(#+1)],10)+tmp3+");";
 //                parse(tmp);
 //              );
 //              if(typeL_(-1)!=1,
@@ -4863,7 +4863,7 @@ Windispg(gcLorg):=( //190125
               );
               tmp3=",dashtype->3"+tmp3;
               forall(1..(length(Nk)-1),
-                tmp="draw("+Textformat([Nk_#,Nk_(#+1)],5)+tmp3+");";
+                tmp="draw("+Textformat([Nk_#,Nk_(#+1)],10)+tmp3+");";
                 parse(tmp);
               );
               if(typeL_3!=1,

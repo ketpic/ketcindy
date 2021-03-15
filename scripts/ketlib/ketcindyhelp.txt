@@ -204,7 +204,6 @@ Arrowdata(options=[size(1),angle(18),pos(1),cut(0),"Cutend=0,0","Coord=p/l"]);
 Arrowdata(optionsadded=["line"]);
 Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
 Anglemark(options=[size,"E/L=(sep,)letter"]);
-Paramark([A,B,C],["E=\theta"]);
 Paramark("1",[p1,p2,p3],["E=\theta"]);
 Bowdata("1",[C,A],[2,1.2,"Expr=10","da"]);
 Bowdata("2",[A,B],["Expr=t0n3,a"]);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210311] loaded");
+println("ketcindylibbasic2[20210315] loaded");
 
 //help:start();
 
@@ -708,7 +708,6 @@ Paramark(Arg1,Arg2):=( // 17.03.27 from
   );
 );// to
 Paramark(nm,plist,optionsrog):=(
-//help:Paramark([A,B,C],["E=\theta"]);
 //help:Paramark("1",[p1,p2,p3],["E=\theta"]);
   regional(name,options,Out,pB,pA,pC,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,
          Brat,tmp,tmp1,tmp2,Ltype,Noflg,eqL,realL,opcindy,color,color4,sc,Msg,scaley);
@@ -768,7 +767,8 @@ Paramark(nm,plist,optionsrog):=(
     tmp1=apply(Out,Pcrd(#));
     tmp=name+"="+Textformat(tmp1,10)+";"; //190415
     parse(tmp);
-    tmp1=substring(Textformat(plist,5),1,length(Textformat(plist,10))-1); //no ketjs on
+    tmp=Textformat(plist,10);
+    tmp1=substring(tmp,1,length(tmp)-1);//210315 //no ketjs on
     tmp=name+"=Paramark("+tmp1+opstr+")";
     GLIST=append(GLIST,tmp); //no ketjs off
   );

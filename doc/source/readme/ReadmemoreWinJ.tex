@@ -73,10 +73,12 @@ KeTCindyについての補足 (Windows)
       \hspace*{10mm}画面に白い枠が出れば，ライブラリの読み込みは成功．
     \item スクリーンの左上部にあるFigureボタンを押す．
     \item \TeX コンパイラが動いて，PDFが表示されれば成功．
+   \item[注)] フォルダ名がハイフン(-)を含むと，コマンドプロンプトの窓が開かない場合がある．
   \end{enumerate}
 
 \item TeXWorksの設定（kettexの場合）
   \begin{itemize}
+  \item \url{http://www.tug.org/texworks/}からダウンロードする．
    \item TeXworksを立ち上げ，「TeXworks \verb|>| 環境設定 \verb|>| タイプセット」
   \item 上の欄（パス）に以下を追加\\
   \hspace*{5mm}\verb|C:\kettex\texlive\bin\win32|\\
@@ -98,7 +100,7 @@ KeTCindyについての補足 (Windows)
 \item gccのインストール
   \begin{itemize}
     \item 曲面描画のためには, gccが必要である．
-    \item minGWのホームページ\url{http://www.mingw.org}から\\
+    \item \url{http://mingw-w64.org/}から\\
     \hspace*{10mm}download \verb|>| Install \verb|>| mingw-get-setup.exe\\
     をダウンロードして実行\\
     \hspace*{10mm}注) パッケージは，mingw32-base, mingw32-gcc-g++だけでよい．

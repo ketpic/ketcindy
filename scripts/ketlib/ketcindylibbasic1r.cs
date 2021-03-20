@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210316 loaded");
+println("ketcindylibbasic1[20210319 loaded");
 
 //help:start();
 
@@ -2528,15 +2528,18 @@ Nearestpt(pt,plotstr):=(
       dv=pt2-pt1;
       nv=[-dv_2,dv_1];
       tmp1=Intersectline(pt1,dv,pt,nv);
-      if((tmp1_2>=0)&(tmp1_2<=1),
-        dt=[tmp1_1,nn+tmp1_2,|tmp1_1-pt|];
-      ,
-        if(tmp1_2<0,
-          dt=[pt1,nn,|pt1-pt|];
+      if(length(tmp1)>1, //210319from
+        if((tmp1_2>=0)&(tmp1_2<=1),
+          dt=[tmp1_1,nn+tmp1_2,|tmp1_1-pt|];
         ,
-          dt=[pt2,nn+1,|pt2-pt|];
+          if(tmp1_2<0,
+            dt=[pt1,nn,|pt1-pt|];
+          ,
+            dt=[pt2,nn+1,|pt2-pt|];
+          );
         );
-      );
+      ,
+      ); //210319to
     );
     dtL=append(dtL,dt);
   );

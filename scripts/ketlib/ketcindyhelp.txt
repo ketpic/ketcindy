@@ -264,6 +264,7 @@ Slider("C",[-3,0],[3,0]);
 Slider(options=["Color=[0,0,0.6]","Thick=2"]);
 Slider(options2=["Sep=0.3"]);
 Putpoint("A",[1,2],[1,A.y]);
+Bezierfun(A,B,C,D,"t");
 Bezier("1",[A,D],[B,C]);
 Bezier(options=["Num=10"]);
 Mkbezierptcrv([A,B,C,D]);

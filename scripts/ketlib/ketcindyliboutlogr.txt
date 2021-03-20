@@ -1,3 +1,6 @@
+// 20210320
+//    CalcbyC changed  (WriteFlag[global] added)
+//    ExeccmdC  changed  ( fname rewritten using connectseg3d )
 // 20210216
 //    CalcbyM,CalcbyR debugged  ( case that file(M,R) not exists )
 // 20201230

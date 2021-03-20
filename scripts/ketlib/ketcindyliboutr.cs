@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20210216] loaded");
+println("ketcindylibout[20210320] loaded");
 
 //help:start();
 
@@ -4459,6 +4459,7 @@ CalcbyC(name,path,cmd,optionorg):=(
     );
     if(wflg==0,wflg=-1);
   );
+  WriteFlag=wflg; //210320
   if(wflg==1,
     WritetoC(name,header,[top,body]);
     SCEOUTPUT=openfile(wfile);
@@ -4593,6 +4594,18 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(length(CommandListC)<=2,ErrFlag=1);
   if(ErrFlag==0,
     CalcbyC(nm,[Cheadsurf(),Ctopsurf(nm),CommandListC],tmp1);
+    if(WriteFlag==1, //210320from
+      varL=ReadOutData(fname,["Disp=n"]); 
+      tmp2=[];
+      forall(varL,
+        tmp1=Connectseg3d(#);
+        tmp=#+"="+Textformat(tmp1,6);
+        parse(tmp);
+        tmp2=concat(tmp2,[#,parse(#)]);
+      );
+      wait(200);
+      Writeoutdata(fname,tmp2);
+    );  //210320to
   );
   if(ErrFlag==1,
     err("CommandListC is empty or execcmd is not completed");

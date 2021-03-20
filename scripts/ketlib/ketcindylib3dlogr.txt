@@ -1,3 +1,9 @@
+// 210320
+//    Connectseg3d changed ( for non-string data )
+// 210319
+//    Connectseg3d added
+// 210318
+//    precision =>10
 // 210112
 //    Rotatepoint3d changed  ( Rodrigues used )
 //    Mkpointlist debugged  ( typo )

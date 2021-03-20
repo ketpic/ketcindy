@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210315] loaded");
+println("ketcindylibbasic2[20210318] loaded");
 
 //help:start();
 
@@ -3234,6 +3234,19 @@ Putpoint(name,Ptinit,Pt):=(
   ); //no ketjs  //191030
 );
 ////%Putpoint end////
+
+////%Bezierfun start//// 210318
+Bezierfun(pt0,pt1,pt2,pt3):=Bezierfun(p0,pt1,pt2,pt3,"t");
+Bezierfun(pt0,pt1,pt2,pt3,var):=(
+//help:Bezierfun(A,B,C,D,"t");
+  regional(fun,xx,yy,p0,p1,p2,p3);
+  p0=Lcrd(pt0); p1=Lcrd(pt1); p2=Lcrd(pt2); p3=Lcrd(pt3);
+  fun="P0*(1-t)^3+3*P1*(1-t)^2*t+3*P2*(1-t)*t^2+P3*t^3";
+  xx=Assign(fun,["P0",p0_1,"P1",p1_1,"P2",p2_1,"P3",p3_1,"t",var]);
+  yy=Assign(fun,["P0",p0_2,"P1",p1_2,"P2",p2_2,"P3",p3_2,"t",var]);
+  [xx,yy];
+);
+////%Bezierfun end////
 
 ////%Bezierpt start////
 Bezierpt(t,ptlist,ctrlist):=(

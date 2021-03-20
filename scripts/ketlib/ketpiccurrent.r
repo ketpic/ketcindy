@@ -16,11 +16,13 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(2021024)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20210320)" 
 
 print(ThisVersion)
 
-# 20211111
+# 20210320
+#   Nearestpt debugged  ( case of not list as result )
+# 20210111
 #   Nearestpt changed according to that of KeTCindy
 # 20201024
 #   Texif, Texendif changed  ("}" removed)
@@ -5020,13 +5022,15 @@ Nearestpt<- function(pt,ptL){
       dv=pt2-pt1
       nv=c(-Op(2,dv),Op(1,dv))
       tmp1=Intersectline(pt1,dv,pt,nv);
-      if((Op(2,tmp1)>=0)&&(Op(2,tmp1)<=1)){
-        dt=list(Op(1,tmp1),nn+Op(2,tmp1),Norm(Op(1,tmp1)-pt)); rk=c(rk,dt[[3]])
-      }else{
-        if(Op(2,tmp1)<0){
-          dt=list(pt1,nn,Norm(pt1-pt)); rk=c(rk,dt[[3]])
+      if(length(tmp1)>1){ #210320
+        if((Op(2,tmp1)>=0)&&(Op(2,tmp1)<=1)){
+          dt=list(Op(1,tmp1),nn+Op(2,tmp1),Norm(Op(1,tmp1)-pt)); rk=c(rk,dt[[3]])
         }else{
-          dt=list(pt2,nn+1,Norm(pt2-pt)); rk=c(rk,dt[[3]])
+          if(Op(2,tmp1)<0){
+            dt=list(pt1,nn,Norm(pt1-pt)); rk=c(rk,dt[[3]])
+          }else{
+            dt=list(pt2,nn+1,Norm(pt2-pt)); rk=c(rk,dt[[3]])
+          }
         }
       }
     }

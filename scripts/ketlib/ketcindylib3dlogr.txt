@@ -1,3 +1,5 @@
+// 210322
+//    Connectseg3d debugged  (Measuredepth)
 // 210320
 //    Connectseg3d changed ( for non-string data )
 // 210319

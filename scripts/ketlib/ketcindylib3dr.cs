@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210320] loaded");
+println("ketcindylib3d[20210322] loaded");
 
 //help:start();
 
@@ -3854,6 +3854,7 @@ Connectseg3d(dtstr3):=(
   regional(data,pt1,pt2,dt3,nd,nn,Eps,flg,tmp,tmp1,out);
   Eps=10^(-4);
   if(isstring(dtstr3),dt3=parse(dtstr3),dt3=dtstr3);
+  if(Measuredepth(dt3)<2,dt3=[dt3]); //210322
   tmp=select(dt3,|#_1-#_(-1)|<Eps);
   out=tmp;
   dt3=remove(dt3,tmp);

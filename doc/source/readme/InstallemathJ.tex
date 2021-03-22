@@ -1,0 +1,40 @@
+\documentclass{ujarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx,colorlinks=true,urlcolor=blue]{hyperref}
+
+\setmargin{15}{15}{15}{15}
+
+\西暦
+
+\renewcommand{\labelitemi}{・}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+emath(selected)のインストール
+\end{center}
+
+\vspace{-5mm}
+
+\hfill 修正日：\today
+
+\begin{enumerate}[\bf\large 1.]
+\item \TeX システムの中にemathをおくフォルダを用意する．
+   \begin{itemize}
+   \item texlive, kettexの場合，例えば次のフォルダを作る．\\
+　　\verb|texmf-local > tex > platex|
+   \item Macのkettex.appの場合，「フォルダへ移動」で次を入力してから上のフォルダを作る．\\
+　　\verb|/Applications/kettex.app/texlive|
+   \end{itemize}
+
+\item \verb|emathselected|フォルダを丸ごとコピーする．
+\item ketcindysettings.cdyを立ち上げ，TeXシステムを選択して\verb|Update|だけを実行する．
+
+\end{enumerate}
+
+\end{document}

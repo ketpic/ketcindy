@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210322] loaded");
+println("ketcindylib3d[20210325] loaded");
 
 //help:start();
 
@@ -54,6 +54,7 @@ Ketinit3d(subflg):=(
   drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right");
   THETA=(TH.x-xPos)*20*pi/180;
   PHI=(FI.x-xPos)*40*pi/180; //190713to
+  Skeleton=1; //210324
 );
 ////%Ketinit3d end////
 
@@ -3854,40 +3855,44 @@ Connectseg3d(dtstr3):=(
   regional(data,pt1,pt2,dt3,nd,nn,Eps,flg,tmp,tmp1,out);
   Eps=10^(-4);
   if(isstring(dtstr3),dt3=parse(dtstr3),dt3=dtstr3);
-  if(Measuredepth(dt3)<2,dt3=[dt3]); //210322
-  tmp=select(dt3,|#_1-#_(-1)|<Eps);
-  out=tmp;
-  dt3=remove(dt3,tmp);
-  forall(1..(length(dt3)),nd,
-    data=dt3_nd;
-    pt1=data_1; pt2=data_(-1);
-    tmp=select(1..(length(out)),
-       (|pt2-out_#_1|<Eps)%(|pt2-out_#_(-1)|<Eps)
-          %(|pt1-out_#_1|<Eps)%(|pt1-out_#_(-1)|<Eps));
-    if(length(tmp)>0,
-      nn=tmp_1;
-      tmp1=out_nn;
-      flg=0;
-      if((flg==0)&(|pt2-tmp1_1|<Eps),
-        out_nn=concat(data_(1..(length(data)-1)),tmp1);
-        flg=1;
+  if(length(dt3)==0, //210324from
+    out=[];
+  ,
+    if(Measuredepth(dt3)<2,dt3=[dt3]); //210322
+    tmp=select(dt3,|#_1-#_(-1)|<Eps);
+    out=tmp;
+    dt3=remove(dt3,tmp);
+    forall(1..(length(dt3)),nd,
+      data=dt3_nd;
+      pt1=data_1; pt2=data_(-1);
+      tmp=select(1..(length(out)),
+         (|pt2-out_#_1|<Eps)%(|pt2-out_#_(-1)|<Eps)
+            %(|pt1-out_#_1|<Eps)%(|pt1-out_#_(-1)|<Eps));
+      if(length(tmp)>0,
+        nn=tmp_1;
+        tmp1=out_nn;
+        flg=0;
+        if((flg==0)&(|pt2-tmp1_1|<Eps),
+          out_nn=concat(data_(1..(length(data)-1)),tmp1);
+          flg=1;
+        );
+        if((flg==0)&(|pt2-tmp1_(-1)|<Eps),
+          out_nn=concat(data_(1..(length(data)-1)),reverse(tmp1));
+          flg=1;
+        );
+        if((flg==0)&(|pt1-tmp1_1|<Eps),
+          out_nn=concat(reverse(tmp1),data_(2..(length(data))));
+          flg=1;
+        );
+        if((flg==0)&(|pt1-tmp1_(-1)|<Eps),
+          out_nn=concat(tmp1,data_(2..(length(data))));
+          flg=1;
+        );
+      ,
+        out=concat(out,[data]);
       );
-      if((flg==0)&(|pt2-tmp1_(-1)|<Eps),
-        out_nn=concat(data_(1..(length(data)-1)),reverse(tmp1));
-        flg=1;
-      );
-      if((flg==0)&(|pt1-tmp1_1|<Eps),
-        out_nn=concat(reverse(tmp1),data_(2..(length(data))));
-        flg=1;
-      );
-      if((flg==0)&(|pt1-tmp1_(-1)|<Eps),
-        out_nn=concat(tmp1,data_(2..(length(data))));
-        flg=1;
-      );
-    ,
-      out=concat(out,[data]);
     );
-  );
+  );  //210324to
   out;
 );
 ////%Connectseg3d end////
@@ -4578,7 +4583,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   size=1;
   Eps2=0.05;
   fileflg="N";
-  mkflg=1;
+  mkflg=0; //210324
   if(length(reL)>0, //16.02.28 
     size=reL_1;
     Rr=size*Rr;
@@ -4591,11 +4596,10 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       fileflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
-    if(tmp1=="N",
-      tmp=parse(tmp_2);
-      if(Anyselected(tmp),
-        mkflg=-1;
-      );
+    if(tmp1=="M", //210324from
+      tmp=Toupper(tmp_2);
+      if(substring(tmp,0,1)=="N",mkflg=0); 
+      if(substring(tmp,0,1)=="Y",mkflg=1); //210324to
       options=remove(options,[#]);
     );
     if(tmp1=="C",
@@ -4603,6 +4607,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       options=remove(options,[#]);
     );
   );// no ketjs off
+  if(!islist(Skeleton),mkflg=1); //210324
   Eps=10^(-4);
   ObjL=Flattenlist(pltdata1);
   Plt3L=Flattenlist(pltdata2);
@@ -4653,7 +4658,6 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     ); 
   );// no ketjs off
   if(mkflg==1, //181102
-/////////////  tmp=apply(pltdata1,replace(#,"3d","2d"));
     Out=[];
     forall(1..(length(ObjL)),ii,
       Obj3=ObjL_ii;
@@ -4673,13 +4677,16 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       );
     );
     Out=select(Out,length(Projcurve(#))>0); // 16.12.19
-    tmp1=apply(Out,textformat(#,10));
-    tmp=name3+"="+tmp1+";"; //190415
-    parse(tmp);
-    tmp=name2+"=Projcurve("+tmp1+");";
-    parse(tmp);
-  ); 
-  if(mkflg>-1,
+    Skeleton=Out; //210324from
+  ,
+    Out=Skeleton;  //210324to
+  );
+  tmp1=apply(Out,textformat(#,10));
+  tmp=name3+"="+tmp1+";"; //190415
+  parse(tmp);
+  tmp=name2+"=Projcurve("+tmp1+");";
+  parse(tmp);
+  if(mkflg> -1,
     Changestyle3d(pltdata1org,["nodisp"]);
   ); 
   if((Noflg<3)&(mkflg> -1), //no ketjs on //181103
@@ -4713,7 +4720,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       Subgraph(name3,opcindy);
     );
   );
-  if(mkflg>-1, // no ketjs on
+  if(mkflg> -1, // no ketjs on
     if((fileflg=="Y")&(wflg==1), //181102from
       tmp1="skeleton"+nm+".txt";
       SCEOUTPUT = openfile(tmp1);

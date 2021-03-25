@@ -1,3 +1,7 @@
+// 20210325
+//    Nearestpt,Intersectline  changed  ( precision )
+// 20210319
+//    Nearestpt debugged  ( for too short seg )
 // 20210316
 //    Ketinit changed  ( Warning of (-) in case of windows )
 // 20210311

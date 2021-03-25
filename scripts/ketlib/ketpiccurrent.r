@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20210320)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20210325)" 
 
 print(ThisVersion)
 
+# 20210325
+#   Intersectlne,Nearestpt changed ( precision )
 # 20210320
 #   Nearestpt debugged  ( case of not list as result )
 # 20210111
@@ -4968,7 +4970,7 @@ Nearestpt<- function(...){
   }
   if(Nrow(PL1)==1) Flg=0
   else Flg=1
-  Eps<- 10.0^(-6)
+  Eps<- 10.0^(-5) #210325
   PL<- varargin[[2]]
   Ans<- list(PL1[1,],1,PL[1,],1,Norm(PL1[1,]-PL[1,]))
   for(N in Looprange(1,Nrow(PL1))){
@@ -12568,7 +12570,7 @@ Symb3data<- function(Moji,Size,Kaiten,NV,Pos){
 ############## New Intersect 18.02.01 #############
 
 Intersectline<- function(p1,v1,p2,v2){
-  Eps0=10^(-5)
+  Eps0=10^(-8) #210325
   tmp=Dotprod(v1,v2)
   tmp1=c(tmp,Norm(v1)^2)
   tmp2=c(-Norm(v2)^2,-tmp)

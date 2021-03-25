@@ -1,3 +1,5 @@
+// 20210325
+//    ExeccmdC changed  ( Skeleton added )
 // 20210320
 //    CalcbyC changed  (WriteFlag[global] added)
 //    ExeccmdC  changed  ( fname rewritten using connectseg3d )

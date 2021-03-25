@@ -1,3 +1,8 @@
+// 210325
+//    Skeletondata => Skeleton
+// 210324
+//    Connectseg3d debugged  (case of [])
+//    Skeletonparadata changed  (keletonData)
 // 210322
 //    Connectseg3d debugged  (Measuredepth)
 // 210320

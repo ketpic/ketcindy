@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20210320] loaded");
+println("ketcindylibout[20210325] loaded");
 
 //help:start();
 
@@ -4457,7 +4457,7 @@ CalcbyC(name,path,cmd,optionorg):=(
         );
       );
     );
-    if(wflg==0,wflg=-1);
+//    if(wflg==0,wflg=-1); //210324
   );
   WriteFlag=wflg; //210320
   if(wflg==1,
@@ -4605,6 +4605,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
       );
       wait(200);
       Writeoutdata(fname,tmp2);
+      Skeleton=1; //210325
     );  //210320to
   );
   if(ErrFlag==1,
@@ -4636,8 +4637,11 @@ ExeccmdC(nm,optionorg,optionhorg):=(
       );
       tmp=substring(tmp,0,length(tmp)-1);
     );
-    tmp2=apply(tmp2,replace(#,"3d","2d")+"=Projpara("+Dqq(#)+",["+tmp+"]);");
-    forall(tmp2,parse(#));
+    tmp2=select(tmp2,length(parse(#))>0); //210323
+    tmp2=apply(tmp2,replace(#,"3d","2d")+"=Projpara("+#+",["+tmp+"]);");
+    forall(tmp2,
+      parse(#)
+    );
     Changestyle3d(EraseList,["nodisp"]);//180601
   );
   varL=select(varL,length(parse(#))>0);

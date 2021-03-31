@@ -9,7 +9,7 @@ Filelist,basic1,302,318,fileslist,Strsplit
 Readlines,basic1,322,340,isexists,readfile2str
 Readcsv,basic1,344,382,Divoptions,Strsplit,Toupper,Readlines
 Cindyname,basic1,386,393,Cdyname,Getcdyname
-Setwindow,basic1,397,446,LLcrd,Putpoint,Ptpos,Strictmove,Pcrd,Toupper
+Setwindow,basic1,397,446,Toupper,LLcrd,Putpoint,Ptpos,Pcrd,Strictmove
 Setfiles,basic1,450,463,Dqq
 Setparent,basic1,467,479,Dqq
 Reparse,basic1,483,493

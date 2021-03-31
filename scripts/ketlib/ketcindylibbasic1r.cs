@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210325 loaded");
+println("ketcindylibbasic1[20210319 loaded");
 
 //help:start();
 
@@ -436,13 +436,13 @@ Setwindow(xrange,yrange,msg):=(
   Ptpos(SW,Pcrd([XMIN,YMIN])); //190927from
   Ptpos(NE,Pcrd([XMAX,YMAX]));
   Strictmove("SW"); Strictmove("NE");
-  layer(KETPICLAYER); 
+  layer(KETPICLAYER); // no ketjs on  210331
   autoclearlayer(KETPICLAYER,true);
   drawpoly([Pcrd([XMIN,YMIN]), Pcrd([XMAX,YMIN]),
         Pcrd([XMAX,YMAX]),Pcrd([XMIN,YMAX])],color->[1,1,1]); //190927to
   if(Toupper(substring(msg,0,1))=="Y", 
     println("Setwindow(["+XMIN+","+XMAX+"],["+YMIN+","+YMAX+"])");
-  );
+  ); // no ketjs off  210331
 );
 ////%Setwindow end////
 
@@ -2064,7 +2064,7 @@ Intersectcrvs(Gr1,Gr2,options):=(
 ////%Intersectline start////
 Intersectline(p1,v1,p2,v2):=(
   regional(Eps,d,dt,ds,t,s,pt,out,tmp,tmp1,tmp2,tmp3);
-  Eps=10^(-8); //210325
+  Eps=10^(-5);
   out=[];
   tmp=Dotprod(v1,v2);
   tmp1=[tmp,|v1|^2];
@@ -2517,7 +2517,7 @@ Nearestpt(pt,plotstr):=(
 //      a1,b1,a2,b2,v1,v2,x1,x2,Tmp,rT,pP,sS,Lm,Pm,Sm,Flg);
 //help:Nearestpt(point,"gr2");
   if(isstring(plotstr),ptL=parse(plotstr),ptL=plotstr);
-  Eps=10^(-5);
+  Eps=10^(-6);
   dtL=[];
   forall(1..(length(ptL)-1),nn,
     pt1=ptL_nn;
@@ -2529,7 +2529,7 @@ Nearestpt(pt,plotstr):=(
       nv=[-dv_2,dv_1];
       tmp1=Intersectline(pt1,dv,pt,nv);
       if(length(tmp1)>1, //210319from
-        if((tmp1_2>-Eps)&(tmp1_2<=1+Eps),
+        if((tmp1_2>=0)&(tmp1_2<=1),
           dt=[tmp1_1,nn+tmp1_2,|tmp1_1-pt|];
         ,
           if(tmp1_2<0,
@@ -2541,7 +2541,7 @@ Nearestpt(pt,plotstr):=(
       ,
       ); //210319to
     );
-    dtL=concat(dtL,[dt]);
+    dtL=append(dtL,dt);
   );
   dtL=sort(dtL,[#_3,#_2]);
   dtL_1;

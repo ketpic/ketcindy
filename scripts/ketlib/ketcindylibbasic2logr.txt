@@ -1,3 +1,5 @@
+// 20210331
+//    Setwindow changed  ( no frame in ketcindyjs )
 // 20210319
 //    Nearestpt debugged  ( result from Intersectline )
 // 20210318

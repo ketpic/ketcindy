@@ -1,4 +1,4 @@
-emathの組み込み　　　2021.04.01
+emathの組み込み　　　2021.04.0２
 
 準備
 　Cinderella3とRが必要である．
@@ -8,9 +8,8 @@ emathの組み込み　　　2021.04.01
 ０．古いemathが組み込まれていたら削除する．
 １．emathのページ
 　　　　http://emath.la.coocan.jp
-　　から，訂正版 emathc190703 をダウンロードする．
-２．foremathにあるcopyemath.cdyを１のstyの中にコピーする．
-３．2を立ち上げ，TeXを選び，Copyemathボタンを押す．
-　　　　 1の中身が texmf-local/tex/platex/emath にコピーされ，mktexlsrが実行される．
-４．必要なら，foremathにあるcopyemath.cdyも実行する．
-　　　　注）追加および置き換えファイルがコピーされる．
+　　から，丸ごとパックemathf051107c.zip をダウンロードして解凍する．
+２．中にあるsty.zipを解凍する．
+３．foremathにあるcopyemath.cdyを１のstyの中（または１つ上）のフォルダに入れる．
+４．３を立ち上げ，TeXを選び，Copyemathボタンを押す．
+　　　　 ２の中身が texmf-local/tex/platex/emath にコピーされ，mktexlsrが実行される．

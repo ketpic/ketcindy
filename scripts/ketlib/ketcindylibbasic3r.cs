@@ -4106,12 +4106,15 @@ Resizetextsize(json,defaultsize,scale):=(
 ////%Resizetextsize end////
 
 ////%Movetojs start////
+Movetojs(geoorg,pos):=Movetojs(geoorg,pos,0); //210403
 Movetojs(geoorg,pos,textsize):=(
 //help:Movetojs(Text51,[1,2],12);
   regional(geo); //190729from
   geo=geoorg;
   if(isreal(geo),geo=parse("Text"+text(geo))); //190729to
-  inspect(geo,"textsize",textsize);
+  if(textsize>0, //210404from
+    inspect(geo,"textsize",textsize);
+  );  //210404to
   if(!islist(MOVETOJSLIST), MOVETOJSLIST=[]); //190802
   MOVETOJSLIST=append(MOVETOJSLIST,[geo.name,[pos_1,pos_2]]);
 );

@@ -1,3 +1,5 @@
+// 210404
+//   Movetojs  changed  ( textsize be optional)
 // 210312
 //   makebat debugged  (for Homehead=="")
 // 210311

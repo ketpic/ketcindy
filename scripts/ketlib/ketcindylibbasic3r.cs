@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210312] loaded");
+println("ketcindylibbasic3[20210404] loaded");
 
 //help:start();
 
@@ -4371,9 +4371,19 @@ Mkketcindyjs(options):=( //17.11.18
   ,
     tmp3=Readlines(Dircdy,Fhead+".html");
     htmorg=[];
-    from=1;
-    upto=length(tmp3);
-    htmorg=concat(htmorg,tmp3_(from..upto));
+    forall(tmp3, //210404from
+      tmp1=Removespace(#);
+      if(substring(tmp1,0,7)=="import(",
+        tmp=Bracket(tmp1,"()");
+        tmp2=substring(tmp1,tmp_1_1+1,tmp_2_1-2);
+        If((isexists(Dircdy,tmp2))&(indexof(tmp2,".cs")==0),
+          tmp=Readlines(Dircdy,tmp2);
+          htmorg=concat(htmorg,tmp);
+        );
+      ,
+        htmorg=concat(htmorg,[#]);
+      );
+    );   //210404to
     tmp=select(1..(length(htmorg)),indexof(htmorg_#,"id="+Dqq("csinit"))>0); //190206from
     from=tmp_1+5;
     flg=0;
@@ -4402,7 +4412,7 @@ Mkketcindyjs(options):=( //17.11.18
         if(ketflg=="off",
           tmp=Removespace(#);
           if(substring(tmp,0,2)!="//",
-            tmp2=append(tmp2,#);
+              tmp2=append(tmp2,#);
           ,
              tmp1=indexof(tmp,"only ketjs"); //190430from
              if((tmp1>0)%(onlyflg=="on"), //190502

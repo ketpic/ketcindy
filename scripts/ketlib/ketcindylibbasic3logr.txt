@@ -1,4 +1,6 @@
 // 210404
+//   Mkketcindyjs changed   ( "import" supported )
+// 210403
 //   Movetojs  changed  ( textsize be optional)
 // 210312
 //   makebat debugged  (for Homehead=="")

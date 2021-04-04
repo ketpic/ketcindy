@@ -30,14 +30,13 @@ KETCindyについての補足(Mac)
 \hspace*{10mm}\url{https://github.com/ketpic/kettex/releases}
 \item kettex.dmgをダブルクリックして仮想ディスクを開き，KetTeX.appをApplicationsに入れる．\\
 \hspace*{1zw}注）仮想ディスクにあるApplicationsにドラグドロップすればよい．
-\item
-最初の実行時，セキュリティの制限によって実行不可のエラーが出る場合（特にCatalina以降）
-    \begin{enumerate}[(1)]
-   \item キャンセルを押す．（ゴミ箱を選ばない）
-   \item システム環境設定＞セキュリティとプライバシー　を開く．
-   \item 「このまま許可」をクリックする．
-   \end{enumerate}
-\item \verb|ketcindysettings.cdy|を実行すると，\verb|KeTeX.app/texlive|のリンク \verb|kettexlive|が作られる．
+%\item
+%最初の実行時，セキュリティの制限によって実行不可のエラーが出る場合（特にCatalina以降）
+%    \begin{enumerate}[(1)]
+%   \item キャンセルを押す．（ゴミ箱を選ばない）
+%   \item システム環境設定＞セキュリティとプライバシー　を開く．
+%   \item 「このまま許可」をクリックする．
+%   \end{enumerate}
 
 \end{itemize}
 
@@ -46,19 +45,21 @@ KETCindyについての補足(Mac)
 \item ketcindysettings.cdyを利用する．
 \begin{enumerate}[(1)]
 \item 必要なら，「情報を見る」でアプリをCinderella.appを選び，「すべてを変更」
+\item \verb|ketcindysettings.cdy|を立ち上げる．
 \item 左方にあるボタンで，言語，TeXの種類，描画コードを選ぶ．\\
 \hspace*{10mm}ボタンを押すと順に項目が変わる．
 \item 中央にあるボタンでTeXシステムを選ぶ．\\
 \hspace*{10mm}KeTTeX，TeXLive以外の場合は，CindyScriptでパスを設定してから．\verb|Other|を選ぶ．
 \item 右側にあるボタンを順に押す．\\
-\hspace*{10mm}\verb|Mkinit|：初期化ファイルketcindy.iniをユーザホームに作成\\
-\hspace*{10mm}\verb|Update|：TeXに入っているketlib関連のファイルを更新（コピー）\\
-\hspace*{10mm}\verb|Work|：作業フォルダketcindy.iniをユーザホームに作成\\
-\hspace*{1mm}注）\verb|KeTTeX.app|を選択して\verb|Update|を実行した場合\\
-\hspace*{13mm}\verb|/Applications|に\verb|KeTTeX.app/texlive|のシンボリックリンク\verb|kettexlive|が作られる．
+\hspace*{5mm}\verb|Mkinit|：初期化ファイルketcindy.iniと作業フォルダをユーザホームに作成\\
+\hspace*{5mm}\verb|Update|：TeXに入っているketlib関連のファイルを更新（コピー）\\
+\hspace*{5mm}\verb|Work|：初期設定ファイル\verb|ketcindy.ini|と
+作業フォルダketcindy+日付をユーザホームに作成
+\item[注)]\verb|KeTTeX.app|を選択して\verb|Update|を実行した場合\\
+\hspace*{5mm}\verb|/Applications|に\verb|KeTTeX.app/texlive|のシンボリックリンク\verb|kettexlive|が作られる．
 \end{enumerate}
-\item ketcindysettings.cdyのUpdateでエラーが出た場合\\
-\hspace*{10mm}{\bf 1.}を実行する．
+%\item ketcindysettings.cdyのUpdateでエラーが出た場合\\
+%\hspace*{10mm}{\bf 1.}を実行する．
 \end{itemize}
 
   \item KeTCindyのテストラン
@@ -72,11 +73,9 @@ KETCindyについての補足(Mac)
 
 \item TeXWorksの設定（kettexの場合）
   \begin{itemize}
-  \item \url{https://github.com/TeXworks/texworks/releases/} からダウンロードできる．\\
-\hspace*{10mm}注）KeTTeXの場合，TeXworksのバージョンは 0.6.2の方がよい．
+  \item \url{https://github.com/TeXworks/texworks/releases/} からダウンロードできる．
   \item TeXworksを立ち上げ，「TeXworks \verb|>| 環境設定 \verb|>| タイプセット」
-  \item 上の欄（パス）に以下を選択して入れる\\
-  \hspace*{5mm}\verb|/Applications/kettexlive/bin/x86_64-darwin|（KeTTeX.appの場合）\\
+  \item 上の欄（パス）に\verb|kettexlive|を選択して入れる\\
   \hspace*{10mm}注) この行を上の欄の先頭に移動する．
   \item 下の欄の横にある + をクリック
     \begin{itemize}
@@ -98,9 +97,7 @@ KETCindyについての補足(Mac)
   \hspace*{5mm}\url{https://pages.uoregon.edu/koch/texshop/obtaining.html}
   \item TeXShopを立ち上げ，「TeXShop \verb|>| 環境設定 |」
   \item 「書類\verb|>|設定プロファイル」　ptex(ptex2pdf)かuptex(uptex2pdf)を選ぶ
-  \item 「内部設定\verb|>|パス設定」以下を入れる．\\
-  \hspace*{10mm}\verb|/Applications/kettex/texlive/bin/x86_64-darwin|（kettexの場合）\\
-  \hspace*{10mm}\verb|/Applications/kettexlive/bin/x86_64-darwin|（KeTTeX.appの場合）
+  \item 「内部設定\verb|>|パス設定」に\verb|kettex/bin/...darwin|フォルダをドラグドロップする．
   \end{itemize}
 
 \item gccのインストール
@@ -111,33 +108,33 @@ KETCindyについての補足(Mac)
     \hspace*{20mm}\verb|sudo xcode-select --install|
   \end{itemize}
 
-\item 手動でコピーする場合（KeTTeX）\\
-\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
-\hspace*{3zw}\verb|/Applications/kettex/texlive| $=>$ \verb|/Library/TeX/Root| など
-  \begin{enumerate}[(1)]
-  \item ketcindy(-master)/ketcindyfolderを開いておく．
-  \item scriptsフォルダの中身を以下にコピーする．\\
-　\verb|/Applications/kettex/texlive/texmf-dist/scripts/ketcindy|
-  \item styleフォルダの中身を以下にコピーする．\\
-　\verb|/Applications/kettex/texlive/texmf-dist/tex/latex/ketcindy|
-  \item docフォルダの中身を以下にコピーする．\\
-　\verb|/Applications/kettex/texlive/texmf-dist/doc/support/ketcindy|
-  \item ターミナルで以下を実行する\\
-  \hspace*{1zw}\verb|sudo /Applications/kettex/texlive/bin/x86_64-darwin/mktexlsr|
-  \item workをユーザホームなど適当な場所にコピーして，名前（例えばketcindy）を変更する．
-  \item 上の作業ディレクトリ(ketcindy)に doc/ketmanual のマニュアルをコピーする．
-  \end{enumerate}
+%\item 手動でコピーする場合（KeTTeX）\\
+%\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
+%\hspace*{3zw}\verb|/Applications/kettex/texlive| $=>$ \verb|/Library/TeX/Root| など
+%  \begin{enumerate}[(1)]
+%  \item ketcindy(-master)/ketcindyfolderを開いておく．
+%  \item scriptsフォルダの中身を以下にコピーする．\\
+%　\verb|/Applications/kettex/texlive/texmf-dist/scripts/ketcindy|
+%  \item styleフォルダの中身を以下にコピーする．\\
+%　\verb|/Applications/kettex/texlive/texmf-dist/tex/latex/ketcindy|
+%  \item docフォルダの中身を以下にコピーする．\\
+%　\verb|/Applications/kettex/texlive/texmf-dist/doc/support/ketcindy|
+%  \item ターミナルで以下を実行する\\
+%  \hspace*{1zw}\verb|sudo /Applications/kettex/texlive/bin/x86_64-darwin/mktexlsr|
+%  \item workをユーザホームなど適当な場所にコピーして，名前（例えばketcindy）を変更する．
+%  \item 上の作業ディレクトリ(ketcindy)に doc/ketmanual のマニュアルをコピーする．
+%  \end{enumerate}
 
 \item その他
 
 \begin{itemize}
- \item 「すべての実行を許可」を表示させる
-\begin{enumerate}[(1)]
-\item ターミナルで \verb|sudo stctl --master-disable| を実行
-\item システム環境設定＞セキュリティとプライバシー を開く
-\item 実行の許可が「すべてを許可」になっているかを確認する
-   \end{enumerate}
-
+% \item 「すべての実行を許可」を表示させる
+%\begin{enumerate}[(1)]
+%\item ターミナルで \verb|sudo stctl --master-disable| を実行
+%\item システム環境設定＞セキュリティとプライバシー を開く
+%\item 実行の許可が「すべてを許可」になっているかを確認する
+%   \end{enumerate}
+%
     \item PDFの表示後，ターミナル画面を閉じるようにする
        \begin{enumerate}[(1)]
         \item アプリケーション \verb|/| ユーティリティ \verb|/| ターミナルを開く

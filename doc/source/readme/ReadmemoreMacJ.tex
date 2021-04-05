@@ -57,6 +57,7 @@ KETCindyについての補足(Mac)
 作業フォルダketcindy+日付をユーザホームに作成
 \item[注)]\verb|KeTTeX.app|を選択して\verb|Update|を実行した場合\\
 \hspace*{5mm}\verb|/Applications|に\verb|KeTTeX.app/texlive|のシンボリックリンク\verb|kettexlive|が作られる．
+\item[注)]Updateの実行中に，「xattr: No such file... man」のメッセージが出るが気にしなくてよい．
 \end{enumerate}
 %\item ketcindysettings.cdyのUpdateでエラーが出た場合\\
 %\hspace*{10mm}{\bf 1.}を実行する．
@@ -128,7 +129,9 @@ KETCindyについての補足(Mac)
 \item その他
 
 \begin{itemize}
-% \item 「すべての実行を許可」を表示させる
+\item kettex.appの実行許可が与えられていないときは，ターミナルで\\
+\hspace*{5mm}sudo xattr -r -d com.apple.quarantine    /Applications/KeTTeX.app\\
+を実行する（「manなどのファイルがない」とのメッセージが出ても問題ない）
 %\begin{enumerate}[(1)]
 %\item ターミナルで \verb|sudo stctl --master-disable| を実行
 %\item システム環境設定＞セキュリティとプライバシー を開く

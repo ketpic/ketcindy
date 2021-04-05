@@ -1,3 +1,9 @@
+// 210405
+//   Addasterisk changed  ( \...(sp)  remain unchanged )
+//   Addasterisk debugged  ( position +/-,for example,"sin(x)+sin(y)" )
+//   Mkketcindyjs changed  ( "import" supported )
+// 210404
+//   Mkketcindyjs changed   ( "import" supported )
 // 210403
 //   Movetojs  changed  ( textsize be optional)
 // 210312

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210312] loaded");
+println("ketcindylibbasic3[20210405] loaded");
 
 //help:start();
 
@@ -3039,7 +3039,7 @@ Sla2fra(str):=(
 Addasterisk(strorg):=(
 //help:Addasterisk("ax^2+bx+c");
   regional(pL,sL,funL,fn,sgnL,numL,alphaL,
-      str0,str,f,k,n1,n2,sub,res,tmp,tmp1,tmp2,ctr,out,s,flg);
+      str0,str,f,k,n1,n2,sub,res,tmp,tmp1,tmp2,ctr,out,s,flg,repL);
   str0=replace(strorg,"  ","*");
   funL=["sin","cos","tan","log"]; 
   sgnL=["+","-"];
@@ -3070,7 +3070,7 @@ Addasterisk(strorg):=(
         flg=0;
         forall(sgnL,s,
           if(flg==0,
-            tmp2=Getlevel(res,s);
+            tmp2=Getlevel(substring(res,0,tmp1),s); //210405
             if(length(tmp2)>0,
               tmp2=select(tmp2,#_2==1);
               if(length(tmp2)>0,tmp2=tmp2_1_1,tmp2=0);
@@ -3088,6 +3088,21 @@ Addasterisk(strorg):=(
     str0=str+res;
   );
   str=str0;
+  repL=[];  //210405from
+  ctr=1;
+  tmp=indexof(str,"\");
+  while((tmp>0)&(ctr<50),
+    res=substring(str,tmp-1,length(str));
+    str=substring(str,0,tmp-1);
+    tmp=indexof(res," ");
+    tmp1=substring(res,0,tmp);
+    res=substring(res,tmp,length(res));
+    repL=append(repL,tmp1);
+    tmp="#"+text(length(repL))+"#";
+    str=str+tmp+res;
+    tmp=indexof(str,"\");
+    ctr=ctr+1;
+  );  //210405to
   str=replace(str," ","*");
   str=replace(str,"pi","%");
   str=replace(str,"ex(","exp("); //210227from
@@ -3103,6 +3118,7 @@ Addasterisk(strorg):=(
     );
     str=tmp1+substring(str,tmp_(-1),length(str));;
   );
+
   funL=["sin","cos","tan","log","fr","sq","exp"]; //210227to
   sgnL=["+","-","*","/","^"];
   numL=append(apply(0..9,text(#)),"."); //210226
@@ -3166,6 +3182,9 @@ Addasterisk(strorg):=(
   );
   out=replace(res,"%","pi");
   out=replace(out,"$","");
+  forall(1..(length(repL)),n1,  //210405from
+    out=replace(out,"#"+text(n1)+"#",repL_n1);
+  ); //210405to
   out;
 );
 ////%Addasterisk end////
@@ -3278,12 +3297,12 @@ Totexformpart(str):=( //190515from
       frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
     ["frac",["","\frac{xx}{yy}"]], //210228from
-    ["log",["\log{xx}","\log_{xx} yy"]],
+    ["log",["\log xx ","\log_{xx} yy"]], //210405
     ["sqrt",["\sqrt{xx}","\sqrt[xx]{yy}"]],
     ["pow",["","{xx}^{yy}"]],
-    ["sin",["\sin{xx}","\sin^{xx}\!{yy}"]], //200823[3lines]
-    ["cos",["\cos{xx}","\cos^{xx}\!{yy}"]],
-    ["tan",["\tan{xx}","\tan^{xx}\!{yy}"]]  //210228to
+    ["sin",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
+    ["cos",["\cos xx ","\cos^{xx}\! yy "]], //210405
+    ["tan",["\tan xx ","\tan^{xx}\! yy "]]  //210228to  //210405
   ];
   funL=apply(repL,substring(#_1,0,2)); //190515to
   out="";
@@ -4404,11 +4423,11 @@ Mkketcindyjs(options):=( //17.11.18
           if(substring(tmp,0,2)!="//",
             tmp2=append(tmp2,#);
           ,
-             tmp1=indexof(tmp,"only ketjs"); //190430from
-             if((tmp1>0)%(onlyflg=="on"), //190502
-               if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
-               tmp2=append(tmp2,substring(tmp,2,length(tmp)));
-             ); //190430to
+            tmp1=indexof(tmp,"only ketjs"); //190430from
+            if((tmp1>0)%(onlyflg=="on"), //190502
+              if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
+              tmp2=append(tmp2,substring(tmp,2,length(tmp)));
+            ); //190430to
           );
         );
       );
@@ -4598,25 +4617,34 @@ Mkketcindyjs(options):=( //17.11.18
       tmp1=htmorg_((from)..(upto-1)); //190905
       ketflg="off"; //190206from
       onlyflg="off";  //190502
-      forall(tmp1,
-        if(indexof(#,"only ketjs on")>0,onlyflg="on"); //190502
-        if(indexof(#,"only ketjs off")>0,onlyflg="off"); //190502
-        if(indexof(#,"no ketjs")>0,
-          if(indexof(#,"no ketjs on")>0,
+      forall(tmp1,tmp3,
+        if(indexof(tmp3,"only ketjs on")>0,onlyflg="on"); //190502
+        if(indexof(tmp3,"only ketjs off")>0,onlyflg="off"); //190502
+        if(indexof(tmp3,"no ketjs")>0,
+          if(indexof(tmp3,"no ketjs on")>0,
             ketflg="on";
           );
-          if(indexof(#,"no ketjs off")>0,
+          if(indexof(tmp3,"no ketjs off")>0,
             ketflg="off";
           );
         ,
           if(ketflg=="off",
-            tmp=Removespace(#);
+            tmp=Removespace(tmp3);
             if(substring(tmp,0,2)!="//",
-              println(SCEOUTPUT,#);
+              if(indexof(tmp,"import(")==0,  //210405from
+                println(SCEOUTPUT,tmp3);
+              ,
+                tmp=Bracket(tmp3,"()");
+                tmp2=substring(tmp3,tmp_1_1+1,tmp_2_1-2);
+                If((isexists(Dircdy,tmp2))&(indexof(tmp2,".cs")==0),
+                  tmp1=Readlines(Dircdy,tmp2);
+                  forall(tmp1,println(SCEOUTPUT,#));
+                );
+              );  //210405to
             ,
               tmp1=indexof(tmp,"only ketjs"); //19020l6from
               if((tmp1>0)%(onlyflg=="on"), //190502
-                if(tmp1>0,tmp=substring(#,0,tmp1-1)); //190502
+                if(tmp1>0,tmp=substring(tmp3,0,tmp1-1)); //190502
                 println(SCEOUTPUT,substring(tmp,2,length(tmp)));
               ); //190206to
             );

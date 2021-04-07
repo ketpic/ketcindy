@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210405] loaded");
+println("ketcindylibbasic3[20210406] loaded");
 
 //help:start();
 
@@ -3961,18 +3961,23 @@ Seteditable(no,optionorg):=(
 
 ////%Textedit start//// 190430
 Textedit(no):=(
-//help:Textedit(50[,str]);
+//help:Textedit(50[,str[,"="]]);
+//help:Textedit(50,str,"");
   regional(tmp,tmp1,tmp2);
   tmp="Text"+text(no)+".currenttext";
   tmp1=parse(tmp);
   tmp1;
 );
-Textedit(n0,str):=( //210208from
+Textedit(n0,str):=Textedit(n0,str,"="); //210406from
+Textedit(n0,str,sep):=( //210208from
   regional(tmp,tmp1,tmp2,out);
   tmp1=str;
   //tmp1=Textedit(n0); //only ketjs
-  tmp=Strsplit("="+tmp1,"=");
-  tmp2=tmp_(-1);
+  tmp2=tmp1;
+  if(length(sep)>0,
+    tmp=Strsplit(sep+tmp1,sep);
+    tmp2=tmp_(-1);
+  ); //210406to
   if(length(tmp2)==0,out=str,out=tmp2);
   out;
 ); //210208to

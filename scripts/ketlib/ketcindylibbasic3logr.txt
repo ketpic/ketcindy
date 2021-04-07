@@ -1,3 +1,5 @@
+// 210406
+//   Textedit changed  ( sep(= as default) option added )
 // 210405
 //   Addasterisk changed  ( \...(sp)  remain unchanged )
 //   Addasterisk debugged  ( position +/-,for example,"sin(x)+sin(y)" )

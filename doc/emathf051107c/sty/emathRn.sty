@@ -1,0 +1,59 @@
+% emathRn.sty by tDB(CQB00260@nifty.ne.jp)
+
+% 乱数処理
+
+\ProvidesPackage{emathRn}[2002/10/01 v0.03 乱数処理]%
+
+\RequirePackage{fp-random}
+\RequirePackage{emath}
+\FPmessagesfalse
+
+% \rndsuji[#1][#2]#3
+%   #1 : 取り出す乱数の個数  （デフォルト値=10）
+%   #2 :               上限値（デフォルト値=#1）
+%   #3 : 結果を受け取る制御綴り
+
+\def\rndsuji{\@ifnextchar[{\@rndsuji}{\@rndsuji[10]}}
+\def\@rndsuji[#1]{\@ifnextchar[{\@@rndsuji[#1]}{\@@rndsuji[#1][#1]}}
+\def\@@rndsuji[#1][#2]#3{%
+\FPseed=\time
+\multiply\FPseed\day
+\multiply\FPseed\month
+\multiply\FPseed\year
+    \Cfor{\edef\Rn@i{0}}{\Rn@i<#2}{}\do{%
+      \Incr\Rn@i
+      \expandafter\edef\csname num@\Rn@i\endcsname{0}}%
+    \edef\@ii{0}%
+    \@whilenum\@ii<#1\do{%
+        \FPrandom\@x
+        \Mul\@x{#2}\@x
+        \Seisuububun\@x\@x
+        \IAdd\@x{1}\@xx
+        \ifnum\csname num@\@xx\endcsname=0\relax
+            \IAdd\@ii{1}\@ii
+            \expandafter\edef\csname num@\@xx\endcsname{\@ii}%
+            \ifnum\@ii=1\relax\edef\@y{\@x}\else\edef\@y{\@y,\@x}\fi%
+            \fi
+    }\edef#3{\@y}}%
+
+% \RandomList<#1>#2#3
+%       #2 に与えられた数字列（コンマ区切り）から
+%       #1 個の数字を乱数的に選んだものを（デフォルトは与えられた全部）
+%       #3 の制御綴りに返す．
+
+\def\RandomList{\@ifnextchar<{\@RandomList}{\@RandomList<0>}}
+\def\@RandomList<#1>#2#3{%
+  \edef\@kosuu{0}%
+  \expandafter\@for\expandafter\@c\expandafter:\expandafter=#2\do{%
+        \Incr\@kosuu
+        \expandafter\edef\csname @motosuu\@kosuu\endcsname{\@c}}%
+    \ifnum#1=\z@\edef\@@kosuu{\@kosuu}\else\edef\@@kosuu{#1}\fi
+    \rndsuji[\@@kosuu][\@kosuu]\@hairetuzyun
+  \edef#3{}%
+  \expandafter\@for\expandafter\@c\expandafter:\expandafter=\@hairetuzyun\do{%
+        \Incr\@c
+        \ifx\empty #3\relax\edef#3{\csname 
+          @motosuu\@c\endcsname}%
+        \else\edef#3{#3,\csname @motosuu\@c\endcsname}\fi}%
+}
+\endinput

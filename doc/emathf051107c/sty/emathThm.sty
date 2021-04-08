@@ -1,0 +1,79 @@
+% emathThm.sty by tDB (CQB00260@nifty.ne.jp)
+%
+\def\tmpname{LaTeX2e}%
+\ProvidesPackage{emathThm}[2004/07/26 v0.04]%
+\RequirePackage{theorem}%
+\RequirePackage{emath}%
+%
+\let\ltxnewtheorem\newtheorem
+\define@key{EMthm}{itemindent}{\edef\EMthm@@itemindent{#1}}%
+\define@key{EMthm}{leftmargin}{\edef\EMthm@@leftmargin{#1}}%
+\define@key{EMthm}{Leftmargin}{\edef\EMthm@@Leftmargin{#1}}%
+\define@key{EMthm}{postThnum}{\edef\EMthm@@postThnum{#1}}%
+%
+\def\EMthm@leftmargin{1zw}%
+\def\EMthm@Leftmargin{0zw}%
+\def\EMthm@itemindent{0zw}%
+\def\EMthm@postThnum{}%
+\def\EMtheorem{\@ifnextchar<{\@EMtheorem}{\@EMtheorem<\empty>}}
+\def\@EMtheorem<#1>#2{%
+  \expandafter\xdef\csname #2@leftmargin\endcsname{\EMthm@leftmargin}%
+  \expandafter\xdef\csname #2@Leftmargin\endcsname{\EMthm@Leftmargin}%
+  \expandafter\xdef\csname #2@itemindent\endcsname{\EMthm@itemindent}%
+  \expandafter\xdef\csname #2@postThnum\endcsname{\EMthm@postThnum}%
+  \xdef\EMthm@@itemindent{\EMthm@itemindent}%
+  \xdef\EMthm@@leftmargin{\EMthm@leftmargin}%
+  \xdef\EMthm@@Leftmargin{\EMthm@Leftmargin}%
+  \xdef\EMthm@@postThnum{\EMthm@postThnum}%
+  \ifx\empty #1\relax\else\setkeys{EMthm}{#1}%
+    \expandafter\xdef\csname #2@leftmargin\endcsname{\EMthm@@leftmargin}%
+    \expandafter\xdef\csname #2@Leftmargin\endcsname{\EMthm@@Leftmargin}%
+    \expandafter\xdef\csname #2@itemindent\endcsname{\EMthm@@itemindent}%
+    \expandafter\xdef\csname #2@postThnum\endcsname{\EMthm@@postThnum}%
+  \fi\ltxnewtheorem{#2}}
+%
+%\global\let\@endtheorem=\endlist
+%
+\newcounter{mycnta}
+\gdef\@ynthm#1#2{%
+  \expandafter\@ifdefinable\csname #1\endcsname
+   {\@definecounter{#1}%
+    \expandafter\xdef\csname the#1\endcsname{\@thmcounter{#1}}%
+    \def\@tempa{\global\@namedef{#1}}\expandafter \@tempa
+     \expandafter{\csname th@\the \theorem@style \expandafter
+     \endcsname \the\theorem@bodyfont \@thm{#1}{#2}}%
+%
+\def\@tempa{\global\@namedef{ttl#1}}\expandafter \@tempa
+\expandafter{\refstepcounter{#1}#2\ \@nameuse{the#1}}%
+%
+    \global \expandafter \let \csname end#1\endcsname \@endtheorem}%
+}
+%
+\gdef\@thm#1#2{\refstepcounter{#1}%
+  \trivlist
+  \itemindent=\csname #1@itemindent\endcsname
+  \leftmargin=\csname #1@leftmargin\endcsname
+  \advance\linewidth -\leftmargin
+  \advance\@totalleftmargin \leftmargin
+  \parshape \@ne \@totalleftmargin \linewidth
+  \@topsep \theorempreskipamount               % used by first \item
+  \@topsepadd \theorempostskipamount           % used by \@endparenv
+  \parindent=1zw\relax
+  \def\makelabel##1{\hspace*{-\leftmargin}%
+    \hspace{\csname #1@Leftmargin\endcsname}##1\csname #1@postThnum\endcsname}%
+  \@ifnextchar [%
+  {\@ythm{#1}{#2}}%
+  {\@begintheorem{#2}{\csname the#1\endcsname}\ignorespaces}}
+%
+\let\newtheorem\EMtheorem
+\endinput
+
+v 0.01 2004/05/21
+    \global\let\@endtheorem=\endlist を附加
+v 0.02 2004/07/19
+    <leftmargin=..>オプション
+    <Leftmargin=..>オプション
+v 0.03 2004/07/25
+    <postThnum=..>オプション
+v 0.04 2004/07/26
+    \ttlteiri など

@@ -1,0 +1,45 @@
+% emathEc.sty by tDB (emath@nifty.com)
+
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{emathEc}[2005/09/05 v0.00]%
+\RequirePackage{emathC}%
+\RequirePackage{keyval}%
+
+\define@key{emE}{apnenum}{\def\apn@enum{#1}\relax}%
+
+\newif\ifrenzi\renzitrue
+
+\def\@enloop@{%
+  \ifx A\@entemp         \def\@tempa{\@enLabel\Alph  }\else
+  \ifx a\@entemp         \def\@tempa{\@enLabel\alph  }\else
+  \ifx i\@entemp         \def\@tempa{\@enLabel\roman }\else
+  \ifx I\@entemp         \def\@tempa{\@enLabel\Roman }\else
+  \ifx 1\@entemp         \def\@tempa{\@enLabel\arabic}\else
+  \ifx m\@entemp         \def\@tempa{\@enLabel\marucnt}\else
+  \ifx M\@entemp         \def\@tempa{\@enLabel\Marucnt}\else
+  \ifx n\@entemp         \def\@tempa{\@enLabel\nagamarucnt}\else
+  \ifx ア\@entemp         \def\@tempa{\@enLabel\カタカナ}\else
+  \ifx イ\@entemp         \def\@tempa{\@enLabel\イロハ}\else
+  \ifx あ\@entemp         \def\@tempa{\@enLabel\ひらがな}\else
+  \ifx い\@entemp         \def\@tempa{\@enLabel\いろは}\else
+  \ifx 一\@entemp         \renzifalse\def\@tempa{\@enLabel\Kanji}\else
+  \ifx １\@entemp         \def\@tempa{\@enLabel\rensuzi}\else
+  \ifx \@sptoken\@entemp \let\@tempa\@enSpace         \else
+  \ifx \bgroup\@entemp   \let\@tempa\@enGroup         \else
+  \ifx \@enum@\@entemp   \let\@tempa\@gobble          \else
+%%% enumerate パッケージに下の1行を追加
+  \ifx \@edaenum@\@entemp   \let\@tempa\@gobble       \else
+                         \let\@tempa\@enOther
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+  \@tempa}
+
+% 全角数字によるナンバリング
+%\def\labelenumi{Ｑ\suuziToZen{\the\c@enumi}}%
+%\def\labelenumi{Ｑ\suuziToZen{\the\value{enumi}}.\ }%
+% 半角数字列を全角数字列に変換する．
+\def\suuziToZen#1{%
+  \expandafter\@tfor\expandafter\@c\expandafter:\expandafter=#1%
+  \do{{\@tempcnta33359\advance\@tempcnta\@c\char\@tempcnta}}}%
+\endinput
+
+v 0.00 2005/09/05 emathE, emathEy の共通部分

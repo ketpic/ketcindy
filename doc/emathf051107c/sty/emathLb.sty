@@ -1,0 +1,102 @@
+% emathLb.sty by tDB(CQB00260@nifty.ne.jp)
+
+  \NeedsTeXFormat{LaTeX2e}
+  \ProvidesPackage{emathLb}[2004/09/27 v 0.04]%
+
+% 相互参照形式ラベル書き出し
+% \WriteLabel#1#2
+%   #1 : ラベル名
+%   #2 : 書き出す内容
+\def\writeLabel#1#2{%
+\@ifundefined{Fld@menulength}{%
+  \@bsphack%
+  \protected@write\@auxout{}%
+         {\string\newlabel{#1}{{#2}{\thepage}}}%
+  \@esphack
+}{% (hyperref.sty 形式 --- 応急手当版)
+  \@bsphack%
+  \protected@write\@auxout{}%
+    {\string\newlabel{#1}{{#2}{\thepage}{\string\relax\space}{}{}}}%
+  \@esphack
+}}
+%
+% hyperref.sty 対策
+% LaTeX の \ref を \ltxref として，このファイルではこちらを用いる。
+\def\ltx@setref#1#2#3{%
+  \ifx#1\relax
+   \protect\G@refundefinedtrue
+   \nfss@text{\reset@font\bfseries ??}%
+   \@latex@warning{Reference `#3' on page \thepage \space
+             undefined}%
+  \else
+   \expandafter#2#1\null
+  \fi}
+\def\ltxref#1{\expandafter\ltx@setref\csname r@#1\endcsname\@firstoftwo{#1}}
+%
+% 単位付数値を受け取る （未定義時 [#1:default=0pt]）
+%   \dimenref : 戻り値は pt つき
+%   \dimenref*: 戻り値は無名数
+\def\dimenref{\@ifstar{\@dimenref@}{\@dimenref}}
+\def\@dimenref{\@ifnextchar[{\@@dimenref}{\@@dimenref[0pt]}}
+\def\@@dimenref[#1]#2#3{\@ifundefined{r@#2}{\edef#3{#1}}{%
+    \@tempdima=\ltxref{#2}\edef#3{\the\@tempdima}}%
+}
+\def\@dimenref@{\@ifnextchar[{\@@dimenref@}{\@@dimenref@[0]}}
+\def\@@dimenref@[#1]#2#3{\@ifundefined{r@#2}{\edef#3{#1}}{%
+    \@tempdima=\ltxref{#2}\edef#3{\strip@pt\@tempdima}}%
+}
+
+% ベクトルを受け取る （未定義時 (0,0)）
+\def\vec@ref#1{\@ifundefined{r@#1}{\edef\vec@refX{0}\edef\vec@refY{0}}{%
+  \def\vecXY@r(##1,##2){\edef\vec@refX{##1}\edef\vec@refY{##2}}%
+  \edef\Nlabel@xy{\ltxref{#1}}\expandafter\vecXY@r\Nlabel@xy}}%
+\def\vecref#1#2{\vec@ref{#1}\edef#2{(\vec@refX,\vec@refY)}}
+
+% \getWHD#1#2
+% \getWHD*#1#2
+% #2 のサイズを ラベル #1 に書き出す。
+%   W#1 : width
+%   H#1 : height
+%   D#1 : depth
+%   T#1 : totalheight
+% 参照は \dimenref による。
+% *付は，#2を実行しない。
+
+\def\getWHD{\@ifstar{\getWHD@}{\@getWHD}}
+\def\@getWHD#1#2{{%
+  \ifmmode
+    \ifinner
+      \setbox0=\hbox{\ensuremath{#2}}%
+    \else
+      \setbox0=\hbox{\ensuremath{\displaystyle #2}}%
+    \fi
+  \else
+    \setbox0=\hbox{#2}%\relax
+  \fi
+  \writeLabel{W#1}{\the\wd0}%
+  \writeLabel{H#1}{\the\ht0}%
+  \writeLabel{D#1}{\the\dp0}%
+  \@tempdima=\ht0\advance\@tempdima\dp0
+  \writeLabel{T#1}{\the\@tempdima}%
+  \leavevmode\box0
+}}
+\def\getWHD@#1#2{{\setbox0=\hbox{#2}%\relax
+  \writeLabel{W#1}{\the\wd0}%
+  \writeLabel{H#1}{\the\ht0}%
+  \writeLabel{D#1}{\the\dp0}%
+  \@tempdima=\ht0\advance\@tempdima\dp0
+  \writeLabel{T#1}{\the\@tempdima}%
+}}
+\endinput
+
+v 0.00 2003/11/28
+v 0.01 2003/11/29-12/01
+        getWHD* サイズのみを書き出す
+v 0.02 2003/12/05
+        \dimenref : ラベル未定義のとき返す値を[#1]オプションで指定可能
+        \dimenref*: `pt'をつけない，無名数を返す。
+v 0.03 2004/07/15
+        hyperref.sty 対策
+          LaTeX 本来の \ref を \ltxref として，このファイルではこちらを用いる
+v 0.04 2004/09/27
+        \getWHD : 数式モード内か否かで分類

@@ -1,0 +1,2059 @@
+% emathPp.sty by tDB(CQB00260@nifty.ne.jp)
+%
+\@ifundefined{ifpapersize}{\newif\ifpapersize\papersizefalse}{}%
+%
+  \NeedsTeXFormat{LaTeX2e}
+  \ProvidesPackage{emathPp}[2005/11/07 v 0.39]%
+  \DeclareOption{notMy}{\def\not@My{}}%
+  \DeclareOption{onlyP}{\def\P@nly{}}%
+  \DeclareOption{times}{\def\em@fonts{1}}%
+  \DeclareOption{txfonts}{\def\em@fonts{2}}%
+  \DeclareOption{pxfonts}{\def\em@fonts{3}}%
+  \DeclareOption{mathabx}{\def\em@fonts{4}}%
+  \DeclareOption{varg}{\def\@varg{}}%
+  \DeclareOption{dviout}{\def\em@grdrv{dviout}}%
+  \DeclareOption{dvips}{\def\em@grdrv{dvips}}%
+  \DeclareOption{dvipdfm}{\def\em@grdrv{dvipdfm}}%
+  \DeclareOption{dvipdfmx}{\def\em@grdrv{dvipdfmx}}%
+  \DeclareOption{papersize}{\papersizetrue}
+  \ProcessOptions\relax
+  \@ifundefined{P@nly}{%
+    \RequirePackage{emathPh}%
+  }{}%
+%
+\define@key{emGurafu}{hidarix}{\def\YGurafu@xl{#1}}%
+\define@key{emGurafu}{migix}{\def\YGurafu@xr{#1}}%
+\define@key{emGurafu}{uey}{\def\XGurafu@yt{#1}}%
+\define@key{emGurafu}{sitay}{\def\XGurafu@yb{#1}}%
+\define@key{emGurafu}{hazimet}{\def\BGurafu@ts{#1}}%
+\define@key{emGurafu}{owarit}{\def\BGurafu@te{#1}}%
+\define@key{emGurafu}{xformat}{\def\x@format{#1}}%
+\define@key{emGurafu}{yformat}{\def\y@format{#1}}%
+\define@key{emGurafu}{iro}{\def\iro@{#1}}%
+%
+\newif\ifyclip\ycliptrue
+\newif\ifxclip\xcliptrue
+\newwrite\pl@out
+\newread\pl@in%
+\xdef\save@perldata{0}
+\def\skipCallPerl{\relax}
+\def\emathpl{emath.pl}
+%
+\def\useperllib#1{%
+  \@for\@@c:=#1\do{%
+  \edef\@flnm{\@@c.pl}%
+  \myPerlLib{\@flnm}}}
+\def\useperlpm#1{\@ifundefined{myPerlPM}{\edef\myPerlPM{#1}}{%
+    \edefappend\myPerlPM{,#1}}}
+\def\myPerlLib#1{%
+  \Strchr{#1}{.}\myPerllib@tmp
+  \ifnum\myPerllib@tmp>\z@\edef\myPerlLib@l{#1}\else
+    \edef\myPerlLib@l{#1.pl}\fi
+  \@ifundefined{my@PerlLib}{\edef\my@PerlLib{\myPerlLib@l}}{%
+    \edef\my@PerlLib{\my@PerlLib;\myPerlLib@l}}}%
+\def\@requirePerlLib{%
+      \immediate\write\pl@out{require '\emathpl';}%
+      \@ifundefined{my@PerlLib}{}{%
+      \Strchr\my@PerlLib{,}\RPL@tmp
+      \ifnum\RPL@tmp>\z@\edef\RPL@t{,}\else\edef\RPL@t{;}\fi
+      \Cfor{\edef\RPL@a{\my@PerlLib}}{\not\equal\RPL@a\empty}{%
+        \edef\RPL@a{\RPL@b}}\do{%
+        \strsep\RPL@a\RPL@t\RPL@a\RPL@b
+        \immediate\write\pl@out{require '\RPL@a';}}}%
+      \@ifundefined{myPerlPM}{}{%
+%       \immediate\write\pl@out{use \myPerlPM;}%
+        \Strchr\myPerlPM{,}\RPL@tmp
+        \ifnum\RPL@tmp>\z@\edef\RPL@t{,}\else\edef\RPL@t{;}\fi
+        \Cfor{\edef\RPL@a{\myPerlPM}}{\not\equal\RPL@a\empty}{%
+          \edef\RPL@a{\RPL@b}}\do{%
+            \strsep\RPL@a\RPL@t\RPL@a\RPL@b
+            \immediate\write\pl@out{use \RPL@a;}}%
+      }%
+}
+%
+\def\t@perl#1#2{%
+  \edef\t@perl@str{#1}\edef#2{}%
+  \ifx\empty#1\else
+    \expandafter\@tfor\expandafter\@c\expandafter:\expandafter=\t@perl@str\do{%
+      \if X\@c\edefappend#2{($x)}\else
+      \if Y\@c\edefappend#2{($x)}\else
+      \if T\@c\edefappend#2{($x)}\else
+      \edefappend#2{\@c}\fi\fi\fi
+    }%
+  \fi}
+
+\def\perl@datafiledir{\@currdir}
+\def\perldatafiledir#1{\relax}
+%\def\perldatafiledir#1{%
+%  \if /\kugirisi
+%    \IfFileExists{#1/perl.d0}{}{%
+%      \immediate\write18{md #1}%
+%      \immediate\openout \pl@out #1/perl.d0\relax
+%      \immediate\closeout\pl@out
+%    }%
+%    \def\perl@datafiledir{#1\kugirisi}%
+%  \fi}%
+\def\@perljob@sub{%
+      \def\skip@perl{0}%
+%     \def\perl@datafilename{_temp.dat}%
+      \def\perl@datafilename{\perl@datafiledir\jobname.d\perlflnum}%
+      \ifnum\save@perldata>\z@
+        \IfFileExists{\perl@datafiledir\jobname.d\perlflnum}{%
+          \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\def\skip@perl{1}}{%
+            \immediate\openout \pl@out temp.pl\relax
+%           \def\perl@datafilename{\jobname.d\perlflnum}%
+          }%
+      \else
+        \immediate\openout \pl@out temp.pl\relax
+      \fi
+}
+%
+% y=f(x) の描画領域内の右端点
+%   #1 : y=f(x)
+%   #2 : 右端点のx座標
+%   #3 : 右端点の座標
+
+\def\migi@Tanten#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$xl=(\YGurafu@xl);$xr=(\YGurafu@xr);%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $y=\perl@siki;
+          if ($y<$trueymax && $y>$trueymin){$xl=$x;}
+          else {$xr=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xl;
+        $x=$xl;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$x,$y;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$xl=(\YGurafu@xl);$xr=(\YGurafu@xr);%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $y=\perl@siki;
+          if ($y<$trueymax && $y>$trueymin){$xl=$x;}
+          else {$xr=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xl;
+        $x=$xl;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$x,$y;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp migi@Tanten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+\let\migiTanten\migi@Tanten
+%
+% y=f(x) の描画領域内の左端点
+%   #1 : y=f(x)
+%   #2 : 左端点のx座標
+%   #3 : 左端点の座標
+
+\def\hidari@Tanten#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$xl=(\YGurafu@xl);$xr=(\YGurafu@xr);%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+            $y=\perl@siki;
+            if ($y<$trueymax && $y>$trueymin){$xr=$x;}
+            else {$xl=$x;}};
+        printf FHNDL"\@percent f\string\n",$xr;
+        $x=$xr;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$x,$y;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$xl=(\YGurafu@xl);$xr=(\YGurafu@xr);%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $y=\perl@siki;
+          if ($y<$trueymax && $y>$trueymin){$xr=$x;}
+          else {$xl=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xr;
+        $x=$xr;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$x,$y;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp hidari@Tanten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+\let\hidariTanten\hidari@Tanten
+%
+\def\yclipdrawline{\@ifnextchar({\@yclipdrawline}{\relax}}%
+\def\@yclipdrawline(#1,#2)(#3,#4){\yclipDrawline{(#1,#2)(#3,#4)}}%
+\def\YGurafu{\bgroup
+  \ifnum\EMps@mode=\@ne\gsave\fi
+  \ifyclip\else\let\yclipDrawline\Drawline\fi
+  \edef\YGurafu@xl{\truexmin}\edef\YGurafu@xr{\truexmax}%
+  \@ifstar{\YGurafu@}{\Y@Gurafu}}%
+\def\YGurafu@{\@ifnextchar[{\YGurafu@@}{\YGurafu@@@}}%
+\def\YGurafu@@[#1]{\setkeys{emGurafu}{#1}\YGurafu@@@}%
+\def\YGurafu@@@{\@ifnextchar({\YGurafu@@@@}{\YGurafu@@@@(.05)}}%
+\def\YGurafu@@@@(#1){\@ifnextchar({\YGurafu@@@@@(#1)}{%
+  \YGurafu@@@@@(#1)(\empty)}}%
+\def\YGurafu@@@@@(#1)(#2)#3{%
+  \hidari@Tanten{#3}\YGurafu@xl\hidariT\xdef\hidariT{\hidariT}%
+  \migi@Tanten{#3}\YGurafu@xr\migiT\xdef\migiT{\migiT}%
+  \ifthenelse{\equal\YGurafu@xl\YGurafu@xr}{%
+    \@warning{YGurafu* : 描画範囲を求めることが出来ませんでした。%
+      hidarix=, migix= オプションで描画範囲を狭めて下さい。}%
+    \egroup
+  }{%
+    \@@YGurafu(#1)(#2){#3}\YGurafu@xl\YGurafu@xr
+  }%
+}%
+\def\Y@Gurafu{\@ifnextchar[{\Y@Gurafu@}{\Y@@Gurafu}}%
+\def\Y@Gurafu@[#1]{\setkeys{emGurafu}{#1}\Y@@Gurafu}%
+\def\Y@@Gurafu{\@ifnextchar({\@YGurafu}{\@YGurafu(.05)}}%
+\def\@YGurafu(#1){\@ifnextchar({\@@YGurafu(#1)}{\@@YGurafu(#1)(\empty)}}%
+\def\@@YGurafu(#1)(#2)#3#4#5{%
+  \ifthenelse{\equal{#1}{*}}{%
+    \dtoul{.5mm}\YG@unit%\typeout{YGurafu:dx=\YG@unit}%
+  }{%
+    \edef\YG@unit{#1}%
+  }%
+  \ifthenelse{\equal{#4}\empty}{\edef\YG@lx{\truexmin}}{\edef\YG@lx{#4}}%
+  \ifthenelse{\equal{#5}\empty}{\edef\YG@rx{\truexmax}}{\edef\YG@rx{#5}}%
+  \t@perl{#3}\YGurafu@siki
+  \check@perlp@ss
+  \ifx\empty#2\relax
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@%
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+        \@requirePerlLib
+        \immediate\write\pl@out{%
+          $oldx=$x=\YG@lx;%
+          $oldy=\YGurafu@siki;%
+          $orgdx=$dx=\YG@unit;%
+          printf FHNDL"(\@percent f,\@percent f)",$x,$oldy;%
+        }%
+\ifthenelse{\equal{#1}{*}}{%
+        \immediate\write\pl@out{%
+          for($x=\YG@lx;$x<\YG@rx;){%
+            $x+=\YG@unit;
+            if ($x>\YG@rx) {$x=\YG@rx}
+            $y=\YGurafu@siki;
+            while (abs($y-$oldy)>$orgdx){%
+              $ddx=$dx/2;
+              if ($ddx>0.001) {
+                $dx=$ddx;
+                $x=$oldx+$dx; 
+                if ($x>\YG@rx) {$x=\YG@rx}
+                $y=\YGurafu@siki;
+              }else{
+                $x=$oldx+$dx; 
+                if ($x>\YG@rx) {$x=\YG@rx}
+                $y=\YGurafu@siki;
+                last;
+              }
+            }
+            printf FHNDL"(\@percent f,\@percent f)",$x,$y;
+            $oldx=$x;
+            $oldy=$y;
+            $dx=$orgdx;
+          };%
+          $x=\YG@rx;printf FHNDL"(\@percent f,\@percent f)",$x,\YGurafu@siki;           }%
+}{%
+        \immediate\write\pl@out{%
+          for($x=\YG@lx;$x<\YG@rx;$x+=\YG@unit){%
+            printf FHNDL"(\@percent f,\@percent f)",$x,\YGurafu@siki};%
+            $x=\YG@rx;printf FHNDL"(\@percent f,\@percent f)",$x,\YGurafu@siki;
+        }%
+}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \read\pl@in to\YGurafu@resen
+      \trim\YGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \yclipDrawline{\@resen}%
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=\YG@lx;$x<\YG@rx;$x+=\YG@unit){%
+          $y=\YGurafu@siki;
+          printf FHNDL"(\@percent f,\@percent f)",$x,$y}%
+          ;$x=\YG@rx;printf FHNDL"(\@percent f,\@percent f)",$x,\YGurafu@siki;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \read\pl@in to\YGurafu@resen
+      \trim\YGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \yclipDrawline{\@resen}%
+    \fi
+  \else
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+        for($x=\YG@lx;$x<\YG@rx;$x+=\YG@unit){%
+          printf FHNDL"(\@percent f,\@percent f)",$x,\YGurafu@siki;$x+=#2;%
+          printf FHNDL"(\@percent f,\@percent f)\string\n",$x,\YGurafu@siki;%
+          $x-=#2}}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \expandafter\yclipdrawline\@resen
+%       \ifthenelse{\equal{\@resen}{\par}}{}{\yclipDrawline{\@resen}}%
+        \fi}%
+      \immediate\closein\pl@in
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+      for($x=\YG@lx;$x<\YG@rx;$x+=\YG@unit){%
+        printf FHNDL"(\@percent f,\@percent f)",$x,\YGurafu@siki;$x+=#2;%
+        printf FHNDL"(\@percent f,\@percent f)\string\n",$x,\YGurafu@siki;%
+        $x-=#2}}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \expandafter\yclipdrawline\@resen
+%       \ifthenelse{\equal{\@resen}{\par}}{}{\yclipDrawline{\@resen}}%
+        \fi}%
+      \immediate\closein\pl@in
+    \fi
+  \fi
+  \ifnum\EMps@mode=\@ne\grestore\fi
+  \egroup\ignorespaces
+}
+
+\def\check@perlp@ss{%
+  \xIncr\perlflnum
+  \if /\kugirisi\gdef\perlp@ss{0}\else
+    \IfFileExists{\perl@datafiledir\jobname.d\perlflnum}{%
+      \gdef\perlp@ss{2}}{\gdef\perlp@ss{1}}%
+  \fi
+}
+%
+% 計算値を戻す
+%   \calcval[#1]#2#3
+%     #1 : printf の書式 (%はつけない。デフォルトは `f')
+%     #2 : 計算式
+%     #3 : 結果を受け取る制御綴
+%
+\def\calcval{\@ifnextchar[{\@calcval}{\@calcval[f]}}
+\def\@calcval[#1]#2#3{%
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{printf FHNDL"\@percent #1",#2;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \IfFileExists{\perl@datafilename}{%
+        \openin\pl@in=\perl@datafilename}{%
+        \errmessage{emathPp Error : Perl との連携ができていません。}}%
+    \fi
+      \read\pl@in to\calcval@tmp%
+    \trim\calcval@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \immediate\write\pl@out{printf FHNDL"\@percent #1",#2;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp calcval ---> \jobname.d\perlflnum}%
+%   \immediate\write\pl@out{\perl@sharp calcval ---> \jobname.d\perlflnum}%
+%   \edef#3{0}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\calcval@tmp
+    \trim\calcval@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+%
+% \Argvec を perl で
+%
+\let\PhArgvec\Argvec
+\def\Argvec{\@ifnextchar<{\perlArgvec}{\PhArgvec}}
+\def\perlArgvec<#1>#2#3{%
+  \vecXY{#2}\Argvec@x\Argvec@y
+  \calcval{RadDeg(atan2(\Argvec@y,\Argvec@x))}#3}
+%
+% 関数値
+%
+\def\funcval{\@ifnextchar[{\@funcval}{\@funcval[f]}}
+\def\@funcval[#1]#2#3#4{%
+  \t@perl{#2}\funcval@siki
+  \edef\x@funcval{#3}%
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$x=\x@funcval;%
+        printf FHNDL"\@percent #1",\funcval@siki;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\funcval@tmp
+    \trim\funcval@tmp\to#4\relax
+    \immediate\closein\pl@in
+   \or
+%    \ifnum\perlflnum=\@ne
+%      \immediate\openout \pl@out temp.pl\relax
+% \@requirePerlLib
+%    \fi
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \immediate\write\pl@out{$x=\x@funcval;%
+      printf FHNDL"\@percent #1",\funcval@siki;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp calcval ---> \jobname.d\perlflnum}%
+%   \immediate\write\pl@out{\perl@sharp funcval ---> \jobname.d\perlflnum}%
+%   \edef#4{0}%
+   \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\funcval@tmp
+    \trim\funcval@tmp\to#4\relax
+    \immediate\closein\pl@in
+   \fi
+}
+%
+% y=f(x) 上の点の座標を求める。
+%
+% \YTen#1#2#3
+%     #1 : 関数式
+%     #2 : x の値
+%     #3 : 点の座標を受け取る制御綴
+%
+\def\YTen{\def\x@format{s}\def\y@format{f}%
+  \@ifnextchar[{\YTen@}{\@YTen}}
+\def\YTen@[#1]{\setkeys{emGurafu}{#1}\@YTen}
+\def\@YTen#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+      \@requirePerlLib
+      \ifthenelse{\equal\x@format{s}}{%
+        \immediate\write\pl@out{$x=(#2);%
+          printf FHNDL"(\@percent s,\@percent\y@format)",'#2',\perl@siki;}%
+      }{%
+        \immediate\write\pl@out{$x=(#2);%
+        printf FHNDL"(\@percent\x@format,\@percent\y@format)",$x,\perl@siki;}%
+      }%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \ifthenelse{\equal\x@format{s}}{%
+        \immediate\write\pl@out{$x=(#2);%
+          printf FHNDL"(\@percent s,\@percent\y@format)",'#2',\perl@siki;}%
+      }{%
+        \immediate\write\pl@out{$x=(#2);%
+        printf FHNDL"(\@percent\x@format,\@percent\y@format)",$x,\perl@siki;}%
+      }%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp YTen ---> \jobname.d\perlflnum}%
+%   \immediate\write\pl@out{\perl@sharp YTen ---> \jobname.d\perlflnum}%
+%   \edef#3{(0,0)}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+%
+% x=f(y) 上の点の座標を求める。
+%
+% \XTen#1#2#3
+%     #1 : 関数式
+%     #2 : y の値
+%     #3 : 点の座標を受け取る制御綴
+
+\def\XTen{\def\x@format{f}\def\y@format{s}%
+  \@ifnextchar[{\XTen@}{\@XTen}}
+\def\XTen@[#1]{\setkeys{emGurafu}{#1}\@XTen}
+\def\@XTen#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+      \@requirePerlLib
+      \ifthenelse{\equal\y@format{s}}{%
+        \immediate\write\pl@out{$x=(#2);%
+          printf FHNDL"(\@percent\x@format,\@percent s)",\perl@siki,'#2';}%
+      }{%
+        \immediate\write\pl@out{$x=(#2);%
+        printf FHNDL"(\@percent\x@format,\@percent\y@format)",\perl@siki,$x;}%
+      }%
+%      \immediate\write\pl@out{$x=(#2);%
+%        printf FHNDL"(\@percent f,\@percent s)",\perl@siki,'#2';}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\XTen@tmp
+    \trim\XTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \ifthenelse{\equal\y@format{s}}{%
+        \immediate\write\pl@out{$x=(#2);%
+          printf FHNDL"(\@percent\x@format,\@percent s)",\perl@siki,'#2';}%
+      }{%
+        \immediate\write\pl@out{$x=(#2);%
+        printf FHNDL"(\@percent\x@format,\@percent\y@format)",\perl@siki,$x;}%
+      }%
+%    \immediate\write\pl@out{$x=(#2);%
+%      printf FHNDL"(\@percent f,\@percent f)",\perl@siki,#2;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp XTen ---> \jobname.d\perlflnum}%
+%   \immediate\write\pl@out{\perl@sharp XTen ---> \jobname.d\perlflnum}%
+%   \edef#3{(0,0)}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\XTen@tmp
+    \trim\XTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+\def\YKinziOresen#1#2#3#4#5{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \ifdim #4 pt>\z@
+        \immediate\write\pl@out{%
+        for($x=#2;$x<#3;$x+=#4)%
+          {printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki};%
+          $x=#3;printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki;}%
+      \else
+        \immediate\write\pl@out{%
+        for($x=#2;$x>#3;$x+=#4)%
+          {printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki};%
+          $x=#3;printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki;}%
+      \fi
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YKinzi@resen
+    \trim\YKinzi@resen\to#5\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \ifdim #4 pt>\z@
+      \immediate\write\pl@out{%
+      for($x=#2;$x<#3;$x+=#4)%
+        {printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki};%
+        $x=#3;printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki;}%
+    \else
+      \immediate\write\pl@out{%
+      for($x=#2;$x>#3;$x+=#4)%
+        {printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki};%
+        $x=#3;printf FHNDL"(\@percent f,\@percent f)",$x,\perl@siki;}%
+    \fi
+    \immediate\write\pl@out{close(FHNDL);}%
+    \edef#5{}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YKinzi@resen
+    \trim\YKinzi@resen\to#5\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+% y=f(x) と y=g(x) の交点を求める。
+%
+\def\YKouten#1#2#3#4#5#6{%
+% #1 : f(x)
+% #2 : g(x)
+% #3 : 区間左端点（省略時は \xmin)
+% #4 : 区間右端点（省略時は \xmax)
+% #5 : 交点のx座標を受け取る制御綴
+% #6 : 交点の座標を受け取る制御綴
+  \t@perl{#1}\perl@siki
+  \t@perl{#2}\perl@sikii
+  \edef\perl@siki{(\perl@siki)-(\perl@sikii)}%
+  \ifthenelse{\equal{#3}\empty}{\edef\YKouten@xl{\truexmin}}{\edef\YKouten@xl{#3}}%
+  \ifthenelse{\equal{#4}\empty}{\edef\YKouten@xr{\truexmax}}{\edef\YKouten@xr{#4}}%
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$xl=(\YKouten@xl);$xr=(\YKouten@xr);%
+        $x=$xl;$yl=\perl@siki;
+        $x=$xr;$yr=\perl@siki;
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $y=\perl@siki;%
+          if ($y<0.001 && $y>-0.001){$xr=$x;$xl=$x;}%
+          else {$yy=$y*$yl;%
+            if ($yy>0){$xl=$x;$yl=$y;}%
+            else {$xr=$x;$yr=$y;}}}%
+        printf FHNDL"\@percent f\string\n",$x;%
+        $x=$x;$y=\perl@sikii;%
+        printf FHNDL"(\@percent f,\@percent f)",$x,$y;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#5\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#6\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$xl=(\YKouten@xl);$xr=(\YKouten@xr);%
+        $x=$xl;$yl=\perl@siki;
+        $x=$xr;$yr=\perl@siki;
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $y=\perl@siki;%
+          if ($y<0.001 && $y>-0.001){$xr=$x;$xl=$x;}%
+          else {$yy=$y*$yl;%
+            if ($yy>0){$xl=$x;$yl=$y;}%
+            else {$xr=$x;$yr=$y;}}}%
+        printf FHNDL"\@percent f\string\n",$x;
+        $x=$x;$y=\perl@sikii;
+        printf FHNDL"(\@percent f,\@percent f)",$x,$y;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp YKouten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#5\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#6\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+\def\XKinziOresen#1#2#3#4#5{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \ifdim #4 pt>\z@
+        \immediate\write\pl@out{%
+          for($x=#2;$x<#3;$x+=#4)%
+            {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x};%
+            $x=#3;printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;}%
+      \else
+        \immediate\write\pl@out{%
+          for($x=#2;$x>#3;$x+=#4)%
+            {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x};%
+            $x=#3;printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;}%
+      \fi
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YKinzi@resen
+    \trim\YKinzi@resen\to#5\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \ifdim #4 pt>\z@
+      \immediate\write\pl@out{%
+        for($x=#2;$x<#3;$x+=#4)%
+          {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x};%
+          $x=#3;printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;}%
+    \else
+      \immediate\write\pl@out{%
+        for($x=#2;$x>#3;$x+=#4)%
+          {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x};%
+          $x=#3;printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;}%
+    \fi
+    \immediate\write\pl@out{close(FHNDL);}%
+    \edef#5{}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YKinzi@resen
+    \trim\YKinzi@resen\to#5\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+\def\BKinziOresen#1#2#3#4#5#6{%
+  \t@perl{#1}\x@perl@siki
+  \t@perl{#2}\y@perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \ifdim #5 pt>\z@
+        \immediate\write\pl@out{%
+        for($x=#3;$x<#4;$x+=#5)%
+          {printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki};%
+          $x=#4;printf FHNDL"(\@percent f,\@percent f)",%
+          \x@perl@siki,\y@perl@siki;}%
+      \else
+        \immediate\write\pl@out{%
+        for($x=#3;$x>#4;$x+=#5)%
+          {printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki};%
+          $x=#4;printf FHNDL"(\@percent f,\@percent f)",%
+          \x@perl@siki,\y@perl@siki;}%
+      \fi
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\BKinzi@resen
+    \trim\BKinzi@resen\to#6\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \ifdim #5 pt>\z@
+      \immediate\write\pl@out{%
+      for($x=#3;$x<#4;$x+=#5)%
+        {printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki};%
+        $x=#4;printf FHNDL"(\@percent f,\@percent f)",%
+        \x@perl@siki,\y@perl@siki;}%
+    \else
+      \immediate\write\pl@out{%
+      for($x=#3;$x>#4;$x+=#5)%
+        {printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki};%
+        $x=#4;printf FHNDL"(\@percent f,\@percent f)",%
+        \x@perl@siki,\y@perl@siki;}%
+    \fi
+    \immediate\write\pl@out{close(FHNDL);}%
+    \edef#6{}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\BKinzi@resen
+    \trim\BKinzi@resen\to#6\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+\def\RKinziOresen#1#2#3#4#5{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \ifdim #4 pt>\z@
+        \immediate\write\pl@out{for($x=#2;$x<#3;$x+=#4){$r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);};%
+          $x=#3;$r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+      \else
+        \immediate\write\pl@out{for($x=#2;$x>#3;$x+=#4){$r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);};%
+          $x=#3;$r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+      \fi
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\RKinzi@resen
+    \trim\RKinzi@resen\to#5\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \ifdim #4 pt>\z@
+      \immediate\write\pl@out{for($x=#2;$x<#3;$x+=#4){$r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);};%
+        $x=#3;$r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+    \else
+      \immediate\write\pl@out{for($x=#2;$x>#3;$x+=#4){$r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);};%
+        $x=#3;$r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+    \fi
+    \immediate\write\pl@out{close(FHNDL);}%
+    \edef#5{}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\RKinzi@resen
+    \trim\RKinzi@resen\to#5\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+%\def\calcfunc#1#2#3{\edef\x{#2}\FPeval #3{#1}}
+
+%\def\Ygurafu{\@ifnextchar({\Y@gurafu}{\Y@gurafu(.05)}}%
+%\def\Y@gurafu(#1){\@ifnextchar({\@Y@gurafu(#1)}{\@Y@gurafu(#1)(\empty)}}%
+%\def\@Y@gurafu(#1)(#2)#3#4#5{{
+%\ifx\empty#2\def\@resen{}%
+%  \For\Ygurafu@x{#4}{#5}{#1}\Do{%
+%    \calcfunc{#3}\Ygurafu@x\Ygurafu@y%
+%    \setlength{\@tempdimb}{\Ygurafu@y pt}%
+%    \ifdim\@tempdimb<\ymin pt\relax\else\ifdim\@tempdimb>\ymax pt\relax\else%
+%    \edef\@resen{\@resen(\Ygurafu@x,\Ygurafu@y)}\fi\fi}%
+%    \calcfunc{#3}{#5}\Ygurafu@y\setlength{\@tempdimb}{\Ygurafu@y pt}%
+%    \ifdim\@tempdimb<\ymin pt\relax\else\ifdim\@tempdimb>\ymax pt\relax\else%
+%    \edef\@resen{\@resen(#5,\Ygurafu@y)}\fi\fi%
+%    \Drawline\@resen%
+%\else
+%  \For\Ygurafu@x{#4}{#5}{#1}\Do{%
+%    \calcfunc{#3}\Ygurafu@x\Ygurafu@y%
+%    \setlength{\@tempdimb}{\Ygurafu@y pt}%
+%    \ifdim\@tempdimb<\ymin pt\relax\else\ifdim\@tempdimb>\ymax pt\relax\else%
+%    \Add\Ygurafu@x{#2}\Ygurafu@@x\calcfunc{#3}\Ygurafu@@x\Ygurafu@@y%
+%    \drawline(\Ygurafu@x,\Ygurafu@y)(\Ygurafu@@x,\Ygurafu@@y)\fi\fi}%
+%\fi}}%
+
+% x=f(y) の描画領域内の上端点
+%   #1 : x=f(y)
+%   #2 : 上端点のx座標
+%   #3 : 上端点の座標
+%
+\def\ue@Tanten#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$yb=(\XGurafu@yb);$yt=(\XGurafu@yt);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        for($x=($yt+$yb)/2;$yt-$yb>0.001;$x=($yt+$yb)/2){%
+          $y=\perl@siki;
+          if ($y<$truexmax && $y>$truexmin){$yb=$x;}
+          else {$yt=$x;}}%
+        printf FHNDL"\@percent f\string\n",$yb;
+        $x=$yb;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$y,$x;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$yb=(\XGurafu@yb);$yt=(\XGurafu@yt);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        for($x=($yt+$yb)/2;$yt-$yb>0.001;$x=($yt+$yb)/2){%
+          $y=\perl@siki;
+          if ($y<$truexmax && $y>$truexmin){$yb=$x;}
+          else {$yt=$x;}}%
+        printf FHNDL"\@percent f\string\n",$yb;
+        $x=$yb;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$y,$x;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp migi@Tanten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+% x=f(y) の描画領域内の下端点
+%   #1 : x=f(y)
+%   #2 : 下端点のx座標
+%   #3 : 下端点の座標
+
+\def\sita@Tanten#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$yb=(\XGurafu@yb);$yt=(\XGurafu@yt);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        for($x=($yt+$yb)/2;$yt-$yb>0.001;$x=($yt+$yb)/2){%
+          $y=\perl@siki;
+          if ($y<$truexmax && $y>$truexmin){$yt=$x;}
+          else {$yb=$x;}}%
+        printf FHNDL"\@percent f\string\n",$yt;
+        $x=$yt;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$y,$x;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$yb=(\XGurafu@yb);$yt=(\XGurafu@yt);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        for($x=($yt+$yb)/2;$yt-$yb>0.001;$x=($yt+$yb)/2){%
+          $y=\perl@siki;
+          if ($y<$truexmax && $y>$truexmin){$yt=$x;}
+          else {$yb=$x;}}%
+        printf FHNDL"\@percent f\string\n",$yt;
+        $x=$yt;$y=\perl@siki;
+        printf FHNDL"(\@percent f,\@percent f)",$y,$x;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp hidari@Tanten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#2\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+%
+\def\XGurafu{%
+  \ifnum\EMps@mode=\@ne\gsave\fi
+  \ifxclip\else\let\xclipDrawline\Drawline\fi
+  \edef\XGurafu@yb{\trueymin}\edef\XGurafu@yt{\trueymax}%
+  \@ifstar{\XGurafu@}{\X@Gurafu}}
+\def\XGurafu@{\@ifnextchar[{\XGurafu@@}{\XGurafu@@@}}
+\def\XGurafu@@[#1]{\setkeys{emGurafu}{#1}\XGurafu@@@}
+\def\XGurafu@@@{\@ifnextchar({\XGurafu@@@@}{\XGurafu@@@@(.05)}}
+\def\XGurafu@@@@(#1){\@ifnextchar({\XGurafu@@@@@(#1)}{%
+  \XGurafu@@@@@(#1)(\empty)}}
+\def\XGurafu@@@@@(#1)(#2)#3{%
+  \sita@Tanten{#3}\XGurafu@yb\sitaT
+  \ue@Tanten{#3}\XGurafu@yt\ueT
+  \@@XGurafu(#1)(#2){#3}\XGurafu@yb\XGurafu@yt
+}
+\def\X@Gurafu{\@ifnextchar({\@XGurafu}{\@XGurafu(.05)}}
+\def\@XGurafu(#1){\@ifnextchar({\@@XGurafu(#1)}{\@@XGurafu(#1)(\empty)}}%
+\def\@@XGurafu(#1)(#2)#3#4#5{{
+  \ifthenelse{\equal{#4}\empty}{\edef\XG@by{\trueymin}}{\edef\XG@by{#4}}%
+  \ifthenelse{\equal{#5}\empty}{\edef\XG@ty{\trueymax}}{\edef\XG@ty{#5}}%
+  \t@perl{#3}\perl@siki
+  \check@perlp@ss
+  \ifx\empty#2\relax
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+          for($x=\XG@by;$x<\XG@ty;$x+=#1)%
+          {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x}%
+          ;$x=\XG@ty;printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \read\pl@in to\XGurafu@resen
+      \trim\XGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \xclipDrawline{\@resen}%
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=\XG@by;$x<\XG@ty;$x+=#1)%
+        {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x}%
+        ;$x=\XG@ty;printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \read\pl@in to\XGurafu@resen
+      \trim\XGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \xclipDrawline{\@resen}%
+    \fi
+  \else
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+          for($x=\XG@by;$x<\XG@ty;$x+=#1)%
+          {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;$x+=#2;%
+          printf FHNDL"(\@percent f,\@percent f)\string\n",\perl@siki,$x;%
+          $x-=#2;}}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \xclipDrawline{\@resen}%
+        \fi}%
+      \immediate\closein\pl@in
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=\XG@by;$x<\XG@ty;$x+=#1)%
+        {printf FHNDL"(\@percent f,\@percent f)",\perl@siki,$x;$x+=#2;%
+        printf FHNDL"(\@percent f,\@percent f)\string\n",\perl@siki,$x;%
+        $x-=#2;}}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \xclipDrawline{\@resen}%
+        \fi}%
+      \immediate\closein\pl@in
+    \fi
+  \fi
+  \ifnum\EMps@mode=\@ne\grestore\fi
+}}
+
+% \BGurafu(#1)(#2)#3#4#5#6
+%   #1 : t の刻み値（デフォルト値は 0.05 ）
+%   #2 : 点線で描画するときの描画する部分の t のレンジ
+%   #3 : x=f(t)
+%   #4 : y=g(t)
+%   #5 : t の始め値
+%   #6 :     終り値
+
+% x=f(t), y=g(t) の描画領域内の始点
+%   #1 : x=f(t)
+%   #2 : y=f(t)
+%   #3 : 始点の t 値
+%   #4 : 始点の座標
+%
+\def\owari@Tanten#1#2#3#4{%
+  \t@perl{#1}\perl@xsiki
+  \t@perl{#2}\perl@ysiki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$xl=(\BGurafu@ts);$xr=(\BGurafu@te);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $X=\perl@xsiki;
+          $Y=\perl@ysiki;
+          if ($Y<$trueymax && $Y>$trueymin && $X<$truexmax && $X>$truexmin){$xl=$x;}
+          else {$xr=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xl;
+        $x=$xl;
+        $X=\perl@xsiki;
+        $Y=\perl@ysiki;
+        printf FHNDL"(\@percent f,\@percent f)",$X,$Y;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#4\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$xl=(\BGurafu@ts);$xr=(\BGurafu@te);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $X=\perl@xsiki;
+          $Y=\perl@ysiki;
+          if ($Y<$trueymax && $Y>$trueymin && $X<$truexmax && $X>$truexmin){$xl=$x;}
+          else {$xr=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xl;
+        $x=$xl;
+        $X=\perl@xsiki;
+        $Y=\perl@ysiki;
+        printf FHNDL"(\@percent f,\@percent f)",$X,$Y;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp owari@Tanten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#4\relax
+    \immediate\closein\pl@in
+  \fi
+}
+%
+% x=f(t), y=g(t) の描画領域内の終点
+%   #1 : x=f(t)
+%   #2 : y=f(t)
+%   #3 : 終点の t 値
+%   #4 : 終点の座標
+
+\def\hazime@Tanten#1#2#3#4{%
+  \t@perl{#1}\perl@xsiki
+  \t@perl{#2}\perl@ysiki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$xl=(\BGurafu@ts);$xr=(\BGurafu@te);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $X=\perl@xsiki;
+          $Y=\perl@ysiki;
+          if ($Y<$trueymax && $Y>$trueymin && $X<$truexmax && $X>$truexmin){$xr=$x;}
+          else {$xl=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xr;
+        $x=$xr;
+        $X=\perl@xsiki;
+        $Y=\perl@ysiki;
+        printf FHNDL"(\@percent f,\@percent f)",$X,$Y;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#4\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{$xl=(\BGurafu@ts);$xr=(\BGurafu@te);%
+        $truexmax=\truexmax;$truexmin=\truexmin;%
+        $trueymax=\trueymax;$trueymin=\trueymin;%
+        for($x=($xr+$xl)/2;$xr-$xl>0.001;$x=($xr+$xl)/2){%
+          $X=\perl@xsiki;
+          $Y=\perl@ysiki;
+          if ($Y<$trueymax && $Y>$trueymin && $X<$truexmax && $X>$truexmin){$xr=$x;}
+          else {$xl=$x;}}%
+        printf FHNDL"\@percent f\string\n",$xr;
+        $x=$xr;
+        $X=\perl@xsiki;
+        $Y=\perl@ysiki;
+        printf FHNDL"(\@percent f,\@percent f)",$X,$Y;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp hazime@Tanten ---> \jobname.d\perlflnum}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#3\relax
+    \read\pl@in to\YTen@tmp
+    \trim\YTen@tmp\to#4\relax
+    \immediate\closein\pl@in
+  \fi
+}
+%
+\def\BGurafu{\bgroup
+  \ifnum\EMps@mode=\@ne\gsave\fi
+  \@ifstar{\BGurafu@}{\@BGurafu}}
+\def\BGurafu@{\@ifnextchar[{\BGurafu@@}{\BGurafu@@@}}
+\def\BGurafu@@[#1]{\setkeys{emGurafu}{#1}\BGurafu@@@}
+\def\BGurafu@@@{\@ifnextchar({\BGurafu@@@@}{\BGurafu@@@@(.05)}}
+\def\BGurafu@@@@(#1){\@ifnextchar({\BGurafu@@@@@(#1)}{%
+  \BGurafu@@@@@(#1)(\empty)}}
+\def\BGurafu@@@@@(#1)(#2)#3#4#5#6{%
+  \edef\BGurafu@ts{#5}%
+  \edef\BGurafu@te{#6}%
+  \hazime@Tanten{#3}{#4}\BGurafu@ts\hazimeT\xdef\hazimeT{\hazimeT}%
+  \owari@Tanten{#3}{#4}\BGurafu@te\owariT\xdef\owariT{\owariT}%
+  \@B@Gurafu(#1)(#2){#3}{#4}\BGurafu@ts\BGurafu@te
+% egroup%       余計なものを削除 (2005/02/01)
+}
+\def\@BGurafu{\@ifnextchar[{\@BGurafu@}{\@@BGurafu}}
+\def\@BGurafu@[#1]{\setkeys{emGurafu}{#1}\@@BGurafu}
+\def\@@BGurafu{\@ifnextchar({\B@Gurafu}{\B@Gurafu(.05)}}%
+\def\B@Gurafu(#1){\@ifnextchar({\@B@Gurafu(#1)}{\@B@Gurafu(#1)(\empty)}}%
+\def\@B@Gurafu(#1)(#2)#3#4#5#6{{%
+  \t@perl{#3}\x@perl@siki
+  \t@perl{#4}\y@perl@siki
+  \check@perlp@ss
+  \ifx\empty#2\relax
+      \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+          for($x=#5;$x<#6;$x+=#1)%
+            {printf FHNDL"(\@percent f,\@percent f)",%
+            \x@perl@siki,\y@perl@siki;};$x=#6;%
+            printf FHNDL"(\@percent f,\@percent f)",%
+            \x@perl@siki,\y@perl@siki;}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \read\pl@in to\BGurafu@resen
+      \trim\BGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \clipDrawline{\@resen}%
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=#5;$x<#6;$x+=#1)%
+          {printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki;}%
+          ;$x=#6;%
+          printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \read\pl@in to\BGurafu@resen
+      \trim\BGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \clipDrawline{\@resen}%
+    \fi
+  \else
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+          for($x=#5;$x<#6;$x+=#1)%
+            {printf FHNDL"(\@percent f,\@percent f)",%
+            \x@perl@siki,\y@perl@siki;%
+            $x+=#2;printf FHNDL"(\@percent f,\@percent f)\string\n",%
+            \x@perl@siki,\y@perl@siki;$x-=#2;}}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \clipDrawline{\@resen}%
+        \fi}%
+      \immediate\closein\pl@in
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=#5;$x<#6;$x+=#1)%
+          {printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki;%
+          $x+=#2;printf FHNDL"(\@percent f,\@percent f)\string\n",%
+          \x@perl@siki,\y@perl@siki;$x-=#2;}}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \clipDrawline{\@resen}%
+        \fi}%
+      \immediate\closein\pl@in
+    \fi
+  \fi
+  \ifnum\EMps@mode=\@ne\grestore\fi
+}\egroup}
+
+% \BTen#1#2#3#4
+%   媒介変数曲線上の1点の座標を求める。
+%   #1 : x=f(t)
+%   #2 : y=g(t)
+%   #3 : t の値
+%   #4 : 結果を受け取る制御綴
+
+\def\BTen#1#2#3#4{%
+  \t@perl{#1}\x@perl@siki
+  \t@perl{#2}\y@perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$x=(#3);%
+        printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki;}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\BTen@tmp
+    \trim\BTen@tmp\to#4%
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \immediate\write\pl@out{$x=(#3);%
+      printf FHNDL"(\@percent f,\@percent f)",\x@perl@siki,\y@perl@siki;}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp BTen ---> \jobname.d\perlflnum}%
+%   \immediate\write\pl@out{\perl@sharp BTen ---> \jobname.d\perlflnum}%
+%   \edef#4{(0,0)}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\BTen@tmp
+    \trim\BTen@tmp\to#4%
+    \immediate\closein\pl@in
+  \fi
+}
+
+\def\RGurafu{\@ifnextchar[{\RGurafu@}{\@RGurafu}}
+\def\RGurafu@[#1]{\setkeys{emGurafu}{#1}\@RGurafu}
+\def\@RGurafu{%
+  \ifnum\EMps@mode=\@ne\gsave\fi
+  \@ifnextchar({\R@Gurafu}{\R@Gurafu(0.05)}}%
+\def\R@Gurafu(#1){\@ifnextchar({\@R@Gurafu(#1)}{\@R@Gurafu(#1)(\empty)}}%
+\def\@R@Gurafu(#1)(#2)#3#4#5{{%
+  \t@perl{#3}\perl@siki
+  \check@perlp@ss
+  \ifx\empty#2\relax
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+          for($x=#4;$x<#5;$x+=#1){%
+          $r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+          ;$x=#5;$r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \read\pl@in to\RGurafu@resen
+      \trim\RGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \clipDrawline{\@resen}%
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=#4;$x<#5;$x+=#1){%
+        $r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+        ;$x=#5;$r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \read\pl@in to\RGurafu@resen
+      \trim\RGurafu@resen\to\@resen
+      \immediate\closein\pl@in
+      \clipDrawline{\@resen}%
+    \fi
+  \else
+    \ifcase\perlp@ss
+      \@perljob@sub
+      \ifnum\skip@perl=\z@
+        \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+        \immediate\write\pl@out{%
+          for($x=#4;$x<#5;$x+=#1){%
+          $r=\perl@siki;%
+          printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);%
+          $x+=#2;$r=\perl@siki;%
+          printf FHNDL%
+          "(\@percent f,\@percent f)\string\n",$r*cos($x),$r*sin($x);%
+          $x-=#2  ;}}%
+        \immediate\write\pl@out{close(FHNDL);}%
+        \immediate\closeout\pl@out
+        \immediate\write18{\Perl@Name\space temp.pl}%
+        \openin\pl@in=\perl@datafilename
+      \fi
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \clipDrawline{\@resen}%
+        \fi}%
+      \immediate\closein\pl@in
+    \or
+      \open@perlfile
+      \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+      \immediate\write\pl@out{%
+        for($x=#4;$x<#5;$x+=#1){%
+        $r=\perl@siki;%
+        printf FHNDL"(\@percent f,\@percent f)",$r*cos($x),$r*sin($x);%
+        $x+=#2;$r=\perl@siki;%
+        printf FHNDL%
+        "(\@percent f,\@percent f)\string\n",$r*cos($x),$r*sin($x);%
+        $x-=#2  ;}}%
+      \immediate\write\pl@out{close(FHNDL);}%
+    \or
+      \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+      \Cfor{\edef\@wari{0}}{\@wari=0}{}\do{%
+        \ifeof\pl@in\edef\@wari{1}\else
+        \read\pl@in to\@resen
+        \clipDrawline{\@resen}%
+        \fi}%
+      \immediate\closein\pl@in
+    \fi
+  \fi
+  \ifnum\EMps@mode=\@ne\grestore\fi
+}}%
+
+% \RTen#1#2#3#4
+%   極方程式であらわされた曲線上の1点の座標を求める。
+%   #1 : r=f(Θ)
+%   #2 : Θ の値
+%   #3 : 結果を受け取る制御綴
+
+\def\RTen#1#2#3{%
+  \t@perl{#1}\perl@siki
+  \check@perlp@ss
+  \ifcase\perlp@ss
+    \@perljob@sub
+    \ifnum\skip@perl=\z@
+      \immediate\write\pl@out{open(FHNDL,">\perl@datafilename");}%
+\@requirePerlLib
+      \immediate\write\pl@out{$x=(#2);$y=(\perl@siki);%
+        printf FHNDL"(\@percent f,\@percent f)",$y*cos($x),$y*sin($x);}%
+      \immediate\write\pl@out{close(FHNDL);}%
+      \immediate\closeout\pl@out
+      \immediate\write18{\Perl@Name\space temp.pl}%
+      \openin\pl@in=\perl@datafilename
+    \fi
+    \read\pl@in to\RTen@tmp
+    \trim\RTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \or
+    \open@perlfile
+    \immediate\write\pl@out{open(FHNDL,"> \jobname.d\perlflnum");}%
+    \immediate\write\pl@out{$x=(#2);$y=(\perl@siki);%
+      printf FHNDL"(\@percent f,\@percent f)",$y*cos($x),$y*sin($x);}%
+    \immediate\write\pl@out{close(FHNDL);}%
+    \errmessage{\perl@sharp RTen ---> \jobname.d\perlflnum}%
+%   \immediate\write\pl@out{\perl@sharp RTen ---> \jobname.d\perlflnum}%
+%   \edef#3{(0,0)}%
+  \or
+    \openin\pl@in=\perl@datafiledir\jobname.d\perlflnum\relax
+    \read\pl@in to\RTen@tmp
+    \trim\RTen@tmp\to#3\relax
+    \immediate\closein\pl@in
+  \fi
+}
+
+% ?Ten に引き続いて，\Put
+
+%\def\YPut#1#2{\YTen{#1}{#2}\YPut@P\Put\YPut@P}
+\def\YPut{\@ifnextchar[{\YPut@}{\@YPut}}
+\def\@YPut#1#2{\YTen{#1}{#2}\YPut@P\Put\YPut@P}
+\def\YPut@[#1]#2#3{\YTen[#1]{#2}{#3}\YPut@P\Put\YPut@P}
+\def\XPut#1#2{\XTen{#1}{#2}\XPut@P\Put\XPut@P}
+\def\BPut#1#2#3{\BTen{#1}{#2}{#3}\BPut@P\Put\BPut@P}
+%\def\RPut#1#2{\RTen{#1}{#2}\RPut@P\Put\RPut@P}
+
+%\def\delGurafuFile{%
+%  \@delfile{_temp0.pl}%
+%  \@delfile{temp.pl}%
+%  \@delfile{_temp.dat}}
+
+%   \YNuri[濃さ]<xの刻み値>{関数}{x1}{x2}
+
+\def\YNuri{\@ifstar{\@YhNuri}{\@YsNuri}}%
+\def\@YsNuri{\@ifnextchar[{\Y@Nuri}{\Y@Nuri[.5]}}%
+\def\Y@Nuri[#1]{\@ifnextchar<{\Y@@Nuri[#1]}{\Y@@Nuri[#1]<0.05>}}%
+\def\Y@@Nuri[#1]<#2>#3#4#5{%
+\YKinziOresen{#3}{#4}{#5}{#2}\@resen
+%\funcval{#3}{#4}\@@y
+%\edef\@resen{\@resen(#4,\@@y)}%
+\Nuritubusi[#1]\@resen}%
+
+%   \YNurii[濃さ]<xの刻み値>{関数1}{関数2}{x1}{x2}
+%
+\def\YNurii{\@ifstar{\@YhNurii}{\@YsNurii}}%
+\def\@YsNurii{\@ifnextchar[{\s@YNurii}{\s@YNurii[.5]}}%
+\def\s@YNurii[#1]{\@ifnextchar<{\s@@YNurii[#1]}{\s@@YNurii[#1]<0.05>}}%
+\def\s@@YNurii[#1]<#2>#3#4#5#6{\YKinziOresen{#3}{#5}{#6}{#2}\@resen
+\YKinziOresen{#4}{#6}{#5}{-#2}\@@resen\edef\@resen{\@resen\@@resen}%
+%\funcval{#3}{#5}\@@y\edef\@resen{\@resen(#5,\@@y)}%
+\Nuritubusi[#1]\@resen}%
+
+\def\XNuri{\@ifstar{\@XhNuri}{\@XsNuri}}%
+\def\@XsNuri{\@ifnextchar[{\X@Nuri}{\X@Nuri[.5]}}%
+\def\X@Nuri[#1]{\@ifnextchar<{\X@@Nuri[#1]}{\X@@Nuri[#1]<0.05>}}%
+\def\X@@Nuri[#1]<#2>#3#4#5{\XKinziOresen{#3}{#4}{#5}{#2}\@resen
+%\funcval{#3}{#4}\@@x\edef\@resen{\@resen(\@@x,#4)}%
+\Nuritubusi[#1]\@resen}%
+
+\def\XNurii{\@ifstar{\@XhNurii}{\@XsNurii}}%
+\def\@XsNurii{\@ifnextchar[{\s@XNurii}{\s@XNurii[.5]}}%
+\def\s@XNurii[#1]{\@ifnextchar<{\s@@XNurii[#1]}{\s@@XNurii[#1]<0.05>}}%
+\def\s@@XNurii[#1]<#2>#3#4#5#6{\XKinziOresen{#3}{#5}{#6}{#2}\@resen
+\XKinziOresen{#4}{#6}{#5}{-#2}\@@resen\edef\@resen{\@resen\@@resen}%
+%\funcval{#3}{#5}\@@x\edef\@resen{\@resen(\@@x,#5)}% added 99/06/14
+\Nuritubusi[#1]\@resen}%
+
+\def\BNuri{\@ifstar{\@BhNuri}{\@BsNuri}}%
+\def\@BsNuri{\@ifnextchar[{\B@Nuri}{\B@Nuri[.5]}}%
+\def\B@Nuri[#1]{\@ifnextchar<{\B@@Nuri[#1]}{\B@@Nuri[#1]<0.05>}}%
+\def\B@@Nuri[#1]<#2>#3#4#5#6{\BKinziOresen{#3}{#4}{#5}{#6}{#2}\@resen
+%\funcval{#3}{#5}\@@x\funcval{#4}{#5}\@@y
+%\edef\@resen{\@resen(\@@x,\@@y)}%
+\Nuritubusi[#1]\@resen}%
+
+\def\RNuri{\@ifstar{\@RhNuri}{\@RsNuri}}%
+\def\@RsNuri{\@ifnextchar[{\R@Nuri}{\R@Nuri[.5]}}%
+\def\R@Nuri[#1]{\@ifnextchar<{\R@@Nuri[#1]}{\R@@Nuri[#1]<0.05>}}%
+\def\R@@Nuri[#1]<#2>#3#4#5{\RKinziOresen{#3}{#4}{#5}{#2}\@resen
+%\funcval{#3}{#4}\@@r\Cos{#4}\@@x\Mul\@@r\@@x\@@x\Sin{#4}\@@y\Mul\@@r\@@y\@@y
+%\edef\@resen{\@resen(\@@x,\@@y)}
+\Nuritubusi[#1]\@resen}%
+
+\def\@YhNuri{\@ifnextchar[{\Y@hNuri}{\Y@hNuri[45]}}%
+\def\Y@hNuri[#1]{\@ifnextchar<{\Y@@hNuri[#1]}{\Y@@hNuri[#1]<\empty>}}%
+\def\Y@@hNuri[#1]<#2>{\@ifnextchar({\@Y@@hNuri[#1]<#2>}{%
+  \@Y@@hNuri[#1]<#2>(0.1)}}%
+\def\@Y@@hNuri[#1]<#2>(#3)#4#5#6{\YKinziOresen{#4}{#5}{#6}{#3}\@resen%
+% \funcval{#4}{#5}\@@y\edef\@resen{\@resen(#5,\@@y)}%
+  \Hatchpolygon[#1]<#2>\@resen}%
+
+\def\@YhNurii{\@ifnextchar[{\Y@hNurii}{\Y@hNurii[45]}}%
+\def\Y@hNurii[#1]{\@ifnextchar<{\Y@@hNurii[#1]}{\Y@@hNurii[#1]<\empty>}}%
+\def\Y@@hNurii[#1]<#2>{\@ifnextchar({\@Y@@hNurii[#1]<#2>}{%
+  \@Y@@hNurii[#1]<#2>(0.1)}}%
+\def\@Y@@hNurii[#1]<#2>(#3)#4#5#6#7{\YKinziOresen{#4}{#6}{#7}{#3}\@resen
+  \YKinziOresen{#5}{#7}{#6}{-#3}\@@resen\edef\@resen{\@resen\@@resen}%
+% \funcval{#4}{#6}\@@y\edef\@resen{\@resen(#6,\@@y)}%
+  \Hatchpolygon[#1]<#2>\@resen}%
+
+\def\@XhNuri{\@ifnextchar[{\X@hNuri}{\X@hNuri[45]}}%
+\def\X@hNuri[#1]{\@ifnextchar<{\X@@hNuri[#1]}{\X@@hNuri[#1]<\empty>}}%
+\def\X@@hNuri[#1]<#2>{\@ifnextchar({\@X@@hNuri[#1]<#2>}{%
+  \@X@@hNuri[#1]<#2>(0.1)}}%
+\def\@X@@hNuri[#1]<#2>(#3)#4#5#6{\XKinziOresen{#4}{#5}{#6}{#3}\@resen%
+% \funcval{#4}{#5}\@@x\edef\@resen{\@resen(\@@x,#5)}%
+  \Hatchpolygon[#1]<#2>\@resen}%
+
+\def\@XhNurii{\@ifnextchar[{\X@hNurii}{\X@hNurii[45]}}%
+\def\X@hNurii[#1]{\@ifnextchar<{\X@@hNurii[#1]}{\X@@hNurii[#1]<\empty>}}%
+\def\X@@hNurii[#1]<#2>{\@ifnextchar({\@X@@hNurii[#1]<#2>}{%
+  \@X@@hNurii[#1]<#2>(0.1)}}%
+\def\@X@@hNurii[#1]<#2>(#3)#4#5#6#7{\XKinziOresen{#4}{#6}{#7}{#3}\@resen
+  \XKinziOresen{#5}{#7}{#6}{-#3}\@@resen\edef\@resen{\@resen\@@resen}%
+% \funcval{#4}{#6}\@@x\edef\@resen{\@resen(\@@x,#6)}%
+  \Hatchpolygon[#1]<#2>\@resen}%
+
+\def\@BhNuri{\@ifnextchar[{\B@hNuri}{\B@hNuri[45]}}%
+\def\B@hNuri[#1]{\@ifnextchar<{\B@@hNuri[#1]}{\B@@hNuri[#1]<\empty>}}%
+\def\B@@hNuri[#1]<#2>{\@ifnextchar({\B@@@hNuri[#1]<#2>}{%
+  \B@@@hNuri[#1]<#2>(0.05)}}%
+\def\B@@@hNuri[#1]<#2>(#3)#4#5#6#7{\BKinziOresen{#4}{#5}{#6}{#7}{#3}\@resen
+%\funcval{#4}{#6}\@@x\funcval{#5}{#6}\@@y
+%\edef\@resen{\@resen(\@@x,\@@y)}%
+\Hatchpolygon[#1]<#2>\@resen}%
+%
+\def\@RhNuri{\@ifnextchar[{\R@hNuri}{\R@hNuri[45]}}%
+\def\R@hNuri[#1]{\@ifnextchar<{\R@@hNuri[#1]}{\R@@hNuri[#1]<\empty>}}%
+\def\R@@hNuri[#1]<#2>{\@ifnextchar({\R@@@hNuri[#1]<#2>}{%
+  \R@@@hNuri[#1]<#2>(0.05)}}%
+\def\R@@@hNuri[#1]<#2>(#3)#4#5#6{\RKinziOresen{#4}{#5}{#6}{#3}\@resen
+  \Hatchpolygon[#1]<#2>\@resen}%
+%
+\edef\out@perl{0}
+\def\open@perlfile{%
+  \ifnum\out@perl=\z@
+    \immediate\openout \pl@out temp.pl\relax
+\@requirePerlLib
+    \xdef\out@perl{1}%
+  \fi
+}
+
+% 波線
+% \namisen[#1]#2#3
+%   #1 : key=val
+%         namisuu     : 波の個数（デフォルト値 = 5）
+%         namitakasa  : 波の高さ（デフォルト値 = 0.25）
+%         dx          : xの刻み値（デフォルト値 = 0.05）
+%         namikankaku : 2つの波の間隔（デフォルト値 = 0.1)
+%            (\namisen* のみ）
+%         yclip       : クリップするか否か
+%   #2 : 始点
+%   #3 : 終点
+% \namisen* 
+%   2つの波線間を白塗りする。
+
+\define@key{emP}{namisuu}{\def\namisen@n{#1}}%
+\define@key{emP}{namitakasa}{\def\namisen@h{#1}}%
+\define@key{emP}{namikankaku}{\def\namisen@g{#1}}%
+\define@key{emP}{dx}{\def\namisen@dx{#1}}%
+\define@key{emP}{yclip}{\def\nami@yclip{#1}}%
+\def\namisen{%
+  \def\namisen@n{5}%
+  \def\namisen@h{.25}%
+  \def\namisen@g{.1}%
+  \def\namisen@dx{.05}%
+  \def\nami@yclip{yes}%
+  \def\draw@border{1}%
+  \@ifstar{\namisen@}{\@namisen}}
+\def\@namisen{\@ifnextchar[{\@@namisen}{\@@@namisen}}
+\def\@@namisen[#1]{\setkeys{emP}{#1}\@@@namisen}
+\def\@@@namisen#1#2{%
+  \Subvec{#2}{#1}\namisen@v
+  \Absvec\namisen@v\namisen@L
+\ifdim\namisen@L\p@>\z@
+  \Argvec\namisen@v\namisen@k
+  \Mul\Pii\namisen@n\namisen@w
+  \Div\namisen@w\namisen@L\namisen@w
+  \ifdim\namisen@k pt=\z@
+%   水平
+    \vecXY{#1}\nami@xi\namiyi
+    \vecXY{#2}\nami@xii\namiyii
+    \ifdim\nami@xi pt>\nami@xii pt\relax
+      \edef\nami@S{#2}%
+      \Sub\nami@xi\nami@xii\namisen@L
+    \else
+      \edef\nami@S{#1}%
+      \Sub\nami@xii\nami@xi\namisen@L
+    \fi
+    \Mul\Pii\namisen@n\namisen@w
+    \Div\namisen@w\namisen@L\namisen@w
+    \def\nami@Fx{\namisen@h*sin(\namisen@w*X)}%
+    {\yclipfalse
+    \Put{\nami@S}{\YGurafu(\namisen@dx)\nami@Fx{0}{\namisen@L}}}%
+  \else\ifdim\namisen@k pt=90pt\relax
+%   垂直
+    \vecXY{#1}\nami@xi\nami@yi
+    \vecXY{#2}\nami@xii\nami@yii
+    \ifdim\nami@yi pt>\nami@yii pt\relax
+      \edef\nami@S{#2}%
+      \Sub\nami@yi\nami@yii\namisen@L
+    \else
+      \edef\nami@S{#1}%
+      \Sub\nami@yii\nami@yi\namisen@L
+    \fi
+    \Mul\Pii\namisen@n\namisen@w
+    \Div\namisen@w\namisen@L\namisen@w
+    \def\nami@Fy{\namisen@h*sin(\namisen@w*Y)}%
+    {\xclipfalse
+    \Put{\nami@S}{\XGurafu(\namisen@dx)\nami@Fy{0}{\namisen@L}}}%
+  \else
+    \YKinziOresen{%
+      \namisen@h*sin(\namisen@w*X)}{0}{\namisen@L}{\namisen@dx}\@resen
+    \kaiten\O@@\@resen\namisen@k\@@resen
+    \Put{#1}{\Drawline\@@resen}%
+  \fi\fi
+\fi
+}
+%\def\@@@namisen#1#2{%
+%  \Subvec{#2}{#1}\namisen@v
+%  \Absvec\namisen@v\namisen@L
+%  \Argvec\namisen@v\namisen@k
+%  \Mul\Pii\namisen@n\namisen@w
+%  \Div\namisen@w\namisen@L\namisen@w
+%  \YKinziOresen{%
+%    \namisen@h*sin(\namisen@w*X)}{0}{\namisen@L}{\namisen@dx}\@resen
+%  \kaiten\O@@\@resen\namisen@k\@@resen
+%  \Put{#1}{\Drawline\@@resen}%
+%}
+%\def\@@@namisen#1#2{%
+%  \Subvec{#2}{#1}\namisen@v
+%  \Absvec\namisen@v\namisen@L
+%  \Argvec\namisen@v\namisen@k
+%  \Mul\Pii\namisen@n\namisen@w
+%  \Div\namisen@w\namisen@L\namisen@w
+%  \Put{#1}{\rotatebox{\namisen@k}{%
+%    \bgroup
+%      \ifthenelse{\equal\nami@yclip{false}}{\yclipfalse}{}%
+%      \YGurafu(\namisen@dx){\namisen@h*sin(\namisen@w*X)}{0}{\namisen@L}%
+%    \egroup
+%  }}%
+%}
+
+\def\namisen@{\@ifnextchar[{\@@namisen@}{\@@@namisen@}}
+\def\@@namisen@[#1]{\setkeys{emP}{#1}\@@@namisen@}
+\def\@@@namisen@#1#2{%
+  \Subvec{#2}{#1}\namisen@v
+  \Absvec\namisen@v\namisen@L
+  \Argvec\namisen@v\namisen@k
+  \Mul\Pii\namisen@n\namisen@w
+  \Div\namisen@w\namisen@L\namisen@w
+  \ifdim\namisen@k pt=\z@
+%   水平
+    \vecXY{#1}\nami@xi\namiyi
+    \vecXY{#2}\nami@xii\namiyii
+    \ifdim\nami@xi pt>\nami@xii pt\relax
+      \edef\nami@S{#2}%
+      \Sub\nami@xi\nami@xii\namisen@L
+    \else
+      \edef\nami@S{#1}%
+      \Sub\nami@xii\nami@xi\namisen@L
+    \fi
+    \Mul\Pii\namisen@n\namisen@w
+    \Div\namisen@w\namisen@L\namisen@w
+    \def\nami@Fx{\namisen@h*sin(\namisen@w*X)}%
+    \def\nami@Gx{\namisen@h*sin(\namisen@w*X)+\namisen@g}%
+    {\yclipfalse
+    \Put{\nami@S}{\YNurii[0]<\namisen@dx>\nami@Fx\nami@Gx{0}{\namisen@L}}%
+    \ifnum\draw@border=\z@\else
+      \Put{\nami@S}{\YGurafu(\namisen@dx)\nami@Fx{0}{\namisen@L}}%
+      \Put{\nami@S}{\YGurafu(\namisen@dx)\nami@Gx{0}{\namisen@L}}%
+    \fi}%
+  \else\ifdim\namisen@k pt=90pt\relax
+%   垂直
+    \vecXY{#1}\nami@xi\nami@yi
+    \vecXY{#2}\nami@xii\nami@yii
+    \ifdim\nami@yi pt>\nami@yii pt\relax
+      \edef\nami@S{#2}%
+      \Sub\nami@yi\nami@yii\namisen@L
+    \else
+      \edef\nami@S{#1}%
+      \Sub\nami@yii\nami@yi\namisen@L
+    \fi
+    \Mul\Pii\namisen@n\namisen@w
+    \Div\namisen@w\namisen@L\namisen@w
+    \def\nami@Fy{\namisen@h*sin(\namisen@w*Y)}%
+    \def\nami@Gy{\namisen@h*sin(\namisen@w*Y)+\namisen@g}%
+    {\xclipfalse
+    \Put{\nami@S}{\XNurii[0]<\namisen@dx>\nami@Fy\nami@Gy{0}{\namisen@L}}%
+    \ifnum\draw@border=\z@\else
+      \Put{\nami@S}{\XGurafu(\namisen@dx)\nami@Fy{0}{\namisen@L}}%
+      \Put{\nami@S}{\XGurafu(\namisen@dx)\nami@Gy{0}{\namisen@L}}%
+    \fi}%
+  \else
+    \def\nami@Fx{\namisen@h*sin(\namisen@w*X)}
+    \def\nami@Gx{\namisen@h*sin(\namisen@w*X)+\namisen@g}
+    \YKinziOresen{\nami@Fx}{0}{\namisen@L}{\namisen@dx}\@resen
+    \YKinziOresen{\nami@Gx}{\namisen@L}{0}{-\namisen@dx}\@@resen
+    \kaiten\O@@\@resen\namisen@k\@resen@
+    \kaiten\O@@\@@resen\namisen@k\@@resen@
+    \edef\@@@resen{\@resen@\@@resen@(0,0)}%
+    \Put{#1}{\Nuritubusi[0]\@@@resen}%
+    \ifnum\draw@border=\z@\else
+      \Put{#1}{\Drawline\@resen@}%
+      \Put{#1}{\Drawline\@@resen@}%
+    \fi
+  \fi\fi
+}
+%\def\@@@namisen@#1#2{%
+%  \Subvec{#2}{#1}\namisen@v
+% \Absvec\namisen@v\namisen@L
+%  \Argvec\namisen@v\namisen@k
+%  \Mul\Pii\namisen@n\namisen@w
+%  \Div\namisen@w\namisen@L\namisen@w
+%  \def\nami@Fx{\namisen@h*sin(\namisen@w*X)}
+%  \def\nami@Gx{\namisen@h*sin(\namisen@w*X)+\namisen@g}
+%  \YKinziOresen{\nami@Fx}{0}{\namisen@L}{\namisen@dx}\@resen
+%  \YKinziOresen{\nami@Gx}{\namisen@L}{0}{-\namisen@dx}\@@resen
+%  \kaiten\O@@\@resen\namisen@k\@resen@
+%  \kaiten\O@@\@@resen\namisen@k\@@resen@
+%  \edef\@@@resen{\@resen@\@@resen@(0,0)}%
+%  \Put{#1}{\Nuritubusi[0]\@@@resen}%
+%  \Put{#1}{\Drawline\@resen@}%
+%  \Put{#1}{\Drawline\@@resen@}%
+%}
+%\def\@@@namisen@#1#2{%
+%  \Subvec{#2}{#1}\namisen@v
+%  \Absvec\namisen@v\namisen@L
+%  \Argvec\namisen@v\namisen@k
+%  \Mul\Pii\namisen@n\namisen@w
+%  \Div\namisen@w\namisen@L\namisen@w
+%  \def\nami@Fx{\namisen@h*sin(\namisen@w*X)}
+%  \def\nami@Gx{\namisen@h*sin(\namisen@w*X)+\namisen@g}
+%  \Put{#1}{\rotatebox{\namisen@k}{%
+%    \bgroup
+%      \ifthenelse{\equal\nami@yclip{false}}{\yclipfalse}{}%
+%      \YNurii[0]<\namisen@dx>\nami@Fx\nami@Gx{0}{\namisen@L}%
+%      \YGurafu(\namisen@dx){\nami@Fx}{0}{\namisen@L}%
+%      \YGurafu(\namisen@dx){\nami@Gx}{0}{\namisen@L}%
+%    \egroup
+%  }}%
+%}
+
+% 区分求積の図
+%   \kubunkyuusekizu[#1]<#2>#3#4#5#6#7%     短冊のみ
+%   \kubunkyuusekizu*[#1]<#2>#3#4#5#6#7%    ベタ塗り
+%   \kubunkyuusekizu**[#1]<#2>#3#4#5#6#7%   斜線塗り
+%     #1 : 塗りの濃さ／斜線の方向角
+%     #2 : 斜線塗りの場合の斜線間隔
+%     #3 : 関数式
+%     #4 : 区間の左端
+%     #5 :       右端
+%     #6 : 分割数
+%     #7 : l = 区間の左端を高さ
+%          r =       右端
+%
+\def\kubunkyuusekizu{\@ifstar{\kubunkyuusekizu@}{%
+  \edef\@nuri{0}\@kubunkyuusekizu}}
+\def\kubunkyuusekizu@{\@ifstar{\edef\@nuri{2}\@kubunkyuusekizu}{%
+  \edef\@nuri{1}\@kubunkyuusekizu}}
+\def\@kubunkyuusekizu{\@ifnextchar[{\@@kubunkyuusekizu}{\@@kubunkyuusekizu[]}}
+\def\@@kubunkyuusekizu[#1]{\@ifnextchar<{\@@@kubunkyuusekizu[#1]}{%
+  \@@@kubunkyuusekizu[#1]<\empty>}}
+\def\@@@kubunkyuusekizu[#1]<#2>#3#4#5#6#7{%
+  \calcval{((#5)-(#4))/(#6)}\@deltax
+  \Cfor{%             ループ初期設定
+    \edef\@ix{0}%      ループ変数
+    \edef\@ldx{#4}%
+    \funcval{#3}{#4}\y@rg
+    \edef\@ldy{\y@rg}%
+    \edef\kaidanzu{(\@ldx,0)(\@ldx,\@ldy)}% 階段状図形の初期設定
+  }{%               ループ継続条件
+    \@ix<#6
+  }{%               ループ再設定
+    \edef\@ldx{\@x}%
+    \edef\@ldy{\@y}%
+  }\do{%            ループ本体
+    \Incr\@ix
+    \calcval{(#4)+\@ix*\@deltax}\@x
+    \funcval{#3}\@x\@y
+    \expandafter\edef\csname xkubunzu\romannumeral\@ix\endcsname{\@x}%
+    \expandafter\edef\csname ykubunzu\romannumeral\@ix\endcsname{\@y}%
+    \Drawline{(\@x,0)(\@x,\@y)}%
+    \if l#7\relax
+      \edefappend\kaidanzu{(\@ldx,\@ldy)(\@x,\@ldy)}% 区間の左辺を高さとする
+    \else\if r#7\relax
+      \edefappend\kaidanzu{(\@ldx,\@y)(\@x,\@y)}%     区間の右辺を高さとする
+    \fi\fi
+  }%
+  \edefappend\kaidanzu{(\@x,0)(#4,0)}% 階段状図形を閉多角形に
+  \Drawline\kaidanzu%                     輪郭描画
+  \ifnum\@nuri=\@ne
+    \Nuritubusi[#1]\kaidanzu
+  \else\ifnum\@nuri=\tw@
+    \ifthenelse{\equal{#1}\empty}{%
+      \ifdim\y@rg pt>\@y pt\relax%    減少
+        \def\nuri@kaku{60}%
+      \else
+        \def\nuri@kaku{-60}%
+      \fi
+    }{\def\nuri@kaku{#1}}%
+    \Nuritubusi*[\nuri@kaku]<#2>\kaidanzu
+  \fi\fi
+}
+%
+\edef\perlflnum{0}
+%\AtBeginDocument{\if :\kugirisi
+%  \IfFileExists{emathO.sty}{\usepackage{emathO}}{}\fi}
+%\AtEndDocument{%
+%  \ifnum\perlflnum>\z@\ifnum\perlp@ss=\@ne
+%%    \immediate\openout \pl@out temp.pl\relax
+%%    \immediate\write\pl@out{open(WHNDL,">temp.pl");}%
+%% \@requirePerlLib
+%%    \immediate\write\pl@out{for($i=0;$i<\perlflnum;){%
+%%      ++$i;$inputflnm=sprintf('_temp\@percent d.pl',$i);%
+%%      open(RHNDL,$inputflnm);%
+%%      while(<RHNDL>){print WHNDL;};%
+%%      close(RHNDL);unlink($inputflnm);};}%
+%%    \immediate\write\pl@out{close(WHNDL);}
+%    \immediate\closeout\pl@out
+%  \fi\fi
+%}
+\def\checkPerl{\@ifstar{\checkPerl@}{\@checkPerl}}
+\def\checkPerl@{%
+\ifeof18
+\errmessage{emathPp Error : Please enable shell escape by --shell option}%
+%\else
+%\immediate\write18{SomeCommand}
+\fi
+\@checkPerl
+}
+\def\@checkPerl{%
+  \edef\perlflnum{-1}%
+  \calcval[s]{"\jobname"}\tmp
+  \Strlen\tmp\ltmp
+  \Strlen\jobname\ljobname
+  \ifnum\ltmp=\ljobname\else
+        \errmessage{emathPp Error : B Perl との連携ができていません。}%
+  \fi
+  \Cfor{\headchar\tmp\tmpi\tmpii\headchar\jobname\ci\cii}{%
+    \not\equal\tmpi\empty}{\headchar\tmpii\tmpi\tmpii\headchar\cii\ci\cii}\do{%
+      \if\ci\tmpi\else
+        \errmessage{emathPp Error : C Perl との連携ができていません。}%
+      \fi
+  }%
+% \@delfile{\jobname.d\perlflnum}%
+}
+\endinput
+% ---------------------------------
+v 0.00 2001/12/23
+v 0.01 2002/02/09
+        \namisen : 波線
+v 0.02 2002/04/25
+        txfonts オプションなどの処理変更
+v 0.03 2002/07/24
+        dvipdfm ロードオプション
+v 0.04 2002/08/26-30
+        perl の作成するデータファイルを格納するディレクトリを指定可能
+v 0.05 2002/09/08-10/27
+        \namisen* 波線を2本引きその間を白塗りする。
+        \YGurafu* 描画範囲の取得に失敗した場合は Warning を出す。
+        \kubunkyuusekizu 区分求積図
+        \perldatafiledir : Mac の場合無効コマンドとする。
+v 0.06 2003/01/03
+        \@lbrace \@rbrace
+        \yclipDrawline
+v 0.07 2003/01/22
+        v 0.06 で行った\yclipDrawline への修正をもとに戻す。
+v 0.08 2003/01/30
+        \calcval, \funcval printf の書式を指定可能とする。
+v 0.09 2003/02/04
+        \YGurafu(#1)(#2)に対しては
+          \yclipDrawline に代えて \yclipdrawline を使用する。
+v 0.10 2003/02/24
+        \checkPerl : Perl との連携チェック
+v 0.11 2003/03/15
+        \perldatafiledir : 無効命令
+        \skipCallPerl : 無効命令
+v 0.12 2003/03/30
+        \ifyclip 新設
+        \namisen にオプション追加
+          yclip=true/false
+          dx=xの刻み値
+v 0.13 2003/05/15
+        \namisen v0.12 による変更によるバグ混入
+v 0.14 2003/06/18
+        \O@@ : 原点
+v 0.15 2003/07/01
+        \myPerlLib#1 で，perl のライブラリを追加可能とする。
+v 0.16 2003/07/25
+        \YGurafu, \XGurafu, \BGurafu, \RGurafu
+          emathPs で，[linewidth=..,dash=..] オプションを局所的に
+v 0.17 2003/08/21
+        \myPerlLib について修正
+v 0.18 2003/09/05
+        \YTen x座標の戻り値を元のまま "%s '#2'" とする。
+v 0.19 2003/09/06-11
+        \YTen, \XTen, \YPut
+          x,y座標の戻り値の形式を指定するオプション xformat=, yformat=
+        \useperllib
+v 0.20 2003/10/25
+        \kubunkyuusekizu : 分点を
+                (\kubunzuxi,\kubunzuyi), (\kubunzuxii,\kubunzuyii), ..
+                で保存する。
+v 0.21 2003/11/07
+        \YGurafu(*) : xの刻み値を 0.5mm とし，
+          yの変化が大きいときは x の刻み値を小さくする。
+v 0.22 2003/12/03
+        \namisen 与えた2点が等しいときは描画しない
+v 0.23 2003/12/23
+        notMy オプション
+v 0.24 2004/02/02
+        \namisen* に，境界線の描画スイッチ [border=0/1]を導入
+v 0.25 2004/09/08
+        \useperlpm : perl のモジュールを使用する宣言
+v 0.26 2004/09/09
+        \useperlpm : 複数のモジュールを使用可能
+v 0.27 2004/10/22
+        \checkPerl : 作業用ファイルの削除を保留（unix との関係）
+v 0.28 2004/11/07
+        @Tanten を emathPh の Ex, Ey オプションにあわせて
+          xmax ---> truexmax など
+v 0.29 2004/11/10
+        \migiTanten, \hidariTanten
+v 0.30 2004/12/11
+        \myPerlLib : バグ修正
+v 0.32 2004/12/30
+        \checkPerl* : \ifeof18
+v 0.33 2005/01/01
+        iro=.. オプション整備
+v 0.34 2005/01/09
+        ロードオプション papersize
+v 0.35 2005/02/01
+        \BGurafu* : \egroup が1個多かった
+v 0.36 2005/02/12
+        \@percent などの定義を emath.sty に移管
+v 0.37 2005/02/17
+        \Argvec : <perl> オプション
+v 0.38 2005/09/19
+    ロードオプション dvipdfmx
+v 0.39 2005/11/07
+    \RNuri*

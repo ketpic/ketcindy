@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210325] loaded");
+println("ketcindylib3d[20210408] loaded");
 
 //help:start();
 
@@ -2637,113 +2637,53 @@ Mkbezierptcrv3(ptdata,options):=(  //17.10.08 greatly changed
   BezierNumber3=BezierNumber3+1;
   Out;
 );
-////%Mkbezierptcrv3d end////
+////%Mkbezierptcrv3d end////  210408renewal
 
 ////%Readobj start////
-Readobj(filename,options):=(
-//help:Readobj("file.obj",["size=-3"]);
-  regional(eqL,size,vL,fnL,dtL,numer,flg,flg2,
-     tmp,tmp1,tmp2,tmp3,tmp4,tmp5);
+Readobj(filename):=Readobj(loaddirectory,filename,[]); 
+Readobj(Arg1,Arg2):=(
+  if(islist(Arg2),
+    Readobj(loaddirectory,Arg1,Arg2);
+  ,
+    Readobj(Arg1,Arg2,[]);
+  );
+);
+Readobj(directory,filename,options):=(
+//help:Readobj("file.obj");
+//help:Readobj("file.obj",["Size=-3"]);
+//help:Readobj(directory,"file.obj",["Size=-3"]);
+  regional(eqL,size,vL,fnL,tmp,tmp1,tmp2);
   size=1;
   tmp=Divoptions(options);
   eqL=tmp_5;
   forall(eqL,
-    if(Toupper(substring(#,0,1))=="S",
-      tmp=indexof(#,"=");
-      size=parse(substring(#,tmp,length(#)));
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="S",
+      size=parse(tmp_2);
     );
   );
   numer="-0123456789";
-  tmp=load(filename);
-  if(length(tmp)>0, //200509from
-    tmp=replace(tmp,CRmark,"");
-    tmp=replace(tmp,LFmark,"");
-  ); //200509from
-  dtL=tokenize(tmp,"v ");
+  tmp=Readlines(directory,filename);
+  tmp1=select(tmp,substring(#,0,1)=="v");
+  tmp2=select(tmp,substring(#,0,1)=="f");
   vL=[];
+  forall(tmp1,
+    tmp=replace(#,"v","");
+    tmp=Removespace(tmp);
+    tmp=replace(tmp,"  "," ");
+    tmp="["+replace(tmp," ",",")+"]";
+    tmp=size*parse(tmp);
+    vL=append(vL,tmp);
+  );
   fnL=[];
-  flg=0;
-  flg2=0;
-  forall(dtL,dt,
-    tmp1=Removespace(dt);
-    if(indexof(numer,substring(tmp1,0,1))>0,
-      tmp2="";
-      tmp=indexof(tmp1,"f");
-      if(tmp>0,
-        tmp2=substring(tmp1,tmp-1,length(tmp1));
-        tmp1=substring(tmp1,0,tmp-1);
-        if(substring(tmp1,length(tmp1)-1,length(tmp1))=="#",
-          tmp2="#"+tmp2;
-          tmp1=substring(tmp1,0,length(tmp1)-1);
-        );
-//        tmp=indexof(tmp2,"#");
-//        if(tmp>0,
-//          tmp2=substring(tmp2,0,tmp-1);
-//        );
-      );
-      if(flg==1,
-        tmp1="";
-        flg=0;
-      );
-      if(length(tmp1)>0,
-        tmp=indexof(tmp1,"#");
-        if(tmp>0,
-          tmp1=substring(tmp1,0,tmp-1);
-          flg=1;
-        );
-        tmp=indexof(tmp1,"vt");
-        if(tmp>0,
-          tmp1=substring(tmp1,0,tmp-1);
-        );
-        tmp1=replace(tmp1,"  ",",");
-        tmp1=replace(tmp1," ",",");
-        tmp1="["+tmp1+"]";
-        tmp1=size*parse(tmp1);
-        vL=append(vL,tmp1);
-      );
-      if(length(tmp2)>0,
-        tmp2=tokenize(tmp2,"f");
-        if(length(tmp2_1)==0,
-          tmp2=tmp2_(2..length(tmp2));
- //       ,
- //         if(tmp2_1=="#",
-//            tmp2=tmp2_(2..length(tmp2));
-//            tmp2_1="#"+tmp2_1;
-//          );
-        );
-        forall(1..length(tmp2),tmp3,
-          tmp=tmp2_tmp3;
-          if(substring(tmp,length(tmp)-1,length(tmp))=="#",
-            tmp2_(tmp3+1)="#"+Removespace(tmp2_(tmp3+1));
-            tmp2_tmp3=substring(tmp,0,length(tmp)-1);
-          );
-          tmp5="";
-          if(length(tmp2_tmp3)>0,
-            tmp4=tokenize(tmp2_tmp3," ");
-            forall(tmp4,
-              if(length(text(#))>0,
-                if(indexof(text(#),"/")==0,
-                  tmp=text(#);
-                ,
-                  tmp=tokenize(text(#),"/");
-                  tmp=tmp_1;
-                );
-                if(length(tmp)>0,
-                  tmp5=tmp5+tmp+",";
-                );
-              );
-            );
-            tmp5=substring(tmp5,0,length(tmp5)-1);
-            if(length(tmp5)>0,
-              if(substring(tmp5,0,1)!="#",
-                tmp5="["+tmp5+"]";
-                fnL=append(fnL,parse(tmp5));
-              );
-            );
-          );
-        );
-      );
-    );
+  forall(tmp2,
+    tmp=replace(#,"f","");
+    tmp=Removespace(tmp);
+    tmp=replace(tmp,"  "," ");
+    tmp="["+replace(tmp," ",",")+"]";
+    tmp=parse(tmp);
+    fnL=append(fnL,tmp);
   );
   [vL,fnL];
 );

@@ -1,0 +1,33 @@
+% emFxabx.sty by tDB(CQB00260@nifty.ne.jp)
+%
+  \NeedsTeXFormat{pLaTeX2e}
+  \ProvidesPackage{emFxabx}[2005/10/23 v0.00]%
+%
+\DeclareSymbolFont{EMmatha}{U}{matha}{m}{n}
+\DeclareFontSubstitution{U}{matha}{m}{n}
+%%\DeclareSymbolFont{EMmathb}{U}{mathb}{m}{n}
+%%\DeclareFontSubstitution{U}{mathb}{m}{n}
+\DeclareSymbolFont{EMmathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+\DeclareMathSymbol{\abxpm}            {2}{EMmatha}{"08}
+\DeclareMathSymbol{\abxmp}            {2}{EMmatha}{"09}
+\DeclareMathSymbol{\abxnotin}         {3}{EMmatha}{"52}
+\DeclareMathSymbol{\abxnotni}        {3}{EMmatha}{"53}
+\DeclareMathSymbol{\abxrightarrow}{3}{EMmatha}{"D1}
+\DeclareMathSymbol{\abxleqq}        {3}{EMmatha}{"AE}
+\DeclareMathSymbol{\abxgeqq}        {3}{EMmatha}{"AF}
+\DeclareMathSymbol{\abxlesseqqgtr}  {3}{EMmatha}{"BE}
+\DeclareMathSymbol{\abxgtreqqless}  {3}{EMmatha}{"BF}
+\DeclareMathSymbol{\abxlesssim}     {3}{EMmatha}{"C0}
+\DeclareMathSymbol{\abxrelbar}{3}{EMmatha}{"DD}
+\DeclareMathSymbol{\abxsum}    {1}{EMmathx}{"B0}
+\DeclareMathSymbol{\abxintop}  {1}{EMmathx}{"B3}
+\def\abxint{\abxintop\nolimits}
+\DeclareMathDelimiter{\abxlbrack} {4}{EMmatha}{"72}{EMmathx}{"10}
+\DeclareMathDelimiter{\abxrbrack} {5}{EMmatha}{"73}{EMmathx}{"18}
+\DeclareMathDelimiter{\ldbrack}   {4}{EMmatha}{"76}{EMmathx}{"30}
+\DeclareMathDelimiter{\rdbrack}   {5}{EMmatha}{"77}{EMmathx}{"38}
+%
+\newcommand{\abxgauss}[1]{\ensuremath{%
+    \left\abxlbrack\mkern1mu #1\mkern1mu\right\abxrbrack}}%
+\endinput

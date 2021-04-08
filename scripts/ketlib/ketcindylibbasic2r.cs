@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210331] loaded");
+println("ketcindylibbasic2[20210408] loaded");
 
 //help:start();
 
@@ -2737,12 +2737,12 @@ Drwxy(add,optionsorg):=(
   //tmp2=min([org_2+YMAX,YMAX]);
   yrng=[YMIN,YMAX];  //190103
   ax=AXSTYLE_1; //190901from
-  labelsize="Size=1.5"; //201012
+  labelsize=1.5; //210408
   forall(AXSTYLE_2,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(contains(["S","L"],tmp1), 
-      labelsize="Size="+tmp_2;
+      labelsize=parse(tmp_2);
       options=remove(options,[#]);
     );
   );  //190901to
@@ -2809,10 +2809,18 @@ Drwxy(add,optionsorg):=(
     Listplot("-axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
-  tmp=[colorla,labelsize]; //190901from
-  Expr([[xrng_2,org_2],ax_3,ax_2],tmp);
-  Expr([[org_1,yrng_2],ax_5,ax_4],tmp);
-  Letter([org,ax_7,ax_6],tmp); //190901to
+  tmp=[colorla,"Size="+text(labelsize)]; //190901from //210408
+  Expr([[xrng_2,org_2],ax_3,ax_2],tmp); // no ketjs //210407from
+  Expr([[org_1,yrng_2],ax_5,ax_4],tmp); // no ketjs
+  Letter([org,ax_7,ax_6],tmp); //190901to // no ketjs
+  //tmp2=labelsize*10*1.1; //only ketjs on //210408from
+  //tmp1=tmp2*0.0352778;
+  //tmp=tmp1*0.15;
+  //drawtext([xrng_2,org_2-tmp],"$"+ax_2+"$",size->tmp2);
+  //drawtext([org_1-tmp,yrng_1],"$"+ax_4+"$",size->tmp2);
+  //if(indexof(AX_7,"s")>0,tmp1=tmp,tmp1=-tmp);
+  //If(indexof(AX_7,"w")>0, tmp2=tmp,tmp2=-tmp);
+  //drawtext(org-4*[tmp1,tmp2],ax_6,size->tmp1);// only ketjs off //210408to
   if(add==0, //190103
     Addax(0);
   );

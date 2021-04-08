@@ -1,3 +1,5 @@
+// 20210408
+//    Drwxy changed  ( drawtext for ketcindyjs)
 // 20210331
 //    Setwindow changed  ( no frame in ketcindyjs )
 // 20210319

@@ -1,3 +1,5 @@
+// 20210411
+//    Enclosing debugged  ( for close curve)
 // 20210408
 //    Drwxy changed  ( drawtext for ketcindyjs)
 // 20210331

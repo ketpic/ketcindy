@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210408] loaded");
+println("ketcindylibbasic2[20210411] loaded");
 
 //help:start();
 
@@ -1360,7 +1360,10 @@ Enclosing2(nm,plistorg,options):=(
           KL=sort(KL,[#_2]);//180706
           tmp=parse(Fdata);
           tmp1=t1+Eps;
-          KL=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //180713,16
+          tmp=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //210411from
+          if(length(tmp)>0,
+            KL=tmp;
+          ); //210411to
           t2=KL_1_2;
           ss=KL_1_3;
           if(abs(t2-t1)<Eps,//180707
@@ -2809,18 +2812,18 @@ Drwxy(add,optionsorg):=(
     Listplot("-axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
-  tmp=[colorla,"Size="+text(labelsize)]; //190901from //210408
-  Expr([[xrng_2,org_2],ax_3,ax_2],tmp); // no ketjs //210407from
-  Expr([[org_1,yrng_2],ax_5,ax_4],tmp); // no ketjs
-  Letter([org,ax_7,ax_6],tmp); //190901to // no ketjs
-  //tmp2=labelsize*10*1.1; //only ketjs on //210408from
-  //tmp1=tmp2*0.0352778;
-  //tmp=tmp1*0.15;
-  //drawtext([xrng_2,org_2-tmp],"$"+ax_2+"$",size->tmp2);
-  //drawtext([org_1-tmp,yrng_1],"$"+ax_4+"$",size->tmp2);
-  //if(indexof(AX_7,"s")>0,tmp1=tmp,tmp1=-tmp);
-  //If(indexof(AX_7,"w")>0, tmp2=tmp,tmp2=-tmp);
-  //drawtext(org-4*[tmp1,tmp2],ax_6,size->tmp1);// only ketjs off //210408to
+  tmp=[colorla,"Size="+text(labelsize)]; //no ketjs on //210408
+  Expr([[xrng_2,org_2],ax_3,ax_2],tmp); //210407from
+  Expr([[org_1,yrng_2],ax_5,ax_4],tmp); 
+  Letter([org,ax_7,ax_6],tmp); //190901to // no ketjs off
+  //tmp=labelsize*10*1.15; //only ketjs on //210408from
+  //tmp1=tmp*0.0352778*0.16; 
+  //tmp2=tmp*0.0352778*0.16; 
+  //drawtext([xrng_2,org_2-tmp2],"$"+ax_2+"$",size->tmp);
+  //drawtext([org_1-tmp1,yrng_2],"$"+ax_4+"$",size->tmp);
+  //if(indexof(AX_7,"e")>0,tmp1=0,tmp1=1.9*tmp1);
+  //If(indexof(AX_7,"n")>0,tmp2=0,tmp2=1.9*tmp2);
+  //drawtext(org-4*[tmp1,tmp2],ax_6,size->tmp);// only ketjs off //210408to
   if(add==0, //190103
     Addax(0);
   );

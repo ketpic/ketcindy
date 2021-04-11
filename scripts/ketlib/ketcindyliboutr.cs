@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20210325] loaded");
+println("ketcindylibout[20210411] loaded");
 
 //help:start();
 
@@ -4616,32 +4616,18 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     tmp1=select(varL,indexof(#,"h3d")==0);
     tmp2=remove(varL,tmp1);
     tmp1=select(tmp1,indexof(#,"3d")>0);
-    tmp="";
-    if(length(options)>0,
-      forall(options,
-        tmp=tmp+Dqq(#)+",";
-      );
-      tmp=substring(tmp,0,length(tmp)-1);
-    );
-    if(length(tmp)>0,tmp=tmp+","); //180602
-    tmp=tmp+Dqq("Msg=no"); //180602
-    tmp1=apply(tmp1,replace(#,"3d","2d")+"=Projpara("+Dqq(#)+",["+tmp+"]);");
-	forall(tmp1,parse(#));
-    tmp="";
-    if(length(optionsh)>0,
-      forall(1..(length(StyleListC)/4), //200624from
-        StyleListC_(4*#)=optionsh; 
-      ); //200624to
-      forall(optionsh,
-        tmp=tmp+Dqq(#)+",";
-      );
-      tmp=substring(tmp,0,length(tmp)-1);
+    tmp1=select(tmp1,length(tmp1)>0); //210411from
+	forall(tmp1,
+      tmp=Projpara(#,append(options,"Msg=n"));
+      tmp=replace(#,"3d","2d")+"="+Textformat(tmp,6);
+      parse(tmp);
     );
     tmp2=select(tmp2,length(parse(#))>0); //210323
-    tmp2=apply(tmp2,replace(#,"3d","2d")+"=Projpara("+#+",["+tmp+"]);");
     forall(tmp2,
-      parse(#)
-    );
+      tmp=Projpara(#,append(optionsh,"Msg=n"));
+      tmp=replace(#,"3d","2d")+"="+Textformat(tmp,6);
+      parse(tmp);
+    ); //210411to
     Changestyle3d(EraseList,["nodisp"]);//180601
   );
   varL=select(varL,length(parse(#))>0);

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210319] loaded");
+println("ketcindylibbasic1[20210412] loaded");
 
 //help:start();
 
@@ -116,17 +116,6 @@ Ketinit(work,strictsep):=( //200509
   );//17.11.12
   Dircdy=replace(Dircdy,"%E3%80%80",unicode("3000"));//190416
 //  Dircdy=replace(Dircdy,"%20"," ");//210308
-  if(iswindows(), // no ketjs on  //210316from
-    if(indexof(Dircdy,"-")>0,
-      repeat(3,
-        inspect(Text1,"text.text","No (-)");
-        wait(700);
-        inspect(Text1,"text.text","Folder");
-        wait(300);
-      );
-      println("   No hyphen(-) in the folder name");
-    );
-  );  // no ketjs off //210316to
   Namecdy=Cindyname();//180608
   tmp1=Indexall(Dircdy,"%"); //180329from
   if(length(tmp1)>0,
@@ -158,6 +147,12 @@ Ketinit(work,strictsep):=( //200509
     );  //181125to
   );
   Changework(Dircdy+pathsep()+work); //180329to,181001
+  if(iswindows(), // no ketjs on  //210412from
+    if(indexof(Dirwork,"-")>0,
+      drawtext([SW.x,NE.y],"Remove minus(-) in your pathname",color->[1,0,0],size->20);
+      println("   Remove minus(-) in your pathname");
+    );
+  );  // no ketjs off //2104126to
   Fnametex=Fhead+".tex";
   FnameR=Fhead+".r";
   FnamebodyR=Fhead+"body.r";

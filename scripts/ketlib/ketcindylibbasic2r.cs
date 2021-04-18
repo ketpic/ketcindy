@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210411] loaded");
+println("ketcindylibbasic2[20210416] loaded");
 
 //help:start();
 
@@ -2872,6 +2872,26 @@ Addax(param):=(
   ADDAXES=text(param);
 );
 ////%Addax end////
+
+////%Drwexpr start////
+Drwexpr(pos,str):=Drwexpr(pos,str,12);
+Drwexpr(pos,str,sz):=(
+  regional(tmp,tmp1);
+  tmp=str;
+  if(!isstring(str),tmp=text(tmp));
+  drawtext(pos,"$"+tmp+"$",size->sz);
+);
+////%Drwexpr end////
+
+////%Drwletter start////
+Drwletter(pos,str):=Drwletter(pos,str,12);
+Drwletter(pos,str,sz):=(
+  regional(tmp,tmp1);
+  tmp=str;
+  if(!isstring(str),tmp=text(tmp));
+  drawtext(pos,tmp,size->sz);
+);
+////%Drwletter end////
 
 ////%Expr start////
 Expr(Pt,Dr,St):=Expr([Pt,Dr,St]);

@@ -1,0 +1,123 @@
+///// To make buttons      20210419
+// Prepare
+//  1. Create a button with 'ABC' 
+//  2. Select the button and go to its 'inspector".
+//  3. Change the name according to the followings and mark 'use as button","click button".
+//  4. Copy the lines, paste in CindyScript and execute them.
+//  5. Define 'Dqq' in the begining, if necessary,
+//          Dqq(str):=unicode("0022")+str+unicode("0022");
+
+///////////////////////
+// Figure Text1
+inspect(Text1,"textsize",18);
+inspect(Text1,"button.script","Viewtex(); kc();");
+
+///////////////////////
+// Parent, Text2
+inspect(Text2,"textsize",18);
+inspect(Text2,"button.script",
+"if(length(Shellparent)>0,Makeshell(),Makebat()); writetoRS(2); kc();");
+
+///////////////////////
+//ParaF, Text3
+inspect(Text3,"textsize",18);
+inspect(Text3,"button.script","Parafolder();");
+
+///////////////////////
+//Anime, Text4
+inspect(Text4,"textsize",18);
+inspect(Text4,"button.script","Mkanimation();");
+
+///////////////////////
+//Flip, Text5
+inspect(Text5,"textsize",18);
+inspect(Text5,"button.script","Mkflipanime();");
+
+///////////////////////
+//Title,Text11
+inspect(Text11,"textsize",18);
+inspect(Text11,"button.script","Maketitle();");
+
+//////////////////////
+//Slide, Text12
+inspect(Text12,"textsize",18);
+inspect(Text12,"button.script","Mkslides();");
+
+//////////////////////
+//Digest, Text13
+inspect(Text13,"textsize",18);
+inspect(Text13,"button.script","Mkslidesummary();");
+
+///////////////////////
+//Ketjson, Text21
+inspect(Text21,"textsize",18);
+inspect(Text21,"button.script",
+"Mkketcindyjs(append(KETJSOP,"+Dqq("Web=y")+"));");
+
+///////////////////////
+// Ketjsoff, Text22
+inspect(Text22,"textsize",18);
+inspect(Text22,"button.script",
+"Mkketcindyjs(append(KETJSOP,"+Dqq("Web=n")+"));");
+
+///////////////////////
+// Objview, Text31
+inspect(Text31,"textsize",18);
+inspect(Text31,"button.script",
+"Mkviewobj(OCNAME,OBJCMD,OCOPTION);");
+
+///////////////////////
+// Skele,Text50
+inspect(Text50,"textsize",18);
+inspect(Text50,"button.script","skeleflg=1;");
+
+///////////////////////
+// Nohid,Text51
+inspect(Text51,"textsize",18);
+inspect(Text51,"button.script","nohidflg=1;");
+
+///////////////////////
+// Play, Text71
+inspect(Text71,"textsize",18);
+inspect(Text71,"button.script",
+"resetclock();
+playanimation();
+Animeflg=1;
+Dirflg=1;
+sorg=Current;"
+);
+
+///////////////////////
+// Pause, Text72
+inspect(Text72,"textsize",18);
+inspect(Text72,"button.script",
+"Animeflg=1-Animeflg;
+if(Animeflg==0,
+  pauseanimation();
+  sorg=sstart;
+,
+  resetclock();
+  playanimation();
+);"
+);
+
+///////////////////////
+// Rev, Text73
+inspect(Text73,"textsize",18);
+inspect(Text73,"button.script",
+"sorg=sstart;
+Dirflg=-Dirflg;
+Animeflg=1;
+resetclock();
+playanimation();"
+);
+
+///////////////////////
+// Stop, Text74
+inspect(Text74,"textsize",18);
+inspect(Text74,"button.script",
+"stopanimation();
+Animeflg=0;
+sstart=Current;"
+);
+

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210416] loaded");
+println("ketcindylibbasic2[20210417] loaded");
 
 //help:start();
 
@@ -1397,15 +1397,16 @@ Enclosing2(nm,plistorg,options):=(
     println("generate Enclosing "+name);
     tmp=name+"="+Textformat(AnsL,10)+";"; //190415
     parse(tmp);
-    tmp=name+"=Enclosing2(";//16.11.07from
-    tmp1="list"+PaO();
-    forall(plistorg, //18.02.02
-      tmp1=tmp1+#+",";
-    );
-    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from //no ketjs on
-    if(length(Start)>0,tmp=tmp+","+Textformat(Start,10));
-    tmp=tmp+","+text(Eps1)+")";//18.0706to,180707
-    GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
+//    tmp=name+"=Enclosing2(";//16.11.07from
+//    tmp1="list"+PaO();
+//    forall(plistorg, //18.02.02
+//      tmp1=tmp1+#+",";
+//    );
+//    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from //no ketjs on
+//    if(length(Start)>0,tmp=tmp+","+Textformat(Start,10));
+//    tmp=tmp+","+text(Eps1)+")";//18.0706to,180707
+//    GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
+    Listplot("-"+name,parse(name),["nodisp"]); //210421
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
@@ -2874,22 +2875,32 @@ Addax(param):=(
 ////%Addax end////
 
 ////%Drwexpr start////
-Drwexpr(pos,str):=Drwexpr(pos,str,12);
-Drwexpr(pos,str,sz):=(
-  regional(tmp,tmp1);
-  tmp=str;
-  if(!isstring(str),tmp=text(tmp));
-  drawtext(pos,"$"+tmp+"$",size->sz);
+Drwexpr(pos,str):=Drwexpr(pos,str,[]);
+Drwexpr(pos,str,Arg):=(
+  regional(sz,clr);
+  if(!islist(Arg),sz=Arg;clr=[0,0,0],sz=12;clr=Arg);
+  Drwexpr(pos,str,sz,clr);
+);
+Drwexpr(pos,str,sz,clr):=(
+//help:Drwexpr([1,2],"x^2" [,12,[0,0,0]]);
+  regional(tmp);
+  if(!isstring(str),tmp=text(str),tmp=str);
+  drawtext(pos,"$"+tmp+"$",size->sz,color->clr);
 );
 ////%Drwexpr end////
 
 ////%Drwletter start////
-Drwletter(pos,str):=Drwletter(pos,str,12);
-Drwletter(pos,str,sz):=(
-  regional(tmp,tmp1);
-  tmp=str;
-  if(!isstring(str),tmp=text(tmp));
-  drawtext(pos,tmp,size->sz);
+Drwletter(pos,str):=Drwletter(pos,str,[]);
+Drwletter(pos,str,Arg):=(
+  regional(sz,clr);
+  if(!islist(Arg),sz=Arg;clr=[0,0,0],sz=12;clr=Arg);
+  Drwletter(pos,str,sz,clr);
+);
+Drwletter(pos,str,sz,clr):=(
+//help:Drwletter([1,2],"abc" [,12,[0,0,0]]);
+  regional(tmp);
+  if(!isstring(str),tmp=text(str),tmp=str);
+  drawtext(pos,tmp,size->sz,color->clr);
 );
 ////%Drwletter end////
 

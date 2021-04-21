@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20210325)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20210421)" 
 
 print(ThisVersion)
 
+# 20210421
+#   Enclosing2( bug confirmed, not fixed yet)
 # 20210325
 #   Intersectlne,Nearestpt changed ( precision )
 # 20210320
@@ -13141,6 +13143,9 @@ Enclosing2<- function(...){
     t1=tst
     p1=Pointoncurve(t1,Fdata)#180713
     for(nn in Looprange(1,length(plist))){
+
+print(c(144,nn))
+
       Fdata=Op(nn,plist)
       if(nn==length(plist)){
         nxtno=1
@@ -13156,7 +13161,7 @@ Enclosing2<- function(...){
         t2=Length(Fdata)
         ss=1 #18.02.02to
       }else{
-        tmp=c(Op(2,KL[[1]]))  #180711from #190921
+        tmp=c(Op(2,KL[[1]]))  #180711from #190921, #bug between 13162-13176
         for(j in Looprange(2,length(KL))){
           tmp=c(tmp,Op(2,KL[[j]]))
         }

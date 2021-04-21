@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210412] loaded");
+println("ketcindylibbasic1[20210419] loaded");
 
 //help:start();
 
@@ -98,7 +98,7 @@ Ketinit(work,strictsep):=( //200509
   OutComList=[];
   OutFileLIst=[];   // 15.10.22
   FigPdfList=[];  // 16.04.08 //no ketjs off
-  Fillstore(); //181212
+  Fillstore(); // no ketjs //181212
   ADDPACK=[]; // 16.05.16 //no ketjs on
   if(!isstring(GPACK),GPACK="tpic",Usegraphics(GPACK)); //180817//191002
   ErrFlag=0;

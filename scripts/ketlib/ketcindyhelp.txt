@@ -247,6 +247,8 @@ Drwxy(1[the last axis will be drawn],options);
 Drwxy(options=["Xrng=","Yrng=","Ax=l,x,e,...","Size="]);
 Drawpoint(pstr);
 Addax(0);
+Drwexpr([1,2],"x^2" [,12,[0,0,0]]);
+Drwletter([1,2],"abc" [,12,[0,0,0]]);
 Expr([A,"e","f(x)=x^2"]);
 Expr([A,"e","f(x)=x^2"],["size->24"]);
 Letter([C,"c","Graph of $f(x)$"]);

@@ -1,3 +1,5 @@
+// 20210419
+//    Ketinit changed  (Fillstore() only for no ketjs )
 // 20210412
 //    Ketinit changed  (Message  in case of including minus )
 // 20210325

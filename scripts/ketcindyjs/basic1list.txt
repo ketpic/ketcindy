@@ -1,4 +1,4 @@
-Ketinit,basic1,42,188,Fillstore,Setwindow,Strictmove,Ptpos
+Ketinit,basic1,42,188,Setwindow,Strictmove,Ptpos
 Initglist,basic1,192,196,Ketinit
 Setglist,basic1,200,209
 Addglist,basic1,213,222

@@ -1,3 +1,13 @@
+// 20210423
+//    Addgraph changed changed  (Form of data)
+// 20210422
+//    Ketinit changed  (AddGraphList,PointDataList added )w
+//    Strsplit changed  (almost same as tokenize )
+//    Parselist added ( only parse the list at first level  )
+//    Pointdata changed
+//       ( one of Scaledata removed, registration to PointDataList )
+//    Changestyle changed  ( for pointdata )
+//    Addgraph changed
 // 20210419
 //    Ketinit changed  (Fillstore() only for no ketjs )
 // 20210412

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210417] loaded");
+println("ketcindylibbasic2[20210423] loaded");
 
 //help:start();
 
@@ -2189,8 +2189,13 @@ Rotatedata(nm,plist,angle,optionorg):=(
 //help:Rotatedata("1",["crAB","pt1"],pi/3,[[1,5],"dr,2"]);
 //help:Rotatedata("1",[[A.xy],[B.xy]],pi/3,[[1,5],"dr,2"]);
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdLL,PdL,options,
-    opcindy,eqL,msgflg,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,Ltype,Noflg,name,color,color4);
-  name="rt"+nm;
+    opcindy,eqL,msgflg,ptL,Nj,Njj,Kj,Mj,X1,Y1,X2,Y2,
+    Ltype,Noflg,name,color,color4);
+  if(substring(nm,0,1)=="-", //210423from
+    name=substring(nm,1,length(nm));
+  ,
+    name="rt"+nm;
+  ); //210423to
   options=optionorg;
   Pt=[0,0];
   tmp=Divoptions(options);
@@ -2209,6 +2214,9 @@ Rotatedata(nm,plist,angle,optionorg):=(
       msgflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
+    if(tmp1=="S", //210423from
+      options=remove(options,[#]);
+    ); //210423to
   ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
@@ -2218,6 +2226,7 @@ Rotatedata(nm,plist,angle,optionorg):=(
   if(isstring(angle),Theta=parse(angle),Theta=angle);
   Cx=Pt_1; Cy=Pt_2;
   PdL=[];
+  ptL=[];
   forall(pdata,Njj,
     if(isstring(Njj),Kj=parse(Njj),Kj=Njj);
     if(Measuredepth(Kj)==0,Kj=[Kj]); //17.11.24
@@ -2233,45 +2242,86 @@ Rotatedata(nm,plist,angle,optionorg):=(
         Y2=Cy+(X1-Cx)*sin(Theta)+(Y1-Cy)*cos(Theta); 
         tmp1=concat(tmp1,[[X2,Y2]]);
       );
-      tmp2=concat(tmp2,[tmp1]);
+      if(length(tmp1)==1, //210423from
+        Pointdata("-"+name,tmp1,optionorg);
+      ,
+        tmp2=concat(tmp2,[tmp1]);
+        PdL=concat(PdL,tmp2);
+      );  //210423to
     );
-    PdL=concat(PdL,tmp2);
   );
-  if(Noflg<3,
-    if(msgflg=="Y",
-      println("generate Rotatedata "+name);
+  if(length(PdL)>0,
+    if(Noflg<3,
+      if(msgflg=="Y",
+        println("generate Rotatedata "+name);
+      );
+      tmp1=[];
+      forall(PdL,tmp2,
+        tmp=apply(tmp2,Pcrd(#));
+        tmp1=append(tmp1,tmp);
+      );
+      if(length(tmp1)==1,tmp1=tmp1_1);
+      tmp=name+"="+Textformat(tmp1,10)+";"; //190415
+      parse(tmp);
+      tmp1=text(plist); //no ketjs on
+      tmp1=RSform(tmp1,1);// 180602
+      tmp=name+"=Rotatedata("+tmp1+","
+        +Textformat(angle,10)+","+RSform(Textformat(Pt,10))+")"; //17.12.23
+      GLIST=append(GLIST,tmp); //no ketjs off
     );
-    tmp1=[];
-    forall(PdL,tmp2,
-      tmp=apply(tmp2,Pcrd(#));
-      tmp1=append(tmp1,tmp);
+    if(Noflg<3, //190818
+      if(isstring(Ltype),
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
+        ); //no ketjs off
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("}");//180722
+        ); //no ketjs off
+      ,
+        if(Noflg==1,Ltype=0);
+      );
+      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
     );
-    if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
-    parse(tmp);
-    tmp1=text(plist); //no ketjs on
-    tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Rotatedata("+tmp1+","
-    +Textformat(angle,10)+","+RSform(Textformat(Pt,10))+")"; //17.12.23
-    GLIST=append(GLIST,tmp); //no ketjs off
   );
-  if(Noflg<3, //190818
-    if(isstring(Ltype),
-      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
-      ); //no ketjs off
-      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
-        Texcom("}");//180722
-      ); //no ketjs off
-    ,
-      if(Noflg==1,Ltype=0);
-    );
-    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
-  );
-  PdL;
+  pdL;
 );
 ////%Rotatedata end////
+
+////%Rotatedataadd start//// //210423
+Rotatedataadd(nm,addstr,angle):=Rotatedataadd(nm,addstr,angle,[],[]);
+Rotatedataadd(nm,addstr,angle,common):=Rotatedataadd(nm,addstr,angle,common,[]);
+Rotatedataadd(nm,addstr,angle,common,optionsLorg):=(
+//help:Rotatedataadd("1","ad1",pi/3);
+//help:Rotatedataadd("1","ad1",pi/3,[[1,5],"dr,2"]);
+  regional(name,optionsL,pdata,pltdataL,nn,tmp,tmp1,tmp2);
+  name="ad"+nm;
+  println("generate rotatedataadd "+name);
+  optionsL=optionsLorg;
+  if(length(optionsL)==0,
+    tmp1=select(AddGraphData,#_1==addstr);
+    tmp1=tmp1_1;
+    optionsL=tmp1_(-1);
+  ,
+    tmp1=length(pltdataL);
+    tmp2=length(optionsL);
+    forall((tmp2+1)..(tmp1),optionsL=append(optionsL,[]));
+  );
+  pdata=parse(addstr);
+  pltdataL=[];
+  forall(1..(length(pdata)),nn,
+    tmp=name+"n"+nn;
+    tmp1=concat(optionsL_nn,["Msg=n"]);
+    tmp1=concat(common,tmp1);
+    Rotatedata("-"+tmp,pdata_nn,angle,tmp1);
+    pltdataL=append(pltdataL,tmp);
+  );
+  tmp=apply(pltdataL,Dqq(#));
+  tmp=name+"="+text(tmp)+";";
+  parse(tmp);
+  AddGraphData=append(AddGraphData,[name,addstr,pltdataL,common,optionsL]);
+);
+////%Rotatedataadd end////
 
 ////%Translatedata start////
 Translatedata(nm,plist,mov):=Translatedata(nm,plist,mov,[]);
@@ -2279,7 +2329,11 @@ Translatedata(nm,plist,mov,optionorg):=(
 //help:Translatedata("1",["gr1","pt1"],[1,2]);
   regional(options,tmp,tmp1,tmp2,pdata,Cx,Cy,PdL,Nj,Njj,Kj,eqL,
            opcindy,X2,Y2,Ltype,Noflg,name,color,color4,leveL,msgflg);
-  name="tr"+nm;
+  if(substring(nm,0,1)=="-", //210423from
+    name=substring(nm,1,length(nm));
+  ,
+    name="tr"+nm;
+  ); //210423to
   options=optionorg; //190425
   tmp=Divoptions(options);
   Ltype=tmp_1;
@@ -2295,6 +2349,9 @@ Translatedata(nm,plist,mov,optionorg):=(
       msgflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
+    if(tmp1=="S", //210423from
+      options=remove(options,[#]);
+    ); //210423to
   ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
@@ -2316,44 +2373,85 @@ Translatedata(nm,plist,mov,optionorg):=(
         Y2=tmp_2+Cy;    
         tmp1=concat(tmp1,[[X2,Y2]]);
       );
-      tmp2=concat(tmp2,[tmp1]);
+      if(length(tmp1)==1, //210423from
+        Pointdata("-"+name,tmp1,optionorg);
+      ,
+        tmp2=concat(tmp2,[tmp1]);
+        PdL=concat(PdL,tmp2);
+      );  //210423to
     );
-    PdL=concat(PdL,tmp2);
   );
-  if(Noflg<3,
-    if(msgflg=="Y", //190425
-      println("generate Translatedata "+name);
+  if(length(PdL)>0,
+    if(Noflg<3,
+      if(msgflg=="Y", //190425
+        println("generate Translatedata "+name);
+      );
+      tmp1=[];
+      forall(PdL,tmp2,
+        tmp=apply(tmp2,Pcrd(#));
+        tmp1=append(tmp1,tmp);
+      );
+      if(length(tmp1)==1,tmp1=tmp1_1);
+      tmp=name+"="+Textformat(tmp1,10)+";"; //190415
+      parse(tmp);
+      tmp1=text(plist); //no ketjs on
+      tmp1=RSform(tmp1,1);// 180602
+      tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,10))+")";
+      GLIST=append(GLIST,tmp); //no ketjs off
     );
-    tmp1=[];
-    forall(PdL,tmp2,
-      tmp=apply(tmp2,Pcrd(#));
-      tmp1=append(tmp1,tmp);
+    if(Noflg<3, //190818
+      if(isstring(Ltype),
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
+        ); //no ketjs off
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("}");//180722
+        ); //no ketjs off
+      ,
+        if(Noflg==1,Ltype=0);
+      );
+      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
     );
-    if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,10)+";"; //190415
-    parse(tmp);
-    tmp1=text(plist); //no ketjs on
-    tmp1=RSform(tmp1,1);// 180602
-    tmp=name+"=Translatedata("+tmp1+","+RSform(Textformat(mov,10))+")";
-    GLIST=append(GLIST,tmp); //no ketjs off
-  );
-  if(Noflg<3, //190818
-    if(isstring(Ltype),
-      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
-      ); //no ketjs off
-      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
-        Texcom("}");//180722
-      ); //no ketjs off
-    ,
-      if(Noflg==1,Ltype=0);
-    );
-    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
   PdL;
 );
 ////%Translatedata end////
+
+////%Translatedataadd start//// //210423
+Translatedataadd(nm,addstr,mov):=Translatedataadd(nm,addstr,mov,[],[]);
+Translatedataadd(nm,addstr,mov,common):=Translatedataadd(nm,addstr,mov,common,[]);
+Translatedataadd(nm,addstr,mov,common,optionsLorg):=(
+//help:Translatedataadd("1","ad1",pi/3);
+//help:Translatedataadd("1","ad1",pi/3,[[1,5],"dr,2"]);
+  regional(name,optionsL,pdata,pltdataL,nn,tmp,tmp1,tmp2);
+  name="ad"+nm;
+  println("generate translateadd "+name);
+  optionsL=optionsLorg;
+  if(length(optionsL)==0,
+    tmp1=select(AddGraphData,#_1==addstr);
+    tmp1=tmp1_1;
+    optionsL=tmp1_(-1);
+  ,
+    tmp1=length(pltdataL);
+    tmp2=length(optionsL);
+    forall((tmp2+1)..(tmp1),optionsL=append(optionsL,[]));
+  );
+  pdata=parse(addstr);
+  pltdataL=[];
+  forall(1..(length(pdata)),nn,
+    tmp=name+"n"+nn;
+    tmp1=concat(optionsL_nn,["Msg=y"]);
+    tmp1=concat(common,tmp1);
+    Translatedata("-"+tmp,pdata_nn,mov,tmp1);
+    pltdataL=append(pltdataL,tmp);
+  );
+  tmp=apply(pltdataL,Dqq(#));
+  tmp=name+"="+text(tmp)+";";
+  parse(tmp);
+  AddGraphData=append(AddGraphData,[name,addstr,pltdataL,common,optionsL]);
+);
+////%Translatedataadd end////
 
 ////%Scaledata start////
 Scaledata(nm,plist,ratioV):=(
@@ -2364,8 +2462,6 @@ Scaledata(nm,plist,ratioV):=(
   Scaledata(nm,plist,tmp_1,tmp_2,[]);
 );
 Scaledata(nm,plist,Arg1,Arg2):=(
-//help:Scaledata("1",["crAB","pt1"],3,2,[[0,0]]);
-//help:Scaledata("1",["crAB","pt1"],2,[[0,0]]);
   regional(tmp,options);
   if(islist(Arg2),
     tmp=Arg1;//180603[2lines]
@@ -2378,16 +2474,23 @@ Scaledata(nm,plist,Arg1,Arg2):=(
   );
 );
 Scaledata(nm,plist,rx,ry,optionorg):=(
+//help:Scaledata("1",["crAB","pt1"],3,2,[[0,0]]);
+//help:Scaledata("1",["crAB","pt1"],2,[[0,0]]);
   regional(tmp,tmp1,tmp2,pdata,Theta,Pt,Cx,Cy,PdL,options,eqL,
       opcindy,Nj,Njj,Kj,X2,Y2,Ltype,Noflg,name,color,color4,msgflg);
-  name="sc"+nm;
+  if(substring(nm,0,1)=="-", //210423from
+    name=substring(nm,1,length(nm));
+  ,
+    name="sc"+nm;
+  ); //210423to
   options=optionorg;
   Pt=[0,0];
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
   eqL=tmp_5;
-  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200618
+  color=tmp_(length(tmp)-2);
+  color4=Colorrgb2cmyk(color); //200618
   opcindy=tmp_(length(tmp));
   tmp1=tmp_6;
   if(length(tmp1)>0,
@@ -2401,6 +2504,9 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
       msgflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
+    if(tmp1=="S", //210423from
+      options=remove(options,[#]);
+    ); //210423to
   ); //190425to
   pdata=plist;
   if(isstring(pdata),pdata=[pdata]);
@@ -2421,45 +2527,86 @@ Scaledata(nm,plist,rx,ry,optionorg):=(
         Y2=Cy+ry*(tmp_2-Cy);
         tmp1=concat(tmp1,[[X2,Y2]]);
       );
-      tmp2=concat(tmp2,[tmp1]);
+      if(length(tmp1)==1, //210423from
+        Pointdata("-"+name,tmp1,optionorg);
+      ,
+        tmp2=concat(tmp2,[tmp1]);
+        PdL=concat(PdL,tmp2);
+      );  //210423to
     );
-    PdL=concat(PdL,tmp2);
   );
-  if(Noflg<3,
-    if(msgflg=="Y",
-      println("generate Scaledata "+name);
+  if(length(PdL)>0,
+    if(Noflg<3,
+      if(msgflg=="Y",
+        println("generate Scaledata "+name);
+      );
+      tmp1=[];
+      forall(PdL,tmp2,
+        tmp=apply(tmp2,Pcrd(#));
+        tmp1=append(tmp1,tmp);
+      );
+      if(length(tmp1)==1,tmp1=tmp1_1);
+      tmp=name+"="+Textformat(tmp1,10)+";"; //190415
+      parse(tmp);
+      tmp1=text(plist); //no ketjs on
+      tmp1=RSform(tmp1,1);// 180602
+      tmp=name+"=Scaledata("+tmp1+","
+        +Textformat(rx,10)+","+Textformat(ry,10)+","+RSform(Textformat(Pt,10))+")"; //17.12.23
+      GLIST=append(GLIST,tmp); //no ketjs off
     );
-    tmp1=[];
-    forall(PdL,tmp2,
-      tmp=apply(tmp2,Pcrd(#));
-      tmp1=append(tmp1,tmp);
+    if(Noflg<3, //190818
+      if(isstring(Ltype),
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("{");Com2nd("Setcolor("+color4+")");//180722
+        ); //no ketjs off
+        Ltype=Getlinestyle(text(Noflg)+Ltype,name);
+        if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
+          Texcom("}");//180722
+        ); //no ketjs off
+      ,
+        if(Noflg==1,Ltype=0);
+      );
+      GCLIST=append(GCLIST,[name,Ltype,opcindy]);
     );
-    if(length(tmp1)==1,tmp1=tmp1_1);
-    tmp=name+"="+Textformat(tmp1,10)+";"; //190415,210311
-    parse(tmp);
-    tmp1=text(plist); //no ketjs on
-    tmp1=RSform(tmp1,1); // 180602
-    tmp=name+"=Scaledata("+tmp1+","
-      +Textformat(rx,10)+","+Textformat(ry,10)+","+RSform(Textformat(Pt,10))+")"; //210311
-    GLIST=append(GLIST,tmp); //no ketjs off
-  );
-  if(Noflg<3, //190818
-    if(isstring(Ltype),
-      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
-        Texcom("{");Com2nd("Setcolor("+color4+")");//180722
-      ); //no ketjs off
-      Ltype=Getlinestyle(text(Noflg)+Ltype,name);
-      if((Noflg==0)&(color4!=KCOLOR), //180904 //no ketjs on
-        Texcom("}");//180722
-      ); //no ketjs off
-    ,
-      if(Noflg==1,Ltype=0);
-    );
-    GCLIST=append(GCLIST,[name,Ltype,opcindy]);
   );
   PdL;
 );
 ////%Scaledata end////
+
+////%Scaledataadd start//// //210423
+Scaledataadd(nm,addstr,rx,ry):=Scaledataadd(nm,addstr,rx,ry,[],[]);
+Scaledataadd(nm,addstr,rx,ry,common):=Scaledataadd(nm,addstr,rx,ry,common,[]);
+Scaledataadd(nm,addstr,rx,ry,common,optionsLorg):=(
+//help:Scaledataadd("1","ad1",0.5);
+//help:Scaledataadd("1","ad1",[0.5,1],[[1,5],"dr,2"]);
+  regional(name,optionsL,pdata,pltdataL,nn,tmp,tmp1,tmp2);
+  name="ad"+nm;
+  println("generate scaledataadd "+name);
+  optionsL=optionsLorg;
+  if(length(optionsL)==0,
+    tmp1=select(AddGraphData,#_1==addstr);
+    tmp1=tmp1_1;
+    optionsL=tmp1_(-1);
+  ,
+    tmp1=length(pltdataL);
+    tmp2=length(optionsL);
+    forall((tmp2+1)..(tmp1),optionsL=append(optionsL,[]));
+  );
+  pdata=parse(addstr);
+  pltdataL=[];
+  forall(1..(length(pdata)),nn,
+    tmp=name+"n"+nn;
+    tmp1=concat(optionsL_nn,["Msg=n"]);
+    tmp1=concat(common,tmp1);
+    Scaledata("-"+tmp,pdata_nn,angle,tmp1);
+    pltdataL=append(pltdataL,tmp);
+  );
+  tmp=apply(pltdataL,Dqq(#));
+  tmp=name+"="+text(tmp)+";";
+  parse(tmp);
+  AddGraphData=append(AddGraphData,[name,addstr,pltdataL,common,optionsL]);
+);
+////%Scaledataadd end////
 
 ////%Reflectdata start////
 Reflectdata(nm,plist,symL):=Reflectdata(nm,plist,symL,[]);
@@ -2468,7 +2615,11 @@ Reflectdata(nm,plist,symL,optionorg):=(
 //help:Reflectdata("1",["crAB"],[pt1,pt2]);
   regional(tmp,tmp1,tmp2,pdata,Us,Vs,Pt1,Pt2,Cx,Cy,PdL,options,eqL,
       opcindy,Nj,Njj,Kj,X1,Y1,X2,Y2,Ltype,Noflg,name,color,color4);
-  name="re"+nm;
+  if(substring(nm,0,1)=="-", //210423from
+    name=substring(nm,1,length(nm));
+  ,
+    name="rt"+nm;
+  ); //210423to
   options=optionorg;
   Pt=[0,0];
   tmp=Divoptions(options);
@@ -2502,13 +2653,17 @@ Reflectdata(nm,plist,symL,optionorg):=(
         tmp=Reflectpoint(#,symL);
         tmp1=append(tmp1,tmp);
       );
-      tmp2=append(tmp2,tmp1);
+      if(length(tmp1)==1, //210423from
+        Pointdata("-"+name,tmp1,optionorg);
+      ,
+        tmp2=concat(tmp2,[tmp1]);
+        PdL=concat(PdL,tmp2);
+      );  //210423to
     );
-    PdL=concat(PdL,tmp2);
   );
   if(Noflg<3,
     if(msgflg=="Y",
-      println("generate Reflectdata "+name);
+      println("generate reflectdata "+name);
     );
     tmp1=[];
     forall(PdL,tmp2,
@@ -2541,6 +2696,41 @@ Reflectdata(nm,plist,symL,optionorg):=(
   PdL;
 );
 ////%Reflectdata end////
+
+////%Reflectdataadd start//// //210423
+Reflectdataadd(nm,addstr,symL):=Reflectdataadd(nm,addstr,symL,[],[]);
+Reflectdataadd(nm,addstr,symL,common):=Reflectdataadd(nm,addstr,symL,common,[]);
+Reflectdataadd(nm,addstr,symL,common,optionsLorg):=(
+//help:Reflectdataadd("1","ad1",pi/3);
+//help:Reflectdataadd("1","ad1",pi/3,[[1,5],"dr,2"]);
+  regional(name,optionsL,pdata,pltdataL,nn,tmp,tmp1,tmp2);
+  name="ad"+nm;
+  println("generate reflectdataadd "+name);
+  optionsL=optionsLorg;
+  if(length(optionsL)==0,
+    tmp1=select(AddGraphData,#_1==addstr);
+    tmp1=tmp1_1;
+    optionsL=tmp1_(-1);
+  ,
+    tmp1=length(pltdataL);
+    tmp2=length(optionsL);
+    forall((tmp2+1)..(tmp1),optionsL=append(optionsL,[]));
+  );
+  pdata=parse(addstr);
+  pltdataL=[];
+  forall(1..(length(pdata)),nn,
+    tmp=name+"n"+nn;
+    tmp1=concat(optionsL_nn,["Msg=n"]);
+    tmp1=concat(common,tmp1);
+    Reflectdata("-"+tmp,pdata_nn,symL,tmp1);
+    pltdataL=append(pltdataL,tmp);
+  );
+  tmp=apply(pltdataL,Dqq(#));
+  tmp=name+"="+text(tmp)+";";
+  parse(tmp);
+  AddGraphData=append(AddGraphData,[name,addstr,pltdataL,common,optionsL]);
+);
+////%Reflectdataadd end////
 
 // 180800 revised
 ////%Mksegments start////
@@ -2800,7 +2990,7 @@ Drwxy(add,optionsorg):=(
     if(length(tmp)==0,options=append(options,YasenStyle));
     tmp=substring(ax_1,1,length(ax_1)); //181216[2lines]
     if(length(tmp)>0,size=parse(tmp),size=YaSize);
-    tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//181216
+    tmp1=concat(options,[size,Yamov,YaPosition,YaCut,colorax]);//181216
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
     Arrowdataseg("axx"+text(AXCOUNT),tmp,tmp1);
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];

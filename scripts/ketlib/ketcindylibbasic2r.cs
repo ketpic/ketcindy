@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210423] loaded");
+println("ketcindylibbasic2[20210425] loaded");
 
 //help:start();
 
@@ -2989,8 +2989,8 @@ Drwxy(add,optionsorg):=(
     tmp=select(strL,contains(["dr","da","do","id"],substring(#,0,2)));
     if(length(tmp)==0,options=append(options,YasenStyle));
     tmp=substring(ax_1,1,length(ax_1)); //181216[2lines]
-    if(length(tmp)>0,size=parse(tmp),size=YaSize);
-    tmp1=concat(options,[size,Yamov,YaPosition,YaCut,colorax]);//181216
+    if(length(tmp)>0,size=parse(tmp),size=YaSize); 
+    tmp1=concat(options,[size,YaAngle,YaPosition,YaCut,colorax]);//210425
     tmp=[[xrng_1,org_2],[xrng_2,org_2]];
     Arrowdataseg("axx"+text(AXCOUNT),tmp,tmp1);
     tmp=[[org_1,yrng_1],[org_1,yrng_2]];

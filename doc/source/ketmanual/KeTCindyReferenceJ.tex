@@ -224,20 +224,20 @@ options は次のリストである。\\
 \hspace*{10mm}["Origin=",\ "Xrng=",\ "Yrng="]
 
 \begin{layer}{150}{0}
-\putnotese{75}{10}{\scalebox{0.8} {\input{Fig/drwxy}}}
+\putnotese{85}{10}{\scalebox{0.8} {\input{Fig/drwxy}}}
 \end{layer}
 
 【例】点$(-\pi,\ 0)$と$(\pi,\ 0)$を白抜きの点で表示する。
 \begin{verbatim}
 Setax([7,"se"]);
 Setpt(5);
-Pointdata("1",[[-pi,0]],["Inside=0"]);
+Pointdata("1",[[-pi,0]],["Inside=white"]);
 Drwxy();
 Plotdata("1","sin(x)","x",["dr","Num=200"]);
-Pointdata("2",[[pi,0]],["Inside=0"]);
+Pointdata("2",[[pi,0]],["Inside=white"]);
 \end{verbatim}
 
-このスクリプトでは，\verb| Pointdata("1",[[-pi,0]],["Inside=0"]);| を実行したのち座標軸を描き，次に，$y=\sin x$ のグラフを描いてから，再び \verb| ["Inside=0"]);|にして実行するので，点($-\pi$,0) の上を座標軸が通り，点($\pi$,0)は座標軸とグラフの上を通るので白抜きになる。
+このスクリプトでは，\verb| Pointdata("1",[[-pi,0]],["Inside=white"]);| を実行したのち座標軸を描き，次に，$y=\sin x$ のグラフを描いてから，再び \verb| ["Inside=white"]);|にして実行するので，点($-\pi$,0) の上を座標軸が通り，点($\pi$,0)は座標軸とグラフの上を通るので白抜きになる。
 
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -8883,7 +8883,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{tabledatalight}{Tabledatalight("" , 縦横 ,除外 , options)}\>幾何点を持たない表の枠を作成する\\
 \hyperlink{tgrid}{Tgrid(セルラベル)} \>セル（格子点）の座標を返す\\
 \hyperlink{tlistplot}{Tlistplot(セルラベル1,セルラベル2)} \>セルに斜線を引く\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【値の取得と入出力】\\
 \hyperlink{asin}{Asin(real)}\>逆正弦三角関数の値を返す\\
 \hyperlink{asin}{Acos(real) }\>逆余弦三角関数の値を返す\\
@@ -8917,7 +8917,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{viewtex}{Viewtex()}\>\TeX のソースファイルを書き出す。引数なし\\
 \hyperlink{workprocess}{Workprocess()}\>作図の経過を取得する\\
 \hyperlink{writeoutdata}{WriteOutData()}\>PDデータを書き出す\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【ファイル操作】\\
 \hyperlink{isexists}{isexists(dir,file)}\>dirにfileが存在するか\\
 \hyperlink{makedir}{makedir(path,dirname)}\>pathにdirnameのdirを作成する\\
@@ -8927,7 +8927,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{ismacos}{ismacos()}\>Mac OSか\\
 \hyperlink{iswindows}{iswindows()}\>Windows OSか\\
 \hyperlink{islinux}{islinux()}\>Linux OSか\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【その他】\\
 \hyperlink{assign}{Assign(文字列)}\>文字列中のある文字を値で置き換える\\
 \hyperlink{bbdata}{BBdata(ファイル名)}\>画像のサイズ(bounding box)を求める\\
@@ -8965,7 +8965,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{addasterisk}{Addasterisk(文字列)}\>数式文字列に\verb|*|を追加する\\
 \hyperlink{totexform}{Totexform(TeX-like書式)}\>TeX書式の文字列を返す\\
 \hyperlink{tocindyform}{Tocindyform(TeX-like書式}\>Cindy書式の文字列を返す\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【Ｒとの連携】\\
 \hyperlink{boxplot}{Boxplot(名前,データ,位置,高さ,option)} \>箱ひげ図を描く\\
 \hyperlink{rfun}{Rfun(変数名,コマンド,引数, option)}\>Rの1つコマンドを実行して結果を返す\\
@@ -8974,27 +8974,27 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{plotdatar}{PlotdataR(name,式,変数)}\>Rの関数のグラフを描く\\
 \hyperlink{plotdiscr}{PlotdiscR(name,式,変数)}\>離散型のグラフを描く\\
 \hyperlink{scatterplot}{Scatterplot(name,filename,option)}\>2次元データを読み込み，散布図を描く\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【Maximaとの連携】\\
 \hyperlink{calcbyM}{CalcbyM(name,list,option)}\>Maximaのスクリプトを実行する\\
 %\hyperlink{example}{Example("Mxfun",文字)}\>Mxfunの使用例を表示\\
 \hyperlink{mxbatch}{Mxbatch(list)}\>Maximaの外部スクリプト用コマンドを作る\\
 \hyperlink{mxfun}{Mxfun(name,式,list,option)}\>Maximaの関数を実行する\\
 \hyperlink{mxtex}{Mxtex(num,式)}\>式をTeX書式にする\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【Wolfram Engineとの連携】\\
 \hyperlink{calcbyW}{CalcbyW(name,list,option)}\>Wolfram 言語のスクリプトを実行する\\
 \hyperlink{wlfun}{Wlfun(name,式,list,option)}\>Wolfram 言語の1つの関数を実行する\\
 \hyperlink{mxtex}{Wltex(name,式)}\>式をTeX書式にする\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【Risa/Asirとの連携】\\
 \hyperlink{asirfun}{Asirfun(name,式,list,option)}\>Risa/Asirの関数を実行する\\
 \hyperlink{calcbyA}{CalcbyA(name,list,option)}\>Risa/Asirのスクリプトを実行する\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【FriCASとの連携】\\
 \hyperlink{calcbyF}{CalcbyF(name,list,option)}\>FriCASのスクリプトを実行する\\
 \hyperlink{frfun}{Frfun(name,式,list,option)}\>FriCASの関数を実行する\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【MeshLabとの連携】\\
 \hyperlink{mkobjcmd}{Mkobjcmd(name,式,option)} \>厚みを持たない曲面のコマンドを作成\\
 \hyperlink{mkobjcrvcmd}{Mkobjcrvcmd(name,PD,option)} \>空間曲線のコマンドを作成\\
@@ -9004,12 +9004,12 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{mkobjsymbcmd}{Mkobjsymbcmd(PD, 実数,実数,vec,vec)} \>文字等のコマンドを作成\\
 \hyperlink{mkobjthickcmd}{Mkobjthickcmd(name,式)} \>厚みを持つ曲面のコマンドを作成\\
 \hyperlink{mkviewobj}{Mkviewobj(name,PD, options)} \>obj ファイルを作成\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【表計算ソフトとの連携】\\
 \hyperlink{dispmat}{Dispmat(list)}\>listの内容を行列型にコンソールに表示する\\
 \hyperlink{tab2list}{Tab2list(str，option)}\>str の内容をlistに変換する\\
 \hyperlink{writecsv}{Writecsv(namelist,data,option)}\>dataの内容をcsvファイルに書き出す\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【アニメーション】\\
 %\hyperlink{moviedata}{Moviedata(str1,str2,options)}\>動画データの作成\\
 \hyperlink{setpara}{Setpara(str)}\>パラパラ動画のタイトル指定\\
@@ -9022,7 +9022,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{setangle}{Setangle(theta,phi)} \>回転角の設定\\
 \hyperlink{getangle}{Getangle()}\>回転角の取得\\
 \hyperlink{startsurf}{Startsurf()}\>曲面描画の初期化\\
-\vspace{\baselineskip}
+%\vspace{\baselineskip}
 【KeTCindy3D描画】\\
 \hyperlink{bezier3d}{Bezier3d(name, list, list)}\>空間ベジェ曲線を描く\\
 \hyperlink{changestyle3d}{Changestyle3d(list, list)}\>空間プロットデータの属性を変更\\

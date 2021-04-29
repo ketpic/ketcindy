@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210406] loaded");
+println("ketcindylibbasic3[20210428] loaded");
 
 //help:start();
 
@@ -4393,7 +4393,34 @@ Mkketcindyjs(options):=( //17.11.18
     drawtext(mouse().xy-[0,1],Cdyname()+".html not found",size->24,color->[0,0,1]);
     wait(3000);
   ,
-    tmp3=Readlines(Dircdy,Fhead+".html");
+    tmp3=Readlines(Dircdy,Fhead+".html"); //210428from
+    tmp2=select(1..(length(tmp3)),indexof(tmp3_#,"import")>0);
+    partL=select(tmp2,indexof(tmp3_#,".ini")==0);
+    tmp4=tmp3;
+    forall(1..(length(partL)),nn,
+      tmp1=partL_nn;
+      if(nn==1,
+        tmp4=tmp3_(1..(tmp1-1));
+      ,
+        tmp=partL_(nn-1)+1;
+        tmp4=concat(tmp4,tmp3_(tmp..(tmp1-1)));
+      );
+      tmp=tmp3_tmp1;
+      tmp2=Removespace(tmp3_tmp1);
+      if(substring(tmp2,0,2)!="//",    
+        tmp=Bracket(tmp2,"()");
+        tmp1=substring(tmp2,tmp_1_1+1,tmp_2_1-2);
+        If(isexists(Dircdy,tmp1),
+          tmp=Readlines(Dircdy,tmp1);
+          tmp4=concat(tmp4,tmp);
+        );
+      );
+      if(nn==length(partL),
+        tmp1=partL_nn;
+        tmp4=concat(tmp4,tmp3_((tmp1+1)..(length(tmp3))));
+      );
+    );
+    tmp3=tmp4; //210428to
     htmorg=[];
     from=1;
     upto=length(tmp3);
@@ -4636,16 +4663,7 @@ Mkketcindyjs(options):=( //17.11.18
           if(ketflg=="off",
             tmp=Removespace(tmp3);
             if(substring(tmp,0,2)!="//",
-              if(indexof(tmp,"import(")==0,  //210405from
-                println(SCEOUTPUT,tmp3);
-              ,
-                tmp=Bracket(tmp3,"()");
-                tmp2=substring(tmp3,tmp_1_1+1,tmp_2_1-2);
-                If((isexists(Dircdy,tmp2))&(indexof(tmp2,".cs")==0),
-                  tmp1=Readlines(Dircdy,tmp2);
-                  forall(tmp1,println(SCEOUTPUT,#));
-                );
-              );  //210405to
+              println(SCEOUTPUT,tmp3);
             ,
               tmp1=indexof(tmp,"only ketjs"); //19020l6from
               if((tmp1>0)%(onlyflg=="on"), //190502

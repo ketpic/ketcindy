@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20210421)" 
+ThisVersion<- "KeTpic for R  v5_2_4(20210504)" 
 
 print(ThisVersion)
 
+# 20210503
+#   Koutenseg debugged  (Tmp< )
 # 20210421
 #   Enclosing2( bug confirmed, not fixed yet)
 # 20210325
@@ -3918,7 +3920,7 @@ Koutenseg<-function(...)
   Sv2 <- V[1]^2+V[2]^2
   if(Sv2<10^(-6))
   {
-    Out<-Inf
+    Out<- Inf
     return(Out)
   }    
   P<-varargin[[3]]-A; Q<-varargin[[4]]-A
@@ -4026,7 +4028,7 @@ Koutenseg<-function(...)
   {
     T<-min(max(Q1,0),1)
   }
-  Tmp<A+T*V
+  Tmp<- A+T*V #210503
   Out<-list(Tmp,T,1)
   return(Out)
 }

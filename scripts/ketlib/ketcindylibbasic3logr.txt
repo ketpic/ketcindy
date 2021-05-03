@@ -1,3 +1,5 @@
+// 210503
+//   Copyketcindyjs debugged  ( for mac, add Dqq )
 // 210428
 //   Mkketcindyjs debugged  ( for "import" )
 // 210406

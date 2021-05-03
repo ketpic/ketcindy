@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210428] loaded");
+println("ketcindylibbasic3[20210503] loaded");
 
 //help:start();
 
@@ -3677,16 +3677,17 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,"#!/bin/sh");
     println(SCEOUTPUT,"cd "+Dqq(tmp1+"/")); //190214from
     println(SCEOUTPUT,"mkdir ketcindyjs");
+    tmp2=Dqq(tmp1+"/ketcindyjs");
     println(SCEOUTPUT,"cd "+Dqq(Dirhead+"/ketcindyjs"));
-    println(SCEOUTPUT,"cp -r -p katex "+tmp1+"/ketcindyjs");
-    println(SCEOUTPUT,"cp -p Cindy.js "+tmp1+"/ketcindyjs");
-    println(SCEOUTPUT,"cp -p Cindy.js.map "+tmp1+"/ketcindyjs");
-    println(SCEOUTPUT,"cp -p CindyJS.css "+tmp1+"/ketcindyjs");
-    println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp1+"/ketcindyjs");
-    println(SCEOUTPUT,"cp -p webfont.js "+tmp1+"/ketcindyjs"); //190214to
-    println(SCEOUTPUT,"cp -p jquery.min.js "+tmp1+"/ketcindyjs"); //200123[2lines]
-    println(SCEOUTPUT,"cp -p auto-render.min.js "+tmp1+"/ketcindyjs");
-    println(SCEOUTPUT,"cp -p auto-render11.min.js "+tmp1+"/ketcindyjs"); //200517(trial)
+    println(SCEOUTPUT,"cp -r -p katex "+tmp2); //210503from
+    println(SCEOUTPUT,"cp -p Cindy.js "+tmp2);
+    println(SCEOUTPUT,"cp -p Cindy.js.map "+tmp2);
+    println(SCEOUTPUT,"cp -p CindyJS.css "+tmp2);
+    println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp2);
+    println(SCEOUTPUT,"cp -p webfont.js "+tmp2); //190214to
+    println(SCEOUTPUT,"cp -p jquery.min.js "+tmp2); //200123[2lines]
+    println(SCEOUTPUT,"cp -p auto-render.min.js "+tmp2);
+    println(SCEOUTPUT,"cp -p auto-render11.min.js "+tmp2); //210503to
     println(SCEOUTPUT,"exit 0");
     closefile(SCEOUTPUT);
   );

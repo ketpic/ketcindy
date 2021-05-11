@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210503] loaded");
+println("ketcindylibbasic3[20210512] loaded");
 
 //help:start();
 
@@ -4408,9 +4408,10 @@ Mkketcindyjs(options):=( //17.11.18
       );
       tmp=tmp3_tmp1;
       tmp2=Removespace(tmp3_tmp1);
-      if(substring(tmp2,0,2)!="//",    
-        tmp=Bracket(tmp2,"()");
-        tmp1=substring(tmp2,tmp_1_1+1,tmp_2_1-2);
+      if(substring(tmp2,0,2)!="//",
+        tmp=Bracket(tmp2,"()");        
+        tmp1=substring(tmp2,tmp_1_1,tmp_2_1-1); //0512[2lines]
+        tmp1=parse(tmp1);
         If(isexists(Dircdy,tmp1),
           tmp=Readlines(Dircdy,tmp1);
           tmp4=concat(tmp4,tmp);

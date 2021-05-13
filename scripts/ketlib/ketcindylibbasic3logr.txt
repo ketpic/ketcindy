@@ -1,5 +1,5 @@
-// 210512
-//   Mkketcindyjs debugged  ( for Dircdy,etc )
+// 210513
+//   Mkketcindyjs debugged  ( case of using Cdyname() )
 // 210503
 //   Copyketcindyjs debugged  ( for mac, add Dqq )
 // 210428

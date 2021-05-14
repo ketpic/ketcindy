@@ -1,3 +1,5 @@
+// 210514
+//   Addasterisk debugged  ( case of "\.." )
 // 210513
 //   Mkketcindyjs debugged  ( case of using Cdyname() )
 // 210503

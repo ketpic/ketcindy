@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210513] loaded");
+println("ketcindylibbasic3[20210514] loaded");
 
 //help:start();
 
@@ -3035,7 +3035,7 @@ Sla2fra(str):=(
 );
 ////%Sla2fra end////
 
-////%Addasterisk start//// 210301
+////%Addasterisk start////
 Addasterisk(strorg):=(
 //help:Addasterisk("ax^2+bx+c");
   regional(pL,sL,funL,fn,sgnL,numL,alphaL,
@@ -3090,13 +3090,26 @@ Addasterisk(strorg):=(
   str=str0;
   repL=[];  //210405from
   ctr=1;
-  tmp=indexof(str,"\");
+  tmp=indexof(str,"\"); //210514from
   while((tmp>0)&(ctr<50),
-    res=substring(str,tmp-1,length(str));
+    res=substring(str,tmp,length(str));
     str=substring(str,0,tmp-1);
-    tmp=indexof(res," ");
-    tmp1=substring(res,0,tmp);
-    res=substring(res,tmp,length(res));
+    tmp1="\";
+    flg=0;
+    while(flg==0,
+      flg=1;
+      if(length(res)>0,
+        tmp=Toupper(res_(1));
+        if((tmp>="A")&(tmp<="Z"),
+          tmp1=tmp1+res_(1);
+          res=substring(res,1,length(res));
+          flg=0;
+        );
+      );
+    );
+    if(substring(res,0,1)==" ",
+      res=substring(res,1,length(res));
+    );  //210514to
     repL=append(repL,tmp1);
     tmp="#"+text(length(repL))+"#";
     str=str+tmp+res;

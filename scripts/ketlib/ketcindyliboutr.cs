@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20210411] loaded");
+println("ketcindylibout[20210516] loaded");
 
 //help:start();
 
@@ -4048,7 +4048,7 @@ kcC(cname):=(
     tmp=Indexall(tmp1,"\");
     tmp1=substring(tmp1,0,tmp_(length(tmp))-1); // 20200914from
     println(SCEOUTPUT,"cd "+tmp1);
-    tmp=PathC+" %path%\"+cname+".c";
+    tmp=Dqq(PathC)+" %path%\"+cname+".c"; //210516
     tmp=tmp+" -o %path%\main.exe"; 
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"cd "+Dq+Dirwork+Dq);

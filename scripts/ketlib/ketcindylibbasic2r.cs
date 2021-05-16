@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210425] loaded");
+println("ketcindylibbasic2[20210516] loaded");
 
 //help:start();
 
@@ -3134,7 +3134,7 @@ Letter(list,options):=(
   color=tmp_(length(tmp)-2); color4=Colorrgb2cmyk(color); //200618
   opL=select(options,indexof(#,"->")>0); //16.10.09from
   tmp=select(opL,indexof(#,"color"));
-  sz=12;
+  sz=16; //210516
   bld=false;
   ita=false;
   aln="left";
@@ -3151,7 +3151,7 @@ Letter(list,options):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="S",
-      sz=round(parse(tmp_2)*12);
+      sz=round(parse(tmp_2)*16); //210516
     );
   ); //190209to
   Off=-4;

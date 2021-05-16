@@ -97,13 +97,15 @@ KeTCindyについての補足 (Windows)
     \end{itemize}
   \end{itemize}
 
-\item gccのインストール
+\item MinGWのインストール
   \begin{itemize}
     \item 曲面描画のためには, gccが必要である．
-    \item \url{http://mingw-w64.org/}から\\
-    \hspace*{10mm}download \verb|>| Install \verb|>| mingw-get-setup.exe\\
-    をダウンロードして実行\\
-    \hspace*{10mm}注) パッケージは，mingw32-base, mingw32-gcc-g++だけでよい．
+    \item \url{https://sourceforge.net/projects/mingw-w64/}から，\verb|mingw-w64-install.exe|
+    をダウンロードして実行
+  \begin{enumerate}[(1)]
+  \item Program FielesまたはProgram Files(x86)にインストールする．
+  \item Architecture：Windows10が32bit版の場合\verb|i686|，64bit版の場合\verb|x86_64|を選択
+  \end{enumerate}
   \end{itemize}
 
 \item 手動でインストールする場合（KeTTeX）\\

@@ -1,4 +1,20 @@
-// LIbrary for net materials   20200512
+//  Copyright (C)  2021  Setsuo Takato, KETCindy Japan project team
+//
+//This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>
+//
+
+// Library for learning   20200517
 
 // グローバル変数
 // LogData　学習のログデータ
@@ -42,15 +58,15 @@ QuesData="";
 QuesNo=0;
 StartTime=0;
 
-newflg=1;
-confirmflg=0;
-quesflg=0;
-scoreflg=0;
-scorefin=0;
-Scorectr=0;
-recordflg=0;
-quesgiven=0;
-quesnew=0;
+newflg=1;//開始処理が終われば0
+confirmflg=0;//確認
+quesflg=0;//出題
+scoreflg=0;//採点
+scorefin=0;//採点が１度でもすれば 1
+Scorectr=0;//採点回数のカウンタ
+recordflg=0;//記録
+quesgiven=0;//出題されているか
+quesnew=0;//出題していいか
 Msgnew=[];
 Msgques=[];
 Msgsc=[];
@@ -118,16 +134,24 @@ Newsession(editno,noinput,pos,size,studentL):=(
     st=Textedit(editno,noinput);
     if(length(st)==0,
        st="";
-       msg=["IDを入力",pos,size,[0,0,1]];
+       msg=["ID",pos,size,[1,0,0]];
     ,
       if(length(studentL)>0,
         st=Confirmstudent(st,studentL);
         if(length(st)>0,
-          msg=["確認",pos,size,[0,0,1]];
           Subsedit(editno,"ID="+st);
+          msg=["$\Longleftarrow$",pos,size,[0,0,1]];
+		  if(confirmflg==1,
+		    msg=["$\Longrightarrow$",pos,size,[0,0,1]];
+			confirmflg=0;
+			newflg=0;
+		  );
         ,
-          msg=["ID未確認",pos,size,[1,0,0]];
+          msg=["ID?",pos,size,[1,0,0]];
         );
+	  ,
+	    msg=["$\Longrightarrow$",pos,size,[0,0,1]];
+		newflg=0;
       );
     );
   );
@@ -217,6 +241,15 @@ Dispquesno(pos,size,rgb):=(
   msg;
 );
 
+Getcurtime():=Getcurtime(date(),time());
+Getcurtime(ymd,hms):=(
+  regional(out,tmp,tmp1);
+  out=text(ymd_1*10000+ymd_2*100+ymd_3);
+  tmp=text(hms_1*3600+hms_2*60+hms_3);
+  tmp1=substring("0000000",0,5-length(tmp));
+  out=out+tmp1+tmp;
+  out;
+);
 
 Counttime():=(
   regional(tmp,tmp1);
@@ -248,4 +281,49 @@ Returntime(timedata):=(
   );
   out=substring(out,0,length(out)-1);
   out;
+);
+
+Log2csv(dt):=(
+  regional(cL,dL,out,nn,tmp,tmp1,tmp2);
+  cL=[];
+  dL=tokenize(dt,"||");
+  tmp=dL_1;
+  tmp1=tokenize(tmp,";;");
+  tmp=Returndatetime(tmp1_2);
+  out=tmp1_1+","+tmp_1+","+tmp_2;
+  forall(2..(length(dL)),nn,
+    tmp1=tokenize(dL_nn,";;");
+    tmp2=text(tmp1_1)+",";
+    forall(2..(length(tmp1)),
+      tmp=tmp1_#;
+      if(!isstring(tmp),tmp=text(tmp));
+      if(indexof(tmp,",")>0,tmp=Dqq(tmp));
+      tmp2=tmp2+tmp;
+      if(#<length(tmp1),tmp2=tmp2+",");
+    );
+    out=out+","+tmp2;
+  );
+  out;
+);
+
+Csvtext():=Csvtext("alltext");
+Csvtext(fname):=(
+  regional(tmp,tmp1,tL,numL,tnL,fid);
+  tmp=allelements();
+  tmp1=allpoints();
+  tL=remove(tmp,tmp1);
+  numL=apply(tL,replace(#.name,"Text",""));
+  numL=apply(numL,replace(#,"''",".2"));
+  numL=apply(numL,replace(#,"'",".1"));
+  numL=apply(numL,if(length(#)==0,"-1",#));
+  numL=apply(numL,parse(#));
+  tnL=apply(1..(length(numL)),
+     [numL_#,inspect(tL_#,"name"),inspect(tL_#,"text.text")]);
+  tnL=sort(tnL,[#_1]);
+  fid=openfile(fname+".csv");
+  forall(tnL,
+   println(fid,#_1+","+#_2+","+#_3);
+  );
+  closefile(fid);
+  println("generate "+fname+".csv");
 );

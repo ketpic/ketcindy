@@ -6624,7 +6624,7 @@ optionsがないときは，以下の 初期設定を用いる。
 \item[機能]座標軸を描く
 \item[説明]描画面に座標軸を描き，プロットデータ ax3dを作成する。nameは空文字列でよい。option は次の2つ。
 
-矢じり："an"：nは数字で矢じりの大きさ。nはなくてもよい。
+矢じり："a[size],angle"：sizeは数字で矢じりの大きさ（デフォルトは1）。angleは開き角（デフォルトは$18{}^{\circ}$）
 
 原点O："Onesw"：neswは微小位置。数字も付けられる。neswをつけない場合の初期値はsw。
 
@@ -6633,7 +6633,7 @@ optionsがないときは，以下の 初期設定を用いる。
 
  矢じりをつける
  
- \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]","a");|
+ \verb|Xyzax3data("","x=[-5,5]","y=[-5,5]","z=[-5,5]",["a"]);|
  
  矢じりを大きくする
  
@@ -7019,7 +7019,13 @@ Putpoint3d("D",2*[0,0,sqrt(3)]);
 phd=[[A,B,C,D],[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]];
 VertexEdgeFace("1",phd);
 \end{verbatim}
- \begin{center} \input{Fig/vertex01} \end{center}
+
+\begin{layer}{150}{0}
+\putnotese{90}{-15}{\input{Fig/vertex01}}
+\end{layer}
+
+\newpage
+
 面リストは，Congatobj() を使って作ることができる。陰線処理して描く場合も含め，\hyperlink{concatobj}{Concatobj()} の例を参照のこと。
 
 \vspace{\baselineskip}
@@ -7217,6 +7223,8 @@ KeTCindyでは，それぞれ次の関数を用いて描画する。
 メッシュ密度は，縦横で "Wire=[a,b]" で指定。初期値はa,bとも20。
 
 解像度は，"Num=[a,b]" で指定。初期値はa,bとも25。
+
+\newpage
 
 \begin{layer}{150}{0}
 \putnotese{88}{10}{ \input{Fig/saddle1}} 
@@ -7604,7 +7612,7 @@ Changestyle3d(edges,["notex"]);
 曲面は，Sfbdparadata()でデータを作成し，ExeccmdC()で表示しておく。交点の座標は，"intercrvsf"+name に代入される。コマンドの実行順序は次の例のようにする。
 
 \begin{layer}{150}{0}
-\putnotese{80}{40}{ \includegraphics[bb=0 0 149.51 121.51 , height=4cm]{Fig/Intersectcurvsf.pdf}}
+\putnotese{100}{25}{ \includegraphics[bb=0 0 149.51 121.51 , height=1.8cm]{Fig/Intersectcurvsf.pdf}}
 \end{layer}
 
 \vspace{\baselineskip}

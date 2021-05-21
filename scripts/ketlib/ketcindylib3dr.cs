@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210408] loaded");
+println("ketcindylib3d[20210521] loaded");
 
 //help:start();
 
@@ -1165,11 +1165,11 @@ Xyzax3data(nm,Xrange,Yrange,Zrange,optionorg):=(
       if(length(Arrow)==2, //190505from
         tmp1=Parapt(Px); tmp2=Parapt(Qx);
         ops=[Arrow_1,Arrow_2,"Line=n"];
-        Lightarrowdata("ax1",[tmp2,tmp2-tmp1],ops);
+        Arrowhead("ax1",tmp2,tmp2-tmp1,ops); //210521
         tmp1=Parapt(Py); tmp2=Parapt(Qy);
-        Lightarrowdata("ax2",[tmp2,tmp2-tmp1],ops);
+        Arrowhead("ax2",tmp2,tmp2-tmp1,ops); //210521
         tmp1=Parapt(Pz); tmp2=Parapt(Qz);
-        Lightarrowdata("ax3",[tmp2,tmp2-tmp1],ops);
+        Arrowhead("ax3",tmp2,tmp2-tmp1,ops); //210521
       ); //190505to
       if(length(Origin)>0,
         Letter([Parapt([0,0,0]),Origin,"O"]);

@@ -1,4 +1,4 @@
-//  Copyright (C)  2014  Setsuo Takato, KETCindy Japan project team
+//  Copyright (C)  2021  Setsuo Takato, KETCindy Japan project team
 //
 //This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,109 +14,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibforjs[20210515] loaded");
+println("ketcindylibforjs[20210518] loaded");
 // 210515 start
 
-LFmark=unicode("000a");
-CRmark=unicode("000d");
-Dq=unicode("0022");
-Dqq(str):=(
-  unicode("0022")+str+unicode("0022");
-);
-
-////%Alltextkey start////
-Alltextkey(make):=( //no ketjs on
-//help:Alltexkey(1);
-  regional(fname,txtkey,keyL,key,tmp,tmp1,tmp2,tmp3,fid);
-  fname="keylist";
-  txtkey=remove(allelements(),allpoints());
-  tmp=concat(1..5,[21,22]);
-  tmp=apply(tmp,parse("Text"+text(#)));
-  txtkey=remove(txtkey,tmp);
-  keyL=[];
-  forall(txtkey,key,
-    tmp=replace(key.name,"Text","");
-    tmp=replace(tmp,"''",".2");
-    tmp=replace(tmp,"'",".1");
-    tmp=parse(tmp);
-    tmp1=[tmp,key.name];
-    tmp=inspect(key,"text.text");
-    tmp2=[Dqq(tmp),inspect(key,"textsize")];
-    tmp3=[inspect(key,"colorfill"),inspect(key,"fillalpha")];
-    keyL=concat(keyL,[tmp1++tmp2++tmp3]);
-  );
-  keyL=sort(keyL,[#_1]);
-  if(make==0,
-    apply(keyL,println(#));
-  );
-  if(make==1,
-    setdirectory(Dircdy);
-    tmp=fname+".csv";
-    fid=openfile(tmp);
-    forall(keyL,key,
-      print(fid,text(key_1)+",");
-      forall(2..(length(key)),
-        tmp=key_#;
-        if(!isstring(tmp),tmp=text(tmp));
-        print(fid,tmp);
-        if(#<length(key),
-          print(fid,",");
-        ,
-          println(fid,"");
-        );
-      );
-    );
-    closefile(fid);
-    tmp=fname+"b.txt";
-    fid=openfile(tmp);
-    forall(keyL,key,
-      tmp=key_2;
-      println(fid,tmp);
-      tmp=parse(tmp);
-      tmp1=inspect(tmp,"button.script");
-      println(fid,tmp1);
-    );
-    closefile(fid);
-  );
-  keyL;
-);  //no ketjs off
-////%Alltextkey end////
-
-////%Setkeystyle start////
-Setkeystyle():=Setkeystyle("keylist");  //no ketjs on
-Setkeystyle(fname):=(
-//help:Setkeystyle();
-  regional(keyL,button,key,tmp);
-  println(fname+".csv");
-  if(!isexists(Dircdy,fname+".csv"),
-    println("  File not found");
-  ,
-    Setdirectory(Dircdy);
-    keyL=Readlines(Dircdy,fname+".csv");
-    button=Readlines(Dircdy,fname+"b.txt");    
-    forall(keyL,
-      key=Strsplit(#,",");
-      tmp=substring(key_3,1,length(key_3)-1);
-      inspect(parse(key_2),"text.text",tmp);
-      inspect(parse(key_2),"textsize",key_4);
-      inspect(parse(key_2),"colorfill",key_5);
-      inspect(parse(key_2),"fillalpha",key_6);
-      tmp=select(1..(length(button)),indexof(button_#,key_2)>0);
-      tmp1=tmp_1+1;
-      tmp2="";
-      while(tmp1<=length(button),
-        if(indexof(button_tmp1,"Text")==0,
-          tmp2=tmp2+button_tmp1;
-        ,
-          tmp1=length(button);
-        );
-        tmp1=tmp1+1;
-      );
-      inspect(parse(key_2),"button.script",tmp2);
-    );
-  );
-);  //no ketjs off
-////%Setkeystyle end////
+ch=0;
+funflg=0;
+texflg=0;
+capflg=0;
+initflg=1;
+initpos=4;
+StrL=apply(1..8,"");
+BoxL=apply(1..8,#);
+strnow="";
+npos=0;
 
 Modifyfortex(str):=(
   regional(rep1L,rep2L,nn,tmp,tmp1,out);
@@ -292,8 +202,6 @@ Instr(key):=(
         if((out>="a")&(out<="z"),
           out=Toupper(out);
         );
-//        tmp=StrL_chno;
-//        StrL_chno=substring(tmp,0,length(tmp)-3);
         capflg=0;
       );
     ,
@@ -471,51 +379,6 @@ Dispexprlist(list):=(
   );
 );
 
-Log2csv(dt):=( // no ketjs on
-  regional(cL,dL,out,nn,tmp,tmp1,tmp2);
-  cL=[];
-  dL=tokenize(dt,"||");
-  tmp=dL_1;
-  tmp1=tokenize(tmp,";;");
-  tmp=Returndatetime(tmp1_2);
-  out=tmp1_1+","+tmp_1+","+tmp_2;
-  forall(2..(length(dL)),nn,
-    tmp1=tokenize(dL_nn,";;");
-    tmp2=text(tmp1_1)+",";
-    forall(2..(length(tmp1)),
-      tmp=tmp1_#;
-      if(!isstring(tmp),tmp=text(tmp));
-      if(indexof(tmp,",")>0,tmp=Dqq(tmp));
-      tmp2=tmp2+tmp;
-      if(#<length(tmp1),tmp2=tmp2+",");
-    );
-    out=out+","+tmp2;
-  );
-  out;
-); // no ketjs off
-
-Csvtext():=Csvtext("alltext"); // no ketjs on
-Csvtext(fname):=(
-  regional(tmp,tmp1,tL,numL,tnL,fid);
-  tmp=allelements();
-  tmp1=allpoints();
-  tL=remove(tmp,tmp1);
-  numL=apply(tL,replace(#.name,"Text",""));
-  numL=apply(numL,replace(#,"''",".2"));
-  numL=apply(numL,replace(#,"'",".1"));
-  numL=apply(numL,if(length(#)==0,"-1",#));
-  numL=apply(numL,parse(#));
-  tnL=apply(1..(length(numL)),
-     [numL_#,inspect(tL_#,"name"),inspect(tL_#,"text.text")]);
-  tnL=sort(tnL,[#_1]);
-  fid=openfile(fname+".csv");
-  forall(tnL,
-   println(fid,#_1+","+#_2+","+#_3);
-  );
-  closefile(fid);
-  println("generate "+fname+".csv");
-); // no ketjs off
-
 Keytable(nx,dx,ny,dy,plb,clr):=(
   regional(xL,yL,plt,prt,prb);
   xL=apply(0..nx,#/10*dx);
@@ -526,21 +389,11 @@ Keytable(nx,dx,ny,dy,plb,clr):=(
   forall(yL,draw([plb_1,plb_2+#],[prb_1,plb_2+#],color->[0,0,0]));
 );
 
-chno=4;
-funflg=0;
-texflg=0;
-capflg=0;
-initflg=1;
-initpos=4;
-StrL=["","","",""];
-strnow="";
-npos=0;
-
 Allclear():=(
-  StrL_chno="";
+  StrL_ch="";
   strnow="";
   npos=0;
-  Subsedit(chno,"");
+  Subsedit(BoxL_ch,"");
   funflg=0;
 );
 
@@ -549,10 +402,112 @@ Delete():=(
   if(npos>0,
     tmp1=substring(strnow,0,npos-1);
     tmp2=substring(strnow,npos,length(strnow));
-    StrL_chno=tmp1+tmp2;
-    strnow=StrL_chno;
-    Subsedit(chno,strnow);
+    StrL_ch=tmp1+tmp2;
+    strnow=StrL_ch;
+    Subsedit(BoxL_ch,strnow);
     npos=npos-1;
     funflg=0;
   );
 );
+
+LFmark=unicode("000a");
+CRmark=unicode("000d");
+Dq=unicode("0022");
+Dqq(str):=(
+  unicode("0022")+str+unicode("0022");
+);
+
+////%Alltextkey start////
+Alltextkey(make):=( //no ketjs on
+//help:Alltexkey(1);
+  regional(fname,txtkey,keyL,key,tmp,tmp1,tmp2,tmp3,fid);
+  fname="keylist";
+  txtkey=remove(allelements(),allpoints());
+  tmp=concat(1..5,[21,22]);
+  tmp=apply(tmp,parse("Text"+text(#)));
+  txtkey=remove(txtkey,tmp);
+  keyL=[];
+  forall(txtkey,key,
+    tmp=replace(key.name,"Text","");
+    tmp=replace(tmp,"''",".2");
+    tmp=replace(tmp,"'",".1");
+    tmp=parse(tmp);
+    tmp1=[tmp,key.name];
+    tmp=inspect(key,"text.text");
+    tmp2=[Dqq(tmp),inspect(key,"textsize")];
+    tmp3=[inspect(key,"colorfill"),inspect(key,"fillalpha")];
+    keyL=concat(keyL,[tmp1++tmp2++tmp3]);
+  );
+  keyL=sort(keyL,[#_1]);
+  if(make==0,
+    apply(keyL,println(#));
+  );
+  if(make==1,
+    setdirectory(Dircdy);
+    tmp=fname+".csv";
+    fid=openfile(tmp);
+    forall(keyL,key,
+      print(fid,text(key_1)+",");
+      forall(2..(length(key)),
+        tmp=key_#;
+        if(!isstring(tmp),tmp=text(tmp));
+        print(fid,tmp);
+        if(#<length(key),
+          print(fid,",");
+        ,
+          println(fid,"");
+        );
+      );
+    );
+    closefile(fid);
+    tmp=fname+"b.txt";
+    fid=openfile(tmp);
+    forall(keyL,key,
+      tmp=key_2;
+      println(fid,tmp);
+      tmp=parse(tmp);
+      tmp1=inspect(tmp,"button.script");
+      println(fid,tmp1);
+    );
+    closefile(fid);
+  );
+  keyL;
+);  //no ketjs off
+////%Alltextkey end////
+
+////%Setkeystyle start////
+Setkeystyle():=Setkeystyle("keylist");  //no ketjs on
+Setkeystyle(fname):=(
+//help:Setkeystyle();
+  regional(keyL,button,key,tmp);
+  println(fname+".csv");
+  if(!isexists(Dircdy,fname+".csv"),
+    println("  File not found");
+  ,
+    Setdirectory(Dircdy);
+    keyL=Readlines(Dircdy,fname+".csv");
+    button=Readlines(Dircdy,fname+"b.txt");    
+    forall(keyL,
+      key=Strsplit(#,",");
+      tmp=substring(key_3,1,length(key_3)-1);
+      inspect(parse(key_2),"text.text",tmp);
+      inspect(parse(key_2),"textsize",key_4);
+      inspect(parse(key_2),"colorfill",key_5);
+      inspect(parse(key_2),"fillalpha",key_6);
+      tmp=select(1..(length(button)),indexof(button_#,key_2)>0);
+      tmp1=tmp_1+1;
+      tmp2="";
+      while(tmp1<=length(button),
+        if(indexof(button_tmp1,"Text")==0,
+          tmp2=tmp2+button_tmp1;
+        ,
+          tmp1=length(button);
+        );
+        tmp1=tmp1+1;
+      );
+      inspect(parse(key_2),"button.script",tmp2);
+    );
+  );
+);  //no ketjs off
+////%Setkeystyle end////
+

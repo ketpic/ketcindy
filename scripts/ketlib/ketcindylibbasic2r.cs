@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210516] loaded");
+println("ketcindylibbasic2[20210522] loaded");
 
 //help:start();
 
@@ -548,11 +548,11 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
   ArrowheadNumber=ArrowheadNumber+1;
   if(Noflg<2,
     if(lineflg==1,
-      Listplot("-arh"+nm,[tmp1,pP,tmp2],append(options,"Msg=n")); //191106
+      Listplot("-ar"+nm+"h",[tmp1,pP,tmp2],append(options,"Msg=n")); //210522
     ,
-      Listplot("-arh"+nm,[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //191106
-      Shade(["arh"+nm],[Ltype,"Color="+color]); // no ketjs
-//    fillpoly(parse("arh"+nm),color->color); // only ketjs
+      Listplot("-ar"+nm+"h",[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //210522
+      Shade(["ar"+nm+"h"],[Ltype,"Color="+color]); // no ketjs
+//    fillpoly(parse("ar"+nm+"h"),color->color); // only ketjs //210522
     );
     if(lineflg==0,
       if(segpos==1,pB=pC); //191202

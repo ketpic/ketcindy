@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210522] loaded");
+println("ketcindylibbasic2[20210530] loaded");
 
 //help:start();
 
@@ -1397,16 +1397,9 @@ Enclosing2(nm,plistorg,options):=(
     println("generate Enclosing "+name);
     tmp=name+"="+Textformat(AnsL,10)+";"; //190415
     parse(tmp);
-//    tmp=name+"=Enclosing2(";//16.11.07from
-//    tmp1="list"+PaO();
-//    forall(plistorg, //18.02.02
-//      tmp1=tmp1+#+",";
-//    );
-//    tmp=tmp+substring(tmp1,0,length(tmp1)-1)+")";//18.0706from //no ketjs on
-//    if(length(Start)>0,tmp=tmp+","+Textformat(Start,10));
-//    tmp=tmp+","+text(Eps1)+")";//18.0706to,180707
-//    GLIST=append(GLIST,tmp);//16.11.07to //no ketjs off
-    Listplot("-"+name,parse(name),["nodisp"]); //210421
+    tmp=parse(name); //210530[2lines]
+    tmp=apply(tmp,LLcrd(#));
+    Listplot("-"+name,tmp,["nodisp"]); //210421
   );
   if(Noflg<3, //190818
     if(isstring(Ltype),
@@ -3005,8 +2998,8 @@ Drwxy(add,optionsorg):=(
   AXCOUNT=AXCOUNT+1;
   tmp=[colorla,"Size="+text(labelsize)]; //no ketjs on //210408
   Expr([[xrng_2,org_2],ax_3,ax_2],tmp); //210407from
-  Expr([[org_1,yrng_2],ax_5,ax_4],tmp); 
-  Letter([org,ax_7,ax_6],tmp); //190901to // no ketjs off
+  Expr([[org_1,yrng_2],ax_5,ax_4],tmp);
+   Letter([org,ax_7,ax_6],tmp); //190901to // no ketjs off
   //tmp=labelsize*10*1.15; //only ketjs on //210408from
   //tmp1=tmp*0.0352778*0.16; 
   //tmp2=tmp*0.0352778*0.16; 
@@ -3201,7 +3194,7 @@ Letter(list,options):=(
         Pos=Pos+[0,tmp_1_2];
       ); //200619to
       if(indexof(Dir,"s")>0,
-        Ymv=-Dmv*3/2;
+        Ymv=-Dmv*2.5;//3/2; //210528
         tmp=select(tmp2,#_1=="s"); //200619[2lines]
         Pos=Pos-[0,tmp_1_2];
       );

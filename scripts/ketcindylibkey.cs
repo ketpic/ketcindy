@@ -337,48 +337,6 @@ Addfunstr(name,npos,strnow):=(
   out;
 );
 
-Displetters(msgLorg):=(
-  regional(msgL,pos,str,size,color);
-  msgL=msgLorg;
-  if(length(msgL)>0,
-    if(isstring(msgL_1),msgL=[msgL]);
-    forall(msgL,
-      pos=#_2;
-      str=#_1;
-      if(length(#)>2,size=#_3,size=16);
-      if(length(#)>3,color=#_4,color=[0,0,0]); 
-      drawtext(pos,str,size->size,color->color);
-    );
-  );
-);
-
-Dispexprs(msgLorg):=(
-  regional(msgL,pos,str,size,color);
-  msgL=msgLorg;
-  if(length(msgL)>0,
-    if(isstring(msgL_1),msgL=[msgL]);
-    forall(msgL,
-      pos=#_2;
-      str="$"+#_1+"$";
-      if(length(#)>2,size=#_3,size=16);
-      if(length(#)>3,color=#_4,color=[0,0,0]);    
-      drawtext(pos,str,size->size,color->color);
-    );
-  );
-);
-
-Displetterlist(list):=(
-  forall(list,
-    Displetters(#);
-  );
-);
-
-Dispexprlist(list):=(
-  forall(list,
-    Dispexprs(#);
-  );
-);
-
 Keytable(nx,dx,ny,dy,plb,clr):=(
   regional(xL,yL,plt,prt,prb);
   xL=apply(0..nx,#/10*dx);
@@ -423,9 +381,9 @@ Alltextkey(make):=( //no ketjs on
   regional(fname,txtkey,keyL,key,tmp,tmp1,tmp2,tmp3,fid);
   fname="keylist";
   txtkey=remove(allelements(),allpoints());
-  tmp=concat(1..5,[21,22]);
-  tmp=apply(tmp,parse("Text"+text(#)));
-  txtkey=remove(txtkey,tmp);
+//  tmp=concat(1..5,[21,22]);
+//  tmp=apply(tmp,parse("Text"+text(#)));
+//  txtkey=remove(txtkey,tmp);
   keyL=[];
   forall(txtkey,key,
     tmp=replace(key.name,"Text","");

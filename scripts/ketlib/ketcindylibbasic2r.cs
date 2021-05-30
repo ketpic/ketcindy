@@ -3112,6 +3112,28 @@ Expr(listorg,options):=( //16.10.09
 );
 ////%Expr end////
 
+////%Lettermove start//// //210530
+Lettermove(dir,str):=(
+  regional(Suu,tmp,tmp1,out,nn);
+  Suu="+-.0123456789";
+  tmp=indexof(str,dir);
+  tmp1=substring(str,tmp,length(str));
+  out="";
+  nn=1;
+  while(nn<=length(tmp1),
+    tmp=substring(tmp1,nn-1,nn);
+    if(indexof(Suu,tmp)>0,
+      out=out+tmp;
+    ,
+      nn=length(str);
+    );
+    nn=nn+1;
+  );
+  if(length(out)==0,out=0,out=parse(out));
+  out;
+);
+////%Lettermove end////
+
 ////%Letter start////
 Letter(Pt,Dr,St):=Letter([Pt,Dr,St]);
 Letter(list):=Letter(list,[]);
@@ -3119,7 +3141,7 @@ Letter(Pt,Dr,St,options):=Letter([Pt,Dr,St],options);//181218
 Letter(list,options):=(
 //help:Letter([C,"c","Graph of $f(x)$"]);
 //help:Letter([C,"c","xy"],["size->30"]);
-  regional(Nj,Pos,Dir,Str,Off,Dmv,Xmv,Ymv,Noflg,opcindy,
+  regional(Nj,Pos,Dir,Str,Off,Xmv,Ymv,Noflg,opcindy,
       opL,aln,sz,clr,bld,ita,tmp,tmp1,tmp2,color,color4,eqL);
   tmp=Divoptions(options);
   eqL=tmp_5; //190209
@@ -3147,8 +3169,6 @@ Letter(list,options):=(
       sz=round(parse(tmp_2)*16); //210516
     );
   ); //190209to
-  Off=-4;
-  Dmv=8;
   Nj=1;
 //  if(Ketcindyjsfigure>0,sz=round(sz*Ketcindyjsscale) ); // only ketjs
   while(Nj+2<=length(list),
@@ -3172,60 +3192,26 @@ Letter(list,options):=(
       );
     ); //no ketjs off
     if(Noflg<2,
-      Xmv=0;//16.10.13
-      Ymv=-4;
-      tmp1=[]; //200619from
-      forall(1..10,
-        tmp=substring(Dir,#-1,#);
-        if(contains(["n","s","e","w"],tmp),
-          tmp1=append(tmp1,[tmp,#]);
-        );
-      );
-      tmp1=append(tmp1,["",length(Dir)+1]);
-      tmp2=[];
-      forall(1..(length(tmp1)-1),
-        tmp=substring(Dir,tmp1_#_2,tmp1_(#+1)_2-1);
-        if(length(tmp)>0,tmp=MARKLEN*parse(tmp),tmp=0);
-        tmp2=append(tmp2,[tmp1_#_1,tmp]);
-      );
-      if(indexof(Dir,"n")>0,
-        Ymv=Dmv/2;
-        tmp=select(tmp2,#_1=="n"); //200619[2lines]
-        Pos=Pos+[0,tmp_1_2];
-      ); //200619to
-      if(indexof(Dir,"s")>0,
-        Ymv=-Dmv*2.5;//3/2; //210528
-        tmp=select(tmp2,#_1=="s"); //200619[2lines]
-        Pos=Pos-[0,tmp_1_2];
-      );
+      Off=[0,0];
+      Xmv=0; Ymv=0;
+      aln="mid"; //200530from
+      if(indexof(Dir,"c")>0, Off=-0.5*sz*[0,1]);
+      if(indexof(Dir,"n")>0,Off=[0,0];Ymv=Lettermove("n",Dir));
+      if(indexof(Dir,"s")>0, Off=[0,-0.85*sz];Ymv=-Lettermove("s",Dir));
       if(indexof(Dir,"e")>0,
-        Xmv=Dmv/2;
-        Off=0;
-        aln="left"; 
-        tmp=select(tmp2,#_1=="e"); //200619[2lines]
-        Pos=Pos+[tmp_1_2,0];
+        aln="left";
+        if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off_2=-0.3*sz);
+        Xmv=Lettermove("s",Dir);
       );
-      if(indexof(Dir,"w")>0, 
-        Xmv=-Dmv/2;
-        Off=0; // 16.09.30from
-        aln="right"; 
-        tmp=select(tmp2,#_1=="w"); //200619[2lines]
-        Pos=Pos-[tmp_1_2,0];
+      if(indexof(Dir,"w")>0,
+        aln="right";
+        if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off_2=-0.3*sz);
+        Xmv=-Lettermove("s",Dir);
       );
-      if(indexof(Dir,"c")>0,
-        Xmv=0;//16.10.13
-        Off=0;
-        if(Ymv==0,Ymv=-4);//16.10.08
-        aln="mid"; // 16.09.30until
-      );
-//      if(Ketcindyjsfigure>0, // only ketjs on
-//        Off=round(Off*Ketcindyjsscale);
-//        Xmv=round(Xmv*Ketcindyjsscale);
-//        Ymv=round(Ymv*Ketcindyjsscale);
-//      ); // only ketjs off
       Str=list_(Nj+2);  //17.10.17
+      Pos=Pos+[Xmv,Ymv]*MARKLEN; //210530to
       if(length(color)==4,color=Colorcmyk2rgb(color)); //200523
-      tmp="drawtext("+format(Pcrd(Pos),10)+","+Dqq(Str)+",offset->"+format([Off+Xmv,Off+Ymv],10)+","; //201004from
+      tmp="drawtext("+format(Pcrd(Pos),10)+",offset->"+text(Off)+","+Dqq(Str)+","; 
       tmp1="size->sz,color->colornow,align->aln,bold->bld,italics->ita";
       tmp1=Assign(tmp1,["sz",text(sz),"colornow",text(color),"aln",Dqq(aln),"bld",text(bld),"ita",text(ita)]);
       tmp=tmp+tmp1+");";

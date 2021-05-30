@@ -3201,12 +3201,12 @@ Letter(list,options):=(
       if(indexof(Dir,"e")>0,
         aln="left";
         if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off_2=-0.3*sz);
-        Xmv=Lettermove("s",Dir);
+        Xmv=Lettermove("e",Dir);
       );
       if(indexof(Dir,"w")>0,
         aln="right";
         if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off_2=-0.3*sz);
-        Xmv=-Lettermove("s",Dir);
+        Xmv=-Lettermove("w",Dir);
       );
       Str=list_(Nj+2);  //17.10.17
       Pos=Pos+[Xmv,Ymv]*MARKLEN; //210530to
@@ -4511,7 +4511,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     );  //190507to
     if(tick!=0, //190421
       if(mod(jj,tick)==0 % #==m,
-        drawtext(clist_(jj+1)+TableMove-[0.04,-0.1],"c"+text(jj)); //190428
+        Letter(clist_(jj+1)+TableMove,"n1","c"+text(jj)); //190428,210530
       );
     );
   ); //190507
@@ -4532,8 +4532,8 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     );
     if(tick!=0, //190421
       if(mod(jj,tick)==0 % #==n,
-       drawtext(rlist_(jj+1)+TableMove-[0.4,0.1],"r"+text(jj)); //190428
-      );
+       Letter(rlist_(jj+1)+TableMove,"w1","r"+text(jj)); //190428,210530
+      );,
     );
   );
   tbstr=substring(tbstr,0,length(tbstr)-1)+"]"; //101008from

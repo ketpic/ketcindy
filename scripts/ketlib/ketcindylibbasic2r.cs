@@ -4511,7 +4511,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     );  //190507to
     if(tick!=0, //190421
       if(mod(jj,tick)==0 % #==m,
-        Letter(clist_(jj+1)+TableMove,"n1","c"+text(jj)); //190428,210530
+        Letter(clist_(jj+1)+TableMove,"n1","c"+text(jj),["notex"]); //190428,210530
       );
     );
   ); //190507
@@ -4532,7 +4532,7 @@ Tabledatalight(nm,xLst,yLst,rmvL,optionorg):=(
     );
     if(tick!=0, //190421
       if(mod(jj,tick)==0 % #==n,
-       Letter(rlist_(jj+1)+TableMove,"w1","r"+text(jj)); //190428,210530
+       Letter(rlist_(jj+1)+TableMove,"w1","r"+text(jj),["nottex"]); //190428,210530
       );,
     );
   );

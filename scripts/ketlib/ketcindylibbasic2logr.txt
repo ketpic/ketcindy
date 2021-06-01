@@ -1,3 +1,5 @@
+// 20210601
+//    Drwxy debugged  ( only ketjs removed)
 // 20210530
 //    Enclosing debugged  (case of Setscaling)
 //    Lettermove added

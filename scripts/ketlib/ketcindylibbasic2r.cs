@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210530] loaded");
+println("ketcindylibbasic2[20210601] loaded");
 
 //help:start();
 
@@ -2996,18 +2996,10 @@ Drwxy(add,optionsorg):=(
     Listplot("-axy"+text(AXCOUNT),tmp,tmp1); 
   );
   AXCOUNT=AXCOUNT+1;
-  tmp=[colorla,"Size="+text(labelsize)]; //no ketjs on //210408
+  tmp=[colorla,"Size="+text(labelsize)]; ///210408
   Expr([[xrng_2,org_2],ax_3,ax_2],tmp); //210407from
   Expr([[org_1,yrng_2],ax_5,ax_4],tmp);
-   Letter([org,ax_7,ax_6],tmp); //190901to // no ketjs off
-  //tmp=labelsize*10*1.15; //only ketjs on //210408from
-  //tmp1=tmp*0.0352778*0.16; 
-  //tmp2=tmp*0.0352778*0.16; 
-  //drawtext([xrng_2,org_2-tmp2],"$"+ax_2+"$",size->tmp);
-  //drawtext([org_1-tmp1,yrng_2],"$"+ax_4+"$",size->tmp);
-  //if(indexof(AX_7,"e")>0,tmp1=0,tmp1=1.9*tmp1);
-  //If(indexof(AX_7,"n")>0,tmp2=0,tmp2=1.9*tmp2);
-  //drawtext(org-4*[tmp1,tmp2],ax_6,size->tmp);// only ketjs off //210408to
+  Letter([org,ax_7,ax_6],tmp); //190901to //
   if(add==0, //190103
     Addax(0);
   );

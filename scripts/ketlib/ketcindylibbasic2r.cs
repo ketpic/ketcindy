@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210601] loaded");
+println("ketcindylibbasic2[20210602] loaded");
 
 //help:start();
 
@@ -3187,24 +3187,24 @@ Letter(list,options):=(
       Off=[0,0];
       Xmv=0; Ymv=0;
       aln="mid"; //200530from
-      if(indexof(Dir,"c")>0, Off=-0.5*sz*[0,1]);
-      if(indexof(Dir,"n")>0,Off=[0,0];Ymv=Lettermove("n",Dir));
-      if(indexof(Dir,"s")>0, Off=[0,-0.85*sz];Ymv=-Lettermove("s",Dir));
+      if(indexof(Dir,"c")>0, Off_2=-0.3*sz);
+      if(indexof(Dir,"n")>0,Off_2=0;Ymv=Lettermove("n",Dir)); //210601
+      if(indexof(Dir,"s")>0, Off_2=-0.85*sz;Ymv=-Lettermove("s",Dir));
       if(indexof(Dir,"e")>0,
         aln="left";
-        if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off_2=-0.3*sz);
+        if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off=[0,-0.3*sz]);
         Xmv=Lettermove("e",Dir);
       );
       if(indexof(Dir,"w")>0,
         aln="right";
-        if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off_2=-0.3*sz);
+        if(indexof(Dir,"n")+indexof(Dir,"s")==0,Off=[0,-0.4*sz]);
         Xmv=-Lettermove("w",Dir);
       );
       Str=list_(Nj+2);  //17.10.17
-      Pos=Pos+[Xmv,Ymv]*MARKLEN; //210530to
+      Pos=Pos+[Xmv,Ymv]*MARKLEN;//210530to
       if(length(color)==4,color=Colorcmyk2rgb(color)); //200523
       tmp="drawtext("+format(Pcrd(Pos),10)+",offset->"+text(Off)+","+Dqq(Str)+","; 
-      tmp1="size->sz,color->colornow,align->aln,bold->bld,italics->ita";
+      tmp1="size->sz,color->colornow,align->"+Dqq(aln)+",bold->"+bld+",italics->"+ita; //210601
       tmp1=Assign(tmp1,["sz",text(sz),"colornow",text(color),"aln",Dqq(aln),"bld",text(bld),"ita",text(ita)]);
       tmp=tmp+tmp1+");";
       GCLIST=append(GCLIST,[tmp,[6,0]]); //201004to
@@ -5013,7 +5013,7 @@ Windispg(gcLorg):=( //190125
   ); //190125to
   gcL=select(gcL,#_2_1>=0); //190818
   gsave();
-  layer(KETPIClayer);
+  layer(KETPIClAYER); // 210602[spell]
   forall(gcL,Nj,
     flg=0;
     if(isstring(Nj_1),

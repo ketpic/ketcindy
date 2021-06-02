@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210423] loaded");
+println("ketcindylibbasic1[20210602] loaded");
 
 //help:start();
 
@@ -4036,7 +4036,7 @@ Pointdata(nm,listorg,optionsorg):=(
   eqL=tmp_5;
   opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
-  opcindy=""; //tmp_(length(tmp));
+  opcindy="";
   size="1";
   dispflg="Y";
   inside="Y"; //200512
@@ -4049,9 +4049,9 @@ Pointdata(nm,listorg,optionsorg):=(
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="S",
-      size=tmp_2; //190406from
+      size=tmp_2; //190406[2lines]
       tmp1=parse(size);
-      opcindy=opcindy+",size->"+text(tmp1); //190409to
+//      opcindy=opcindy+",size->"+text(tmp1); //210602removed
       options=remove(options,[#]);
     );
     if(tmp1=="D", //181030from
@@ -4104,43 +4104,44 @@ Pointdata(nm,listorg,optionsorg):=(
   parse(tmp);
   if(Noflg<3,
     tmp=RSform(tmp1,2);
-    GLIST=append(GLIST,name+"=Pointdata("+tmp+")"); //no ketjs
+    GLIST=append(GLIST,name+"=Pointdata("+tmp+")"); // no ketjs
   );
-  if(Noflg<3, //190818
+  if(Noflg<2, //210602
     tmp1=parse(size)*TenSizeInit;
     forall(1..(length(list)),
-      tmp2=text(#)+name;
+      tmp2=text(#)+name; // no ketjs on
       tmp3=[list_#,tmp1*ratio];
-      Circledata(tmp2,[list_#,tmp1*ratio],["nodisp","Msg=n"]);//201025
-      if(inside=="N",
+      Circledata(tmp2,[list_#,tmp1*ratio],["nodisp","Msg=n"]); // no ketjs off
+      if(inside=="N", //210602from
         if(length(incolor)>0, //200519from
-          Scaledata(tmp2+"i",["cr"+tmp2],1,1/SCALEY,[tmp3_1,"nodisp","Msg=n"]);
+          Scaledata(tmp2+"i",["cr"+tmp2],1,1/SCALEY,[tmp3_1,"Msg=n"]);//no ketjs on
           tmp="sc"+tmp2+"i";
-          Shade([tmp],["Color="+incolor]); // no ketjs 201025
+          Shade([tmp],["Color="+incolor]); // no ketjs off //201025
 //          if(isstring(incolor),incolor=Colorname2cmyk(incolor)); // only ketjs on
 //          if(length(incolor)==4,incolor=Colorcmyk2rgb(incolor));
-//          opcindy=opcindy+",color->"+text(incolor);
-//          tmp=parse(tmp);
-//          tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
-//          parse(tmp); // only ketjs off
+//          tmp2=opcindy+",color->";
+//          tmp=["fillcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(incolor)+");",[5,0]];
+//          GCLIST=append(GCLIST,tmp);
+//          tmp=["drawcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(color)+");",[5,0]];
+//          GCLIST=append(GCLIST,tmp); // only ketjs off
         );
       ,
-        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,[tmp3_1,"nodisp","Msg=n"]);
+        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,[tmp3_1,"Msg=n"]);// no ketjs on
         tmp="sc"+tmp2;
-        Shade([tmp],options); // no ketjs   //200813
+        Shade([tmp],options); // no ketjs off //200813
 //          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on
-//          opcindy=opcindy+",color->"+text(color);
-//        tmp=parse(tmp); // only ketjs on
-//        tmp="fillpoly("+Textformat(tmp,5)+opcindy+");";
-//        parse(tmp); // only ketjs off
-      );
+//          tmp2=opcindy+",color->";
+//          tmp=["fillcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(incolor)+");",[5,0]];
+//          GCLIST=append(GCLIST,tmp);
+//          tmp=["drawcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(color)+");",[5,0]];
+//          GCLIST=append(GCLIST,tmp);  // only ketjs off
+      ); //210602to
       tmp=round(10*sqrt(parse(size))); //201027from (moved)
-      if(Noflg==0,options=[Ltype,"Color="+text(color),"Num="+format(tmp,6)]);
-      if(Noflg==1,options=["notex",Ltype,"Color="+text(color),"Num="+format(tmp2,6)]);
+      if(Noflg==0,options=[Ltype,"Color="+text(color),"Num="+text(tmp)]);
+      if(Noflg==1,options=["notex",Ltype,"Color="+text(color),"Num="+text(tmp)]);
       if(Noflg==2,options=["nodisp"]);
       options=concat(options,[tmp3_1,"Msg=n"]);  //201027to
-//      Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,options);  //210422 removed
-    ); //200519to
+    ); 
   );
   ngc2=length(GCLIST); //210422[5lines]
   ng2=length(GLIST);

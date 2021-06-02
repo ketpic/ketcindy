@@ -1,3 +1,7 @@
+// 20210602
+//    Pointdata changed/debugged  (for ketcindyjs)
+// 20210601
+//    Letter changed (Off)
 // 20210425
 //    Drwxy debugged ( Yaangle )
 // 20210423

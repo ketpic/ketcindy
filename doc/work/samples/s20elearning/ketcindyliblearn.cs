@@ -54,7 +54,7 @@
 // Returndatetime(data) dataから年月日と時刻の通常データのリストを返す
 // Endquestion(studentans,studentscore) 
 
-/////  template flow ///////////
+/////  flow template ///////////
 //  Id=51; Rec=59;
 //Coorodinates([0.4,-0.1],[0,0.3],[-0.1,-0.4],16);
 //if(newflg==1,

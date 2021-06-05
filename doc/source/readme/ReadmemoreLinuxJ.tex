@@ -40,7 +40,15 @@ $ mkdir tmp
 $ cd tmp
 \end{verbatim}
 
-\item TexLive 2020 のインストール
+\item KeTTeX(2021) のインストール
+
+\begin{itemize}
+\item \url{https://github.com/ketpic/kettex/releases}から\verb|KeTTeX-linux-20210322.tar.zst|をダウンロードして解凍する．\\
+　注）zstの解凍には，zstdをインストールして用いる．
+\item kettexフォルダを\verb|/opt|の中に入れる．
+\end{itemize}
+
+\item TexLive 2020 を用いる場合
 
 ※ デフォルトのフォルダ( /usr/local/texlive/2020/ )にインストールする
 
@@ -54,18 +62,6 @@ $ sudo ./install-tl-(日時)/install-tl
 
 \verb|$ sudo /usr/local/texlive/2020/bin/x86_64-linux/tlmgr path add|
 
-\item JDK のインストール
-
-\verb|$ sudo apt install default-jdk|
-
-\item Rのインストール
-
-\verb|$ sudo apt install r-base-core|
-
-\item git のインストール
-
-\verb|$ sudo apt install git|
-
 \item Cinderella3 のインストール
 
 ※ /opt/cinderella/ にインストールする
@@ -76,11 +72,34 @@ $ tar xvfz Cinderella-3.0b.1952.tar.gz
 $ sudo mv cinderella/ /opt
 \end{verbatim}
 
+\item KeTCindyのインストール
+
+\begin{itemize}
+\item \verb|HowtoUseJ|に従って，ダウンロードして\verb|ketcindysettings.cdy|を実行する．
+\end{itemize}
+
+\item JDK のインストール
+
+\verb|$ sudo apt install default-jdk|
+
+\item Rのインストール
+
+\verb|$ sudo apt install r-base-core|
+
+\item (5)の代わりに，以下のようにしてもよい．
+
+\begin{itemize}
+\item git のインストール
+
+\verb|$ sudo apt install git|
+
 \item Github から最新版をクローンして \verb|ketcindysettings.cdy| を開く
 \begin{verbatim}
 $ git clone https://github.com/ketpic/ketcindy.git
 $ /opt/cinderella/Cinderella ~/tmp/ketcindy/doc/ketcindysettings.cdy &
 \end{verbatim}
+
+\end{itemize}
 
 \end{enumerate}
 

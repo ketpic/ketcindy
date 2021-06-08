@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210602] loaded");
+println("ketcindylibbasic1[20210609] loaded");
 
 //help:start();
 
@@ -4040,7 +4040,7 @@ Pointdata(nm,listorg,optionsorg):=(
   size="1";
   dispflg="Y";
   inside="Y"; //200512
-  incolor=""; //200519
+  incolor="";
   ratio=0.95; //200708,0813
   border="Y";
   Msg="Y";
@@ -4130,10 +4130,10 @@ Pointdata(nm,listorg,optionsorg):=(
         tmp="sc"+tmp2;
         Shade([tmp],options); // no ketjs off //200813
 //          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on
-//          tmp2=opcindy+",color->";
-//          tmp=["fillcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(incolor)+");",[5,0]];
+//          tmp2=opcindy+",color->"+text(color); //210609
+//          tmp=["fillcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+");",[5,0]];
 //          GCLIST=append(GCLIST,tmp);
-//          tmp=["drawcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(color)+");",[5,0]];
+//          tmp=["drawcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+");",[5,0]];
 //          GCLIST=append(GCLIST,tmp);  // only ketjs off
       ); //210602to
       tmp=round(10*sqrt(parse(size))); //201027from (moved)

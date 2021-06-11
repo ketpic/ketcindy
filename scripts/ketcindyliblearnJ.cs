@@ -14,7 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-// Library for learning   20210526
+// Library for learning
+// 20210610 Blink added 
+// 20210526 start
 
 // グローバル変数
 // LogData　学習のログデータ
@@ -171,6 +173,18 @@ Startlearning(editno):=(
   LogData;
 );
 
+Blink(posdata):=(
+  regional(p1,p2,q,fr);
+  p1=posdata_1; p2=posdata_2;
+  q=posdata_3*[1,1];
+  p1=p1-q; p2=p2+q;
+  fr=[p1,[p2_1,p1_2],p2,[p1_1,p2_2],p1];
+  drawpoly(fr,color->[1,0,0]);
+  p1=p1-0.2*q; p2=p2+0.2*q;
+  fr=[p1,[p2_1,p1_2],p2,[p1_1,p2_2],p1];
+  drawpoly(fr,color->[1,0,0]);
+);
+
 Newsession(editno,pos):=Newsession(editno,"",pos,18,[]);
 Newsession(editno,Arg1,Arg2):=(
   if(islist(Arg1),
@@ -187,7 +201,8 @@ Newsession(editno,Arg1,Arg2,Arg3):=(
   );  
 );
 Newsession(editno,noinput,pos,size,studentL):=(
-  regional(st,msg,confok);
+  regional(st,msg,confok,ctr);
+  // global Posid, Posconf, Posques
   Posnew=pos;
   Sizenew=size;
   confok=0;
@@ -207,12 +222,22 @@ Newsession(editno,noinput,pos,size,studentL):=(
       confok=1;
     );
   );
+  ctr=1;
+  while((confok==0)&(ctr<10),
+    Blink(Posid);
+    ctr=ctr+1;
+  );
   if(confok==1,
     Subsedit(editno,"ID="+st);
-    msg=["$\Longleftarrow$",pos,size,[1,0,0]];
+    msg=["$\Leftarrow$",pos,size,[1,0,0]];
+    ctr=1;
+    while((confirmflg==0)&(ctr<5),
+      Blink(Poscon);
+      ctr=ctr+1;
+    );
     if(confirmflg==1,
       Startlearning(editno);
-      msg=["$\Longrightarrow$",pos,size,[1,0,0]];
+      msg=["$\Rightarrow$",pos,size,[1,0,0]];
       quesnew=1;
       quesgiven=0;
       newflg=0;

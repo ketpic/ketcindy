@@ -488,9 +488,12 @@ Keytable(nx,dx,ny,dy,plb,clr):=(
   xL=apply(0..nx,#/10*dx);
   yL=apply(0..ny,#/10*dy);
   plt=plb+[0,yL_(-1)]; prt=plt+[xL_(-1),0]; prb=prt-[0,yL_(-1)];
-  fillpoly([plb,plt,prt,prb,plb],color->clr);
+  fillpoly([plb,plt,prt,prb,plb],color->clr,alpha->1);
   forall(xL,draw([plb_1+#,plb_2],[plb_1+#,plt_2],color->[0,0,0]));
   forall(yL,draw([plb_1,plb_2+#],[prb_1,plb_2+#],color->[0,0,0]));
+  xL=apply(xL,plb_1+#);
+  yL=apply(yL,plb_2+#);
+  [xL,dx/10,yL,dy/10];
 );
 
 Allclear():=(

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210514] loaded");
+println("ketcindylibbasic3[20210611] loaded");
 
 //help:start();
 
@@ -3038,11 +3038,11 @@ Sla2fra(str):=(
 ////%Addasterisk start////
 Addasterisk(strorg):=(
 //help:Addasterisk("ax^2+bx+c");
-  regional(pL,sL,funL,fn,sgnL,numL,alphaL,
-      str0,str,f,k,n1,n2,sub,res,tmp,tmp1,tmp2,ctr,out,s,flg,repL);
+  regional(pL,sL,funL,fn,sgnL,numL,alphaL,type,res,res2,
+      str0,str,f,k,n1,n2,sub,tmp,tmp1,tmp2,ctr,out,s,flg,repL);
   str0=replace(strorg,"  ","*");
   funL=["sin","cos","tan","log"]; 
-  sgnL=["+","-"];
+  sgnL=["-","+"];
   forall(funL,f,
     str="";
     res=str0;
@@ -3064,25 +3064,55 @@ Addasterisk(strorg):=(
         );
       );
       if(res_1=="(",
+        type=1;
         tmp1=bracket(res,"()");
+        tmp=select(tmp1,#_2==-1); //210611from
+        if(length(tmp)>0,
+          tmp=tmp_1_1;
+          res2=substring(res,tmp,length(res));
+          res=substring(res,0,tmp);
+        ,
+          res2="";
+        );
+        tmp2=Indexall(res,","); //210611from
+        tmp2=Getlevel(res,",");
+        tmp2=select(tmp2,#_2==1);
+        if(length(tmp2)>0,
+          tmp2=tmp2_1_1;
+          str=str+substring(res,0,tmp2);
+          res="("+substring(res,tmp2,length(res));
+          tmp1=bracket(res,"()");
+          type=2;
+        );  //210611to
         tmp1=select(tmp1,#_2==-1);
         if(length(tmp1)>0,tmp1=tmp1_1_1,tmp1=0);
         flg=0;
         forall(sgnL,s,
           if(flg==0,
-            tmp2=Getlevel(substring(res,0,tmp1),s); //210405
+            tmp=substring(res,0,tmp1);
+            tmp2=Getlevel(tmp,s); //210405
             if(length(tmp2)>0,
               tmp2=select(tmp2,#_2==1);
               if(length(tmp2)>0,tmp2=tmp2_1_1,tmp2=0);
               if(tmp2<tmp1, //210302
-                res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res));
-                str=str+"((";
+                if(type==2,
+                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
+                  str=str+"("; //210611
+                ,
+                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
+                  str=str+"(("; //210611
+                );
                 flg=1;
               );
             );
           );
         );
+        if((flg==0)&(type==2), //210611from
+          str=str+substring(res,1,tmp1);
+          res=substring(res,tmp1,length(res));
+        ); //210611to
       );
+      res=res+res2;
       ctr=ctr+1;
     );
     str0=str+res;

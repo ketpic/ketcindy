@@ -14,8 +14,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibkey[20210606] loaded");
+println("ketcindylibkey[20210612] loaded");
 
+// 210615 Keytalble changed ( name added )
+// 210612 Replacefun debugged
 // 210606 Replacematdet,Extractvar added
 // 210604 Replacefun, Morefunctions added
 //              Modifyfortex changed ( (inf) added )
@@ -34,61 +36,14 @@ npos=0;
 
 Modifyfortex(str):=(
   regional(rep1L,rep2L,nn,tmp,tmp1,out);
-  rep1L=["(sp)","(cross)","(cdot)","(deg)","(neq)",
+  rep1L=["(sp)","(cross)","(cdot)","(deg)","(circ)","(neq)",
          "(geq)","(leq)","(pm)","(mp)","(inf)"];
-  rep2L=["\;","{\times}\,","{\cdot}\,","^{\circ}\,","{\neq}\,",
+  rep2L=["\;","{\times}\,","{\cdot}\,","^{\circ}\,","\circ\,","{\neq}\,",
          "{\geq}\,","{\leq}\,","{\pm}\,","{\mp}\,","{\infty}\,"];
   out=str;
   forall(1..(length(rep1L)),nn,
     out=replace(out,rep1L_nn,rep2L_nn);
   );
-  out;
-);
-
-Replacefun(str,name,repL):=(  //new 210604
-  regional(out,sub,pre,post,comL,ctr,lev,nn,
-     tmp,tmp1,tmp2);
-  out=str;
-  pre=""; post=""; sub="";
-  tmp=indexof(out,name);
-  ctr=1;
-  while((tmp>0)&(ctr<50),
-    pre=substring(out,0,tmp-1);
-    sub=substring(out,tmp+2,length(out));
-    tmp1=Bracket(sub,"()");
-    tmp1=select(tmp1,#_2==-1);
-    tmp1=tmp1_1_1;
-    post=substring(sub,tmp1,length(out));
-    sub=substring(sub,0,tmp1);
-    tmp1=Bracket(sub,"()");
-    tmp2=Indexall(sub,",");
-    comL=[1];
-    forall(tmp2,nn,
-      lev=select(tmp1,#_1<nn);
-      lev=lev_(-1);
-      if((lev_2==1)%(lev_2==-2),
-        comL=append(comL,nn);
-      );
-    );
-    comL=append(comL,length(sub));
-    if(length(comL)==length(repL),
-      out=repL_1;
-      tmp1=comL_1;
-      forall(2..(length(comL)),
-        tmp2=substring(sub,tmp1,comL_#-1);
-        out=out+tmp2;
-        out=out+repL_#;
-        tmp1=comL_#;
-      );
-    ,
-      tmp1=replace(name,"(","");
-      pre=pre+tmp1+sub;
-      out="";
-    );
-    ctr=ctr+1;
-    tmp=indexof(out,name);
-  );
-  out=pre+out+post;
   out;
 );
 
@@ -177,14 +132,60 @@ Replacematdet(str):=(
   out;
 );
 
+Replacefun(str,name,repL):=(  //new 210604
+  regional(out,sub,rest,pre,post,comL,ctr,lev,nn,
+     tmp,tmp1,tmp2);
+  out="";
+  pre=""; post=str; sub="";
+  tmp=indexof(post,name);
+  ctr=1;
+  while((tmp>0)&(ctr<50),
+    pre=substring(post,0,tmp-1);
+    sub=substring(post,tmp+length(name)-2,length(post));
+    tmp1=Bracket(sub,"()");
+    tmp1=select(tmp1,#_2==-1);
+    tmp1=tmp1_1_1;
+    post=substring(sub,tmp1,length(sub));
+    sub=substring(sub,0,tmp1);
+    tmp1=Bracket(sub,"()");
+    tmp2=Getlevel(sub,",");
+    if(length(tmp2)==0,
+      if(name=="int(",
+        pre=pre+"\displaystyle\int\,";
+      );
+    ,
+      tmp2=select(tmp2,#_2==1);
+      tmp2=apply(tmp2,#_1);
+      tmp2=prepend(1,tmp2);
+      tmp2=append(tmp2,length(sub));
+      if(length(tmp2)==length(repL),
+        forall(1..(length(tmp2)-1),
+          tmp=substring(sub,tmp2_#,tmp2_(#+1)-1);
+          if(!contains(["e^("],name),
+            if(indexof(tmp,"-")+indexof(tmp,"+")>0,tmp="("+tmp+")");
+          );
+          pre=pre+repL_#+tmp;
+//        if(#<length(tmp2)-1,pre=pre+","); //210617removed
+        );
+        pre=pre+repL_(length(tmp2));
+      );
+    );
+    out=out+pre;
+    tmp=indexof(post,name);
+    ctr=ctr+1;
+  );
+  out=out+post;
+  out;
+);
+
 Morefunction(str):=( //new 210604
   regional(out,name,repL);
   out=str;
   out=Replacefun(out,"tfr(",["\tfrac{","}{","}"]);
-  out=Replacefun(out,"lim(",["\displaystyle\lim_{","\to\,","}",""]);
-  out=Replacefun(out,"int(",["\displaystyle\int_{","}^{","}","\,d"," "]);
-  out=Replacefun(out,"int(",["\displaystyle\int\,","\,d"," "]);
-  out=Replacefun(out,"sum(",["\displaystyle\sum_{","}^{","}{","}"]); //210606
+  out=Replacefun(out,"lim(",["\displaystyle\lim_{","\to\,","}"]); //210617from
+  out=Replacefun(out,"int(",["\displaystyle\int_{","}^{","}"]);
+  out=Replacefun(out,"sum(",["\displaystyle\sum_{","}^{","}"]); //210617to
+//  out=Replacefun(out,"e^(",["\exp{","}"]); //210612
   out=Replacematdet(out); //210606
   out;
 );
@@ -439,6 +440,7 @@ Gettexform(str):=(
       tmp=Modifyfortex(tmp);
       tmp=Morefunction(tmp);
       tmp=Addasterisk(tmp);
+      tmp=replace(tmp,"\exp(","e^(");
       tmp1=Totexform(tmp);
       tmp1=replace(tmp1,"a r r a y","array"); //210606[2lines]
       repeat(5,tmp1=replace(tmp1,"c c","cc"));
@@ -459,7 +461,7 @@ Dispposition(pos,npos,str):=(
   tmp=[0.1,0];
   p1=pos-tmp;  p2=pos+tmp;
   p3=p1+dp; p4=p2+dp;
-  Listplot("-disp",[p1,p2,p4,p3,p1],["nodisp"]);
+  Listplot("-disp",[p1,p2,p4,p3,p1],["nodisp","Msg=n"]);
   Shade(["disp"],["Color=red"]);
   if(length(str)>0,
     tmp=max([0,npos-4]);
@@ -483,17 +485,27 @@ Addfunstr(name,npos,strnow):=(
   out;
 );
 
-Keytable(nx,dx,ny,dy,plb,clr):=(
-  regional(xL,yL,plt,prt,prb);
-  xL=apply(0..nx,#/10*dx);
-  yL=apply(0..ny,#/10*dy);
-  plt=plb+[0,yL_(-1)]; prt=plt+[xL_(-1),0]; prb=prt-[0,yL_(-1)];
-  fillpoly([plb,plt,prt,prb,plb],color->clr,alpha->1);
-  forall(xL,draw([plb_1+#,plb_2],[plb_1+#,plt_2],color->[0,0,0]));
-  forall(yL,draw([plb_1,plb_2+#],[prb_1,plb_2+#],color->[0,0,0]));
-  xL=apply(xL,plb_1+#);
-  yL=apply(yL,plb_2+#);
-  [xL,dx/10,yL,dy/10];
+Keytable(nx,dx,ny,dy,plb,clr):=Keytable(nx,dx,ny,dy,plb,clr,[],0);
+Keytable(nx,dx,ny,dy,plb,clr,nameL,nmove,sz):=(
+  regional(xL,yL,plt,prt,prb,row,col,name,tmp1,tmp2,pos);
+  xL=apply(0..nx,#/10*dx+plb_1);
+  yL=apply(0..ny,(ny-#)/10*dy+plb_2);
+  plt=[xL_1,yL_1]; prt=[xL_(-1),yL_1]; prb=[xL_(-1),yL_(-1)];
+  fillpoly([plb,plt,prt,prb,plb],color->clr);
+  forall(xL,draw([#,plb_2],[#,plt_2],color->[0,0,0]));
+  forall(yL,draw([plb_1,#],[prb_1,#],color->[0,0,0]));
+  forall(1..(length(yL)-1),row,
+    tmp1=yL_row;
+    tmp2=yL_(row+1);
+    pos=[0,(tmp1+tmp2)/2];
+    forall(1..(length(xL)-1),col,
+      name=nameL_row_col;
+      tmp1=xL_col;
+      tmp2=xL_(col+1);
+      pos_1=(tmp1+tmp2)/2;
+      drawtext(pos+nmove,name,align->"mid",size->sz);
+    );
+  );
 );
 
 Allclear():=(
@@ -504,7 +516,7 @@ Allclear():=(
   funflg=0;
 );
 
-Delete():=(
+Deletekey():=(
   regional(tmp1,tmp2);
   if(npos>0,
     tmp1=substring(strnow,0,npos-1);

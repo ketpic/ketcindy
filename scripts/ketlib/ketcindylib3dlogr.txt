@@ -1,3 +1,6 @@
+// 210620
+//    Skeletonparadata changed  ( to write data 'sk3d' directly )
+//    Skeletonparadata debugged  (for string data : recovered )
 // 210521
 //    Xyzax3data debugged  ( Lightarrow -> Arrowhead )
 // 210408

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210521] loaded");
+println("ketcindylib3d[20210620] loaded");
 
 //help:start();
 
@@ -4493,6 +4493,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
 //help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
 //help:Skeletonparadatac(options=[1(width),"File=y(/m/n)","Not=ptlist","Check=ptlist"]);
   regional(Eps,Eps2,name2,name3,options,Ltype,Noflg,reL,eqL,opcindy,
+  // global Sketeton;
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color,
      fileflg,wflg,mkflg,fname,varL,nn,chkL); //181101
@@ -4502,13 +4503,13 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   pltdata1=[];// 16.01.31
   forall(pltdata1org,tmp1,
     if(isstring(tmp1),tmp=parse(tmp1),tmp=tmp1); //210319
-//    tmp=apply(tmp,if(isstring(#),parse(#),#));//190506
+    tmp=apply(tmp,if(isstring(#),parse(#),#));//210620[recoverd]
     pltdata1=append(pltdata1,tmp);
   );
   pltdata2=[];// 16.01.31
   forall(pltdata2org,tmp1,
     if(isstring(tmp1),tmp=parse(tmp1),tmp=tmp1); //210319
-//    tmp=apply(tmp,if(isstring(#),parse(#),#));//190506
+    tmp=apply(tmp,if(isstring(#),parse(#),#));//210620[recoverd]
     pltdata2=append(pltdata2,tmp);
   );
   options=optionsorg;
@@ -4551,7 +4552,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   Eps=10^(-4);
   ObjL=Flattenlist(pltdata1);
   Plt3L=Flattenlist(pltdata2);
-  tmp=apply(Plt3L,Projcoordcurve(#));
+  tmp=apply(1..(length(Plt3L)),Projcoordcurve(Plt3L_#));
   Plt2L=Flattenlist(tmp);
   if((fileflg=="Y")%(fileflg=="M")&(mkflg>-1),  // no ketjs on //181101from, 181103
     wflg=1;
@@ -4621,7 +4622,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   ,
     Out=Skeleton;  //210324to
   );
-  tmp1=apply(Out,textformat(#,10));
+  tmp1=apply(Out,textformat(#,6));
   tmp=name3+"="+tmp1+";"; //190415
   parse(tmp);
   tmp=name2+"=Projcurve("+tmp1+");";
@@ -4632,17 +4633,18 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   if((Noflg<3)&(mkflg> -1), //no ketjs on //181103
     if(fileflg!="Y", //181102
       println("generate skeleton :"+name3);
-      tmp1=text(pltdata1org);
-      if(tmp1_1=="[",tmp1=substring(tmp1,1,length(tmp1)-1)); //201230[2lines]
-      tmp1="list("+tmp1+")";
-      tmp2=text(pltdata2org);
-      if(tmp2_1=="[",tmp2=substring(tmp2,1,length(tmp2)-1)); //201230[2lines]
-      tmp2="list("+tmp2+")";
-      tmp=name3+"=Skeletonpara3data("+tmp1+","+tmp2+",";
-      tmp=tmp+text(size)+")";
-      GLIST=append(GLIST,tmp);  
-      tmp=name2+"=Projpara("+name3+")";
+      if(Measuredepth(Out)<2,Out=[Out]); //210620from
+      tmp2="list(";
+      forall(Out,
+        tmp=Rsform(text(#));
+        tmp="matrix("+tmp+",ncol=3,byrow=T),";
+        tmp2=tmp2+tmp;
+      );
+      tmp2=substring(tmp2,0,length(tmp2)-1)+")";
+      tmp=name3+"="+tmp2;
       GLIST=append(GLIST,tmp);
+      tmp=name2+"=Projpara("+name3+")";
+      GLIST=append(GLIST,tmp); //210620fto
     ,
       GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
     );

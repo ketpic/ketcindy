@@ -20,6 +20,8 @@ ThisVersion<- "KeTpic for R  v5_2_4(20210504)"
 
 print(ThisVersion)
 
+# 20210625
+#   Partcrv changed ( for not matrix data )
 # 20210503
 #   Koutenseg debugged  (Tmp< )
 # 20210421
@@ -5474,9 +5476,12 @@ Paramplot<- function(...)
 }
 
 #####################################
-
-Partcrv<- function(A,B,PkL)
+Partcrv<- function(A,B,PkLorg)
 {
+  PkL=PkLorg  #210625from
+  if(!is.matrix(PkL)){
+    PkL=matrix(PkL,ncol=2,byrow=TRUE)
+  }   #210625to
   Eps<- 10.0^(-3)
   if(mode(A)=="numeric" && length(A)==1){
     if(A>B+Eps){

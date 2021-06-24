@@ -1,3 +1,5 @@
+// 20210624
+//    Intersegseg debugged  ( for small segments )
 // 20210609
 //    Pointdata debugged  (color for ketcindyjs)
 // 20210602

@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210609] loaded");
+println("ketcindylibbasic1[20210624] loaded");
 
 //help:start();
 
@@ -2100,11 +2100,11 @@ Intersectseg(seg1org,seg2org,Eps1):=(
   out=[];
   p1=seg1_1; q1=seg1_2;
   p2=seg2_1; q2=seg2_2;
-  if((|q1-p1|<Eps)%(|q2-p2|<Eps),
+   if((|q1-p1|<Eps)%(|q2-p2|<Eps),
     out=[-1];
   ,
     tmp=Intersectline(p1,q1-p1,p2,q2-p2);
-    if(islist(tmp_1),
+    if((islist(tmp))&(length(tmp)==3),
       pt=tmp_1; t=tmp_2; s=tmp_3;
       if((t*(t-1)<Eps)&(s*(s-1)<Eps),
         out=[0,pt,t,s];
@@ -2177,9 +2177,21 @@ Intersectseg(seg1org,seg2org,Eps1):=(
           tmp=apply(pts,#_1_2);
           tmp2=sum(tmp)/(length(pts));
           tmp3=[tmp1,tmp2];
-          tmp=Nearestpt(tmp3,seg1);
+          tmp1=seg1_2-seg1_1;
+          tmp=Dotprod(tmp3-seg1_1,tmp1)/Norm(tmp1)^2;
+          if((tmp>0)%(tmp<1),
+            tmp=[seg1_1+tmp*tmp1,1+tmp];
+          ,
+            if(tmp<0,tmp=[seg1_1,1],tmp2=[seg1_2,2]);
+          );
           tmp1=tmp_2;
-          tmp=Nearestpt(tmp3,seg2);
+          tmp2=seg2_2-seg2_1;
+          tmp=Dotprod(tmp3-seg2_1,tmp2)/Norm(tmp2)^2;
+          if((tmp>0)%(tmp<1),
+            tmp=[seg2_1+tmp*tmp2,1+tmp];
+          ,
+            if(tmp<0,tmp=[seg2_1,1],tmp=[seg2_2,2]);
+          );
           tmp2=tmp_2;
           out=[dist,tmp3,tmp1,tmp2];
         );

@@ -27,7 +27,7 @@ Xyzax3data,3d,1056,1183,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Spaceline,Xyza
 Xyzaxparaname,3d,1187,1229,Strsplit,Dqq,Parapt,Expr
 Datalist3d,3d,1233,1241
 Datalist2d,3d,1245,1253
-Embed,3d,1257,1345,Measuredepth,Divoptions,Assign,Projpara,textformat,Com2nd,Getlinestyle,Texcom,Subgraph
+Embed,3d,1257,1345,Measuredepth,Divoptions,Colorrgb2cmyk,Assign,Projpara,textformat,Com2nd,Getlinestyle,Texcom,Subgraph
 Rotate3pt,3d,1349,1350,Rotatepoint3d
 Rotatepoint3d,3d,1353,1394,Measuredepth,Norm,Dotprod,Crossprod
 Rotatedata3d,3d,1398,1469,Divoptions,Colorrgb2cmyk,Rotatepoint3d,Flattenlist,Projpara,textformat,RSform,Textformat,Com2nd,Getlinestyle,Texcom,Subgraph

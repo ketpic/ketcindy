@@ -1286,7 +1286,7 @@ Embed(nm,Pd2str,funstr,varstr,options):=(
   tmp=Divoptions(options);
   Ltype=tmp_1;
   Noflg=tmp_2;
-  color=tmp_(length(tmp)-2);
+  color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //210620
   opcindy=tmp_(length(tmp));
   Out=[];
   forall(Pd2L,Pd2,

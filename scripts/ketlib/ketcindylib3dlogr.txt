@@ -1,3 +1,5 @@
+// 210625
+//    Skeletonparadata debugged ( precision => 6 )
 // 210620
 //    Skeletonparadata changed  ( to write data 'sk3d' directly )
 //    Skeletonparadata debugged  (for string data : recovered )

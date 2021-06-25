@@ -78,7 +78,7 @@ WireparadataR,3d,4175,4276,Divoptions,Toupper,Select,MkprecommandR,RSform,textfo
 IntersectcrvsfR,3d,4280,4368,Intersectcrvsf,Divoptions,Toupper,RSform,textformat,Rsform,Dqq,CalcbyR,ReadOutData
 SfcutparadataR,3d,4372,4469,Strsplit,Changestyle,Divoptions,Toupper,RSform,Select,MkprecommandR,textformat,Rsform,Dqq,CalcbyR,ReadOutData,Extractdata,Projpara
 Skeletonparadata,3d,4475,4479,Skeletondatacindy
-Skeletondatacindy,3d,4483,4677,Datalist3d,Divoptions,Flattenlist,Projcoordcurve,Makeskeletondata,Norm,Ptcrv,Invparapt,Projcurve,textformat,Changestyle3d,Getlinestyle,Com2nd,Subgraph
+Skeletondatacindy,3d,4483,4677,Datalist3d,Divoptions,Flattenlist,Projcoordcurve,Makeskeletondata,Norm,Ptcrv,Invparapt,Projcurve,Textformat,Changestyle3d,Getlinestyle,Com2nd,Subgraph
 Makeskeletondata,3d,4681,4883,Columnlist,Intersectcrvspp,Op,column,Dotprod,Norm,Kukannozoku,Pointoncurve,Listplot
 Kukannozoku,3d,4887,4938
 Projcoordcurve,3d,4944,4958

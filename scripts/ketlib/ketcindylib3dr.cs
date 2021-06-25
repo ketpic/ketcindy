@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210620] loaded");
+println("ketcindylib3d[20210625] loaded");
 
 //help:start();
 
@@ -4622,7 +4622,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   ,
     Out=Skeleton;  //210324to
   );
-  tmp1=apply(Out,textformat(#,6));
+  tmp1=apply(Out,Textformat(#,6));
   tmp=name3+"="+tmp1+";"; //190415
   parse(tmp);
   tmp=name2+"=Projcurve("+tmp1+");";
@@ -4636,7 +4636,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       if(Measuredepth(Out)<2,Out=[Out]); //210620from
       tmp2="list(";
       forall(Out,
-        tmp=Rsform(text(#));
+        tmp=Rsform(Textformat(#,6));  //210625
         tmp="matrix("+tmp+",ncol=3,byrow=T),";
         tmp2=tmp2+tmp;
       );

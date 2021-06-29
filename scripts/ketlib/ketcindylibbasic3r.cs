@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210611] loaded");
+println("ketcindylibbasic3[20210629] loaded");
 
 //help:start();
 
@@ -3148,20 +3148,6 @@ Addasterisk(strorg):=(
   );  //210405to
   str=replace(str," ","*");
   str=replace(str,"pi","%");
-  str=replace(str,"ex(","exp("); //210227from
-  tmp=Indexall(str,"e");
-  if(length(tmp)>0,
-    tmp1=substring(str,0,tmp_1-1);
-    forall(tmp,
-      if(!substring(str,#,#+3)!="xp(",
-        tmp1=tmp1+"exp(1)";
-      ,
-        tmp1=tmp1+"e";
-      );
-    );
-    str=tmp1+substring(str,tmp_(-1),length(str));;
-  );
-
   funL=["sin","cos","tan","log","fr","sq","exp"]; //210227to
   sgnL=["+","-","*","/","^"];
   numL=append(apply(0..9,text(#)),"."); //210226

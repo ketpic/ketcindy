@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210629] loaded");
+println("ketcindylibbasic3[20210702] loaded");
 
 //help:start();
 
@@ -3045,7 +3045,7 @@ Addasterisk(strorg):=(
   sgnL=["-","+"];
   forall(funL,f,
     str="";
-    res=str0;
+    res=str0; res2="";
     ctr=1;
     while((indexof(res,f)>0)&(ctr<100),
       tmp1=indexof(res,f);

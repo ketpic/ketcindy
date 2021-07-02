@@ -1,3 +1,5 @@
+// 210702
+//   Addasterisk debugged  ( res2="" )
 // 210611
 //   Addasterisk debugged  ( case of ( , +/- ) )
 // 210514

@@ -1,3 +1,7 @@
+// 210724
+//  Copyketcindyjs changed  (jquerry updated to 3-6-0)
+// 210716
+//   Addasterisk changed ( for adding () in case of * )
 // 210702
 //   Addasterisk debugged  ( res2="" )
 // 210611

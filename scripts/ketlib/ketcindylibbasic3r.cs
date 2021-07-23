@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210702] loaded");
+println("ketcindylibbasic3[20210724] loaded");
 
 //help:start();
 
@@ -3041,82 +3041,6 @@ Addasterisk(strorg):=(
   regional(pL,sL,funL,fn,sgnL,numL,alphaL,type,res,res2,
       str0,str,f,k,n1,n2,sub,tmp,tmp1,tmp2,ctr,out,s,flg,repL);
   str0=replace(strorg,"  ","*");
-  funL=["sin","cos","tan","log"]; 
-  sgnL=["-","+"];
-  forall(funL,f,
-    str="";
-    res=str0; res2="";
-    ctr=1;
-    while((indexof(res,f)>0)&(ctr<100),
-      tmp1=indexof(res,f);
-      str=str+substring(res,0,tmp1+2);
-      res=substring(res,tmp1+2,length(res));
-      if(res_1==" ",
-        str=str+"(";
-        res=substring(res,1,length(res));
-        tmp=indexof(res," ");
-        if(tmp>0,
-          str=str+substring(res,0,tmp-1)+")";
-          res=substring(res,tmp,length(res));
-        ,
-          str=str+res+")";
-          res="";
-        );
-      );
-      if(res_1=="(",
-        type=1;
-        tmp1=bracket(res,"()");
-        tmp=select(tmp1,#_2==-1); //210611from
-        if(length(tmp)>0,
-          tmp=tmp_1_1;
-          res2=substring(res,tmp,length(res));
-          res=substring(res,0,tmp);
-        ,
-          res2="";
-        );
-        tmp2=Indexall(res,","); //210611from
-        tmp2=Getlevel(res,",");
-        tmp2=select(tmp2,#_2==1);
-        if(length(tmp2)>0,
-          tmp2=tmp2_1_1;
-          str=str+substring(res,0,tmp2);
-          res="("+substring(res,tmp2,length(res));
-          tmp1=bracket(res,"()");
-          type=2;
-        );  //210611to
-        tmp1=select(tmp1,#_2==-1);
-        if(length(tmp1)>0,tmp1=tmp1_1_1,tmp1=0);
-        flg=0;
-        forall(sgnL,s,
-          if(flg==0,
-            tmp=substring(res,0,tmp1);
-            tmp2=Getlevel(tmp,s); //210405
-            if(length(tmp2)>0,
-              tmp2=select(tmp2,#_2==1);
-              if(length(tmp2)>0,tmp2=tmp2_1_1,tmp2=0);
-              if(tmp2<tmp1, //210302
-                if(type==2,
-                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
-                  str=str+"("; //210611
-                ,
-                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
-                  str=str+"(("; //210611
-                );
-                flg=1;
-              );
-            );
-          );
-        );
-        if((flg==0)&(type==2), //210611from
-          str=str+substring(res,1,tmp1);
-          res=substring(res,tmp1,length(res));
-        ); //210611to
-      );
-      res=res+res2;
-      ctr=ctr+1;
-    );
-    str0=str+res;
-  );
   str=str0;
   repL=[];  //210405from
   ctr=1;
@@ -3214,6 +3138,84 @@ Addasterisk(strorg):=(
   forall(1..(length(repL)),n1,  //210405from
     out=replace(out,"#"+text(n1)+"#",repL_n1);
   ); //210405to
+  str0=out; //210716(moved)from
+  funL=["sin","cos","tan","log"]; 
+  sgnL=["-","+","*"];
+  forall(funL,f,
+    str="";
+    res=str0; res2="";
+    ctr=1;
+    while((indexof(res,f)>0)&(ctr<100),
+      tmp1=indexof(res,f);
+      str=str+substring(res,0,tmp1+2);
+      res=substring(res,tmp1+2,length(res));
+      if(res_1==" ",
+        str=str+"(";
+        res=substring(res,1,length(res));
+        tmp=indexof(res," ");
+        if(tmp>0,
+          str=str+substring(res,0,tmp-1)+")";
+          res=substring(res,tmp,length(res));
+        ,
+          str=str+res+")";
+          res="";
+        );
+      );
+      if(res_1=="(",
+        type=1;
+        tmp1=bracket(res,"()");
+        tmp=select(tmp1,#_2==-1); //210611from
+        if(length(tmp)>0,
+          tmp=tmp_1_1;
+          res2=substring(res,tmp,length(res));
+          res=substring(res,0,tmp);
+        ,
+          res2="";
+        );
+        tmp2=Indexall(res,","); //210611from
+        tmp2=Getlevel(res,",");
+        tmp2=select(tmp2,#_2==1);
+        if(length(tmp2)>0,
+          tmp2=tmp2_1_1;
+          str=str+substring(res,0,tmp2);
+          res="("+substring(res,tmp2,length(res));
+          tmp1=bracket(res,"()");
+          type=2;
+        );  //210611to
+        tmp1=select(tmp1,#_2==-1);
+        if(length(tmp1)>0,tmp1=tmp1_1_1,tmp1=0);
+        flg=0;
+        forall(sgnL,s,
+          if(flg==0,
+            tmp=substring(res,0,tmp1);
+            tmp2=Getlevel(tmp,s); //210405
+            if(length(tmp2)>0,
+              tmp2=select(tmp2,#_2==1);
+              if(length(tmp2)>0,tmp2=tmp2_1_1,tmp2=0);
+              if(tmp2<tmp1, //210302
+                if(type==2,
+                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
+                  str=str+"("; //210611
+                ,
+                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
+                  str=str+"(("; //210611
+                );
+                flg=1;
+              );
+            );
+          );
+        );
+        if((flg==0)&(type==2), //210611from
+          str=str+substring(res,1,tmp1);
+          res=substring(res,tmp1,length(res));
+        ); //210611to
+      );
+      res=res+res2;
+      ctr=ctr+1;
+    );
+    str0=str+res;
+  );
+  out=str0; //210716(moved)to
   out;
 );
 ////%Addasterisk end////
@@ -3679,7 +3681,7 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex-plugin.js"+tmp2);
     println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
-    println(SCEOUTPUT,tmp1+"jquery.min.js"+tmp2); //200123[2lines]
+    println(SCEOUTPUT,tmp1+"jquery-3.6.0.min.js"+tmp2); //210724
     println(SCEOUTPUT,tmp1+"auto-render.min.js"+tmp2);
     println(SCEOUTPUT,tmp1+"auto-render11.min.js"+tmp2); //200517(trial)
     println(SCEOUTPUT,"cd katex");
@@ -3714,7 +3716,7 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,"cp -p CindyJS.css "+tmp2);
     println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp2);
     println(SCEOUTPUT,"cp -p webfont.js "+tmp2); //190214to
-    println(SCEOUTPUT,"cp -p jquery.min.js "+tmp2); //200123[2lines]
+    println(SCEOUTPUT,"cp -p jquery-3.6.0.min.js "+tmp2); //210724
     println(SCEOUTPUT,"cp -p auto-render.min.js "+tmp2);
     println(SCEOUTPUT,"cp -p auto-render11.min.js "+tmp2); //210503to
     println(SCEOUTPUT,"exit 0");

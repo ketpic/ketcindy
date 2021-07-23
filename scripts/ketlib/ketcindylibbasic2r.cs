@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210602] loaded");
+println("ketcindylibbasic2[20210724] loaded");
 
 //help:start();
 
@@ -259,8 +259,7 @@ Arrowhead(Arg1,Arg2,Arg3):=(
 Arrowhead(nm,pointorg,direction,optionsorg):=(//191129remade
 //help:Arrowhead("1",B,B-A);
 //help:Arrowhead("2",[1,2],"gr1");
-//help:Arrowhead("3",0.5,"gr1");
-//help:Arrowhead("4",1,"gr1");
+//help:Arrowhead("3",Ptend("gr1"),"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
    regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
          point,options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
@@ -285,9 +284,12 @@ Arrowhead(nm,pointorg,direction,optionsorg):=(//191129remade
      );
   );
   list=Arrowheaddata(point,direction,options);
-//  if((ispoint(point))%(islist(point)),  //210216[removed]
+  if(length(point)>1, //210724from
     if(!Inwindow(point),Noflg=2);
-//  );  //210216[removed]
+    if(isstring(direction),
+      if(|Ptend(direction)-point|<Eps,point=1);
+    );
+  ); //210724to
   if(Noflg<3,
     tmp=name+"="+Textformat(list,10)+";"; //210311
     parse(tmp);
@@ -295,7 +297,7 @@ Arrowhead(nm,pointorg,direction,optionsorg):=(//191129remade
       if(line=="N",
         fillpoly(apply(list,Pcrd(#)),color->color);
         if(Noflg==0,
-          if(isstring(directory), //210215
+          if(isstring(direction), //210215,210724
             if(ispoint(point) % islist(point), //201214from
               if(|point-Ptend(direction)|<Eps,point=1);
             );  //201214to

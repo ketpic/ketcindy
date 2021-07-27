@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210724] loaded");
+println("ketcindylibbasic3[20210726] loaded");
 
 //help:start();
 
@@ -3681,7 +3681,7 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex-plugin.js"+tmp2);
     println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
-    println(SCEOUTPUT,tmp1+"jquery-3.6.0.min.js"+tmp2); //210724
+    println(SCEOUTPUT,tmp1+"jquery.min.js"+tmp2); //3.6.0 since 210724
     println(SCEOUTPUT,tmp1+"auto-render.min.js"+tmp2);
     println(SCEOUTPUT,tmp1+"auto-render11.min.js"+tmp2); //200517(trial)
     println(SCEOUTPUT,"cd katex");
@@ -3716,7 +3716,7 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,"cp -p CindyJS.css "+tmp2);
     println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp2);
     println(SCEOUTPUT,"cp -p webfont.js "+tmp2); //190214to
-    println(SCEOUTPUT,"cp -p jquery-3.6.0.min.js "+tmp2); //210724
+    println(SCEOUTPUT,"cp -p jquery.min.js "+tmp2); //3.6.0 since 210724
     println(SCEOUTPUT,"cp -p auto-render.min.js "+tmp2);
     println(SCEOUTPUT,"cp -p auto-render11.min.js "+tmp2); //210503to
     println(SCEOUTPUT,"exit 0");
@@ -4986,7 +4986,7 @@ Mkketcindyjs(options):=( //17.11.18
 //      println(SCEOUTPUT,"<script id="+tmp+"></script>");
       if(webflg=="Y", 
         println(SCEOUTPUT,"<script src="+
-            Dqq("https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")+"></script>");
+            Dqq("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")+"></script>");//210724
         println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+
             Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517(trial)
         println(SCEOUTPUT,"<script src="+
@@ -4994,7 +4994,7 @@ Mkketcindyjs(options):=( //17.11.18
         println(SCEOUTPUT,"<script src="+
             Dqq("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517(trial)
       , 
-        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/jquery.min.js")+"></script>"); //200122from
+        println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/jquery.min.js")+"></script>"); //200122
         println(SCEOUTPUT,"<link rel="+Dqq("stylesheet")+" href="+Dqq("ketcindyjs/katex/katex11.min.css")+" />"); //200517(trial)
         println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/katex/katex11.min.js")+"></script>"); //200517(trial)
         println(SCEOUTPUT,"<script src="+Dqq("ketcindyjs/auto-render11.min.js")+"></script>"); //200517(trial)

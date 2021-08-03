@@ -1,5 +1,6 @@
 \documentclass{ujarticle}
-\usepackage{ketpic,ketlayer}
+\usepackage{pict2e}
+\usepackage{ketpic2e,ketlayer2e,ketlayermorewith2e}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -67,8 +68,9 @@ KeTCindyを使うために
 %\vspace{3mm}
 
 \begin{layer}{140}{0}
-\putnotese{17}{15}{\includegraphics[bb=0.00 0.00 771.00 420.00,width=100mm]{Fig/setting.pdf}}
-\putnotee{-10}{5}{\bf [1]\ 言語などの選択}
+\putnotese{17}{18}{\includegraphics[bb=0.00 0.00 813.00 271.00,width=100mm]{setting.pdf}}
+\arrowlineseg{30}{17}{14}{135}
+\putnotee{0}{5}{\bf [1]\ 言語などの選択}
 \putnotese{-7}{10}{\underline{Language}}
 \putnotese{-5}{15}{\begin{tabular}{l}
 Japanese\vspace{-1mm}\\English \end{tabular}}
@@ -76,35 +78,31 @@ Japanese\vspace{-1mm}\\English \end{tabular}}
 \putnotese{-5}{29}{\begin{tabular}{l}
 platex\vspace{-1mm}\\uplatex\vspace{-1mm}\\latex\vspace{-1mm}\\xelatex\vspace{-1mm}\\pdflatex\vspace{-1mm}\\lualatex\end{tabular}}
 \putnotese{-7}{57}{\underline{Graphic Code}}
-\putnotese{-5}{61}{\begin{tabular}{l}tpic\vspace{-1mm}\\pict2e\vspace{-1mm}\\tikz\end{tabular}}
-\arrowline{34}{17}{18}{135}
-\putnoten{73}{7}{\bf [2]\ \TeX システムの選択}
-\arrowline{73}{17}{9}{90}
-\putnotee{115}{5}{\bf [3]\ 作成と更新}
-\arrowline{100}{17}{18}{45}
-\putnotese{121}{9}{\fbox{Mkinit}}
-\putnotese{123}{16}{\begin{minipage}[t]{52mm}%
+\putnotese{20}{57}{pict2e,\ Tpic,\ tikz}
+\arrowlineseg{60}{17}{9}{90}
+\putnoten{60}{7}{\bf [2]\ \TeX システムの選択}
+\arrowlineseg{86}{17}{10}{60}
+\putnotee{83}{5}{\bf [3]\ 作成と更新}
+\arrowlineseg{104}{17}{14}{45}
+\putnotee{115}{5}{\bf [3]\ \TeX 不使用}
+\putnotese{121}{12}{\fbox{Mkinit}}
+\putnotese{123}{18}{\begin{minipage}[t]{52mm}%
 初期設定ファイルketcindy.iniをユーザホーム(ホーム)に作成\\
-%{\small 注）CinderellaのPluginsにおくとき\\
-%\hspace*{3mm}CindyScript/ketlibの3行目を\\
-%\hfill setdirectory(plugindirectory)にする}
 \end{minipage}}
 \putnotese{121}{30}{\fbox{Update}}
 \putnotese{123}{37}{TeXシステムのketcindyを更新}
-%\putnotese{126}{56}{実行時エラーの場合Helpを参照}
-\putnotese{121}{47}{\fbox{Work}}
-\putnotese{123}{54}{\begin{minipage}[t]{52mm}%
+\putnotese{121}{45}{\fbox{Work}}
+\putnotese{123}{52}{\begin{minipage}[t]{52mm}
 作業フォルダketcindy(+日付)をホームに作成
-(samples, templates, manual)
 \end{minipage}}
 \end{layer}
 
-\vspace{71mm}
+\vspace{60mm}
 
 \item テストラン\vspace{-2mm}
 
 \begin{itemize}
- \item Cinderellaをいったん終了，ユーザホーム/ketcindy(+日付)/templtatesの1つのファイルをダブルクリック．
+ \item Cinderellaをいったん終了，ユーザホーム/ketcindy(+日付)/templtatesの1つのファイルをダブルクリック．\vspace{-1mm}
 \item\verb|Figure|を押して，pdfが表示されれば成功
 \end{itemize}
 
@@ -115,7 +113,10 @@ platex\vspace{-1mm}\\uplatex\vspace{-1mm}\\latex\vspace{-1mm}\\xelatex\vspace{-1
 　・CinderellaのPluginsフォルダにコピーした場合は，\verb|setdirectory(plugindirectory);|とする．
 
 \item エディタの設定などについては，\verb|doc>readmemore|フォルダにあるReadmemore(Mac,Win,Linux)を参照．
+\item \ketcindy JSだけを用いるときは，Cinderellaだけをインストールすればよい，\\
+　・ketcindysettings.cdyでNotexを押すと，ユーザホームにketcindy.iniができる．
 \end{itemize}
+
 \end{enumerate}
 
 \end{document}

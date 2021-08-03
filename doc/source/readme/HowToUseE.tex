@@ -1,5 +1,6 @@
 \documentclass{article}
-\usepackage{ketpic,ketlayer}
+\usepackage{pict2e}
+\usepackage{ketpic2e,ketlayer2e,ketlayermorewith2e}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -65,7 +66,8 @@ To Use KeTCindy
 %\vspace{2mm}
 
 \begin{layer}{140}{0}
-\putnotese{17}{20}{\includegraphics[bb=0.00 0.00 752.00 408.00,width=100mm]{Fig/setting.pdf}}
+\putnotese{17}{18}{\includegraphics[bb=0.00 0.00 813.00 271.00,width=100mm]{setting.pdf}}
+\arrowlineseg{30}{17}{14}{135}
 \putnotee{0}{5}{\bf [1]\ Select language,etc}
 \putnotese{-7}{10}{\underline{Language}}
 \putnotese{-5}{15}{\begin{tabular}{l}Japanese\\English\end{tabular}}
@@ -73,12 +75,13 @@ To Use KeTCindy
 \putnotese{-5}{29}{\begin{tabular}{l}
 platex\\uplatex\\latex\\xelatex\\pdflatex\\lualatex\end{tabular}}
 \putnotese{-7}{56}{\underline{Graphic Code}}
-\putnotese{-5}{60}{\begin{tabular}{l}tpic\\pict2e\\tikz\end{tabular}}
-\arrowline{37}{20}{17}{135}
-\putnoten{73}{7}{\bf [2]Select \TeX\ sytem}
-\arrowline{73}{20}{13}{90}
-\putnotee{115}{5}{\bf [3]\ Folder operation}
-\arrowline{100}{20}{20}{45}
+\putnotese{20}{57}{pict2e,\ Tpic,\ tikz}
+\arrowlineseg{60}{17}{9}{90}
+\putnoten{60}{7}{\bf [2]Select \TeX\ sytem}
+\arrowlineseg{86}{17}{10}{60}
+\putnotee{80}{5}{\bf [3]\ Folder operation}
+\arrowlineseg{107}{17}{14}{45}
+\putnotee{118}{5}{\bf [4]\ Only \ketcindy JS}
 \putnotese{121}{10}{\fbox{Mkinit}}
 \putnotese{123}{17}{\begin{minipage}[t]{52mm}%
 Create initialization file in user's home(Home).\hfill Name: ketcindy.ini\\
@@ -97,7 +100,7 @@ Manuals, samples will be copied.
 \end{minipage}}
 \end{layer}
 
-\vspace{70mm}
+\vspace{60mm}
 
 \item Test run\vspace{-1mm}
 \begin{itemize}
@@ -110,7 +113,8 @@ Manuals, samples will be copied.
 \item \verb|ketcindy.ini| will be generatede in the User's home as default.\\
 \hspace*{5mm}$\cdot$\ Write \verb|setdirectory(gethome());| on the 3rd line in \verb|CindyScripts>ketlib|.\\
 \hspace*{5mm}$\cdot$\ Write \verb|setdirectory(plugindirectory);| if \verb|ketincy.ini| is moved to Plugins in Cinderella.\vspace{-1mm}
-\item See Readmemore for more informations.\vspace{-1mm}
+\item When you use only \ketcindy JS, install Cinderella and press \verb|Notex|.\vspace{-1mm}
+\item See \verb|Readmemore| for more informations.\vspace{-1mm}
 \end{itemize}
 
   \end{enumerate}

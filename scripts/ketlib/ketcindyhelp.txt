@@ -388,7 +388,7 @@ Fracform(1.33,1..100 (,err(-5)));
 Fracform(1.33,200 (,err(-5)));
 :Sla2fra("x/y+(a/b)/c+(pi/2)/(3/4)");
 Addasterisk("ax^2+bx+c");
-Totexform("frac(2,3)");
+Totexform("fr(2,3)");
 Tocindyform("frac(2,3)");
 Getcindystr("val=sq(3)");
 Getcindystr("val=sq(3)",5);

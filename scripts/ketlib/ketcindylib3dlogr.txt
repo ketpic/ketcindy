@@ -1,5 +1,3 @@
-// 210629
-//    Addasterisk debugged ( for e^ )
 // 210625
 //    Skeletonparadata debugged ( precision => 6 )
 // 210620

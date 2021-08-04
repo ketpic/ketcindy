@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210726] loaded");
+println("ketcindylibbasic3[20210805] loaded");
 
 //help:start();
 
@@ -3322,162 +3322,71 @@ Tonormalform(fun0org):=(
 );
 ////%Tonormalform end//// //200605
 
-////%Totexformpart start////
-Totexformpart(str):=( //190515from
-  regional(plv,funL,repL,flg,flgf,nall,nn,fun,funf,
-      frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
-  repL=[ //190515from
-    ["frac",["","\frac{xx}{yy}"]], //210228from
-    ["log",["\log xx ","\log_{xx} yy"]], //210405
-    ["sqrt",["\sqrt{xx}","\sqrt[xx]{yy}"]],
-    ["pow",["","{xx}^{yy}"]],
-    ["sin",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
-    ["cos",["\cos xx ","\cos^{xx}\! yy "]], //210405
-    ["tan",["\tan xx ","\tan^{xx}\! yy "]]  //210228to  //210405
-  ];
-  funL=apply(repL,substring(#_1,0,2)); //190515to
-  out="";
-  plv=Bracket(str,"()");
-  nall=length(plv);
-  if(nall>0,
-    frL=[];
-    forall(1..nall,nn,
-      tmp1=plv_nn;
-      if(tmp1_2>0,
-        fun="";
-        flgf=0;
-        forall(1..20,
-          if(flgf==0,
-            tmp2=tmp1_1;
-            tmp=substring(str,tmp2-#-1,tmp2-#);
-            if((tmp>="a")&(tmp<="z"),
-              fun=tmp+fun;
-            ,
-              flgf=1;
-            );       
-          );
-        );
-        tmp=substring(fun,0,2); //190515from
-        if(contains(funL,tmp), 
-          tmp=select(repL,substring(#_1,0,2)==tmp);
-          funf=tmp_1_1; //190515to
-          tmp=select(plv,(#_1>tmp1_1)&(#_2==-tmp1_2));
-          tmp=tmp_1_1-1;
-          frL=append(frL,[fun,funf,tmp1_1,tmp,tmp1_2]);
-        );
-      );
-    );
-    if(length(frL)>0,
-      frL=sort(frL,[-#_5]);
-      fr=frL_1;
-      fun=fr_1; funf=fr_2;
-      tmp1=substring(str,fr_3,fr_4);
-      tmp=select(repL,#_1==funf);
-      tmp=tmp_1;
-      tmp2=tmp_2;
-      tmp=Strsplit(tmp1,","); //190515from
-      nn=length(tmp); 
-      if(nn==1,
-        tmp2=Assign(tmp2_1,["xx",tmp_1]);
-      );
-      if(nn==2,
-        tmp2=Assign(tmp2_2,["xx",tmp_1,"yy",tmp_2]);
-      ); //190515to
-      nn=fr_3-length(fun);
-      tmp=substring(str,0,nn-1);
-      out=tmp+tmp2+substring(str,fr_4+1,length(str));
-    ,
-      out="";
-    );
-  );
-  out;
-);
-////%Totexformpart end////
-
 ////%Totexform start////
-Totexform(str):=( //190514
-//help:Totexform("frac(2,3)");
-  regional(funL,f,out,plv,flg,nn,tmp,tmp1,tmp2);
-  out=replace(str,"pi","\pi"); //190715
-  out=replace(out,"exp(1)","e"); //210227
-  funL=["cos","sin","tan"]; //210303from
-  forall(funL,f,
-    tmp2="";
-    tmp1=indexof(out,f+"((-1,");
-    flg=1;
-    while((tmp1>0)&(flg<100),
-      if(tmp1>1,tmp=substring(out,0,tmp1-1),tmp="");
-      tmp2=tmp2+tmp+"\"+f+"^(-1)"; // 210303[2lines]
-      out="("+substring(out,tmp1+length(f+"((-1,")-1,length(out));
-      tmp=Bracket(out,"()");
-      tmp=select(tmp,#_2==-1);
-      tmp=tmp_1_1;
-      tmp2=tmp2+substring(out,0,tmp);
-      out=substring(out,tmp+1,length(out));
-      tmp1=indexof(out,f+"((-1,");
-      flg=flg+1;
+Totexform(str):=( //210803from[renew]
+//help:Totexform("fr(2,3)");
+  regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
+      tmp,tmp1,tmp2,tmp3,tmp4);
+  repL=[ //190515from
+    ["fr(",["","\frac{xx}{yy}"]], //210228from
+    ["log(",["\log xx ","\log_{xx} yy"]], //210405
+    ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
+    ["po(",["","{xx}^{yy}"]],
+    ["sin(",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
+    ["cos(",["\cos xx ","\cos^{xx}\! yy "]], //210405
+    ["tan(",["\tan xx ","\tan^{xx}\! yy "]]  //210228to  //210405
+  ];  
+  out=replace(str,"pi","{\pi}"); //210805
+  head="";
+  flg=0;
+  plv=Bracket(out,"()");
+  if(length(plv)>0,
+    if(plv_1_2==0,
+      head=substring(out,0,plv_1_1);
+      out=substring(out,plv_1_1,length(out));
+      if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
+      plv=Bracket(out,"()");
     );
-    if(length(tmp2)>0,out=tmp2+out);
-  ); //210303to
-  out=replace(out,f+"(-1,",f+"^(-1)(");
-  tmp1=apply(0..9,text(#));  //190915from
-  tmp2=Indexall(out,"*");
-  forall(tmp2,
-    tmp=substring(out,#,#+1);
-    if(contains(tmp1,tmp),
-      out=substring(out,0,#-1)+"$"+substring(out,#,length(out));
-    ,
-      out=substring(out,0,#-1)+"%"+substring(out,#,length(out));
+    tmp=plv_(-1);
+    if(tmp_2!=-1,
+      out=str;
+      flg=1;
     );
   );
-  out=replace(out,"$","\cdot ");
-  out=replace(out,"%"," "); //190915to,201018
-  out=replace(out,"  ","\;");
-  plv=Bracket(out,"()"); //190515from
-  flg=0; //190521from
-  if(length(plv)==0,
-    flg=4; //190522
-  );
-  if(flg==0, //190521to
-    tmp=Indexall(out,"("); //190522from
-    tmp1=Indexall(out,")");
-    if(length(tmp)>length(tmp1),
-      flg=2;
-      out=out+"?+)?";
-    );
-    if(length(tmp)<length(tmp1),
-      flg=3;
-      out=out+"?)-?";
-    );  //190522to
-    forall(1..20,
-      if(flg==0,
-        tmp=Totexformpart(out);
-        if(length(tmp)==0,
-          flg=1;
-        ,
-          out=tmp;
+  if(flg==0,
+    forall(repL,rep,
+      fun=rep_1;
+      ctr=1;
+      tmp=indexof(out,fun);
+      while((tmp>0)&(ctr<40),
+        pre=substring(out,0,tmp-1);
+        out=substring(out,tmp-1,length(out));
+        plv=Bracket(out,"()");
+        tmp=select(plv,#_2==-1);
+        tmp=tmp_1;
+        post=substring(out,tmp_1,length(out));
+        out=substring(out,0,tmp_1);
+        clv=Getlevel(out);
+        clv=select(clv,#_2==1);
+        nn=length(clv)+1;
+        if(nn==1,
+          tmp1=substring(out,plv_1_1,length(out)-1);
+          out=replace(rep_2_1,"xx",tmp1);
         );
+        if(nn==2,
+          tmp1=substring(out,plv_1_1,clv_1_1-1);
+          tmp2=substring(out,clv_1_1,length(out)-1);
+          tmp=replace(rep_2_2,"xx",tmp1);
+          out=replace(tmp,"yy",tmp2);
+        );
+        out=pre+out+post;
+        tmp=indexof(out,fun);
+        ctr=ctr+1;
       );
     );
   );
-  if(flg<=1,
-    out=replace(out,"+-","\pm ");
-    out=replace(out,"-+","\mp ");
-    out=replace(out,"<=","\leq ");
-    out=replace(out,">=","\geq ");
-    tmp1=Indexall(out,"^");
-    forall(tmp1,nn,
-      if(substring(out,nn,nn+1)=="(",
-        tmp2=Bracket(substring(out,nn,length(out)),"()");
-        tmp2=select(tmp2,#_2==-1);
-        tmp2=tmp2_1_1+nn;
-        tmp=substring(out,nn+1,tmp2-1);
-        tmp2=substring(out,tmp2,length(out));//190915
-        out=substring(out,0,nn)+"{"+tmp+"}";
-        out=out+tmp2;
-      );
-    );
-  );
+  out=head+out;
+  out=replace(out,"*"," ");
   out;
 );
 ////%Totexform end////

@@ -1907,7 +1907,7 @@ Intersectcrvspp(Gr1,Gr2,options):=(
   regional(Out,Eps,Eps2,Eps0,Flg,Data1,Data2,
     Tmp1,Tmp2,Tmp3,Tmp,KL1,KL2,pA,pB,Ni,Nj,
     pP,pQ,rT,Flg,eqL,realL,opstr,Dif);
-  Eps=10^(-4);
+  Eps=10^(-6); //210730
   Eps2=0.1;
   Dif=0.05; // 2015.05.31
   Flg=0;

@@ -3215,7 +3215,8 @@ Addasterisk(strorg):=(
     );
     str0=str+res;
   );
-  out=str0; //210716(moved)to
+  out=str0;
+  out=replace(out,")(",")*("); //210805
   out;
 );
 ////%Addasterisk end////
@@ -3392,124 +3393,150 @@ Totexform(str):=( //210803from[renew]
 );
 ////%Totexform end////
 
-////%Tocindyformpart start////
-Tocindyformpart(str):=( //190521
-  regional(plv,funL,repL,flg,flgf,nall,nn,fun,funf,
-      frL,fr,out,tmp,tmp1,tmp2,tmp3,tmp4);
-  repL=[ //190515from
-    ["frac",["","{xx}/{yy}"]],
-    ["log",["log{xx}","log{yy}/log{xx}"]],
-    ["sqrt",["sqrt{xx}","{yy}^(1/{xx})"]], //190522
-    ["pow",["","{xx}^{yy}"]],
-    ["sin",["sin{xx}","{sin{yy}}^{xx}"]], //190522from
-    ["cos",["cos{xx}","{cos{yy}}^{xx}"]],
-    ["tan",["tan{xx}","{tan{yy}}^{xx}"]] //190522to
-  ];
-  funL=apply(repL,substring(#_1,0,2)); //190515to
-  out="";
-  plv=Bracket(str,"()");
-  nall=length(plv);
-  if(nall>0,
-    frL=[];
-    forall(1..nall,nn,
-      tmp1=plv_nn;
-      if(tmp1_2>0,
-        fun="";
-        flgf=0;
-        forall(1..20,
-          if(flgf==0,
-            tmp2=tmp1_1;
-            tmp=substring(str,tmp2-#-1,tmp2-#);
-            if((tmp>="a")&(tmp<="z"),
-              fun=tmp+fun;
-            ,
-              flgf=1;
-            );       
-          );
-        );
-        tmp=substring(fun,0,2); //190515from
-        if(contains(funL,tmp), 
-          tmp=select(repL,substring(#_1,0,2)==tmp);
-          funf=tmp_1_1; //190515to
-          tmp=select(plv,(#_1>tmp1_1)&(#_2==-tmp1_2));
-          tmp=tmp_1_1-1;
-          frL=append(frL,[fun,funf,tmp1_1,tmp,tmp1_2]);
-        );
-      );
-    );
-    if(length(frL)>0,
-      frL=sort(frL,[-#_5]);
-      fr=frL_1;
-      fun=fr_1; funf=fr_2;
-      tmp1=substring(str,fr_3,fr_4);
-      tmp=select(repL,#_1==funf);
-      tmp=tmp_1;
-      tmp2=tmp_2;
-      tmp=Strsplit(tmp1,","); //190515from
-      nn=length(tmp); 
-      if(nn==1,
-        tmp2=Assign(tmp2_1,["xx",tmp_1]);
-      );
-      if(nn==2,
-        tmp2=Assign(tmp2_2,["xx",tmp_1,"yy",tmp_2]);
-      ); //190515to
-      nn=fr_3-length(fun);
-      tmp=substring(str,0,nn-1);
-      out=tmp+tmp2+substring(str,fr_4+1,length(str));
-    ,
-      out="";
-    );
-  );
-  out;
-);
-////%Tocindyformpart end////
-
 ////%Tocindyform start////
-Tocindyform(str):=( //190521
-//help:Tocindyform("frac(2,3)");
-  regional(funL,out,plv,flg,nn,tmp,tmp1);
-  out=str;
-  funL=["cos","sin","tan"]; //210302from
-  forall(funL,
-    out=replace(out,#+"((-1,","arc"+#+"((");
-    out=replace(out,#+"(-1,","arc"+#+"(");
-  ); //210302to
-  out=replace(out,"\",""); //190712[4lines]
-  out=replace(out,"   "," ");
-  out=replace(out,"  "," "); 
-  out=replace(out," ","*"); 
-  plv=Bracket(out,"()");
+Tocindyform(str):=(
+//help:Tocindyform("fr(2,3)");
+  regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
+      tmp,tmp1,tmp2,tmp3,tmp4);
+  repL=[ //190515from
+    ["fr(",["","{xx}/{yy}"]],
+    ["log(",["log{xx}","log{yy}/log{xx}"]],
+    ["sq(",["sqrt{xx}","{yy}^{1/{xx}}"]], //190522
+    ["po(",["","{xx}^{yy}"]],
+    ["sin(",["sin{xx}","{sin{yy}}^{xx}"]], //190522from
+    ["cos(",["cos{xx}","{cos{yy}}^{xx}"]],
+    ["tan(",["tan{xx}","{tan{yy}}^{xx}"]],
+    ["pi(",["{pi}"]] //190522to
+  ];
+  out=replace(str,"pi","pi(x)"); //210805
+  out=Addasterisk(out);
+  head="";
   flg=0;
-  if(length(plv)==0,
-    flg=4; //190522
+  plv=Bracket(out,"()");
+  if(length(plv)>0,
+    if(plv_1_2==0,
+      head=substring(out,0,plv_1_1);
+      out=substring(out,plv_1_1,length(out));
+      if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
+      plv=Bracket(out,"()");
+    );
+    tmp=plv_(-1);
+    if(tmp_2!=-1,
+      out=str;
+      flg=1;
+    );
   );
   if(flg==0,
-    tmp=Indexall(out,"("); //190522from
-    tmp1=Indexall(out,")");
-    if(length(tmp)>length(tmp1),
-      flg=2;
-      out=out+"?+)?";
-    );
-    if(length(tmp)<length(tmp1),
-      flg=3;
-      out=out+"?)-?";
-    );  //190522to
-    forall(1..20,
-      if(flg==0,
-        tmp=Tocindyformpart(out);
-        if(length(tmp)==0,
-          flg=1;
-        ,
-          out=tmp;
+    forall(repL,rep,
+      fun=rep_1;
+      ctr=1;
+      tmp=indexof(out,fun);
+      while((tmp>0)&(ctr<40),
+        pre=substring(out,0,tmp-1);
+        out=substring(out,tmp-1,length(out));
+        plv=Bracket(out,"()");
+        tmp=select(plv,#_2==-1);
+        tmp=tmp_1;
+        post=substring(out,tmp_1,length(out));
+        out=substring(out,0,tmp_1);
+        clv=Getlevel(out);
+        clv=select(clv,#_2==1);
+        nn=length(clv)+1;
+        if(nn==1,
+          tmp1=substring(out,plv_1_1,length(out)-1);
+          out=replace(rep_2_1,"xx",tmp1);
         );
+        if(nn==2,
+          tmp1=substring(out,plv_1_1,clv_1_1-1);
+          tmp2=substring(out,clv_1_1,length(out)-1);
+          tmp=replace(rep_2_2,"xx",tmp1);
+          out=replace(tmp,"yy",tmp2);
+        );
+        out=pre+out+post;
+        tmp=indexof(out,fun);
+        ctr=ctr+1;
       );
     );
   );
   out=replace(out,"{","(");
   out=replace(out,"}",")");
+  out=head+out;
   out;
 );
 ////%Tocindyform end////
+
+////%Tomaxform start//// 210805added
+Tomaxform(str):=(
+//help:Tomaxform("cos(pi)");
+  regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
+      tmp,tmp1,tmp2,tmp3,tmp4);
+  repL=[ //190515from
+    ["fr(",["","{xx}/{yy}"]],
+    ["log(",["log{xx}","log{yy}/log{xx}"]],
+    ["sq(",["sqrt{xx}","{yy}^{1/{xx}}"]], //190522
+    ["po(",["","{xx}^{yy}"]],
+    ["sin(",["sin{xx}","{sin{yy}}^{xx}"]], //190522from
+    ["cos(",["cos{xx}","{cos{yy}}^{xx}"]],
+    ["tan(",["tan{xx}","{tan{yy}}^{xx}"]],//190522to
+    ["pi(",["{%pi}"]]
+  ];
+  out=str;
+  out=replace(out,"pi","pi()"); //210805
+  out=Addasterisk(out);
+  head="";
+  flg=0;
+  plv=Bracket(out,"()");
+  if(length(plv)>0,
+    if(plv_1_2==0,
+      head=substring(out,0,plv_1_1);
+      out=substring(out,plv_1_1,length(out));
+      if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
+      plv=Bracket(out,"()");
+    );
+    tmp=plv_(-1);
+    if(tmp_2!=-1,
+      out=str;
+      flg=1;
+    );
+  );
+  if(flg==0,
+    forall(repL,rep,
+      fun=rep_1;
+      ctr=1;
+      tmp=indexof(out,fun);
+      while((tmp>0)&(ctr<40),
+        pre=substring(out,0,tmp-1);
+        out=substring(out,tmp-1,length(out));
+        plv=Bracket(out,"()");
+        tmp=select(plv,#_2==-1);
+        tmp=tmp_1;
+        post=substring(out,tmp_1,length(out));
+        out=substring(out,0,tmp_1);
+        clv=Getlevel(out);
+        clv=select(clv,#_2==1);
+        nn=length(clv)+1;
+        if(nn==1,
+          tmp1=substring(out,plv_1_1,length(out)-1);
+          out=replace(rep_2_1,"xx",tmp1);
+        );
+        if(nn==2,
+          tmp1=substring(out,plv_1_1,clv_1_1-1);
+          tmp2=substring(out,clv_1_1,length(out)-1);
+          tmp=replace(rep_2_2,"xx",tmp1);
+          out=replace(tmp,"yy",tmp2);
+        );
+        out=pre+out+post;
+        tmp=indexof(out,fun);
+        ctr=ctr+1;
+      );
+    );
+  );
+  out=replace(out,"{","(");
+  out=replace(out,"}",")");
+  out=head+out;
+  out;
+);
+////%Tomaxform end////
 
 ////%Getcindystr start////
 Getcindystr(str):=Getcindystr(str,"");

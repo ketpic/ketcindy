@@ -1,5 +1,7 @@
 // 210805
 //  Totexform remade
+//  Tocindyform remade
+//  Tomaxform added
 // 210726
 //  Mkketcindyjs changed (jquery updated to 3-6-0)
 // 210724

@@ -3328,6 +3328,7 @@ Totexform(str):=( //210803from[renew]
   regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
       tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
+    ["^(",["^{xx}"]], //210805
     ["fr(",["","\frac{xx}{yy}"]], //210228from
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],

@@ -1,3 +1,9 @@
+// 210816
+//  Tocindyform,Tomaxform debugged
+// 210806
+//  Tocindyform debugged
+//  Tomaxform debugged
+//  Totexform debugged
 // 210805
 //  Totexform remade
 //  Tocindyform remade

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210805] loaded");
+println("ketcindylibbasic3[20210816] loaded");
 
 //help:start();
 
@@ -3349,11 +3349,13 @@ Totexform(str):=( //210803from[renew]
       if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
       plv=Bracket(out,"()");
     );
-    tmp=plv_(-1);
-    if(tmp_2!=-1,
-      out=str;
-      flg=1;
-    );
+    if(length(plv)>0, //210806
+      tmp=plv_(-1);
+      if(tmp_2!=-1,
+        out=str;
+        flg=1;
+      );
+    );  //210806
   );
   if(flg==0,
     forall(repL,rep,
@@ -3408,8 +3410,7 @@ Tocindyform(str):=(
     ["tan(",["tan{xx}","{tan{yy}}^{xx}"]],
     ["pi(",["{pi}"]] //190522to
   ];
-  out=replace(str,"pi","pi(x)"); //210805
-  out=Addasterisk(out);
+  out=Removespace(replace(str,"pi","pi(x)")); //210805, //210816
   head="";
   flg=0;
   plv=Bracket(out,"()");
@@ -3458,8 +3459,18 @@ Tocindyform(str):=(
       );
     );
   );
+  tmp1=Indexall(out,"("); //210806from
+  tmp1=remove(tmp1,[1]);
+  forall(tmp1,
+    tmp=substring(out,#-2,#-1); //200816
+    if(!contains(["+","-","/","*","^"],tmp),
+      out=substring(out,0,#-1)+"#"+substring(out,#,length(out));
+    );
+  ); 
+  out=replace(out,"#","*("); //210806to
   out=replace(out,"{","(");
   out=replace(out,"}",")");
+  out=Addasterisk(out);
   out=head+out;
   out;
 );
@@ -3480,9 +3491,8 @@ Tomaxform(str):=(
     ["tan(",["tan{xx}","{tan{yy}}^{xx}"]],//190522to
     ["pi(",["{%pi}"]]
   ];
-  out=str;
+  out=Removespace(str); //210816
   out=replace(out,"pi","pi()"); //210805
-  out=Addasterisk(out);
   head="";
   flg=0;
   plv=Bracket(out,"()");
@@ -3531,8 +3541,18 @@ Tomaxform(str):=(
       );
     );
   );
+  tmp1=Indexall(out,"("); //210806from
+  tmp1=remove(tmp1,[1]);
+  forall(tmp1,
+    tmp=substring(out,#-2,#-1); //200816
+    if(!contains(["+","-","/","*","^"],tmp),
+      out=substring(out,0,#-1)+"#"+substring(out,#,length(out));
+    );
+  ); 
+  out=replace(out,"#","*("); //210806to
   out=replace(out,"{","(");
   out=replace(out,"}",")");
+  out=Addasterisk(out);
   out=head+out;
   out;
 );

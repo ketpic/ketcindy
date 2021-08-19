@@ -3325,6 +3325,7 @@ Tomaxform(str):=(
         tmp="#"+text(ctr)+"#";
         out=substring(out,0,tmp1-1)+tmp+substring(out,tmp2,length(out));
         sharpL=append(sharpL,[tmp,sub]);
+        tmp=indexof(out,fun);
         ctr=ctr+1;
       );
     );

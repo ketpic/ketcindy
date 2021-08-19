@@ -3262,7 +3262,6 @@ Tomaxform(str):=(
     ["pi(",["{%pi}()"]]
   ];
   out=str; //210816
-  out=replace(out,"pi","pi()"); //210805
   tmp1=""; //210817from
   flg=0;
   forall(1..(length(out)),

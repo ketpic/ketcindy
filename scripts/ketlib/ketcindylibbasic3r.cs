@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210816] loaded");
+println("ketcindylibbasic3[20210819] loaded");
 
 //help:start();
 
@@ -3035,192 +3035,6 @@ Sla2fra(str):=(
 );
 ////%Sla2fra end////
 
-////%Addasterisk start////
-Addasterisk(strorg):=(
-//help:Addasterisk("ax^2+bx+c");
-  regional(pL,sL,funL,fn,sgnL,numL,alphaL,type,res,res2,
-      str0,str,f,k,n1,n2,sub,tmp,tmp1,tmp2,ctr,out,s,flg,repL);
-  str0=replace(strorg,"  ","*");
-  str=str0;
-  repL=[];  //210405from
-  ctr=1;
-  tmp=indexof(str,"\"); //210514from
-  while((tmp>0)&(ctr<50),
-    res=substring(str,tmp,length(str));
-    str=substring(str,0,tmp-1);
-    tmp1="\";
-    flg=0;
-    while(flg==0,
-      flg=1;
-      if(length(res)>0,
-        tmp=Toupper(res_(1));
-        if((tmp>="A")&(tmp<="Z"),
-          tmp1=tmp1+res_(1);
-          res=substring(res,1,length(res));
-          flg=0;
-        );
-      );
-    );
-    if(substring(res,0,1)==" ",
-      res=substring(res,1,length(res));
-    );  //210514to
-    repL=append(repL,tmp1);
-    tmp="#"+text(length(repL))+"#";
-    str=str+tmp+res;
-    tmp=indexof(str,"\");
-    ctr=ctr+1;
-  );  //210405to
-  str=replace(str," ","*");
-  str=replace(str,"pi","%");
-  funL=["sin","cos","tan","log","fr","sq","exp"]; //210227to
-  sgnL=["+","-","*","/","^"];
-  numL=append(apply(0..9,text(#)),"."); //210226
-  tmp1=32..126;
-  tmp=(65..90)++(97..122);
-  tmp1=remove(tmp1,tmp);
-  alphaL=apply(tmp,unicode(text(#),base->10));
-  alphaL=concat(alphaL,["%"]);
-  str="$"+str;
-  pL=Bracket(str);
-  pL=concat(pL,[[length(str),0]]);
-  pL=concat([[1,0]],pL);
-  out=[];
-  forall(1..(length(pL)-1),k,
-    tmp=pL_k; n1=tmp_1; l1=tmp_2;
-    tmp=pL_(k+1); n2=tmp_1; l2=tmp_2;
-    sub=substring(str,n1-1,n2);
-    out=append(out,sub);
-  );
-  forall(1..(length(pL)-1),k,
-    sub=out_k;
-    if(length(sub)>0,
-      res=sub_(-1);
-      sub=substring(sub,0,length(sub)-1);
-    ,
-      res=""
-    );
-    forall(funL,f,
-      tmp=indexof(sub,f);
-      if(tmp>0,
-        res=substring(f,0,length(f))+"(";
-        sub=substring(sub,0,tmp-1);
-      );
-    );
-    ctr=1;
-    while((length(sub)>0)&(ctr<200),
-      tmp1=sub_(-1);
-      tmp2=res_1;
-      sub=substring(sub,0,length(sub)-1);
-      if(contains(alphaL,tmp2),
-        tmp=concat(alphaL,numL);
-        tmp=concat(tmp,[")"]);
-        if(contains(tmp,tmp1),
-          res="*"+res;
-        );
-      );
-      if(contains(numL,tmp2),
-        tmp=concat(aphaL,[")"]);
-        if(contains(tmp,tmp1),
-          res="*"+res;
-        );
-      );
-      res=tmp1+res;
-      ctr=ctr+1;
-    );
-    out_k=substring(res,1,length(res));
-  );
-  res="";
-  forall(out,
-    res=res+#;
-  );
-  out=replace(res,"%","pi");
-  out=replace(out,"$","");
-  forall(1..(length(repL)),n1,  //210405from
-    out=replace(out,"#"+text(n1)+"#",repL_n1);
-  ); //210405to
-  str0=out; //210716(moved)from
-  funL=["sin","cos","tan","log"]; 
-  sgnL=["-","+","*"];
-  forall(funL,f,
-    str="";
-    res=str0; res2="";
-    ctr=1;
-    while((indexof(res,f)>0)&(ctr<100),
-      tmp1=indexof(res,f);
-      str=str+substring(res,0,tmp1+2);
-      res=substring(res,tmp1+2,length(res));
-      if(res_1==" ",
-        str=str+"(";
-        res=substring(res,1,length(res));
-        tmp=indexof(res," ");
-        if(tmp>0,
-          str=str+substring(res,0,tmp-1)+")";
-          res=substring(res,tmp,length(res));
-        ,
-          str=str+res+")";
-          res="";
-        );
-      );
-      if(res_1=="(",
-        type=1;
-        tmp1=bracket(res,"()");
-        tmp=select(tmp1,#_2==-1); //210611from
-        if(length(tmp)>0,
-          tmp=tmp_1_1;
-          res2=substring(res,tmp,length(res));
-          res=substring(res,0,tmp);
-        ,
-          res2="";
-        );
-        tmp2=Indexall(res,","); //210611from
-        tmp2=Getlevel(res,",");
-        tmp2=select(tmp2,#_2==1);
-        if(length(tmp2)>0,
-          tmp2=tmp2_1_1;
-          str=str+substring(res,0,tmp2);
-          res="("+substring(res,tmp2,length(res));
-          tmp1=bracket(res,"()");
-          type=2;
-        );  //210611to
-        tmp1=select(tmp1,#_2==-1);
-        if(length(tmp1)>0,tmp1=tmp1_1_1,tmp1=0);
-        flg=0;
-        forall(sgnL,s,
-          if(flg==0,
-            tmp=substring(res,0,tmp1);
-            tmp2=Getlevel(tmp,s); //210405
-            if(length(tmp2)>0,
-              tmp2=select(tmp2,#_2==1);
-              if(length(tmp2)>0,tmp2=tmp2_1_1,tmp2=0);
-              if(tmp2<tmp1, //210302
-                if(type==2,
-                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
-                  str=str+"("; //210611
-                ,
-                  res=substring(res,1,tmp1-1)+"))"+substring(res,tmp1,length(res)); //210611
-                  str=str+"(("; //210611
-                );
-                flg=1;
-              );
-            );
-          );
-        );
-        if((flg==0)&(type==2), //210611from
-          str=str+substring(res,1,tmp1);
-          res=substring(res,tmp1,length(res));
-        ); //210611to
-      );
-      res=res+res2;
-      ctr=ctr+1;
-    );
-    str0=str+res;
-  );
-  out=str0;
-  out=replace(out,")(",")*("); //210805
-  out;
-);
-////%Addasterisk end////
-
 ////%Tonormalform start//// //200605
 Tonormalform(fun0org):=(
   regional(fun0,num,alp,ope,par,sgn,tmp,tmp1,tmp2,
@@ -3395,104 +3209,73 @@ Totexform(str):=( //210803from[renew]
 );
 ////%Totexform end////
 
-////%Tocindyform start////
-Tocindyform(str):=(
-//help:Tocindyform("fr(2,3)");
-  regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
-      tmp,tmp1,tmp2,tmp3,tmp4);
-  repL=[ //190515from
-    ["fr(",["","{xx}/{yy}"]],
-    ["log(",["log{xx}","log{yy}/log{xx}"]],
-    ["sq(",["sqrt{xx}","{yy}^{1/{xx}}"]], //190522
-    ["po(",["","{xx}^{yy}"]],
-    ["sin(",["sin{xx}","{sin{yy}}^{xx}"]], //190522from
-    ["cos(",["cos{xx}","{cos{yy}}^{xx}"]],
-    ["tan(",["tan{xx}","{tan{yy}}^{xx}"]],
-    ["pi(",["{pi}"]] //190522to
-  ];
-  out=Removespace(replace(str,"pi","pi(x)")); //210805, //210816
-  head="";
-  flg=0;
-  plv=Bracket(out,"()");
-  if(length(plv)>0,
-    if(plv_1_2==0,
-      head=substring(out,0,plv_1_1);
-      out=substring(out,plv_1_1,length(out));
-      if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
-      plv=Bracket(out,"()");
+////%Addasterisk start////
+Addasterisk(strorg):=(
+//help:Addasterisk("ax^2+bx+c");
+  regional(str,out,sgnL,numL,alphaL,numalpha,ctr,
+      pre,now,tmp,tmp1,tmp2);
+  str=Removespace(strorg);
+  str=replace(str,"  ","*");
+  sgnL=["+","-","*","/","^"];
+  numL=append(apply(0..9,text(#)),"."); //210226
+  tmp1=32..126;
+  tmp=(65..90)++(97..122);
+  tmp1=remove(tmp1,tmp);
+  alphaL=apply(tmp,unicode(text(#),base->10));
+  numalpha=numL++alphaL;
+  out=""; pre="@";
+  while(length(str)>0,
+    now=str_1;
+    str=substring(str,1,length(str));
+    if(now=="#",
+      if(contains(numalpha++[")"],pre),out=out+"*");
+      tmp=indexof(str,"#");
+      out=out+"#"+substring(str,0,tmp-1);
+      str=substring(str,tmp,length(str));
+    );    
+    if(contains(numL,now),
+      if(contains(alphaL++[")"],pre),out=out+"*");
     );
-    tmp=plv_(-1);
-    if(tmp_2!=-1,
-      out=str;
-      flg=1;
+    if(contains(alphaL++["("],now),
+      if(contains(numalpha++[")"],pre),out=out+"*");
     );
+    out=out+now;
+    pre=now;
   );
-  if(flg==0,
-    forall(repL,rep,
-      fun=rep_1;
-      ctr=1;
-      tmp=indexof(out,fun);
-      while((tmp>0)&(ctr<40),
-        pre=substring(out,0,tmp-1);
-        out=substring(out,tmp-1,length(out));
-        plv=Bracket(out,"()");
-        tmp=select(plv,#_2==-1);
-        tmp=tmp_1;
-        post=substring(out,tmp_1,length(out));
-        out=substring(out,0,tmp_1);
-        clv=Getlevel(out);
-        clv=select(clv,#_2==1);
-        nn=length(clv)+1;
-        if(nn==1,
-          tmp1=substring(out,plv_1_1,length(out)-1);
-          out=replace(rep_2_1,"xx",tmp1);
-        );
-        if(nn==2,
-          tmp1=substring(out,plv_1_1,clv_1_1-1);
-          tmp2=substring(out,clv_1_1,length(out)-1);
-          tmp=replace(rep_2_2,"xx",tmp1);
-          out=replace(tmp,"yy",tmp2);
-        );
-        out=pre+out+post;
-        tmp=indexof(out,fun);
-        ctr=ctr+1;
-      );
-    );
-  );
-  tmp1=Indexall(out,"("); //210806from
-  tmp1=remove(tmp1,[1]);
-  forall(tmp1,
-    tmp=substring(out,#-2,#-1); //200816
-    if(!contains(["+","-","/","*","^"],tmp),
-      out=substring(out,0,#-1)+"#"+substring(out,#,length(out));
-    );
-  ); 
-  out=replace(out,"#","*("); //210806to
-  out=replace(out,"{","(");
-  out=replace(out,"}",")");
-  out=Addasterisk(out);
-  out=head+out;
   out;
 );
-////%Tocindyform end////
+////%Addasterisk end////
 
 ////%Tomaxform start//// 210805added
 Tomaxform(str):=(
-//help:Tomaxform("cos(pi)");
-  regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
-      tmp,tmp1,tmp2,tmp3,tmp4);
+//help:Tomaxform("[comment]2cos(pi)");
+  regional(plv,funL,repL,out,sub,head,flg,rep,fun,pre,post,ctr,clv,nn,
+      sharpL,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
-    ["fr(",["","{xx}/{yy}"]],
-    ["log(",["log{xx}","log{yy}/log{xx}"]],
-    ["sq(",["sqrt{xx}","{yy}^{1/{xx}}"]], //190522
-    ["po(",["","{xx}^{yy}"]],
-    ["sin(",["sin{xx}","{sin{yy}}^{xx}"]], //190522from
-    ["cos(",["cos{xx}","{cos{yy}}^{xx}"]],
-    ["tan(",["tan{xx}","{tan{yy}}^{xx}"]],//190522to
-    ["pi(",["{%pi}"]]
+    ["fr(",["","(xx)/(yy)"]],
+    ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]],
+    ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]], //190522
+    ["po(",["","(xx)^(yy)"]],
+    ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]], //190522from
+    ["cos(",["{cos}(xx)","{cos}(yy)^(xx)"]],
+    ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],//190522to
+    ["pi(",["{%pi}()"]]
   ];
-  out=Removespace(str); //210816
+  out=str; //210816
   out=replace(out,"pi","pi()"); //210805
+  tmp1=""; //210817from
+  flg=0;
+  forall(1..(length(out)),
+    tmp=out_#;
+    if(contains(["[","]"],tmp),
+      if(tmp=="[",flg=1);
+      if(tmp=="]",flg=0);
+    ,
+      if(flg==0,tmp1=tmp1+tmp);
+    );
+  );
+  out=tmp1; //210817to
+  out=Removespace(out);
   head="";
   flg=0;
   plv=Bracket(out,"()");
@@ -3509,12 +3292,13 @@ Tomaxform(str):=(
       flg=1;
     );
   );
+  sharpL=[];
+  ctr=1;
   if(flg==0,
     forall(repL,rep,
       fun=rep_1;
-      ctr=1;
       tmp=indexof(out,fun);
-      while((tmp>0)&(ctr<40),
+      while((tmp>0)&(ctr<100),
         pre=substring(out,0,tmp-1);
         out=substring(out,tmp-1,length(out));
         plv=Bracket(out,"()");
@@ -3536,27 +3320,119 @@ Tomaxform(str):=(
           out=replace(tmp,"yy",tmp2);
         );
         out=pre+out+post;
-        tmp=indexof(out,fun);
+        tmp1=indexof(out,"{");
+        tmp2=indexof(out,"}");
+        sub=substring(out,tmp1,tmp2-1);
+        tmp="#"+text(ctr)+"#";
+        out=substring(out,0,tmp1-1)+tmp+substring(out,tmp2,length(out));
+        sharpL=append(sharpL,[tmp,sub]);
         ctr=ctr+1;
       );
     );
   );
-  tmp1=Indexall(out,"("); //210806from
-  tmp1=remove(tmp1,[1]);
-  forall(tmp1,
-    tmp=substring(out,#-2,#-1); //200816
-    if(!contains(["+","-","/","*","^"],tmp),
-      out=substring(out,0,#-1)+"#"+substring(out,#,length(out));
-    );
-  ); 
-  out=replace(out,"#","*("); //210806to
-  out=replace(out,"{","(");
-  out=replace(out,"}",")");
   out=Addasterisk(out);
+  out=replace(out,"()","");
+  forall(reverse(sharpL),
+    out=replace(out,#_1,#_2);
+  );
   out=head+out;
   out;
 );
 ////%Tomaxform end////
+
+////%Tocindyform start////
+Tocindyform(str):=(
+//help:Tocindyform("fr(2,3)");
+  regional(plv,funL,repL,out,sub,head,flg,rep,fun,pre,post,ctr,clv,nn,
+      sharpL,tmp,tmp1,tmp2,tmp3,tmp4);
+  repL=[ //190515from
+    ["fr(",["","(xx)/(yy)"]],
+    ["log(",["{log}(xx)","{log{(yy)/{log}(xx)"]],
+    ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]], //190522
+    ["po(",["","(xx)^(yy)"]],
+    ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]], //190522from
+    ["cos(",["{cos}(xx)","{cos}(yy)^(xx)"]],
+    ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],
+    ["pi(",["{pi}()"]] //190522to
+  ];
+  out=str; //210816
+  out=replace(out,"pi","pi()"); //210805
+  tmp1=""; //210817from
+  flg=0;
+  forall(1..(length(out)),
+    tmp=out_#;
+    if(contains(["[","]"],tmp),
+      if(tmp=="[",flg=1);
+      if(tmp=="]",flg=0);
+    ,
+      if(flg==0,tmp1=tmp1+tmp);
+    );
+  );
+  out=tmp1; //210817to
+  out=Removespace(out);
+  head="";
+  flg=0;
+  plv=Bracket(out,"()");
+  if(length(plv)>0,
+    if(plv_1_2==0,
+      head=substring(out,0,plv_1_1);
+      out=substring(out,plv_1_1,length(out));
+      if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
+      plv=Bracket(out,"()");
+    );
+    tmp=plv_(-1);
+    if(tmp_2!=-1,
+      out=str;
+      flg=1;
+    );
+  );
+  sharpL=[];
+  ctr=1;
+  if(flg==0,
+    forall(repL,rep,
+      fun=rep_1;
+      tmp=indexof(out,fun);
+      while((tmp>0)&(ctr<100),
+        pre=substring(out,0,tmp-1);
+        out=substring(out,tmp-1,length(out));
+        plv=Bracket(out,"()");
+        tmp=select(plv,#_2==-1);
+        tmp=tmp_1;
+        post=substring(out,tmp_1,length(out));
+        out=substring(out,0,tmp_1);
+        clv=Getlevel(out);
+        clv=select(clv,#_2==1);
+        nn=length(clv)+1;
+        if(nn==1,
+          tmp1=substring(out,plv_1_1,length(out)-1);
+          out=replace(rep_2_1,"xx",tmp1);
+        );
+        if(nn==2,
+          tmp1=substring(out,plv_1_1,clv_1_1-1);
+          tmp2=substring(out,clv_1_1,length(out)-1);
+          tmp=replace(rep_2_2,"xx",tmp1);
+          out=replace(tmp,"yy",tmp2);
+        );
+        out=pre+out+post;
+        tmp1=indexof(out,"{");
+        tmp2=indexof(out,"}");
+        sub=substring(out,tmp1,tmp2-1);
+        tmp="#"+text(ctr)+"#";
+        out=substring(out,0,tmp1-1)+tmp+substring(out,tmp2,length(out));
+        sharpL=append(sharpL,[tmp,sub]);
+        ctr=ctr+1;
+      );
+    );
+  );
+  out=Addasterisk(out);
+  out=replace(out,"()","");
+  forall(reverse(sharpL),
+    out=replace(out,#_1,#_2);
+  );
+  out=head+out;
+  out;
+);
+////%Tocindyform end////
 
 ////%Getcindystr start////
 Getcindystr(str):=Getcindystr(str,"");

@@ -1,3 +1,7 @@
+// 210819
+//  Tocindyform,Tomaxform Addasterisk rebuild (debugged)
+// 210817
+//  Tocindyform,Tomaxform changed ( [ ] for comment )
 // 210816
 //  Tocindyform,Tomaxform debugged
 // 210806

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210819] loaded");
+println("ketcindylibbasic3[20210821] loaded");
 
 //help:start();
 
@@ -3246,7 +3246,7 @@ Addasterisk(strorg):=(
 );
 ////%Addasterisk end////
 
-////%Tomaxform start//// 210805added
+////%Tomaxform start//// 210821debugged
 Tomaxform(str):=(
 //help:Tomaxform("[comment]2cos(pi)");
   regional(plv,funL,repL,out,sub,head,flg,rep,fun,pre,post,ctr,clv,nn,
@@ -3254,26 +3254,26 @@ Tomaxform(str):=(
   repL=[ //190515from
     ["fr(",["","(xx)/(yy)"]],
     ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]],
-    ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]], //190522
+    ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]],
     ["po(",["","(xx)^(yy)"]],
-    ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]], //190522from
+    ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]],
     ["cos(",["{cos}(xx)","{cos}(yy)^(xx)"]],
-    ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],//190522to
+    ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],
     ["pi(",["{%pi}()"]]
   ];
-  out=str; //210816
-  tmp1=""; //210817from
-  flg=0;
-  forall(1..(length(out)),
-    tmp=out_#;
-    if(contains(["[","]"],tmp),
-      if(tmp=="[",flg=1);
-      if(tmp=="]",flg=0);
+  if(isstring(str),out=str, out=format(str,6));
+  tmp1=""; 
+  while(length(out)>0,
+    tmp=out_1;
+    if(tmp!="[",
+      tmp1=tmp1+tmp;
+      out=substring(out,1,length(out));
     ,
-      if(flg==0,tmp1=tmp1+tmp);
+      tmp=indexof(out,"]");
+      out=substring(out,tmp,length(out));
     );
   );
-  out=tmp1; //210817to
+  out=tmp1;
   out=Removespace(out);
   head="";
   flg=0;
@@ -3284,11 +3284,6 @@ Tomaxform(str):=(
       out=substring(out,plv_1_1,length(out));
       if(substring(out,0,1)=="*",out=substring(out,1,length(out)));
       plv=Bracket(out,"()");
-    );
-    tmp=plv_(-1);
-    if(tmp_2!=-1,
-      out=str;
-      flg=1;
     );
   );
   sharpL=[];

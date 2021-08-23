@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210624] loaded");
+println("ketcindylibbasic1[20210823] loaded");
 
 //help:start();
 
@@ -1063,7 +1063,8 @@ Changestyle(nameL,styleorg):=( //210422pt
         GCLIST=remove(GCLIST,tmp);
       );
       tmp=select(COM2ndlist,indexof(#,name)>0); //no ketjs on
-      COM2ndlist=remove(COM2ndlist,tmp); //no ketjs off
+      tmp=select(tmp,indexof(#,"Shade")==0);//210823
+	  COM2ndlist=remove(COM2ndlist,tmp); //no ketjs off
       if(Noflg<3,
         if(pttype=="Y",
           tmp=select(PTSHADElist,indexof(#_1,name)>0);

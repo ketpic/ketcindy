@@ -4479,13 +4479,6 @@ Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
     Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
 ////%Skeletonparadata end////
 
-////%Skeletondatacindy start////
-Skeletondatacindy(nm):=Skeletondatacindy(nm,[]);
-Skeletondatacindy(nm,options):=(
-  regional(tmp); 
-  tmp=Datalist3d();
-  Skeletondatacindy(nm,tmp,tmp,options);
-);
 Skeletondatacindy(nm,pltdata1,pltdata2):=
      Skeletondatacindy(nm,pltdata1,pltdata2,[]);
 Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
@@ -4493,20 +4486,21 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
 //help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
 //help:Skeletonparadatac(options=[1(width),"File=y(/m/n)","Not=ptlist","Check=ptlist"]);
   regional(Eps,Eps2,name2,name3,options,Ltype,Noflg,reL,eqL,opcindy,
-  // global Sketeton;
+//  // global Sketeton;
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color,
-     fileflg,wflg,mkflg,fname,varL,nn,chkL); //181101
+     fileflg,wflg,mkflg,fname,skflie,varL,nn,chkL); //181101
+  // global Fhead
   name2="sk2d"+nm;
   name3="sk3d"+nm;
   fname=Fhead+"sk"+nm+".txt"; // no ketjs //181102
+  skfile="skeleton"+nm+".txt";
   pltdata1=[];// 16.01.31
   forall(pltdata1org,tmp1,
     if(isstring(tmp1),tmp=parse(tmp1),tmp=tmp1); //210319
     tmp=apply(tmp,if(isstring(#),parse(#),#));//210620[recoverd]
     pltdata1=append(pltdata1,tmp);
   );
-  pltdata2=[];// 16.01.31
   forall(pltdata2org,tmp1,
     if(isstring(tmp1),tmp=parse(tmp1),tmp=tmp1); //210319
     tmp=apply(tmp,if(isstring(#),parse(#),#));//210620[recoverd]
@@ -4523,8 +4517,8 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   Rr=0.075*1000/2.54/MilliIn;
   size=1;
   Eps2=0.05;
-  fileflg="N";
-  mkflg=0; //210324
+  fileflg="Y"; //210823
+  mkflg=1; //210823
   if(length(reL)>0, //16.02.28 
     size=reL_1;
     Rr=size*Rr;
@@ -4548,13 +4542,14 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       options=remove(options,[#]);
     );
   );// no ketjs off
-  if(!islist(Skeleton),mkflg=1); //210324
+//  if(!islist(Skeleton),mkflg=1); //210324,0823
   Eps=10^(-4);
   ObjL=Flattenlist(pltdata1);
   Plt3L=Flattenlist(pltdata2);
   tmp=apply(1..(length(Plt3L)),Projcoordcurve(Plt3L_#));
   Plt2L=Flattenlist(tmp);
-  if((fileflg=="Y")%(fileflg=="M")&(mkflg>-1),  // no ketjs on //181101from, 181103
+  if((fileflg=="Y")%((fileflg=="M")&(mkflg>-1)),  // no ketjs on
+   //181101from, 181103
     wflg=1;
     tmp=flatten(pltdata1org);
     varL=tmp;
@@ -4579,8 +4574,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     if(fileflg=="M",
       fileflg="Y";
     ,
-      tmp1="skeleton"+nm+".txt";
-      if(isexists(Dirwork,tmp1),
+      if(isexists(Dirwork,skfile),
         tmp2=load(tmp1);
         tmp2=tokenize(tmp2,"//");
         tmp2=tmp2_(1..(length(tmp2)-1));
@@ -4618,9 +4612,9 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       );
     );
     Out=select(Out,length(Projcurve(#))>0); // 16.12.19
-    Skeleton=Out; //210324from
   ,
-    Out=Skeleton;  //210324to
+    Readoutdata(skfile);
+//    Out=Skeleton;  //210324to
   );
   tmp1=apply(Out,Textformat(#,6));
   tmp=name3+"="+tmp1+";"; //190415
@@ -4629,7 +4623,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   parse(tmp);
   if(mkflg> -1,
     Changestyle3d(pltdata1org,["nodisp"]);
-  ); 
+  );
   if((Noflg<3)&(mkflg> -1), //no ketjs on //181103
     if(fileflg!="Y", //181102
       println("generate skeleton :"+name3);

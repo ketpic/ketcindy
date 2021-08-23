@@ -1,3 +1,5 @@
+// 20210823
+//    Changestyle debugged  ( for "shade" )
 // 20210624
 //    Intersegseg debugged  ( for small segments )
 // 20210609

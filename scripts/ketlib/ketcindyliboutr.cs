@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20210516] loaded");
+println("ketcindylibout[20210827] loaded");
 
 //help:start();
 
@@ -607,6 +607,7 @@ CalcbyR(name,path,cmd,optionorg):=(
       );
     );
   );
+  flg; //210827
 );
 ////%CalcbyR end////
 
@@ -2214,6 +2215,7 @@ CalcbyM(name,cmd,optionorg):=(
       println("      CalcbyM succeeded "+name+" ("+text(tmp2)+" sec)");
     );
   );
+  flg;
 );
 ////%CalcbyM end////
 
@@ -4495,7 +4497,7 @@ CalcbyC(name,path,cmd,optionorg):=(
       );
     );
   );//180615to
-  wflg; //181101
+  flg; //181101, 210827
 );
 ////%CalcbyC end////
 
@@ -5967,6 +5969,7 @@ CalcbyW(name,cmd,optionorg):=(
       println("      CalcbyW succeeded "+name+" ("+text(tm)+" sec)");
     );
   );
+  flg; //210827
 );
 ////%CalcbyW end////
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210821] loaded");
+println("ketcindylibbasic3[20210828] loaded");
 
 //help:start();
 
@@ -1186,8 +1186,12 @@ Usegraphics(gpack):=( //180817
       ADDPACK=set(ADDPACK); //191127
   );
   if(Toupper(gpack)=="PICT2E",
+    if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"pdflatex")>0), //210828from
       Addpackage(["pict2e"]);
-      ADDPACK=set(ADDPACK); //191127
+    ,
+      Addpackage(["[dvipdfmx]{pict2e}"]); 
+    );  //210828to
+    ADDPACK=set(ADDPACK); //191127
   );
 );
 ////%Usegraphics end////

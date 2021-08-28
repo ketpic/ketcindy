@@ -1,3 +1,5 @@
+// 210828
+//  Usepackage debugged ( for pict2d )
 // 210821
 //  Tomaxform debugged
 // 210819

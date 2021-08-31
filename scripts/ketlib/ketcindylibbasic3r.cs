@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210828] loaded");
+println("ketcindylibbasic3[20210831 loaded");
 
 //help:start();
 
@@ -3146,15 +3146,23 @@ Totexform(str):=( //210803from[renew]
 //help:Totexform("fr(2,3)");
   regional(plv,funL,repL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
       tmp,tmp1,tmp2,tmp3,tmp4);
+  tmp1="\displaystyle\int"; //210831from
+  tmp2="\displaystyle\lim";
+  tmp3="\displaystyle\sum"; //210831to
   repL=[ //190515from
     ["^(",["^{xx}"]], //210805
+    ["_(",["_{xx}"]], //210831
+    ["tfr(",["","\tfrac{xx}{yy}"]], //210831
     ["fr(",["","\frac{xx}{yy}"]], //210228from
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
     ["po(",["","{xx}^{yy}"]],
     ["sin(",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
     ["cos(",["\cos xx ","\cos^{xx}\! yy "]], //210405
-    ["tan(",["\tan xx ","\tan^{xx}\! yy "]]  //210228to  //210405
+    ["tan(",["\tan xx ","\tan^{xx}\! yy "]],  //210228to  //210405
+    ["lim(", ["",tmp2+"_{xx \to yy} ",tmp2+"_{xx \to yy} zz"]], //210831from
+    ["int(", [tmp1+" ",tmp1+"_{xx}^{yy} ",tmp1+" yy dzz ",tmp1+"_{xx}^{yy} zz dww "]],       
+    ["sum(", ["",tmp3+"_{xx}^[yy} ", tmp3+"_{xx}^[yy} zz"]] //210831to
   ];  
   out=replace(str,"pi","{\pi}"); //210805
   head="";
@@ -3201,6 +3209,25 @@ Totexform(str):=( //210803from[renew]
           tmp=replace(rep_2_2,"xx",tmp1);
           out=replace(tmp,"yy",tmp2);
         );
+        if(nn==3, //210831from
+          tmp1=substring(out,plv_1_1,clv_1_1-1);
+          tmp2=substring(out,clv_1_1,clv_2_1-1);
+          tmp3=substring(out,clv_2_1,length(out)-1);
+          tmp=replace(rep_2_3,"xx",tmp1);
+          tmp=replace(tmp,"yy",tmp2);
+          out=replace(tmp,"zz",tmp3);
+          println(out);
+        );
+        if(nn==4,
+          tmp1=substring(out,plv_1_1,clv_1_1-1);
+          tmp2=substring(out,clv_1_1,clv_2_1-1);
+          tmp3=substring(out,clv_2_1,clv_3_1-1);
+          tmp4=substring(out,clv_3_1,length(out)-1);
+          tmp=replace(rep_2_4,"xx",tmp1);
+          tmp=replace(tmp,"yy",tmp2);
+          tmp=replace(tmp,"zz",tmp3);
+          out=replace(tmp,"ww",tmp4);
+        );  //210831to
         out=pre+out+post;
         tmp=indexof(out,fun);
         ctr=ctr+1;

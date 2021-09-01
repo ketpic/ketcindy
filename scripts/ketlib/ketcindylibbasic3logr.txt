@@ -1,5 +1,7 @@
+// 210901
+//  Totexform changed (adding "()" for sin,...)
 // 210831
-//  Tomaxform changed (int,lim,sum)
+//  Totexform changed (int,lim,sum)
 // 210828
 //  Usepackage debugged ( for pict2d )
 // 210821

@@ -1,3 +1,6 @@
+// 210903
+//  Tomaxform debugged ([] as comment etc)
+//  Totexform,Tomaxform changed (ln added)
 // 210901
 //  Totexform changed (adding "()" for sin,...)
 // 210831

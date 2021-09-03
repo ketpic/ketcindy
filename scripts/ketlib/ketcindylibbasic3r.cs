@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210901 loaded");
+println("ketcindylibbasic3[20210903 loaded");
 
 //help:start();
 
@@ -3155,6 +3155,7 @@ Totexform(str):=( //210803from[renew]
     ["tfr(",["","\tfrac{xx}{yy}"]], //210831
     ["fr(",["","\frac{xx}{yy}"]], //210228from
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
+    ["ln(",["\ln xx "]], //210903
     ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
     ["po(",["","{xx}^{yy}"]],
     ["sin(",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
@@ -3306,26 +3307,34 @@ Tomaxform(str):=(
   repL=[ //190515from
     ["fr(",["","(xx)/(yy)"]],
     ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]],
+    ["ln(",["{log}(xx)"]], //210903
     ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]],
     ["po(",["","(xx)^(yy)"]],
     ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]],
     ["cos(",["{cos}(xx)","{cos}(yy)^(xx)"]],
     ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],
+    ["|(",["{abs}(xx)"]], //210902
     ["pi(",["{%pi}()"]]
   ];
   if(isstring(str),out=str, out=format(str,6));
-  tmp1=""; 
-  while(length(out)>0,
-    tmp=out_1;
-    if(tmp!="[",
-      tmp1=tmp1+tmp;
-      out=substring(out,1,length(out));
-    ,
-      tmp=indexof(out,"]");
-      out=substring(out,tmp,length(out));
+  tmp=Bracket(out,"[]");
+  if(length(tmp)>0,
+    tmp1=substring(out,0,tmp_1-1);
+    forall(1..(length(tmp)/2),
+      tmp2=tmp_(2*#-1);
+      tmp3=tmp_(2*#);
+      tmp1=tmp1+substring(out,tmp2,tmp3-1);
     );
+    out=tmp1;
+  );    
+  out=replace(out,"pi","pi()"); //210805
+  tmp=Indexall(out,"|"); //210902from
+  forall(1..(length(tmp)/2),
+    tmp2=tmp_(2*#);
+    tmp1=substring(out,0,tmp2-1)+")";
+    out=tmp1+substring(out,tmp2,length(out));
   );
-  out=tmp1;
+  out=replace(out,"|","|(");//210902to
   out=Removespace(out);
   head="";
   flg=0;

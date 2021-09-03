@@ -1,0 +1,242 @@
+\documentclass[a4paper,12pt]{jarticle}
+\begin{document}
+\begin{center}
+ K\raisebox{-0.3zw}{E}TCindy インストール手順 （FreeBSD）
+\end{center}
+\begin{flushright}
+ 修正日：2021年9月3日
+\end{flushright}
+
+この文書では，
+root 権限で実行するコマンドはプロンプトに\#を使用して，
+通常のユーザーで実行するコマンドはプロンプトに\%を使用しています．
+
+root権限で実行するには，
+root でログインする，
+su コマンドで root になる，
+sudo を使う，
+等の方法があります．
+
+\$HOME はユーザーのホームディレクトリを表す．ユーザー名が hoge の場合，
+通常は，/home/hoge である．
+
+\begin{enumerate}
+ \item 準備
+
+FreeBSD上でK\raisebox{-0.3zw}{E}TCindyを動作させるには，
+以下の Ports （package) が必要である．
+
+\noindent
+x11/xorg
+\\
+\noindent
+emulators/linux\_base-c7
+\\
+\noindent
+x11/linux-c7-xorg-libs
+\\
+\noindent
+lang/gcc**
+\\
+\noindent
+math/R
+\\
+\noindent
+math/maxima
+
+この他に，適当なpdfビューワーが必要である．
+ここでは，graphic/evince を使用するものとして話を進めていく．
+違うpdfビューワーを使用するときは適当に読み替えること．
+
+インストールされていないときは，
+以下のように，root権限でインストールする．
+（注意：これだけで，必要なものは，依存関係でインストールできる．）
+\\[0.5zw]
+\noindent
+\# pkg install xorg
+\\
+\noindent
+\# kldload linux
+\\
+\noindent
+\# kldload linux64
+\\
+\noindent
+\# pkg install linux-c7-xorg-libs
+\\
+\noindent
+\# pkg install R
+\\
+\noindent
+\# pkg install maxima
+\\
+\noindent
+\# pkg install evince
+\\[0.5zw]
+次に，limux emulator を起動時から動作するように，
+/etc/rc.conf に linux\_enable="YES" を追加する．
+例えば，
+\\[0.5zw]
+\noindent
+\# echo 'linux\_enable="YES"' $>>$  /etc/rc.conf
+\\[0.5zw]
+とする．
+そして，linux emulator を動作させるために再起動する．
+\\[0.5zw]
+\noindent
+\# shutdown -r now
+
+\item \TeX \  Live のインストール
+
+Ports の \TeX \  Live では 
+K\raisebox{-0.3zw}{E}TCindy 
+は動作しない．
+そのため，\TeX \  Live のサイトから 
+\TeX \  Live をインストールしなくてはならない．
+例えば，
+\\[0.5zw]
+http://mirror.ctan.org/systems/texlive/Images/
+\\[0.5zw]
+からDVD イメージ texlive2021.iso をダウンロードして，
+\\[0.5zw]
+\noindent
+\# mdconfig -a -f texlive2021.iso -u 0
+\\
+\noindent
+\# mount\_cd9660 /dev/md0 /mnt
+\\
+\noindent
+\# cd /mnt
+\\
+\noindent
+\# ./install-tl
+\\[0.5zw]
+※ 選択肢が表示されたら I + Enter を入力
+\\[0.5zw]
+その他のtex環境（\TeX Works，\TeX studio等）
+をPortsからインストールすると，
+Portsのtexliveもインストールされてしまう．
+そのため，
+「tlmgr path add」を行わず，path を適切に設定して，
+こちらの\TeX を優先させたほうがよいようである．
+ports の \TeX \  Live よりこちらを優先させるためには，
+他のPathよりPathを先に通せばよい．
+例えば，csh，tcsh を使用しているときは，
+\$HOME/.cshrc に，
+\\[0.5zw]
+\noindent
+set path = (/usr/local/texlive/2021/bin/amd64-freebsd\  /sbin\  /bin \  /usr/sbin \ /usr/bin \ /usr/games \ /usr/local/sbin \  /usr/local/bin \    \$HOME/bin)
+\\[0.5zw]
+等を足せばよい．
+なお，必要なpathを通すのを忘れないようにすること．
+.cshrc を編集する前に
+\\[0.5zw]
+\% echo \$PATH
+\\[0.5zw]
+をして，必要なPathを確認しておくことをお勧めする．
+
+\item Cinderellaのインストール
+
+FreeBSDでのCinderellaの動作はバージョンによって，
+動作しないものがある．
+現時点で，
+FreeBSD 12.2-RELEASE 上では Cinderella-3.0b.2017 の動作を，
+FreeBSD 13.0-RELEASE 上では Cinderella-3.0b.2028 の動作を確認している．
+\\[0.5zw]
+https://beta.cinderella.de/Cinderella-3.0b.2017.tar.gz
+\\
+https://beta.cinderella.de/Cinderella-3.0b.2028.tar.gz
+\\[0.5zw]
+をダウンロードして，
+\\[0.5zw]
+\$ tar xvzf  Cinderella-3.0b.2028.tar.gz
+\\[0.5zw]
+とする．
+そして，
+\\[0.5zw]
+\$ ./cinderella/Cinderella 
+として，Cinderella を起動する．
+解凍する前には，/etc/rc.conf に
+linux\_enable="YES" を追加して，
+再起動しておかないと動かいないので注意する．
+
+\item ketcindy の設定
+
+github から以下のように
+\\[0.5zw]
+\% git clone https://github.com/ketpic/ketcindy.git
+\\[0.5zw]
+最新版を clone するか，
+\\[0.5zw]
+https://github.com/ketpic/ketcindy
+\\[0.5zw]
+から ketcindy-master.zip 
+をダウンロードして解凍して，
+\\[0.5zw]
+\% unzip ketcindy-master.zip
+\\
+\% mv ketcindy-master ketcindy
+\\[0.5zw]
+とする．
+そして，
+\\[0.5zw]
+\# cp -pr ketcindy/style/*  /usr/local/texlive/2021/texmf-dist/tex/latex/ketcindy/
+\# cp -pr ketcindy/scripts/*  /usr/local/texlive/2021/texmf-dist/scripts/
+\# /usr/local/texlive/2021/bin/amd64-freebsd/mktexlsr 
+\\[0.5zw]
+とする．
+そして，以下の内容の ketcindy.ini を \$HOME の下に作成する．
+
+PathThead="/usr/local/texlive/2021/bin/amd64-freebsd";
+\\
+Dirhead="/usr/local/texlive/2021/texmf-dist/scripts/ketcindy";
+\\
+setdirectory(Dirhead);
+\\
+import("setketcindy.txt");
+\\
+PathT=PathThead+"/platex";
+\\
+GPACK="tpic";
+\\
+Pathpdf="/usr/local/bin/evince";
+\\
+PathR="/usr/local/bin/R";
+\\
+PathM="/usr/local/bin/maxima";
+\\
+PathC="/usr/local/bin/gcc10";
+\\
+PathV3="Meshlab";
+\\
+PathAd="acroread";
+\\
+PathA="asir";
+\\
+//PathW="";
+\\
+PathF="fricas";
+\\
+Mackc="bash";
+\\
+Helplist("read",[],"helpJ");
+\\
+setdirectory(Dircdy);
+\\[1zw]
+ketcindy.ini は Cinderella で 
+ketcindy/doc/ketcindysettings.cdy 
+を開いて，
+「Mkinit」のボタンを押して，雛形を作成し，
+テキストエディターで編集すると作成が楽である．
+編集するとき，texlive のインストールディレクトリ，
+gcc，pdfビューワーは環境によって，適宜，書き帰ること．
+gccは何が入っているかわからないときは，
+\\[0.5zw]
+\% ls /usr/local/bin/gcc*
+\\[0.5zw]
+等としてみるとよい．
+\end{enumerate}
+
+以上で，FreeBSDでもketcindyが動作する．
+
+\end{document}

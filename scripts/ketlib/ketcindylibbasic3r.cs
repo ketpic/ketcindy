@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210903 loaded");
+println("ketcindylibbasic3[20210907 loaded");
 
 //help:start();
 
@@ -3152,6 +3152,7 @@ Totexform(str):=( //210803from[renew]
   repL=[ //190515from
     ["^(",["^{xx}"]], //210805
     ["_(",["_{xx}"]], //210831
+    ["tx(",["\text{xx}"]], //210907
     ["tfr(",["","\tfrac{xx}{yy}"]], //210831
     ["fr(",["","\frac{xx}{yy}"]], //210228from
     ["log(",["\log xx ","\log_{xx} yy"]], //210405

@@ -1,3 +1,5 @@
+// 20210907
+//    Getlevel debugged  ( case of no bracket )
 // 20210823
 //    Changestyle debugged  ( for "shade" )
 // 20210624

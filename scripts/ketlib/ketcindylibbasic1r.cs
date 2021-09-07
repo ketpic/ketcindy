@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210823] loaded");
+println("ketcindylibbasic1[20210907] loaded");
 
 //help:start();
 
@@ -851,14 +851,21 @@ Getlevel(str,Arg,bra):=(
     nL=Indexall(str,Arg);
   );
   parL=Bracket(str,bra);
-  if(length(parL)==0,parL=[[0,0]]);
-  out=[];
-  forall(nL,n,
-    tmp2=select(parL,#_1<n);
-    tmp2=tmp2_(-1);
-    if(tmp2_2>=0,tmp=tmp2_2,tmp=-tmp2_2-1);
-    out=append(out,[n,tmp]);
-  );
+  if(length(parL)==0, //210907from
+    out=apply(1..(lenght(nL)),0);
+  ,
+    out=[];
+    forall(nL,n,
+      if((n<parL_1_1)%(n>parL_(-1)_1),
+        tmp=0;
+      ,
+        tmp2=select(parL,#_1<n);
+        tmp2=tmp2_(-1);
+        if(tmp2_2>=0,tmp=tmp2_2,tmp=-tmp2_2-1);
+      );
+      out=append(out,[n,tmp]);
+    );
+  );  //210907to
   out;
 );
 ////%Getlevel end////

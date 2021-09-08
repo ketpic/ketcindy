@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210907 loaded");
+println("ketcindylibbasic3[20210909 loaded");
 
 //help:start();
 
@@ -3141,6 +3141,25 @@ Tonormalform(fun0org):=(
 );
 ////%Tonormalform end//// //200605
 
+////%Addpar start//// //210909
+Addpar(str):=(
+  regional(num,add,tmp);
+  if(length(str)==0,
+    add=(1==0);
+  ,
+    add=(length(str)>=2)&(str!="{\pi}");
+    num=apply(0..9,text(#));
+    tmp=apply(1..(length(str)),str_#);
+    tmp=sort(tmp);
+    add=add&(common(num,tmp)!=tmp);
+    tmp=Indexall(str,"^");
+    add=add&(length(tmp)!=1);
+    add=add&(str_1!="(");
+  );
+  add;
+);
+////%Addpar end////
+
 ////%Totexform start////
 Totexform(str):=( //210803from[renew]
 //help:Totexform("fr(2,3)");
@@ -3205,9 +3224,9 @@ Totexform(str):=( //210803from[renew]
         if(nn==1,
           tmp1=substring(out,plv_1_1,length(out)-1);
           if(contains(parL,fun), //210901from
-            if((length(tmp1)>=2)&(tmp1!="{\pi}"),
-              if(tmp1_1!="(",tmp1="("+tmp1+")")
-            );
+            if(Addpar(tmp1), //210909from
+              tmp1="("+tmp1+")";
+            ); //210909to
           ); //210901to
           out=replace(rep_2_1,"xx",tmp1);
         );
@@ -3215,9 +3234,9 @@ Totexform(str):=( //210803from[renew]
           tmp1=substring(out,plv_1_1,clv_1_1-1);
           tmp2=substring(out,clv_1_1,length(out)-1);
           if(contains(parL,fun), //210901from
-            if((length(tmp2)>=2)&(tmp2!="{\pi}"),
-              if(tmp2_1!="(",tmp2="("+tmp2+")")
-            );
+           if(Addpar(tmp2), //210909from
+              tmp2="("+tmp2+")";
+            ); //210909to
           ); //210901to
           tmp=replace(rep_2_2,"xx",tmp1);
           out=replace(tmp,"yy",tmp2);
@@ -3227,9 +3246,9 @@ Totexform(str):=( //210803from[renew]
           tmp2=substring(out,clv_1_1,clv_2_1-1);
           tmp3=substring(out,clv_2_1,length(out)-1);
           if(contains(parL,fun), //210901from
-            if((length(tmp3)>=2)&(tmp3!="{\pi}"),
-              if(tmp3_1!="(",tmp3="("+tmp3+")")
-            );
+            if(Addpar(tmp3), //210909from
+              tmp3="("+tmp3+")";
+            ); //210909to
           ); //210901to
           tmp=replace(rep_2_3,"xx",tmp1);
           tmp=replace(tmp,"yy",tmp2);
@@ -3241,9 +3260,9 @@ Totexform(str):=( //210803from[renew]
           tmp2=substring(out,clv_1_1,clv_2_1-1);
           tmp3=substring(out,clv_2_1,clv_3_1-1);
           if(contains(parL,fun), //210901from
-            if((length(tmp3)>=2)&(tmp3!="{\pi}"),
-              if(tmp3_1!="(",tmp3="("+tmp3+")")
-            );
+            if(Addpar(tmp3), //210909from
+              tmp3="("+tmp3+")";
+            ); //210909to
           ); //210901to
           tmp4=substring(out,clv_3_1,length(out)-1);
           tmp=replace(rep_2_4,"xx",tmp1);
@@ -3318,16 +3337,13 @@ Tomaxform(str):=(
     ["pi(",["{%pi}()"]]
   ];
   if(isstring(str),out=str, out=format(str,6));
-  tmp=Bracket(out,"[]");
-  if(length(tmp)>0,
-    tmp1=substring(out,0,tmp_1-1);
-    forall(1..(length(tmp)/2),
-      tmp2=tmp_(2*#-1);
-      tmp3=tmp_(2*#);
-      tmp1=tmp1+substring(out,tmp2,tmp3-1);
-    );
-    out=tmp1;
-  );    
+  tmp=Bracket(out,"[]"); //210908from
+  while(length(tmp)>0,
+    tmp1=tmp_1_1;
+    tmp2=tmp_2_1;
+    out=substring(out,0,tmp1-1)+substring(out,tmp2,length(out));
+    tmp=Bracket(out,"[]");
+  ); //210908to
   out=replace(out,"pi","pi()"); //210805
   tmp=Indexall(out,"|"); //210902from
   forall(1..(length(tmp)/2),

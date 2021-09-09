@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210909 loaded");
+println("ketcindylibbasic3[20210910 loaded");
 
 //help:start();
 
@@ -1525,10 +1525,15 @@ Setslidebody(str,Arg):=( //17.01.08
     Setslidebody(str,"\Large\bf\boldmath",Arg);
   );
 );
-Setslidebody(str,style,density):=( // 16.12.22,17.01.06,01.08
+Setslidebody(str1,str2,density):=( // 16.12.22,17.01.06,01.08
 //help:Setslidebody(["black",,0]);
 //help:Setslidebody(["blue","\Large\bf\boldmath",0.1]);
-  regional(numlist,tmp,tmp1,letterc,boxc,shadowc,mboxc);
+  regional(str,style,numlist,tmp,tmp1,letterc,boxc,shadowc,mboxc);
+  if(indexof(str1,"\")==0, //210910from
+    str=str1; style=str2;
+  ,
+    str=str2; style=str1;
+  ); //210910from
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow";
   if(!islist(SlideColorList),

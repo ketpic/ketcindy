@@ -1,3 +1,5 @@
+// 210913
+//  Totexform changed  ( diff,par added )
 // 210910
 //  Setslidebody changed  ( order of strings )
 // 210909

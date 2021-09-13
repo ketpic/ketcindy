@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210910 loaded");
+println("ketcindylibbasic3[20210913 loaded");
 
 //help:start();
 
@@ -3188,7 +3188,9 @@ Totexform(str):=( //210803from[renew]
     ["tan(",["\tan xx ","\tan^{xx}\! yy "]],  //210228to  //210405
     ["lim(", ["",tmp2+"_{xx \to yy} ",tmp2+"_{xx \to yy} zz"]], //210831from
     ["int(", [tmp1+" ",tmp1+"_{xx}^{yy} ",tmp1+" yy dzz ",tmp1+"_{xx}^{yy} zz dww "]],       
-    ["sum(", ["",tmp3+"_{xx}^{yy} ", tmp3+"_{xx}^{yy} zz"]] //210831to
+    ["sum(", ["",tmp3+"_{xx}^{yy} ", tmp3+"_{xx}^{yy} zz"]], //210831to
+    ["diff(", ["d ","\frac{dxx}{dyy}"]], //210913
+    ["par(", ["\partial ","\frac{\partial xx}{\partial yy}"]] //210913
   ];
   parL=["log(","sin(","cos(","tan(","lim(","int(","sum("]; //210901
   out=replace(str,"pi","{\pi}"); //210805

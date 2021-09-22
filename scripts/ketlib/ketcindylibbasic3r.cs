@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20210913 loaded");
+println("ketcindylibbasic3[20210923 loaded");
 
 //help:start();
 
@@ -3160,6 +3160,9 @@ Addpar(str):=(
     tmp=Indexall(str,"^");
     add=add&(length(tmp)!=1);
     add=add&(str_1!="(");
+    forall(["+","-","/"], //210923from
+      add=add%(indexof(str,#)>0);
+    ); //210923to
   );
   add;
 );
@@ -3190,7 +3193,8 @@ Totexform(str):=( //210803from[renew]
     ["int(", [tmp1+" ",tmp1+"_{xx}^{yy} ",tmp1+" yy dzz ",tmp1+"_{xx}^{yy} zz dww "]],       
     ["sum(", ["",tmp3+"_{xx}^{yy} ", tmp3+"_{xx}^{yy} zz"]], //210831to
     ["diff(", ["d ","\frac{dxx}{dyy}"]], //210913
-    ["par(", ["\partial ","\frac{\partial xx}{\partial yy}"]] //210913
+    ["par(", ["\partial ","\frac{\partial xx}{\partial yy}"]] ,//210913
+    ["[](", ["","","\Bigl[xx\Bigr]_{yy}^{zz}"]] //210923
   ];
   parL=["log(","sin(","cos(","tan(","lim(","int(","sum("]; //210901
   out=replace(str,"pi","{\pi}"); //210805

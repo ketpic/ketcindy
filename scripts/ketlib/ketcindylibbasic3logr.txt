@@ -1,3 +1,6 @@
+// 210923
+//  Totexform debugged ( []( added )
+//  Addgraph changed  ( for string with multi chars )
 // 210913
 //  Totexform changed  ( diff,par added )
 // 210910

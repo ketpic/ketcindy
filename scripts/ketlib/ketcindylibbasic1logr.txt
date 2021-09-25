@@ -1,3 +1,5 @@
+// 20210926
+//    Getlevel debugged again ( case of no bracket )
 // 20210907
 //    Getlevel debugged  ( case of no bracket )
 // 20210823

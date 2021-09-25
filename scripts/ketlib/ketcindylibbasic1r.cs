@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210907] loaded");
+println("ketcindylibbasic1[20210926] loaded");
 
 //help:start();
 
@@ -852,7 +852,9 @@ Getlevel(str,Arg,bra):=(
   );
   parL=Bracket(str,bra);
   if(length(parL)==0, //210907from
-    out=apply(1..(lenght(nL)),0);
+    tmp="("+str+")"; //210926from
+    tmp1=Getlevel(tmp);
+    out=apply(tmp1,[#_1-1,#_2-1]); //210926to
   ,
     out=[];
     forall(nL,n,

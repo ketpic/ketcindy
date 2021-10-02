@@ -109,6 +109,20 @@ KETCindyについての補足(Mac)
     \hspace*{20mm}\verb|sudo xcode-select --install|
   \end{itemize}
 
+
+\item M1でのMaximaのインストール
+  \begin{enumerate}[(1)]
+    \item Homebrewを以下のコマンドでインストールする．\\
+　{\small \verb|/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"|}\\
+　　・Homebrewを既にインストールしている場合は不要
+\item Maximaをインストールする．\\
+　\verb|brew install maxima|
+\item \verb|type|でMaximaのインストール先を見つける(typeはMac専用)．\\
+　\verb|type maxima|\\
+　　・\verb|/opt/local|, \verb|/usr/local|などの中にある．
+\item ユーザーホームにある\verb|ketcindy.ini|のPathMに上で得たパスを入れる．
+  \end{enumerate}
+
 %\item 手動でコピーする場合（KeTTeX）\\
 %\hspace*{1zw}注）他のTeXの場合は，適宜パスを置き換える．\\
 %\hspace*{3zw}\verb|/Applications/kettex/texlive| $=>$ \verb|/Library/TeX/Root| など

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20210724] loaded");
+println("ketcindylibbasic2[20211002] loaded");
 
 //help:start();
 
@@ -1365,6 +1365,8 @@ Enclosing2(nm,plistorg,options):=(
           tmp=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //210411from
           if(length(tmp)>0,
             KL=tmp;
+          ,
+            KL=KL_1;  //211002
           ); //210411to
           t2=KL_1_2;
           ss=KL_1_3;
@@ -1391,7 +1393,7 @@ Enclosing2(nm,plistorg,options):=(
       );
     );
     if(flg==0,
-      AnsL=apply(AnsL,Pcrd(#));
+      AnsL=apply(1..(length(AnsL)),Pcrd(AnsL_#));
     );
   );
   AnsL=Unscaling(AnsL); //201110

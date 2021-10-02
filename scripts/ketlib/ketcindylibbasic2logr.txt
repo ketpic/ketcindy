@@ -1,3 +1,5 @@
+// 20211002
+//    Enclosing debugged 
 // 20210724
 //    Arrowhead debugged  ( point=1 or Ptend(directory )
 // 20210602

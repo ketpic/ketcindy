@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20210625] loaded");
+println("ketcindylib3d[20211010] loaded");
 
 //help:start();
 
@@ -4472,8 +4472,8 @@ SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
 ////////////// current skeleton  2018.01.04 ////////////////
 
 ////%Skeletonparadata start////
-Skeletonparadata(nm):=Skeletondatacindy(nm,[]);
-Skeletonparadata(nm,options):=Skeletondatacindy(nm,options);
+Skeletonparadata(nm):=Skeletondatacindy(nm,Datalist3d(),Datalist3d(),[]); //211010[2lines]
+Skeletonparadata(nm,options):=Skeletondatacindy(nm,Datalist3d(),Datalist3d(),options); 
 Skeletonparadata(nm,pltdata1,pltdata2):=Skeletondatacindy(nm,pltdata1,pltdata2);
 Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
     Skeletondatacindy(nm,pltdata1org,pltdata2org,options);

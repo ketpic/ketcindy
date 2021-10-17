@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20211002] loaded");
+println("ketcindylibbasic2[20211015] loaded");
 
 //help:start();
 
@@ -1304,7 +1304,7 @@ Enclosing2(nm,plistorg,options):=(
     Fdata=plist_1;
     Gdata=plist_(length(plist));
     KL=Intersectcurvespp(Fdata,Gdata);
-    if(length(KL)==0,
+   if(length(KL)==0,
       tmp=parse(Gdata);
       tmp1=LLcrd(Op(length(tmp),tmp)); //18.02.02from
       tmp=parse(Fdata);
@@ -1348,7 +1348,7 @@ Enclosing2(nm,plistorg,options):=(
         AnsL=concat(AnsL,tmp1);
       ,  //200803to
         KL=Intersectcurvespp(Fdata,Gdata);
-        if(length(KL)==0,
+        if(length(KL)==0, 
           tmp2=Prepend(Op(length(tmp1),tmp),tmp2);
           Gdata=replace(Gdata,"(","");
           Gdata=replace(Gdata,")","");
@@ -1366,7 +1366,7 @@ Enclosing2(nm,plistorg,options):=(
           if(length(tmp)>0,
             KL=tmp;
           ,
-            KL=KL_1;  //211002
+            KL=KL;  //211002,1014
           ); //210411to
           t2=KL_1_2;
           ss=KL_1_3;

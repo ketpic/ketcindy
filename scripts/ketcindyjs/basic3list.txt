@@ -39,8 +39,8 @@ Gcd,basic3,2882,2910,Euclidalg
 Fracform,basic3,2914,2954
 Sla2fra,basic3,2958,3044,Strsplit,Bracket,Getlevel
 Tonormalform,basic3,3048,3146
-Addpar,basic3,3150,3168,Indexall
-Totexform,basic3,3172,3293,Bracket,Getlevel,Addpar
+Addpar,basic3,3150,3176,Indexall
+Totexform,basic3,3180,3293,Bracket,Getlevel,addpar,Addpar
 Addasterisk,basic3,3297,3330,Removespace
 Tomaxform,basic3,3334,3425,Indexall,Removespace,Bracket,Getlevel,Addasterisk
 Tocindyform,basic3,3429,3519,Removespace,Bracket,Getlevel,Addasterisk

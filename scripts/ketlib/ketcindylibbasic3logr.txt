@@ -1,3 +1,9 @@
+// 211029
+//  Addpar,Totexform changed ( !str )
+// 211027
+//  Totexform changed ( int )
+// 211019
+//  Totexform changed ( []( => br( )
 // 210923
 //  Totexform debugged ( []( added )
 //  Addgraph changed  ( for string with multi chars )

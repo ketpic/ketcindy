@@ -1,3 +1,6 @@
+// 211104
+//    Fullformfunc debugged ( case of Jrg=4 )
+//    Skeletonparadata debugged/renewed  (case of null, file="Y")
 // 211010
 //    Skeletonparadata debugged ( case of arg 1/2 )
 // 210625

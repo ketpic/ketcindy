@@ -516,7 +516,7 @@ Sf3data(options=["Num=[25,25]","Wire=[20,20]"]);
 Addpoints(list of 3d points);
 Skeletonparadata("1");
 Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
-Skeletonparadatac(options=[1(width),"File=y(/m/n)","Not=ptlist","Check=ptlist"]);
+Skeletonparadatac(options=[1(width),"File=y(n)","m/r"]);
 Divnohidhid("1","sc3d1",nvec,["Num=100"],["Num=100","do"]);
 Beziersurf("pt",2,2,pL);
 Setpara("folder name","funstr","range",options,optionsanim);

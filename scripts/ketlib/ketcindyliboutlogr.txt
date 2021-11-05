@@ -1,3 +1,6 @@
+// 20211105
+//    Cform, debugged( renewed)
+//    ConvertFdtoC changed 
 // 20210827
 //    Calcby changed   (return flg )
 // 20210516

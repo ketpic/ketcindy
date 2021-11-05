@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20210827] loaded");
+println("ketcindylibout[20211105] loaded");
 
 //help:start();
 
@@ -3858,17 +3858,19 @@ Cformold(strorg):=(
 );
 
 ////%Cform start////
-Cform(strorg):=( //181106
+Cform(strorg):=( //181106,211105
 //help:Cform(str);
-  regional(str,str2,out,ter,num,hat,pare,jj,ns,ne,nsa,nea,flg,flg2,tmp,tmp1,tmp2);
-  ter=["+","-","*","/","(",")","="]; //180517
+  regional(str,str1,str2,ter,num,hatLht,pare,flg,
+         pmx,sub,sub1,sub2,ns,nsL,ne,ht,kk,
+        tmp,tmp1,tmp2,tmp3,tmp4);
+  ter=["+","-","*","/","(",")","=","[","]"]; //180517
   str=replace(strorg,"pi","M_PI");
   num=apply(0..9,text(#));  //181107from
   num=append(num,".");
-  flg=0;
   tmp1=str+"/";
   tmp2="";
   str="";
+  flg=0;
   forall(1..(length(tmp1)),
     tmp=substring(tmp1,#-1,#);
     if(contains(num,tmp),
@@ -3888,73 +3890,99 @@ Cform(strorg):=( //181106
       );      
     );
   );
-  str=substring(str,0,length(str)-1); //181107to
-  out="";
-  flg=0;
-  forall(1..100,jj,
-    if(flg==0,
-      hat=indexof(str,"^");
-      if(hat==0,
-        out=out+str;
-        flg=1;
-      ,
-        ne=hat-1;
-        if(substring(str,ne-1,ne)==")",
-          ne=ne-1;
-          pare=Bracket(str,"()");
-          tmp=select(pare,#_1==hat-1);
-          tmp=tmp_1_2;
-          tmp1=select(pare,(#_1<hat)&(#_2==-tmp));
-          ns=tmp1_(length(tmp1))_1+1;
-          nsa=ns-1;
-       ,
-          flg2=0;
-          forall(reverse(1..ne),
-            if(flg2==0,
-              if(contains(ter,substring(str,#-1,#)),
-                ns=#+1;
-                flg2=1;
-              );
-            );
+  str=substring(str,0,length(str)-1);
+  str="("+str+")";
+  pare=Bracket(str,"()");
+  tmp=apply(pare,#_2);
+  pmx=max(tmp);
+  while(pmx>0,
+    tmp=select(pare,#_2==pmx);
+    while(length(tmp)>0,
+      ns=tmp_1_1;
+      tmp=select(pare,(#_2==-pmx)&(#_1>ns));
+      ne=tmp_1_1;
+      sub=substring(str,ns-1,ne);
+      sub=replace(sub,"(","[");
+      sub=replace(sub,")","]");
+      str1=substring(str,0,ns-1);
+      str2=substring(str,ne,length(str));
+      ht=indexof(sub,"^");
+      while(ht>0,
+        tmp1=substring(sub,0,ht-1);
+        tmp2=substring(sub,ht,length(sub));
+        sub1=""; sub2="";
+        tmp=tmp1_(-1);
+        if((tmp==")")%(tmp=="]"),
+          if(tmp==")",
+            tmp3=Bracket(tmp1,"()");
+          ,
+            tmp3=Bracket(tmp1,"[]");
           );
-          if(flg2==0,ns=1);
-          nsa=ns;
-        );
-        str2="pow("+substring(str,ns-1,ne)+",";
-        ns=hat;
-        if(substring(str,ns,ns+1)=="(",
-          ns=ns+2;
-          pare=Bracket(str,"()");
-          tmp=select(pare,#_1==hat+1);
-          tmp=tmp_1_2;
-          tmp1=select(pare,(#_1>hat)&(#_2==-tmp));
-          ne=tmp1_1_1-1;
-          nea=ne+1;
+          tmp=tmp3_(-1)_2;
+          tmp=select(tmp3,#_2==-tmp);
+          tmp=tmp_(-1)_1;
+          sub1=sub1+substring(tmp1,0,tmp-1);
+          tmp1=substring(tmp1,tmp-1,length(tmp1));
         ,
-          ns=ns+1;
-          flg2=0;
-          forall(ns..(length(str)),
-            if(flg2==0,
-              if(contains(ter,substring(str,#-1,#)),
-                ne=#-1;
-                flg2=1;
-              );
+          kk=length(tmp1);
+          while(kk>0,
+            tmp=tmp1_(kk);
+            if(contains(ter,tmp),
+              sub1=sub1+substring(tmp1,0,kk);
+              tmp1=substring(tmp1,kk,length(tmp1));
+              kk=0;
+            ,
+              kk=kk-1;
             );
           );
-          if(flg2==0,ne=length(str));
-          nea=ne;
         );
-        str2=str2+substring(str,ns-1,ne)+")";
-        out=out+substring(str,0,nsa-1)+str2;
-        str=substring(str,nea,length(str));
+        tmp=tmp2_(1);
+        if((tmp=="(")%(tmp=="["),
+          if(tmp=="(",
+            tmp3=Bracket(tmp1,"()");
+          ,
+            tmp3=Bracket(tmp1,"[]");
+          );
+          tmp=tmp3_(1)_2;
+          tmp=select(tmp3,#_2==-tmp);
+          tmp=tmp_(1)_1;
+          sub2=substring(tmp2,tmp,length(tmp2))+sub2;
+          tmp2=substring(tmp2,0,tmp);
+        ,
+          kk=1;
+          while(kk<length(tmp2),
+            tmp=tmp2_(kk);
+            if(contains(ter,tmp),
+              tmp=length(tmp2);
+              sub2=substring(tmp2,kk-1,length(tmp2))+sub2;
+              tmp2=substring(tmp2,0,kk-1);
+              kk=tmp;
+            ,
+              kk=kk+1;
+            );
+          );
+        );
+        sub=sub1+"pow["+tmp1+","+tmp2+"]"+sub2;
+        ht=indexof(sub,"^");
+      );
+      str=str1+sub+str2;
+      pare=Bracket(str,"()");
+      tmp=[];
+      if(length(pare)>0,
+        tmp=select(pare,#_2==pmx);
       );
     );
+    pare=Bracket(str,"()");
+    pmx=pmx-1;
   );
-  out;
+  str=replace(str,"[","(");
+  str=replace(str,"]",")");
+  str=substring(str,1,length(str)-1);
+  str;
 );
-////%Cform end////
+////%Cform end/
 
-////%ConvertFdtoC start////
+////%ConvertFdtoC start//// 211105
 ConvertFdtoC(Fd):=ConvertFdtoC(Fd,["x","y","z"]);
 ConvertFdtoC(Fd,name):=(
 //help:ConvertFd(Fd);
@@ -3968,7 +3996,10 @@ ConvertFdtoC(Fd,name):=(
   tmp1=apply(tmp1,Assign(#,vvar,"v"));
   tmp1=concat(tmp1,FdL_(7..8));
   FdC=apply(1..3,name_#+"="+Cform(tmp1_#)); 
-  FdC=concat(FdC,[Cform(tmp1_4),Cform(tmp1_5)]);
+  tmp=[Cform(tmp1_4),Cform(tmp1_5)];
+  tmp=apply(tmp,replace(#,"(","["));
+  tmp=apply(tmp,replace(#,")","]"));
+  FdC=concat(FdC,tmp);
   FdC=concat(FdC,[tmp1_6]); 
 );
 ////%ConvertFdtoC end////

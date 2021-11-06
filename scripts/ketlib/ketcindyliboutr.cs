@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20211105] loaded");
+println("ketcindylibout[20211106] loaded");
 
 //help:start();
 
@@ -5454,24 +5454,33 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
 );
 ////%Intersectcrvsf end////
 
-////%Sfcutparadatacdy start//// 181112
+////%Sfcutparadatacdy start//// 181112,211106
 Sfcutparadatacdy(nm,cutfun,fd):=
    Sfcutparadatacdy(nm,cutfun,fd,[]);
-Sfcutparadatacdy(nm,cutfun,fd,options):=(
-//help:Sfcutparadatacdy("1","2*x+3*y+z=1","sfbd3d",fd,options);
-  regional(out3,out2,name3,name2,eps,fdL,rep,jj,pL,vn1,vn2,
+Sfcutparadatacdy(nm,cutfun,fd,optionorg):=(
+//help:Sfcutparadatacdy("1","2*x+3*y+z=1",,fd,options);
+//help:Sfcutparadatacdy(options=["Color=red","Num=[100,100]"]);
+  regional(options,eqL,out3,out2,name3,name2,eps,fdL,rep,jj,pL,vn1,vn2,
        tmp,tmp1,tmp2);
   eps=10^(-5);
   name2="sfcc2d"+nm;
   name3="sfcc3d"+nm;
+  options=optionorg;  //211106from
+  tmp=Divoptions(options);
+  eqL=tmp_5;
+  options=remove(options,eqL); //211106to
   fdL=Fullformfunc(fd);
+  
+  println(fdL);
+  
   tmp=Strsplit(fdL_5,"=");
   vn1=tmp_1;
   tmp=Strsplit(fdL_6,"=");
   vn2=tmp_1;
   rep=["x",fdL_2,"y",fdL_3,"z",fdL_4];
-  tmp=Assign(cutfun,rep);
-  Implicitplot("sfc"+nm,tmp,fd_5,fd_6,["Msg=n","nodisp"]);
+  tmp=Assign(cutfun,rep);  
+  Implicitplot("sfc"+nm,tmp,fd_5,fd_6,
+      concat(eqL,["Msg=n","nodisp"])); //211106
   out3=[]; out2=[];
   tmp1=parse("impsfc"+nm);
   if(Measuredepth(tmp1)==1,tmp1=[tmp1]);

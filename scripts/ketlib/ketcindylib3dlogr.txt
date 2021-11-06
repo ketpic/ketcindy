@@ -1,3 +1,7 @@
+// 211106
+//    Skeletonparadata debugged
+//    Expr3d debugged  ( regional(tmp) )
+//    Pointdata3d debugged  ( regional(tmp) )
 // 211104
 //    Fullformfunc debugged ( case of Jrg=4 )
 //    Skeletonparadata debugged/renewed  (case of null, file="Y")

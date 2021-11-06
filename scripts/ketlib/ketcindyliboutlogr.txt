@@ -1,3 +1,5 @@
+/ 20211106
+//    Sfcutparadatacdy changed  ( "Num" option added )
 // 20211105
 //    Cform, debugged( renewed)
 //    ConvertFdtoC changed 

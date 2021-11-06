@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20211104] loaded");
+println("ketcindylib3d[20211106] loaded");
 
 //help:start();
 
@@ -2167,7 +2167,7 @@ Expr3d(pt3d,dir,name,options):=Expr3d([pt3d,dir,name],options);
 Expr3d(dtlist,options):=(
 //help:Expr3d( point3d,direction,name);
 //help:Expr3d([point3d,direction,name],options]);
-  regional(dt,nall,jj);
+  regional(dt,nall,jj,tmp); //211106
   dt=dtlist;
   if(mod(length(dt),3)!=0,
     println("   Improper data");
@@ -4524,12 +4524,16 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     Rr=size*Rr;
     if(length(reL)>1,Eps2=reL_2);
   );
-  if(length(strL)>0,
-    tmp=strL_1;
-    if(tmp=="m",mkflg=1);
-    if(tmp=="r",mkflg=-1);
-    if(tmp=="",mkflg=0);
+  tmp1=strL;
+  forall(strL,
+    if(contains(["m","r",""],#),
+      if(#=="m",mkflg=1);
+      if(#=="r",mkflg=-1);
+      if(#=="",mkflg=0);
+      tmp1=remove(tmp1,[#]);
+    );
   );
+  strL=tmp1;
   forall(eqL, // no ketjs on //181101from
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -4559,7 +4563,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       );
     );
   ,
-    mkflg=-1;  
+    mkflg=1;  //211106
   );
   if(mkflg==1,  // no ketjs on
    //181101from, 181103
@@ -4587,10 +4591,12 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     parse(tmp);
     tmp=name2+"=Projcurve("+tmp1+");";
     parse(tmp);
-  ); //no ketjs off
+  ,
+    Readoutdata(fname); // 211106[2lines]
+   ); //no ketjs off
   Changestyle3d(pltdata1org,["nodisp"]);
-  if((Noflg<3)&(mkflg> -1), //no ketjs on //181103  
-    if(fileflg!="Y", //181102
+  if(Noflg<3, //no ketjs on //181103,211106 from
+    if(mkflg>-1,
       println("generate skeleton :"+name3);
       if(Measuredepth(Out)<2,Out=[Out]); //210620from
       tmp2="list(";
@@ -4607,12 +4613,12 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     ,
       GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
     );
-  ); 
-  if((Noflg<3)&(mkflg==1), //181103,190818
-    wdtL=["angleorg",[[THETA,PHI]],"ObjLorg",ObjL,"Plt3Lorg",Plt3L];
-    tmp=[name3,parse(name3),name2,parse(name2)];
-    wdtL=concat(wdtL,tmp);
-    WriteOutData(fname,wdtL);
+    if(mkflg==1, //181103,190818,211106
+      wdtL=["angleorg",[[THETA,PHI]],"ObjLorg",ObjL,"Plt3Lorg",Plt3L];
+      tmp=[name3,parse(name3),name2,parse(name2)];
+      wdtL=concat(wdtL,tmp);
+      WriteOutData(fname,wdtL);
+    ); //211106
     if(isstring(Ltype),
       if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
       Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
@@ -4625,7 +4631,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       Subgraph(name3,opcindy);
     );
   );// no ketjs off
-  out;
+//  out;
 );
 ////%Skeletondatacindy end////
 

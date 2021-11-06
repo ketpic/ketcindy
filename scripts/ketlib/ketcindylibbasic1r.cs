@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20210926] loaded");
+println("ketcindylibbasic1[20211106] loaded");
 
 //help:start();
 
@@ -5593,6 +5593,60 @@ Putintersect(nm,pdata1,pdata2,ptno):=(
   );
 );
 ////%Putintersect end////
+
+///%Orgplotlist start//// 211106
+Orgplotlist(pltL):=(
+//help:Orgplotlist(plotlist);
+  regional(eps,out,out2,plt,ps,pe,qs,qe,tmp,tmp1,tmp2);
+  eps=10^(-4);
+  out=[];
+  forall(pltL, plt,
+    tmp1=[plt_1];
+    forall(2..(length(plt)),
+      if(|plt_#-tmp1_(-1)|>eps,
+        tmp1=append(tmp1,plt_#);
+      );
+    );
+    if(length(tmp1)>1,
+      out=append(out,tmp1);
+    );
+  );
+  if(length(out)>0,
+    out2=select(out,|Ptstart(#)-Ptend(#)|<eps);
+    while(length(out)>0,
+      tmp1=out_1;
+      ps=Ptstart(tmp1);
+      pe=Ptend(tmp1);
+      out=out_(2..(length(out)));
+      tmp=select(out,
+         (|Ptstart(#)-pe|<eps)%(|Ptend(#)-pe|<eps)
+             %(|Ptstart(#)-ps|<eps)%(|Ptend(#)-ps|<eps));
+      if(length(tmp)>0,
+        tmp2=tmp_1;
+        qs=Ptstart(tmp2); qe=Ptend(tmp2);
+        if(|qs-pe|<eps,
+          tmp1=concat(tmp1,tmp2);
+        );
+        if(|qe-pe|<eps,
+          tmp1=concat(tmp1,reverse(tmp2));
+        );
+        if(|qs-ps|<eps,
+          tmp1=concat(reverse(tmp2),tmp1);
+        );
+        if(|qe-ps|<eps,
+          tmp1=concat(tmp2,tmp1);
+        );
+        out=remove(out,[tmp2]);
+        out=prepend(tmp1,out);
+      ,
+        out2=append(out2,tmp1);
+      );      
+    );
+  );
+  if(length(out2)==1,out2=out2_1);
+  out2;
+);
+///%Orgplotlist end////
 
 //help:end();
 

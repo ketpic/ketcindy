@@ -2031,7 +2031,7 @@ Shade(nm,plistorg,options):=(
     );
   );//180613to
   if(flg==1,
-    println("    some data not defined properly");
+    println("    Shade : some data not defined properly");
  ,
     if(Noflg<2, //200512
       G2=Joincrvs("1",plist,["nodata"]);

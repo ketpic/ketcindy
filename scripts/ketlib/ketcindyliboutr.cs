@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20211106] loaded");
+println("ketcindylibout[20211108] loaded");
 
 //help:start();
 
@@ -4429,7 +4429,7 @@ CalcbyC(name,Arg1,Arg2):=(
 );
 CalcbyC(name,path,cmd,optionorg):=(
   regional(options,eqL,strL,waiting,wflg,header,top,body,
-       wfile,hfile,mfile,flg,tmp,tmp1,tmp2,tmp3);
+     wfile,hfile,mfile,flg,tmp,tmp1,tmp2,tmp3);
   header=cmd_1;
   top=cmd_2;
   body=cmd_3;
@@ -4556,8 +4556,10 @@ ExeccmdC(nm,optionorg,optionhorg):=(
 //help:ExeccmdC(options1=["dr(/da/do)","m/r","Wait=30"]);
 //help:ExeccmdC(options2=["do(/nodisp/da/do)"]);
   regional(options,optionsh,name2,name3,waiting,dirbkup,
-     eqL,reL,strL,fname,cL,tmp,tmp1,tmp2,flg,wflg,varL);
+     eqL,reL,strL,fname,wfile,chk,cL,tmp,tmp1,tmp2,flg,wflg,varL);
   fname=Fhead+nm+".txt";
+  wfile=Fhead+nm+"end.txt";  //211108[2lines]
+  chk=[THETA,PHI];
   options=optionorg;
   optionsh=optionhorg;
   optionsh=select(optionsh,length(#)>0);
@@ -4597,7 +4599,17 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(CommonMake==-1,
     tmp1=append(options,"r");
     wflg=0;
-   );//180609to
+  );//180609to
+  if(wflg<1, //211108from
+    if(!isexists(Dirwork,wfile),
+      wfile=1;
+    ,
+      tmp=Readlines(Dirwork,wfile);
+      tmp=replace(tmp_1,"////","");
+      tmp=parse(tmp);
+      if(|tmp-[THETA,PHI]|>10^(-4),wflg=1);
+    );
+  ); //211108to
   if(wflg==1,tmp1=append(options,"m"));
   if(wflg==-1,tmp1=append(options,"r"));
   tmp1=append(tmp1,"Wait="+text(waiting));
@@ -4662,6 +4674,12 @@ ExeccmdC(nm,optionorg,optionhorg):=(
       parse(tmp);
     ); //210411to
     Changestyle3d(EraseList,["nodisp"]);//180601
+    if(wflg==1, //211108from
+      SCEOUTPUT=openfile(wfile);
+      tmp=Textformat([THETA,PHI],4)+"////";
+      println(SCEOUTPUT,tmp);
+      closefile(SCEOUTPUT);
+    ); //211108to
   );
   varL=select(varL,length(parse(#))>0);
   if(length(addpath)>0,Changework(dirbkup,["Sub=n"])); //180605
@@ -5470,9 +5488,6 @@ Sfcutparadatacdy(nm,cutfun,fd,optionorg):=(
   eqL=tmp_5;
   options=remove(options,eqL); //211106to
   fdL=Fullformfunc(fd);
-  
-  println(fdL);
-  
   tmp=Strsplit(fdL_5,"=");
   vn1=tmp_1;
   tmp=Strsplit(fdL_6,"=");

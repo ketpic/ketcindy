@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211029 loaded");
+println("ketcindylibbasic3[20211118 loaded");
 
 //help:start();
 
@@ -3146,7 +3146,7 @@ Tonormalform(fun0org):=(
 );
 ////%Tonormalform end//// //200605
 
-////%Addpar start//// //210909,211029
+//// start//// //210909,211029
 Addpar(str):=(
   regional(num,out,add,tmp);
   out=str;
@@ -3158,7 +3158,7 @@ Addpar(str):=(
         out="("+substring(str,2,length(str))+")";
       );
     ,
-      add=(length(str)>=2)&(str!="{\pi}");
+      add=(length(str)>=3)&(str!="{\pi}"); //211118
       num=apply(0..9,text(#));
       tmp=apply(1..(length(str)),str_#);
       tmp=sort(tmp);
@@ -3347,7 +3347,7 @@ Tomaxform(str):=(
     ["|(",["{abs}(xx)"]], //210902
     ["pi(",["{%pi}()"]]
   ];
-  if(isstring(str),out=str, out=format(str,6));
+  if(isstring(str),out=replace(str,"!",""), out=format(str,6)); //211118
   tmp=Bracket(out,"[]"); //210908from
   while(length(tmp)>0,
     tmp1=tmp_1_1;
@@ -3440,7 +3440,7 @@ Tocindyform(str):=(
     ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],
     ["pi(",["{pi}()"]] //190522to
   ];
-  out=str; //210816
+  out=replace(str,"!",""); //210816,211118
   out=replace(out,"pi","pi()"); //210805
   tmp1=""; //210817from
   flg=0;

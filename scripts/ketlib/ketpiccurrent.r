@@ -20,6 +20,8 @@ ThisVersion<- "KeTpic for R  v5_2_4(20210504)"
 
 print(ThisVersion)
 
+# 2021119
+#   Hatchdata debugged  ( case of scaling )
 # 20210625
 #   Partcrv changed ( for not matrix data )
 # 20210503
@@ -3370,8 +3372,8 @@ Hatchdata<- function(...)
   ShaLs<-list()
   for (I in Looprange(1,length(ShaL)))
   {
-    Tmp<- ShaL[[I]]
-    Tmp1<- Unscaling(Tmp)
+    Tmp1<- ShaL[[I]]
+#    Tmp1<- Unscaling(Tmp) #211119
     Tmp2<- Mixjoin(ShaLs, list(Tmp1))
     ShaLs<- Tmp2
   }

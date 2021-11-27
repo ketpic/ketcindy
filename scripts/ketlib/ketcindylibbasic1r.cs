@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20211106] loaded");
+println("ketcindylibbasic1[20211125] loaded");
 
 //help:start();
 
@@ -2751,7 +2751,7 @@ Integratedt(pltdata,range,options):=(
     );
   );
   if(Rule=="o",
-    Sm= IntegrateO(pltdata,range);
+    Sm=SCALEY*IntegrateO(pltdata,range); //211125
   ,
     if(isstring(pltdata),pdata=parse(pltdata),pdata=pltdata);
     if(Measuredepth(pdata)==2,pdata=pdata_1);
@@ -2767,7 +2767,7 @@ Integratedt(pltdata,range,options):=(
       ptQ=list_(#+1);
       Sm=Sm+(ptP_2+ptQ_2)*(ptQ_1-ptP_1)/2;
     );
-    Sm;
+    SCALEY*Sm; //211125
   );
 );
 ////%Integratedt end////
@@ -2832,7 +2832,7 @@ Integratefn(fnstr,rngstr,options):=( //180708from
       Sm=Sm+dx*(y0+4*y1+y2)/3;
     ); 
   );
-  Sm;
+  SCALEY*Sm; //211125
 );
 ////%Integratefn end////
 

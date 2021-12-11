@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211118 loaded");
+println("ketcindylibbasic3[20211212 loaded");
 
 //help:start();
 
@@ -3146,7 +3146,7 @@ Tonormalform(fun0org):=(
 );
 ////%Tonormalform end//// //200605
 
-//// start//// //210909,211029
+////%Addpar start//// //210909,211029
 Addpar(str):=(
   regional(num,out,add,tmp);
   out=str;

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20211108] loaded");
+println("ketcindylibout[20211211] loaded");
 
 //help:start();
 
@@ -3980,13 +3980,13 @@ Cform(strorg):=( //181106,211105
   str=substring(str,1,length(str)-1);
   str;
 );
-////%Cform end/
+////%Cform end/////
 
 ////%ConvertFdtoC start//// 211105
 ConvertFdtoC(Fd):=ConvertFdtoC(Fd,["x","y","z"]);
 ConvertFdtoC(Fd,name):=(
 //help:ConvertFd(Fd);
-  regional(FdL,FdC,uvar,vvar,tmp,tmp1);
+  regional(FdL,FdC,uvar,vvar,tmp,tmp1,str,par,n);
   FdL=Fullformfunc(Fd);
   tmp=indexof(FdL_5,"="); //180303from
   uvar=substring(FdL_5,0,tmp-1);
@@ -3996,10 +3996,15 @@ ConvertFdtoC(Fd,name):=(
   tmp1=apply(tmp1,Assign(#,vvar,"v"));
   tmp1=concat(tmp1,FdL_(7..8));
   FdC=apply(1..3,name_#+"="+Cform(tmp1_#)); 
-  tmp=[Cform(tmp1_4),Cform(tmp1_5)];
-  tmp=apply(tmp,replace(#,"(","["));
-  tmp=apply(tmp,replace(#,")","]"));
-  FdC=concat(FdC,tmp);
+  str=[Cform(tmp1_4),Cform(tmp1_5)]; //211211from
+  forall(1..2,n,
+    par=Bracket(str_n,"()");
+    tmp=select(par,#_2==1); tmp=tmp_1;
+    str_n_tmp="[";
+    tmp=select(par,#_2==-1); tmp=tmp_1;
+    str_n_tmp="]";
+  );
+  FdC=concat(FdC,str); //211211to
   FdC=concat(FdC,[tmp1_6]); 
 );
 ////%ConvertFdtoC end////

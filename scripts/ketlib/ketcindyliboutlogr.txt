@@ -1,3 +1,5 @@
+// 20211211
+//    ConvertFdtoC debugged  ( [ ] for range )
 // 20211108
 //    ExeccmdC changed  ( chk=[THETA,PHI] added )
 // 20211106

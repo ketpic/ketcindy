@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211212 loaded");
+println("ketcindylibbasic3[20211214 loaded");
 
 //help:start();
 
@@ -4509,6 +4509,7 @@ Mkketcindyjs(options):=( //17.11.18
     setdirectory(path);
     SCEOUTPUT = openfile(fname); 
     tmp1=htmorg_((toppart_1)..(toppart_2));
+    tmp1=apply(tmp1,replace(#,"v0.8/","v0.8.8/"));
     if(webflg=="N",
       if(localflg=="N", //190128
         tmp3=replace(Dirhead+"/ketcindyjs/",pathsep(),"/");
@@ -4528,7 +4529,7 @@ Mkketcindyjs(options):=( //17.11.18
              //190203
         tmp1_(length(tmp1))=""; //190128to
       );
-    ,
+    ,      
       tmp1_(length(tmp1))=""; //190117to
     );
     forall(tmp1,

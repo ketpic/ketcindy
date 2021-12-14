@@ -1,3 +1,7 @@
+// 211214
+//  Mkketcindyjs changed  ( "v0.8/" > "v0.8.8/" for json )
+// 211212
+//  Addpar ---  start debugged
 // 211118
 //  Tocindyform,Tomaxform changed (! removed)
 //  Addpar changed  ( 2 => 3)

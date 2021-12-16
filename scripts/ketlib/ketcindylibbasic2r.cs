@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20211015] loaded");
+println("ketcindylibbasic2[2021217] loaded");
 
 //help:start();
 
@@ -256,17 +256,27 @@ Arrowhead(Arg1,Arg2,Arg3):=(
     Arrowhead(text(ArrowheadNumber),Arg1,Arg2,Arg3);
   );
 );
-Arrowhead(nm,pointorg,direction,optionsorg):=(//191129remade
+Arrowhead(nm,pointorg,directionorg,optionsorg):=(//191129remade
 //help:Arrowhead("1",B,B-A);
 //help:Arrowhead("2",[1,2],"gr1");
 //help:Arrowhead("3",Ptend("gr1"),"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
-   regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,
+   regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,direction,invflg,
          point,options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
   Eps=10^(-4);
   name="arh"+nm; //181018
   ArrowheadNumber=ArrowheadNumber+1;
   point=Lcrd(pointorg); //210216
+  direction=directionorg; //211217from
+  invflg=0;
+  if(isstring(direction),
+    if(indexof(direction,"Invert")>0,
+      invflg=1;
+      tmp=parse(direction);
+      direction=text(nm)+"invert";
+      Listplot("-"+direction,tmp,["nodisp"]);
+    );
+  ); //211217to
   options=optionsorg;
   tmp=Divoptions(options);
   Ltype=tmp_1;

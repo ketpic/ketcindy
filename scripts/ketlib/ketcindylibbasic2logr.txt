@@ -1,3 +1,5 @@
+// 2021217
+//    Arrowhead debugged (case of "Invert")
 // 20211015
 //    Enclosing debugged 
 // 20211002

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211214 loaded");
+println("ketcindylibbasic3[20211215 loaded");
 
 //help:start();
 
@@ -3595,7 +3595,7 @@ Copyketcindyjs():=(
     tmp1="%xcp%"+" /Y /Q /S /E /R ";
     tmp2=" "+Dqq(Dircdy+"ketcindyjs\");
     println(SCEOUTPUT,tmp1+"Cindy.js"+tmp2);
-    println(SCEOUTPUT,tmp1+"Cindy.js.map"+tmp2);
+//    println(SCEOUTPUT,tmp1+"Cindy.js.map"+tmp2); //211215
     println(SCEOUTPUT,tmp1+"CindyJS.css"+tmp2);
     println(SCEOUTPUT,tmp1+"katex-plugin.js"+tmp2);
     println(SCEOUTPUT,tmp1+"webfont.js"+tmp2);
@@ -3630,7 +3630,7 @@ Copyketcindyjs():=(
     println(SCEOUTPUT,"cd "+Dqq(Dirhead+"/ketcindyjs"));
     println(SCEOUTPUT,"cp -r -p katex "+tmp2); //210503from
     println(SCEOUTPUT,"cp -p Cindy.js "+tmp2);
-    println(SCEOUTPUT,"cp -p Cindy.js.map "+tmp2);
+//    println(SCEOUTPUT,"cp -p Cindy.js.map "+tmp2); //211215
     println(SCEOUTPUT,"cp -p CindyJS.css "+tmp2);
     println(SCEOUTPUT,"cp -p katex-plugin.js "+tmp2);
     println(SCEOUTPUT,"cp -p webfont.js "+tmp2); //190214to

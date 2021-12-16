@@ -273,7 +273,7 @@ Arrowhead(nm,pointorg,directionorg,optionsorg):=(//191129remade
     if(indexof(direction,"Invert")>0,
       invflg=1;
       tmp=parse(direction);
-      direction=text(nm)+"invert";
+      direction="invert"+text(nm);
       Listplot("-"+direction,tmp,["nodisp"]);
     );
   ); //211217to

@@ -261,19 +261,17 @@ Arrowhead(nm,pointorg,directionorg,optionsorg):=(//191129remade
 //help:Arrowhead("2",[1,2],"gr1");
 //help:Arrowhead("3",Ptend("gr1"),"gr1");
 //help:Arrowhead(options=[size(1),angle(18),position(1),cut(0),"Line=n(y)"]);
-   regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,direction,invflg,
+   regional(Eps,name,Ltype,Noflg,opstr,opcindy,color,eqL,line,direction,
          point,options,pP,Houkou,ptstr,hostr,tmp,tmp1,tmp2,list);
   Eps=10^(-4);
   name="arh"+nm; //181018
   ArrowheadNumber=ArrowheadNumber+1;
   point=Lcrd(pointorg); //210216
   direction=directionorg; //211217from
-  invflg=0;
   if(isstring(direction),
     if(indexof(direction,"Invert")>0,
-      invflg=1;
       tmp=parse(direction);
-      direction="invert"+text(nm);
+      direction=replace(direction,[["(",""],[")",""]]);
       Listplot("-"+direction,tmp,["nodisp"]);
     );
   ); //211217to

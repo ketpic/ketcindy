@@ -1266,7 +1266,7 @@ Enclosing2(nm,plistorg,options):=(
 //help:Enclosing(options=[startpoint,epspara(1)]);
   regional(name,plist,AnsL,Start,Eps,Eps1,Eps2,flg,Fdata,Gdata,KL,
       t1,t2,tst,ss,ii,nn,nxtno,Ltype,Noflg,realL,eqL,opstr,opcindy,
-      tmp,tmp1,tmp2,color,color4,p1,p2);
+      tmp,tmp1,tmp2,tmp3,tmp4,color,color4,p1,p2);
   if(substring(nm,0,1)=="-",  //201110from
     name=substrin(nm,1,length(nm));
   ,
@@ -1353,7 +1353,12 @@ Enclosing2(nm,plistorg,options):=(
       tmp1=parse(Fdata); //200803from
       tmp2=parse(Gdata);
       if(|tmp2_1-tmp1_(-1)|<Eps,
-        AnsL=concat(AnsL,tmp1);
+        if(nn<length(plist), //211217from
+          AnsL=concat(AnsL,tmp1);
+        ,
+          tmp3=Partcrv("",AnsL_(-1),tmp2_1,tmp1,["nodata"]);
+          AnsL=concat(AnsL,tmp3);
+        );  //211217fto
       ,  //200803to
         KL=Intersectcurvespp(Fdata,Gdata);
         if(length(KL)==0, 

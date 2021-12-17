@@ -1,3 +1,6 @@
+// 211217
+//  Licencedata added
+//  Mkketcindyjs changed  ("Lic" option)
 // 211215
 // Copyketcindyjs changed  ( .map not copied )
 // 211214

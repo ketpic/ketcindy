@@ -4200,17 +4200,37 @@ Tohtmltagpf(sentence):=(
 );
 ////%Tohtmltagpf send///
 
+////%Licencedata start//// 211217
+Licencedata():=(
+  regional(dtL);
+  dtL=[
+    "<!-- Copyright (C)  2014  Setsuo Takato, KETCindy Japan project team",
+    "* This program is free software: you can redistribute it and/or modify",
+    " it under the terms of the GNU General Public License as published by",
+    " the Free Software Foundation; either version 3 of the License, or",
+    " (at your option) any later version. ",
+    "* This program is distributed in the hope that it will be useful,",
+    " but WITHOUT ANY WARRANTY; without even the implied warranty of",
+    " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+    " GNU General Public License for more details.",
+    "* You should have received a copy of the GNU General Public License",
+    " along with this program.  If not, see <http://www.gnu.org/licenses/>",
+    " -->"
+  ];
+);
+////%Licencedata end//// 
+
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
 Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs();
 //help:Mkketcindyjs(options=["Scale=(1)","Lablel=[]","Nolabel=[]","Color=(offwhite)","Grid="]);
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Remove=(list)"]);
-//help:Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)"]);
+//help:Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)","Lic=(y/n)"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,tmp4,
-      libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,
-     nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
-     figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH,label);
+      libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,licence,
+      nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
+      figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH,label);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
   webflg="Y";  //190128 texflg removed
   localflg="Y"; //190209,0215
@@ -4228,23 +4248,24 @@ Mkketcindyjs(options):=( //17.11.18
   axes="";
   path=Dircdy;
   igno=[];
+  licence="N"; //211217
   rmptL=REMOVEPTJS;
   flg=0; //210105
   forall(options,
     tmp=Strsplit(#,"=");
-    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp1=Toupper(substring(tmp_1,0,2)); //211217
     tmp2=tmp_2;
-    if(tmp1=="W",
+    if(tmp1=="WE",
       if(length(tmp2)>0, //190209
         webflg=Toupper(substring(tmp2,0,1));
       );
     );
-    if(tmp1=="S",
+    if((tmp1=="SC")%(tmp1=="SI"), //211217
       if(length(tmp2)>0, //190209
         scale=parse(tmp2);
       );
     );
-    if(tmp1=="N",
+    if(tmp1=="NO", //211217
       if(length(tmp2)>0, //190209
         if(Toupper(tmp2)=="ALL", //190405from
           tmp2=remove(allpoints(),[SW,NE]);
@@ -4259,31 +4280,34 @@ Mkketcindyjs(options):=( //17.11.18
       );
       flg=1; //210105
     );
-    if(tmp1=="L",
-        tmp=tmp2; //210105from
-        if(indexof(tmp2,"[")>0,
-          tmp=substring(tmp2,1,length(tmp2)-1);
-        );
-        tmp=tokenize(tmp,",");
-        label=concat(label,tmp);  //210105to
+    if(tmp1=="LA", //211217
+      tmp=tmp2; //210105from
+      if(indexof(tmp2,"[")>0,
+        tmp=substring(tmp2,1,length(tmp2)-1);
+      );
+      tmp=tokenize(tmp,",");
+      label=concat(label,tmp);  //210105to
     );
-    if(tmp1=="C", //190209
+    if(tmp1=="LI", //211217from
+      licence=Toupper(substring(tmp2,0,1));
+    );  //211217to
+    if(tmp1=="CO", //190209,//211217
       if(length(tmp2)>0,
         color=tmp2;
       );
     );
-    if(tmp1=="G",
+    if(tmp1=="GR", //211217
       if(length(tmp2)>0,
         grid=tmp2;
       );
     );
-    if(tmp1=="A",
+    if(tmp1=="AX", //211217
       if(length(tmp2)>0,
         tmp2=Toupper(substring(tmp2,0,1)); //190729[2lines]
         if(contains(["N","F"],tmp2),axes="false");
       );
     );
-    if(tmp1=="E", //190603from
+    if(tmp1=="EQ", //190603from//211217
       eqflg=1;
       if(length(tmp2)>0,
         eqrep=tmp2;
@@ -4291,25 +4315,25 @@ Mkketcindyjs(options):=( //17.11.18
         eqrep="";
       );
     );  //190603to
-    if(tmp1=="P",
+    if(tmp1=="PA", //211217
       if(!tmp2="Dircdy",
         path=tmp2;
       );
     );
-    if(tmp1=="I",  //190417from
+    if(tmp1=="IG",  //190417from//211217
       if(substring(tmp2,0,1)=="[",
         tmp2=substring(tmp2,1,length(tmp2)-1);
         igno=tokenize(tmp2,",");
       );
     );  //190417to
-    if(tmp1=="R",  //190503from
+    if(tmp1=="RM",  //190503from //211217
       if(substring(tmp2,0,1)=="[",
         tmp2=substring(tmp2,1,length(tmp2)-1);
         tmp2=tokenize(tmp2,",");
         rmptL=concat(rmptL,tmp2);
       );  //190503to
     );  //190503to
-    if(tmp1=="F",
+    if(tmp1=="FI", //211217
       if(length(tmp2)>0,
         if(Toupper(substring(tmp2,0,1))=="Y",figure=1,figure=0);
       );
@@ -4507,8 +4531,13 @@ Mkketcindyjs(options):=( //17.11.18
       if(localflg=="Y",fname=replace(fname,"off.","offL."));
     );
     setdirectory(path);
-    SCEOUTPUT = openfile(fname); 
-    tmp1=htmorg_((toppart_1)..(toppart_2));
+    SCEOUTPUT = openfile(fname);
+    if(licence=="Y", //211217from
+      tmp1=Licencedata();
+    ,
+      tmp1=[];
+    );
+    tmp1=concat(tmp1,htmorg_((toppart_1)..(toppart_2)));  //211217to
     tmp1=apply(tmp1,replace(#,"v0.8/","v0.8.8/"));
     if(webflg=="N",
       if(localflg=="N", //190128

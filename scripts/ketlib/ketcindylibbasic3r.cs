@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211215 loaded");
+println("ketcindylibbasic3[20211215] loaded");
 
 //help:start();
 

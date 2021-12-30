@@ -1,3 +1,10 @@
+// 20211230
+//    ExeccmdC changed
+//    ReadoutC added
+//    Crvsfparadata  debugged  ( // part revived)
+// 20211227
+//    CalcbyC debugged (ErrFlag=0 at first)
+//    ExeccmdC debugged/changed
 // 20211211
 //    ConvertFdtoC debugged  ( [ ] for range )
 // 20211108

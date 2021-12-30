@@ -1,3 +1,7 @@
+// 211228
+//  Readoutdata changed  ( option "Rflg=")
+// 211226
+//  Writeoutdata changed  ( option "Msg=")
 // 211217
 //  Licencedata added
 //  Mkketcindyjs changed  ("Lic" option)

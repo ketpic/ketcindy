@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20211106] loaded");
+println("ketcindylib3d[20211229] loaded");
 
 //help:start();
 
@@ -283,24 +283,48 @@ Isangle():=Ptselected(TH)%Ptselected(FI); //180517
 ////%Changestyle3d start////
 Changestyle3d(nameL,style):=(
 //help:Changestyle3d(["geoseg3d","ax3d"],["notex"]);
+//help:Changestyle3d(["sfbd1"],["Color=red"],["do"]]);
   regional(nmL,name,tmp,tmp1,tmp2);
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   tmp1=[];
   forall(nmL,name,
     tmp=parse(name);
     if(islist(tmp),
-      if(isstring(tmp_1),
-        tmp1=concat(tmp1,tmp);
-      ,
-        tmp1=append(tmp1,name);
-      );
+      if(length(tmp)>0, //211229
+        if(isstring(tmp_1),
+          tmp1=concat(tmp1,tmp);
+        ,
+          tmp1=append(tmp1,name);
+        );
+      );  //211229
       tmp=apply(tmp1,replace(#,"3d","2d"));
-      Changestyle(tmp,style);
-      tmp=apply(tmp,"sub"+#); // 15.05.24
-      Changestyle(tmp,style);
+        Changestyle(tmp,style);
+        tmp=apply(tmp,"sub"+#); // 15.05.24
+        Changestyle(tmp,style);
     );
   );
 );
+Changestyle3d(nameL,style,styleh):=( //211228from
+  regional(nmL,name,tmp,tmp1,tmp2,nm,nmh);
+  if(islist(nameL),nmL=nameL,nmL=[nameL]);
+  forall(nmL,nm,
+    tmp=indexof(nm,"3d");
+    nmh=substring(nm,0,tmp-1)+"h"+substring(nm,tmp-1,length(nm));
+    if(length(parse(nm))>0,
+      Changestyle3d(nm,style);
+    );
+    tmp1=select(style,indexof(#,"Color")>0);
+    tmp2=select(styleh,indexof(#,"Color")>0);
+    tmp=styleh;
+    if(length(tmp)==0,tmp=["do"]);
+    if(length(tmp2)==0,
+      tmp=concat(tmp,tmp1);
+    );
+    if(length(parse(nmh))>0,
+      Changestyle3d(nmh,tmp);
+    );
+  );
+); //211228to
 ////%Changestyle3d end////
 
 ////%Dist3d start////
@@ -913,43 +937,52 @@ Spacecurve(nm,funstr,variable,optionorg):=(
 );
 ////%Spacecurve end////
 
-////%Partcrv3d start////
-Partcrv3d(nm,pA,pB,PkLstr):=Partcrv3d(nm,pA,pB,PkLstr,[]);
-Partcrv3d(nm,pA,pB,PkLstr,options):=(
-//help:Partcrv3d("1",A,B,"sl3d1");
+////%Partcrv3d start////  //211230  significant changes
+Partcrv3d(nm,pt1,pt2,PkLstr):=Partcrv3d(nm,pA,pB,PkLstr,[]);
+Partcrv3d(nm,pt1,pt2,PkLstr,options):=(
+//help:Partcrv3d("1",pt1,pt2,"sl3d1");
 //help:Partcrv3d("1",1.3,2.5,"sl3d1");
-  regional(p1,p2,q1,q2,dt1,dts,dt3,tmp,tmp1,tmp2);
-  if(isreal(pA),
-    p1=pA; q1=pA;
+  regional(p1,p2,dirflg,pL3d,pL2dstr,n1,n2,n,tmp,tmp1,tmp2);
+  pL3d=parse(PkLstr);
+  pL2dstr=replace(PkLstr,"3d","2d");
+  tmp=parse(pL2dstr);
+  pL2dstr=replace(pL2dstr,"_","n");
+  Listplot("-"+pL2dstr,tmp,["nodisp","Msg=n"]);
+  if(isreal(pt1), 
+    p1=pt1;
   ,
-    if(islist(pA),
-      tmp=pA;
-    ,
-      if(ispoint(pA),tmp=pA.name,tmp=pA); //190505
-      tmp=parse(tmp+"3d");
-    );
-    p1=parapt(tmp);
-    q1=[p1_1,tmp_3]+[NE.x-SW.x,0];
+    tmp=Parapt(pt1);
+    p1=Paramoncurve(tmp,pL2dstr);
   );
-  if(isreal(pB),
-    p2=pB; q2=pB;
+  if(isreal(pt2),
+    p2=pt2;
   ,
-    if(islist(pB),
-      tmp=pB;
-    ,
-      if(ispoint(pB),tmp=pB.name,tmp=pB); //190505
-      tmp=parse(tmp+"3d");
-    );
-    p2=parapt(tmp);
-    q2=[p2_1,tmp_3]+[NE.x-SW.x,0];
+    tmp=Parapt(pt2);
+    p2=Paramoncurve(tmp,pL2dstr);
   );
-  tmp=replace(PkLstr,"3d","2d");
-  dt1=partcrv("",p1,p2,tmp,["nodata"]);
-  dts=partcrv("",q1,q2,"sub"+tmp,["nodata"]);
-  dt=apply(1..length(dt1),
-    Xyzcoord(dt1_#,dts_#); //181028
+  dirflg=1;
+  if(p1>p2,
+    dirflg=-1;
+    tmp=p2; p2=p1; p1=tmp;
   );
-  Spaceline("-part3d"+nm,dt,options);
+  n1=ceil(p1); n2=floor(p2);
+  tmp1=[];
+  if(p1<n1,
+    n=n1-1;
+    tmp1=[(n1-p1)*pL3d_n+(p1-n)*pL3d_n1];
+  );
+  forall(n1..n2,tmp1=append(tmp1,pL3d_#));
+  if(n2<p2,
+    n=n2+1;
+    tmp=(n-p2)*pL3d_n2+(p2-n2)*pL3d_n;
+    tmp1=append(tmp1,tmp);
+  );
+  if(dirflg==-1,tmp1=reverse(tmp1));
+  if(substring(nm,0,1)=="-",
+    Spaceline(nm,tmp1,options);
+  ,
+    Spaceline("-part3d"+nm,tmp1,options);
+  );
 );
 ////%Partcrv3d end////
 

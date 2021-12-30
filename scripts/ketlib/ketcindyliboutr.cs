@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20211211] loaded");
+println("ketcindylibout[20211230] loaded");
 
 //help:start();
 
@@ -1971,6 +1971,7 @@ CalcbyM(name,cmd,optionorg):=(
 //help:CalcbyM(options2= ["line=1000"]);
   regional(options,tmp,tmp0,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,allflg,indL,line,
       dig,flg,wflg,file,nc,arg,add,powerd,cmdM,cmdlist,wfile,errchk,waiting,num,st);
+  ErrFlag=0;
   options=optionorg;
   tmp=divoptions(options);
   eqL=tmp_5;
@@ -4034,6 +4035,7 @@ StartsurfC(Arg):=(
 );
 StartsurfC(restr,Nplist,Dsizelist,Epslist):=(//180501
 //help:Startsurf();
+//help:Startsurf("1");
 //help:Startsurf("reset");
 //help:Startsurf([0.01,0.1]);
 //help:Startsurf([50,50],[1500,500,200],[0.01,0.1]);
@@ -4134,32 +4136,6 @@ kcC(cname):=(
 );
 ////%kcC end////
 
-ReaddataCold(var, fname):=ReaddataC(var, fname,[]);
-ReaddataC(var, fname,options):=(
-  regional(file,dt,name,str,tmp,tmp1,opstr,gout, out3,out2);
-  if(indexof(fname,".")==0,
-    file=fname+".txt";
-    name=fname;
-  ,
-    file=fname;
-    tmp=indexof(fname,".");
-    name=substring(fname,0,tmp-1);
-  );
-  tmp=Divoptions(options);
-  opstr=tmp_(length(tmp)-1);
-  gout=ReadOutData(file);
-  GLIST=Append(GLIST,"Tmpstr=ReadOutData("+Dq+file+Dq+")");
-  if(substring(var,length(var)-1,length(var))!="h",
-    if(length(parse(gout_1))>0,
-      Projpara(var+"3d",options); 
-    );
-  ,
-    if(length(parse(gout_2))>0,
-      Projpara(var+"3d",options);
-    );
-  );//17.06.16until
-);
-
 ////%ReaddataC start////
 ReaddataC(fnameorg):=(
   regional(tmp,tmp1,fname,data,out);
@@ -4213,6 +4189,7 @@ WritedataC(fnameorg,dataorg):=(
 );
 ////%WritedataC end////
 
+////%DisplayC start////
 DisplayC():=DisplayC(DispC);
 DisplayC(name,options):=DisplayC([name,options]);
 DisplayC(dispc):=(
@@ -4259,6 +4236,7 @@ DisplayC(dispc):=(
     );
   );
 );
+////%DisplayC end////
 
 ////%Cheadsurf start////
 Cheadsurf():=(
@@ -4435,6 +4413,8 @@ CalcbyC(name,Arg1,Arg2):=(
 CalcbyC(name,path,cmd,optionorg):=(
   regional(options,eqL,strL,waiting,wflg,header,top,body,
      wfile,hfile,mfile,flg,tmp,tmp1,tmp2,tmp3);
+  // global ErrFlag
+  ErrFlag=0; //211227
   header=cmd_1;
   top=cmd_2;
   body=cmd_3;
@@ -4495,7 +4475,7 @@ CalcbyC(name,path,cmd,optionorg):=(
         );
       );
     );
-//    if(wflg==0,wflg=-1); //210324
+    if(wflg==0,wflg=-1); //210324,211226
   );
   WriteFlag=wflg; //210320
   if(wflg==1,
@@ -4533,7 +4513,7 @@ CalcbyC(name,path,cmd,optionorg):=(
       );
     );
   );//180615to
-  flg; //181101, 210827
+  wflg; //181101, 210827,211226
 );
 ////%CalcbyC end////
 
@@ -4553,6 +4533,30 @@ Gccexists():=( //190124
 );
 ////%Gccexists end////
 
+////%Adddata3d start//// 211230 added
+Adddata3d(nm,dtstrL):=(
+//help:Addata3d("1",["crvsf3d1",...]);
+  regional(fname,var,va,tmp,tmp1,tmp2);
+  fname=Cdyname()+nm+".txt";
+  var=Readoutdata(fname,["Msg=n"]);
+  tmp1=[];
+  forall(var,
+    tmp1=concat(tmp1,[#,parse(#)]);
+  );
+  tmp2=[];
+  forall(dtstrL,
+    if(!contains(var,#),
+      tmp=replace(#,"3d","h3d");
+      tmp2=concat(tmp2,[#,parse(#),tmp,[]]);
+    );
+  );
+  if(length(tmp2)>0,
+    Writeoutdata(fname,concat(tmp1,tmp2),["Msg=n"]);
+  );
+);
+
+////%Adddata3d end////
+
 ////%ExeccmdC start////
 ExeccmdC(nm):=ExeccmdC(nm,[],["do"]);  //180531
 ExeccmdC(nm,options):=ExeccmdC(nm,options,[]); //201230[optionsh removed]
@@ -4560,8 +4564,10 @@ ExeccmdC(nm,optionorg,optionhorg):=(
 //help:ExeccmdC("1",options1,options2);
 //help:ExeccmdC(options1=["dr(/da/do)","m/r","Wait=30"]);
 //help:ExeccmdC(options2=["do(/nodisp/da/do)"]);
-  regional(options,optionsh,name2,name3,waiting,dirbkup,
-     eqL,reL,strL,fname,wfile,chk,cL,tmp,tmp1,tmp2,flg,wflg,varL);
+  regional(options,optionsh,name2,name3,waiting,dirbkup,eqL,reL,
+     strL,fname,wfile,chk,cL,tmp,tmp1,tmp2,tmp3,flg,wflg,va,varL,nn,mm);
+  //global ErrFlag
+  ErrFlag=0;
   fname=Fhead+nm+".txt";
   wfile=Fhead+nm+"end.txt";  //211108[2lines]
   chk=[THETA,PHI];
@@ -4597,12 +4603,13 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   options=remove(options,reL);
   options=select(options,length(#)>0);
+  tmp1=options; //211226
   if(CommonMake==1,//180609from
-    tmp1=append(options,"m");
+    tmp1=append(tmp1,"m"); //211226
     wflg=0;
   );
   if(CommonMake==-1,
-    tmp1=append(options,"r");
+    tmp1=append(tmp1,"r"); //211226
     wflg=0;
   );//180609to
   if(wflg<1, //211108from
@@ -4610,15 +4617,17 @@ ExeccmdC(nm,optionorg,optionhorg):=(
       wfile=1;
     ,
       tmp=Readlines(Dirwork,wfile);
-      tmp=replace(tmp_1,"////","");
-      tmp=parse(tmp);
-      if(|tmp-[THETA,PHI]|>10^(-4),wflg=1);
+      if(length(tmp)>0, //211226
+        tmp=replace(tmp_1,"////","");
+        tmp=parse(tmp);
+        if(|tmp-[THETA,PHI]|>10^(-4),wflg=1);
+      ); //211226
     );
   ); //211108to
   if(wflg==1,tmp1=append(options,"m"));
   if(wflg==-1,tmp1=append(options,"r"));
   tmp1=append(tmp1,"Wait="+text(waiting));
-  tmp1=append(tmp1,"Disp=n"); //181024
+  tmp1=append(tmp1,"Msg=n"); //181024
   cL=CommandListC; //181101from
   tmp2="  char fnameall[]="+Dqq(fname)+";";
   tmp=select(1..(length(cL)),indexof(cL_#,"char fnameall[]=")>0); 
@@ -4641,27 +4650,76 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   if(length(tmp)==0,
     CommandListC=append(CommandListC,"  outputend(dirfname);");
   );
-  if(length(CommandListC)<=2,ErrFlag=1);
-  if(ErrFlag==0,
-    CalcbyC(nm,[Cheadsurf(),Ctopsurf(nm),CommandListC],tmp1);
-    if(WriteFlag==1, //210320from
-      varL=ReadOutData(fname,["Disp=n"]); 
+  if(length(CommandListC)<=2,
+    Errflag=1;
+    wflg=-1:
+  );
+  if(wflg==0,//211229from
+    tmp=Cdyname()+nm+".c"; 
+    if(isexists(Dirwork,tmp),
+      tmp3=Readlines(Dirwork,tmp);
+      tmp=select(1..(length(tmp3)),indexof(tmp3_#,"Execcmd "+nm)>0);
+      tmp=tmp_1;
+      tmp3=tmp3_(tmp..(length(tmp3)));
+      tmp=select(1..(length(tmp3)),indexof(tmp3_#,"return 0")>0);
+      tmp3=tmp3_(1..(tmp_1-1));
+      tmp3=apply(tmp3,replace(#,"/**/",""));
+      tmp=select(1..(length(tmp3)),tmp3_#!=CommandListC_#);
+      if(CommandListC==tmp3,
+        wflg=-1; tmp1=append(tmp1,"r");
+      ,
+        wflg=1; tmp1=append(tmp1,"m");
+      );
+    ,
+      wflg=1; tmp1=append(tmp1,"m");
+    ); 
+  );
+  if(wflg==1,//211229to
+    tmp=CalcbyC(nm,[Cheadsurf(),Ctopsurf(nm),CommandListC],tmp1);
+    if(tmp==1, //211227from
+      tmp1=ReadOutData(fname,["Msg=n"]);
+      varL=[tmp1_1,tmp1_2];
+      forall(2..(length(tmp1)/2),
+        if(varL_(-1)!=tmp1_(2*#),varL=concat(varL,tmp1_[2*#-1,2*#]));
+      );
+      tmp3=select(StyleListC,!islist(#));
       tmp2=[];
-      forall(varL,
-        tmp1=Connectseg3d(#);
-        tmp=#+"="+Textformat(tmp1,6);
+      forall(1..(length(varL)),nn,
+        va=varL_nn;
+        tmp1=Connectseg3d(va);
+        tmp=select(tmp1,length(#)==1);
+        if(length(tmp)>0,
+          tmp1=remove(tmp1,tmp);
+        );
+        if(length(tmp1)==1,tmp1=tmp1_1); //211228
+        tmp=tmp3_nn+"="+Textformat(tmp1,5)+";";
         parse(tmp);
-        tmp2=concat(tmp2,[#,parse(#)]);
+        tmp2=concat(tmp2,[tmp3_nn,tmp1]);
       );
       wait(200);
-      Writeoutdata(fname,tmp2);
+      Writeoutdata(fname,tmp2,["Msg=n"]);
+      tmp=common(varL,tmp3);
+      tmp1=remove(varL,tmp);
+      tmp2=remove(tmp3,tmp);
+      if(length(tmp1)>0,
+        forall(1..(length(tmp1)),nn,
+          forall(1..(length(GCLIST)),mm,
+            tmp=GCLIST_mm;
+            tmp_1=replace(tmp_1,tmp1_nn,tmp2_nn);
+            GCLIST_mm=tmp;
+          );
+          GLIST=apply(GLIST,replace(#,tmp1_nn,tmp2_nn));
+        );
+      );
+      varL=tmp3;
       Skeleton=1; //210325
-    );  //210320to
-  );
+    );
+  ,
+    varL=ReadOutData(fname,["Msg=n"]);     
+  ); //211227to
   if(ErrFlag==1,
     err("CommandListC is empty or execcmd is not completed");
   ,
-    varL=ReadOutData(fname,["Disp=n"]); //181029
     GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
     tmp1=select(varL,indexof(#,"h3d")==0);
     tmp2=remove(varL,tmp1);
@@ -4678,15 +4736,22 @@ ExeccmdC(nm,optionorg,optionhorg):=(
       tmp=replace(#,"3d","2d")+"="+Textformat(tmp,6);
       parse(tmp);
     ); //210411to
-    Changestyle3d(EraseList,["nodisp"]);//180601
+    Changestyle3d(EraseList,["nodisp"]); //180601
+    tmp1=remove(varL,EraseList); //211227from
+    forall(tmp1,va,
+      tmp=select(1..(length(StyleListC)),StyleListC_#==va);
+      tmp=tmp_1;
+      tmp=StyleListC_(tmp+1);
+      if((length(tmp)>0)&(length(parse(va))>0),
+        Changestyle3d(va,tmp);
+      );
+    ); //211227to
     if(wflg==1, //211108from
       SCEOUTPUT=openfile(wfile);
       tmp=Textformat([THETA,PHI],4)+"////";
-      println(SCEOUTPUT,tmp);
       closefile(SCEOUTPUT);
     ); //211108to
   );
-  varL=select(varL,length(parse(#))>0);
   if(length(addpath)>0,Changework(dirbkup,["Sub=n"])); //180605
   if(SUBSCR==1, //  15.02.11
     forall(varL, //181106from
@@ -4695,17 +4760,28 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   ); //181106to
   tmp=StyleListC; //181107from
   tmp1=apply(1..(length(tmp)/2),[tmp_(2*#-1),tmp_(2*#)]);
-  forall(tmp1,tmp2,
-    strL=select(varL,indexof(#,tmp2_1)>0); //181114from
-    forall(strL,
-      if((length(parse(#))>0)&(length(tmp2_2))>0,
-        Changestyle3d(#,tmp2_2);
-      );
-    ); //181114to
-  ); //181107to
   varL;
 );
 ////%ExeccmdC end////
+
+////%ReadoutC start//// 211230 added
+ReadoutC(frname):=(
+//help:ReadoutC(readfile);
+  regional(f,var,cmdL,wa,va,tmp);
+  f=frname+".txt";
+  var=Readoutdata(frname,["Msg=n"]);
+  cmdL=["  sprintf(dirfnamer,"+Dqq("%s%s")+",Dirname,"+Dqq(f)+");"];
+  wa="w";
+  forall(var,va,
+    tmp=["  readoutdata3(dirfnamer,"+Dqq(va)+",data);",
+             "  output3(1,"+Dqq(wa)+","+Dqq(va)+",dirfname,data);"];
+    cmdL=concat(cmdL,tmp);
+    wa="a";
+  );
+  CommandListC=concat(CommandListC,cmdL);
+  cmdL;
+);
+////%ReadoutC end////
 
 ////%Sfbdparadata start////
 Sfbdparadata(nm,fd):=SfbdparadataC(nm,fd);
@@ -4924,31 +5000,31 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
   StyleListC=concat(StyleListC,[name3,options,name3h,optionsh]); //181107
   options=remove(options,eqL);
   if(useflg=="N",
-//    flg=0;
-//    tmp=Fhead+Fk+".dat";
-//    if(!isexists(Dirwork,tmp),flg=1);
-//    if(flg==0,
-//      tmp1=ReaddataC(tmp);
-//      tmp2=parse(Fk);
-//      if(length(tmp1)==length(tmp2),
-//        forall(1..(length(tmp1)),ii,
-//          if(length(tmp1_ii)!=length(tmp2_ii),flg=1);
-//          forall(1..(length(tmp1_ii)),jj,
-//            if(flg==0,
-//              if(Norm(tmp1_ii_jj-tmp2_ii_jj)>eps,flg=1);
-//            );
-//          );
-//        );
-//      );
-//    );
-//    if(flg==1,
+    flg=0;
+    tmp=Fhead+Fk+".dat";
+    if(!isexists(Dirwork,tmp),flg=1);
+    if(flg==0,
+      tmp1=ReaddataC(tmp);
+      tmp2=parse(Fk);
+      if(length(tmp1)==length(tmp2),
+        forall(1..(length(tmp1)),ii,
+          if(length(tmp1_ii)!=length(tmp2_ii),flg=1);
+          forall(1..(length(tmp1_ii)),jj,
+            if(flg==0,
+              if(Norm(tmp1_ii_jj-tmp2_ii_jj)>eps,flg=1);
+            );
+          );
+        );
+      );
+    );
+    if(flg==1,
       if((islist(parse(Fk))),
         tmp=Fhead+Fk+".dat";
         WritedataC(tmp,Fk);
       ,
         useflg="Y";
       );
-//    );
+    );
   ); //181105to
   if(cmdflg==1,
     EraseList=append(EraseList,Fk);
@@ -5560,7 +5636,7 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
       cutfunL_#=Cform(tmp2);
     );
   );
-  CutFunList=cutfunL; //180601
+  CutFunList=concat(CutFunList,cutfunL); //211227
   name2="sfcut2d"+nm;
   name3="sfcut3d"+nm;
   name2h="sfcuth2d"+nm;
@@ -5595,12 +5671,8 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
       options=remove(options,[#]);
     );
   );
-  options=select(optionorg,length(#)>0); //190123from
-//  tmp=Divoptions(options); //191006[2lines]
-//  if(length(tmp_7)==0,options=append(options,"dr"));
+  options=select(optionorg,length(#)>0); //190123
   optionsh=select(optionshorg,length(#)>0);
-//  tmp=Divoptions(optionsh); //191006[2lines]
-//  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
   tmp1=select(options,
       (indexof(#,"=")>0)&(Toupper(substring(#,0,1))=="C")); //181114from
   if(length(tmp1)>0,
@@ -5617,7 +5689,7 @@ SfcutparadataC(nm,cutfunLorg,sfbd,fdorg,optionorg,optionshorg):=(
   );  //181114to
   StyleListC=concat(StyleListC,[name3,options,name3h,optionsh]); //181107
   options=remove(options,eqL);
-  tmp1=text(length(cutfunL));
+  tmp1=text(length(CutFunList));
   cmdL=[
     "  char fname[]="+Dqq(fname)+";",
     "  char fnameh[]="+Dqq(fnameh)+";",

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211215] loaded");
+println("ketcindylibbasic3[20211227] loaded");
 
 //help:start();
 
@@ -704,14 +704,14 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
 //help:Readoutdata();
 //help:Readoutdata("file.txt");
 //help:Readoutdata("/datafolder","file.txt");
-//help:Readoutdata(options=["Msg=y(n)"]);
+//help:Readoutdata(options=["Msg=y(n)","R=n(y)"]);
   regional(options,path,filename,varname,varL,ptL,pts,tmp,tmp1,tmp2,tmp3,tmp4,
-     nmbr,cmdall,cmd,outdt,goutdt,eqL,msg,readflg);
+     nmbr,cmdall,cmd,outdt,goutdt,eqL,msg,Rflg);
   options=optionsorg;
   tmp=Divoptions(options); //181024from
   msg="Y";
+  Rflg="N"; //211228
   //msg="N"; //only ketjs
-  readflg=0;
   eqL=tmp_5;
   forall(eqL,
     tmp=Strsplit(#,"=");
@@ -722,7 +722,7 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
       options=remove(options,[#]); //181030
     );
     if(tmp1=="R",
-      if(tmp2=="Y",readflg=1);
+      Rflg=tmp2; //211228
       options=remove(options,[#]); //181030
     );
   ); //181024to
@@ -807,7 +807,7 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
     print("readoutdata from "+tmp+" : ");
     println(varL);
   );  //200624to
-  if(readflg==1, //200514from
+  if(Rflg=="Y", //200514from, //211228
     GLIST=append(GLIST,"Tmpout=ReadOutData("+Dqq(filename)+")");
   ); //200514to
   varL;
@@ -815,10 +815,22 @@ Readoutdata(pathorg,filenameorg,optionsorg):=(
 ////%Readoutdata end////
 
 ////%Writeoutdata start////
-Writeoutdata(filename,ptlist):=(
+Writeoutdata(filename,ptlist):=Writeoutdata(filename,ptlist,[]); //211226
+Writeoutdata(filename,ptlist,options):=(//211226
 //help:Writeoutdata("file.txt",["g1",gr1,"sg",sgAB]);
-//help:Writeoutdata("file.txt",["g1",gr1,"sg",sgAB]);
-  regional(nn,Gname,Gdata,Str,Gstr,Gj,Pt,Flg,tmp,tmp1,loopend);
+//help:Writeoutdata("file.txt",["g1",gr1,"sg",sgAB],["Msg=n"]);
+  regional(nn,Gname,Gdata,Str,Gstr,Gj,Pt,Flg,
+      msg,tmp,tmp1,tmp2,loopend);
+  msg="Y"; //211226from
+  forall(options, 
+    tmp=Strsplit(#,"=");
+    tmp1=substring(tmp_1,0,1); tmp1=Toupper(tmp1);
+    tmp2=substring(tmp_2,0,1); tmp2=Toupper(tmp2);
+    if(tmp1=="M",
+      msg=tmp2;;
+      options=remove(options,[#]); //181030
+    );
+  ); //211226to
   Flg=0;
   if(isstring(ptlist_(length(ptlist))),
     Flg=1;
@@ -876,7 +888,9 @@ Writeoutdata(filename,ptlist):=(
   );
   closefile(SCEOUTPUT);
   Gstr=substring(Gstr,0,length(Gstr)-1)+"]";
-  println("writeoutdata "+filename+":"+Gstr);
+  if(Msg=="Y",
+    println("writeoutdata "+filename+":"+Gstr);
+  );
 );
 ////%Writeoutdata end////
 

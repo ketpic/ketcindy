@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20211230] loaded");
+println("ketcindylibout[20220103] loaded");
 
 //help:start();
 
@@ -4043,7 +4043,7 @@ StartsurfC(restr,Nplist,Dsizelist,Epslist):=(//180501
   regional(divL,sizeL,epsL);
   StyleListC=[]; //181107
   CommandListC=[];//180608(2lines)
-  FuncListC=[];
+  FuncListC=FUNLIST; //220103
   if(substring(restr,0,1)=="R", //180611(3lines)
     GLIST=[];
   );
@@ -4804,7 +4804,7 @@ SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
     if(FuncListC_#==fd,
       funnm=#;
       tmp1=1;
-    );
+   );
   );
   if(tmp1==0,
     FuncListC=append(FuncListC,fd);
@@ -4932,21 +4932,34 @@ CrvsfparadataC(nm,fk,sfbd,fd,options):=
 CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
 //help:Crvsfparadata("1","ax3d","sfbd3d1",Fd,,nohiddenoptions,hiddenoptions);
   regional(funnm,sfbd,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
-     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,useflg,cmdlfg,ii,jj,eps);
+     errflg,eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,useflg,cmdlfg,ii,jj,eps);
   eps=10^(-5);
   sfbd=replace(sfbdorg,"bdy","sfbd");
   fd=ConvertFdtoC(fdorg);
-  tmp=select(1..(length(FuncListC)),FuncListC_#==fd);
-  funnm=text(tmp_1); //180426
-  name2="crvsf2d"+nm;
-  name3="crvsf3d"+nm;
-  name2h="crvsfh2d"+nm;
-  name3h="crvsfh3d"+nm;
-  fname=Fhead+"crvsf"+nm+".txt";
-  options=select(optionorg,length(#)>0); //190123from
+  errflg=1; //220103from
+  forall(1..(length(FuncListC)),
+    if(FuncListC_#==fd,
+      funnm=#;
+      errflg=0;
+   );
+  );
+  if(errflg==1,
+     println("   "+fdorg+" not in FuncList");
+     funnm=1;
+  );
+  if(substring(nm,0,1)=="-",
+    tmp=substring(nm,1,length(nm));
+    name2=tmp+"2d"; name3=tmp+"3d";
+    name2h=tmp+"h2d"; name3h=tmp+"h3d";
+  ,
+    name2="crvsf2d"+nm; name3="crvsf3d"+nm;
+    name2h="crvsfh2d"+nm; name3h="crvsfh3d"+nm;
+  );
+//  fname=Fhead+"crvsf"+nm+".txt";
+  options=select(optionorg,length(#)>0); 
 //  tmp=Divoptions(options); //191006[2lines]
 //  if(length(tmp_7)==0,options=append(options,"dr"));
-  optionsh=select(optionshorg,length(#)>0);
+  optionsh=select(optionshorg,length(#)>0); //220103to
 //  tmp=Divoptions(optionsh);//191006[2lines]
 //  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
   tmp=Divoptions(options);
@@ -5032,7 +5045,7 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
     Changestyle3d(Fk,["nodisp"]);
   );
   cmdL=[
-    "  char fname"+nm+"[]="+Dqq(fname)+";",
+//    "  char fname"+nm+"[]="+Dqq(fname)+";",
     "  rangeUV("+funnm+");",
     "  boundary("+funnm+");"
   ];
@@ -5110,7 +5123,7 @@ Crv3onsfparadataC(nm,crv3d,sfbd,fd,options):=
 Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
 //help:Crv3onsfparadata("1","sc3","sfbd3d1",fd,,nohiddenoptions,hiddenoptions);
   regional(funnm,sfbd,fd,options,optionsh,name3,name3h,name2,name2h,waiting,
-     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdflg);
+     eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdflg,msg);
   tmp1=replace(crv3d,"3d","2d");
   tmp=apply(GCLIST,#_1);
   if(contains(tmp,tmp1),
@@ -5158,6 +5171,16 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
       options=remove(options,[#]);
     );
   );
+  msg="Y";
+  forall(eqL, //220103from
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    tmp2=Toupper(substring(tmp_2,0,1));
+    if(tmp1=="M",
+      msg=tmp2;
+      options=remove(options,[#]);
+    );
+  ); //220103to
   options=remove(options,reL);
   options=select(options,length(#)>0);
   tmp1=select(options,
@@ -5175,7 +5198,7 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
     );
   );  //181114to
   StyleListC=concat(StyleListC,[name3,options,name3h,optionsh]); //181107
-  options=remove(options,eqL);
+//  options=remove(options,eqL);
   tmp2=parse(crv3d);
   flg=0;
   tmp=Fhead+crv3d+".dat";
@@ -5207,7 +5230,9 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
     "  outputend(dirfname);"
   ];
   if(cmdflg==1,//180531from
-    println("  ExeccmdC will generate "+ name3+","+name3h);
+    if(msg=="Y",
+      println("  ExeccmdC will generate "+ name3+","+name3h);
+    );
     cmdL_7="  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fnameall);"; //180607
     tmp=replace(cmdL_(length(cmdL)-1),Dqq("w"),Dqq("a")); cmdL_(length(cmdL)-1)=tmp;
 	cmdL_5="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
@@ -5286,23 +5311,26 @@ Crv2onsfparadataC(nm,crv2d,sfbd,fdorg,options,optionsh):=(
 );
 ////%Crv2onsfparadata end////
 
-////%Wireparadata start////
+////%Wireparadata start//// 229\0102 major change
 Wireparadata(nm,sfbd,fd,wr1,wr2):=WireparadataC(nm,sfbd,fd,wr1,wr2);
 Wireparadata(nm,sfbd,fd,wr1,wr2,options):=WireparadataC(nm,sfbd,fd,wr1,wr2,options);
-Wireparadata(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh):=
-  WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionsh);
+Wireparadata(nm,sfbd,fd,wr1,wr2,optionorg,optionsh):=
+  WireparadataC(nm,sfbd,fd,wr1,wr2,optionorg,optionsh);
 WireparadataC(nm,sfbd,fd,wr1,wr2):=
   WireparadataC(nm,sfbd,fd,wr1,wr2,[],["do"]);
 WireparadataC(nm,sfbd,fd,wr1,wr2,options):=
    WireparadataC(nm,sfbd,fd,wr1,wr2,options,["do"]);
-WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionshorg):=(
+WireparadataC(nm,sfbd,fd,wr1,wr2,optionorg,optionshorg):=(
 //help:Wireparadata("1","sfbd3d1",fd,5,5,nohiddenoptions,hiddenoptions);
-  regional(funnm,fd,options,optionsh,name2,name3,name2h,name3h,waiting,
+  regional(options,optionsh,name2,name3,name2h,name3h,
+     waiting,addstyle,varu,rngu,varv,rngv,
      eqL,reL,strL,fname,fnameh,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,udata,vdata,cmdflg);
   eps=10^(-5);
-  fd=ConvertFdtoC(fdorg);
-  tmp=select(1..(length(FuncListC)),FuncListC_#==fd);
-  funnm=text(tmp_1); 
+  tmp=Fullformfunc(fd); //220102form
+  tmp1=Strsplit(tmp_5,"=");
+  varu=tmp1_1; rngu=tmp1_2;
+  tmp1=Strsplit(tmp_6,"=");
+  varv=tmp1_1; rngv=tmp1_2; //220102to
   name2="wire2d"+nm;
   name3="wire3d"+nm;
   name2h="wireh2d"+nm;
@@ -5310,141 +5338,38 @@ WireparadataC(nm,sfbd,fdorg,wr1,wr2,optionorg,optionshorg):=(
   fname=Fhead+"wire"+nm+".txt";
   fnameh=replace(fname,".txt","h.txt");
   options=select(optionorg,length(#)>0); //190123from
-//  tmp=Divoptions(options); //191006[2lines]
-//  if(length(tmp_7)==0,options=append(options,"dr"));
   optionsh=select(optionshorg,length(#)>0);
-//  tmp=Divoptions(optionsh); //191006[2lines]
-//  if(length(tmp_7)==0,optionsh=append(optionsh,"do")); //190123to
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  reL=tmp_6;
-  strL=tmp_7;
-  waiting=60;
-  wflg=0;
-  options=remove(options,reL);
-  wflg=0;
-  cmdflg=1;
-  forall(strL,
-    tmp=Toupper(substring(#,0,1));
-    if(tmp=="M",
-      cmdflg=0;
-      wflg=1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="R",
-      cmdflg=0;
-      wflg=-1;
-      options=remove(options,[#]);
-    );
-    if(tmp=="C", //180531
-      cmdflg=1;
-      options=remove(options,[#]);
-    );
-  );
-  options=remove(options,reL);
-  options=select(options,length(#)>0);
-  tmp1=select(options,
-      (indexof(#,"=")>0)&(Toupper(substring(#,0,1))=="C")); //181114from
-  if(length(tmp1)>0,
-    tmp1=tmp1_1;
-    tmp2=select(optionsh,
-      (indexof(#,"=")>0)&(Toupper(substring(#,0,1))=="C")); 
-    if(length(tmp2)==0,
-      if(length(optionsh)==0,
-        optionsh=["do",tmp1];        
-      ,
-        optionsh=append(optionsh,tmp1);
-      );
-    );
-  );  //181114to
-  StyleListC=concat(StyleListC,[name3,options,name3h,optionsh]); //181107
-  options=remove(options,eqL);
   if(islist(wr1),
     udata=prepend(length(wr1),wr1);
   ,
-    tmp=Fullformfunc(fdorg);
-    tmp1=tmp_5;
-    tmp=indexof(tmp1,"=");
-    tmp=substring(tmp1,tmp,length(tmp1));
-    tmp=parse(tmp);
+    tmp=parse(rngu);
     tmp1=tmp_1; tmp2=tmp_2;
     udata=apply(1..wr1,tmp1+#*(tmp2-tmp1)/(wr1+1));
     udata=prepend(wr1,udata);
   );
-  udata=textformat(udata,6);
-  udata=substring(udata,1,length(udata)-1);
+  udata=udata_(2..(length(udata)));  
   if(islist(wr2),
     vdata=prepend(length(wr2),wr2);
   ,
-    tmp=Fullformfunc(fdorg);
-    tmp1=tmp_6;
-    tmp=indexof(tmp1,"=");
-    tmp=substring(tmp1,tmp,length(tmp1));
-    tmp=parse(tmp);
+    tmp=parse(rngv);
     tmp1=tmp_1; tmp2=tmp_2;
     vdata=apply(1..wr2,tmp1+#*(tmp2-tmp1)/(wr2+1));
     vdata=prepend(wr2,vdata);
   );
-  vdata=textformat(vdata,6);
-  vdata=substring(vdata,1,length(vdata)-1);
-  cmdL=[
-    "  double wireu[]={"+udata+"};",
-    "  double wirev[]={"+vdata+"};",
-    "  char fname[]="+Dqq(fname)+";",
-    "  char fnameh[]="+Dqq(fnameh)+";",
-    "  rangeUV("+funnm+");",
-    "  boundary("+funnm+");",
-    "  readoutdata3("+Dqq(Fhead+replace(sfbd,"3d","")+".txt")+","+Dqq(sfbd)+",sfbd);", //180531
-    "  wireparadata("+funnm+",sfbd,wireu,wirev,fname,fnameh);"
-  ];
-  if(cmdflg==1,//180531from
-    println("  ExeccmdC will generate "+ name3+","+name3h);
-    tmp=replace(cmdL_8,"fnameh",Dqq(""));
-    tmp=replace(tmp,"fname","fnameall");  cmdL_8=tmp;
-	cmdL_7="  readoutdata3(fnameall,"+Dqq(sfbd)+",sfbd);";
-    cmdL=append(cmdL,"  outputend(dirfname);");
-    tmp=remove(1..(length(cmdL)),[3,4]); //181113(2lines)
-    cmdL=cmdL_tmp;
-//    cmdL=remove(cmdL,[cmdL_3,cmdL_4]); //180827
-    CommandListC=concat(CommandListC,cmdL); //180531to
-  ,
-    if(wflg==1,tmp1=append(options,"m"));
-    if(wflg==-1,tmp1=append(options,"r"));
-    if(ErrFlag==0,
-      tmp="wire"+nm;
-      CalcbyC(tmp,[Cheadsurf(),Ctopsurf(tmp),cmdL],tmp1);
-    );
-    if(ErrFlag==1,
-      err("Wireparadata not completed");
-    ,
-      ReadOutData(fname,["Disp=n"]);
-      GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
-      ReadOutData(fnameh);
-      GLIST=append(GLIST,"ReadOutData("+Dqq(fnameh)+")");
-      if(islist(parse(name3)),
-        tmp1=name2+"=Projpara("+Dqq(name3)+",[";
-        tmp2="";
-        if(length(options)>0,
-          forall(options,
-            tmp2=tmp2+Dqq(#)+",";
-          );
-          tmp2=substring(tmp2,0,length(tmp2)-1);
-        );
-        tmp1=tmp1+tmp2+"]);";
-        parse(tmp1);
-        tmp2=select(optionsh,length(#)>0); //180517(2lines)
-        if(length(tmp2)==0,tmp2=["nodisp"]);
-        tmp1=name2h+"=Projpara("+Dqq(name3h)+",[";
-        forall(tmp2,
-          tmp1=tmp1+Dqq(#)+",";
-        );
-        tmp1=substring(tmp1,0,length(tmp1)-1)+"]);";
-        parse(tmp1);
-      ,
-        ErrFlag=1;
-      );
-    );
+  vdata=vdata_(2..(length(vdata)));
+  forall(1..(length(udata)),
+    tmp=Assign("[u,v]",["u",udata_#,"v",varv]);
+    tmp1=Textformat(parse(rngv),6);
+    Paramplot("-wire"+nm+"u"+#,tmp,varv+"="+tmp1,["nodisp","Msg=n"]);
+    Crv2onsfparadata(nm+"u"+#,"wire"+nm+"u"+#,sfbd,fd,options,optionsh);
   );
+  forall(1..(length(vdata)),
+    tmp=Assign("[u,v]",["u",varu,"v",vdata_#]);
+    tmp1=Textformat(parse(rngu),6);
+    Paramplot("-wire"+nm+"v"+#,tmp,varu+"="+tmp1,["nodisp","Msg=n"]);
+    Crv2onsfparadata(nm+"v"+#,"wire"+nm+"v"+#,sfbd,fd,options,optionsh);
+  );
+  
 );
 ////%Wireparadata end////
 

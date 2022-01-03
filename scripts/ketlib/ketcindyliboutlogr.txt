@@ -1,3 +1,6 @@
+// 20220103
+//    Wireparadata changed (Major changes)
+//    Crv3onsfparadata changed  ("Msg=");
 // 20211230
 //    ExeccmdC changed
 //    ReadoutC added

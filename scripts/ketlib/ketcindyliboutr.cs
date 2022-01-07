@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20220103] loaded");
+println("ketcindylibout[20220107] loaded");
 
 //help:start();
 
@@ -5124,15 +5124,6 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
 //help:Crv3onsfparadata("1","sc3","sfbd3d1",fd,,nohiddenoptions,hiddenoptions);
   regional(funnm,sfbd,fd,options,optionsh,name3,name3h,name2,name2h,waiting,
      eqL,reL,strL,fname,tmp,tmp1,tmp2,flg,wflg,flg,ii,jj,eps,cmdflg,msg);
-  tmp1=replace(crv3d,"3d","2d");
-  tmp=apply(GCLIST,#_1);
-  if(contains(tmp,tmp1),
-    if(cmdflg==1,
-      EraseList=append(EraseList,tmp1);
-    ,
-      Changestyle3d(tmp1,["nodisp"]);//180428
-    );
-  );
   eps=10^(-5);
   sfbd=replace(sfbdorg,"bdy","sfbd");
   fd=ConvertFdtoC(fdorg);
@@ -5171,6 +5162,15 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
       options=remove(options,[#]);
     );
   );
+  tmp1=replace(crv3d,"3d","2d"); //220107from(moved)
+  tmp=apply(GCLIST,#_1);
+  if(contains(tmp,tmp1),
+    if(cmdflg==1,
+      EraseList=append(EraseList,tmp1);
+    ,
+      Changestyle3d(tmp1,["nodisp"]);//180428
+    );
+  );  //220107to(moved)
   msg="Y";
   forall(eqL, //220103from
     tmp=Strsplit(#,"=");
@@ -5243,6 +5243,10 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
     if(wflg==1,tmp1=append(options,"m"));
     if(wflg==-1,tmp1=append(options,"r"));
     if(ErrFlag==0,
+      if(isexists(Dirwork,Fhead+crv3d+".dat"), //220107from
+        tmp="  remove("+Dqq(Fhead+crv3d+".dat")+");";
+        cmdL=append(cmdL,tmp);
+      ); //220107to
       tmp="crv3onsf"+nm;
       CalcbyC(tmp,[Cheadsurf(),Ctopsurf(tmp),cmdL],tmp1);
     );

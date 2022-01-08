@@ -7584,14 +7584,14 @@ println("PD="+Datalist3d());
 
 %------------------- Changestyle3d -----------------------------------------------
 \hypertarget{changestyle3d}{}
-\item[関数]Changestyle3d(リスト,リスト)
+\item[関数]Changestyle3d(リスト,スタイルリスト(, 陰線部分のスタイル))
 \item[機能]3Dプロットデータの属性を変更
 \item[説明]第１引数のプロットデータの属性を，第2引数に変更する。
 
 たとえば，補助線など，画面には描いてもTeXに書き出さない線を描画するときは，optionに["notex"] をつけるが，これをあとから付加したい場合に利用する。プロットデータはリストにできるので，複数のプロットデータの属性をまとめて変更することができて便利である。
 
 \vspace{\baselineskip}
-【例】4つの点で四面体の辺を描き，まとめて notex にする。点A,B,C,Dはとってあるものとする。
+4つの点で四面体の辺を描き，まとめて notex にする。点A,B,C,Dはとってあるものとする。
 \begin{verbatim}
 Spaceline("1",[A,B]);
 Spaceline("2",[A,C]);
@@ -7603,20 +7603,28 @@ edges=apply(1..6,"sl3d"+text(#));
 Changestyle3d(edges,["notex"]);
 \end{verbatim}
 
+\noindent
+【注】sfbd3d, sfbdh3dなど陰線データをもつ場合\\
+　Changestyle3d(sfbd3dd,["Color=red"],["do,0.5"]);\\
+　　sfbd3d,sfbdh3dのスタイルを同時に変更する．
+
+\vspace{\baselineskip}
+
 %------------------- Intersectcrvsf -----------------------------------------------
 \hypertarget{intersectcrvsf}{}
 \item[関数]Intersectcrvsf(name,PD，式)
 \item[機能]曲線と曲面の交点の座標を求める
 \item[説明]PDは曲線のプロットデータ。式は曲面の式。
 
-曲面は，Sfbdparadata()でデータを作成し，ExeccmdC()で表示しておく。交点の座標は，"intercrvsf"+name に代入される。コマンドの実行順序は次の例のようにする。
-
-\begin{layer}{150}{0}
-\putnotese{100}{25}{ \includegraphics[bb=0 0 149.51 121.51 , height=1.8cm]{Fig/Intersectcurvsf.pdf}}
-\end{layer}
+曲面は，Sfbdparadata()でデータを作成し，ExeccmdC()で表示
+しておく。交点の座標は，"intercrvsf"+name に代入される。\\
+コマンドの実行順序は次の例のようにする。
 
 \vspace{\baselineskip}
 【例】回転放物面と線分の交点の座標を表示する。
+
+\newpage
+
 \begin{verbatim}
 Putpoint3d(["A",[0,-3,0],"B",[0,3,2]]);
 Spaceline("1",[A,B]);
@@ -7631,6 +7639,11 @@ ExeccmdC("1",[""]);
 println("Intersect="+intercrvsf1);
 Pointdata3d("1",intercrvsf1); 
 \end{verbatim}
+
+\begin{layer}{150}{0}
+\putnotese{100}{-20}{ \includegraphics[bb=0 0 149.51 121.51 , height=1.8cm]{Fig/Intersectcurvsf.pdf}}
+\end{layer}
+
 実行すると，コンソールに
 
 \verb| Intersect=[[0,1.57,1.52],[0,-1.91,0.36]] |
@@ -8780,7 +8793,7 @@ Cinderellaで使っている用語に次のものがある。
 
 \begin{tabbing}
 12345678901234567890123456789012345678\=\kill
-【設定・定義】\\
+%【設定・定義】\\
 %command list from here
 %\hyperlink{example}{Example("Mxfun",文字)}\>Mxfunの使用例を表示\\
 %\hyperlink{makeshell}{Makebat(ファイル名)} \>Windowsのバッチファイルを書き出す\\

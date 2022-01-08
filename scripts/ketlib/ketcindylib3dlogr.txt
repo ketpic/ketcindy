@@ -1,6 +1,5 @@
 // 211230
 //    Partcrv3d changed drastically
-//    Adddata3d added
 // 211229
 //    Changestyle3d debugged  (case of varname not in GCLIST )
 // 211106

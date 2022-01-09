@@ -1441,19 +1441,9 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
   }
 }
 
-void intersectcrvsf(const char *wa, short chfd,double crv[][3],const char *fname){
-  double pa[3],pb[3],out[DsizeM][3],ptL[DsizeM][3];
+void intersectcrvsf(short chfd,double crv[][3],double fbdkL[][3],double ptL[][3]){
+  double pa[3],pb[3],out[DsizeM][3];
   int i;
-  short chcut;
-  char chc[10];
-  sprintf(chc,"%d",chfd);
-  char var[]="intercrvsf";
-  char dirfname[256];
-  dirfname[0] = '\0';
-  sprintf(dirfname,"%s%s",Dirname,fname);
-  char varname[256];
-  varname[0] = '\0';
-  sprintf(varname,"%s%s",var,chc);
   ptL[0][0]=0;
   for(i=1;i<length3(crv);i++){
     pull3(i,crv,pa);
@@ -1461,7 +1451,6 @@ void intersectcrvsf(const char *wa, short chfd,double crv[][3],const char *fname
     meetpoints(chfd,pa,pb,1,out);
     appendd3(0,1,length3(out),out,ptL);
   }
-  output3(1,wa,varname,dirfname,ptL);
 }
 
 void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,const char *fnameh){

@@ -1,3 +1,5 @@
+// 20220108
+//    Intersectcrvsf debugged
 // 20220107
 //    Crv3onsfparadata changed  (to remove ".dat");
 // 20220103

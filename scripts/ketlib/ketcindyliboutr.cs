@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20220107] loaded");
+println("ketcindylibout[20220108] loaded");
 
 //help:start();
 
@@ -5393,7 +5393,7 @@ IntersectcrvsfC(nm,crv,fd,Arg):=(
 IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
 //help:Intersectcrvsf("1",curve,fd);
   regional(fd,funnm,name,crv,fd,options,reL,fname,crvfname,argR,
-     waiting,tmp,tmp1,tmp2,flg,wflg,pts,cmdflg);
+     waiting,tmp,tmp1,tmp2,flg,wflg,pts,cmdflg,msgflg);
   fd=ConvertFdtoC(fdorg);
   tmp=select(1..(length(FuncListC)),FuncListC_#==fd);
   funnm=text(tmp_1); //180426
@@ -5409,6 +5409,7 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
   waiting=60;
   wflg=0;
   cmdflg=1;
+  msgflg="Y";
   forall(strL,
     tmp=Toupper(substring(#,0,1));
     if(tmp=="M",
@@ -5426,7 +5427,14 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
       options=remove(options,[#]);
     );
   );
-  options=remove(options,eqL);
+  forall(eqL,
+    tmp=Strsplit(#,"=");
+    tmp1=Toupper(substring(tmp_1,0,1));
+    if(tmp1=="M",
+      msgflg=Toupper(substring(tmp_2,0,1));
+      options=remove(options,[#]);
+    );
+  );
   options=remove(options,reL);
   options=select(options,length(#)>0);
   tmp2=parse(crv3d);
@@ -5449,18 +5457,15 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
   ); 
   if(flg==1,WritedataC(tmp,crv3d));
   cmdL=[
-    "  double crv3d[DsizeL][3];",
-    "  char fname"+nm+"[]="+Dqq(fname)+";",
-    "  rangeUV("+funnm+");",
-    "  boundary("+funnm+");",
-    "  readdataC("+Dqq(Fhead+crv3d+".dat")+",crv3d);",
-    "  intersectcrvsf("+Dqq("w")+","+funnm+",crv3d,"+Dqq(fname)+");",
-    "  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,fname"+nm+");"
+    "  readdataC("+Dqq(Fhead+crv3d+".dat")+",data);", //220109from
+    "  intersectcrvsf(1,data,sfbd,out);",
+    "  sprintf(dirfname,"+Dqq("%s%s")+",Dirname,"+Dqq(fname)+");",
+    "  output3(1,"+Dqq("w")+","+Dqq(name)+", dirfname,out);" //220109to
   ];
   if(cmdflg==1,//180531from
-    cmdL_6="  intersectcrvsf("+Dqq("a")+","+funnm+",crv3d,fnameall);";
-    tmp=remove(1..(length(cmdL)),[2,length(cmdL)]); //181113(2lines)
-    cmdL=cmdL_tmp;
+ //   cmdL_6="  intersectcrvsf("+Dqq("a")+","+funnm+",crv3d,fnameall);";
+ //   tmp=remove(1..(length(cmdL)),[2,length(cmdL)]); //181113(2lines)
+//    cmdL=cmdL_tmp;
 //    cmdL=remove(cmdL,[cmdL_2]);
 //    cmdL=remove(cmdL,[cmdL_(length(cmdL))]);
     CommandListC=concat(CommandListC,cmdL); //180531to
@@ -5469,16 +5474,21 @@ IntersectcrvsfC(nm,crv3d,fdorg,bdyeq,optionorg):=(
     if(wflg==-1,tmp1=append(options,"r"));
     if(ErrFlag==0,
       tmp="crv3onsf"+nm;
-      CalcbyC(tmp,[Cheadsurf(),Ctopsurf(tmp),cmdL],tmp1);
+//      CalcbyC(tmp,[Cheadsurf(),Ctopsurf(tmp),cmdL],tmp1);
     );
-    if(ErrFlag==1,
-   	  err("Intersectcrvsf not completed");
+  ); //220108from
+  if(ErrFlag==1,
+    err("Intersectcrvsf not completed");
+  ,
+    if(isexists(Dirwork,fname), //220109from
+      ReadOutData(fname,["Disp=n"]);
+      tmp="generate "+name;
+      parse(name);
     ,
-      ReadOutData(fname,["Disp=n"]); //181029
-    );
-    println("generate "+name);
-    parse(name);
-  );
+      tmp="ExeccmdC will generate "+name;
+    ):
+    if(msgflg=="Y",println(tmp));  //220109to
+  ); //220108to
 );
 ////%Intersectcrvsf end////
 

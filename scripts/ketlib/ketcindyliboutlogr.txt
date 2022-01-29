@@ -1,3 +1,37 @@
+// 20220129
+//    ConvertFd2C debugged  ( case of the form after Fullformfunc
+// 20220128
+//    Addnodisp added
+// 20220126
+//    Crvsfparadata changed  ( for updated dat )
+//    Starsurf changed  ( WritFlag=0 added )
+//    EraseList =>NodispList
+//    Addsurf debugged  (SurfList)
+// 20220125
+//    ExeccmdC (major change)
+//    Intersectcrvsf (major change)
+// 20220123
+//    Cheadsurf,Ctopsurf changed ( /* ...end */ added )
+//    ExeccmdC overhauled
+// 20220122
+//    Contsurf removed
+// 20220119
+//    Execcmdc changed  (frnameread,... added)
+//    Sfcutparadata ( major change )
+// 20220116
+//    Intersectcrvsf debugged
+// 20220115
+//    Execcmd changed (clen added,fname reset added, Anglenow check added)
+//    crvsf,..   changed ( "w"=>"a" )
+// 20220114
+//    Execcmdc debugged/changed  ( ErrFlag, CmdLength )
+//    Startsurf changed ( CmdLength,ReadList added )
+//    Crvsfparadata,... changed (for Usedata3d)
+//    Readexecdata, Usedata3d added
+// 20220112
+//    Addsurf added
+// 20220111
+//    Wireparadata changed ( "Num=" added)
 // 20220108
 //    Intersectcrvsf debugged
 // 20220107

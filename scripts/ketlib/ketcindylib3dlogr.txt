@@ -1,3 +1,11 @@
+// 220128
+//    Surffun, Sf3data changed  ( no of surf added )
+// 220126
+//    Start3d changed  (SurfList,FuncListC added, move option added)
+//    Skeletonpara changed  (auto m/r)
+// 220116
+//    Ketinit3d changed  (AngleNow,SkeletonNow added)
+//    Skeletonparadate  debugged/changed  (Major change)
 // 211230
 //    Partcrv3d changed drastically
 // 211229

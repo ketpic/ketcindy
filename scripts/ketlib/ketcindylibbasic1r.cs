@@ -16,7 +16,7 @@
 
 println("KeTCindy V.3.4.1");
 println(ketjavaversion());
-println("ketcindylibbasic1[20211125] loaded");
+println("ketcindylibbasic1[20220115] loaded");
 
 //help:start();
 
@@ -2564,6 +2564,7 @@ Nearestpt(pt,plotstr):=(
     );
     dtL=append(dtL,dt);
   );
+  dtL=select(dtL,length(#)>=3); //220115
   dtL=sort(dtL,[#_3,#_2]);
   dtL_1;
 );

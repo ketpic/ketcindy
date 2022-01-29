@@ -1,3 +1,5 @@
+// 220116
+//    Intersectcrvsf debugged  (fbdkL[][3] removed)
 // 180430 
 //    crv2sfparadata,wireparadata added
 //    output3h,output3 chanded       
@@ -47,15 +49,15 @@ int output3(short head, const char *wa,const char *var, const char *fname,double
 }
 
 int output3h(const char *wa,const char *var, const char *varh, const char *fname, double out[][3]){
-  // 17.06.09
+  /* 17.06.09 */
   double out1[DsizeLL][3], tmpd[3];
   int din1[DsizeM][2],din2[DsizeM][2], i, j,ctr;
   FILE *fp;
-  fp=fopen(fname,wa);
+  fp=fopen(fname,"a");
   if (fp == NULL) { 
     printf("cannot open\n");  
     return -1;
-  }
+  };
   dataindexd3(3,out,din1);
   out1[0][0]=0;
   appendd3(0, din1[1][0],din1[1][1],out,out1);
@@ -1413,7 +1415,7 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
     for(i=0; i<=Mdv; i++){
       add2(crv2d, Urng[0]+i*du,vdata[j]);
     }
-    if(allflg==1){out[0][0]=0;}
+		if(allflg==1){out[0][0]=0;};
     crv2onsfparadata(ch,crv2d,bdyk,out);
     if(allflg==0){
       dataindexd3(3,out,din);
@@ -1441,7 +1443,7 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
   }
 }
 
-void intersectcrvsf(short chfd,double crv[][3],double fbdkL[][3],double ptL[][3]){
+void intersectcrvsf(short chfd,double crv[][3],double ptL[][3]){ /*220116*/
   double pa[3],pb[3],out[DsizeM][3];
   int i;
   ptL[0][0]=0;
@@ -1453,11 +1455,11 @@ void intersectcrvsf(short chfd,double crv[][3],double fbdkL[][3],double ptL[][3]
   }
 }
 
-void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,const char *fnameh){
+void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double ekL[][3]){
   double Vec[3]={sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA)};
   double v1=Vec[0],v2=Vec[1],v3=Vec[2];
   double out[DsizeM][2],out2[DsizeM][2],outd3[DsizeL][3];
-  double ekL[DsizeL][3],out1d3[DsizeL][3],out2d3[DsizeL][3];
+  double out1d3[DsizeL][3],out2d3[DsizeL][3];
   double uval1,uval2,vval1,vval2,eval11,eval12,eval21,eval22;
   double pl[5][2], vl[5], ql[11][2],diff1,diff2;
   double tmp1md[DsizeM][2],tmp2md[DsizeM][2],tmpd[2],tmp1d[2],tmp2d[2];
@@ -1466,32 +1468,7 @@ void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,c
   double dv=(Vrng[1]-Vrng[0])/Ndv;
   double p1[2],p2[2],m1,m2,q11,q12,q21,q22,a1,a3,b1,b3;
   int i,j,k,din[DsizeS][2],ns,ne,rmv[DsizeS];
-  short chcut, allflg=0;
-  if(strlen(fnameh)==0){
-    allflg=1;
-  }
-  char var0[]="sfcut3d";
-  char varh0[]="sfcuth3d";
-  char var[20];
-  char varh[20];
-  sprintf(var,"%s%d",var0,chfd);
-  sprintf(varh,"%s%d",varh0,chfd);
-  char varnow[40];
-  char varhnow[40];
-  char dirfname[256];
-  char dirfnameh[256];
-  char varname[256];
-  char varnameh[256];
-  varnow[0]='\0';
-  varhnow[0]='\0';
-  dirfname[0]='\0';
-  dirfnameh[0]='\0';
-  varname[0]='\0';
-  varnameh[0]='\0';
-  sprintf(varname,"%s%d",var,chfd);
-  sprintf(varnameh,"%s%d",varh,chfd);
-  sprintf(dirfname,"%s%s",Dirname,fname);
-  sprintf(dirfnameh,"%s%s",Dirname,fnameh);
+  short chcut;
   for(chcut=1;chcut<=ncut;chcut++){
     out[0][0]=0; out2[0][0]=0;
     for(j=0; j<=Ndv-1; j++){
@@ -1610,27 +1587,6 @@ void sfcutparadata(short chfd, short ncut, double fbdy3[][3],const char *fname,c
       appendd3(2,1,length3(tmp2md3),tmp2md3,outd3);
 	}
     crv3onsfparadata(chfd,outd3,fbdy3,ekL);
-    if(allflg==0){
-      dataindexd3(3,ekL,din);
-      out1d3[0][0]=0; out2d3[0][0]=0;
-      appendd3(0,din[1][0],din[1][1],ekL,out1d3);
-      appendd3(0,din[2][0],din[2][1],ekL,out2d3);
-      if(chcut==1){
-        output3(1,"w",varname,dirfname,out1d3);
-        output3(1,"w",varnameh,dirfnameh,out2d3);
-      }else{
-        output3(0,"a",varname,dirfname,out1d3);
-        output3(0,"a",varnameh,dirfnameh,out2d3);
-      }
-    }else{
-      sprintf(varnow,"%s%d",var,chcut);
-      sprintf(varhnow,"%s%d",varh,chcut);
-      output3h("a",varnow, varhnow,fname,ekL);
-    }
-  }
-  if(allflg==0){
-    outputend(dirfname);
-    outputend(dirfnameh);
   }
 }
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20211229] loaded");
+println("ketcindylib3d[20220128] loaded");
 
 //help:start();
 
@@ -54,6 +54,8 @@ Ketinit3d(subflg):=(
   drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right");
   THETA=(TH.x-xPos)*20*pi/180;
   PHI=(FI.x-xPos)*40*pi/180; //190713to
+  AngleNow=[THETA,PHI]; //220115[2lines]
+  SkeletonNowList=[];
   Skeleton=1; //210324
 );
 ////%Ketinit3d end////
@@ -73,11 +75,12 @@ Start3d(Arg):=( //190503from
 Start3d(ptexception,optionjs):=(//190503to
 //help:Start3d();
 //help:Start3d(["A","B"](exceptionptlist));
-//help:Start3d(optionjs=["Slider=n","Removept=[]");
+//help:Start3d(optionjs=["Slider=n","Move=[3]","Removept=[]");
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
-    xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+    xPos,yTh,yPh,Eps,move,tmp,tmp1,tmp2,tmp3,tmp4);
   PTEXCEPTION=[];
   SLIDEFLG="Y";
+  move=[0,0];
   forall(optionjs,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -90,13 +93,18 @@ Start3d(ptexception,optionjs):=(//190503to
       tmp2=tokenize(tmp2,",");
       REMOVEPTJS=concat(REMOVEPTJS,tmp2);
     );
+    if(tmp1=="M", //220126from
+      move=parse(tmp_2);
+      if(!islist(move),move=[move]);
+      if(length(move)==1,move=append(move,0));
+    ); //220126to
   );
   Setfiles(Namecdy); //180608 // no ketjs
   ConstantListC=[[50,50],[5000,1500,500,200],[0.00001,0.01,0.1]]; // no ketjs on
   FuncListC=[];
   CommandListC=[]; //180531
   CutFunList=[];//180601
-  EraseList=[];//180601 // no ketjs off
+  NodispList=[];//180601 // no ketjs off
 //  ADDPACK=[]; //180606 //no ketjs
   GCLIST=[];
   GLIST=[];   // no ketjs on
@@ -124,7 +132,7 @@ Start3d(ptexception,optionjs):=(//190503to
   Fnameout=Fhead+".txt"; // no ketjs off
   Setwindow("Msg=no"); // 16.06.20from
     tmp=round(4*SW.y)/4;
-    xPos=-5; yTh=tmp-0.5; yPh=tmp-1;
+    xPos=-5+move_1; yTh=tmp-0.5+move_2; yPh=tmp-1; //220126
 //  if(SLIDEFLG=="Y", // only ketjs //190503from
     Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]); //190209
     Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); //190209
@@ -165,9 +173,9 @@ Start3d(ptexception,optionjs):=(//190503to
   tmp=ptexception; //181106
   if(!islist(tmp),tmp=[tmp]);  //190209
   PTEXCEPTION=concat(PTEXCEPTION,tmp); //190209 
-//  if(!islist(tmp),PTEXCEPTION=[tmp],PTEXCEPTION=tmp);
   Ptseg3data(PTEXCEPTION);//16.08.23
-//  PTEXCEPTION=ptexception; //180916 //190209[del]
+  FuncListC=[]; //220126[2lines]
+  SurfList=[];
 );
 ////%Start3d end////
 
@@ -3626,13 +3634,22 @@ Fullformfunc(FdL):=(
 ////%Fullformfunc end////
 
 ////%Surffun start////
-Surffun(nm,Fd):=(
-  regional(name,coord,var1,var2,rng1,rng2,bdy,tmp,tmp1,tmp2);
-  tmp=Fullformfunc(Fd);
-  rng1=tmp_5;
-  rng2=tmp_6;
-  bdy=tmp_7;
-  coord="["+tmp_2+","+tmp_3+","+tmp_4+"]";
+Surffun(nm,fdorg):=(
+  regional(fd,name,coord,var1,var2,rng1,rng2,bdy,tmp,tmp1,tmp2);
+  fd=fdorg; //220128from
+  if(!islist(fd),
+    if(fd<=length(SurfList),
+      fd=SurfList_fd;
+    ,
+      println("  number is over the length of lists");
+    );
+  ,
+    fd=Fullformfunc(fd);    
+  );
+  rng1=fd_5;
+  rng2=fd_6;
+  bdy=fd_7;
+  coord="["+fd_2+","+fd_3+","+fd_4+"]";
   tmp=indexof(rng1,"=");
   var1=substring(rng1,0,tmp-1);
   rng1=substring(rng1,tmp,length(rng1));
@@ -3646,21 +3663,23 @@ Surffun(nm,Fd):=(
 ////%Surffun end////
 
 ////%Sf3data start////
-Sf3data(nm,fdata):=Sf3data(nm,fdata,[]);
-Sf3data(nm,fdata,optionorg):=(
+Sf3data(nm,fd):=Sf3data(nm,fd,[]);
+Sf3data(nm,fd,optionorg):=(
   regional(tmp,tmp1,tmp2);
-  tmp=Surffun(nm,fdata);
+  tmp=Surffun(nm,fd);
+  println(tmp);
   tmp1=tmp_2+"="+tmp_3;
   tmp2=tmp_4+"="+tmp_5;
   Sf3data(nm,tmp_1,tmp1,tmp2,optionorg);
 );
 Sf3data(nm,funstr,var1,var2):=Sf3data(nm,funstr,var1,var2,[]);
-Sf3data(nm,funstr,var1org,var2org,optionorg):=(
+Sf3data(nm,fd,var1org,var2org,optionorg):=(
 //help:Sf3data("1",Fd);
+//help:Sf3data("1",1);
 //help:Sf3data(options=["Num=[25,25]","Wire=[20,20]"]);
   regional(name2,name3,var1,var2,Ltype,Noflg,opstr,opcindy,eqL,Num,
     Wire,varu,varv,rngu,rngv,sfdtuL,sfdtvL,options,
-    tmp,tmp1,tmp2,tmp3);
+    tmp,tmp1,tmp2,tmp3);    
   var1=replace(var1org,"%pi","pi");
   var2=replace(var2org,"%pi","pi");
   tmp=Divoptions(optionorg);
@@ -3699,7 +3718,7 @@ Sf3data(nm,funstr,var1org,var2org,optionorg):=(
   sfdtuL=[];
   forall(0..Wire_2,
     tmp=rngv_1+#/Wire_2*(rngv_2-rngv_1);
-    tmp1=replace(funstr,varv,textformat(tmp,10));
+    tmp1=replace(fd,varv,textformat(tmp,10));
     tmp="Num="+text(Num_2);
     tmp2=concat(options,["Msg=no",tmp]);
     Spacecurve(nm+"u"+#,tmp1,var1,tmp2);
@@ -3708,7 +3727,7 @@ Sf3data(nm,funstr,var1org,var2org,optionorg):=(
   sfdtvL=[];
   forall(0..Wire_1,
     tmp=rngu_1+#/Wire_1*(rngu_2-rngu_1);
-    tmp1=replace(funstr,varu,textformat(tmp,10));
+    tmp1=replace(fd,varu,textformat(tmp,10));
     tmp="Num="+text(Num_1);
     tmp2=concat(options,["Msg=no",tmp]);
     Spacecurve(nm+"v"+#,tmp1,var2,tmp2);
@@ -4512,6 +4531,7 @@ Skeletonparadata(nm,pltdata1org,pltdata2org,options):=
     Skeletondatacindy(nm,pltdata1org,pltdata2org,options);
 ////%Skeletonparadata end////
 
+////%Skeletondatacindy start////
 Skeletondatacindy(nm,pltdata1,pltdata2):=
      Skeletondatacindy(nm,pltdata1,pltdata2,[]);
 Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
@@ -4520,12 +4540,13 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
 //help:Skeletonparadatac(options=[1(width),"File=y(n)","m/r"]);
   regional(Eps,Eps2,name2,name3,options,Ltype,Noflg,reL,eqL,strL,opcindy,
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,wdtL,
-     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,color,
-     fileflg,wflg,mkflg,fname,skflie,varL,nn,chkL); //181101
+     Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,tmp3,color,fileflg,
+      mkflg,fname,fdname,varL,nn,chkL,flg); //181101
   // global Fhead
   name2="sk2d"+nm;
   name3="sk3d"+nm;
   fname=Fhead+"sk"+nm+".txt"; // no ketjs //181102
+  fdname=replace(fname,".txt",".dat"); // no ketjs //220115
   pltdata1=[];// 16.01.31
   forall(pltdata1org,tmp1,
     if(isstring(tmp1),tmp=parse(tmp1),tmp=tmp1); //210319
@@ -4575,29 +4596,61 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       options=remove(options,[#]);
     );
   );// no ketjs off
-  Eps=10^(-4);
-  ObjL=Flattenlist(pltdata1);
-  Plt3L=Flattenlist(pltdata2);
-  tmp=apply(1..(length(Plt3L)),Projcoordcurve(Plt3L_#));
-  Plt2L=Flattenlist(tmp);
-  if(fileflg=="Y",
-    if(mkflg<1,
-      if(isexists(Dirwork,fname),
-        Readoutdata(fname);
-        if(Measuredepth(ObjLorg)==1,ObjLorg=[ObjLorg]);
-        if(Measuredepth(Plt3Lorg)==1,Plt3Lorg=[Plt3Lorg]);
-        if((ObjLorg==ObjL)&(Plt3Lorg==Plt3L),
+  Eps=10^(-3);
+  tmp3=[nm,pltdata1org,pltdata2org,[THETA,PHI]]; //220115from
+  if(mkflg==0,
+    if(fileflg=="Y",
+      if(isexists(Dirwork,fdname), // no ketjs on
+        import(fdname);
+        if(|tmp3_4-SkeletonNow_4|>Eps,mkflg=1); //220126from
+        if(tmp3_1!=SkeletonNow_1,mkflg=1);
+        if(length(tmp3_2)!=length(SkeletonNow_2),mkflg=1);
+        if(length(tmp3_3)!=length(SkeletonNow_3),mkflg=1);
+        if(mkflg==0,
+          tmp1=apply(tmp3_2,parse(#));
+          tmp2=apply(tmp3_3,parse(#));
+          if(|tmp1-tmp2|>Eps,mkflg=1); 
+        ); //220126to
+      ,
+        mkflg=1;
+      );  // no ketjs off
+    ,
+      tmp1=select(SkeletonNowList,#_1==tmp_1);
+      if(length(tmp1)>0,
+        tmp1=tmp1_1;
+        if(tmp1==tmp,
           mkflg=-1;
         ,
           mkflg=1;
         );
-      ,
-        mkflg=1;
       );
     );
-  ,
-    mkflg=1;  //211106
-  );
+  ); //220115to
+  ObjL=Flattenlist(pltdata1);
+  Plt3L=Flattenlist(pltdata2);
+  tmp=apply(1..(length(Plt3L)),Projcoordcurve(Plt3L_#));
+  Plt2L=Flattenlist(tmp);
+  if(mkflg==1, //220115from
+    if(fileflg=="Y",
+      SCEOUTPUT=openfile(fdname);
+      tmp1="[";
+      forall(pltdata1org,tmp1=tmp1+Dqq(#)+",");
+      tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
+      tmp="SkeletonNow=["+Dqq(nm)+","+tmp1+","; //220126
+      tmp1="[";
+      forall(pltdata2org,tmp1=tmp1+Dqq(#)+",");
+      tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
+      tmp=tmp+tmp1+","+Textformat([THETA,PHI],5)+"];";
+      print(SCEOUTPUT,tmp);
+      closefile(SCEOUTPUT);
+    ,
+      tmp=[nm,pltdata1org,pltdata2org,[THETA,PHI]];
+      tmp1=select(SkeletonNowList,#_1==tmp_1);
+      if(length(tmp1)>0,tmp1=tmp1_1);
+      SkeletonNowList=remove(SkeletonNowList,tmp1);
+      SkeletonNowList=append(SkeletonNowList,tmp);
+    );
+  ); //220115to
   if(mkflg==1,  // no ketjs on
    //181101from, 181103
     Out=[];
@@ -4622,48 +4675,23 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
     tmp1=apply(Out,Textformat(#,6));
     tmp=name3+"="+tmp1+";"; //190415
     parse(tmp);
-    tmp=name2+"=Projcurve("+tmp1+");";
-    parse(tmp);
+    Projpara(name3,options); //220116from
+    if(fileflg=="Y",
+      Writeoutdata(fname,[name3,parse(name3)]);//220116to
+    );
   ,
-    Readoutdata(fname); // 211106[2lines]
-   ); //no ketjs off
+    if(fileflg=="Y", // 220115from
+      Readoutdata(fname);
+      GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
+      Projpara(name3,options);
+      Out=parse(name3);
+    );  
+  ); //no ketjs off
   Changestyle3d(pltdata1org,["nodisp"]);
-  if(Noflg<3, //no ketjs on //181103,211106 from
-    if(mkflg>-1,
-      println("generate skeleton :"+name3);
-      if(Measuredepth(Out)<2,Out=[Out]); //210620from
-      tmp2="list(";
-      forall(Out,
-        tmp=Rsform(Textformat(#,6));  //210625
-        tmp="matrix("+tmp+",ncol=3,byrow=T),";
-        tmp2=tmp2+tmp;
-      );
-      tmp2=substring(tmp2,0,length(tmp2)-1)+")";
-      tmp=name3+"="+tmp2;
-      GLIST=append(GLIST,tmp);
-      tmp=name2+"=Projpara("+name3+")";
-      GLIST=append(GLIST,tmp); //210620fto
-    ,
-      GLIST=append(GLIST,"ReadOutData("+Dq+fname+Dq+")");//181102
-    );
-    if(mkflg==1, //181103,190818,211106
-      wdtL=["angleorg",[[THETA,PHI]],"ObjLorg",ObjL,"Plt3Lorg",Plt3L];
-      tmp=[name3,parse(name3),name2,parse(name2)];
-      wdtL=concat(wdtL,tmp);
-      WriteOutData(fname,wdtL);
-    ); //211106
-    if(isstring(Ltype),
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+color+")"));
-      Ltype=Getlinestyle(text(Noflg)+Ltype,name2);
-      if(!contains([[0,0,0],[0,0,0,1]],color),Com2nd("Setcolor("+text(KCOLOR)+")"));
-    ,
-      if(Noflg==1,Ltype=0);
-    );
-    GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
-    if(SUBSCR==1,
+  println("generate skeleton :"+name3); //220116[removed from here]
+  if(SUBSCR==1,
       Subgraph(name3,opcindy);
     );
-  );// no ketjs off
 //  out;
 );
 ////%Skeletondatacindy end////

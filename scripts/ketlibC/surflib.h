@@ -1263,15 +1263,16 @@ void meetpoints(short ch,double pta[3], double ptb[3], int uveq,double out[][3])
   }
 }
 
-void crvsfparadata(short ch, double fkL[][3], double fbdkL[][3], int sepflg, double out[][3]){
+void crvsfparadata(int chfd[2], double fkL[][3], double fbdkL[][3], int sepflg, double out[][3]){
   double fbdy[DsizeL][2], fk[DsizeM][3],outh[DsizeL][3];
 //  double fkp[DsizeM][3], dt;
   double fh[DsizeM][2], parL[DsizeM], tmpmd3[DsizeM][3];
   double ptL[DsizeM][3], tmpd2[2], tmpd3[3], tmp1d1, tmp2d1;
-  double po[2]={0,0}, epsd2[2]={Eps1,1}, pa[3], pb[3];
+  double po[2]={0,0}, epsd2[2]={Eps1,1}, pa[3], pb[3],tmp;
   int nbor=length3(Borderhiddendata);
   int ncshidden,din[DsizeM][2],din2[DsizeS][2];
   int nn, i, j, k, n;
+  short ch;
   projpara(fbdkL,fbdy);
   out[0][0]=0;
   outh[0][0]=0;
@@ -1285,7 +1286,18 @@ void crvsfparadata(short ch, double fkL[][3], double fbdkL[][3], int sepflg, dou
       for(i=1; i<=length3(fk)-1; i++){
         pull3(i,fk,pa);
         pull3(i+1,fk,pb);
+        ch=chfd[0]; /*220203from*/
+        if(fabs(pa[0]-pb[0])+fabs(pa[1]-pb[1])<Eps){
+          tmp=pa[1]; pa[1]=pa[2]; pa[2]=tmp;
+          tmp=pb[1]; pb[1]=pb[2]; pb[2]=tmp;
+          ch=chfd[1];
+        } /*220203to*/
         meetpoints(ch,pa,pb,1,ptL);
+        if(ch==chfd[1]){ /*220203from*/
+          for(i=1;i<=length3(ptL);i++){
+            tmp=ptL[i][1]; ptL[i][1]=ptL[i][2]; ptL[i][2]=tmp;
+          }
+        } /*220203to*/
         for(j=1; j<=length3(ptL); j++){
 	      pull3(j,ptL,tmpd3);
           parapt(tmpd3,tmpd2);
@@ -1303,6 +1315,9 @@ void crvsfparadata(short ch, double fkL[][3], double fbdkL[][3], int sepflg, dou
         simplesort(parL);
       }
     }
+    
+    dispmatd1all(parL);
+    
     nohiddenpara2(ch,parL,fk,1, tmpmd3);
     appendd3(2,1,length3(tmpmd3),tmpmd3,out);
     appendd3(2,1, length3(Hiddendata),Hiddendata,outh);
@@ -1443,14 +1458,26 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
   }
 }
 
-void intersectcrvsf(short chfd,double crv[][3],double ptL[][3]){ /*220116*/
-  double pa[3],pb[3],out[DsizeM][3];
+void intersectcrvsf(short chfd[2],double crv[][3],double ptL[][3]){ /*220202*/
+  double pa[3],pb[3],tmp,out[DsizeS][3];
   int i;
+  short ch;
   ptL[0][0]=0;
   for(i=1;i<length3(crv);i++){
     pull3(i,crv,pa);
     pull3(i+1,crv,pb);
-    meetpoints(chfd,pa,pb,1,out);
+    ch=0;
+    if(fabs(pa[0]-pb[0])+fabs(pa[1]-pb[1])<Eps){
+      tmp=pa[1]; pa[1]=pa[2]; pa[2]=tmp;
+      tmp=pb[1]; pb[1]=pb[2]; pb[2]=tmp;
+      ch=1;
+    }
+    meetpoints(chfd[ch],pa,pb,1,out);
+    if(ch==1){
+      for(i=1;i<=length3(out);i++){
+        tmp=out[i][1]; out[i][1]=out[i][2]; out[i][2]=tmp;
+      }
+    }
     appendd3(0,1,length3(out),out,ptL);
   }
 }

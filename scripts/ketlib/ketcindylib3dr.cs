@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220128] loaded");
+println("ketcindylib3d[20220204] loaded");
 
 //help:start();
 
@@ -176,6 +176,7 @@ Start3d(ptexception,optionjs):=(//190503to
   Ptseg3data(PTEXCEPTION);//16.08.23
   FuncListC=[]; //220126[2lines]
   SurfList=[];
+  LenAddSurf=0; //220202
 );
 ////%Start3d end////
 
@@ -532,7 +533,7 @@ Projpara(ptdata,optionsorg):=(
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1)); //181111
-    if(tmp=="M",
+    if(tmp1=="M",
       tmp=substring(tmp_2,0,1);
       msg=Toupper(tmp);
       options=remove(options,[#]);
@@ -546,18 +547,17 @@ Projpara(ptdata,optionsorg):=(
       name2=replace(name3,"3d","2d");
     ,
       name2="para"+name3;
-    );
+    );  
     ptL=Projcurve(name3);
     ptL=select(ptL,length(#)>1);//17.06.02
     if(length(ptL)==1,
       ptL=ptL_1;
     );
-    Out=append(Out,ptL);
     if(Noflg<3,
-      if(msgflg==1,//180602from
+      if(msg=="Y", //220206
         println("generate projparadata  "+name2);
       );//180602to
-      tmp=name2+"="+textformat(ptL,10)+";"; //190415
+      tmp=name2+"="+Textformat(ptL,6)+";"; //220206
       parse(tmp);
       tmp=name2+"=Projpara("+name3+")";
       GLIST=append(GLIST,tmp);
@@ -576,6 +576,7 @@ Projpara(ptdata,optionsorg):=(
       );
      GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
     );
+    Out=append(Out,ptL);
   );
   if(length(Out)==1,Out=Out_1);
   if(length(Out)==1,Out=Out_1); // 15.02.24
@@ -767,7 +768,9 @@ Spaceline(nm,ptlistorg,optionorg):=(
     );
     GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
     if(SUBSCR==1, //no ketjs on//  15.02.11
-      Subgraph(name3,opcindy);
+      if(!contains(options,"nodisp"), //220204
+        Subgraph(name3,opcindy);
+      );
     ); //no ketjs off
   );
   ptlist;
@@ -935,10 +938,12 @@ Spacecurve(nm,funstr,variable,optionorg):=(
     );
     GCLIST=append(GCLIST,[name2,Ltype,opcindy]);
     if(SUBSCR==1, //  15.02.11
-      tmp=parse(name2);  // 15.08.17
-      if(length(tmp)>0,
-        Subgraph(name3,opcindy);
-      );   // 15.08.17
+      if(!contains(options,"nodisp"), //220204
+        tmp=parse(name2);  // 15.08.17
+        if(length(tmp)>0,
+          Subgraph(name3,opcindy);
+        );   // 15.08.17
+      );
     );
   );
   Out;

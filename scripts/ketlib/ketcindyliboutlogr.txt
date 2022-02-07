@@ -1,3 +1,17 @@
+// 20220207
+//    Crv3onsfparadata, ExeccmidC debugged
+//    Addnodisp changed  ( to be used also for 2d)
+//    Execcmdc changed
+// 20220205
+//    Wireparadata changed
+// 20220204
+//    Sfbdparadata,Crvsfparadata changed ( reorganized)
+//    Crv3onsfparadata, Crv2onsfparadata changed
+//    Usedata3d debugged ( StyleList )
+// 20220203
+//    Startsurf, Execcmdc changed ( ExecName added, short chfd[2] added)
+// 20220202
+//    Intersectcrvsf debugged( major change: case the curve parallel to z axis )
 // 20220129
 //    ConvertFd2C debugged  ( case of the form after Fullformfunc
 // 20220128

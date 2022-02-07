@@ -1,3 +1,5 @@
+// 220203
+//    sfbdparadata,crvsfparadata degugged 
 // 220116
 //    Intersectcrvsf debugged  (fbdkL[][3] removed)
 // 180430 
@@ -1263,7 +1265,7 @@ void meetpoints(short ch,double pta[3], double ptb[3], int uveq,double out[][3])
   }
 }
 
-void crvsfparadata(int chfd[2], double fkL[][3], double fbdkL[][3], int sepflg, double out[][3]){
+void crvsfparadata(short chfd[2], double fkL[][3], double fbdkL[][3], int sepflg, double out[][3]){
   double fbdy[DsizeL][2], fk[DsizeM][3],outh[DsizeL][3];
 //  double fkp[DsizeM][3], dt;
   double fh[DsizeM][2], parL[DsizeM], tmpmd3[DsizeM][3];
@@ -1294,30 +1296,21 @@ void crvsfparadata(int chfd[2], double fkL[][3], double fbdkL[][3], int sepflg, 
         } /*220203to*/
         meetpoints(ch,pa,pb,1,ptL);
         if(ch==chfd[1]){ /*220203from*/
-          for(i=1;i<=length3(ptL);i++){
-            tmp=ptL[i][1]; ptL[i][1]=ptL[i][2]; ptL[i][2]=tmp;
+          for(j=1;j<=length3(ptL);j++){
+            tmp=ptL[j][1]; ptL[j][1]=ptL[j][2]; ptL[j][2]=tmp;
+            tmp=pa[1]; pa[1]=pa[2]; pa[2]=tmp;
+            tmp=pb[1]; pb[1]=pb[2]; pb[2]=tmp;
           }
+          ch=chfd[0];
         } /*220203to*/
         for(j=1; j<=length3(ptL); j++){
 	      pull3(j,ptL,tmpd3);
-          parapt(tmpd3,tmpd2);
-          tmp1d1=paramoncurve(tmpd2,i,fh);
-          tmp2d1=Inf;
-          for(k=1; k<=length1(parL); k++){
-             tmp2d1=fmin(tmp2d1,fabs(parL[k]-tmp1d1));
-          }
-          tmpd3[0]=pb[0]-pa[0]; tmpd3[1]=pb[1]-pa[1]; 
-          tmpd3[2]=pb[2]-pa[2]; 
-          if(tmp2d1*dist(3,tmpd3,po)>Eps1){
-            appendd1(tmp1d1,parL);
-          }
+          tmp1d1=i+dist(3,tmpd3,pa)/dist(3,pb,pa);
+          appendd1(tmp1d1,parL);
         }
         simplesort(parL);
       }
     }
-    
-    dispmatd1all(parL);
-    
     nohiddenpara2(ch,parL,fk,1, tmpmd3);
     appendd3(2,1,length3(tmpmd3),tmpmd3,out);
     appendd3(2,1, length3(Hiddendata),Hiddendata,outh);
@@ -1326,17 +1319,18 @@ void crvsfparadata(int chfd[2], double fkL[][3], double fbdkL[][3], int sepflg, 
   appendd3(0,1,length3(outh),outh,out);
 }
 
-void crv3onsfparadata(short ch,double fk[][3], double fbdyd3[][3], double out[][3]){
+void crv3onsfparadata(short ch,const char *var,double fk[][3], double fbdyd3[][3],const char *fname,double out[][3]){
   // 180609 debugged(renewed)
   double fbdy[DsizeL][2],fh[DsizeL][2],fks[DsizeL][3],fhs[DsizeL][2],par[DsizeM];
   double tmpmd3[DsizeL][3],outh[DsizeL][3];
-  int i,j,din[DsizeS][2];
+  int i,j,din[DsizeS][2],ctr=0;
+  char varno[20];
   projpara(fbdyd3,fbdy);
   projpara(fk,fh);
-  out[0][0]=0;
-  outh[0][0]=0;
   dataindexd2(2,fh,din);
   for(i=1;i<=din[0][0];i++){
+    out[0][0]=0; /* 220204[2lines] */
+    outh[0][0]=0;
     fhs[0][0]=0; fks[0][0]=0;
 	appendd2(0,din[i][0],din[i][1],fh,fhs);
     appendd3(0,din[i][0],din[i][1],fk,fks);
@@ -1349,19 +1343,27 @@ void crv3onsfparadata(short ch,double fk[][3], double fbdyd3[][3], double out[][
     }else{
       appendd3(2,1,1,fks,out);
     }
+    connectseg3(out, Eps1,tmpmd3);
+    ctr=ctr+1;
+    sprintf(varno,"%s%s%d",var,"3d",ctr);
+    output3(1,"a",varno,fname,tmpmd3);
+    connectseg3(outh, Eps1,tmpmd3);
+    sprintf(varno,"%s%s%d",var,"h3d",ctr);
+    output3(1,"a",varno,fname,tmpmd3);
   }
-  connectseg3(out, Eps1,tmpmd3);
+/*  connectseg3(out, Eps1,tmpmd3);
   out[0][0]=0;
   appendd3(0,1,length3(tmpmd3),tmpmd3,out);
   push3(Inf,3,0,out);  //181025
   connectseg3(outh, Eps1,tmpmd3);
-  appendd3(0,1,length3(tmpmd3),tmpmd3,out);//181025
+  appendd3(0,1,length3(tmpmd3),tmpmd3,out); */
 }
 
-void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], double out[][3]){
+/* 220204
+void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], const char *fname, double out[][3]){
   double fk[DsizeL][3];
   surfcurve(ch,fh,fk);
-  crv3onsfparadata(ch,fk,fbdyd3,out);
+  crv3onsfparadata(ch,fk,fbdyd3,fname,out);
 }
 
 void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],const char *fname,const char *fnameh){
@@ -1457,6 +1459,7 @@ void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],cons
     outputend(dirfnameh);
   }
 }
+*/
 
 void intersectcrvsf(short chfd[2],double crv[][3],double ptL[][3]){ /*220202*/
   double pa[3],pb[3],tmp,out[DsizeS][3];
@@ -1613,7 +1616,7 @@ void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double ekL[][3]){
       }
       appendd3(2,1,length3(tmp2md3),tmp2md3,outd3);
 	}
-    crv3onsfparadata(chfd,outd3,fbdy3,ekL);
+/*    crv3onsfparadata(chfd,outd3,fbdy3,ekL); */
   }
 }
 

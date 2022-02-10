@@ -1485,7 +1485,7 @@ void intersectcrvsf(short chfd[2],double crv[][3],double ptL[][3]){ /*220202*/
   }
 }
 
-void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double ekL[][3]){
+void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double outd3[][3]){
   double Vec[3]={sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA)};
   double v1=Vec[0],v2=Vec[1],v3=Vec[2];
   double out[DsizeM][2],out2[DsizeM][2],outd3[DsizeL][3];

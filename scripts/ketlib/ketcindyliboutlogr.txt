@@ -1,3 +1,7 @@
+// 20220209
+//    Sfcutparadata debugged  (major change)
+// 20220208
+//    Startsurf debugged  ( case of nm assigned, SurfList,FunListC reset )
 // 20220207
 //    Crv3onsfparadata, ExeccmidC debugged
 //    Addnodisp changed  ( to be used also for 2d)

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220204] loaded");
+println("ketcindylib3d[20220208] loaded");
 
 //help:start();
 
@@ -47,14 +47,15 @@ Ketinit3d(subflg):=(
   TSIZE=10;
   TSIZEZ=10;
   ErrFlg=0;
+  SlideMoveNow=[0,0]; //220208
   xPos=-5; yTh=tmp-0.5; yPh=tmp-1;
-  Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]);  //190713from
-  Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); 
-  drawtext([xPos-0.8,yTh-0.1],Sprintf((TH.x-xPos)*20,2),align->"right"); 
-  drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right");
+//  Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]);  //190713from
+//  Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); 
+//  drawtext([xPos-0.8,yTh-0.1],Sprintf((TH.x-xPos)*20,2),align->"right"); 
+//  drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right");
   THETA=(TH.x-xPos)*20*pi/180;
   PHI=(FI.x-xPos)*40*pi/180; //190713to
-  AngleNow=[THETA,PHI]; //220115[2lines]
+//  AngleNow=[THETA,PHI]; //220115[2lines]
   SkeletonNowList=[];
   Skeleton=1; //210324
 );
@@ -76,11 +77,12 @@ Start3d(ptexception,optionjs):=(//190503to
 //help:Start3d();
 //help:Start3d(["A","B"](exceptionptlist));
 //help:Start3d(optionjs=["Slider=n","Move=[3]","Removept=[]");
-  regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
-    xPos,yTh,yPh,Eps,move,tmp,tmp1,tmp2,tmp3,tmp4);
+  regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,theta,phi,
+    xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+  //global SliderMove //220208
   PTEXCEPTION=[];
   SLIDEFLG="Y";
-  move=[0,0];
+  SlideMove=[0,0];
   forall(optionjs,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -94,9 +96,10 @@ Start3d(ptexception,optionjs):=(//190503to
       REMOVEPTJS=concat(REMOVEPTJS,tmp2);
     );
     if(tmp1=="M", //220126from
-      move=parse(tmp_2);
-      if(!islist(move),move=[move]);
-      if(length(move)==1,move=append(move,0));
+      tmp2=parse(tmp_2);
+      if(!islist(tmp2),tmp2=[tmp2]);
+      if(length(tmp2)==1,tmp2=append(tmp2,0));
+      SlideMove=tmp2;
     ); //220126to
   );
   Setfiles(Namecdy); //180608 // no ketjs
@@ -132,19 +135,28 @@ Start3d(ptexception,optionjs):=(//190503to
   Fnameout=Fhead+".txt"; // no ketjs off
   Setwindow("Msg=no"); // 16.06.20from
     tmp=round(4*SW.y)/4;
-    xPos=-5+move_1; yTh=tmp-0.5+move_2; yPh=tmp-1; //220126
+    xPos=-5+SlideMove_1; yTh=tmp-0.5+SlideMove_2; yPh=tmp-1; //220126
 //  if(SLIDEFLG=="Y", // only ketjs //190503from
     Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]); //190209
     Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); //190209
-    drawtext([xPos-0.8,yTh-0.1],Sprintf((TH.x-xPos)*20,2),align->"right"); //17.05.02
-    drawtext([xPos-0.8,yPh-0.1],Sprintf((FI.x-xPos)*40,2),align->"right"); //17.05.02
+    if(|SliveMoveNow-SlideMove|>0.1, //220208from
+      theta=(TH.x-xPos-SliderMove_1)*20*pi/180;
+      phi=(FI.x-xPos-SliderMove.1)*40*pi/180;
+      TH.x=theta*180/20/pi+xPos;
+      PH.x=phi*180/20/pi+xPos;
+      drawtext([xPos-0.8,yTh-0.1],Sprintf(theta*180/pi,2),align->"right");
+      drawtext([xPos-0.8,yPh-0.1],Sprintf(phi*180/pi,2),align->"right");  //220208to
+      SlideMoveNow=SlideMove;
+    ); 
+    THETA=(TH.x-xPos)*20*pi/180;
+    PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until
+    drawtext([xPos-0.8,yTh-0.1],Sprintf(THETA*180/pi,2),align->"right");
+    drawtext([xPos-0.8,yPh-0.1],Sprintf(PHI*180/pi,2),align->"right");  //220208to
 //  ); // only ketjs //190503to
     tmp="Setangle("  //no ketjs on
         +format((TH.x-xPos)*20,5)+","
     +format((FI.x-xPos)*40,5)+")";
   GLIST=append(GLIST,tmp); //no ketjs off
-  THETA=(TH.x-xPos)*20*pi/180;
-  PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until
   if(Ptselected(TH) % Ptselected(FI), //190505
     if(length(Ch)>0,
       ChNum=Ch_(length(Ch));
@@ -187,15 +199,16 @@ Setangle(theta,phi):=( //16.12.24
   regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
     xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
   tmp=round(4*SW.y)/4;
-  xPos=-5;yTh=tmp-0.5;yPh=tmp-1;
-  if(theta=="",theta=THETA*180/pi); // 17.01.19
+  xPos=-5+SlideMove_1; //220208[2lines]
+  yTh=tmp-0.5+SlideMove_2; yPh=tmp-1+SlideMove_2;
+  if(theta=="",theta=THETA*180/pi);
   if(phi=="",phi=PHI*180/pi);
   THETA=theta*pi/180;
   TH.x=theta/20+xPos;
   PHI=phi*pi/180;
   FI.x=phi/40+xPos;
-//  drawtext([xPos-0.8,yTh-0.1],text(theta)); //17.05.05
-//  drawtext([xPos-0.8,yPh-0.1],text(phi));
+//  drawtext([xPos-0.8,yTh-0.1],format(theta,2));
+//  drawtext([xPos-0.8,yPh-0.1],format(phi,2));
   tmp="Setangle(" // no ketjs on
     +format(theta,5)+","+format(phi,5)+")";
   GLIST=append(GLIST,tmp); //no ketjs off

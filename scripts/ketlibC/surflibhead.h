@@ -50,7 +50,7 @@ void crv3onsfparadata(short ch, const char *var, double fk[][3], double fbdyd3[]
 void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],const char *fname,const char *fnameh);
 */
 void intersectcrvsf(short chfd[2],double crv[][3],double ptL[][3]);
-void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double ekL[][3]);
+void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double outd3[][3]);
 int projcoordcurve(double curve[][3], double out[][3]);
 int kukannozoku(double jokyo[2], double kukanL[][2], double res[][2]);
 int skeletondata3(double data[][3], double r00, double eps1, double eps2,

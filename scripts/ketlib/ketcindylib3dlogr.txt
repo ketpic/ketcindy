@@ -1,3 +1,6 @@
+// 220208
+//    Start3d, Setangle changed  ( case SlideMove neqq 0)
+//    Ketinit3d changed  (Slider removed)
 // 220204
 //    Spacecurve, Spaceline debugged  ( subgraph in case of "nodisp"  )
 // 220202

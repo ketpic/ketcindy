@@ -1,3 +1,5 @@
+// 220209
+//    crv3onsfparadata changed  ( out removed)
 // 220203
 //    sfbdparadata,crvsfparadata degugged 
 // 220116
@@ -1280,6 +1282,7 @@ void crvsfparadata(short chfd[2], double fkL[][3], double fbdkL[][3], int sepflg
   outh[0][0]=0;
   dataindexd3(2,fkL,din);
   for(nn=1; nn<=length2i(din); nn++){
+    if(din[nn][0]==din[nn][1]){continue;} //220210
     fk[0][0]=0;
     appendd3(0,din[nn][0],din[nn][1],fkL,fk);
     projpara(fk,fh);
@@ -1356,7 +1359,8 @@ void crv3onsfparadata(short ch,const char *var,double fk[][3], double fbdyd3[][3
   appendd3(0,1,length3(tmpmd3),tmpmd3,out);
   push3(Inf,3,0,out);  //181025
   connectseg3(outh, Eps1,tmpmd3);
-  appendd3(0,1,length3(tmpmd3),tmpmd3,out); */
+  appendd3(0,1,length3(tmpmd3),tmpmd3,out); 
+*/
 }
 
 /* 220204
@@ -1365,7 +1369,8 @@ void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], const char *f
   surfcurve(ch,fh,fk);
   crv3onsfparadata(ch,fk,fbdyd3,fname,out);
 }
-
+*/
+/*
 void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],const char *fname,const char *fnameh){
   double crv2d[DsizeL][2],out[DsizeL][3],out1[DsizeL][3],out2[DsizeL][3];
   double du=(Urng[1]-Urng[0])/Mdv;
@@ -1485,11 +1490,11 @@ void intersectcrvsf(short chfd[2],double crv[][3],double ptL[][3]){ /*220202*/
   }
 }
 
-void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double outd3[][3]){
+void sfcutparadata(short chfd, short ncut, double outd3[][3]){
   double Vec[3]={sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA)};
   double v1=Vec[0],v2=Vec[1],v3=Vec[2];
-  double out[DsizeM][2],out2[DsizeM][2],outd3[DsizeL][3];
-  double out1d3[DsizeL][3],out2d3[DsizeL][3];
+  double out[DsizeM][2],out2[DsizeM][2];
+//  double outd3[DsizeL][3];
   double uval1,uval2,vval1,vval2,eval11,eval12,eval21,eval22;
   double pl[5][2], vl[5], ql[11][2],diff1,diff2;
   double tmp1md[DsizeM][2],tmp2md[DsizeM][2],tmpd[2],tmp1d[2],tmp2d[2];
@@ -1616,7 +1621,7 @@ void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double outd3[][3]){
       }
       appendd3(2,1,length3(tmp2md3),tmp2md3,outd3);
 	}
-/*    crv3onsfparadata(chfd,outd3,fbdy3,ekL); */
+//    crv3onsfparadata(chfd,outd3,fbdy3,var,varh,fname);
   }
 }
 

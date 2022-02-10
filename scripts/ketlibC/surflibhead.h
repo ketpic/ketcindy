@@ -44,16 +44,13 @@ double funmeet(short ch,double u, double v,double pa[3], double vec[3]);
 void meetpoints(short ch,double pta[3], double ptb[3], int uveq,double out[][3]);
 void crvsfparadata(short chfd[2],double fkL[][3], double fbdkL[][3], int sepflg, double out[][3]);
 void crv3onsfparadata(short ch, const char *var, double fk[][3], double fbdyd3[][3], const char *fname, double out[][3]);
-
 /*void crv2onsfparadata(short ch,double fh[][2], double fbdyd3[][3], const char *fname, double out[][3]);
 
 void wireparadata(short ch,double bdyk[][3], double udata[], double vdata[],const char *fname,const char *fnameh);
 */
 void intersectcrvsf(short chfd[2],double crv[][3],double ptL[][3]);
-void sfcutparadata(short chfd, short ncut, double fbdy3[][3],double outd3[][3]);
+void sfcutparadata(short chfd, short ncut, double outd3[][3]);
 int projcoordcurve(double curve[][3], double out[][3]);
 int kukannozoku(double jokyo[2], double kukanL[][2], double res[][2]);
-int skeletondata3(double data[][3], double r00, double eps1, double eps2,
-          double allres[][3]);
-
+int skeletondata3(double data[][3], double r00, double eps1, double eps2, double allres[][3]);
 double cutfun(short chfd,short chcut,double u, double v);

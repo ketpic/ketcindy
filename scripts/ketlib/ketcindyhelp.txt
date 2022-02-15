@@ -425,7 +425,6 @@ Ketinit3d();
 Ketinit3d(0);
 Start3d();
 Start3d(["A","B"](exceptionptlist));
-Start3d(optionjs=["Slider=n","Move=[3]","Removept=[]");
 Setangle(60,30);
 Getangle();
 Changestyle3d(["geoseg3d","ax3d"],["notex"]);

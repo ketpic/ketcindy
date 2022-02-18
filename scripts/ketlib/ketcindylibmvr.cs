@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20190415) loaded");
+println("ketcindymv(20220218) loaded");
 
 //help:start();
 
@@ -547,6 +547,9 @@ Mkflipanime(path,folder):=(
     tmp="\special{papersize=\the\paperwidth,\the\paperheight}";
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"\mag="+mag);//17.11.25
+    if(indexof(GPACK,"pict2e")>0, //220218from
+      println(SCEOUTPUT,"\usepackage{pict2e}");
+   ); //220218to
   );
   if((tex=="pdflatex")%(tex=="lualatex")%(tex=="xelatex"),
     if((tex=="pdflatex")%(tex=="xelatex"),

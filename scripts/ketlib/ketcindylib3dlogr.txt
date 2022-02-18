@@ -1,3 +1,5 @@
+// 220215
+//    Ketinit3d,Start3d changed  ( slidemove removed )
 // 220213
 //    Skeletonparadata debugged  (nearestpt )
 // 220212

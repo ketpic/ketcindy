@@ -1198,7 +1198,7 @@ Usegraphics(gpack):=(
   GPACKL=["{"+tmp+"}"];
   tmp=Toupper(GPACKL_1);
   if(tmp=="{TPIC}",
-    GPACKL=concat(GPACKL,["{ketpic}","{ketlayer}"]);
+    GPACKL=["{ketpic}","{ketlayer}"];
   );
   if(tmp=="{PICT2E}",
     if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),

@@ -1,5 +1,5 @@
-// 20220218
-//    Mkflipanime debugged  ( for pict2e)
+// 20220219
+//    Mkflipanime,Mkanime changed (Major change)
 // 20190415
 //    parse( ..=  ) changed ( ; added )
 // 20190404

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindymv(20220218) loaded");
+println("ketcindymv(20220219) loaded");
 
 //help:start();
 
@@ -400,33 +400,9 @@ Mkanimation(path,folder):=(
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"\mag="+mag);//17.11.25
   );
-  if((tex=="pdflatex")%(tex=="lualatex")%(tex=="xelatex"),
-    if((tex=="pdflatex")%(tex=="xelatex"),
-      println(SCEOUTPUT,"\usepackage[pdftex]{pict2e}");
-    ,
-      println(SCEOUTPUT,"\usepackage{pict2e}");
-      println(SCEOUTPUT,"\usepackage{luatexja}");
-    );
-    tmp=replace(Dirhead,"\","/"); //17.10.30from
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic2e}");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer2e}");
-    );
-  ,
-    tmp=replace(Dirhead,"\","/"); //17.10.30from
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
-    );
-  );
+  forall(GPACKL,; //220219from
+    println(SCEOUTPUT,"\usepackage"+#);
+  ); //220219to
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{bm,enumerate}");
   if((tex=="platex")%(tex=="uplatex")%(tex=="latex"),
@@ -547,37 +523,10 @@ Mkflipanime(path,folder):=(
     tmp="\special{papersize=\the\paperwidth,\the\paperheight}";
     println(SCEOUTPUT,tmp);
     println(SCEOUTPUT,"\mag="+mag);//17.11.25
-    if(indexof(GPACK,"pict2e")>0, //220218from
-      println(SCEOUTPUT,"\usepackage{pict2e}");
-   ); //220218to
   );
-  if((tex=="pdflatex")%(tex=="lualatex")%(tex=="xelatex"),
-    if((tex=="pdflatex")%(tex=="xelatex"),
-      println(SCEOUTPUT,"\usepackage[pdftex]{pict2e}");
-    ,
-      println(SCEOUTPUT,"\usepackage{pict2e}");
-      println(SCEOUTPUT,"\usepackage{luatexja}");
-    );
-    tmp=replace(Dirhead,"\","/"); //17.10.30from
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic2e}");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer2e}");
-    );
-  ,
-    tmp=replace(Dirhead,"\","/"); //17.10.30from
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
-    );
-  );
+  forall(GPACKL,; //220219from
+    println(SCEOUTPUT,"\usepackage"+#);
+  ); //220219to
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{bm,enumerate}");
   if((tex=="platex")%(tex=="uplatex")%(tex=="latex"),

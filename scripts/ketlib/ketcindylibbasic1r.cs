@@ -16,7 +16,7 @@
 
 println("KeTCindy V.4.4.4");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220115] loaded");
+println("ketcindylibbasic1[20220219] loaded");
 
 //help:start();
 
@@ -102,7 +102,7 @@ Ketinit(work,strictsep):=( //200509
   FigPdfList=[];  // 16.04.08 //no ketjs off
   Fillstore(); // no ketjs //181212
   ADDPACK=[]; // 16.05.16 //no ketjs on
-  if(!isstring(GPACK),GPACK="tpic",Usegraphics(GPACK)); //180817//191002
+  Usegraphics(GPACK);//220219
   ErrFlag=0;
   KETJSOP=[]; //190129
 //  KETJSOP=["Web=y"]; WebMode=0; //200516,0526
@@ -147,7 +147,7 @@ Ketinit(work,strictsep):=( //200509
       Shellparent="/kc.sh"; 
       Mackc="bash"; //190222
     );  //181125to
-  );
+  ); // no ketjs off
   Changework(Dircdy+pathsep()+work); //180329to,181001
   if(iswindows(), // no ketjs on  //210412from
     if(indexof(Dirwork,"-")>0,
@@ -155,7 +155,7 @@ Ketinit(work,strictsep):=( //200509
       println("   Remove minus(-) in your pathname");
     );
   );  // no ketjs off //2104126to
-  Fnametex=Fhead+".tex";
+  Fnametex=Fhead+".tex"; //no ketjs on
   FnameR=Fhead+".r";
   FnamebodyR=Fhead+"body.r";
   Fnameout=Fhead+".txt";  // 17.10.13to

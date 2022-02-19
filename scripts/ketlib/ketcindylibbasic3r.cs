@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20211227] loaded");
+println("ketcindylibbasic3[20220219] loaded");
 
 //help:start();
 
@@ -527,14 +527,11 @@ WritetoRS(filename,shchoice):=(
   );//180409to
   tmp=replace(Libname,"\","/"); //17.09.24from
   println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')"); //181213
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
-    if(GPACK=="tpic",GPACK="pict2e");
-  );
-  if(indexof(GPACK,"pict2e")>0, //  190615
+  if(indexof(GPACK_1,"pict2e")>0, //  190615
     tmp=replace(tmp+"_rep2e","\","/");
     println(SCEOUTPUT,"source('"+tmp+".r')");
   ); 
-  if(indexof(GPACK,"tikz")>0, //181213from //190615
+  if(indexof(GPACK_1,"tikz")>0, //181213from //190615
     tmp=replace(tmp+"_reptikz","\","/");
     println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')");
   ); //181213to
@@ -1190,22 +1187,33 @@ Addpackage(packorg):=(
 );
 ////%Addpackage end////
 
-////%Usegraphics start////
-Usegraphics(gpack):=( //180817
-//help:Usegraphics("pict2e");
+////%Usegraphics start//// //220229 major change
+Usegraphics(gpack):=(
+//help:Usegraphics("tpic/pict2e/tikz");
   regional(tmp);
-  GPACK=gpack;
-  if(Toupper(gpack)=="TIKZ",  //190615
-      Addpackage(["pgf","tikz"]); //190101
-      ADDPACK=set(ADDPACK); //191127
+  tmp=gpack; 
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
+    if(tmp=="tpic",tmp="pict2e");
   );
-  if(Toupper(gpack)=="PICT2E",
-    if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"pdflatex")>0), //210828from
-      Addpackage(["pict2e"]);
+  GPACKL=["{"+tmp+"}"];
+  tmp=Toupper(GPACKL_1);
+  if(tmp=="{TPIC}",
+    GPACKL=concat(GPACKL,["{ketpic}","{ketlayer}"]);
+  );
+  if(tmp=="{PICT2E}",
+    if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
+      GPACKL_1="[dvipdfmx]{pict2e}";
+    );
+    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}","{ketlayermorewith2e}"]);
+  );
+  if(tmp=="{TIKZ}",
+    GPACKL=concat(GPACKL,["{pgf}","{tikz}"]);
+    if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
+      GPACKL=append(GPACKL,"[dvipdfmx]{pict2e}");
     ,
-      Addpackage(["[dvipdfmx]{pict2e}"]); 
-    );  //210828to
-    ADDPACK=set(ADDPACK); //191127
+      GPACKL=append(GPACKL,"{pict2e}");
+    ); 
+    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}","{ketlayermorewith2e}"]);
   );
 );
 ////%Usegraphics end////
@@ -1216,7 +1224,7 @@ Viewtex():=(
   texfile=Fhead+"main";
   SCEOUTPUT=openfile(texfile+".tex");
   tmp="\documentclass{article}";
-  if(indexof(GPACK,"tikz")>0, //190324from //190615
+  if(indexof(GPACKL_1,"tikz")>0, //190324from //190615
     if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
       tmp="\documentclass[dvipdfmx]{article}";
     ); //190324to
@@ -1228,27 +1236,9 @@ Viewtex():=(
     );//17.08.13to
   ); 
   println(SCEOUTPUT,tmp);
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0), //181213from
-    if(GPACK=="tpic", GPACK="pict2e");
+  forall(GPACKL,
+    println(SCEOUTPUT,"\usepackage"+#);
   );
-  if(GPACK=="tpic", 
-    tmp=replace(Dirhead,"\","/");
-    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
-  );
-  if(indexof(GPACK,"pict2e")>0, //190615 
-//    println(SCEOUTPUT,"\usepackage{pict2e}"); //190615
-    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
-    if(indexof(PathT,"lualatex")>0,
-      println(SCEOUTPUT,"\usepackage{luatexja}");
-    );
-  );
-  if(indexof(GPACK,"tikz")>0, //190615 
-    println(SCEOUTPUT,"\usepackage{pict2e}"); //190615
-    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}"); //190615
-    if(indexof(PathT,"lualatex")>0, 
-      println(SCEOUTPUT,"\usepackage{luatexja}");
-    );
-  );//181213to
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{graphicx}");
   println(SCEOUTPUT,"\usepackage{color}");
@@ -1349,7 +1339,7 @@ Figpdf(fnameorg,optionorg):=(
     sc=parse(tmp1);
   );
   tmp="\documentclass{article}";
-  if(indexof(GPACK,"tikz")>0, //190324from //190615
+  if(indexof(GPACKL_1,"tikz")>0, //190324from //190615
     if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
       tmp="\documentclass[dvipdfmx]{article}";
     ); //190324to

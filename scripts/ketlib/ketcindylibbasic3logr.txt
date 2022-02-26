@@ -1,5 +1,7 @@
+// 220227
+//  Figpdf debugged  ( GPACKL
 // 220219
-//  Usegraphics change (major change)
+//  Usegraphics changed (major change)
 //  GPACKL added
 // 211228
 //  Readoutdata changed  ( option "Rflg=")

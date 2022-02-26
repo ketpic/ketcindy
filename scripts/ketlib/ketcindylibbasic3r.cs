@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220219] loaded");
+println("ketcindylibbasic3[20220227] loaded");
 
 //help:start();
 
@@ -527,11 +527,11 @@ WritetoRS(filename,shchoice):=(
   );//180409to
   tmp=replace(Libname,"\","/"); //17.09.24from
   println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')"); //181213
-  if(indexof(GPACK_1,"pict2e")>0, //  190615
+  if(indexof(GPACKL_1,"pict2e")>0, //  190615
     tmp=replace(tmp+"_rep2e","\","/");
     println(SCEOUTPUT,"source('"+tmp+".r')");
   ); 
-  if(indexof(GPACK_1,"tikz")>0, //181213from //190615
+  if(indexof(GPACKL_1,"tikz")>0, //181213from //190615
     tmp=replace(tmp+"_reptikz","\","/");
     println(SCEOUTPUT,"source"+PaO()+"'"+tmp+".r')");
   ); //181213to
@@ -1191,6 +1191,7 @@ Addpackage(packorg):=(
 Usegraphics(gpack):=(
 //help:Usegraphics("tpic/pict2e/tikz");
   regional(tmp);
+  GPACK=gpack;
   tmp=gpack; 
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
     if(tmp=="tpic",tmp="pict2e");
@@ -1357,33 +1358,10 @@ Figpdf(fnameorg,optionorg):=(
   tmp=SCALEY*(YMAX-YMIN)*sc+(mar_3+mar_4); //190412
   tmp1=replace(tmp1,"H",text(tmp));
   FigPdfList=append(FigPdfList,tmp1);
-  if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")>0, //17.11.05from
-    FigPdfList=append(FigPdfList,
-      "\usepackage{pict2e}");
-    tmp=replace(Dirhead,"\","/");
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      FigPdfList=append(FigPdfList,
-         "\usepackage{ketpic2e,ketlayer2e}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      FigPdfList=concat(FigPdfList, 
-        ["\usepackage{"+tmp+"/ketpic2e}",
-         "\usepackage{"+tmp+"/ketlayer2e}"]);
-    );
-  ,
-    tmp=replace(Dirhead,"\","/");
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      FigPdfList=append(FigPdfList,
-         "\usepackage{ketpic,ketlayer}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      FigPdfList=concat(FigPdfList,
-        ["\usepackage{"+tmp+"/ketpic}",
-         "\usepackage{"+tmp+"/ketlayer}"]);
-    );
-  );//17.11.05until
+  forall(GPACKL, //220227from
+    tmp1="\usepackage"+#; //17.07.10
+    FigPdfList=append(FigPdfList,tmp1); 
+  ); //220227to
   FigPdfList=append(FigPdfList,
     "\usepackage{amsmath,amssymb}");
   FigPdfList=append(FigPdfList,

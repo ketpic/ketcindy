@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.4");
+println("KeTCindy V.4.4.5");
 println(ketjavaversion());
 println("ketcindylibbasic1[20220219] loaded");
 
@@ -383,7 +383,7 @@ Readcsv(path,fileorg,options):=(
 Cindyname():=Getcdyname();
 Cdyname():=Getcdyname();
 Getcdyname():=( //17.12.27
-//help:Cindyname();
+//help:Cdyname();
   regional(out);
   out=text(curkernel());
   out=replace(out,".cdy","");

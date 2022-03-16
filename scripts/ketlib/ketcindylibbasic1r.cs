@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.5");
+println("KeTCindy V.4.4.6");
 println(ketjavaversion());
 println("ketcindylibbasic1[20220219] loaded");
 
@@ -1056,7 +1056,7 @@ Changestyle(nameL,styleorg):=( //210422pt
       tmp1=select(PointDataList,name==#_1);
       tmp1=tmp1_1;
       PointDataList=remove(PointDataList,[tmp1]);
-      GCLIST=remove(GCLIST,tmp1_3);
+      GCLIST=remove(GCLIST,tmp1_3);      
       GLIST=remove(GLIST,tmp1_4);
       COM2ndlist=remove(COM2ndlist,tmp1_5);
       tmp=replace(name,"pt","");
@@ -1086,22 +1086,29 @@ Changestyle(nameL,styleorg):=( //210422pt
           tmp=["Color="+text(color),"Size="+ptsize,"Inside="+inside];
           Pointdata("-"+name,tmp1,tmp);
         ,
-          if(Noflg==2,GCLIST=append(GCLIST,[name,[-1,0],opcindy]));
-          if(Noflg==1,GCLIST=append(GCLIST,[name,[0,1],opcindy]));
+          tmp=select(1..(length(GCLIST)),GCLIST_#_1!=parse(name));//220315from
+          GCLIST=GCLIST_(tmp);
+          if(Noflg==2,tmp1=[name,[-1,0]]);
+          if(Noflg==1,tmp1=[name,[0,1]])); //220315to
           if(Noflg==0,
             if(color4!=KCOLOR, //no ketjs on
               Texcom("{");Com2nd("Setcolor("+color4+")");
             ); 
             Ltype=Getlinestyle(text(Noflg)+Ltype,name); //200514[2Lines]
-            GCLIST=append(GCLIST,[name,Ltype,opcindy]);
+            tmp1=[name,Ltype]; //220315
             if(color4!=KCOLOR, //180904 
               Texcom("}");//180722
             );//no ketjs off
           );
+          if(Noflg<=3, //220315from
+            tmp=select(GCLIST,[#_1,#_2]==tmp1);
+            if(length(tmp)==0,
+              GCLIST=append(GCLIST,append(tmp1,opcindy));
+           ); //220315to
         );
       );
     );
-  );
+  );  
 );
 ////%Changestyle end////
 

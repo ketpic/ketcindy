@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20211217] loaded");
+println("ketcindylibbasic2[20220316] loaded");
 
 //help:start();
 
@@ -4662,95 +4662,78 @@ Tlistplot(nm,ptL,options):=(
 );
 ////%Tlistplot end////
 
-////%Changetablestyle start////
+////%Changetablestyle start//// //220316(major change)
 Changetablestyle(nameL,style):=(
 //help:Changetablestyle(["r0c0c3"],["da"]);
-  regional(nmL,nametb, name,grid,head,sb,tmp,tmp1,tmp2,tmp3,
-      tsg,pts,p1,p2,names,name,name1,nn,mm,gname,flg);
+  regional(nametb,tname,nmL,grid,gcL,hd,fr,to,pd,sty,side1,side2,
+     tmp,tmp1,tmp2,tmp3);
+//  regional(nmL,nametb, name,grid,head,sb,tmp,tmp1,tmp2,tmp3,
+//      tsg,pts,p1,p2,names,name,name1,nn,mm,gname,flg);
   nametb="tb"+text(TABLECOUNT); //190428
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
-  forall(nmL,grid,
-    if(substring(grid,0,1)=="r",sb="c",sb="r");
-    tmp=indexof(grid,sb);
-    head=substring(grid,0,tmp-1);
-    if(sb=="r", //190507from
-      pts=head+sb+"x";
-    ,
-      pts=sb+"x"+head;
-    ); 
-    names=nametb+head+sb+"x"+sb+"y";//190507to
-    tmp3=apply(GCLIST,#_1); // 161206from
-    tmp3=select(tmp3,indexof(#,nametb)>0);
-    tmp3=apply(tmp3,substring(#,length(nametb),length(#))); //190507from
-    tmp3=select(tmp3,substring(#,0,length(head))==head);
-    tmp=Indexall(grid,sb);
-    tmp1=substring(grid,tmp_1,tmp_2-1);
-    tmp2=substring(grid,tmp_2,length(grid));
-    tsg=apply([tmp1,tmp2],parse(#));
-    flg=0;
-    forall(tmp3,gname,
-      if(flg==0,
-        tmp=Indexall(gname,sb);
-        tmp1=parse(substring(gname,tmp_1,tmp_2-1));
-        tmp2=parse(substring(gname,tmp_2,length(gname)));
-        if((tmp1<=tsg_1)&(tsg_2<=tmp2),
-          flg=1;
-          if(tmp1==tsg_1,
-            if(tsg_2==tmp2,
-              name=Replaceall(names,["x",tsg_1,"y",tsg_2]);
-              Changestyle(name,style);
-            ,
-              name=Replaceall(names,["x",tsg_2,"y",tmp2]);
-              name1=Replaceall(names,["x",tmp1,"y",tmp2]); //190508from
-              p1=Replaceall(pts,["x",tsg_2]);
-              p2=Replaceall(pts,["x",tmp2]);
-              Tlistplot("-"+name,[p1,p2],["notex"]);
-              GCLIST=GCLIST_(1..(length(GCLIST)-1));
-              nn=select(1..(length(GCLIST)),indexof(GCLIST_#_1,name1)>0);
-              nn=nn_1;
-              tmp=GCLIST_nn;
-              tmp=tmp_[2,3];
-              GCLIST_nn=prepend(name,tmp);
-              nn=select(1..(length(GLIST)),indexof(GLIST_#,name1)>0);
-              nn=nn_1;
-              GLIST_nn=replace(GLIST_nn,name1,name);
-              mm=select(1..(length(COM2ndlist)),indexof(COM2ndlist_#,name1)>0);
-              mm=mm_1;
-              COM2ndlist_mm=replace(COM2ndlist_mm,name1,name); //190508to
-           );
-          ,
-            name=Replaceall(names,["x",tmp1,"y",tsg_1]);
-            name1=Replaceall(names,["x",tmp1,"y",tmp2]); //190508from
-            p1=Replaceall(pts,["x",tmp1]);
-            p2=Replaceall(pts,["x",tsg_1]);
-            Tlistplot("-"+name,[p1,p2],["notex"]);
-            nn=select(1..(length(GCLIST)),indexof(GCLIST_#_1,name1)>0);
-            GCLIST=GCLIST_(1..(length(GCLIST)-1));
-            nn=nn_1;
-            tmp=GCLIST_nn;
-            tmp=tmp_[2,3];
-            GCLIST_nn=prepend(name,tmp);
-            nn=select(1..(length(GLIST)),indexof(GLIST_#,name1)>0);
-            nn=nn_1;
-            GLIST_nn=replace(GLIST_nn,name1,name);
-            mm=select(1..(length(COM2ndlist)),indexof(COM2ndlist_#,name1)>0);
-            mm=mm_1;
-            COM2ndlist_mm=replace(COM2ndlist_mm,name1,name); //190508to
-            if(tsg_2<tmp2,
-              p1=Replaceall(pts,["x",tsg_2]);
-              p2=Replaceall(pts,["x",tmp2]);
-              name=Replaceall(names,["x",tsg_2,"y",tmp2]);
-              Tlistplot("-"+name,[p1,p2]);
-            );
-          );
+  forall(nmL,grid,  
+    hd=substring(grid,0,1);
+    if(hd=="r",tmp2=Indexall(grid,"c"),tmp2=Indexall(grid,"r"));
+    hd=substring(grid,0,tmp2_1);
+    fr=parse(substring(grid,tmp2_1,tmp2_2-1));
+    to=parse(substring(grid,tmp2_2,length(grid)));
+    pd=[hd,fr,to];
+    tmp=select(GCLIST,indexof(#_1,nametb+pd_1)>0);
+    tmp=select(tmp,#_2_1>=0);
+    gcL=apply(tmp,[replace(#_1,nametb,""),#_2,#_3]);
+    forall(1..(length(gcL)),
+      tmp1=gcL_#_1;
+      hd=substring(tmp1,0,1);
+      if(hd=="r",tmp2=Indexall(tmp1,"c"),tmp2=Indexall(tmp1,"r"));
+      hd=substring(tmp1,0,tmp2_1);
+      fr=parse(substring(tmp1,tmp2_1,tmp2_2-1));
+      to=parse(substring(tmp1,tmp2_2,length(tmp1)));
+      gcL_#=[[hd,fr,to],gcL_#_2,gcL_#_3];
+    );
+    tmp2=select(gcL,(#_1_2<=pd_2)&(pd_3<=#_1_3));
+    if(length(tmp2)>0,
+      tmp=tmp2_1;
+      side1=tmp_1_2;
+      side2=tmp_1_3;
+      tmp1=tmp_1;
+      tname=nametb+tmp1_1+tmp1_2+hd_(-1)+tmp1_3;
+      tmp2=tmp_2;
+      tmp3=tmp_3;
+      tmp=text(tmp2);
+      if(tmp_2=="0",tmp2="dr"+substring(tmp,2,length(tmp)-1));
+      if(tmp_2=="1",tmp2="da"+substring(tmp,2,length(tmp)-1));
+      if(tmp_2=="2",tmp2="id"+substring(tmp,2,length(tmp)-1));
+      if(tmp_2=="3",tmp2="do"+substring(tmp,2,length(tmp)-1));
+      tmp3=replace(tmp3,",color->","Color=");
+      sty=[tmp2,tmp3];
+      Changestyle([tname],["nodisp"]);
+      hd=substring(hd,0,length(hd)-1);
+      if(substring(hd,0,1)=="r",tmp1="c",tmp1="r");
+      if(side1<pd_2,
+        if(substring(hd,0,1)=="r",
+          tmp=[tmp1+side1+hd,tmp1+pd_2+hd];
+        ,
+          tmp=[hd+tmp1+side1,hd+tmp1+pd_2];
         );
+        Tlistplot("-"+nametb+hd+tmp1+side1+tmp1+pd_2,tmp,sty)
       );
-    ); 
-    name=Replaceall(names,["x",tsg_1,"y",tsg_2]);
-    p1=Replaceall(pts,["x",tsg_1]);
-    p2=Replaceall(pts,["x",tsg_2]);
-    Tlistplot("-"+name,[p1,p2],style);
-  ); //170507to
+      if(pd_3<side2,
+        if(substring(hd,0,1)=="r",
+          tmp=[tmp1+pd_3+hd,tmp1+side2+hd];
+        ,
+          tmp=[hd+tmp1+pd_3,hd+tmp1+side2];
+        );
+        Tlistplot("-"+nametb+hd+tmp1+pd_3+tmp1+side2,tmp,sty)
+      );
+      if(substring(hd,0,1)=="r",
+        tmp=[tmp1+pd_2+hd,tmp1+pd_3+hd];
+      ,
+        tmp=[hd+tmp1+pd_2,hd+tmp1+pd_3];
+      );      
+      Tlistplot("-"+nametb+hd+tmp1+pd_2+tmp1+pd_3,tmp,style);
+    ,
+    );
+  );
 );
 ////%Changetablestyle end////
 

@@ -74,9 +74,10 @@ fi
 
 # check for duplicate files
 # ignore
-# ketcindyfolder/scripts/ketlib/ketcindylibmvhelpE.txt
 # ketcindyfolder/scripts/ketlib/ketcindylibmvhelpJ.txt
-bla=$(findup -t . \( ! -path './ketcindyfolder/scripts/ketlib/ketcindylibmvhelpE.txt' \))
+# scripts/ketlib/ketcindylibmvhelpE.txt
+# scripts/ketlib/ketcindylibmvhelpJ.txt
+bla=$(findup -t . \( ! -path './scripts/ketlib/ketcindylibmvhelpE.txt' \))
 if [ -n "$bla" ] ; then
   echo "Found duplicate file *contents*"
   echo "-------------------------------"
@@ -140,29 +141,23 @@ mkdir -p scripts/ketcindy/
 mkdir -p tex/latex/ketcindy/
 
 # tex hierarchy
-mv ketcindy/ketcindyfolder/style/* tex/latex/ketcindy/
-rmdir ketcindy/ketcindyfolder/style
+mv ketcindy/style/* tex/latex/ketcindy/
+rmdir ketcindy/style
 
 # scripts
-# thinks that we should not have in the scripts folder in texlive
-mv ketcindy/ketcindyfolder/scripts/* scripts/ketcindy/
+# loads of stuff in upstream scripts move them to more appropriate places
+mv ketcindy/scripts/ketcindyjs doc/support/ketcindy/
+mv ketcindy/scripts/* scripts/ketcindy/
 chmod 0755 scripts/ketcindy/ketcindy.sh
-rmdir ketcindy/ketcindyfolder/scripts
+rmdir ketcindy/scripts
 
 # doc
-mv ketcindy/ketcindyfolder/doc/* doc/support/ketcindy/
-for i in LICENSE README tl-integration/README.TeXLive ; do
-  if [ -r ketcindy/$i ] ; then
-    mv ketcindy/$i doc/support/ketcindy
-  fi
-done
-mv ketcindy/HowToInstallE.pdf doc/support/ketcindy
-mv ketcindy/HowToInstallJ.pdf doc/support/ketcindy
-mv ketcindy/Readmemore doc/support/ketcindy/
-mv ketcindy/updater doc/support/ketcindy/
-mv ketcindy/ketcindysettings.cdy doc/support/ketcindy/
-mv ketcindy/ketcindytestrun.cdy doc/support/ketcindy/
-rmdir ketcindy/ketcindyfolder/doc
+mv ketcindy/doc/* doc/support/ketcindy/
+mv ketcindy/LICENSE doc/support/ketcindy
+mv ketcindy/README doc/support/ketcindy
+mv ketcindy/tl-integration/README.TeXLive doc/support/ketcindy
+mv ketcindy/HowToUseE.pdf doc/support/ketcindy
+mv ketcindy/HowToUseJ.pdf doc/support/ketcindy
 
 # CTAN doesn't like it if files are not in TDS that are in
 # the uploaded zip, so move them somewhere into the doc hierarchy
@@ -171,18 +166,13 @@ rmdir ketcindy/ketcindyfolder/doc
 
 
 # work stuff
-mv ketcindy/ketcindyfolder/work/samples doc/support/ketcindy/
-mv ketcindy/ketcindyfolder/work/allbuttons.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template0.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template3Dfigure.cdy scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/template4ketcindyjs.cdy scripts/ketcindy/
-#mv ketcindy/ketcindyfolder/work/ketcindy.conf scripts/ketcindy/
-mv ketcindy/ketcindyfolder/work/Scriptkelib.txt doc/support/ketcindy/
-rmdir ketcindy/ketcindyfolder/work
-
-# now the ketcindyfolder dir should be empty
-rmdir ketcindy/ketcindyfolder
+#mv ketcindy/ketcindyfolder/work/allbuttons.cdy scripts/ketcindy/
+#mv ketcindy/ketcindyfolder/work/template0.cdy scripts/ketcindy/
+#mv ketcindy/ketcindyfolder/work/template1basic.cdy scripts/ketcindy/
+#mv ketcindy/ketcindyfolder/work/template3Dfigure.cdy scripts/ketcindy/
+#mv ketcindy/ketcindyfolder/work/template4ketcindyjs.cdy scripts/ketcindy/
+#mv ketcindy/ketcindyfolder/work/Scriptkelib.txt doc/support/ketcindy/
+#rmdir ketcindy/ketcindyfolder/work
 
 # use our TeX Live ketcindy.ini
 mv ketcindy/tl-integration/ketcindy.ini scripts/ketcindy/

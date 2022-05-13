@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220227] loaded");
+println("ketcindylibbasic3[20220513] loaded");
 
 //help:start();
 
@@ -3422,7 +3422,7 @@ Tocindyform(str):=(
     ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],
     ["pi(",["{pi}()"]] //190522to
   ];
-  out=replace(str,"!",""); //210816,211118
+  out=replace(str,"(!","("); //210816,211118
   out=replace(out,"pi","pi()"); //210805
   tmp1=""; //210817from
   flg=0;
@@ -3487,6 +3487,7 @@ Tocindyform(str):=(
         tmp="#"+text(ctr)+"#";
         out=substring(out,0,tmp1-1)+tmp+substring(out,tmp2,length(out));
         sharpL=append(sharpL,[tmp,sub]);
+        tmp=indexof(out,fun); //220513
         ctr=ctr+1;
       );
     );

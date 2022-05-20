@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220513] loaded");
+println("ketcindylibbasic3[20220520] loaded");
 
 //help:start();
 
@@ -3374,6 +3374,8 @@ Tomaxform(str):=(
         clv=Getlevel(out);
         clv=select(clv,#_2==1);
         nn=length(clv)+1;
+println([3377,out,nn]);
+
         if(nn==1,
           tmp1=substring(out,plv_1_1,length(out)-1);
 
@@ -3414,7 +3416,7 @@ Tocindyform(str):=(
       sharpL,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
     ["fr(",["","(xx)/(yy)"]],
-    ["log(",["{log}(xx)","{log{(yy)/{log}(xx)"]],
+    ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]], //220520
     ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]], //190522
     ["po(",["","(xx)^(yy)"]],
     ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]], //190522from
@@ -3480,12 +3482,12 @@ Tocindyform(str):=(
           tmp=replace(rep_2_2,"xx",tmp1);
           out=replace(tmp,"yy",tmp2);
         );
-        out=pre+out+post;
-        tmp1=indexof(out,"{");
+        out=pre+out+post;        
+        tmp1=indexof(out,"{"); //220520from
         tmp2=indexof(out,"}");
         sub=substring(out,tmp1,tmp2-1);
         tmp="#"+text(ctr)+"#";
-        out=substring(out,0,tmp1-1)+tmp+substring(out,tmp2,length(out));
+        out=replace(out,"{"+sub+"}",tmp); //220520to
         sharpL=append(sharpL,[tmp,sub]);
         tmp=indexof(out,fun); //220513
         ctr=ctr+1;

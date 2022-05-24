@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220520] loaded");
+println("ketcindylibbasic3[20220523] loaded");
 
 //help:start();
 
@@ -3170,8 +3170,8 @@ Totexform(str):=( //210803from[renew]
     ["^(",["^{xx}"]], //210805
     ["_(",["_{xx}"]], //210831
     ["tx(",["\text{xx}"]], //210907
-    ["tfr(",["","\tfrac{xx}{yy}"]], //210831
-    ["fr(",["","\frac{xx}{yy}"]], //210228from
+    ["tfr(",["","\frac{xx}{yy}"]], //210831,220523
+    ["fr(",["","\dfrac{xx}{yy}"]], //210228from
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["ln(",["\ln xx "]], //210903
     ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
@@ -3374,8 +3374,6 @@ Tomaxform(str):=(
         clv=Getlevel(out);
         clv=select(clv,#_2==1);
         nn=length(clv)+1;
-println([3377,out,nn]);
-
         if(nn==1,
           tmp1=substring(out,plv_1_1,length(out)-1);
 
@@ -3426,6 +3424,7 @@ Tocindyform(str):=(
   ];
   out=replace(str,"(!","("); //210816,211118
   out=replace(out,"pi","pi()"); //210805
+  out=replace(out,"tfr(","fr("); //220523
   tmp1=""; //210817from
   flg=0;
   forall(1..(length(out)),

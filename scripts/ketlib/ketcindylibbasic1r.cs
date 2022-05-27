@@ -16,7 +16,7 @@
 
 println("KeTCindy V.4.4.7");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220424] loaded");
+println("ketcindylibbasic1[20220528] loaded");
 
 //help:start();
 
@@ -325,8 +325,10 @@ Readlines(path,file):=(
     out=[];//200706to
   ,
     out=readfile2str(path,file);
-    out=tokenize(out,"/L"+"F/"); //190129
-    tmp=out_(length(out));
+    out=replace(out,"/LF/","/LF/S");//220528from
+    out=tokenize(out,"/LF/"); //190129
+    out=apply(out,substring(#,1,length(#)));
+    tmp=out_(length(out)); //220528to
     if(length(tmp)==0,
       out=out_(1..(length(out)-1));
     );

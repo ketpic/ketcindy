@@ -325,7 +325,7 @@ Readlines(path,file):=(
     out=[];//200706to
   ,
     out=readfile2str(path,file);
-    out=replace(out,"/LF/","/LF/S");//220528from
+    out="S"+replace(out,"/LF/","/LF/S");//220528from
     out=tokenize(out,"/LF/"); //190129
     out=apply(out,substring(#,1,length(#)));
     tmp=out_(length(out)); //220528to

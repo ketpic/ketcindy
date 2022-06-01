@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20220210] loaded");
+println("ketcindylibout[20220602] loaded");
 
 //help:start();
 
@@ -4916,7 +4916,7 @@ SfbdparadataC(nm,fdorg,optionorg,optionshorg):=(
   ,
     funnm=fd;
     if(funnm>length(SurfList),
-      printlln("   num set to the last");
+      println("   num set to the last");  //220602
       funnm=length(SurfList);
       fd=SurfList_funnm;
     );

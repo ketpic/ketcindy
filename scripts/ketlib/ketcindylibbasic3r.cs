@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220523] loaded");
+println("ketcindylibbasic3[20220610] loaded");
 
 //help:start();
 
@@ -3403,6 +3403,7 @@ Tomaxform(str):=(
     out=replace(out,#_1,#_2);
   );
   out=head+out;
+  out=replace(out,"e^","(exp(1))^"); //220610
   out;
 );
 ////%Tomaxform end////
@@ -3499,6 +3500,7 @@ Tocindyform(str):=(
     out=replace(out,#_1,#_2);
   );
   out=head+out;
+  out=replace(out,"e^","(exp(1))^"); //220610
   out;
 );
 ////%Tocindyform end////

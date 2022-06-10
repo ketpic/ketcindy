@@ -1,3 +1,5 @@
+// 220610
+//  Tocindyform,Tomaxform changed ( e^ -> (exp(1))^ )
 // 220523
 //  Tocindyform changed ( tfr supported )
 //  Totexform changed ( tfr => \frac )

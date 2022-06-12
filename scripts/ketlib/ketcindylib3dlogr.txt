@@ -1,3 +1,5 @@
+// 220613
+//    Ketinit3d debugged ( THETA,PHI, Strictmove)
 // 220612
 //    Ketinit3d debugged ( SUBSCR=0; )
 // 220215

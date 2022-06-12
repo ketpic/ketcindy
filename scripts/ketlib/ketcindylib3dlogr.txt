@@ -1,3 +1,5 @@
+// 220612
+//    Ketinit3d debugged ( SUBSCR=0; )
 // 220215
 //    Ketinit3d,Start3d changed  ( slidemove removed )
 // 220213

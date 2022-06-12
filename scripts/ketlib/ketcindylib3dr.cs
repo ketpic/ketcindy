@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220315] loaded");
+println("ketcindylib3d[20220612] loaded");
 
 //help:start();
 
@@ -41,7 +41,7 @@ Ketinit3d(subflg):=(
     BZLIST3=tmp2;
   );  // no ketjs off
   SUBSCR=subflg; // no ketjs
-  // SUBSCR=0 // only ketjs
+  // SUBSCR=0; // only ketjs //220612
   Setwindow("Msg=no");
   Addax(0);
   TSIZE=10;

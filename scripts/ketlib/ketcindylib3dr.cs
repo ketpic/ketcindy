@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220613] loaded");
+println("ketcindylib3d[20220614] loaded");
 
 //help:start();
 
@@ -4594,8 +4594,8 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   opcindy=tmp_(length(tmp));
   Rr=0.075*1000/2.54/MilliIn;
   fileflg="Y"; //210823
-  //fileflg="N" //only no ketjs
-  mkflg=0;
+  //fileflg="N"; mkflg=1; //only ketjs //220614
+  mkflg=0;  // no ketjs on
   if(length(reL)>0, //16.02.28 
     size=reL_1;
     Rr=size*Rr;
@@ -4610,7 +4610,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       tmp1=remove(tmp1,[#]);
     );
   );
-  strL=tmp1;
+  strL=tmp1; // no ketjs off
   size=1;
   Eps2=0.05;
   Eps=10^(-3);
@@ -4647,9 +4647,9 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       tmp=tmp&(text(tmp1)==text(tmp2));
       if(tmp,mkflg=-1,mkflg=1);
     );
-  ); // no ketjs off
+  ); 
   if(mkflg==1,fileflg="Y"); 
-  if(fileflg=="N",mkflg=1);
+  if(fileflg=="N",mkflg=1); // no ketjs off
   tmp=apply(1..(length(Plt3L)),Projcoordcurve(Plt3L_#));
   Plt2L=Flattenlist(tmp);
   if((fileflg=="Y")&(mkflg==1),  // no ketjs on //220212from

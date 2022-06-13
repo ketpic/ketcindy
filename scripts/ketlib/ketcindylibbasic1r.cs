@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.7");
+println("KeTCindy V.4.4.8");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220528] loaded");
+println("ketcindylibbasic1[20220614] loaded");
 
 //help:start();
 
@@ -1048,9 +1048,7 @@ Changestyle(nameL,styleorg):=( //210422pt
   color=tmp_(length(tmp)-2);color4=Colorrgb2cmyk(color); //200626
   opcindy=tmp_(length(tmp));
   if(length(color)==4,
-    tmp=Colorcmyk2rgb(color);
-  ,
-    tmp=color;
+    color=Colorcmyk2rgb(color);
   );
   if(islist(nameL),nmL=nameL,nmL=[nameL]);
   forall(nmL,name,
@@ -1059,7 +1057,7 @@ Changestyle(nameL,styleorg):=( //210422pt
       tmp1=tmp1_1;
       PointDataList=remove(PointDataList,[tmp1]);
       GCLIST=remove(GCLIST,tmp1_3);      
-      GLIST=remove(GLIST,tmp1_4);
+      GLIST=remove(GLIST,tmp1_4); // no ketjs
       COM2ndlist=remove(COM2ndlist,tmp1_5);
       tmp=replace(name,"pt","");
       Pointdata(tmp,tmp1_2,style); //210422to
@@ -1080,10 +1078,10 @@ Changestyle(nameL,styleorg):=( //210422pt
         if(pttype=="Y",
           tmp=select(PTSHADElist,indexof(#_1,name)>0);
           PTSHADElist=remove(PTSHADElist,tmp); 
-          tmp=select(GLIST,indexof(#,name)>0);
+          tmp=select(GLIST,indexof(#,name)>0); // no ketjs on
           tmp1=select(tmp,indexof(#,name+"=Pointdata")>0);
           tmp=remove(tmp,tmp1);
-          GLIST=remove(GLIST,tmp);
+          GLIST=remove(GLIST,tmp); //no ketjs off
           tmp1=apply(parse(name),#_1);
           tmp=["Color="+text(color),"Size="+ptsize,"Inside="+inside];
           Pointdata("-"+name,tmp1,tmp);
@@ -1095,12 +1093,12 @@ Changestyle(nameL,styleorg):=( //210422pt
           if(Noflg==0,
             if(color4!=KCOLOR, //no ketjs on
               Texcom("{");Com2nd("Setcolor("+color4+")");
-            ); 
+            ); //no ketjs off
             Ltype=Getlinestyle(text(Noflg)+Ltype,name); //200514[2Lines]
             tmp1=[name,Ltype]; //220315
             if(color4!=KCOLOR, //180904 
               Texcom("}");//180722
-            );//no ketjs off
+            );
           );
           if(Noflg<=3, //220315from
             tmp=select(GCLIST,[#_1,#_2]==tmp1);

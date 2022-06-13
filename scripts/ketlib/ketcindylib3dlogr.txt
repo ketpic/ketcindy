@@ -1,3 +1,5 @@
+// 220614
+//    Skeleton debugged ( // only ketjs)
 // 220613
 //    Ketinit3d debugged ( THETA,PHI, Strictmove)
 // 220612

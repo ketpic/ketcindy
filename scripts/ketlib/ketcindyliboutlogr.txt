@@ -1,3 +1,5 @@
+// 20220621
+//    CalcbyR debugged  ( for option "" )
 // 20220602
 //    Sfbdparadata ( correct typo "printlln")
 // 20220209

@@ -1,3 +1,7 @@
+// 220617
+//  Tocindyform,Tomaxform changed ( " " removed )
+// 220615
+//  Tocindyform,Tomaxform debugged ( (cross)=>* )
 // 220610
 //  Tocindyform,Tomaxform changed ( e^ -> (exp(1))^ )
 // 220523

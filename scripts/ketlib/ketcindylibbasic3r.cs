@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220610] loaded");
+println("ketcindylibbasic3[20220617] loaded");
 
 //help:start();
 
@@ -3330,6 +3330,8 @@ Tomaxform(str):=(
     ["pi(",["{%pi}()"]]
   ];
   if(isstring(str),out=replace(str,"!",""), out=format(str,6)); //211118
+  out=replace(out," ",""); //220617
+  out=replace(out,"(cross)","*"); //220615
   tmp=Bracket(out,"[]"); //210908from
   while(length(tmp)>0,
     tmp1=tmp_1_1;
@@ -3426,6 +3428,8 @@ Tocindyform(str):=(
   out=replace(str,"(!","("); //210816,211118
   out=replace(out,"pi","pi()"); //210805
   out=replace(out,"tfr(","fr("); //220523
+  out=replace(out," ",""); //220617
+  out=replace(out,"(cross)","*"); //220615
   tmp1=""; //210817from
   flg=0;
   forall(1..(length(out)),

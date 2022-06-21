@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20220602] loaded");
+println("ketcindylibout[20220621] loaded");
 
 //help:start();
 
@@ -493,19 +493,31 @@ CalcbyR(name,path,cmd,optionorg):=(
       ); //210216to
       if(length(tmp1)==0,
         wflg=1;
-      ,
-        tmp=select(1..(length(tmp1)),indexof(tmp1_#,"####")>0); //200509[3lines]
-        tmp1=tmp1_((tmp_1+1)..(length(tmp1)));
-        tmp1=apply(tmp1,replace(#,"##",""));
-        if(length(tmp1)!=length(cmdlist),
-          wflg=1;
-        ,
-          tmp=select(1..length(tmp1),tmp1_#!=cmdlist_#);
-          if(length(tmp)>0, wflg=1);
-        );
       );
     );
-    if(wflg==0,wflg=-1); // 15.10.16
+    if(wflg==0, //110621from
+      forall(1..(length(cmdlist)),nc, 
+        tmp=cmdlist_nc;
+        tmp=replace(tmp,"-0.","mzp");
+        tmp=replace(tmp,"-0","0");
+        tmp=replace(tmp,"mzp","-0.");
+        cmdlist_nc=tmp;
+      );
+      tmp1=Readlines(Dirwork,Cdyname()+name+".r"); 
+      tmp=select(1..(length(tmp1)),indexof(tmp1_#,"window")>0);
+      tmp1=tmp1_((tmp_1+1)..(length(tmp1)));
+      tmp1=apply(tmp1,replace(#,"##",""));    
+      forall(1..(length(tmp1)),nc,
+        tmp=tmp1_nc;
+        tmp=replace(tmp,"-0.","mzp");
+        tmp=replace(tmp,"-0","0");
+        tmp=replace(tmp,"mzp","-0.");
+        tmp1_nc=tmp;
+      );
+      tmp2=select(1..(length(tmp1)),cmdlist_#!=tmp1_#);
+      if(tmp1==cmdlist,wflg=0,wflg=1);
+    ); // 220621to
+    if(wflg==0,wflg=-1);
     if(wflg==1,
       if(length(wfile)>0,   // 15.10.05
         SCEOUTPUT=openfile(wfile);

@@ -40,7 +40,7 @@ Fracform,basic3,2896,2936
 Sla2fra,basic3,2940,3026,Strsplit,Bracket,Getlevel
 Tonormalform,basic3,3030,3128
 Addpar,basic3,3132,3158,Indexall
-Totexform,basic3,3162,3275,Bracket,Getlevel,addpar,Addpar
+Totexform,basic3,3162,3275,Bracket,Getlevel,Addpar
 Addasterisk,basic3,3279,3312,Removespace
 Tomaxform,basic3,3316,3410,Indexall,Removespace,Bracket,Getlevel,Addasterisk
 Tocindyform,basic3,3414,3509,Removespace,Bracket,Getlevel,Addasterisk

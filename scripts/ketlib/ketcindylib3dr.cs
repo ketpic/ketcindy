@@ -2236,8 +2236,7 @@ Expr3d(dtlist,options):=(
 ); //181218to
 ////%Expr3d end////
 
-////%
-t start////
+////%Perppt start////
 Perppt(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"draw");
 Perppt(name,ptstr,pLstr,option):=Putperp(name,ptstr,pLstr,option);
 Putperp(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"put");
@@ -2367,7 +2366,7 @@ Drawpoint3d(pt3,options):=(
 ////%Drawpoint3d end////
 
 ////%Pointdata3d start////
-Pointdata3d(name,pt3):=Pointdata3d(nm,pt3,[]);//181017from
+Pointdata3d(name,pt3):=Pointdata3d(name,pt3,[]);//181017from
 Pointdata3d(name,pt3,options):=( //181017from
 //help:Pointdata3d("A",[1,2,3],options);
   regional(pt2,ptsub,tmp);

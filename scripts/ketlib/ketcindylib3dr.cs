@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220707] loaded");
+println("ketcindylib3d[20220714] loaded");
 
 //help:start();
 
@@ -2299,26 +2299,17 @@ Putperp(name,ptstr,pLstr,option):=(
 ////%Perpplane start////
 Perpplane(name,ptstr,nvec):=
     Perpplane(name,ptstr,nvec,"draw");
-Perpplane(name,ptstr,nstr,dummyoptions):=(
+Perpplane(name,ptstr,nstr,option):=(
 //help:Perpplane("A-B","P",[1,3,2]);
 //help:Perpplane("A-B","P",[1,3,2]);
 //help:Perpplane(options=["Put/Draw"]);
   regional(Eps,eqL,strL,nvec,sgstr,pP,v1,v2,v3,
-     gptflg,th,ph,pA,pB,tmp,tmp1,tmp2);
+     gptflg,th,ph,pA3,pB3,tmp,tmp1,tmp2);
   Eps=10^(-4);
-//  options=optionorg; //190714from
-//  if(!islist(options),options=[options]);
-//  tmp=Divoptions(options);
-//  eqL=tmp_5;
-//  strL=tmp_7;
-  gptflg=1;
-//  forall(strL,
-//    tmp=Toupper(substring(#,0,1));
-//    if(tmp=="P",
-//      gptflg=1;
-//      options=remove(options,#);
-//    );
-//  ); //190714to
+  tmp1=option; //220713from
+  if(islist(option),tmp1=option_1);
+  tmp=Toupper(substring(tmp1,0,1));
+  if(tmp=="D",gptflg=0,gptflg=1); //220713to
   if(isstring(nstr),nvec=parse(nstr+"3d"),nvec=nstr);
   if(indexof(ptstr,"3d")==0, //181107from
     pP=parse(ptstr+"3d");
@@ -2327,7 +2318,7 @@ Perpplane(name,ptstr,nstr,dummyoptions):=(
   ); //181107to
   v3=nvec/|nvec|;
   th=THETA; ph=PHI;
-  tmp=findangle(v3);
+  tmp=Findangle(v3);
   THETA=tmp_1; PHI=tmp_2;
   v1=Cancoordpara([1,0,0]);
   v2=Cancoordpara([0,1,0]);
@@ -2336,17 +2327,17 @@ Perpplane(name,ptstr,nstr,dummyoptions):=(
   tmp1=substring(name,0,tmp-1);
   tmp2=substring(name,tmp,length(name));
   tmp=indexof(pLstr,"-");
-  pA=pP+v1;
-  pB=pP+v2;
+  pA3=pP+v1;
+  pB3=pP+v2;
   if(gptflg==1, //190714from
-    Putpoint3d([tmp1,pA,tmp2,pB],["fix"]);
+    Putpoint3d([tmp1,pA3,tmp2,pB3d],["fix"]);
   ,
-    Defvar(tmp1+"3d",pA); //190714from
-    Defvar(tmp2+"3d",pB);
-    Pointdata3d(tmp1,pA,options);
-    Pointdata3d(tmp2,pB,options); //190714to
+    Defvar(tmp1+"3d",pA3); //190714from
+    Defvar(tmp2+"3d",pB3); 
+    Pointdata3d(tmp1,pA3,options);
+    Pointdata3d(tmp2,pB3,options); //190714to
   );
-  [pA,pB];
+  [pA3,pB3];
 );
 ////%Perpplane end////
 
@@ -2371,21 +2362,19 @@ Drawpoint3d(pt3,options):=(
 ////%Drawpoint3d end////
 
 ////%Pointdata3d start////
-Pointdata3d(nm,pt3):=Pointdata3d(nm,pt3,[]);//181017from
-Pointdata3d(nm,pt3,options):=( //181017from
-//help:Pointdata3d("1",pt3dlist,options);
-  regional(pt2L,tmp);
-  if(Measuredepth(pt3)==0,tmp=[pt3],tmp=pt3);
-  pt2L=apply(tmp,Parapt(#));
-  Pointdata("2d"+nm,pt2L,append(options,"Disp=n"));
-  tmp=substring(nm,0,1); //190714from
-  if((tmp>="A")&(tmp<="Z"),
-    tmp=nm+"3d";
-  ,
-    tmp="pt3d"+nm;
+Pointdata3d(name,pt3):=Pointdata3d(nm,pt3,[]);//181017from
+Pointdata3d(name,pt3,options):=( //181017from
+//help:Pointdata3d("A",[1,2,3],options);
+  regional(pt2,ptsub,tmp);
+  tmp=append(options,"Disp=n");
+  pt2=Parapt(pt3);//220713from
+  Pointdata("-"+name+"2d",pt2,tmp);
+  if(SUBSCR==1,
+    ptsub=Parasubpt(pt3);
+    Pointdata("-"+name+"z2d",ptsub,tmp);
   );
-  Defvar(tmp,pt3); //190714to
-); //181017to
+  Defvar(name+"3d",pt3);//220713
+);
 ////%Pointdata3d end////
 
 ////%Putaxes3d start////
@@ -2848,19 +2837,16 @@ Mkobjfile(path,fnameorg,objL):=(
 
 ); //end of skip
 
-////%VertexEdgeFace start//// //190502
-VertexEdgeFace(nm,vfnL):=Vertexedgeface(nm,vfnL,[]); 
-VertexEdgeFace(nm,vfnLorg,optionorg):=Vertexedgeface(nm,vfnLorg,optionorg);
-////%VertexEdgeFace end////
-
 ////%Vertexedgeface start////
 Vertexedgeface(nm,vfnL):=Vertexedgeface(nm,vfnL,[]);  // 16.02.10
 Vertexedgeface(nm,vfnLorg,optionorg):=(
 //help:Vertexedgeface("1",[vL,fnL]);
 //help:Vertexedgeface("1",["A","B","C"]);
 //help:Vertexedgeface(options=["Vtx=n(y)" ',"Pt=fix") ,"Edg=n(y)","Label=8(/0)"]);
-  regional(name3,namev,namee,namef,vfnL,options,Noflg,eqL,strL, Lsize,msgflg,
-    Eps,vL,eL,enL,face,edge,vtx,vname,fixflg,vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
+  regional(name3,namev,namee,namef,vfnL,options,
+  Noflg,eqL,strL, Lsize,msgflg,vfinished,
+    Eps,vL,eL,enL,face,edge,vtx,vname,fixflg,
+    vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
   Eps=10^(-5);
   name3="phvef"+nm;
   namev="phv3d"+nm;
@@ -2874,7 +2860,7 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   if(length(vfnL)==1,
     vfnL=[vfnL_1,[1..length(vfnL_1)]];
   );  // 16.06.19until
-  tmp=Divoptions(options);
+  tmp=Divoptions(options); 
   Noflg=tmp_2;
   eqL=tmp_5;
   strL=tmp_7;
@@ -2884,23 +2870,11 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   dispflg=1; //181106
   Lsize="8"; //190331
   msgflg="Y"; //190506
-  // msgflg="N" // only ketjs
+  // msgflg="N"; // only ketjs
   forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     tmp2=Toupper(substring(tmp_2,0,1));
-//    if(tmp1=="P",
-//      if(tmp2=="F", fixflg=0);
-//      options=remove(options,[#]);
-//    );
-//    if(tmp1=="V", //180905from
-//      vtxflg=tmp2;
-//      options=remove(options,[#]);
-//    ); //180905to
-//    if(tmp1=="E",
-//      edgflg=tmp2;
-//      options=remove(options,[#]);
-//    );
     if(tmp1=="L", //190331from
       Lsize=tmp_2;
       if(Lsize=="0",dispflg=0); //190502
@@ -2922,40 +2896,53 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   vL=[];
   forall(1..length(vfnL_1),
     vtx=vfnL_1_#;  // 16.02.10 from
-    if(isstring(vtx),vtx=parse(vtx)); // 16.06.19
-    if(ispoint(vtx),
-      tmp=parse(vtx.name+"3d"); //190506
-      vname=vtx.name;
-    ,
-      tmp=select(tmp1,|#.xy-Parapt(vtx)|<Eps);
-      if(length(tmp)>0,
-        tmp=tmp_1;
-        vname=tmp.name;
+    finished=0; // 220714from
+    if(isstring(vtx),
+      tmp=indexof(vtx,"3d");
+      if(tmp>0,
+        vname=substring(vtx,0,tmp-1);
+        vtx=parse(vtx);// 16.06.19
+        finished=1;
+      ); // 220714to
+    );
+    if(finished==0, //220714
+      vtx=parse(vtx);// 16.06.19
+      if(ispoint(vtx),
+        tmp=parse(vtx.name+"3d"); //190506
+        vname=vtx.name;
       ,
-        vname="V"+nm+text(#); //181212
-      ); //190506to
-      if(vtxflg=="Y",
-        if(fixflg==1,
-          Putpoint3d([vname,vtx],"fix");
+        tmp=select(tmp1,|#.xy-Parapt(vtx)|<Eps);
+        if(length(tmp)>0,
+          tmp=tmp_1;
+          vname=tmp.name;
         ,
-          Putpoint3d([vname,vtx]);
-        );
-      , 
-        tmp=vname+"3d="+format(vtx,10)+";"; //190415
-        parse(tmp);
-        Defvar(vname+"3d",parse(vname+"3d"));
-        tmp=vname+"2d=Parapt("+vname+"3d);"; //190415
-        parse(tmp);
-        Defvar(vname+"2d",parse(vname+"2d"));
+          vname="V"+nm+text(#); //181212
+        ); //190506to
+        if(vtxflg=="Y",
+          if(fixflg==1,
+            Putpoint3d([vname,vtx],"fix");
+          ,
+            Putpoint3d([vname,vtx]);
+          );
+        , 
+          tmp=vname+"3d="+format(vtx,10)+";"; //190415
+          parse(tmp);
+          Defvar(vname+"3d",parse(vname+"3d"));
+          tmp=vname+"2d=Parapt("+vname+"3d);"; //190415
+          parse(tmp);
+          Defvar(vname+"2d",parse(vname+"2d"));
+        ); //220714
         if(dispflg==1, //181106
-          tmp="drawtext(parse(vname+"+Dqq("2d")+"),vname,size->"; //190331
-          parse(tmp+Lsize+");"); //190331
-          draw(parse(vname+"2d"),pointsize->3,color->[0,1,0]); //190128
+          tmp="drawtext(parse(vname+"+Dqq("2d");
+          tmp=tmp+"),vname,size->"+Lsize+");";
+          parse(tmp); //190331
+          draw(parse(vname+"2d"),
+              pointsize->3,color->[0,1,0]); //190128
         );
       ); //180905to
     );
-    vL=append(vL,vname); // 16.02.10 until
-  );
+    vL=append(vL,vname); // 16.02.10to
+  ); 
   eL=[];
   forall(vfnL_2,face,
     forall(1..length(face),
@@ -2975,22 +2962,22 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
         eL=append(eL,[tmp1,tmp2]);
       );
     );
-  );
+  ); 
   if(Noflg<3,
     enL=[];
     forall(eL,edge,
       if(edgflg=="N",
         if(Noflg<2,
-          tmp1=edge_1;//parse(edge_1);
-          tmp2=edge_2;//parse(edge_2);
-          tmp="sl3d"+edge_1+edge_2;
-          if(islist(parse(tmp)),
-            Changestyle3d([tmp],["nodisp"]);
-          );
-          tmp="sl3d"+edge_2+edge_1;
-          if(islist(parse(tmp)),
-            Changestyle3d([tmp],["nodisp"]);
-          );
+          tmp1=parse(edge_1);
+          tmp2=parse(edge_2);
+//          tmp="sl3d"+replace(edge_1+edge_2,"3d",""); 
+//          if(islist(parse(tmp)),
+//            Changestyle3d([tmp],["nodisp"]);
+//          );
+//          tmp="sl3d"+edge_2+edge_1;
+//          if(islist(parse(tmp)),
+//            Changestyle3d([tmp],["nodisp"]);
+//          );
           tmp=replace(edge_1+edge_2,"3d","");
           options=append(options,"Msg=no");
           Spaceline("-"+tmp,[tmp1,tmp2],options); //16.02.28
@@ -3017,23 +3004,23 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
     tmp1=substring(tmp1,0,length(tmp1)-1);
     tmp=namee+"=["+tmp1+"];"; //190415
     parse(tmp);
-    tmp=namee+"=list("+tmp1+")";
+    tmp=namee+"=list("+tmp1+")"; // no ketjs on
     tmp=replace(tmp,Dq,"");
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); // no ketjs off
     tmp1=apply(vL,Dq+#+"3d"+Dq);
     tmp1=text(tmp1);
     tmp1=substring(tmp1,1,length(tmp1)-1);
     tmp=namev+"=["+tmp1+"];"; //190415
     parse(tmp);
-    tmp1=replace(tmp1,Dq,"");
+    tmp1=replace(tmp1,Dq,""); // no ketjs on
     tmp=namev+"=list("+tmp1+")";
-    GLIST=append(GLIST,tmp);
+    GLIST=append(GLIST,tmp); // no ketjs off
     tmp1=Textformat(vfnL_2,10);
     tmp1=substring(tmp1,1,length(tmp1)-1);
-    tmp=namef+"=["+tmp1+"];";
+    tmp=namef+"=["+tmp1+"];"; 
     parse(tmp);
-    tmp=namef+"=list("+tmp1+")";
-    GLIST=append(GLIST,tmp);
+    tmp=namef+"=list("+tmp1+")"; // no ketjs on
+    GLIST=append(GLIST,tmp); // no ketjs off
   );
   [namev,namee,namef];
 );
@@ -3362,7 +3349,7 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
   color=tmp_(length(tmp)-2);
   Eps=10^(-2);
   msgflg="Y";
-  // msgflg="N" // only ketjs
+  // msgflg="N"; // only ketjs 220714
   forall(eqL, //180815from
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
@@ -3374,7 +3361,7 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
       msgflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     ); //190506to
- );//180815to
+  );//180815to
   tmp1=segLorg; //190331from
   if(!islist(tmp1),tmp1=[tmp1]);
   Changestyle3d(tmp1,["nodisp"]);
@@ -3392,7 +3379,7 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
       tmp2=[#];
     );
     segL=concat(segL,tmp2);
-  );
+  ); 
   tmp1=faceLorg;
   if(!islist(tmp1),tmp1=[tmp1]);
   faceL=[];
@@ -3409,12 +3396,12 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
       );
     ,
       tmp2=tmp4;
-    );
+    ); 
     faceL=concat(faceL,tmp2);
   ); //190331to
   ctr=1;
   frnL=[];
-  frhL=[];
+  frhL=[]; 
   forall(segL,seg,
     rng=[0,1];
     forall(faceL,face,

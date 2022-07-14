@@ -1,3 +1,9 @@
+// 220714
+//    Nohiddebyfaces dbg ( ; added for  "only ketjs" )
+// 220713
+//    Vertexedgeface dbg ( ; added for  "only ketjs" )
+//    Findangle debugged ( findangle => Findangle )
+//    Perpplane changed ( option )
 // 220707
 //    Ketinit3d debugged ( THETA,PHI : Strictmove removed)
 // 220614

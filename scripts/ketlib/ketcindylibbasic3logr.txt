@@ -1,3 +1,5 @@
+// 220625
+//  Totexform dbg  ( addpar => Addpar)
 // 220617
 //  Tocindyform,Tomaxform changed ( " " removed )
 // 220615

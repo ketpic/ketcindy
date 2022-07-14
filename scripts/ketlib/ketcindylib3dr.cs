@@ -2236,7 +2236,8 @@ Expr3d(dtlist,options):=(
 ); //181218to
 ////%Expr3d end////
 
-////%Perppt start////
+////%
+t start////
 Perppt(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"draw");
 Perppt(name,ptstr,pLstr,option):=Putperp(name,ptstr,pLstr,option);
 Putperp(name,ptstr,pLstr):=Putperp(name,ptstr,pLstr,"put");
@@ -2299,17 +2300,21 @@ Putperp(name,ptstr,pLstr,option):=(
 ////%Perpplane start////
 Perpplane(name,ptstr,nvec):=
     Perpplane(name,ptstr,nvec,"draw");
-Perpplane(name,ptstr,nstr,option):=(
+Perpplane(name,ptstr,nstr,optionsorg):=(
 //help:Perpplane("A-B","P",[1,3,2]);
 //help:Perpplane("A-B","P",[1,3,2]);
-//help:Perpplane(options=["Put/Draw"]);
-  regional(Eps,eqL,strL,nvec,sgstr,pP,v1,v2,v3,
+//help:Perpplane(options=["put/draw",pointdataoptions);
+  regional(options,Eps,eqL,strL,nvec,sgstr,pP,v1,v2,v3,
      gptflg,th,ph,pA3,pB3,tmp,tmp1,tmp2);
   Eps=10^(-4);
-  tmp1=option; //220713from
-  if(islist(option),tmp1=option_1);
-  tmp=Toupper(substring(tmp1,0,1));
-  if(tmp=="D",gptflg=0,gptflg=1); //220713to
+  options=optionsorg; //220714from
+  if(!islist(options),options=[options]);
+  gptflg=0;
+  tmp=select(options,Toupper(substring(#,0,1))=="P");
+  options=remove(options,tmp);
+  if(length(tmp)>0,gptflg=1);
+  tmp=select(options,Toupper(substring(#,0,1))=="D");
+  options=remove(options,tmp); //220714to
   if(isstring(nstr),nvec=parse(nstr+"3d"),nvec=nstr);
   if(indexof(ptstr,"3d")==0, //181107from
     pP=parse(ptstr+"3d");

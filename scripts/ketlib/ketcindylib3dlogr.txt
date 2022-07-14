@@ -1,5 +1,6 @@
 // 220714
 //    Nohiddebyfaces dbg ( ; added for  "only ketjs" )
+//    Perpplane changed  ( optons of pointdata supported )
 // 220713
 //    Vertexedgeface dbg ( ; added for  "only ketjs" )
 //    Findangle debugged ( findangle => Findangle )

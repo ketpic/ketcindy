@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220625] loaded");
+println("ketcindylibbasic3[20220719] loaded");
 
 //help:start();
 
@@ -3653,10 +3653,11 @@ Setketcindyjs(list):=(  // no ketjs on
 ////%Setketcindyjs end////
 
 ////%Ketcindyjsbody start//// 190909,200505(remove help)
-Ketcindyjsbody(list1,list2):=(
-//help:Ketcindyjsbody(listfront,listrear);
+Ketcindyjsbody(list1,list2):=Ketcindyjsbody([],list1,list2); //220719
+Ketcindyjsbody(listtop,list1,list2):=( //220719
+//help:Ketcindyjsbody([listtop,] listfront,listrear);
 //help :Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
-  JSBODY=[list1,list2];
+  JSBODY=[listtop,list1,list2]; //220719
   JSBODY;
 );
 ////%Ketcindyjsbody end////
@@ -4190,8 +4191,9 @@ Tohtmltagpf(sentence):=(
 );
 ////%Tohtmltagpf send///
 
-////%Licencedata start//// 211217
-Licencedata():=(
+////%License start//// 211217
+License():=(
+//help:License();
   regional(dtL);
   dtL=[
     "<!-- Copyright (C)  2014  Setsuo Takato, KETCindy Japan project team",
@@ -4207,8 +4209,34 @@ Licencedata():=(
     " along with this program.  If not, see <http://www.gnu.org/licenses/>",
     " -->"
   ];
+  dtL
 );
-////%Licencedata end//// 
+////%License end//// 
+
+////%Headline start//// 220719
+Headline(titleorg):=(
+//help:Headline(title);
+  regional(title,tmp);
+  title=titleorg;
+  if(!islist(title),title=[title]);
+  tmp="<header><p align="+Dqq("center")+">";
+  tmp=tmp+"<font size="+Dqq("6")+">";
+  title=prepend(tmp,title);
+  title=append(title,"</font></p></header>");
+  title;
+);
+////%Headline end////
+
+////%Copyright start//// 220719
+Copyright():=(
+//help:Copyright();
+  regional(cpr);
+  cpr="<footer><p align="+Dqq("center")+">";
+  cpr=cpr+"<font size="+Dqq("4")+">";
+  cpr=cpr+"&copy; 2021 Setsuo Takato</font></p></footer>";
+  cpr;
+);
+////%Copyright end////
 
 ////%Mkketcindyjs start//// 190115
 Mkketcindyjs():=Mkketcindyjs(KETJSOP); //190129 
@@ -4218,7 +4246,7 @@ Mkketcindyjs(options):=( //17.11.18
 //help:Mkketcindyjs(optionsadd=["Web=(y)","Path=Dircdy","Ignore=","Remove=(list)"]);
 //help:Mkketcindyjs(optionsadd2=["Equal=","Axes=","Figure=(n)","Lic=(y/n)"]);
   regional(webflg,localflg,htm,htmorg,from,upto,flg,fL,fun,jj,tmp,tmp1,tmp2,tmp3,tmp4,
-      libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,licence,
+      libnameL,libL,lib,jc,nn,name,partL,toppart,lastpart,path,ketflg,flg,cmdL,scale,license,
       nolabel,color,grid,axes,out,Out,igno,onlyflg,rmptL,colorrgb,ptname,eqflg,eqrep,
       figure,dpi,margin,defaultbuttonsize,defaulteditsize,fname,jssizeW,jssizeH,label);
   libnameL=["basic1","basic2","basic3","3d"]; //190416,190428
@@ -4238,7 +4266,7 @@ Mkketcindyjs(options):=( //17.11.18
   axes="";
   path=Dircdy;
   igno=[];
-  licence="N"; //211217
+  license="N"; //211217
   rmptL=REMOVEPTJS;
   flg=0; //210105
   forall(options,
@@ -4279,7 +4307,7 @@ Mkketcindyjs(options):=( //17.11.18
       label=concat(label,tmp);  //210105to
     );
     if(tmp1=="LI", //211217from
-      licence=Toupper(substring(tmp2,0,1));
+      license=Toupper(substring(tmp2,0,1));
     );  //211217to
     if(tmp1=="CO", //190209,//211217
       if(length(tmp2)>0,
@@ -4522,8 +4550,9 @@ Mkketcindyjs(options):=( //17.11.18
     );
     setdirectory(path);
     SCEOUTPUT = openfile(fname);
-    if(licence=="Y", //211217from
-      tmp1=Licencedata();
+    forall(JSBODY_1,println(SCEOUTPUT,#)); //220719
+    if(license=="Y", //211217from
+      tmp1=Licensedata();
     ,
       tmp1=[];
     );
@@ -4893,14 +4922,14 @@ Mkketcindyjs(options):=( //17.11.18
       if(indexof(tmp1,"</body>")==0,
         println(SCEOUTPUT,tmp1);
         if(indexof(tmp1,"<body>")>0,
-          forall(JSBODY_1,
+          forall(JSBODY_2, //220719
             tmp2=replace(#,"_;","&emsp;");
             tmp2=Removespace(tmp2); //200911(next block removed)
             println(SCEOUTPUT,tmp2);
           );
         );
       ,
-        forall(JSBODY_2,
+        forall(JSBODY_3, //220719
           tmp2=replace(#,"_;","&emsp;");
           tmp2=Removespace(tmp2);  //200911(next block removed)
           println(SCEOUTPUT,tmp2);
@@ -4912,6 +4941,7 @@ Mkketcindyjs(options):=( //17.11.18
     if(length(JSMAIN)>0, //200119from
       if(webflg=="Y",tmp="mainon.html",tmp="mainoff.html"); //200506[2lines]
       SCEOUTPUT = openfile(Fhead+tmp); 
+      forall(JSBODY_1,println(SCEOUTPUT,#)); //220719
       println(SCEOUTPUT,"<!DOCTYPE html>");
       println(SCEOUTPUT,"<html>");
       println(SCEOUTPUT,"<head>");

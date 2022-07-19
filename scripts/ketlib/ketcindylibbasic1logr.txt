@@ -1,3 +1,5 @@
+// 20220719
+//    Ketinit changed (JSBODY 2->3 )
 // 20220614
 //    Changestyle dbg ( no ketjs off )
 // 20220528

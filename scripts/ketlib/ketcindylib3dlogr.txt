@@ -1,4 +1,5 @@
 // 220714
+//    Vertexedgeface dbg
 //    Nohiddebyfaces dbg ( ; added for  "only ketjs" )
 //    Perpplane changed  ( optons of pointdata supported )
 // 220713

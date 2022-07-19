@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.9");
+println("KeTCindy V.4.4.10");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220614] loaded");
+println("ketcindylibbasic1[20220719] loaded");
 
 //help:start();
 
@@ -106,7 +106,7 @@ Ketinit(work,strictsep):=( //200509
   ErrFlag=0;
   KETJSOP=[]; //190129
 //  KETJSOP=["Web=y"]; WebMode=0; //200516,0526
-  JSBODY=[[],[]]; JSMAIN=[]; //190916,200119
+  JSBODY=[[],[],[]]; JSMAIN=[]; //190916,0119,220719
   REMOVEPTJS=[]; SLIDEFLG="Y"; //190504
 //  MOVETOJSLIST=[]; //190802
 //  KetcindyjsDataList=[]; //190801

@@ -1,3 +1,8 @@
+// 20220719
+//    Headline added
+//    Mkketcndyjs changed (JSBODY  2->3, top added)
+//    License changed ( help added )
+//    Copyright added 
 // 220625
 //  Totexform dbg  ( addpar => Addpar)
 // 220617

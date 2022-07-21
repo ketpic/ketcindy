@@ -16,7 +16,7 @@
 
 println("KeTCindy V.4.4.10");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220719] loaded");
+println("ketcindylibbasic1[20220722] loaded");
 
 //help:start();
 
@@ -4156,7 +4156,9 @@ Pointdata(nm,listorg,optionsorg):=(
 //          GCLIST=append(GCLIST,tmp); // only ketjs off
         );
       ,
-        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,[tmp3_1,"Msg=n"]);// no ketjs on
+        tmp=[tmp3_1,"Msg=n"]; //220722from
+        if(Noflg==1,tmp=prepend("notex",tmp));
+        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,tmp);// no ketjs on //220722to
         tmp="sc"+tmp2;
         Shade([tmp],options); // no ketjs off //200813
 //          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on

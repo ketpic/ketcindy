@@ -1,3 +1,5 @@
+// 20220722
+//    Pointdata dbg  ( case of "notex", subgraph )
 // 20220719
 //    Ketinit changed (JSBODY 2->3 )
 // 20220614

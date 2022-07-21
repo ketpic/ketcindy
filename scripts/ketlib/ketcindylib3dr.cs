@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220721] loaded");
+println("ketcindylib3d[20220722] loaded");
 
 //help:start();
 
@@ -2375,6 +2375,7 @@ Pointdata3d(name,pt3,options):=( //181017from
   Pointdata("-"+name+"2d",pt2,tmp);
   if(SUBSCR==1,
     ptsub=Parasubpt(pt3);
+    tmp=append(tmp,"notex"); //220722
     Pointdata("-"+name+"z2d",ptsub,tmp);
   );
   Defvar(name+"3d",pt3);//220713

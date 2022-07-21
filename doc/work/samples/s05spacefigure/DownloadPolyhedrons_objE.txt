@@ -1,9 +1,9 @@
 1) Data folder of polyhedra "polyhedrons_obj" is downloadable from the next website:
         http://mitani.cs.tsukuba.ac.jp/polyhedron/
 
-2) Store the folder into someplace, for example, in the user home.
+2) Store the folder into someplace, for example, "ketcindy" in the user home.
 
 3) Open a cindy file and write scripts like the followings in the editor.
-        Setdirectory(gethome()+"/polyhedrons_obj"); 
+        Setdirectory(Dirhead+"polyhedrons_obj"); // Dirhead is "ketcindy" in the user home.
         poly=Readobj("r02.obj",["size=-3.5"]);
         Setdirectory(Dirwork);

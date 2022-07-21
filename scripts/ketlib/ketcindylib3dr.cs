@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220714] loaded");
+println("ketcindylib3d[20220721] loaded");
 
 //help:start();
 
@@ -2735,48 +2735,47 @@ Readobj(directory,filename,options):=(
 ////%Readobj end////
 
 ////%Concatobj start////
-Concatobj(objL):=Concatobj(objL,[]);
-Concatobj(objL,options):=(
-//help:Concatobj([polyhed,triangle]);
-//help:Concatobj([polyhed,triangle],["Rmf=no"]);
-//help:Concatobj([[A,B,C],[A,C,D]]);
-  regional(obj,vL,fL,vadd,vtx,faces,fnew,face,jj,kk,vctr,eps,
-    tmp,tmp1,tmp2,tmp3,eqL,rmf);
-  tmp=divoptions(options);
-  eqL=tmp_5;
-  rmf="y"; // 16.08.19
-  forall(eqL,
-    tmp=indexof(#,"=");
-    tmp1=Toupper(substring(#,0,1));
-    tmp2=Toupper(substring(#,tmp,tmp+1));
-    if(tmp1=="R",
-      if(tmp2=="Y",rmf="y"); // 16.08.14
-    );
-  );
+Concatobj(objL):=( //220721
+//help:Concatobj([["A","B","C"],["A","C","D"]]);
+  regional(strflg,ptflg,obj,vL,vnL,fL,vctr,vadd,vtx,
+       vnx,vnadd,faces,fnew,face,jj,kk,eps, tmp,tmp1,tmp2);
+  if(isstring(objL_1_1),strflg=1,strflg=0);
+  if(ispoint(objL_1_1),ptflg=1,ptflg=0);
   eps=10^(-4);
   vL=[];
   fL=[];
   vctr=0;
   forall(objL,obj,
-    if(isstring(obj),
-      tmp1=parse(obj);
-    ,
-      tmp1=obj;
+    if(ptflg==1,
+      tmp1=apply(obj,parse(#.name+"3d"));
+      tmp2=apply(obj,#.name);
     );
-    if(length(tmp1)>2,  // 16.02.28
+    if(strflg==1,
+      tmp1=apply(obj,parse(#+"3d"));
+      tmp2=apply(obj,#);
+    );
+    if(ptflg+strflg==0,
+      tmp1=obj;
+      tmp2=tmp1;
+    );
+    if(length(tmp1)>2, 
       tmp=1..length(tmp1);
       tmp1=[tmp1,[tmp]];
     );
-    vtx=tmp1_1;  // 16.02.11 from
+    vtx=tmp1_1; 
+    vnx=tmp2;
     faces=tmp1_2;
     fnew=faces;
     vctr=0;
     vadd=[];
+    vnadd=[];
     forall(1..length(vtx),jj,
       tmp1=vtx_jj;
+      tmp2=vnx_jj;
       tmp=select(1..length(vL),dist3d(vL_#,tmp1)<eps);
       if(length(tmp)==0,
         vadd=append(vadd,tmp1);
+        vnadd=append(vnadd,tmp2);
         vctr=vctr+1;
         tmp2=length(vL)+vctr;
       ,
@@ -2792,19 +2791,11 @@ Concatobj(objL,options):=(
       );
     );
     vL=concat(vL,vadd);
+    vnL=concat(vnL,vnadd);
     fL=concat(fL,fnew);   // 16.02.11 until
   );
   tmp2=apply(1..length(fL),1);
-  if(rmf=="y",
-    forall(1..length(fL),jj,
-      tmp=fL_jj;
-      tmp1=select((jj+1)..length(fL),fL_#==tmp);
-      forall(tmp1,tmp2_#=0);
-    );
-    tmp=select(1..length(tmp2),tmp2_#==1);
-    fL=fL_tmp;
-  );
-  [vL,fL];
+  [vnL,fL];
 );
 ////%Concatobj end////
 
@@ -2846,9 +2837,10 @@ Vertexedgeface(nm,vfnL):=Vertexedgeface(nm,vfnL,[]);  // 16.02.10
 Vertexedgeface(nm,vfnLorg,optionorg):=(
 //help:Vertexedgeface("1",[vL,fnL]);
 //help:Vertexedgeface("1",["A","B","C"]);
-//help:Vertexedgeface(options=["Vtx=n(y)" ',"Pt=fix") ,"Edg=n(y)","Label=8(/0)"]);
+//help:Vertexedgeface(options1=["Obj=y(n)" ,"Label=8(/0)"]);
+//help:Vertexedgeface(options2=["Vtx=n(y)","Pt=fix") ,"Edg=n(y)"]);
   regional(name3,namev,namee,namef,vfnL,options,
-  Noflg,eqL,strL, Lsize,msgflg,vfinished,
+  Noflg,eqL,strL, Lsize,msgflg,vfinished,objflg,
     Eps,vL,eL,enL,face,edge,vtx,vname,fixflg,
     vtxflg, edgflg,dispflg,tmp,tmp1,tmp2);
   Eps=10^(-5);
@@ -2857,17 +2849,11 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
   namee="phe3d"+nm;
   namef="phf3d"+nm;
   options=optionorg;
-  vfnL=vfnLorg;  // 16.06.19from
-  if(length(vfnL)>2,
-    vfnL=[vfnL,[1..length(vfnL)]];
-  );
-  if(length(vfnL)==1,
-    vfnL=[vfnL_1,[1..length(vfnL_1)]];
-  );  // 16.06.19until
   tmp=Divoptions(options); 
   Noflg=tmp_2;
   eqL=tmp_5;
   strL=tmp_7;
+  objflg="Y"; //220721
   fixflg=1;
   vtxflg="N"; //180905
   edgflg="N";
@@ -2885,29 +2871,42 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
       options=remove(options,[#]);
     ); //190331to
     if(tmp1=="M", //190506from
-      msgflg=Toupper(substring(tmp_2,0,1));
+      msgflg=tmp2;
       options=remove(options,[#]);
     ); //190506to
-  );
-  forall(strL,
-    if(Toupper(#)=="FREE",
-      fixflg=0;
+    if(tmp1=="O", //220721from
+      objflg=tmp2;
       options=remove(options,[#]);
-    );
+    ); ///220721to
   );
-  tmp=select(allpoints(),indexof(#.name,"z")==0); //190506from
-  tmp1=remove(tmp,[SW,NE,TH,FI]);
+  vfnL=vfnLorg;  // 16.06.19from
+  if(objflg=="N",
+    vfnL=Concatobj(vfnL);
+  );  
+  if(length(vfnL)>2,
+    vfnL=[vfnL,[1..length(vfnL)]];
+  );
+  if(length(vfnL)==1,
+    vfnL=[vfnL_1,[1..length(vfnL_1)]];
+  );  // 16.06.19to
   vL=[];
-  forall(1..length(vfnL_1),
-    vtx=vfnL_1_#;  // 16.02.10 from
-    finished=0; // 220714from
+  forall(1..length(vfnL_1),nm,
+    vtx=vfnL_1_nm;  //220721from
+    if(islist(vtx),
+      vname="V"+nm;
+      Pointdata3d(vname,vtx);
+      finished=1; //220721to
+    );
     if(isstring(vtx),
       tmp=indexof(vtx,"3d");
       if(tmp>0,
         vname=substring(vtx,0,tmp-1);
-        vtx=parse(vtx);// 16.06.19
-        finished=1;
-      ); // 220714to
+        vtx=parse(vtx); //160619
+      ,
+        vname=vtx; //220721[2lines]
+        vtx=parse(vtx+"3d");
+      );
+      finished=1;
     );
     if(finished==0, //220714
       vtx=parse(vtx);// 16.06.19
@@ -2915,13 +2914,15 @@ Vertexedgeface(nm,vfnLorg,optionorg):=(
         tmp=parse(vtx.name+"3d"); //190506
         vname=vtx.name;
       ,
+        tmp=select(allpoints(),indexof(#.name,"z")==0);
+        tmp1=remove(tmp,[SW,NE,TH,FI]);
         tmp=select(tmp1,|#.xy-Parapt(vtx)|<Eps);
         if(length(tmp)>0,
           tmp=tmp_1;
           vname=tmp.name;
         ,
           vname="V"+nm+text(#); //181212
-        ); //190506to
+        );
         if(vtxflg=="Y",
           if(fixflg==1,
             Putpoint3d([vname,vtx],"fix");

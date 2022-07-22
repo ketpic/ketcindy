@@ -2367,15 +2367,29 @@ Drawpoint3d(pt3,options):=(
 
 ////%Pointdata3d start////
 Pointdata3d(name,pt3):=Pointdata3d(name,pt3,[]);//181017from
-Pointdata3d(name,pt3,options):=( //181017from
+Pointdata3d(name,pt3,optionsorg):=( //181017from
 //help:Pointdata3d("A",[1,2,3],options);
-  regional(pt2,ptsub,tmp);
-  tmp=append(options,"Disp=n");
+  regional(pt2,ptsub,options,tmp,label);
+  label=[];
+  options=append(optionsorg,"Disp=n"); //220722from
+  tmp=select(options,Toupper(substring(#,0,1))=="L");
+  if(length(tmp)>0,
+    options=remove(options,tmp);
+    label=Strsplit(tmp_1,",");
+    if(length(label)==1,label=append(label,"1"));
+    if(length(label)==2,label=append(label,"black"));
+  ); //220722to
   pt2=Parapt(pt3);//220713from
-  Pointdata("-"+name+"2d",pt2,tmp);
+  if(length(label)>0, //220722from
+    tmp=select(options,indexof(#,"Size=")==0);
+    tmp=select(tmp,indexof(#,"Color=")==0);
+    tmp=concat(tmp,["Size="+label_2,"Color="+label_3]);
+    Letter(pt2,label_1,name, tmp);
+  ); //220722to
+  Pointdata("-"+name+"2d",pt2,options);
   if(SUBSCR==1,
     ptsub=Parasubpt(pt3);
-    tmp=append(tmp,"notex"); //220722
+    tmp=append(options,"notex"); //220722
     Pointdata("-"+name+"z2d",ptsub,tmp);
   );
   Defvar(name+"3d",pt3);//220713
@@ -4670,8 +4684,6 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
               tmp1=Invparapt(tmp,Obj3);
               if(length(tmp1)>0,
                 PtD=append(PtD,tmp1);
-              ,
-                println([4694,tmp1]);
               );
             );
            );

@@ -1,3 +1,5 @@
+// 220722
+//    Pointdata3d changed ( Label=dir,size,color added )
 // 220714
 //    Vertexedgeface dbg
 //    Nohiddebyfaces dbg ( ; added for  "only ketjs" )

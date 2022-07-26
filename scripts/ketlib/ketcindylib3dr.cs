@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220722] loaded");
+println("ketcindylib3d[20220726] loaded");
 
 //help:start();
 
@@ -176,81 +176,22 @@ Start3d(ptexception,optionjs):=(//190503to
 );
 ////%Start3d end////
 
-////%Setangle start////
-Setangle(angL):=Setangle(ang_1,ang_2);//180614
-Setangle(theta,phi):=( //16.12.24
-//help:Setangle(60,30);
-  regional(xmn,xMx,ymn,yMx,pt,pt3,pt2,
-    xPos,yTh,yPh,Eps,tmp,tmp1,tmp2,tmp3,tmp4);
+////%Setangle start////  //220726major changes
+Setangle(ang):=Setangle(ang_1,ang_2);
+Setangle(th,phi):=(
+//help:Setangle([20,38]);
+//help:Setangle(20,38);
+  regional(tmp,xPos,yTh,yPh);
   tmp=round(4*SW.y)/4;
-  xPos=-5; //220208[2lines]
-  yTh=tmp-0.5; yPh=tmp-1;
-  if(theta=="",theta=THETA*180/pi);
-  if(phi=="",phi=PHI*180/pi);
-  THETA=theta*pi/180;
-  TH.x=theta/20+xPos;
+  xPos=-5; yTh=tmp-0.5; yPh=tmp-1;
+  THETA=th*pi/180;
   PHI=phi*pi/180;
-  FI.x=phi/40+xPos;
-//  drawtext([xPos-0.8,yTh-0.1],format(theta,2));
-//  drawtext([xPos-0.8,yPh-0.1],format(phi,2));
-  tmp="Setangle(" // no ketjs on
-    +format(theta,5)+","+format(phi,5)+")";
-  GLIST=append(GLIST,tmp); //no ketjs off
-  if(length(VLIST)==0, // 16.06.20 
-    tmp=apply(allpoints(),#.name); //190505
-    tmp4=remove(tmp,PTEXCEPTION);  //190329
-    forall(tmp4,pt,
-      tmp1=pt;
-      tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-      if(tmp!="z",
-        tmp=parse(tmp1+"z.xy"); //181028
-        if(ispoint(tmp), //200109
-          pt3=Xyzcoord(pt.xy,tmp); //181028
-          Defvar(tmp1+"3d",pt3);
-          pt2=Parapt(pt3);  // 16.05.28from
-          Defvar(tmp1+"2d",pt2);  // 16.05.28to
-        ); //200109
-      );
-    );
-  ,
-    if(Ptselected(NE) % Ptselected(SW),  //190505
-      tmp4=apply(allpoints(),#.name);  //190505
-      tmp4=remove(tmp4,PTEXCEPTION); 
-      forall(tmp4,pt,
-        tmp1=pt;
-        tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-        if(tmp!="z",
-          tmp=select(VLIST,#_1==tmp1+"3d");
-          pt3=tmp_1_2;
-          tmp=tmp1+".xy=Parapt("+pt3+")_[1,2];";
-          parse(tmp);
-        );
-      );
-    ,
-      tmp=apply(allpoints(),#.name); //190505
-      tmp4=remove(tmp,PTEXCEPTION); //180916
-      forall(tmp4,pt,
-        tmp1=pt;
-        tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
-        if(tmp!="z",
-          tmp2=parse(tmp1+"z");
-          if(Ptselected(pt) % Ptselected(tmp2),
-            Defvar(tmp1+"2d",pt.xy);
-            tmp=parse(tmp1+"z.xy"); //181028[2lines]
-            tmp=Xyzcoord(pt.xy,tmp);
-            Defvar(tmp1+"3d",tmp);
-          );
-        );
-      );
-    );
-  ); 
-  forall(Datalist3d(),#,
-    tmp1=replace(#,"3d","2d");
-    tmp2=Projpara(#,["nodata"]);
-    tmp=tmp1+"="+textformat(tmp2,5)+";"; //190415
-    parse(tmp);
-  );
-  Ptseg3data(PTEXCEPTION); //180916 
+  TH.x=xPos+th/20;
+  FI.x=xPos+phi/40;
+  drawtext([xPos-0.8,yTh-0.1],Sprintf(th,2),
+     align->"right");
+  drawtext([xPos-0.8,yPh-0.1],Sprintf(phi,2),
+     align->"right");
 );
 ////%Setangle end////
 
@@ -2389,7 +2330,7 @@ Pointdata3d(name,pt3,optionsorg):=( //181017from
   Pointdata("-"+name+"2d",pt2,options);
   if(SUBSCR==1,
     ptsub=Parasubpt(pt3);
-    tmp=append(options,"notex"); //220722
+    tmp=append(options,"nodisp"); //220722
     Pointdata("-"+name+"z2d",ptsub,tmp);
   );
   Defvar(name+"3d",pt3);//220713

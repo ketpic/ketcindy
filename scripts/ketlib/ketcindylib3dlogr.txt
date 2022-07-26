@@ -1,3 +1,5 @@
+// 220726
+//    Setangle major changed
 // 220722
 //    Pointdata3d changed ( Label=dir,size,color added )
 // 220714

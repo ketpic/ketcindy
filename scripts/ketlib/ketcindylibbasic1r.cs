@@ -16,7 +16,7 @@
 
 println("KeTCindy V.4.4.10");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220722] loaded");
+println("ketcindylibbasic1[20220731] loaded");
 
 //help:start();
 
@@ -790,12 +790,18 @@ Indexall(str,key):=(
 );
 ////%Indexall end////
 
-////%Strsplit start////  // 210422 renewed
-Strsplit(str,key):=( // 210422 renewed
-//help:Strsplit(string,"=");
-  regional(tmp,out);
-  tmp=tokenize(str,key);
-  out=apply(tmp,if(!isstring(#),Textformat(#,10),#));
+////%Strsplit start////  // 210422,220731 renewed
+Strsplit(strorg,key):=( // 210422 renewed
+  regional(str,ctr,tmp,tmp1,out);
+  str=strorg+key; 
+  out=[];
+  tmp=indexof(str,key);
+  while(tmp>0,
+    tmp1=substring(str,0,tmp-1);
+    out=append(out,tmp1);
+    str=substring(str,tmp-1+length(key),length(str));
+    tmp=indexof(str,key);
+  );
   out;
 );
 ////%Strsplit end////

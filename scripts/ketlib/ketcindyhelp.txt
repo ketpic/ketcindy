@@ -44,7 +44,6 @@ Factorial(5);
 Binomial(5,2);
 Norm([2,1,3]);
 Removespace(" a b c  ");
-Strsplit(string,"=");
 :Parselist("[sg1,sg2]");
 Bracket(string,"()");
 Getlevel(string,","]);

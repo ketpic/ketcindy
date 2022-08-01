@@ -1,3 +1,5 @@
+// 20220731
+//    Strsplit changed   ( use of tokenize avoided )
 // 20220722
 //    Pointdata dbg  ( case of "notex", subgraph )
 // 20220719

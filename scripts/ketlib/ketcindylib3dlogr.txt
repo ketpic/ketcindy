@@ -1,3 +1,5 @@
+// 220801
+//    Nohiddenbyfaces changed  ( color of hidden )
 // 220726
 //    Setangle major changed
 // 220722

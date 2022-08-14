@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20220316] loaded");
+println("ketcindylibbasic2[20220814] loaded");
 
 //help:start();
 
@@ -3181,7 +3181,7 @@ Letter(list,options):=(
   Nj=1;
 //  if(Ketcindyjsfigure>0,sz=round(sz*Ketcindyjsscale) ); // only ketjs
   while(Nj+2<=length(list),
-    Pos=list_Nj;
+    Pos=Lcrd(list_Nj);  //220814
     Dir=list_(Nj+1);
     Str=list_(Nj+2);
     if(!isstring(Str),Str=format(Str,10)); // 16.09.30,10.09

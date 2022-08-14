@@ -49,7 +49,7 @@ Drwexpr,basic2,3070,3081
 Drwletter,basic2,3085,3096
 Expr,basic2,3100,3121,iswindows,Letter
 Lettermove,basic2,3125,3143
-Letter,basic2,3147,3231,Divoptions,Colorrgb2cmyk,Removespace,Strsplit,Toupper,RSslash,Lettermove,Colorcmyk2rgb,Pcrd,Assign,Dqq
+Letter,basic2,3147,3231,Divoptions,Colorrgb2cmyk,Removespace,Strsplit,Toupper,Lcrd,RSslash,Lettermove,Colorcmyk2rgb,Pcrd,Assign,Dqq
 Letterrot,basic2,3235,3283,Divoptions,Colorrgb2cmyk,Letter,LLcrd
 Exprrot,basic2,3287,3339,Divoptions,Colorrgb2cmyk,iswindows,Expr,LLcrd
 Ptpos,basic2,3343,3363,Textformat

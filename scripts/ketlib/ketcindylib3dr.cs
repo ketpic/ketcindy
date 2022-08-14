@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220726] loaded");
+println("ketcindylib3d[20220801] loaded");
 
 //help:start();
 
@@ -3400,7 +3400,7 @@ Nohiddenbyfaces(nm,segLorg,faceLorg,optionorg,optionsh):=(//190331
       tmp=select(optionsh,indexof(#,"=")>0); //180815from
 	  tmp=remove(optionsh,tmp);
       if(length(tmp)==0,tmp=append(optionsh,"do")); //180815to
-      tmp=append(tmp,"Msg=nodisp");  // 15.06.22
+      tmp=concat(tmp,["Color="+color,"Msg=no"]);  // 220801
       Spaceline("-"+nameh+"n"+text(ctr),[tmp1,tmp2],tmp);
       frhL=append(frhL,nameh+"n"+text(ctr)+"3d");
       ctr=ctr+1;

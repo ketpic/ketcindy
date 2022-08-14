@@ -1,3 +1,5 @@
+// 20220814
+//    Letter dbg  ( for scaling )
 // 20220316
 //    Changetablestyle debugged (Major change)
 // 2021217

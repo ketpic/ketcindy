@@ -1,3 +1,5 @@
+// 20220819
+//    Arrowdata dbg  ( color cmyk>rgb)
 // 20220814
 //    Letter dbg  ( for scaling )
 // 20220316

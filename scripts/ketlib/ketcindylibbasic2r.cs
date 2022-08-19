@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20220814] loaded");
+println("ketcindylibbasic2[20220819] loaded");
 
 //help:start();
 
@@ -562,7 +562,8 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
     ,
       Listplot("-ar"+nm+"h",[tmp1,pP,tmp2,pC,tmp1],["dr,0.1","Color="+color,"Msg=n"]); //210522
       Shade(["ar"+nm+"h"],[Ltype,"Color="+color]); // no ketjs
-//    fillpoly(parse("ar"+nm+"h"),color->color); // only ketjs //210522
+   //tmp=Colorcmyk2rgb(color); // only ketjs 220819[2lines]
+   //fillpoly(parse("ar"+nm+"h"),color->tmp); // only ketjs //210522, dbg
     );
     if(lineflg==0,
       if(segpos==1,pB=pC); //191202

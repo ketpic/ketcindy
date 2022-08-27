@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220719] loaded");
+println("ketcindylibbasic3[20220826] loaded");
 
 //help:start();
 
@@ -3652,16 +3652,6 @@ Setketcindyjs(list):=(  // no ketjs on
 );  // no ketjs off
 ////%Setketcindyjs end////
 
-////%Ketcindyjsbody start//// 190909,200505(remove help)
-Ketcindyjsbody(list1,list2):=Ketcindyjsbody([],list1,list2); //220719
-Ketcindyjsbody(listtop,list1,list2):=( //220719
-//help:Ketcindyjsbody([listtop,] listfront,listrear);
-//help :Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
-  JSBODY=[listtop,list1,list2]; //220719
-  JSBODY;
-);
-////%Ketcindyjsbody end////
-
 ////%Ketcindyjsmain start//// 200119
 Ketcindyjsmain(prelist):=Ketcindyjsmain(prelist,[]); // no ketjs on
 Ketcindyjsmain(prelist,postlist):=( 
@@ -3984,7 +3974,6 @@ Textedit2value(no,options):=(
 );
 ////%Textedit2value end////
 
-
 ////%Parsejson start////
 Parsejson(json):=(
 //help:Parsejson("{a:[1,2,[3,4],5],b:{1,2,3}}");
@@ -4189,7 +4178,22 @@ Tohtmltagpf(sentence):=(
   );
   tmp4;
 );
-////%Tohtmltagpf send///
+////%Tohtmltagpf end///
+
+////%Ketcindyjsbody start//// 190909,200505(remove help)
+Ketcindyjsbody(list1,list2):=Ketcindyjsbody([],list1,list2); //220719
+Ketcindyjsbody(listtop,list1org,list2org):=( //220719
+//help:Ketcindyjsbody([listtop,] listfront,listrear);
+//help :Ketcindyjsbody(["<p,f10>_;_;Sample"],[]); //191004
+//help :Ketcindyjsbody(Licecse(),Healine("title"),Copyright()); //191004
+  regional(list1,list2); //220826from
+  list1=list1org; list2=list2org;
+  if(!islist(list1),list1=[list1]);
+  if(!islist(list2),list2=[list2]); //220826to
+  JSBODY=[listtop,list1,list2]; //220719
+  JSBODY;
+);
+////%Ketcindyjsbody end////
 
 ////%License start//// 211217
 License():=(
@@ -4213,14 +4217,17 @@ License():=(
 );
 ////%License end//// 
 
-////%Headline start//// 220719
-Headline(titleorg):=(
+////%Headline start//// 220719,0826[3lines]
+Headline(titleorg):=Headline("center",titleorg);
+Headline(pos,titleorg):=(
 //help:Headline(title);
+//help:Headline("left",title);
   regional(title,tmp);
   title=titleorg;
   if(!islist(title),title=[title]);
-  tmp="<header><p align="+Dqq("center")+">";
-  tmp=tmp+"<font size="+Dqq("6")+">";
+  tmp="<header><p"; //220826[3lines]
+  if(pos!="center",tmp=tmp+" align="+Dqq(pos));
+  tmp=tmp+"><font size="+Dqq("6")+">";
   title=prepend(tmp,title);
   title=append(title,"</font></p></header>");
   title;

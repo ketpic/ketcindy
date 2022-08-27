@@ -1,3 +1,5 @@
+// 20220823
+//    Derivative dbg  ( substring misused)
 // 20220731
 //    Strsplit changed   ( use of tokenize avoided )
 // 20220722

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.12");
+println("KeTCindy V.4.4.13");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220731] loaded");
+println("ketcindylibbasic1[20220823%] loaded");
 
 //help:start();
 
@@ -2422,7 +2422,7 @@ Intersectcurvespp(crv1org,crv2org,options):=(
   if(isstring(crv1org),tmp1=parse(crv1org),tmp1=crv1org);//18.01.05from
   if(isstring(crv2org),tmp2=parse(crv2org),tmp2=crv2org);
   tmp1=apply(tmp1,LLcrd(#));
-  tmp2=apply(tmp2,LLcrd(#));
+  tmp2=apply(tmp2,LLcrd(#)); 
   crv1=[tmp1_1];
   forall(tmp1,
     tmp=crv1_(length(crv1));
@@ -2655,7 +2655,7 @@ Derivative(fun,var,value,options):=(
   tmp=Divoptions(options);
   eqL=tmp_5;
   forall(eqL,
-    tmp=substring(#,"=");
+    tmp=indexof(#,"=");//220823
     tmp1=Toupper(substring(#,0,1));
     tmp2=substring(#,tmp,tmp+1);
     if(tmp1=="M",

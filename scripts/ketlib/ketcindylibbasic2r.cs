@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20220819] loaded");
+println("ketcindylibbasic2[20220903] loaded");
 
 //help:start();
 
@@ -3390,12 +3390,14 @@ Strictmove(pCorg,sep):=(
 
 ////%Slider start////
 Slider(ptstr,p1,p2):=Slider(ptstr,p1,p2,[]);
-Slider(ptstr,p1,p2,options):=(//190120
+Slider(ptstr,p1,p2,optionsorg):=(//220903
 //help:Slider("A-C-B",[-3,0],[3,0]);
 //help:Slider("C",[-3,0],[3,0]);
 //help:Slider(options=["Color=[0,0,0.6]","Thick=2"]);
 //help:Slider(options2=["Sep=0.3"]); //190824
-  regional(pA,pB,pC,color,thick,sep,tmp,tmp1,tmp2);
+  regional(pA,pB,pC,options,color,thick,sep,
+        tmp,tmp1,tmp2);
+  options=optionsorg;
   color="Color=0.6*[0,0,1]"; //190120from
   thick="size->2";
   sep=0.3; //190824
@@ -3403,14 +3405,17 @@ Slider(ptstr,p1,p2,options):=(//190120
     tmp=Toupper(substring(#,0,1));
     if(tmp=="C",
       color=#;
+      options=remove(options,[tmp]);//220903
     );
     if(tmp=="T",
       tmp=Strsplit(#,"=");
       thick="size->"+tmp_2;
+      options=remove(options,[tmp]);//220903
     );
     if(tmp=="S",//190824from
       tmp=Strsplit(#,"=");
       sep=parse(tmp_2);
+      options=remove(options,[tmp]);//220903
     ); //190824to
   );
   tmp=Indexall(ptstr,"-");
@@ -3434,7 +3439,9 @@ Slider(ptstr,p1,p2,options):=(//190120
     pC=ptstr; pA=pC+"l"; pB=pC+"r"; 
     PTEXCEPTION=concat(PTEXCEPTION,[pC]);
   );
-  Listplot(pA+pB,[p1,p2],["Msg=n","notex",color,thick]);
+  options=concat(options,["Msg=n",color,thick]); //220903[2lines]
+  if(!contains(options,"nodisp"),options=append(options,"notex"));
+  Listplot(pA+pB,[p1,p2],options);
   Putonseg(pC,parse("sg"+pA+pB));
 );
 ////%Slider end////

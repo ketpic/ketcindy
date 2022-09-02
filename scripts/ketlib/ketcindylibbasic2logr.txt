@@ -1,3 +1,5 @@
+// 20220903
+//    Slider change  ( nodisp supported)
 // 20220819
 //    Arrowdata dbg  ( color cmyk>rgb)
 // 20220814

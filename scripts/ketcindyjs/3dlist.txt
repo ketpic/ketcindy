@@ -1,5 +1,5 @@
 Ketinit3d,3d,22,54,Setwindow,Addax
-Start3d,3d,58,176,Strsplit,Toupper,Setwindow,Putpoint,Slider,Strictmove,Ptpos,Sprintf,Ptselected,Ptseg3data
+Start3d,3d,58,176,Strsplit,Toupper,Setwindow,Putpoint,Slider,Sprintf,Ptselected,Ptseg3data
 Setangle,3d,180,195,Sprintf
 Getangle,3d,199,218,getangle,divoptions,Strsplit,181111,Toupper,textformat
 Angleselected,3d,222,223,IsAngle

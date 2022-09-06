@@ -1,5 +1,3 @@
-// 220901
-//    Start3d changed  ( Strictmove readded )
 // 220801
 //    Nohiddenbyfaces changed  ( color of hidden )
 // 220726

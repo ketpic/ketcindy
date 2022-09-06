@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220901] loaded");
+println("ketcindylib3d[20220801] loaded");
 
 //help:start();
 
@@ -127,10 +127,10 @@ Start3d(ptexception,optionjs):=(//190503to
 //  if(SLIDEFLG=="Y", // only ketjs //190503from
     Slider("TH",[xPos,yTh],[xPos+9,yTh],["Color=green"]); //190209
     Slider("FI",[xPos,yPh],[xPos+9,yPh],["Color=green"]); //190209
-    forall(remove(allpoints(),[SW,NE]), //220613from 220708from,220801[4lines]revival
-      Strictmove(#.name);
-      Ptpos(#,#.xy); 
-    );
+//    forall(remove(allpoints(),[SW,NE]), //220613from 220708from
+//      Strictmove(#.name);
+//      Ptpos(#,#.xy); 
+//    );
 //    xPos=-5; //220613to 220708to
     THETA=(TH.x-xPos)*20*pi/180;
     PHI=(FI.x-xPos)*40*pi/180; // 16.06.20until

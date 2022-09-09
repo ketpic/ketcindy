@@ -138,18 +138,18 @@ Opcrvs,basic1,4047,4055,Listplot
 Pointdata,basic1,4059,4193,Divoptions,Strsplit,Toupper,Lcrd,Measuredepth,Textformat,RSform,Colorname2cmyk,Colorcmyk2rgb,Pcrd,201027from 
 Listplot,basic1,4197,4278,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Pcrd,Textformat,Getlinestyle,Lcrd
 Lineplot,basic1,4282,4366,Colorrgb2cmyk,Strsplit,Toupper,Divoptions,Lcrd,Pcrd,Textformat,Getlinestyle
-Plotdata,basic1,4370,4576,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Getlinestyle
-Paramplot,basic1,4580,4753,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Getlinestyle
-Polarplot,basic1,4757,4766,Strsplit,Paramplot
-Connectseg,basic1,4770,4832,Norm
-Implicitplot,basic1,4836,5020,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Getlinestyle
-Circledata,basic1,5024,5146,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Lcrd,Listplot,Pcrd,Textformat,Getlinestyle
-Framedata,basic1,5150,5217,Measuredepth,LLcrd,Divoptions,Toupper,Lcrd,Listplot
-Framedata2,basic1,5221,5228,Lcrd,Framedata
-Ovaldata,basic1,5232,5302,Divoptions,Colorrgb2cmyk,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Getlinestyle,Pcrd,Textformat
-Segmark,basic1,5306,5373,Divoptions,Toupper,Strsplit,Listplot,Circledata,Polygonplot
-Parabolaplot,basic1,5377,5417,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
-Ellipseplot,basic1,5421,5464,Lcrd,Rotatepoint,Paramplot,Rotatedata
-Hyperbolaplot,basic1,5468,5532,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
-Polygonplot,basic1,5536,5581,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
-Putintersect,basic1,5585,5613,Intersectcrvs,Putpoint
+Plotdata,basic1,4370,4592,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper,Assign,Norm,Measuredepth,Pcrd,Textformat,Getlinestyle
+Paramplot,basic1,4596,4769,Divoptions,Colorrgb2cmyk,Strsplit,PaO,Dqq,Toupper, differs from Scilab ,Assign,Measuredepth,Pcrd,Textformat,Getlinestyle
+Polarplot,basic1,4773,4782,Strsplit,Paramplot
+Connectseg,basic1,4786,4848,Norm
+Implicitplot,basic1,4852,5036,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Impfun,Connectseg,Measuredepth,Pcrd,Textformat,Getlinestyle
+Circledata,basic1,5040,5162,Divoptions,Colorrgb2cmyk,Strsplit,Toupper,Lcrd,Listplot,Pcrd,Textformat,Getlinestyle
+Framedata,basic1,5166,5233,Measuredepth,LLcrd,Divoptions,Toupper,Lcrd,Listplot
+Framedata2,basic1,5237,5244,Lcrd,Framedata
+Ovaldata,basic1,5248,5318,Divoptions,Colorrgb2cmyk,Lcrd,Listplot,Circledata,Reflectdata,Joincrvs,Getlinestyle,Pcrd,Textformat
+Segmark,basic1,5322,5389,Divoptions,Toupper,Strsplit,Listplot,Circledata,Polygonplot
+Parabolaplot,basic1,5393,5433,Lcrd,Rotatepoint,Textformat,Plotdata,Rotatedata
+Ellipseplot,basic1,5437,5480,Lcrd,Rotatepoint,Paramplot,Rotatedata
+Hyperbolaplot,basic1,5484,5548,Divoptions,Toupper,Lcrd,Rotatepoint,Paramplot,Lineplot,Rotatedata
+Polygonplot,basic1,5552,5597,Divoptions,Strsplit,Toupper,Lcrd,Putpoint,Listplot
+Putintersect,basic1,5601,5629,Intersectcrvs,Putpoint

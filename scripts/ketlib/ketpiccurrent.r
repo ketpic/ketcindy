@@ -16,10 +16,12 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(20210504)" 
+ThisVersion<- "KeTpic for R  v5_2_5(20220910)" 
 
 print(ThisVersion)
 
+# 20220910
+#   Plotdata changed ( for "y" )
 # 2021119
 #   Hatchdata debugged  ( case of scaling )
 # 20210625
@@ -5570,12 +5572,18 @@ Plotdata<- function(...)
   K<-Tmp[[1]]
   if(length(K)>1){
     Vname<- K[1]
+    if(Vname=="y") Yflg=1 else Yflg=0
     Tmp1<- K[2]
     Rng<- eval(parse(text=Tmp1))
   }
   else{
     Vname<- Rgstr
-    Rng<- c(XMIN,XMAX)
+    if(Vname=="y") Yflg=1 else Yflg=0
+    if(Yflg==0){ #220910from
+      Rng<- c(XMIN,XMAX)
+    }else{
+      Rng<- c(YMIN,YMAX)
+    } #220910to
   }
   N<- 50      # Numpoints
   E<-c()       # Exclusions
@@ -5681,6 +5689,9 @@ Plotdata<- function(...)
   if(Tmp1[1]==Inf){
     P<- P[1:(Tmp-1),]
   }
+  if(Yflg==1){ #220910from
+    P=cbind(P[,2],P[,1])
+  } #220910to
   return(P)
 }
 

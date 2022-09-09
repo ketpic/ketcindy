@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.14");
+println("KeTCindy V.4.4.15");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220823%] loaded");
+println("ketcindylibbasic1[20220910] loaded");
 
 //help:start();
 
@@ -4368,9 +4368,10 @@ Plotdata(name1,func,variable):=Plotdata(name1,func,variable,[]);
 Plotdata(name1,func,variable,options):=(
 //help:Plotdata("1","sin(x)","x",["Num=100"]);
 //help:Plotdata("2","x^2","x=[-1,1]");
+//help:Plotdata("3","sin(y)","y");
 //help:Plotdata("Options=[Num,Exc,Dis]");
   regional(Fn,Va,tmp,tmp1,tmp2,eqL,name,Vname,x1,x2,dx,
-         PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,Msg,
+         PdL,Num,Ec,Dc,Fun,Exfun,x,Ke,Eps,Pa,Msg,yflg,
          Ltype,Noflg,Inflg,Outflg,opstr,opcindy,color,color4);
   if(substring(name1,0,1)!="-",  //190420from
     name="gr"+name1;
@@ -4387,6 +4388,7 @@ Plotdata(name1,func,variable,options):=(
   opcindy=tmp_(length(tmp));
   eqL=tmp_5;
   Num=50;
+  yflg=0; //220910
   Ec=[];
   Exfun="";
   Dc=1000;
@@ -4424,14 +4426,20 @@ Plotdata(name1,func,variable,options):=(
     tmp=replace(func,LFmark,"");
     tmp=tokenize(variable,"=");
     Vname=tmp_1;
+    if(Vname=="y",yflg=1); //220910
     if(length(tmp)>1,
       tmp=tmp_2;
       tmp=parse(tmp);
       x1=tmp_1;
       x2=tmp_2;
       ,
-      x1=XMIN;
-      x2=XMAX;
+        if(yflg==0, //220910from
+          x1=XMIN;
+          x2=XMAX;
+        ,
+          x1=YMIN;
+          x2=YMAX;
+        ); //220910to
     );
   //  dx=(x2-x2)/Num;  
     Ec=append(sort(Ec),10000);
@@ -4523,11 +4531,19 @@ Plotdata(name1,func,variable,options):=(
         println("generate Plotdata "+name);
       );
       if(Measuredepth(PdL)==1,
-        tmp1=apply(PdL,Pcrd(#));
+        if(yflg==0, //220910from
+          tmp1=apply(PdL,Pcrd(#));
+        ,
+          tmp1=apply(PdL,Pcrd([#_2,#_1]));
+        ); //220910to
       ,
         tmp1=[];
         forall(PdL,tmp2,
-          tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
+          if(yflg==0, //220910from
+            tmp1=append(tmp1,apply(tmp2,Pcrd(#)));
+          ,
+            tmp1=append(tmp1,apply(tmp2,Pcrd([#_2,#_1])));
+          ); //220910to
         );
       );
       tmp=name+"="+Textformat(tmp1,5)+";";

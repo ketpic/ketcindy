@@ -1,3 +1,5 @@
+// 20220915
+//    Pointdata dbg  ( "dispflg" changed to local )
 // 20220910
 //    Plotdata changed ( "y" supported)
 // 20220823

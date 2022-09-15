@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.15");
+println("KeTCindy V.4.4.16");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220910] loaded");
+println("ketcindylibbasic1[20220915] loaded");
 
 //help:start();
 
@@ -4058,7 +4058,7 @@ Pointdata(nm,listorg,optionsorg):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
 //help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n/color(,ratio))"]);
-  regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,color4,
+  regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,color4,dispflg,//220715
       size,inside,incolor,ratio,tmp,tmp1,tmp2,tmp3,ngc1,ngc2,ng1,ng2,nc1,nc2);
   if(substring(nm,0,1)=="-", //200510[2lines]
     name=substring(nm,1,length(nm));

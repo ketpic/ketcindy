@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20220826] loaded");
+println("ketcindylibbasic3[20221010] loaded");
 
 //help:start();
 
@@ -3248,7 +3248,6 @@ Totexform(str):=( //210803from[renew]
           tmp=replace(rep_2_3,"xx",tmp1);
           tmp=replace(tmp,"yy",tmp2);
           out=replace(tmp,"zz",tmp3);
-          println(out);
         );
         if(nn==4,
           tmp1=substring(out,plv_1_1,clv_1_1-1);

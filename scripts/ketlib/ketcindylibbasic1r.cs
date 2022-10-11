@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.16");
+println("KeTCindy V.4.4.17");
 println(ketjavaversion());
-println("ketcindylibbasic1[20220915] loaded");
+println("ketcindylibbasic1[20221003] loaded");
 
 //help:start();
 
@@ -1140,7 +1140,7 @@ Ptselected(ptlistorg):=(
 //help:Ptselected();
 //help:Ptselected(geopoint);
  regional(ptlist,flg,Eps);
- Eps=(XMAX-XMIN)/10; //190505
+ Eps=StrictSep;//(XMAX-XMIN)/10; //190505,221003
  flg=0;
  ptlist=ptlistorg; //190505[2lines]
  if(!islist(ptlist),ptlist=[ptlist]);

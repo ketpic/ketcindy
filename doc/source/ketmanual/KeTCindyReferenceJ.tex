@@ -1,4 +1,5 @@
 \documentclass[papersize,a4paper,10pt,uplatex]{jsarticle}
+\usepackage{pict2e}
 \usepackage{ketpic,ketlayer}
 \usepackage{amsmath}
 % \usepackage{amsmath,newtxmath}
@@ -1865,6 +1866,17 @@ options は次の通り。
 
 \vspace{\baselineskip}
 \hspace{20mm}\input{Fig/plotdata2} 
+
+\vspace{\baselineskip}
+【例】$x=y^2$ のグラフを，定義域 $0 \leq y \leq YMAX$で描く。
+
+\hspace{10mm} \verb|Plotdata("y","y^2","y=[0,YMAX]");|
+
+yは固定で，他の変数は使えない．
+
+\vspace{\baselineskip}
+\hspace{20mm}\input{Fig/plotdatay} 
+
 
 %\vspace{\baselineskip}
 CindyScript では，plot( 式 , 定義域 ); で描くが， \ketcindy を用いるときは，CindyScript のplot 関数のかわりに，このPlotdata を使えばよい。

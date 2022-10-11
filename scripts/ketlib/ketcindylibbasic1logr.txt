@@ -1,3 +1,5 @@
+// 20221003
+//    Ptselected changed  (Eps set to StrictSep )
 // 20220915
 //    Pointdata dbg  ( "dispflg" changed to local )
 // 20220910

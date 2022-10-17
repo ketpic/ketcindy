@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.17");
+println("KeTCindy V.4.4.18");
 println(ketjavaversion());
 println("ketcindylibbasic1[20221003] loaded");
 

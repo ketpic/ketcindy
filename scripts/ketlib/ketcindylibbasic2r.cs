@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20220903] loaded");
+println("ketcindylibbasic2[20221017] loaded");
 
 //help:start();
 
@@ -2807,23 +2807,24 @@ MakeRarg(arglist):=(
 
 ////%Htickmark start////
 Htickmark(arglist):=Htickmark(arglist,[]); //190203
-Htickmark(arglist,options):=( //190203
+Htickmark(arglist,options):=( //221017
 //help:Htickmark([1,"1",2,"sw","2"]);
   regional(nn,tmp,tmp1,tmp2,mark);
   mark=MARKLEN/SCALEY;
-  tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
+  tmp1=select(1..(length(arglist)),!isstring(arglist_#)); 
   forall(tmp1,nn,
-    Listplot("ht"+text(nn),
-        [[arglist_nn,mark],[arglist_nn,-mark]],append(options,"Msg=n"));//191101
+    tmp=apply([[arglist_nn,mark],[arglist_nn,-mark]],GENTEN+#);
+    Listplot("ht"+text(nn),tmp,append(options,"Msg=n"));
+    tmp2=GENTEN+[arglist_nn,0];
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
-        Expr([[arglist_nn,0],"s1",arglist_(nn+1)],options); //190203
+        Expr([tmp2,"s1",arglist_(nn+1)],options); 
       ,
-        Expr([[arglist_nn,0],arglist_(nn+1),arglist_(nn+2)],options); //190203
+        Expr([tmp2,"s1",arglist_(nn+1),arglist_(nn+2)],options);
       );
     ,
-      Expr([[arglist_nn,0],"s1",arglist_(nn+1)],options); //190203
+      Expr([tmp2,"s1",arglist_(nn+1)],options);
     );
   );//180710to
 //  tmp="";
@@ -2833,27 +2834,27 @@ Htickmark(arglist,options):=( //190203
 ////%Htickmark end////
 
 ////%Vtickmark start////
-Vtickmark(arglist):=Vtickmark(arglist,[]); //190203
-Vtickmark(arglist,options):=( //190203
+Vtickmark(arglist):=Vtickmark(arglist,[]);
+Vtickmark(arglist,options):=( //221017
 //help:Vtickmark([1,"1",2,"sw","2"]);
   regional(nn,tmp,tmp1,tmp2,mark);
   mark=MARKLEN/SCALEX;
   tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
   forall(tmp1,nn,
-    Listplot("vt"+text(nn),
-         [[mark,arglist_nn],[-mark,arglist_nn]],append(options,"Msg=n")); //191101
+    tmp=apply([[mark,arglist_nn],[-mark,arglist_nn]],GENTEN+#);
+    Listplot("vt"+text(nn),tmp,append(options,"Msg=n"));
+    tmp2=GENTEN+[0,arglist_nn];
     if(nn+2<=length(arglist),
       tmp=arglist_(nn+2);
       if(!isstring(tmp),
-        Expr([[0,arglist_nn],"w1",arglist_(nn+1)],options); //190203
+        Expr([tmp2,"w1",arglist_(nn+1)],options);
       ,
-        Expr([[0,arglist_nn],arglist_(nn+1),arglist_(nn+2)],options); //190203
+        Expr([tmp2,"w1",arglist_(nn+1),arglist_(nn+2)],options); 
       );
     ,
-      Expr([[0,arglist_nn],"w1",arglist_(nn+1)],options); //190203
+      Expr([tmp2,"w1",arglist_(nn+1)],options); 
     );
-  );//180710to//  tmp=MakeRarg(arglist);
-//  Com2nd("Vtickmark("+tmp+")");
+  );
 );
 ////%Vtickmark end////
 

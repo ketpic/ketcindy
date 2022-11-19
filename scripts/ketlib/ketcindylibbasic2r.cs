@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20221017] loaded");
+println("ketcindylibbasic2[20221120] loaded");
 
 //help:start();
 
@@ -575,7 +575,7 @@ Arrowdataseg(nm,ptlistorg,optionsorg):=(
 );
 ////%Arrowdataseg end////
 
-////%Anglemark start////
+////%Anglemark start//// 221120
 Anglemark(plist):=Anglemark(plist,[]);
 Anglemark(Arg1,Arg2):=( // 2015.04.28 from
   regional(nm,plist,options,tmp);
@@ -592,13 +592,16 @@ Anglemark(Arg1,Arg2):=( // 2015.04.28 from
     Anglemark(nm,plist,options);
   );
 );// to
-Anglemark(nm,plist,optionsorg):=(
+Anglemark(nm,plistorg,optionsorg):=( //221120
 //help([A,B,C],["E=\theta",2]);
 //help:Anglemark("1",[A,B,C],["E=1.2,\theta",2]);
 // help:Anglemark("1",[A,B,2*pi]);
 //help:Anglemark(options=[size,"E/L=(sep,)letter"]);
-  regional(name,options,Out,pB,pA,pC,Ctr,ra,sab,sac,ratio,opstr,Bname,Bpos,Bstr,color,color4,
-       Brat,tmp,tmp1,tmp2,Num,opcindy,Ltype,eqL,realL,Rg,Th,Noflg,Msg,scaley);
+  regional(name,options,Out,pB,pA,pC,Ctr,ra,
+           sab,sac,ratio,opstr,Bname,Bpos,Bstr,
+           color,color4,Brat,tmp,tmp1,tmp2,
+           Num,opcindy,Ltype,eqL,realL,Rg,Th,
+           Noflg,Msg,scaley,plist);
   name="ag"+nm;
   options=optionsorg; //200619
   ra=0.5;
@@ -641,18 +644,14 @@ Anglemark(nm,plist,optionsorg):=(
       Msg=Toupper(substring(tmp_2,0,1));
     ); //190206to
   );
-  pB=Pcrd(plist_1); pA=Pcrd(plist_2); pC=Pcrd(plist_3);
+  plist=apply(plistorg,Pcrd(#)); //221120[2lines]
+  pB=plist_1; pA=plist_2; pC=plist_3;
   scaley=SCALEY; //191231[2lines]
   SCALEY=1;
   sab=pB-pA;
   Ctr=pA;
-  if((length(plist_3)>1)%(ispoint(plist_3)), //180506from
-    sac=pC-pA;
-    Rg=[arctan2(sab)+0,arctan2(sac)+0];
-  ,
-    sac=pB-pA;
-    Rg=[arctan2(sab)+0,arctan2(sab)+plist_3];   
-  ); //180506to
+  sac=pC-pA;
+  Rg=[arctan2(sab)+0,arctan2(sac)+0]; //22112to 
   if(Rg_2<Rg_1,Rg_2=Rg_2+2*pi);
   Out=[];
   if(ra>min(|sab|,|sac|),  // 16.12.29

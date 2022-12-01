@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20221120] loaded");
+println("ketcindylibbasic2[20221201] loaded");
 
 //help:start();
 
@@ -2804,55 +2804,126 @@ MakeRarg(arglist):=(
 );
 ////%MakeRarg end////
 
-////%Htickmark start////
-Htickmark(arglist):=Htickmark(arglist,[]); //190203
-Htickmark(arglist,options):=( //221017
+////%Htickmark start//// 221201 major change
+Htickmark(arglist):=Htickmark("",arglist,[]);
+Htickmark(Arg1,Arg2):=(
+  if(isstring(Arg1),
+    Htickmark(Arg1,Arg2,[]);
+  ,
+    Htickmark("",Arg1,Arg2);
+  );
+);
+Htickmark(nm,arglist,options):=(
 //help:Htickmark([1,"1",2,"sw","2"]);
-  regional(nn,tmp,tmp1,tmp2,mark);
+//help:Htickmark("1",[1,"1",3,"3"],["Color=red"]);
+  regional(nn,tmp,tmp1,tmp2,tmp3,tmp4,
+           tickL,orgL,mark);
   mark=MARKLEN/SCALEY;
-  tmp1=select(1..(length(arglist)),!isstring(arglist_#)); 
-  forall(tmp1,nn,
-    tmp=apply([[arglist_nn,mark],[arglist_nn,-mark]],GENTEN+#);
-    Listplot("ht"+text(nn),tmp,append(options,"Msg=n"));
-    tmp2=GENTEN+[arglist_nn,0];
-    if(nn+2<=length(arglist),
-      tmp=arglist_(nn+2);
-      if(!isstring(tmp),
-        Expr([tmp2,"s1",arglist_(nn+1)],options); 
-      ,
-        Expr([tmp2,"s1",arglist_(nn+1),arglist_(nn+2)],options);
-      );
-    ,
-      Expr([tmp2,"s1",arglist_(nn+1)],options);
+  tickL=[];
+  orgL=arglist;
+  while(length(orgL)>0,
+    if(length(orgL)==1,
+      orgL=[];
     );
-  );//180710to
-//  tmp="";
-//  tmp=MakeRarg(arglist);
-//  Com2nd("Htickmark("+tmp+")");
+    if(length(orgL)==2,
+      tmp1=orgL_1; tmp2="s1"; tmp3=orgL_2;
+      tickL=concat(tickL,[tmp1,tmp2,tmp3]);
+      orgL=[];
+    );
+    if(length(orgL)>=3,
+      tmp1=orgL_1; tmp2=orgL_2; tmp3=orgL_3;
+      if(length(orgL)>3,tmp4=orgL_4,tmp4=10000);
+      orgL=orgL_(4..(length(orgL)));
+      if((isstring(tmp2))&(isstring(tmp3)),
+        tickL=concat(tickL,[tmp1,tmp2,tmp3]);        
+      );
+      if((isstring(tmp2))&(!isstring(tmp3)),
+        if(isstring(tmp4),
+          tickL=concat(tickL,[tmp1,"s1",tmp2]);
+          orgL=prepend(tmp3,orgL);
+        ,
+          tickL=concat(tickL,[tmp1,tmp2,tmp3]);
+        );       
+      );
+      if((!isstring(tmp2))&(isstring(tmp3)),
+        tickL=concat(tickL,[tmp1,tmp2,tmp3]);        
+      );
+      if(!(isstring(tmp2))&(!isstring(tmp3)),
+        tickL=concat(tickL,[tmp1,"s1",tmp2]);        
+        orgL=prepend(tmp3,orgL);
+      );
+    );
+  );
+  forall(1..(length(tickL)/3),nn,
+    tmp1=tickL_(3*nn-2);
+    tmp2=tickL_(3*nn-1);
+    tmp3=tickL_(3*nn);
+    tmp=[[tmp1,-mark],[tmp1,mark]]; 
+    tmp=apply(tmp,GENTEN+#);
+    Listplot("ht"+nm+text(nn),tmp,append(options,"Msg=n"));
+    Expr([GENTEN+[tmp1,0],tmp2,tmp3],options); 
+  );
 );
 ////%Htickmark end////
 
-////%Vtickmark start////
-Vtickmark(arglist):=Vtickmark(arglist,[]);
-Vtickmark(arglist,options):=( //221017
+////%Vtickmark start//// 221201 major change
+Vtickmark(arglist):=Vtickmark("",arglist,[]);
+Vtickmark(Arg1,Arg2):=(
+  if(isstring(Arg1),
+    Vtickmark(Arg1,Arg2,[]);
+  ,
+    Vtickmark("",Arg1,Arg2);
+  );
+);
+Vtickmark(nm,arglist,options):=(
 //help:Vtickmark([1,"1",2,"sw","2"]);
-  regional(nn,tmp,tmp1,tmp2,mark);
+//help:Vtickmark("1",[1,"1",3,"3"],["Color=red"]);
+  regional(nn,tmp,tmp1,tmp2,tmp3,tmp4
+           tickL,orgL,mark);
   mark=MARKLEN/SCALEX;
-  tmp1=select(1..(length(arglist)),!isstring(arglist_#)); //180710from
-  forall(tmp1,nn,
-    tmp=apply([[mark,arglist_nn],[-mark,arglist_nn]],GENTEN+#);
-    Listplot("vt"+text(nn),tmp,append(options,"Msg=n"));
-    tmp2=GENTEN+[0,arglist_nn];
-    if(nn+2<=length(arglist),
-      tmp=arglist_(nn+2);
-      if(!isstring(tmp),
-        Expr([tmp2,"w1",arglist_(nn+1)],options);
-      ,
-        Expr([tmp2,"w1",arglist_(nn+1),arglist_(nn+2)],options); 
-      );
-    ,
-      Expr([tmp2,"w1",arglist_(nn+1)],options); 
+  tickL=[];
+  orgL=arglist;
+  while(length(orgL)>0,
+    if(length(orgL)==1,
+      orgL=[];
     );
+    if(length(orgL)==2,
+      tmp1=orgL_1; tmp2="w1"; tmp3=orgL_2;
+      tickL=concat(tickL,[tmp1,tmp2,tmp3]);
+      orgL=[];
+    );
+    if(length(orgL)>=3,
+      tmp1=orgL_1; tmp2=orgL_2; tmp3=orgL_3;
+      if(length(orgL)>3,tmp4=orgL_4,tmp4=10000);
+      orgL=orgL_(4..(length(orgL)));
+      if((isstring(tmp2))&(isstring(tmp3)),
+        tickL=concat(tickL,[tmp1,tmp2,tmp3]);        
+      );
+      if((isstring(tmp2))&(!isstring(tmp3)),
+        if(isstring(tmp4),
+          tickL=concat(tickL,[tmp1,"w1",tmp2]);
+          orgL=prepend(tmp3,orgL);
+        ,
+          tickL=concat(tickL,[tmp1,tmp2,tmp3]);
+        );       
+      );
+      if((!isstring(tmp2))&(isstring(tmp3)),
+        tickL=concat(tickL,[tmp1,tmp2,tmp3]);        
+      );
+      if(!(isstring(tmp2))&(!isstring(tmp3)),
+        tickL=concat(tickL,[tmp1,"w1",tmp2]);        
+        orgL=prepend(tmp3,orgL);
+      );
+    );
+  );
+  forall(1..(length(tickL)/3),nn,
+    tmp1=tickL_(3*nn-2);
+    tmp2=tickL_(3*nn-1);
+    tmp3=tickL_(3*nn);
+    tmp=[[-mark,tmp1],[mark,tmp1]]; 
+    tmp=apply(tmp,GENTEN+#);
+    Listplot("vt"+nm+text(nn),tmp,append(options,"Msg=n"));
+    Expr([GENTEN+[0,tmp1],tmp2,tmp3],options); 
   );
 );
 ////%Vtickmark end////

@@ -3804,7 +3804,7 @@ SfbdparadataR(nm,fdorg,optionorg,optionsh):=(
 ////%Connectseg3d start////
 Connectseg3d(dtstr3):=Connectseg3d(dtstr3,10^(-4));
 Connectseg3d(dtstr3,Eps):=(
-//help:Connectseg(pltdata(,10^(-4));
+//help:Connectseg3d(pltdata(,10^(-4)); //221123
   regional(data,pt1,pt2,dt3,nd,nn,flg,tmp,tmp1,flg,ctr,out);
   if(isstring(dtstr3),dt3=parse(dtstr3),dt3=dtstr3);
   if(length(dt3)==0, //210324from

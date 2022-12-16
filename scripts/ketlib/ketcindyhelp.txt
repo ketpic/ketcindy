@@ -525,7 +525,7 @@ Connectseg3d(pltdata(,10^(-4));
 Addpoints(list of 3d points);
 Skeletonparadata("1");
 Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
-Skeletonparadatac(options=[1(width),"Eps=[0.05,0.001]","File=y(n)","m/r"]);
+Skeletonparadatac(options=[1(width),[0.05,0.001](eps),"m/r"","File=y(n)"]);
 Divnohidhid("1","sc3d1",nvec,["Num=100"],["Num=100","do"]);
 Beziersurf("pt",2,2,pL);
 Setpara("folder name","funstr","range",options,optionsanim);

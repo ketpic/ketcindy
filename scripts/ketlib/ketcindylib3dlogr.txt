@@ -1,3 +1,5 @@
+// 221215
+//    Skeletonparadata debugged  ( "m/r", "File=" )
 // 220801
 //    Nohiddenbyfaces changed  ( color of hidden )
 // 220726

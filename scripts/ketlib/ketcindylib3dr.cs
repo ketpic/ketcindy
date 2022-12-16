@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylib3d[20220801] loaded");
+println("ketcindylib3d[20221215] loaded");
 
 //help:start();
 
@@ -4491,7 +4491,7 @@ SfcutparadataR(nm,eqstrorg,sf,fdorg,optionorg,optionsh):=(
 );
 ////%SfcutparadataR end////
 
-////////////// current skeleton  2018.01.04 ////////////////
+////////////// current skeleton  20221215 ////////////////
 
 ////%Skeletonparadata start////
 Skeletonparadata(nm):=Skeletondatacindy(nm,Datalist3d(),Datalist3d(),[]); //211010[2lines]
@@ -4507,7 +4507,7 @@ Skeletondatacindy(nm,pltdata1,pltdata2):=
 Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
 //help:Skeletonparadata("1");
 //help:Skeletonparadata("1",[pdata1,pdata2],[pdata3]);
-//help:Skeletonparadatac(options=[1(width),"Eps=[0.05,0.001]","File=y(n)","m/r"]);
+//help:Skeletonparadatac(options=[1(width),[0.05,0.001](eps),"m/r"","File=y(n)"]);
   regional(Eps,Eps2,name2,name3,options,Ltype,Noflg,reL,eqL,strL,opcindy,
      Out,ObjL,Plt3L,Rr,pltdata1,pltdata2,Plt2L,ObjL,ii,Data,wdtL,
      Obj3,jj,Gd,PtD,size,tmp,tmp1,tmp2,tmp3,color,fileflg,
@@ -4541,73 +4541,65 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
   color=tmp_(length(tmp)-2);
   opcindy=tmp_(length(tmp));
   Rr=0.075*1000/2.54/MilliIn;
-  fileflg="Y"; //210823
-  //fileflg="N"; mkflg=1; //only ketjs //220614
-  mkflg=0;  // no ketjs on
+  mkflg=0;  // no ketjs
+  size=1; //221215
+  Eps2=0.05;
+  Eps=0.001;
   if(length(reL)>0, //16.02.28 
-    size=reL_1;
+    options=remove(options,reL);
+    size=reL_1; //221215
     Rr=size*Rr;
-    if(length(reL)>1,Eps2=reL_2);
+    if(length(reL)>1,Eps2=reL_2); //221215
   );
-  tmp1=strL;
+  mkflg=0; //221215
   forall(strL,
     if(contains(["m","r",""],#),
       if(#=="m",mkflg=1);
       if(#=="r",mkflg=-1);
       if(#=="",mkflg=0);
-      tmp1=remove(tmp1,[#]);
+      options=remove(options,[#]);
     );
   );
-  strL=tmp1; // no ketjs off
-  size=1;
-  Eps2=0.05;
-  Eps=10^(-3);
-  forall(eqL, // no ketjs on //181101from
+  fileflg="Y";
+  forall(eqL,
     tmp=Strsplit(#,"=");
     tmp1=Toupper(substring(tmp_1,0,1));
     if(tmp1=="F", //190320
       fileflg=Toupper(substring(tmp_2,0,1));
       options=remove(options,[#]);
     );
-     if(tmp1=="E", //220212
-      tmp2=parse(tmp_2);
-      if(!islist(tmp2),tmp2=[tmp2]);
-      Eps2=tmp2_1;
-      if(length(tmp2)==1,Eps=10^(-3),Eps=tmp2_2);        
-      options=remove(options,[#]);
-    );
   );
-  if(fileflg=="N",mkflg=1);
+  //fileflg="N"; //only ketjs //221215
   if(fileflg=="Y",
-    if(!isexists(Dirwork,fname),
+    if(!isexists(Dirwork,fname), //221215[2lines]
       mkflg=1;
+    ,
+      if(mkflg<1,
+        Readoutdata(fname); //221215[4lines]
+        tmp1=|angle_1_1-THETA|+|angle_1_2-PHI|<Eps;
+        tmp2=|size1_1_1-size|<Eps;
+        if((tmp1)&(tmp2),
+          mkflg=-1;
+          GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
+          Projpara(name3,options);
+          Out=parse(name3);
+        ,
+          mkflg=1;
+        );
+      );
     );
-    if(mkflg<1,
-      Readoutdata(fname);
-      tmp=|angle_1_1-THETA|+|angle_1_2-PHI|<Eps;
-      tmp1=parse("sk"+nm+"obj");
-      if(Measuredepth(tmp1)<2,tmp1=[tmp1]);
-      tmp2=ObjL;
-      tmp=tmp&(text(tmp1)==text(tmp2));
-      tmp1=parse("sk"+nm+"plt");
-      if(Measuredepth(tmp1)<2,tmp1=[tmp1]);
-      tmp2=Plt3L;
-      tmp=tmp&(text(tmp1)==text(tmp2));
-      if(tmp,mkflg=-1,mkflg=1);
-    );
-  ); 
-  if(mkflg==1,fileflg="Y"); 
-  if(fileflg=="N",mkflg=1); // no ketjs off
+  ,
+    mkflg=1;
+  );
   tmp=apply(1..(length(Plt3L)),Projcoordcurve(Plt3L_#));
   Plt2L=Flattenlist(tmp);
-  if((fileflg=="Y")&(mkflg==1),  // no ketjs on //220212from
-    wdtL=[
+  wdtL=[
       "angle",[[THETA,PHI]],
+      "size1",[[size,1]],
       "sk"+nm+"obj",ObjL,
       "sk"+nm+"plt",Plt3L
-    ];
-  ); // no ketjs off //220212to
-  if(mkflg==1, 
+  ];
+  if(mkflg==1,  //221215
     Out=[];
     forall(1..(length(ObjL)),ii,
       Obj3=ObjL_ii;
@@ -4615,7 +4607,7 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
       Data=Makeskeletondata([tmp],Plt2L,Rr,Eps2);
       forall(1..(length(Data)),jj,
         Gd=Data_jj;
-        if(length(Gd)>1, //220213from
+        if(length(Gd)>1,
           tmp=apply(1..(length(Gd)-1),Norm(Ptcrv(#,Gd)-Ptcrv(#+1,Gd)));
           tmp=max(tmp);
           if(tmp>Eps,
@@ -4629,23 +4621,20 @@ Skeletondatacindy(nm,pltdata1org,pltdata2org,optionsorg):=(
             );
            );
           Out=append(Out,PtD);
-        );  //220213to
+        );
       );
     );
     Out=select(Out,length(Projcurve(#))>0); // 16.12.19
     tmp1=apply(Out,Textformat(#,6));
     tmp=name3+"="+tmp1+";"; //190415
     parse(tmp);
-    Projpara(name3,options); //220212from
-    wdtL=concat(wdtL,[name3,parse(name3)]);
-    Writeoutdata(fname,wdtL);//220212to
-  ,
-    if(fileflg=="Y", // no ketjs on
-      Readoutdata(fname);
-      GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
-      Projpara(name3,options);
-      Out=parse(name3);
-    ); //no ketjs off        
+    forall(1..(length(Out)), //221215[3lines]
+      Spaceline("-"+name3+#,Out_#,append(options,"Msg=n"));
+    );
+    if(fileflg=="Y",
+      wdtL=concat(wdtL,[name3,parse(name3)]);
+      Writeoutdata(fname,wdtL);
+    );
   );
   forall(pltdata1org,
     if(isstring(#),Changestyle3d(#,["nodisp"]));

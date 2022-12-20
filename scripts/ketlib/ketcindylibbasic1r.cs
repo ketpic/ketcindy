@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.21");
+println("KeTCindy V.4.4.22");
 println(ketjavaversion());
-println("ketcindylibbasic1[20221003] loaded");
+println("ketcindylibbasic1[20221218] loaded");
 
 //help:start();
 
@@ -142,10 +142,10 @@ Ketinit(work,strictsep):=( //200509
   ,
     if(ismacosx(), //181125from
       Shellparent="/kc.command"; 
-      Mackc="open"; //190222
+//      Mackc="open"; //190222,221218
     ,
       Shellparent="/kc.sh"; 
-      Mackc="bash"; //190222
+//      Mackc="bash"; //190222,221218
     );  //181125to
   ); // no ketjs off
   Changework(Dircdy+pathsep()+work); //180329to,181001

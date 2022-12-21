@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20221201] loaded");
+println("ketcindylibbasic2[20221222] loaded");
 
 //help:start();
 
@@ -2878,7 +2878,7 @@ Vtickmark(Arg1,Arg2):=(
 Vtickmark(nm,arglist,options):=(
 //help:Vtickmark([1,"1",2,"sw","2"]);
 //help:Vtickmark("1",[1,"1",3,"3"],["Color=red"]);
-  regional(nn,tmp,tmp1,tmp2,tmp3,tmp4
+  regional(nn,tmp,tmp1,tmp2,tmp3,tmp4,
            tickL,orgL,mark);
   mark=MARKLEN/SCALEX;
   tickL=[];

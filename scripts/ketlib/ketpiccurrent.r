@@ -20,6 +20,8 @@ ThisVersion<- "KeTpic for R  v5_2_5(20220910)"
 
 print(ThisVersion)
 
+# 20230121
+#   Sprintf  %*.3f
 # 20220910
 #   Plotdata changed ( for "y" )
 # 2021119
@@ -2858,8 +2860,8 @@ Expr<-function(...)
     CalcWidth(Hoko,Mojiretu)
     CalcHeight(Hoko,Mojiretu)
     cat("\\put(",file=Wfile,append=TRUE)
-    Tmp1<- sprintf("%7.7f",X)  # 11.07.19
-    Tmp2<- sprintf("%7.7f",Y)  # 11.07.19
+    Tmp1<- sprintf("%7.3f",X)  # 11.07.19
+    Tmp2<- sprintf("%7.3f",Y)  # 11.07.19
     Str<-paste(Tmp1,",",Tmp2,sep="")
     cat(Str,file=Wfile,append=TRUE)
     Tmp<-"){\\hspace*{\\Width}"
@@ -4355,8 +4357,8 @@ Letter<-function(...)
     CalcWidth(Hoko,Mojiretu)
     CalcHeight(Hoko,Mojiretu)
     cat("\\put(",file=Wfile,append=TRUE)
-    Tmp1<- sprintf("%7.7f",X)  # 11.07.19
-    Tmp2<- sprintf("%7.7f",Y)  # 11.07.19
+    Tmp1<- sprintf("%7.3f",X)  # 11.07.19
+    Tmp2<- sprintf("%7.3f",Y)  # 11.07.19
     Str<-paste(Tmp1,",",Tmp2,sep="")
     cat(Str,file=Wfile,append=TRUE)
     Tmp<-"){\\hspace*{\\Width}"
@@ -6547,10 +6549,10 @@ WriteOutData<- function(...){
             Str=paste(Str,",",sep="")
           }
           if(length(Pt)<3){
-            Str=paste(Str,sprintf("[%5.5f,%5.5f]",Pt[1],Pt[2]),sep="")
+            Str=paste(Str,sprintf("[%5.3f,%5.3f]",Pt[1],Pt[2]),sep="")
           }
           else{
-            Str=paste(Str,sprintf("[%5.5f,%5.5f,%5.5f]",Pt[1],Pt[2],Pt[3]),sep="")
+            Str=paste(Str,sprintf("[%5.3f,%5.3f,%5.3f]",Pt[1],Pt[2],Pt[3]),sep="")
           }
           if(nchar(Str)>80){
             cat("[",Str,"]//","\n",sep="",file=Fname,append=TRUE)
@@ -13241,14 +13243,14 @@ Fullformfunc<- function(FdL){
   Tmp=strsplit(Urg,"=",fixed=TRUE)
   UNAME<<- Tmp[[1]][1]
   URNG<<- eval(parse(text=Tmp[[1]][2]))
-  Urg=paste(UNAME,"=c(",sprintf("%6.7f",URNG[1]),",",
-               sprintf("%6.7f",URNG[2]),")",sep="")
+  Urg=paste(UNAME,"=c(",sprintf("%6.3f",URNG[1]),",",
+               sprintf("%6.3f",URNG[2]),")",sep="")
   Vrg=Stripblanks(Op(Jrg+1,FdL))
   Tmp=strsplit(Vrg,"=",fixed=TRUE)
   VNAME<<- Tmp[[1]][1]
   VRNG<<- eval(parse(text=Tmp[[1]][2]))
-  Vrg=paste(VNAME,"=c(",sprintf("%6.7f",VRNG[1]),",",
-               sprintf("%6.7f",VRNG[2]),")",sep="")
+  Vrg=paste(VNAME,"=c(",sprintf("%6.3f",VRNG[1]),",",
+               sprintf("%6.3f",VRNG[2]),")",sep="")
   if(Jrg==2){
     Xf=UNAME
     Yf=VNAME
@@ -13331,12 +13333,12 @@ Makexybdy<- function(Np){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:2){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umax),")",sep=""),Xystr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umax),")",sep=""),Xystr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -13355,7 +13357,7 @@ Makexybdy<- function(Np){
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -13381,12 +13383,12 @@ Makexybdy<- function(Np){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:2){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umin),")",sep=""),Xystr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umin),")",sep=""),Xystr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -13412,12 +13414,12 @@ Makexybdy<- function(Np){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:2){
-      Tmp=gsub(VNAME,paste("(",sprintf("%7.7f",Vmin),")",sep=""),Xystr[jj])
+      Tmp=gsub(VNAME,paste("(",sprintf("%7.3f",Vmin),")",sep=""),Xystr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -13533,10 +13535,10 @@ Evlptablepara<- function(...){
   V1=VRNG[1]; V2=VRNG[2]
   Du=(U2-U1)/(Mdv)
   Dv=(V2-V1)/(Ndv)
-  sph=sprintf("%7.7f",sin(PHI))
-  cph=sprintf("%7.7f",cos(PHI))
-  sth=sprintf("%7.7f",sin(THETA))
-  cth=sprintf("%7.7f",cos(THETA))
+  sph=sprintf("%7.3f",sin(PHI))
+  cph=sprintf("%7.3f",cos(PHI))
+  sth=sprintf("%7.3f",sin(THETA))
+  cth=sprintf("%7.3f",cos(THETA))
   xstr=paste("-(",XYZstr[1],")*(",sph,")+(",XYZstr[2],")*(",cph,")",sep="")
   tmp=paste("-(",XYZstr[1],")*(",cph,")*(",cth,")-(",XYZstr[2],")*(",sph,")*(",cth,")",sep="")
   ystr=paste(tmp,"+(",XYZstr[3],")*(",sth,")",sep="")
@@ -13551,8 +13553,8 @@ Evlptablepara<- function(...){
     ZuL=c()
     for(ii in 1:(Mdv+1)){
       u=U1+(ii-1)*Du
-      tmp1=paste(UNAME,"=(",sprintf("%7.7f",u),")",sep="")
-      tmp2=paste(VNAME,"=(",sprintf("%7.7f",v),")",sep="")
+      tmp1=paste(UNAME,"=(",sprintf("%7.3f",u),")",sep="")
+      tmp2=paste(VNAME,"=(",sprintf("%7.3f",v),")",sep="")
       Dxu=Funvalue(dxu,tmp1,tmp2)
       Dxv=Funvalue(dxv,tmp1,tmp2)
       Dyu=Funvalue(dyu,tmp1,tmp2)
@@ -13576,8 +13578,8 @@ Evlptablepara<- function(...){
 }
 
 Evlpfun<- function(u,v){
-  tmp1=paste(UNAME,"=(",sprintf("%7.7f",u),")",sep="")
-  tmp2=paste(VNAME,"=(",sprintf("%7.7f",v),")",sep="")
+  tmp1=paste(UNAME,"=(",sprintf("%7.3f",u),")",sep="")
+  tmp2=paste(VNAME,"=(",sprintf("%7.3f",v),")",sep="")
   Dxu=Funvalue(dxu,tmp1,tmp2)
   Dxv=Funvalue(dxv,tmp1,tmp2)
   Dyu=Funvalue(dyu,tmp1,tmp2)
@@ -13614,10 +13616,10 @@ Envelopedata<- function(...){
       }
     }
   }
-  sph=sprintf("%7.7f",sin(PHI))
-  cph=sprintf("%7.7f",cos(PHI))
-  sth=sprintf("%7.7f",sin(THETA))
-  cth=sprintf("%7.7f",cos(THETA))
+  sph=sprintf("%7.3f",sin(PHI))
+  cph=sprintf("%7.3f",cos(PHI))
+  sth=sprintf("%7.3f",sin(THETA))
+  cth=sprintf("%7.3f",cos(THETA))
   xstr=paste("-(",XYZstr[1],")*(",sph,")+(",XYZstr[2],")*(",cph,")",sep="")
   tmp=paste("-(",XYZstr[1],")*(",cph,")*(",cth,")-(",XYZstr[2],")*(",sph,")*(",cth,")",sep="")
   ystr=paste(tmp,"+(",XYZstr[3],")*(",sth,")",sep="")
@@ -13726,9 +13728,9 @@ Cuspsplitpara<- function(...){
     PthL=c()
     for(I in Looprange(1,Length(PtxyL))){
       Tmp=Op(I,PtxyL)
-      Tmp1=paste(UNAME,'=',sprintf("%7.7f",Tmp[1]),sep="")
+      Tmp1=paste(UNAME,'=',sprintf("%7.3f",Tmp[1]),sep="")
       eval(parse(text=Tmp1))
-      Tmp1=paste(VNAME,'=',sprintf("%7.7f",Tmp[2]),sep="")
+      Tmp1=paste(VNAME,'=',sprintf("%7.3f",Tmp[2]),sep="")
       eval(parse(text=Tmp1))
       Tmp2=c(eval(parse(text=XYZstr[1])))
       Tmp2=c(Tmp2,eval(parse(text=XYZstr[2])))
@@ -13868,8 +13870,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps1,Eps2){
   }
   Tmp=paste("Eqfun<- function(U,V){",sep='')
   if((abs(Vec[2])>Eps0) || (abs(Vec[1])>Eps0)){
-    Vstr=sprintf("%6.6f",Vec)
-    Pstr=sprintf("%6.6f",PtA)
+    Vstr=sprintf("%6.3f",Vec)
+    Pstr=sprintf("%6.3f",PtA)
     Tmp=paste(Tmp,"(",Vstr[2],")*(Xfunc(U,V)-(",Pstr[1],"))",sep='')
     Tmp=paste(Tmp,"-(",Vstr[1],")*(Yfunc(U,V)-(",Pstr[2],"))}",sep='')
   }else{
@@ -13956,8 +13958,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps1,Eps2){
           Ptuv=1/(M1-M2)*(-M2*Puv1+M1*Puv2)
         }
         if(is.character(Uveq)){		
-          Tmp1=paste('(',sprintf("%6.6f",Ptuv[1]),')',sep='')
-          Tmp2=paste('('+sprintf("%6.6f",Ptuv[2]),')',sep='')
+          Tmp1=paste('(',sprintf("%6.3f",Ptuv[1]),')',sep='')
+          Tmp2=paste('('+sprintf("%6.3f",Ptuv[2]),')',sep='')
           Tmp=gsub(UNAME,Tmp1,Uveq,fixed=TRUE)
           Tmp=gsub(VNAME,Tmp2,Tmp,fixed=TRUE)
           Tmp=eval(parse(text=Tmp))
@@ -14144,12 +14146,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umax),")",sep=""),XYZstr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umax),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]),sep="")
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -14159,12 +14161,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(VNAME,paste("(",sprintf("%7.7f",Vmax),")",sep=""),XYZstr[jj])
+      Tmp=gsub(VNAME,paste("(",sprintf("%7.3f",Vmax),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]),sep="")
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -14174,12 +14176,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umin),")",sep=""),XYZstr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umin),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]))
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -14189,12 +14191,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(VNAME,paste("(",sprintf("%7.7f",Vmin),")",sep=""),XYZstr[jj])
+      Tmp=gsub(VNAME,paste("(",sprintf("%7.3f",Vmin),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]))
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -14352,8 +14354,8 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps1){
   }
   Tmp=paste("Eqfun<- function(U,V){",sep='')
   if((abs(Vec[2])>Eps0) || (abs(Vec[1])>Eps0)){
-    Vstr=sprintf("%6.6f",Vec)
-    Pstr=sprintf("%6.6f",PtA)
+    Vstr=sprintf("%6.3f",Vec)
+    Pstr=sprintf("%6.3f",PtA)
     Tmp=paste(Tmp,"(",Vstr[2],")*(Xfunc(U,V)-(",Pstr[1],"))",sep='')
     Tmp=paste(Tmp,"-(",Vstr[1],")*(Yfunc(U,V)-(",Pstr[2],"))}",sep='')
   }else{
@@ -14440,8 +14442,8 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps1){
           Ptuv=1/(M1-M2)*(-M2*Puv1+M1*Puv2)
         }
         if(is.character(Uveq)){
-          Tmp1=paste('(',sprintf("%6.6f",Ptuv[1]),')',sep='')
-          Tmp2=paste('('+sprintf("%6.6f",Ptuv[2]),')',sep='')
+          Tmp1=paste('(',sprintf("%6.3f",Ptuv[1]),')',sep='')
+          Tmp2=paste('('+sprintf("%6.3f",Ptuv[2]),')',sep='')
           Tmp=gsub(UNAME,Tmp1,Uveq,fixed=TRUE)
           Tmp=gsub(VNAME,Tmp2,Tmp,fixed=TRUE)
           Tmp=eval(parse(text=Tmp))

@@ -16,8 +16,11 @@
 
 #########################################
 
-ThisVersion<- "2ev5_2_4(201022)"
+ThisVersion<- "2ev5_2_4(230121)"
 
+# 20230121
+###   digits 6~>3
+###   bxeepic disused
 # 20201022
 #   Drwpt debugged (inside=>Inside )
 # 20200512
@@ -41,7 +44,7 @@ ThisVersion<- "2ev5_2_4(201022)"
 
 #############################################
 
-Dottedline<- function(...)
+Dottedline<- function(...) # old  230120 changed
 {
   varargin <- list(...)     
   Nall <- length(varargin)
@@ -135,9 +138,11 @@ Dottedline<- function(...)
             Tmp3<-1/Norm(Tmp1)*Tmp1+1/Norm(Tmp2)*Tmp2
             V<- 1/Norm(Tmp3)*Tmp3
           }
-          X=sprintf('%5.5f',P[1])
-          Y=sprintf('%5.5f',P[2])
-          Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}',sep="")
+#          X=sprintf('%5.5f',P[1])
+#          Y=sprintf('%5.5f',P[2])
+          X=as.character(round(P[1],digits=3))
+          Y=as.character(round(P[2],digits=3))
+          Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.3f',Ra),'}}',sep="")
           cat(Str,file=Wfile,append=TRUE)
           Mojisu=Mojisu+nchar(Str)
           if(Mojisu>80){
@@ -155,6 +160,78 @@ Dottedline<- function(...)
   Setpen(Tmp)
 }
 
+#############################################
+if(1==0){ ##230121bug?
+
+Dottedline<- function(...)
+{
+  # 230121  dottedline in bxeepic used
+  varargin <- list(...)     
+  Nall <- length(varargin)
+  Nagasa <- 0.1
+  Ookisa <- PenThick*1 #2 #17.10.07,191104(*1)
+  I <- Nall
+  Tmp <- varargin[[I]]
+  while (mode(Tmp)=="numeric" && length(Tmp)==1 ) {
+    I <- I-1
+    Tmp <- varargin[[I]]
+  }
+  if (I==Nall-1) {
+    Nagasa<-Nagasa*varargin[[Nall]]
+    Nall <- Nall-1
+  }
+  if (I==Nall-2) {
+    Nagasa <- Nagasa*varargin[[Nall-1]]
+    Ookisa <- round(Ookisa*varargin[[Nall]])
+    Nall <- Nall-2
+  }
+  Nagasa <- 1000/2.54/MilliIn*Nagasa
+  Ra=Ookisa/MilliIn
+  Tmp=paste("{\\linethickness{",as.character(Ookisa/1000),"in}%","\n",sep="")
+  cat(Tmp,file=Wfile,sep="",append=TRUE)
+  for (N in 1:Nall){
+    Pdata <- varargin[[N]]
+    if (mode(Pdata)=="numeric") {
+      Pdata <- list(Pdata)             
+    }
+    for (II in 1:length(Pdata)){ 
+      Clist <- MakeCurves(Op(II,Pdata))
+      DinM <- Dataindex(Clist)
+      Mojisu=0
+      for (n in Looprange(1,Nrow(DinM))) {    
+        Tmp <- DinM[n,] 
+        Data <- Clist[Tmp[1]:Tmp[2],]
+        Len <- 0
+        Lenlist <- c(0)                    
+        for (I in Looprange(2,Nrow(Data))) {       
+          Len <- Len+Norm(Data[I,]-Data[I-1,])  
+          Lenlist <- c(Lenlist,Len)      
+        }
+        Lenall <- Lenlist[length(Lenlist)]    
+        if (Lenall==0) {
+          next
+        }
+        Naga <- Nagasa
+        Nten <- round(Lenall/Naga)+1
+        if (Nten > 1) {
+          Seg <- Lenall/(Nten-1)
+        }              
+        else {
+          Seg <- Lenall
+        }
+        Tmp=paste("\\dottedline{",sprintf("%.6f",Seg),"}",sep="")
+        for(nd in Looprange(1,Length(Data))){
+            Tmp1=round(Op(nd,Data),digits=4)
+            Tmp=paste(Tmp,"(",Tmp1[1],",",Tmp1[2],")",sep="")
+        }
+        cat(Tmp,"\n",file=Wfile,sep="",append=TRUE) 
+      }        
+      cat("}\n",file=Wfile,sep="",append=TRUE) 
+    }
+  }
+}
+
+} # end skip
 
 ###########################################
 
@@ -189,8 +266,10 @@ Drwline<-function(...)
         Mojisu<-0
         for (I in Looprange(1,Nrow(Data))){
           Tmp<-Data[I,]
-          X=sprintf('%5.5f',Tmp[1])
-          Y=sprintf('%5.5f',Tmp[2])
+          X=as.character(round(Tmp[1],digits=3))
+          Y=as.character(round(Tmp[2],digits=3))
+#          X=sprintf('%5.5f',Tmp[1])
+#          Y=sprintf('%5.5f',Tmp[2])
           Pt=paste('(',X,',',Y,')',sep="")
           if(I==1){
             Str=paste('\\polyline',Pt,sep="")
@@ -240,18 +319,22 @@ Drwpt<-function(...) #200512
       P<- MS[[I]]
       if (InWindow(P)!="i") next
       P<- Doscaling(P)
-      X=sprintf('%5.5f',P[1])
-      Y=sprintf('%5.5f',P[2])
+#      X=sprintf('%5.5f',P[1])
+#      Y=sprintf('%5.5f',P[2])
+      X=as.character(round(P[1],digits=3))
+      Y=as.character(round(P[2],digits=3))
       if(Inside=="1"){
-        Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.6f',Ra),'}}%\n',sep="")
+        Str=paste('\\put(',X,',',Y,'){\\circle*{',sprintf('%6.3f',Ra),'}}%\n',sep="")
         cat(Str,file=Wfile,append=TRUE)
       }
-      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.6f',Ra),'}}%\n',sep="")
+      Str=paste('\\put(',X,',',Y,'){\\circle{',sprintf('%6.3f',Ra),'}}%\n',sep="")
       cat(Str,file=Wfile,append=TRUE)
     }
   } 
   cat("\n",file=Wfile,append=TRUE)
 }
+
+#Pointdata <- function(...){Drwpt(...)} #220121
 
 
 ######################################
@@ -324,16 +407,20 @@ Makehasen<- function(Figdata,Sen,Gap,Ptn)
       T<- (Len-Lenlist[Hajime])
       T<- T/(Lenlist[Hajime+1]-Lenlist[Hajime])
       P<- Data[Hajime,]+T*(Data[Hajime+1,]-Data[Hajime,])
-      X0=sprintf('%5.5f',P[1])
-      Y0=sprintf('%5.5f',P[2])
+#      X0=sprintf('%5.5f',P[1])
+#      Y0=sprintf('%5.5f',P[2])
+      X0=as.character(round(P[1],digits=3))
+      Y0=as.character(round(P[2],digits=3))
       Pt0=paste('(',X0,',',Y0,')',sep="")
       Str=paste('\\polyline',Pt0,sep="")
       cat(Str,file=Wfile,append=TRUE)
       Mojisu<- Mojisu+nchar(Str)
       for (J in Looprange(Hajime+1,Owari)){
         P=Data[J,]
-        X=sprintf('%5.5f',P[1])
-        Y=sprintf('%5.5f',P[2])
+#        X=sprintf('%5.5f',P[1])
+#        Y=sprintf('%5.5f',P[2])
+        X=as.character(round(P[1],digits=3))
+        Y=as.character(round(P[2],digits=3))
         Pt=paste('(',X,',',Y,')',sep="")
         Str=Pt
         cat(Str,file=Wfile,append=TRUE)
@@ -343,8 +430,10 @@ Makehasen<- function(Figdata,Sen,Gap,Ptn)
       T<- (Len+Naga-Lenlist[Owari])
       T<- T/(Lenlist[Owari+1]-Lenlist[Owari])
       P<- Data[Owari,]+T*(Data[Owari+1,]-Data[Owari,])
-      X=sprintf('%5.5f',P[1])
-      Y=sprintf('%5.5f',P[2])
+#      X=sprintf('%5.5f',P[1])
+#      Y=sprintf('%5.5f',P[2])
+      X=as.character(round(P[1],digits=3))
+      Y=as.character(round(P[2],digits=3))
       Pt=paste('(',X,',',Y,')',sep="")
       Str=Pt
       cat(Str,file=Wfile,append=TRUE)
@@ -413,13 +502,13 @@ Beginpicture<-function(ul)
   cat(Str,file=Wfile,append=TRUE);
   cat("\\begin{picture}%\n",file=Wfile,append=TRUE);
   Str<-"(";
-  Tmp<-as.character(round(Dx,digits=6));
+  Tmp<-as.character(round(Dx,digits=3));
   Str<-paste(Str,Tmp,",",sep="");
-  Tmp<-as.character(round(Dy,digits=6));
+  Tmp<-as.character(round(Dy,digits=3));
   Str<-paste(Str,Tmp,")(",sep="");
-  Tmp<-as.character(round(Xm,digits=6));
+  Tmp<-as.character(round(Xm,digits=3));
   Str<-paste(Str,Tmp,",",sep="");
-  Tmp<-as.character(round(Ym,digits=6));
+  Tmp<-as.character(round(Ym,digits=3));
   Str<-paste(Str,Tmp,")%\n",sep="");
   cat(Str,file=Wfile,append=TRUE);
   Str=paste('\\linethickness{',as.character(PenThickInit/1000),'in}%',sep="")
@@ -494,8 +583,10 @@ Shade<- function(...)
     Mojisu<- 0
     for (J in  1:Nrow(PL)){
       P<- Doscaling(Op(J,PL))
-      X=sprintf('%5.5f',P[1])
-      Y=sprintf('%5.5f',P[2])
+#      X=sprintf('%5.5f',P[1])
+#      Y=sprintf('%5.5f',P[2])
+      X=as.character(round(P[1],digits=3))
+      Y=as.character(round(P[2],digits=3))
       Pt=paste('(',X,',',Y,')',sep="")
       if(J==1){
         Str=paste('\\polygon*',Pt,sep="")
@@ -520,3 +611,4 @@ Shade<- function(...)
     cat(Str,file=Wfile,append=TRUE)
   }
 }
+

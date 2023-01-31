@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20221010] loaded");
+println("ketcindylibbasic3[20230131] loaded");
 
 //help:start();
 
@@ -5008,6 +5008,58 @@ Mkketcindyjs(options):=( //17.11.18
   );
 );
 ////%Mkketcindyjs end////
+
+////%Settextkey start////
+Settextkey(num,pos,name,script):=
+    Settextkey(num,pos,name,script,18,0,0.2);
+Settextkey(num,pos,name,script,size,fill,alpha):=(
+//help:Settextkey(10,[2,4],name(,"a=1;",18,0,0.2));
+  regional(id,pid,tmp,tmp1,tmp2);
+  id="Text"+num;
+  tmp=Allelements();
+  tmp=apply(tmp,#.name);
+  tmp=select(tmp,indexof(#,"Text")>0);
+  if(!contains(tmp,id),
+    create([id],"Text",[1,1,1]);
+  );
+  pid=parse(id);
+  tmp=id+".xy="+pos+";";
+  parse(tmp);
+  inspect(pid,"text.text",name);
+  inspect(pid,"textsize",size);
+  inspect(pid,"colorfill",fill);
+  inspect(pid,"fillalpha",alpha);
+  if(length(script)>0,
+    inspect(pid,"textbutton",true);
+    inspect(pid,"texttoggle",true);
+    inspect(pid,"button.script",script);
+  );
+);
+////%Settextkey end////
+
+////%Animationkey start////
+Animationkey():=Animationkey([71,72,73,74],[-4,-2,0,2],-6);
+Animationkey(kL,pxL,py):=(
+//help:Animationkey([71,72,73,74],[-4,-2,0,2],6);
+  regional(sL,fillcolor,fillalpha);
+  println([5046,pxL]);
+  sL=[
+    "resetclock();playanimation();Animeflg=1;Dirflg=1;
+        sorg=Current;",
+    "Animeflg=1-Animeflg;if(Animeflg==0,pauseanimation();
+        sorg=sstart;,resetclock();playanimation(););",
+    "sorg=sstart;Dirflg=-Dirflg;Animeflg=1;resetclock();
+        playanimation();",
+    "stopanimation();Animeflg="";sstart=Current;"
+  ];
+  fillcolor=-1;
+  fillalpha=0.467;
+  Settextkey(kL_1,[pxL_1,py],"Play",sL_1,18,fillcolor,fillalpha);
+  Settextkey(kL_2,[pxL_2,py],"Pause",sL_2,18,fillcolor,fillalpha);
+  Settextkey(kL_3,[pxL_3,py],"Rev",sL_3,18,fillcolor,fillalpha);
+  Settextkey(kL_4,[pxL_4,py],"Stop",sL_4,18,fillcolor,fillalpha);
+);
+////%Animationkey end////
 
 //help:end();
 

@@ -4030,6 +4030,30 @@ Texcom("\shadedraw (1,1) rectangle +(2,2);");
 %\item[機能]Macの場合はシェルファイル，Windowsの場合はバッチファイルを書き出す。
 %\item[説明]書き出されるファイルについては，figいったんフォルダを空にしてから確かめられたい。
 
+\hypertarget{settextkey}{}
+\item[関数]Settextkey(番号,\ 位置,\ 表示文字列,\ スクリプト[,\ size,\ fill,\ alpha]）
+\item[機能]文字要素(Text)を生成または設定
+\item[説明]ない場合は新規作成，すでにある場合は設定
+
+オプションのデフォルト値は，size=18, fill=0, alpha=2
+
+\vspace{\baselineskip}
+【例】\verb|Settextkey(30,[1,3],"Test")|
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
+\hypertarget{Animationkey}{}
+\item[関数]Animationkey([番号リスト,\ 横位置リスト,\ 縦位置]）
+\item[機能]アニメーションのPLAY,REV,PAUSE,STOPを作成
+\item[説明]すでにある場合は位置を設定
+
+オプションのデフォルト値は，[71,72,73,74],[-4,-2,0,2],-6
+
+\vspace{\baselineskip}
+【例】\verb|Animationkey()|
+
+\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
+
 \hypertarget{assign}{}
 \item[関数]Assign(文字列，文字，文字）
 \item[機能]文字列の中のある文字を他の文字で置き換える
@@ -8818,6 +8842,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{addgraph}{Addgraph(name ,プロットデータ)} \>ユーザー定義のプロットデータを描画する\\
 \hyperlink{addpackage}{Addpackage(package)}\>プレビュー用のパッケージを追加\\
 \hyperlink{anglemark}{Anglemark(点list, options)}\>角の印を入れる\\
+\hyperlink{animationkey}{Animationkey([番号list, 横list, 縦])}\>アニメーションkeyを設定\\
 \hyperlink{animationparam}{Animationparam(初期値，速度，範囲)}\>アニメーションボタンのパラメータ値を取得\\
 \hyperlink{arrowdata}{Arrowdata(name,options)}\>2点間を結ぶ矢線を描く\\
 \hyperlink{arrowhead}{Arrowhead(点,方向,options)}\>点に矢じりだけを描く\\
@@ -9040,6 +9065,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{setplaybuttons}{Setplaybuttons(座標,サイズ [, スペース])}\>Playなどのボタンの位置とフォントサイズを設定\\
 \hyperlink{setpt}{Setpt(数)}\>表示する点の大きさを設定する\\
 \hyperlink{setscaling}{Setscaling(数)}\>縦方向の倍率を設定する\\
+\hyperlink{settextkey}{Settextkey(番号,位置,文字列, スクリプト)}\>文字要素 (Text) を生成または設定\\
 \hyperlink{settitle}{Settitle(タイトルlist,options)}\>スライドのタイトル設定\\
 \hyperlink{setunitlen}{Setunitlen(数)}\>単位長を設定する\\
 \hyperlink{setwindow}{Setwindow()}\>描画領域を設定する\\

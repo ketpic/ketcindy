@@ -70,5 +70,5 @@ License,basic3,4198,4216
 Headline,basic3,4220,4233,Dqq
 Copyright,basic3,4237,4244,Dqq
 Mkketcindyjs,basic3,4248,5009, 12px/10pt = 12px/,Strsplit,Toupper,Colorname2cmyk,Colorcmyk2rgb,Copyketcindyjs,Bracket,If,Extractfun,Extractall,Licensedata,pathsep,Readlines,Ketcindyjsdata,Movetojsexe,Resizetextsize,indexall,Indexof,Indexall,Removespace,200911,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css")+" />"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js")+"></script>"); //200517,cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js")+"></script>"); //200517,200517,isexists,Cdyname,Dqq,Tohtmltagpf
-Settextkey,basic3,5013,5037,Allelements
-Animationkey,basic3,5041,5061,resetclock,playanimation,Settextkey
+Settextkey,basic3,5013,5042,Allelements
+Animationkey,basic3,5046,5066,resetclock,playanimation,Settextkey

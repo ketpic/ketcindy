@@ -5012,8 +5012,13 @@ Mkketcindyjs(options):=( //17.11.18
 ////%Settextkey start////
 Settextkey(num,pos,name,script):=
     Settextkey(num,pos,name,script,18,0,0.2);
+Settextkey(num,pos,name,script,size):= // 230206added
+    Settextkey(num,pos,name,script,size,0,0.2);
 Settextkey(num,pos,name,script,size,fill,alpha):=(
-//help:Settextkey(10,[2,4],name(,"a=1;",18,0,0.2));
+//help:Settextkey(10,[2,4],"Test","flg=1;");
+//help:Settextkey(10,[2,4],"Test","");
+//help:Settextkey(no,pos,name,script,18);
+//help:Settextkey(no,pos,name,script,size,fillcolor,fillalpha));
   regional(id,pid,tmp,tmp1,tmp2);
   id="Text"+num;
   tmp=Allelements();

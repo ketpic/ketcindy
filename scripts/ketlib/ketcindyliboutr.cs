@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20220621] loaded");
+println("ketcindylibout[20230318] loaded");
 
 //help:start();
 
@@ -4694,7 +4694,7 @@ ExeccmdC(Arg):=(
   );
 );
 ExeccmdC(Arg1,Arg2):=(
-  if(isstring(Arg),
+  if(isstring(Arg1), //230319
     ExeccmdC(Arg1,Arg2,["do"]);
   ,
     ExeccmdC(ExecName,Arg1,Arg2);
@@ -5130,7 +5130,7 @@ CrvsfparadataC(nm,Fk,sfbdorg,fdorg,optionorg,optionshorg):=(
 );
 ////%Crvsfparadata end////
 
-////%Crv3onsfparadata start////
+////%Crv3onsfparadata start//// old version
 Crv3onsfparadata(nm,crv3d,sfbd,fd):=Crv3onsfparadataC(nm,crv3d,sfbd,fd);
 Crv3onsfparadata(nm,crv3d,sfbd,fd,options):=Crv3onsfparadataC(nm,crv3d,sfbd,fd,options);
 Crv3onsfparadata(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=
@@ -5255,6 +5255,18 @@ Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=(
   );
 );
 ////%Crv3onsfparadata end////
+
+////%Crv3onsfparadata start//// new version 230318
+Crv3onsfparadata(nm,crv3d,sfbd,fd):=CrvsfparadataC(nm,crv3d,sfbd,fd);
+Crv3onsfparadata(nm,crv3d,sfbd,fd,options):=CrvsfparadataC(nm,crv3d,sfbd,fd,options);
+Crv3onsfparadata(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh):=
+  CrvsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionsh);
+Crv3onsfparadataC(nm,crv3d,sfbd,fd):=
+  CrvsfparadataC(nm,crv3d,sfbd,fd,[],["do"]);
+Crv3onsfparadataC(nm,crv3d,sfbd,fd,options):=
+   CrvsfparadataC(nm,crv3d,sfbd,fd,options,["do"]);
+Crv3onsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg):=
+  CrvsfparadataC(nm,crv3d,sfbdorg,fdorg,optionorg,optionshorg);
 
 ////%Crv2onsfparadata start////
 Crv2onsfparadata(nm,crv2d,sfbd,fd):=Crv2onsfparadataC(nm,crv2d,sfbd,fd);

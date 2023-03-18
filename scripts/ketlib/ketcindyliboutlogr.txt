@@ -1,3 +1,6 @@
+// 20230318
+//    ExeccmdC debugged  ( Arg=>Arg1 )
+//    Crv3onsfparadata debugged/changed (=Crvsfparadata) 
 // 20220621
 //    CalcbyR debugged  ( for option "" )
 // 20220602

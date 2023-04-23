@@ -14,8 +14,23 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibkey[20210629 loaded");
+println("ketcindylibkey[20230406 loaded"); // no ketjs
 
+// 230406 Errorcheckstr dbg &changed  (flg returned as list )
+// 230406 Replacedot changed  (cdot in other case )
+// 230406 Keytable changed  ( no painting when clr==0 )
+// 230402 Errorcheckstr added
+// 230227 Keytable changed (sz)
+// 220819 Replacedot addded, and added to Morefunction
+// 220731 All Strsplit changed to Strsplit
+// 220523 Gettexform  (frac x=>x dfrac 
+// 220424 Setkeypos():=
+// 211111 Setkeystyle changed ( keyposition, only for exiisting text )
+// 211111 Alltextkey changed ( fname option )
+// 211109 Dispposition changed (length of seg, nonascii)
+// 211022 List2line, Line2list added
+// 211012 Keytable changed ( for (0,xL,0,yL,... ) )
+// 210917 Setkeypos added, Alltextkey changed (position)
 // 210706 Modifyfortex changed (\, removed)
 // 210629 Addasterisk debugged ( for e^ )
 //              Keytable changed
@@ -91,7 +106,7 @@ Extractvar(strorg,mark):=(
 Replacematdet(str):=(
   regional(sym,out,rest,ctr,eL,np,nc,tmp,tmp1,tmp2,tmp3);
   out=str;
-  forall(["mat(","det("],sym,
+  forall(["mat(","det(","case("],sym,  //210902 case
     tmp=indexof(out,sym);
     ctr=0;
     while((tmp>0)&(ctr<20),
@@ -127,10 +142,43 @@ Replacematdet(str):=(
       if(sym=="det(",
         tmp2="\left|"+tmp2+"\right|";
       );
+      if(sym=="case(", //210902from
+        tmp2="\left\{"+tmp2+"\right.";
+      );
+
       out=out+tmp2+rest;
       tmp=indexof(out,sym);
       ctr=ctr+1;      
     );
+  );
+  out;
+);
+
+Replacedot(str):=(  //220819
+  regional(out,rest,flg,tmp,tmp1,tmp2);
+  out=str;
+  tmp1=indexof(out,"dot(");
+  while(tmp1>0,
+    tmp=Indexall(out,")");
+    tmp=select(tmp,#>tmp1);
+    if(length(tmp)>0,
+      tmp2=tmp_1;
+    ,
+      tmp2=length(out);
+    );
+    rest=substring(out,tmp2,length(out));
+    tmp=substring(out,tmp1+3,tmp2-1);
+    tmp=Removespace(tmp);
+    out=substring(out,0,tmp1-1);
+    flg=0;
+    if((tmp=="")%(tmp=="1"),tmp2="{\cdot}";flg=1);
+    if((tmp=="3")%(tmp=="s"),tmp2="{\cdots}";flg=1);
+    if(tmp=="d",tmp2="{\ddots}";flg=1);
+    if(tmp=="l",tmp2="{\ldots}";flg=1);
+    if(tmp=="v",tmp2="{\vdots}";flg=1);
+    if(flg==0,tmp2="{\cdot}");
+    out=out+tmp2+rest;
+    tmp1=indexof(out,"dot(");
   );
   out;
 );
@@ -184,12 +232,13 @@ Replacefun(str,name,repL):=(  //new 210604
 Morefunction(str):=( //new 210604
   regional(out,name,repL);
   out=str;
-  out=Replacefun(out,"tfr(",["\tfrac{","}{","}"]);
-  out=Replacefun(out,"lim(",["\displaystyle\lim_{","\to\,","}"]); //210617from
-  out=Replacefun(out,"int(",["\displaystyle\int_{","}^{","}"]);
-  out=Replacefun(out,"sum(",["\displaystyle\sum_{","}^{","}"]); //210617to
+//  out=Replacefun(out,"tfr(",["\tfrac{","}{","}"]); //210831
+//  out=Replacefun(out,"lim(",["\displaystyle\lim_{","\to\,","}"]); //210617from
+//  out=Replacefun(out,"int(",["\displaystyle\int_{","}^{","}"]);
+//  out=Replacefun(out,"sum(",["\displaystyle\sum_{","}^{","}"]); //210617to
 //  out=Replacefun(out,"e^(",["\exp{","}"]); //210612
   out=Replacematdet(out); //210606
+  out=Replacedot(out); //220819
   out;
 );
 
@@ -305,8 +354,25 @@ Addat(str):=(
 );
 
 Sepchar(strorg):=(
-  regional(str,out,flg,err,tmp,tmp1,tmp2);
-  str=Addat(strorg);
+  regional(str,out,flg,sharp,tctr,err,tmp,tmp1,tmp2);
+  tmp1=strorg; //210907from
+  str="";
+  tctr=0;
+  sharp=[];
+  tmp=indexof(tmp1,"tx(");
+  while(tmp>0,
+    tctr=tctr+1;
+    tmp2=substring(tmp1,0,tmp+1);
+    tmp1=substring(tmp1,tmp+1,length(tmp1));
+    str=str+tmp2+"(#"+text(tctr)+")";
+    tmp=indexof(tmp1,")");
+    tmp2=substring(tmp1,1,tmp-1);
+    sharp=append(sharp,tmp2);
+    tmp1=substring(tmp1,tmp,length(tmp1));
+    tmp=indexof(tmp1,"tx(");
+  );
+  str=str+tmp1; //210907to
+  str=Addat(str); 
   err="";
   out=[];
   tmp1=Indexall(str,"@");
@@ -339,6 +405,9 @@ Sepchar(strorg):=(
       out=append(out,tmp2);
     );
   );
+  forall(1..(length(sharp)),tmp,  //210907from
+    out=apply(out,replace(#,"#"+tmp,sharp_tmp));
+  ); //210907to
   [out,err];
 );
 
@@ -442,13 +511,14 @@ Gettexform(str):=(
       tmp=replace(#," ","(sp)");
       tmp=Modifyfortex(tmp);
       tmp=Morefunction(tmp);
-      tmp=Addasterisk(tmp);
-      tmp=replace(tmp,"\exp(","e^(");
       tmp1=Totexform(tmp);
+//      tmp=Addasterisk(tmp);
+//      tmp=replace(tmp,"\exp(","e^(");
+//      tmp1=Totexform(tmp);
       tmp1=replace(tmp1,"a r r a y","array"); //210606[2lines]
       repeat(5,tmp1=replace(tmp1,"c c","cc"));
       tmp1=replace(tmp1,"c i r c","\circ");
-      tmp1=replace(tmp1,"\frac","\dfrac");
+//      tmp1=replace(tmp1,"\frac","\dfrac"); //220523(//)
       tmp1=Greekletter(tmp1); //210514[3lines]
       tmp1=Capitalletter(tmp1);
       tmp1=Boldletter(tmp1);
@@ -458,23 +528,37 @@ Gettexform(str):=(
   strt;
 );
 
-Dispposition(pos,npos,str):=(
-  regional(tmp,tmp1,tmp2,dp,p1,p2,p3,p4);
-  dp=[0,3];
+Dispposition(pos,npos,str):=Dispposition(pos,3,npos,str);
+Dispposition(pos,len,npos,str):=(
+  regional(ascii,tmp,tmp1,tmp2,dp,p1,p2,p3,p4,n,ctr);
+  ascii=apply(32..126,unicode(text(#),base->10));
+  dp=[0,len];
   tmp=[0.1,0];
   p1=pos-tmp;  p2=pos+tmp;
   p3=p1+dp; p4=p2+dp;
   Listplot("-disp",[p1,p2,p4,p3,p1],["nodisp","Msg=n"]);
   Shade(["disp"],["Color=red"]);
-  if(length(str)>0,
-    tmp=max([0,npos-4]);
-    tmp1=substring(str,tmp,npos);
-    tmp=min([length(str),npos+4]);
-    tmp2=substring(str,npos,tmp);
+  if(length(str)>0, //211109from
+    n=npos;
+    ctr=0;
+    while((n>0)&(ctr<4),
+      tmp=substring(str,n-1,n);
+      if(contains(ascii,tmp),ctr=ctr+1,ctr=ctr+2);
+      n=n-1;
+    ); 
+    tmp1=substring(str,n,npos);
+    n=npos+1;
+    ctr=0;
+    while((n<=length(str))&(ctr<4),
+      tmp=substring(str,n-1,n);
+      if(contains(ascii,tmp),ctr=ctr+1,ctr=ctr+2);
+      n=n+1;
+    );  
+    tmp2=substring(str,npos,n-1);
     p1=pos+1/3*dp;
-    drawtext(p1,tmp1,size->24,align->"right");
-    drawtext(p1,tmp2,size->24,align->"left");
-  );
+    drawtext(p1,tmp1,size->22,align->"right");
+    drawtext(p1,tmp2,size->22,align->"left");
+  ); //211109to
 );
 
 Addfunstr(name,npos,strnow):=(
@@ -488,13 +572,34 @@ Addfunstr(name,npos,strnow):=(
   out;
 );
 
-Keytable(nx,dx,ny,dy,plb,clr):=Keytable(nx,dx,ny,dy,plb,clr,[],0,22); //210629
-Keytable(nx,dx,ny,dy,plb,clr,nameL,nmove,sz):=(
+////%Keytable start////
+Keytable(nx,dx,ny,dy,plb,clr):=Keytable(nx,dx,ny,dy,plb,clr,[],0,22,1); //210629
+Keytable(nx,dx,ny,dy,plb,clr,nameL,nmove,sz):=( //230406
+  // Keytable(5,20,3,10,....)
+  // Keytable(0,dxL,0,dyL,...)
   regional(xL,yL,plt,prt,prb,row,col,name,tmp1,tmp2,pos);
-  xL=apply(0..nx,#/10*dx+plb_1);
-  yL=apply(0..ny,(ny-#)/10*dy+plb_2);
+  if(nx>0,  //211012from
+    xL=apply(0..nx,#/10*dx+plb_1);
+  ,
+    xL=[plb_1];
+    forall(dx,
+      tmp=xL_(-1)+#/10;
+      xL=append(xL,tmp);
+    );
+  );
+  if(ny>0,
+    yL=apply(0..ny,(ny-#)/10*dy+plb_2);
+  ,
+    yL=[plb_2];
+    forall(dy,
+      tmp=yL_(-1)+#/10;
+      yL=append(yL,tmp);
+    );
+  );  //211012to
   plt=[xL_1,yL_1]; prt=[xL_(-1),yL_1]; prb=[xL_(-1),yL_(-1)];
-  fillpoly([plb,plt,prt,prb,plb],color->clr);
+  if(clr!=0,//shade==1, 230406
+    fillpoly([plb,plt,prt,prb,plb],color->clr);
+  );
   forall(xL,draw([#,plb_2],[#,plt_2],color->[0,0,0]));
   forall(yL,draw([plb_1,#],[prb_1,#],color->[0,0,0]));
   if(length(nameL)>0,
@@ -507,11 +612,13 @@ Keytable(nx,dx,ny,dy,plb,clr,nameL,nmove,sz):=(
         tmp1=xL_col;
         tmp2=xL_(col+1);
         pos_1=(tmp1+tmp2)/2;
-        drawtext(pos+nmove,name,align->"mid",size->sz);
+        tmp=indexof(name,",");
+       drawtext(pos+nmove,name,align->"mid",size->sz);
       );
     );
   );
 );
+////%Keytable end////
 
 Allclear():=(
   StrL_ch="";
@@ -542,17 +649,18 @@ Dqq(str):=(
 );
 
 ////%Alltextkey start////
-Alltextkey(make):=( //no ketjs on
+Alltextkey(make):=Alltextkey(make,"keylist");  //no ketjs on
+Alltextkey(make,fname):=(
 //help:Alltexkey(1);
-  regional(fname,txtkey,keyL,key,tmp,tmp1,tmp2,tmp3,fid);
-  fname="keylist";
+  regional(txtkey,keyL,key,tmp,tmp1,tmp2,tmp3,tmp4,fid);
   txtkey=remove(allelements(),allpoints());
 //  tmp=concat(1..5,[21,22]);
 //  tmp=apply(tmp,parse("Text"+text(#)));
 //  txtkey=remove(txtkey,tmp);
+  println(fname+".csv");
   keyL=[];
   forall(txtkey,key,
-    tmp=replace(key.name,"Text","");
+     tmp=replace(key.name,"Text","");
     tmp=replace(tmp,"''",".2");
     tmp=replace(tmp,"'",".1");
     tmp=parse(tmp);
@@ -560,7 +668,8 @@ Alltextkey(make):=( //no ketjs on
     tmp=inspect(key,"text.text");
     tmp2=[Dqq(tmp),inspect(key,"textsize")];
     tmp3=[inspect(key,"colorfill"),inspect(key,"fillalpha")];
-    keyL=concat(keyL,[tmp1++tmp2++tmp3]);
+    tmp4=key.xy; //210917[2lines]
+    keyL=concat(keyL,[tmp1++tmp2++tmp3++tmp4]);
   );
   keyL=sort(keyL,[#_1]);
   if(make==0,
@@ -603,35 +712,147 @@ Alltextkey(make):=( //no ketjs on
 Setkeystyle():=Setkeystyle("keylist");  //no ketjs on
 Setkeystyle(fname):=(
 //help:Setkeystyle();
-  regional(keyL,button,key,tmp);
+  regional(keyL,button,key,tmp,tmp1,txtkey);
+  tmp=remove(allelements(),allpoints());
+  txtkey=apply(tmp,#.name);
   println(fname+".csv");
   if(!isexists(Dircdy,fname+".csv"),
     println("  File not found");
   ,
-    Setdirectory(Dircdy);
+//    Setdirectory(Dircdy);
     keyL=Readlines(Dircdy,fname+".csv");
     button=Readlines(Dircdy,fname+"b.txt");    
     forall(keyL,
       key=Strsplit(#,",");
-      tmp=substring(key_3,1,length(key_3)-1);
-      inspect(parse(key_2),"text.text",tmp);
-      inspect(parse(key_2),"textsize",key_4);
-      inspect(parse(key_2),"colorfill",key_5);
-      inspect(parse(key_2),"fillalpha",key_6);
-      tmp=select(1..(length(button)),indexof(button_#,key_2)>0);
-      tmp1=tmp_1+1;
-      tmp2="";
-      while(tmp1<=length(button),
-        if(indexof(button_tmp1,"Text")==0,
-          tmp2=tmp2+button_tmp1;
-        ,
-          tmp1=length(button);
+      if((contains(txtkey,key_2))&(key_3!=Dqq("")),
+        tmp=substring(key_3,1,length(key_3)-1);
+        inspect(parse(key_2),"text.text",tmp);
+        inspect(parse(key_2),"textsize",key_4);
+        inspect(parse(key_2),"colorfill",key_5);
+        inspect(parse(key_2),"fillalpha",key_6);
+        if(!contains([key_7,key_8],"NaN"), //211112from
+          tmp=key_2+".xy=["+key_7+","+key_8+"];";
+          parse(tmp);
+        ); //211112from
+        tmp=select(1..(length(button)),indexof(button_#,key_2)>0);
+        tmp1=tmp_1+1;
+        tmp2="";
+        while(tmp1<=length(button),
+          if(indexof(button_tmp1,"Text")==0,
+            tmp2=tmp2+button_tmp1;
+          ,
+            tmp1=length(button);
+          );
+          tmp1=tmp1+1;
         );
-        tmp1=tmp1+1;
+        inspect(parse(key_2),"button.script",tmp2);
       );
-      inspect(parse(key_2),"button.script",tmp2);
     );
   );
 );  //no ketjs off
 ////%Setkeystyle end////
 
+////%Setkeypos start////
+Setkeypos():=Setkeypos("keylist");  //no ketjs on
+Setkeypos(fname):=(
+  regional(keyL,key,tmp,tmp1);
+  keyL=Readlines(Dircdy,fname+".csv");
+  keyL=apply(keyL,Strsplit(#,","));
+  forall(keyL,key,
+    tmp1=key_3;
+    tmp=key_2+".xy=["+key_7+","+key_8+"];";
+    parse(tmp);
+  );
+); //no ketjs off
+////%Setkeypos end////
+
+////%List2line start////
+List2line(stLL):=(
+  regional(tab,nn,nc,tmp,str,st,out);
+  tab=unicode("0009");
+  out="";
+  forall(1..(length(stLL)),nn,
+    st=stLL_nn;
+    str="";
+    forall(1..(length(st)),
+      tmp=st_#;
+      if(!isstring(tmp),tmp=format(tmp,10));
+      str=str+tmp+tab;
+    );
+    str=substring(str,0,length(str)-1);
+    out=out+str;
+    if(nn<length(stLL),out=out+"CR");
+  );
+  out;  
+);
+////%List2line endt////
+
+////%Line2list start////
+Line2list(strorg):=(
+  regional(tab,stL,st,nn,tL,mx,flg,tmp);
+  tab=unicode("0009");
+  str=replace(strorg,";;",tab);
+  flg=indexof(str,"::");
+   tL=[];
+  if(indexof(str,"CR")>0,
+    stL=Strsplit(str,"CR");
+    forall(1..(length(stL)),nn,
+      st=stL_nn;
+      if(!isstring(st),st=format(st,10));
+      stL_nn=Strsplit(st,tab);
+    );
+  ,
+    stL=Strsplit(str,tab);
+    forall(1..(length(stL)),
+      tmp=stL_#;
+      if(indexof(tmp,"::")>0,tmp=Strsplit(tmp,"::"));
+      stL_#=tmp;
+    );
+  );
+  stL;
+);
+////%Line2list end////
+
+
+Errorcheckstr(str):=(
+  regional(flg,tmp,tmp1,tmp2,tmp3);
+  flg=[0,[]];
+  if(length(str)==0,flg=3);
+  if(flg_1==0,
+    tmp3=Indexall(str,"^");
+    tmp2=[];
+    forall(tmp3,
+      if(#==1,
+        tmp2=append(tmp2,#);
+      ,
+        if(str_(#-1)=="(",
+          tmp2=append(tmp2,#);
+        ,
+          if(#>=4,
+            tmp=substring(str,#-4,#-1);
+            println(tmp);
+            
+            if(contains(["sin","cos","tan"],tmp),
+              tmp2=append(tmp2,#);
+            );
+          );    
+        );
+        if(length(tmp2)>0,
+          flg=[2,tmp2]; // pos of hats different
+        );
+      );
+    );
+  );
+  if(flg_1==0,
+    if(indexof(str,"(")>0,
+      tmp2=Bracket(str);
+      tmp=tmp2_(-1);
+      if(tmp_2!=-1, // brackets mismach
+        tmp2=select(tmp2,abs(#_2)==1);
+        tmp2=apply(tmp2,#_1);
+        flg=[1,tmp2]; 
+      );
+    );
+  ); 
+  flg;
+);

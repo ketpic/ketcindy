@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.29");
+println("KeTCindy V.4.4.30");
 println(ketjavaversion());
-println("ketcindylibbasic1[20221218] loaded");
+println("ketcindylibbasic1[20230423] loaded");
 
 //help:start();
 
@@ -4052,14 +4052,17 @@ Opcrvs(num,Fig,options):=(
 );
 ////%Opcrvs end////
 
-////%Pointdata start////
+/////%Pointdata start////
 Pointdata(nm,list):=Pointdata(nm,list,[]);
 Pointdata(nm,listorg,optionsorg):=(
 //help:Pointdata("1",[2,4],["Size=5"]);
 //help:Pointdata("2",[[2,3],[4,1]]);
-//help:Pointdata(options=["Size=(1)","Msg=(y)","Color=","Inside=y(n/color(,ratio))"]);
-  regional(list,name,opstr,opcindy,Msg,options,Ltype,Noflg,eqL,color,color4,dispflg,//220715
-      size,inside,incolor,ratio,tmp,tmp1,tmp2,tmp3,ngc1,ngc2,ng1,ng2,nc1,nc2);
+//help:Pointdata(options=["Color=","Inside=y(n/color(,ratio))"]);
+//help:Pointdata(options=["Size=(1)","Msg=(y)")"]);   
+  regional(list,name,opstr,opcindy,Msg,options,Ltype,
+              Noflg,eqL,color,color4,dispflg,//220715
+              size,inside,incolor,ratio,tmp,tmp1,tmp2,tmp3,
+              ngc1,ngc2,ng1,ng2,nc1,nc2);
   if(substring(nm,0,1)=="-", //200510[2lines]
     name=substring(nm,1,length(nm));
   ,
@@ -4072,7 +4075,7 @@ Pointdata(nm,listorg,optionsorg):=(
   eqL=tmp_5;
   opstr=tmp_(length(tmp)-1);
   color=tmp_(length(tmp)-2);
-  opcindy="";
+  color4=Colorrgb2cmyk(color);
   size="1";
   dispflg="Y";
   inside="Y"; //200512
@@ -4087,7 +4090,6 @@ Pointdata(nm,listorg,optionsorg):=(
     if(tmp1=="S",
       size=tmp_2; //190406[2lines]
       tmp1=parse(size);
-//      opcindy=opcindy+",size->"+text(tmp1); //210602removed
       options=remove(options,[#]);
     );
     if(tmp1=="D", //181030from
@@ -4147,32 +4149,23 @@ Pointdata(nm,listorg,optionsorg):=(
     forall(1..(length(list)),
       tmp2=text(#)+name; // no ketjs on
       tmp3=[list_#,tmp1*ratio];
-      Circledata(tmp2,[list_#,tmp1*ratio],["nodisp","Msg=n"]); // no ketjs off
+      Circledata(tmp2,[list_#,tmp1*ratio],["nodisp","Msg=n"]);
+        // no ketjs off
       if(inside=="N", //210602from
+        Scaledata(tmp2+"i",["cr"+tmp2],1,1/SCALEY,//230423[2line]
+                     ["Color="+color,"Msg=n"]);
         if(length(incolor)>0, //200519from
-          Scaledata(tmp2+"i",["cr"+tmp2],1,1/SCALEY,[tmp3_1,"Msg=n"]);//no ketjs on
+          //no ketjs on
           tmp="sc"+tmp2+"i";
           Shade([tmp],["Color="+incolor]); // no ketjs off //201025
-//          if(isstring(incolor),incolor=Colorname2cmyk(incolor)); // only ketjs on
-//          if(length(incolor)==4,incolor=Colorcmyk2rgb(incolor));
-//          tmp2=opcindy+",color->";
-//          tmp=["fillcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(incolor)+");",[5,0]];
-//          GCLIST=append(GCLIST,tmp);
-//          tmp=["drawcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+text(color)+");",[5,0]];
-//          GCLIST=append(GCLIST,tmp); // only ketjs off
         );
       ,
-        tmp=[tmp3_1,"Msg=n"]; //220722from
+        tmp=[tmp3_1,"Color="+color,"Msg=n"]; //220722from
         if(Noflg==1,tmp=prepend("notex",tmp));
-        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,tmp);// no ketjs on //220722to
+          // no ketjs on //220722to
+        Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,tmp);
         tmp="sc"+tmp2;
         Shade([tmp],options); // no ketjs off //200813
-//          if(length(color)==4,color=Colorcmyk2rgb(color)); // only ketjs on
-//          tmp2=opcindy+",color->"+text(color); //210609
-//          tmp=["fillcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+");",[5,0]];
-//          GCLIST=append(GCLIST,tmp);
-//          tmp=["drawcircle("+text(Pcrd(list_#))+","+text(tmp1)+tmp2+");",[5,0]];
-//          GCLIST=append(GCLIST,tmp);  // only ketjs off
       ); //210602to
       tmp=round(10*sqrt(parse(size))); //201027from (moved)
       if(Noflg==0,options=[Ltype,"Color="+text(color),"Num="+text(tmp)]);
@@ -4184,7 +4177,8 @@ Pointdata(nm,listorg,optionsorg):=(
   ngc2=length(GCLIST); //210422[5lines]
   ng2=length(GLIST);
   nc2=length(COM2ndlist);
-  tmp=[name,list,GCLIST_(ngc1..ngc2),GLIST_(ng1..ng2),COM2ndlist_(nc1..nc2)];  
+  tmp=[name,list,GCLIST_(ngc1..ngc2),
+               GLIST_(ng1..ng2),COM2ndlist_(nc1..nc2)];  
   PointDataList=append(PointDataList,tmp);
   list;
 );

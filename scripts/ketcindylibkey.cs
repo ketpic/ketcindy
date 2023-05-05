@@ -577,7 +577,7 @@ Keytable(nx,dx,ny,dy,plb,clr):=Keytable(nx,dx,ny,dy,plb,clr,[],0,22,1); //210629
 Keytable(nx,dx,ny,dy,plb,clr,nameL,nmove,sz):=( //230406
   // Keytable(5,20,3,10,....)
   // Keytable(0,dxL,0,dyL,...)
-  regional(xL,yL,plt,prt,prb,row,col,name,tmp1,tmp2,pos);
+  regional(xL,yL,plt,prt,prb,row,col,name,tmp,tmp2,pos);
   if(nx>0,  //211012from
     xL=apply(0..nx,#/10*dx+plb_1);
   ,

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20230131] loaded");
+println("ketcindylibbasic3[20230505] loaded");
 
 //help:start();
 
@@ -3317,7 +3317,7 @@ Tomaxform(str):=(
   regional(plv,funL,repL,out,sub,head,flg,rep,fun,pre,post,ctr,clv,nn,
       sharpL,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
-    ["fr(",["","(xx)/(yy)"]],
+    ["fr(",["","((xx)/(yy))"]], //220505
     ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]],
     ["ln(",["{log}(xx)"]], //210903
     ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]],
@@ -3330,7 +3330,10 @@ Tomaxform(str):=(
   ];
   if(isstring(str),out=replace(str,"!",""), out=format(str,6)); //211118
   out=replace(out," ",""); //220617
+  out=replace(out,"tfr(","fr(");//230505
+  out=replace(out,"tfr(","fr(");//230505
   out=replace(out,"(cross)","*"); //220615
+  out=replace(out,"dot()","*");//230505
   tmp=Bracket(out,"[]"); //210908from
   while(length(tmp)>0,
     tmp1=tmp_1_1;
@@ -5045,7 +5048,7 @@ Settextkey(num,pos,name,script,size,fill,alpha):=(
 ////%Animationkey start////
 Animationkey():=Animationkey([71,72,73,74],[-4,-2,0,2],-6);
 Animationkey(kL,pxL,py):=(
-//help:Animationkey([71,72,73,74],[-4,-2,0,2],6);
+//help:Animationkey([71,72,73,74],[-4,-2,0,2],-6);
   regional(sL,fillcolor,fillalpha);
   println([5046,pxL]);
   sL=[

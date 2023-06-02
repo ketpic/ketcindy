@@ -3318,13 +3318,13 @@ Tomaxform(str):=(
       sharpL,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
     ["fr(",["","((xx)/(yy))"]], //220505
-    ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]],
+    ["log",["{log}(xx)","{log}(yy)/{log}(xx)"]], //230520
     ["ln(",["{log}(xx)"]], //210903
-    ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]],
-    ["po(",["","(xx)^(yy)"]],
-    ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]],
-    ["cos(",["{cos}(xx)","{cos}(yy)^(xx)"]],
-    ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]],
+    ["sq",["{sqrt}(xx)","(yy)^(1/(xx))"]], //230520
+    ["po",["","(xx)^(yy)"]],
+    ["sin",["{sin}(xx)","{sin}(yy)^(xx)"]], //230520
+    ["cos",["{cos}(xx)","{cos}(yy)^(xx)"]], //230520
+    ["tan",["{tan}(xx)","{tan}(yy)^(xx)"]], //230520
     ["|(",["{abs}(xx)"]], //210902
     ["pi(",["{%pi}()"]]
   ];
@@ -3406,7 +3406,7 @@ Tomaxform(str):=(
   forall(reverse(sharpL),
     out=replace(out,#_1,#_2);
   );
-  out=head+out;
+  out=replace(head+out,"{",""); //230520
   out=replace(out,"e^","(exp(1))^"); //220610
   out;
 );

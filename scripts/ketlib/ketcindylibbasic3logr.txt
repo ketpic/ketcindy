@@ -1,3 +1,5 @@
+// 20230520
+// Tomaxform debugged ( log( => log, ... )
 // 20230505
 // Tomaxform changed ( tfr, dot() )
 // 20230206

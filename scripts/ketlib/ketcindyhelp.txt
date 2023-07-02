@@ -433,6 +433,8 @@ Settextkey(10,[2,4],"Test","");
 Settextkey(no,pos,name,script,18);
 Settextkey(no,pos,name,script,size,fillcolor,fillalpha));
 Animationkey([71,72,73,74],[-4,-2,0,2],-6);
+Ketlms(Mvpt,Rmvpt,Pt2sc,Sc2pt,Mvdraw);
+Ketlms(global Center,Scale);
 Ketinit3d();
 Ketinit3d(0);
 Start3d();

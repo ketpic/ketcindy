@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20230505] loaded");
+println("ketcindylibbasic3[20230628] loaded");
 
 //help:start();
 
@@ -5068,6 +5068,50 @@ Animationkey(kL,pxL,py):=(
   Settextkey(kL_4,[pxL_4,py],"Stop",sL_4,18,fillcolor,fillalpha);
 );
 ////%Animationkey end////
+
+////% Ketlms start
+//help:Ketlms(Mvpt,Rmvpt,Pt2sc,Sc2pt,Mvdraw);
+//help:Ketlms(global Center,Scale);
+////% Ketlms end
+////%Mvpt start
+Mvpt(pt):=(
+  Scale*pt+Center;  //Scale,Center grobal
+);
+Mvpt(x,y):=Mvpt([x,y]);
+////%Mvpt end
+////%Rmpt start
+Rmpt(mpt):=(
+  (mpt-Center)/Scale;
+);
+Rmpt(mx,my):=Rmpt([mx,my]);
+////%Rmpt end
+////%Pt2sc start
+Pt2sc(pt):=(
+  regional(sx);
+  if(ispoint(pt),sx=pt.x,sx=pt_1);
+  2^(1/5*(sx-35));
+);
+////%Pt2sc end
+////%Sc2pt start
+Sc2pt(sc):=(
+  regional(sx);
+  sx=5*log(sc)/log(2)+35;
+  [sx,4];
+);
+////%Sc2pt end
+////%Mvdraw start
+Mvdraw(num,opt):=(
+  regional(pltL,out,tmp,tmp1);
+  pltL=parse(num);
+  if(length(pltL)==1,
+    Pointdata("-m"+num,ptL,opt);
+  ,
+    out=apply(pltL,Mvpt(#));
+    Listplot("-m"+num,out,append(opt,"Msg=y"));
+  );
+  out;
+);
+////%Mvdraw end
 
 //help:end();
 

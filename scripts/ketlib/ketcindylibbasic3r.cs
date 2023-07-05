@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20230704] loaded");
+println("ketcindylibbasic3[20230705] loaded");
 
 //help:start();
 
@@ -3157,6 +3157,43 @@ Addpar(str):=(
   out;
 );
 ////%Addpar end////
+
+////%Convtrigpow start
+Convtrigpow(strorg):=(
+  //help:Convtrigpow("sin(x)^(2)");
+  regional(tmp,tmp1,tmp2,tmp3,ctr,str,
+         trigL,trig,uptrig,str1,str2);
+  trigL=["sin","cos","tan"];
+  str=strorg;
+  forall(trigL,trig,
+    uptrig=Toupper(trig);
+    tmp=indexof(str,trig+"(");
+    ctr=1;
+    while((tmp>0)&(ctr<10),
+      str1=substring(str,0,tmp-1);
+      str1=str1+uptrig;
+      str2=substring(str,tmp+2,length(str));
+      tmp=Bracket(str2);
+      tmp1=select(tmp,#_2==1);
+      tmp2=select(tmp,#_2==-1);
+      if(length(tmp2)>0,
+        tmp=substring(str2,tmp2_1_1,tmp2_1_1+2);
+        if((tmp=="^(")&(length(tmp2)>1),
+          tmp3=substring(str2,tmp1_2_1,tmp2_2_1-1);
+          tmp=substring(str2,1,tmp2_1_1);
+          str1=str1+"("+tmp3+","+tmp;
+          str2=substring(str2,tmp2_2_1,length(str2));
+        );
+      );
+      str=str1+str2;
+      tmp=indexof(str,trig);
+      ctr=ctr+1;
+    );
+    str=replace(str,uptrig,trig);
+  );
+  str;
+);
+////%Convtrigpow end
 
 ////%Totexform start////
 Totexform(str):=( //210803from[renew]

@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.33");
+println("KeTCindy V.4.4.34");
 println(ketjavaversion());
-println("ketcindylibbasic1[20230505] loaded");
+println("ketcindylibbasic1[20230705] loaded");
 
 //help:start();
 
@@ -87,7 +87,7 @@ Ketinit(work,strictsep):=( //200509
   if(!islist(COM1stlistadd),COM1stlist=[],COM1stlist=COM1stlistadd); 
   if(!islist(COM2ndlistadd),COM2ndlist=[],COM2ndlist=COM2ndlistadd); // no ketjs off
   ADDAXES="1";
-  AXSTYLE=[["l","x","e","y","n","O","sw","","",""],[]]; //190901
+  AXSTYLE=[["l","x","e","y","n","O","sw"],[],[]]; //230704
   AXCOUNT=1; //181215
   SHADECTR=1; //190222
   LFmark=unicode("000a"); Bs=unicode("005c");

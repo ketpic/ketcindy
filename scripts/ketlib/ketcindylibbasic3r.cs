@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20230628] loaded");
+println("ketcindylibbasic3[20230704] loaded");
 
 //help:start();
 
@@ -5100,6 +5100,7 @@ Sc2pt(sc):=(
 );
 ////%Sc2pt end
 ////%Mvdraw start
+Mvdraw(num):=Mvdraw(num,[]);
 Mvdraw(num,opt):=(
   regional(pltL,out,tmp,tmp1);
   pltL=parse(num);
@@ -5112,6 +5113,43 @@ Mvdraw(num,opt):=(
   out;
 );
 ////%Mvdraw end
+
+////%Mvlist start
+Mvlist(num,pdata):=Mvlist(num,pdata,[]);
+Mvlist(num,pdata,opt):=(
+  regional(tmp);
+  tmp=apply(pdata,Mvpt(#));
+  Listplot("-m"+num,tmp,opt);
+);
+////%Mvlist end
+
+////%Mvplotdata start
+Mvplotdata(num,fun,rng):=Mvplotdata(num,fun,rng,[],[]);
+Mvplotdata(num,fun,rng,op1):=Mvplotdata(num,fun,rng,op1,[]);
+Mvplotdata(num,fun,rng,op1,op2):=(
+  //help:Mvplotdata("1","sin(x)","x",["Num=200"],["dr,2"]);
+  Plotdata(num,fun,rng,append(op1,"nodisp"));
+  Mvdraw("gr"+num,op2);
+);
+////%Mvplotdata end
+
+////%Mvdrwxy start
+Mvdrwxy():=(
+//help:Mvdrwxy();
+  regional(org,tmp);
+  org=GENTEN; 
+  Mvlist("axx",[[XMIN,org_2],[XMAX,org_2]],AXSTYLE_2);
+  Mvlist("axy",[[org_1,YMIN],[org_1,YMAX]],AXSTYLE_2);
+  tmp=AXSTYLE_1;
+  if(tmp_1=="a",
+    Arrowhead(Mvpt(XMAX,org_2),[1,0],AXSTYLE_2);
+    Arrowhead(Mvpt(org_1,YMAX),[0,1],AXSTYLE_2);
+  );
+  Expr(Mvpt(XMAX,org_2),tmp_3,tmp_2,AXSTYLE_3); 
+  Expr(Mvpt(org_1,YMAX),tmp_5,tmp_4,AXSTYLE_3); 
+  Letter(Mvpt(org),tmp_7,tmp_6,AXSTYLE_3);
+);
+////%Mvdrwxy end
 
 //help:end();
 

@@ -16,14 +16,11 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_6(20230725)" 
+ThisVersion<- "KeTpic for R  v5_2_5(20220910)" 
 
 print(ThisVersion)
 
-# 2023.07.25
-#  class=   (Appendrow,Ncol,Nrow)
-#  Circledata debugged
-#  Makecurves debugged# 20230121
+# 20230121
 #   Sprintf  %*.3f
 # 20220910
 #   Plotdata changed ( for "y" )
@@ -1864,7 +1861,6 @@ CalcWidth<-function(Hoko,Moji)
 #########################
 # 17.09.17
 # 17.09.24
-# 23.07.25
 
 Circledata<- function(...){
   varargin<- list(...)
@@ -1875,13 +1871,9 @@ Circledata<- function(...){
     ra=Norm(C-Cr[3:4])
     Nop=2
   }
-  if(length(Cr)==3){
+  else{
     ra=Cr[3]
     Nop=2
-  }
-  if(length(Cr)==2){
-    ra=Cr[2]
-    Nop=3
   }
   R=c(0,2*pi)
   N=50
@@ -4533,7 +4525,7 @@ MakeBowdata <- function(PA,PB,H)
 MakeCurves<-function(...){        ## Scaling is implemented
   varargin<-list(...)
   Figdata<-varargin[[1]]
-  if(!is.matrix(Figdata)){
+  if(class(Figdata)[1]=="numeric"){
     Figdata<-matrix(Figdata,nrow=1)
   } 
   Ptout<-1
@@ -4541,15 +4533,16 @@ MakeCurves<-function(...){        ## Scaling is implemented
   Eps<-10.0^(-6)
   IndM<-Dataindex(Figdata)
   Atos<-c()
-  for (Nd in 1:Nrow(IndM)){
+  for (Nd in Looprange(1,Nrow(IndM))){  #180509
     Tmp<-IndM[Nd,]
-    Motos<-Figdata[Tmp[1]:Tmp[2],]
+    Motos<- Figdata[Tmp[1]:Tmp[2],]
     All<-Nrow(Motos)
     if(Nrow(Motos)==1){ 
       if(InWindow(Motos)=="o"){
         next
       }
       Tmp1<- as.numeric(Motos)
+      Tmp1=list(Tmp1) #190405
       if(Ptout==1){
         Drwpt(Tmp1)
       }
@@ -4593,9 +4586,9 @@ MakeCurves<-function(...){        ## Scaling is implemented
    }
  }
   Outdata<-Atos[2:Nrow(Atos),]
-  if((length(Outdata)>0)&&(!is.matrix(Outdata)))
+  if(class(Outdata)[1]=="numeric")
   {
-    Outdata<- as.matrix(Outdata,nrow=1) #20230725
+    Outdata<-matrix(Outdata,nrow=1)
   }
   return(Outdata)
 }

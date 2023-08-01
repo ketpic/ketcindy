@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.4.36");
+println("KeTCindy V.4.4.37");
 println(ketjavaversion());
-println("ketcindylibbasic1[20230705] loaded");
+println("ketcindylibbasic1[20230801] loaded");
 
 //help:start();
 
@@ -4147,25 +4147,22 @@ Pointdata(nm,listorg,optionsorg):=(
   if(Noflg<2, //210602
     tmp1=parse(size)*TenSizeInit;
     forall(1..(length(list)),
-      tmp2=text(#)+name; // no ketjs on
+      tmp2=text(#)+name;
       tmp3=[list_#,tmp1*ratio];
       Circledata(tmp2,[list_#,tmp1*ratio],["nodisp","Msg=n"]);
-        // no ketjs off
       if(inside=="N", //210602from
         Scaledata(tmp2+"i",["cr"+tmp2],1,1/SCALEY,//230423[2line]
                      ["Color="+color,"Msg=n"]);
         if(length(incolor)>0, //200519from
-          //no ketjs on
           tmp="sc"+tmp2+"i";
-          Shade([tmp],["Color="+incolor]); // no ketjs off //201025
+          Shade([tmp],["Color="+incolor]);
         );
       ,
         tmp=[tmp3_1,"Color="+color,"Msg=n"]; //220722from
         if(Noflg==1,tmp=prepend("notex",tmp));
-          // no ketjs on //220722to
         Scaledata(tmp2,["cr"+tmp2],1,1/SCALEY,tmp);
         tmp="sc"+tmp2;
-        Shade([tmp],options); // no ketjs off //200813
+        Shade([tmp],options); 
       ); //210602to
       tmp=round(10*sqrt(parse(size))); //201027from (moved)
       if(Noflg==0,options=[Ltype,"Color="+text(color),"Num="+text(tmp)]);

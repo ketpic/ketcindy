@@ -5087,7 +5087,7 @@ Animationkey():=Animationkey([71,72,73,74],[-4,-2,0,2],-6);
 Animationkey(kL,pxL,py):=(
 //help:Animationkey([71,72,73,74],[-4,-2,0,2],-6);
   regional(sL,fillcolor,fillalpha);
-  println([5046,pxL]);
+//  println([5046,pxL]);
   sL=[
     "resetclock();playanimation();Animeflg=1;Dirflg=1;
         sorg=Current;",
@@ -5106,17 +5106,17 @@ Animationkey(kL,pxL,py):=(
 );
 ////%Animationkey end////
 
-////% Ketlms start
+////% Ketlms start////
 //help:Ketlms(Mvpt,Rmvpt,Pt2sc,Sc2pt,Mvdraw);
 //help:Ketlms(global Center,Scale);
-////% Ketlms end
-////%Mvpt start
+////% Ketlms end////
+////%Mvpt start////
 Mvpt(pt):=(
   Scale*pt+Center;  //Scale,Center grobal
 );
 Mvpt(x,y):=Mvpt([x,y]);
-////%Mvpt end
-////%Rmpt start
+////%Mvpt end////
+////%Rmpt start////
 Rmpt(mpt):=(
   (mpt-Center)/Scale;
 );
@@ -5128,15 +5128,15 @@ Pt2sc(pt):=(
   if(ispoint(pt),sx=pt.x,sx=pt_1);
   2^(1/5*(sx-35));
 );
-////%Pt2sc end
-////%Sc2pt start
+////%Pt2sc end////
+////%Sc2pt start////
 Sc2pt(sc):=(
   regional(sx);
   sx=5*log(sc)/log(2)+35;
   [sx,4];
 );
-////%Sc2pt end
-////%Mvdraw start
+////%Sc2pt end////
+////%Mvdraw start////
 Mvdraw(num):=Mvdraw(num,[]);
 Mvdraw(num,opt):=(
   regional(pltL,out,tmp,tmp1);
@@ -5149,18 +5149,18 @@ Mvdraw(num,opt):=(
   );
   out;
 );
-////%Mvdraw end
+////%Mvdraw end////
 
-////%Mvlist start
+////%Mvlist start////
 Mvlist(num,pdata):=Mvlist(num,pdata,[]);
 Mvlist(num,pdata,opt):=(
   regional(tmp);
   tmp=apply(pdata,Mvpt(#));
   Listplot("-m"+num,tmp,opt);
 );
-////%Mvlist end
+////%Mvlist end////
 
-////%Mvplotdata start
+////%Mvplotdata start////
 Mvplotdata(num,fun,rng):=Mvplotdata(num,fun,rng,[],[]);
 Mvplotdata(num,fun,rng,op1):=Mvplotdata(num,fun,rng,op1,[]);
 Mvplotdata(num,fun,rng,op1,op2):=(
@@ -5168,9 +5168,9 @@ Mvplotdata(num,fun,rng,op1,op2):=(
   Plotdata(num,fun,rng,append(op1,"nodisp"));
   Mvdraw("gr"+num,op2);
 );
-////%Mvplotdata end
+////%Mvplotdata end////
 
-////%Mvdrwxy start
+////%Mvdrwxy start////
 Mvdrwxy():=(
 //help:Mvdrwxy();
   regional(org,tmp);
@@ -5186,7 +5186,7 @@ Mvdrwxy():=(
   Expr(Mvpt(org_1,YMAX),tmp_5,tmp_4,AXSTYLE_3); 
   Letter(Mvpt(org),tmp_7,tmp_6,AXSTYLE_3);
 );
-////%Mvdrwxy end
+////%Mvdrwxy end////
 
 //help:end();
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20230704] loaded");
+println("ketcindylibbasic2[20230819] loaded");
 
 //help:start();
 
@@ -136,16 +136,19 @@ Setarrow(arglist):=(
 );
 ////%Setarrow end////
 
-////%Arrowheaddata start////
+////%Arrowheaddata start////  230818dbg
 Arrowheaddata(point,direction):=
    Arrowheaddata(point,direction,[YaSize,YaAngle,YaPosition,YaCut]);
-Arrowheaddata(point,direction,options):=( //191127remade
+Arrowheaddata(pointorg,directionorg,options):=( //191127remade
 // help:Arrowheaddata(A,B);
 // help:Arrowheaddata("1",A,"gr1");
 // help:Arrowheaddata("1",A,gr1);
 // help:Arrowheaddata(options=[size(1),angle(18),pos(1),cut(0)]);
-  regional(scaley,Eps,size,angle,segpos,cut, Houkou,hflg,Str,Ev,Nv,
-       reL,pP,vec,pA,pB,pC,par,out,tmp,tmp1,tmp2);
+  regional(point,direction,scaley,Eps,size,angle,segpos,cut, 
+            Houkou,hflg,Str,Ev,Nv,reL,pP,vec,
+            pA,pB,pC,par,out,tmp,tmp1,tmp2);
+  point=Pcrd(pointorg); //230819
+  direction=Pcrd(directionorg); //230819
   Eps=10^(-4);
   tmp=Divoptions(options);
   reL=tmp_6;

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20230819] loaded");
+println("ketcindylibbasic2[20230830] loaded");
 
 //help:start();
 
@@ -147,8 +147,9 @@ Arrowheaddata(pointorg,directionorg,options):=( //191127remade
   regional(point,direction,scaley,Eps,size,angle,segpos,cut, 
             Houkou,hflg,Str,Ev,Nv,reL,pP,vec,
             pA,pB,pC,par,out,tmp,tmp1,tmp2);
-  point=Pcrd(pointorg); //230819
-  direction=Pcrd(directionorg); //230819
+  point=Pcrd(pointorg); //230830from
+  tmp=parse(directionorg);
+  direction=apply(tmp,Pcrd(#)); //230830to 
   Eps=10^(-4);
   tmp=Divoptions(options);
   reL=tmp_6;
@@ -294,7 +295,7 @@ Arrowhead(nm,pointorg,directionorg,optionsorg):=(//191129remade
        options=remove(options,[#]);
      );
   );
-  list=Arrowheaddata(point,direction,options);
+   list=Arrowheaddata(point,direction,options);
   if(length(point)>1, //210724from
     if(!Inwindow(point),Noflg=2);
     if(isstring(direction),
@@ -4852,11 +4853,11 @@ Putrowexpr(Tbdata,nrow,dir,exL,options):=(
 
 ////%Putcol start////
 Putcol(mcol,dir,lttrL):=Putcol("",mcol,dir,lttrL,[]); //190228from
-Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
+Putcol(Arg1,Arg2,Arg3,Arg4):=(
   if(islist(Arg4),
-    Putcellexpr("",Arg1,Arg2,Arg3,Arg4);
+    Putcol("",Arg1,Arg2,Arg3,Arg4);
   ,
-    Putcellexpr(Arg1,Arg2,Arg3,Arg4,[]);
+    Putcol(Arg1,Arg2,Arg3,Arg4,[]);
   );
 );
 Putcol(Tbdata,mcol,dir,lttrL,options):=(
@@ -4871,11 +4872,11 @@ Putcol(Tbdata,mcol,dir,lttrL,options):=(
 
 ////%Putcolexpr start////
 Putcolexpr(mcol,dir,exL):=Putcolexpr("",mcol,dir,exL,[]); //190228from
-Putcellexpr(Arg1,Arg2,Arg3,Arg4):=(
+Putcolexpr(Arg1,Arg2,Arg3,Arg4):=(
   if(islist(Arg4),
-    Putcellexpr("",Arg1,Arg2,Arg3,Arg4);
+    Putcolexpr("",Arg1,Arg2,Arg3,Arg4);
   ,
-    Putcellexpr(Arg1,Arg2,Arg3,Arg4,[]);
+    Putcolexpr(Arg1,Arg2,Arg3,Arg4,[]);
   );
 );
 Putcolexpr(Tbdata,mcol,dir,exL,options):=(

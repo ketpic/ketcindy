@@ -1,3 +1,6 @@
+// 20230830
+//    Arrowhead debugged  ( Pcrd )
+//    Putcol, Putcolexpr debugged  (cell=>col)
 // 20230819
 //    Arrowheaddata degugged (scaling)
 // 20230704

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20230830] loaded");
+println("ketcindylibbasic2[20230831] loaded");
 
 //help:start();
 
@@ -148,8 +148,13 @@ Arrowheaddata(pointorg,directionorg,options):=( //191127remade
             Houkou,hflg,Str,Ev,Nv,reL,pP,vec,
             pA,pB,pC,par,out,tmp,tmp1,tmp2);
   point=Pcrd(pointorg); //230830from
-  tmp=parse(directionorg);
-  direction=apply(tmp,Pcrd(#)); //230830to 
+  tmp=directionorg;
+  if(isstring(tmp),
+    tmp=parse(tmp);
+    direction=apply(tmp,Pcrd(#)); //230830to 
+  ,
+    direction=Pcrd(tmp);
+  );
   Eps=10^(-4);
   tmp=Divoptions(options);
   reL=tmp_6;

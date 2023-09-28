@@ -41,7 +41,8 @@
 \hypertarget{ketinit}{}
 \item[関数]Ketinit(options)
 \item[機能]\ketcindy を初期化する。平面図形ではDrawスロットに，空間図形ではInitialization スロットの冒頭に記述する必要がある。
-\item[説明]option 作業サブフォルダ\\%，縦方向の倍率と描画領域を設定する。\\
+\item[説明]option 作業サブフォルダ%，縦方向の倍率と描画領域を設定する。\\
+, KetJSにおけるカーソルの認識範囲（\verb|Ketinit(1)|で，およそ倍の範囲）\\ % kubo230830
 \phantom{option }通常は不要で，\verb|Ketinit()| だけでよい。
 
 \vspace{\baselineskip}
@@ -219,7 +220,7 @@ Letter([A,"ne","A",B,"se","B",C,"se","C"]);
 \hypertarget{drwxy}{}
 \item[関数]Drwxy(), Drwxy(options)
 \item[機能]指定する手順で座標軸を描く
-\item[説明]座標軸は 初期設定では最後に描かれるが，座標軸上に白抜きの点を表示するなど，先に描くことが必要な場合に用いる。描画面には座標軸は表示されない。
+\item[説明]座標軸は 初期設定では最後に描かれるが，座標軸上に白抜きの点を表示するなど，先に描くことが必要な場合に用いる。(Addax(0)のときに有効。)描画面には座標軸は表示されない。
 
 options は次のリストである。\\
 \hspace*{10mm}["Origin=",\ "Xrng=",\ "Yrng="]
@@ -403,7 +404,7 @@ Pointdata("4",D,["Size=4"]);
 \hypertarget{setmarklen}{}
 \item[関数]Setmarklen(数)
 \item[機能]座標軸の目盛の長さを設定する
-\item[説明] \hyperlink{htickmark}{Htickmark()} , Vtickmark() で座標軸に目盛を入れるとき，その長さを設定する。 
+\item[説明] \hyperlink{htickmark}{Htickmark()} , \hyperlink{vtickmark}{Vtickmark()} で座標軸に目盛を入れるとき，その長さを設定する。 
 
 \vspace{\baselineskip}
 \hypertarget{setorigin}{}
@@ -976,9 +977,14 @@ Cinderellaの作図ツールで２点ABをとっておく。
 \hspace*{2.5zw}曲線には向きがあり，それによって矢じりの向きが決まる。\\
 \hspace*{2.5zw}"Invert(曲線名)" とすると反対向きの矢じりになる。\\
 \hspace*{2.5zw}曲線の向きとは，曲線を描くときの順序で，プロットデータの順序でもある。\\
+\hspace*{2.5zw}プロットデータの最後の点は``Ptend(曲線名)''で得られるので，
+``Arrowhead(Ptend(曲線名)``曲線名'')''\\
+\hspace*{2.5zw}で，矢じりがプロットデータの端点に追加される。\\
 \hspace*{2.5zw}位置比は曲線上の位置を表す比率（0から1）。\\
 \hspace*{3.5zw}例えば，分割数が50で位置比が0.3のとき　\verb|1+50*0.3=2.5|\\
 \hspace*{4.5zw}2番目と3番目の点の中点
+
+
 
 \vspace{0.5zw}
 
@@ -1108,6 +1114,8 @@ optionsの使用例\\
 結果は次図左から。
 \end{tabbing}
 \begin{center} \scalebox{0.9}{\input{Fig/listplot3}}\end{center}
+
+\newpage
 
 【例】三角形を描く。
 
@@ -1598,6 +1606,7 @@ optionsは以下のものをリストで与える。省略した場合は実線�
 %\begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
  \verb|Circledata([A,B,C]);| で，3点A,B,Cを通る円を描いたとき，できた円の中心は \verb|Pointdata("1",[crABCcenter]);| で作図できる。
+ \verb|Putpoint("P",crABCcenter);| で，円の中心に点Pを追加できる。% kubo230830
  
 \vspace{\baselineskip}
 【例】A中心，半径AB，中心角60°の弧を描く。
@@ -1686,7 +1695,7 @@ Circledata("2",[A,B],["Num=6"]);
 「点を加える」ツールを用いて，接線，法線上に適当に点を取る。(D,Eとなったとする)
 
 次のスクリプトを書いて実行すると，楕円に関して入射角と反射角が等しくなるように光が反射する様子を図にすることができる。
-\newpage
+%\newpage
 
 \vspace{\baselineskip}
 \begin{layer}{150}{0}
@@ -2420,13 +2429,13 @@ Segmark("4",[D,A],["Type=poly,4","Size=1.5"]);
 
 %\vspace{\baselineskip}
 \hypertarget{htickmark}{}
-\item[関数]Htickmark([横座標 , 方向 , 文字])
+\item[関数]Htickmark(name, [横座標 , 方向 , 文字])
 \item[機能]横軸に目盛と文字を書く。
-\item[説明]引数は位置（横座標），方向，文字。複数点の情報を[ ]内にまとめて記入できる。方向を省略すると "s1"になる。微調整は描画面には反映されないので，PDFにして確認する。
+\item[説明]引数は位置（横座標），方向，文字。複数点の情報を[ ]内にまとめて記入できる。[ ]内にまとめて記入したとき，name は省略できる。方向を省略すると "s1"になる。微調整は描画面には反映されないので，PDFにして確認する。
 目盛の長さは \hyperlink{setmarklen}{Setmarklen()} で設定できる。
 
 \vspace{\baselineskip}
-【例】 方向指定の例：\verb|Htickmark([1,"1",2,"n1","2",3,"se","3",4,"4"]);|
+【例】 方向指定の例：\verb|Htickmark("1",[1,"1",2,"n1","2",3,"se","3",4,"4"]);|
 
 \vspace{\baselineskip}
 \begin{center}
@@ -2446,14 +2455,14 @@ Htickmark(memori);
 \begin{center} \scalebox{0.8}{\input{Fig/htickmark}}\end{center}
 
 \hypertarget{vtickmark}{}
-\item[関数]Vtickmark([横座標 , 方向 , 文字])
+\item[関数]Vtickmark(name, [横座標 , 方向 , 文字])
 \item[機能]縦軸に目盛と文字を書く。
 \item[説明]Htickmarkと同様。縦軸に目盛を書く。方向を省略すると "w1"になる。
 
 \vspace{\baselineskip}
 【例】点$(0,\ 1),\ (0,\ 2)$の西側に$1,\ 2$を表示する。
 
-\hspace{10mm}\verb|Vtickmark([1,"1",2,"2"]);|
+\hspace{10mm}\verb|Vtickmark("1",[1,"1",2,"2"]);|
 
 \vspace{\baselineskip}
 \hypertarget{rulerscale}{}
@@ -3612,7 +3621,7 @@ println(Sprintf(len,6));
 \begin{flushright}\hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
 \end{description}
-\newpage
+%\newpage
 %==============作表=====================
 \subsection{作表}
 
@@ -6734,8 +6743,9 @@ Pointdata3d("1",[[1,1,1],[0,1,0]],["Size=2","Color=red"]);
 \item[機能]空間に幾何点を作図する
 \item[説明]点の名称と座標を与えて点を作図する。複数の点を一度に作図できる。
 
-optionは，"fix"( 初期設定) または "free"。リスト ["free"] にしてもよい。
- 
+optionは，"free"(初期設定) または "fix"。リスト ["free"] にしてもよい。
+% kubo230830
+
 "fix" では，固定点（ドラッグで移動できない点）とする。同じ名称の点がすでに存在する場合は，指定した位置に移動して固定点とする。
 
 "free" では，自由点（ドラッグで移動できる）とする。同じ名称の点がすでに存在する場合はなにもしない。
@@ -8592,11 +8602,13 @@ Plotdata("1",str,"x");
 \begin{description}
 
 \hypertarget{ptpos}{}
-\item[関数]Ptpos(幾何点)
-\item[機能]幾何点の現在（直前）座標を返す。
+\item[関数]Ptpos(幾何点)または，Ptpos(幾何点，座標)
+\item[機能]幾何点の現在（直前）座標を返す。または，幾何点を指定した座標へ移動させる。
 \item[説明]幾何点を制御可能範囲外に移動した場合に保持されるもとの座標
 
 【例】\verb|Ptpos(A)|
+
+【例】\verb|Ptpos(A,[0,1])|：点Aを座標\verb|[0,1]|へ移動させる。% kubo230927
 
 %\begin{flushright} \hyperlink{functionlist}{$\Rightarrow$関数一覧}\end{flushright}
 
@@ -9065,7 +9077,7 @@ Cinderellaで使っている用語に次のものがある。
 \hyperlink{setplaybuttons}{Setplaybuttons(座標,サイズ [, スペース])}\>Playなどのボタンの位置とフォントサイズを設定\\
 \hyperlink{setpt}{Setpt(数)}\>表示する点の大きさを設定する\\
 \hyperlink{setscaling}{Setscaling(数)}\>縦方向の倍率を設定する\\
-\hyperlink{settextkey}{Settextkey(番号,位置,文字列, スクリプト)}\>文字要素 (Text) を生成または設定\\
+\hyperlink{settextkey}{Settextkey(番号,位置,文字列, スクリプト)}\>文字要素 (Text) を生成または設定\\
 \hyperlink{settitle}{Settitle(タイトルlist,options)}\>スライドのタイトル設定\\
 \hyperlink{setunitlen}{Setunitlen(数)}\>単位長を設定する\\
 \hyperlink{setwindow}{Setwindow()}\>描画領域を設定する\\

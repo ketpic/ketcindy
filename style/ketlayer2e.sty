@@ -11,7 +11,10 @@
 %* GNU General Public License for more details.
 %* 
 %* You should have received a copy of the GNU General Public License
-%* along with this program.  If not, see <http://www.gnu.org/licenses/>%%% ketlayer2e.sty 2017-1-11 8:5
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+%%% 2023-11-10 Integrate ketlayermorewith2e
+%%% ketlayer2e.sty 2017-1-11 8:5
 %%% ketlayer2e170109.sce 2017-1-10 13:47
 %  2017.01.09%
 \newlength{\layercurrentunit}%
@@ -3151,5 +3154,130 @@
 \settoheight{\Height}{{#7}}\settodepth{\Depth}{{#7}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
 \put(\theketpicctrf,\theketpicctrg){\hspace*{\Width}\raisebox{\Height}{{#7}}}%
 }%
+%
+}%
+
+%ketlayermorewith2e 20201024
+\newcommand{\qarrow}[5][12]{%
+{\unitlength=0.01mm%
+\begin{picture}(0,0)(0,0)%
+\setcounter{ketpicctra}{-1}%
+\multiply\value{ketpicctra} by #3%
+\multiply\value{ketpicctra} by #3%
+\divide\value{ketpicctra} by 4%
+\addtocounter{ketpicctra}{2500}%
+\setcounter{ketpicctrb}{100}%
+\multiply\value{ketpicctrb} by #3%
+\divide\value{ketpicctrb} by 2%
+\setcounter{ketpicctrc}{#3}%
+\multiply\value{ketpicctrc} by #3%
+\divide\value{ketpicctrc} by 4%
+\addtocounter{ketpicctrc}{2500}%
+\setcounter{ketpicctrd}{-1}%
+\multiply\value{ketpicctrd} by #5%
+\multiply\value{ketpicctrd} by #5%
+\divide\value{ketpicctrd} by 4%
+\addtocounter{ketpicctrd}{2500}%
+\setcounter{ketpicctre}{100}%
+\multiply\value{ketpicctre} by #5%
+\divide\value{ketpicctre} by 2%
+\setcounter{ketpicctrf}{#4}%
+\multiply\value{ketpicctrf} by \value{ketpicctre}%
+\divide\value{ketpicctrf} by \value{ketpicctrd}%
+\setcounter{ketpicctrd}{\value{ketpicctrf}}%
+\setcounter{ketpicctre}{#4}%
+\multiply\value{ketpicctre} by \value{ketpicctra}%
+\divide\value{ketpicctre} by \value{ketpicctrc}%
+\setcounter{ketpicctrf}{\value{ketpicctrd}}%
+\multiply\value{ketpicctrf} by \value{ketpicctrb}%
+\divide\value{ketpicctrf} by \value{ketpicctrc}%
+\addtocounter{ketpicctre}{-\value{ketpicctrf}}%
+\setcounter{ketpicctrf}{#4}%
+\multiply\value{ketpicctrf} by \value{ketpicctrb}%
+\divide\value{ketpicctrf} by \value{ketpicctrc}%
+\setcounter{ketpicctrg}{\value{ketpicctrd}}%
+\multiply\value{ketpicctrg} by \value{ketpicctra}%
+\divide\value{ketpicctrg} by \value{ketpicctrc}%
+\addtocounter{ketpicctrf}{\value{ketpicctrg}}%
+\setcounter{ketpicctrg}{#4}%
+\multiply\value{ketpicctrg} by \value{ketpicctra}%
+\divide\value{ketpicctrg} by \value{ketpicctrc}%
+\setcounter{ketpicctrh}{\value{ketpicctrd}}%
+\multiply\value{ketpicctrh} by \value{ketpicctrb}%
+\divide\value{ketpicctrh} by \value{ketpicctrc}%
+\addtocounter{ketpicctrg}{\value{ketpicctrh}}%
+\setcounter{ketpicctrh}{#4}%
+\multiply\value{ketpicctrh} by \value{ketpicctrb}%
+\divide\value{ketpicctrh} by \value{ketpicctrc}%
+\setcounter{ketpicctri}{\value{ketpicctrd}}%
+\multiply\value{ketpicctri} by \value{ketpicctra}%
+\divide\value{ketpicctri} by \value{ketpicctrc}%
+\addtocounter{ketpicctrh}{-\value{ketpicctri}}%
+\setcounter{ketpicctri}{\value{ketpicctre}}%
+\addtocounter{ketpicctri}{\value{ketpicctrg}}%
+\divide\value{ketpicctri} by 2%
+\multiply\value{ketpicctri} by 8%
+\divide\value{ketpicctri} by 10%
+\setcounter{ketpicctrj}{\value{ketpicctrf}}%
+\addtocounter{ketpicctrj}{\value{ketpicctrh}}%
+\divide\value{ketpicctrj} by 2%
+\multiply\value{ketpicctrj} by 8%
+\divide\value{ketpicctrj} by 10%
+\linethickness{0.001 in}%
+\polygon*(0,0)(\theketpicctre,\theketpicctrf)(\theketpicctri,\theketpicctrj)(\theketpicctrg,\theketpicctrh)(0,0)%
+\setcounter{ketpicctri}{#2}%
+\multiply\value{ketpicctri} by 100%
+\divide\value{ketpicctri} by 2%
+\setcounter{ketpicctrj}{#2}%
+\multiply\value{ketpicctrj} by 100%
+\divide\value{ketpicctrj} by 2%
+\multiply\value{ketpicctrj} by \value{ketpicctrb}%
+\divide\value{ketpicctrj} by \value{ketpicctra}%
+\setcounter{ketpicctrd}{#2}%
+\multiply\value{ketpicctrd} by 100%
+\setcounter{ketpicctra}{\value{ketpicctre}}%
+\addtocounter{ketpicctra}{\value{ketpicctrg}}%
+\divide\value{ketpicctra} by 2%
+\multiply\value{ketpicctra} by 8%
+\divide\value{ketpicctra} by 10%
+\setcounter{ketpicctrb}{\value{ketpicctrf}}%
+\addtocounter{ketpicctrb}{\value{ketpicctrh}}%
+\divide\value{ketpicctrb} by 2%
+\multiply\value{ketpicctrb} by 8%
+\divide\value{ketpicctrb} by 10%
+\addtocounter{ketpicctri}{\value{ketpicctra}}%
+\addtocounter{ketpicctrj}{\value{ketpicctrb}}%
+%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+%
+\else%
+\linethickness{0.0#1 in}%
+%
+\fi%
+\qbezier{(\theketpicctra,\theketpicctrb)(\theketpicctri,\theketpicctrj)(\theketpicctrd,\theketpicctrb)}%
+\end{picture}}%
+%
+}%
+\newcommand{\qarrowlinefull}[8][12]{%
+%thick,x,y,length,angle,ctr,size,tan(arrow/2)*1000%
+\putnotese{#2}{#3}{%
+\rotatebox[origin=l]{#5}{\qarrow[#1]{#4}{#6}{#7}{#8}}}%
+%
+}%
+\newcommand{\qarrowlinesize}[7][12]{%
+%thick,x,y,length,angle,ctr,size%
+\qarrowlinefull[#1]{#2}{#3}{#4}{#5}{#6}{#7}{16}%
+%
+}%
+\newcommand{\qarrowline}[6][12]{%
+%thick,x,y,length,angle,ctr%
+\qarrowlinefull[#1]{#2}{#3}{#4}{#5}{#6}{200}{16}%
+%
+}%
+\renewcommand{\arrowlineseg}[5][12]{%
+%thick,x,y,length,angle%
+\qarrowlinefull[#1]{#2}{#3}{#4}{#5}{0}{200}{16}%
 %
 }%

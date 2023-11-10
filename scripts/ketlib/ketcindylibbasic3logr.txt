@@ -1,3 +1,5 @@
+// 20231110
+// Usegraphics changed (ketlayemore removed)
 // 20230705
 // Convtrigpow added
 // 20230704

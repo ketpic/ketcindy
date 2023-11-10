@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20230705] loaded");
+println("ketcindylibbasic3[20231110] loaded");
 
 //help:start();
 
@@ -1205,7 +1205,7 @@ Usegraphics(gpack):=(
     if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
       GPACKL_1="[dvipdfmx]{pict2e}";
     );
-    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}","{ketlayermorewith2e}"]);
+    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}"]);
   );
   if(tmp=="{TIKZ}",
     GPACKL=concat(GPACKL,["{pgf}","{tikz}"]);
@@ -1214,7 +1214,7 @@ Usegraphics(gpack):=(
     ,
       GPACKL=append(GPACKL,"{pict2e}");
     ); 
-    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}","{ketlayermorewith2e}"]);
+    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}"]);
   );
 );
 ////%Usegraphics end////

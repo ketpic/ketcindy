@@ -13,19 +13,20 @@
 %* You should have received a copy of the GNU General Public License
 %* along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+%%% 2023-11-11 Renew some macros(kubo)
 %%% 2023-11-10 Integrate ketlayermorewith2e
 %%% ketlayer2e.sty 2017-1-11 8:5
 %%% ketlayer2e170109.sce 2017-1-10 13:47
 %  2017.01.09%
 \newlength{\layercurrentunit}%
-\newcommand{\ketshadebox}[7][0]{%
+\newcommand{\ketshadebox}[7][0]{%%%% start of ketshadebox (kubo)%%%%
 \def\tmpcontents{%
 {\unitlength=1mm%
 \begin{picture}%
 ( 100.00000, 100.00000)(   0.00000,   0.00000)%
 \linethickness{0.008in}%
 %
-{\color{#7}
+{\color{#6}
 \polygon*(0.00010,0.00010)(99.99990,0.00010)(99.99990,99.99990)(0.00010,99.99990)%
 (0.00010,0.00010)
 }%
@@ -39,14 +40,14 @@
 {%
 \ifnum %
 #5<10 %
-\settowidth{\Width}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
-\settoheight{\Height}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}}%
+\settowidth{\Width}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.0#4}[0.0#5]{\tmpcontents}}}}%
 %
 \else%
-\settowidth{\Width}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
-\settoheight{\Height}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}}%
+\settowidth{\Width}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.0#4}[0.#5]{\tmpcontents}}}}%
 %
 \fi%
 }%
@@ -56,14 +57,14 @@
 {%
 \ifnum %
 #5<10 %
-\settowidth{\Width}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
-\settoheight{\Height}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}}%
+\settowidth{\Width}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.#4}[0.0#5]{\tmpcontents}}}}%
 %
 \else%
-\settowidth{\Width}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
-\settoheight{\Height}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#7}\scalebox{0.#4}[0.#5]{\tmpcontents}}}}%
+\settowidth{\Width}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Width}{0\Width}%
+\settoheight{\Height}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\settodepth{\Depth}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}\setlength{\Height}{-\Height}%
+\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{{\color{#6}\scalebox{0.#4}[0.#5]{\tmpcontents}}}}%
 %
 \fi%
 }%
@@ -74,12 +75,13 @@
 {%
 \ifnum %
 #1>0 %
-\boxframese{#2}{#3}{#4}{#5}{}%
+{\color{#7}\boxframese{#2}{#3}{#4}{#5}{}}%
 %
 \fi%
 }%
 %
-}%
+}%%%% end of ketshadebox %%%%
+
 \newcommand{\shadeboxse}[7][0]{%
 \ketshadebox[#1]{#2}{#3}{#4}{#5}{#6}{#7}%
 %
@@ -282,7 +284,8 @@
 \eraser[#1]{\theketpicctrd}{\theketpicctre}{#4}{#5}%
 %
 }%
-\newcommand{\arrowhead}[4][1]{%
+
+\newcommand{\arrowhead}[4][1]{%%%% start of arrowhead(kubo)%%%%
 \def\tmpcontents{%
 {\unitlength=1mm%
 \begin{picture}%
@@ -290,17 +293,34 @@
 \linethickness{0.008in}%
 %
 \linethickness{0.004in}%
-\polyline(0.00000,0.00000)(2.00000,-0.61803)(2.00000,0.61803)(0.00000,0.00000)%
+\polyline(0.00000,0.00000)(2.00000,-0.61803)(2.00000,0.61803)(0.00000,0.00000)(2.00000,-0.61803)%
 %
 \linethickness{0.008in}%
-\polygon*(0.00000,0.00000)(2.00000,-0.61803)(2.00000,0.61803)(0.00000,0.00000)\end{picture}}%%
+\polygon*(0.00000,0.00000)(2.00000,-0.61803)(2.00000,0.61803)(0.00000,0.00000)(2.00000,-0.61803)\end{picture}}%%
 }%
 \settowidth{\Width}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\setlength{\Width}{-0.5\Width}%
 \settoheight{\Height}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\settodepth{\Depth}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}\setlength{\Height}{-0.5\Height}\setlength{\Depth}{0.5\Depth}\addtolength{\Height}{\Depth}%
 \put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#4}{\scalebox{#1}{\tmpcontents}}}}%
 %
+}%%%% end of arrowhead(kubo)%%%%
+
+\newcommand{\lineseg}[5][12]{%%%% start of lineseg (kubo)%%%%
+\putnotese{#2}{#3}{
+\rotatebox[origin=l]{#5}{%
+\unitlength=1mm%
+\ifnum %
+#1<10 %
+\linethickness{0.00#1 in}%
+\else%
+\linethickness{0.0#1 in}%
+\fi%
+\put(0,0){\line(1,0){#4}}%
 }%
-\newcommand{\lineseg}[5][12]{%
+}%
+}%%%% end of lineseg %%%%
+
+
+\newcommand{\dashlineseg}[5][12]{%%%% start of dashlineseg (kubo)%%%%
 \def\tmpcontents{%
 \setcounter{ketpicctra}{0}%
 \setcounter{ketpicctra}{1}%
@@ -312,10 +332,7 @@
 {\unitlength=1mm%
 \begin{picture}%
 (   1.00000,   0.00200)(   0.00000,  -0.00100)%
-\linethickness{0.008in}%
 %
-%
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
@@ -324,82 +341,7 @@
 \linethickness{0.0#1 in}%
 %
 \fi%
-}%
-\polyline(0.00000,0.00000)(1.00000,0.00000)%
 %
-\linethickness{0.008in}%
-\end{picture}}%%
-\ifnum\theketpicctra<#4%
-\repeat%
-}%
-%
-}%
-%
-{%
-\ifnum %
-#5>0 %
-%
-{%
-\ifnum %
-#5<90 %
-\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
-\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
-%
-\else%
-\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
-\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{\Depth}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
-%
-\fi%
-}%
-%
-\else%
-%
-{%
-\ifnum %
-#5>-90 %
-\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{0\Width}%
-\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
-%
-\else%
-\settowidth{\Width}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Width}{-1\Width}%
-\settoheight{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}\settodepth{\Depth}{\rotatebox[origin=c]{#5}{\tmpcontents}}\setlength{\Height}{-\Height}%
-\put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\rotatebox[origin=c]{#5}{\tmpcontents}}}%
-%
-\fi%
-}%
-%
-\fi%
-}%
-%
-}%
-\newcommand{\dashlineseg}[5][12]{%
-\def\tmpcontents{%
-\setcounter{ketpicctra}{0}%
-\setcounter{ketpicctra}{1}%
-\addtocounter{ketpicctra}{-1}%
-%
-{%
-\loop%
-\addtocounter{ketpicctra}{1}%
-{\unitlength=1mm%
-\begin{picture}%
-(   1.00000,   0.00200)(   0.00000,  -0.00100)%
-\linethickness{0.008in}%
-%
-%
-{%
-\ifnum %
-#1<10 %
-\linethickness{0.00#1 in}%
-%
-\else%
-\linethickness{0.0#1 in}%
-%
-\fi%
-}%
 \polyline(0.00000,0.00000)(0.50000,0.00000)%
 %
 \linethickness{0.008in}%
@@ -449,7 +391,8 @@
 \fi%
 }%
 %
-}%
+}%%%% end of dashlineseg %%%%
+
 \def\arrowline#1#2#3#4{%
 \lineseg[12]{#1}{#2}{#3}{#4}%
 \arrowhead{#1}{#2}{#4}%
@@ -1857,49 +1800,38 @@
 \put(#2,-#3){\hspace*{\Width}\raisebox{\Height}{\circlemark[#1]{#4}}}%
 %
 }%
-\newcommand{\hjaggyline}[4][8]{%
+
+\newcommand{\hjaggyline}[4][8]{%%%% start of hjaggyline (kubo)%%%%
 \def\tmpcontents{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,   0.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  -0.05000,  -0.05000)%
 %
-%
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(0.00000,0.00000)(1.00000,1.00000)%
 %
-\linethickness{0.008in}%
+\polyline(0.00000,0.0000)(1.05000,1.05000)%
+%
 \end{picture}}%%
 }%
 \def\tmpcontentsb{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,   0.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  -0.05000,  -0.050000)%
 %
-%
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(0.00000,1.00000)(1.00000,0.00000)%
 %
-\linethickness{0.008in}%
+\polyline(0.00000,1.0000)(1.05000,-0.05000)%
+%
 \end{picture}}%%
 }%
 \setcounter{ketpicctra}{0}%
@@ -1935,48 +1867,39 @@
 \repeat%
 }%
 %
-}%
-\newcommand{\vjaggyline}[4][8]{%
+}%%%% end of hjaggyline %%%%
+
+\newcommand{\vjaggyline}[4][8]{%%%% start of vjaggyline (kubo)%%%%
 \def\tmpcontents{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,  -1.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  0.05000,  -1.05000)%
 %
 %
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(0.00000,0.00000)(1.00000,-1.00000)%
 %
-\linethickness{0.008in}%
+\polyline(0.00000,0.00000)(1.05000,-1.05000)%
+%
 \end{picture}}%%
 }%
 \def\tmpcontentsb{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,  -1.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  0.05000,  -1.05000)%
 %
-%
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(1.00000,0.00000)(0.00000,-1.00000)%
+%
+\polyline(1.00000,0.00000)(0.05000,-1.05000)%
 %
 \linethickness{0.008in}%
 \end{picture}}%%
@@ -2014,26 +1937,21 @@
 \repeat%
 }%
 %
-}%
-\newcommand{\hjaggylineb}[4][8]{%
+}%%%% end of vjaggyline %%%%
+
+\newcommand{\hjaggylineb}[4][8]{%%%% start of hjaggylineb (kubo)%%%%
 \def\tmpcontents{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,   0.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  -0.05000,  -0.05000)%
 %
-%
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(0.00000,0.00000)(1.00000,1.00000)%
+\polyline(0.00000,0.00000)(1.05000,1.05000)%
 %
 \linethickness{0.008in}%
 \end{picture}}%%
@@ -2041,21 +1959,16 @@
 \def\tmpcontentsb{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,   0.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  -0.05000,  -0.05000)%
 %
 %
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(0.00000,1.00000)(1.00000,0.00000)%
+\polyline(0.00000,1.00000)(1.05000,-0.05000)%
 %
 \linethickness{0.008in}%
 \end{picture}}%%
@@ -2093,26 +2006,22 @@
 \repeat%
 }%
 %
-}%
-\newcommand{\vjaggylineb}[4][8]{%
+}%%%% end of hjaggylineb %%%%
+
+\newcommand{\vjaggylineb}[4][8]{%%%% start of vjaggylineb (kubo)%%%%
 \def\tmpcontents{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,  -1.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  -0.05000,  -1.05000)%
 %
 %
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(0.00000,0.00000)(1.00000,-1.00000)%
+\polyline(0.00000,0.00000)(1.05000,-1.05000)%
 %
 \linethickness{0.008in}%
 \end{picture}}%%
@@ -2120,21 +2029,16 @@
 \def\tmpcontentsb{%
 {\unitlength=1mm%
 \begin{picture}%
-(   1.00000,   1.00000)(   0.00000,  -1.00000)%
-\linethickness{0.008in}%
+(   1.00000,   1.00000)(  -0.05000,  -1.05000)%
 %
 %
-{%
 \ifnum %
 #1<10 %
 \linethickness{0.00#1 in}%
-%
 \else%
 \linethickness{0.0#1 in}%
-%
 \fi%
-}%
-\polyline(1.00000,0.00000)(0.00000,-1.00000)%
+\polyline(1.00000,0.00000)(-0.05000,-1.05000)%
 %
 \linethickness{0.008in}%
 \end{picture}}%%
@@ -2172,7 +2076,8 @@
 \repeat%
 }%
 %
-}%
+}%%%% end of vjaggylineb %%%%
+
 \newcommand{\jaggyboxframe}[6][8]{%
 \def\tmpcontents{%
 \setcounter{ketpicctrf}{#4}%

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20230318] loaded");
+println("ketcindylibout[20231213] loaded");
 
 //help:start();
 
@@ -2385,12 +2385,16 @@ MxtexL(nm,exlist,options):=(
   apply(out,println(#));
   out;
 );
+////%MxtexL end////
 
-Mxbatch(file):=(
+////%Mxbatch start////  //20231204
+Mxbatch(file):=Mxbatch(Dirlib+"/maximaL/",file);
+Mxbatch(dir,file):=(
 //help:Mxbatch(["matoperation.max"]);
+//help:Mxbatch(Dircdy,["matoperation.max"]);
   regional(figL,out,path,tmp,tmp1,tmp2);
   if(!islist(file),figL=[file],figL=file);
-  path=replace(Dirlib+"/maximaL/","\","/");
+  path=replace(dir,"\","/");
   out=[];
   forall(figL,
     if(indexof(#,".")==0,tmp1=#+".max",tmp1=#);
@@ -2400,7 +2404,51 @@ Mxbatch(file):=(
   );
   out;
 );
-////%MxtexL end////
+////%Mxbatch end////
+
+////%Mxsetvar start//// 231212
+Mxsetvar(var,ansorg):=Mxsetvar(var,ansorg,"p");
+Mxsetvar(var,ansorg,parflg):=(
+//help:Mxaddvar("A::B",ans);
+//help:Mxaddvar(["p1","p2"],ans,"p");
+//help:Mxaddvar(["eq1","eq2"],ans,"n");
+ regional(tmp,vst,ans);
+ vst=var;
+ if(isstring(var),
+   tmp=Strsplit(var,"::");
+   vst=apply(tmp,#);
+ );
+ ans=ansorg;
+ if(!islist(ans),ans=[ans]);
+ forall(1..(length(vst)),
+   if(contains(["p","1"],parflg),
+     tmp=vst_#+"="+ans_#+";";
+   ,
+     tmp=vst_#+"="+Dqq(ans_#)+";";
+   );
+   parse(tmp);
+ );
+);
+////%Mxsetvar end////
+
+////%Mxfactor start////
+Mxfactor(str,norg):=(
+//help:Mxfactor("(a+b)*(c+d)",-1);
+  regional(n,tmp,tmp1,tmp2,out);
+  out=str;
+  n=norg;
+  tmp=Bracket(str);
+  tmp1=select(tmp,#_2==1);
+  if(length(tmp1)>0,
+    if(n<0,n=length(tmp1)+1+n);
+    tmp1=tmp1_n_1;
+    tmp2=select(tmp,(#_1>tmp1)&(#_2==-1));
+    tmp2=tmp2_1_1;
+    out=substring(str,tmp1,tmp2-1);
+  );
+  out;
+);
+////%Mxfactor end////
 
 ////%Mxload start////
 Mxload(file):=( //17.06.16

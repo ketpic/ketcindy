@@ -1,3 +1,5 @@
+// 20231217
+//    CalcbyM changed  ( str1,str2,... )
 // 20231213
 //    Mxaddvar changed to Mxsetvar
 //    Mxfactor added

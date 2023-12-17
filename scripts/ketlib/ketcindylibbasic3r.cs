@@ -3196,10 +3196,10 @@ Convtrigpow(strorg):=(
 ////%Convtrigpow end
 
 ////%Totexform start////
-Totexform(str):=( //210803from[renew]
+Totexform(str):=( //231215
 //help:Totexform("fr(2,3)");
-  regional(plv,funL,repL,parL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
-      tmp,tmp1,tmp2,tmp3,tmp4);
+  regional(plv,funL,repL,parL,out,head,flg,rep,fun,pre,
+    post,ctr,clv,nn,tmp,tmp1,tmp2,tmp3,tmp4);
   tmp1="\displaystyle\int"; //210831from
   tmp2="\displaystyle\lim";
   tmp3="\displaystyle\sum"; //210831to
@@ -3225,6 +3225,26 @@ Totexform(str):=( //210803from[renew]
   ];
   parL=["log(","sin(","cos(","tan(","lim(","int(","sum("]; //210901
   out=replace(str,"pi","{\pi}"); //210805
+  out=replace(str,"sqrt(","sq(");//231215 from
+  tmp=indexof(out,")/(");
+  ctr=1;
+  while((tmp>0)&(ctr<20),
+    tmp1=substring(out,0,tmp);
+    tmp2=substring(out,tmp+1,length(out));
+    tmp=Bracket(tmp1);
+    tmp3=tmp_(-1)_2;
+    tmp=select(tmp,#_2==-tmp3);
+    tmp=tmp_(-1)_1;
+    tmp1=substring(tmp1,0,tmp-1)+"fr("+
+           substring(tmp1,tmp,length(tmp1)-1)+",";
+    tmp=Bracket(tmp2);
+    tmp=select(tmp,#_2==-1);
+    tmp=tmp_1_1;
+    tmp2=substring(tmp2,1,length(tmp2));
+    out=tmp1+tmp2;
+    tmp=indexof(out,")/(");
+    ctr=ctr+1;
+  );//231215 to
   head="";
   flg=0;
   plv=Bracket(out,"()");

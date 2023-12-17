@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20231213] loaded");
+println("ketcindylibout[20231217] loaded");
 
 //help:start();
 
@@ -1979,14 +1979,30 @@ kcM(fname,optionorg):=(
 );
 ////%kcM end////
 
-////%CalcbyM start////
+////%CalcbyM start//// 231217
 CalcbyM(name,cmd):=CalcbyM(name,cmd,[]);
-CalcbyM(name,cmd,optionorg):=(
+CalcbyM(name,cmdorg,optionorg):=(
 //help:CalcbyM("a",cmdL);
 //help:CalcbyM(options1= ["m/r","Wait=5","Errchk=y(/n)","Dig=6","Pow=no","All=y"]);
 //help:CalcbyM(options2= ["line=1000"]);
-  regional(options,tmp,tmp0,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,allflg,indL,line,
-      dig,flg,wflg,file,nc,arg,add,powerd,cmdM,cmdlist,wfile,errchk,waiting,num,st);
+  regional(options,tmp,tmp0,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,
+      allflg,indL,line,dig,flg,wflg,file,nc,arg,add,powerd,
+      cmdM,cmd.cmdlist,wfile,errchk,waiting,num,st);
+  cmd=[]; //231217from
+  forall(1..(length(cmdorg)),
+    tmp1=cmdorg_#;
+    if(#<length(cmdorg),
+	    tmp2=cmdorg_(#+1);
+	  ,
+	    tmp2="";
+	  );
+    cmd=append(cmd,tmp1);
+    if(isstring(tmp1),
+      if(isstring(tmp2),
+        cmd=append(cmd,[]);
+      );
+    );
+  ); //231217to
   ErrFlag=0;
   options=optionorg;
   tmp=divoptions(options);

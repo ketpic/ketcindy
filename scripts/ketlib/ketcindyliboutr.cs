@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20231217] loaded");
+println("ketcindylibout[20231222] loaded");
 
 //help:start();
 
@@ -2465,6 +2465,72 @@ Mxfactor(str,norg):=(
   out;
 );
 ////%Mxfactor end////
+
+////%Dispexpr start//// 231222
+Dispexpr(line,name):=
+  Dispexpr(line,name,parse(name),0,["Size=1.5"]);
+Dispexpr(line,name,Arg):=(
+  if(islist(Arg),
+    Dispexpr(line,name,parse(name),0,Arg);
+  ,
+    if(isstring(Arg),
+      Dispexpr(line,name,Arg,0,["Size=1.5"]);
+	,
+      Dispexpr(line,name,parse(name),Arg,["Size=1.5"]);
+	);
+  );
+);
+Dispexpr(lineorg,name,str,vsp,op):=(
+//help:Dispexpr(3,"pA");
+//help:Dispexpr("","pA",["Size=1.2"]);
+//help:Dispexpr("","pA",0.5);
+ regional(line,tmp);
+// global Pos, Dy
+ line=lineorg;
+ if(line==0,line="");
+ tmp=str;
+ if(!isstring(tmp),tmp=format(tmp,12));
+ if(isreal(line),
+   Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+ ,
+   Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+ );
+ Pos_2=Pos_2-Dy;
+);
+////%Dispexpr end////
+
+////%Disptexexpr start//// 231222
+Disptexexpr(line,name):=
+  Disptexexpr(line,name,parse(name),0,["Size=1.5"]);
+Disptexexpr(line,name,Arg):=(
+  if(islist(Arg),
+    Disptexexpr(line,name,parse(name),0,Arg);
+  ,
+    if(isstring(Arg),
+      Disptexexpr(line,name,Arg,0,["Size=1.5"]);
+	,
+      Disptexexpr(line,name,parse(name),Arg,["Size=1.5"]);
+	);
+  );
+);
+Disptexexpr(lineorg,name,str,vsp,op):=(
+//help:Disptexexpr(3,"pA");
+//help:Disptexexpr("","pA",["Size=1.2"]);
+//help:Disptexexpr("","pA",0.5);
+ regional(line,tmp);
+// global Pos, Dy
+ line=lineorg;
+ if(line==0,line="");
+ tmp=Totexform(str);
+ if(!isstring(tmp),tmp=format(tmp,12));
+ if(isreal(line),
+   Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+ ,
+   Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+ );
+ Pos_2=Pos_2-Dy;
+);
+////%Disptexexpr end////
 
 ////%Mxload start////
 Mxload(file):=( //17.06.16

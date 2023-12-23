@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20231110] loaded");
+println("ketcindylibbasic3[20231224] loaded");
 
 //help:start();
 
@@ -3208,7 +3208,7 @@ Totexform(str):=( //231215
     ["_(",["_{xx}"]], //210831
     ["tx(",["\text{xx}"]], //210907
     ["tfr(",["","\frac{xx}{yy}"]], //210831,220523
-    ["fr(",["","\dfrac{xx}{yy}"]], //210228from
+    ["fr(",["","\displaystyle\frac{xx}{yy}"]], //210228from 231224
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["ln(",["\ln xx "]], //210903
     ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],

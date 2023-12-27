@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20231222] loaded");
+println("ketcindylibout[20231226] loaded");
 
 //help:start();
 
@@ -2531,6 +2531,13 @@ Disptexexpr(lineorg,name,str,vsp,op):=(
  Pos_2=Pos_2-Dy;
 );
 ////%Disptexexpr end////
+
+////%Vspace start//// 231226
+Vspace(dy):=(
+  //global Pos
+  Pos_2=Pos_2-dy;
+);
+////%Vspace end//// 231226
 
 ////%Mxload start////
 Mxload(file):=( //17.06.16

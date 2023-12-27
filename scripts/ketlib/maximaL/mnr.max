@@ -1,10 +1,14 @@
  /*            MNR method 
                                                   mnrv1
-                                                   2023.12.11
+												   2023.12.12
+                                                   2023.12.27
 remvalue(all);
 */
 
 numer(f):=factor(num(ratsimp(f)))$
+Numer(f):=numer(f)$
+ratev(eq,rep):=ratsimp(ev(eq,rep))$
+Ratev(eq,rep):=ratev(eq,rep)$
 
 nthfactor(pol,kth):=block(
  [tmp,j,out],
@@ -101,40 +105,47 @@ rotate(v):=block(
   ratsimp(u+rotCenter)
 )$
 
-putTriangle(m, n, r) := block(
+putTriangle(m,n,r) := block(
   mAng:m,
   nAng:n,
   inR:r,
   assume(mAng>0,nAng>0,inR>0,mAng*nAng-1<0),
-  edgeLeft:r*(1 + m^2)/(m*(1 - n*m)),
-  edgeRight:r*(1 + n^2)/(n*(1 - n*m)),
-  edgeBottom:r*(m + n)/(n*m),
+  edgeLeft:r*(1 + m^2)/(m*(1 - n*m)), edgL:edgeLeft,
+  edgeRight:r*(1 + n^2)/(n*(1 - n*m)), edgR:edgeRight,
+  edgeBottom:r*(m + n)/(n*m), edgB:edgeBottom,
   cirR:r*(m^2+1)*(n^2+1)/(4*m*n*(1-m*n)),
   exRa:r/(m*n),
   exRb:r*(m+n)/(m*(1-m*n)),
   exRc:r*(m+n)/(n*(1-m*n)),
   area:r^2*(m+n)/(m*n*(1-m*n)),
-  halfPer:r*(m+n)/(m*n*(1-m*n)),
-  
-  inCenter:[0,0],
-  vertexLeft:[-r/m,-r],
-  vertexRight:[r/n,-r],
+  halfPer:r*(m+n)/(m*n*(1-m*n)), half:halfPer,
+  inCenter:[0,0], inC:inCenter,
+  vertexLeft:[-r/m,-r], verL:vertexLeft,
+  vertexRight:[r/n,-r], verR:vertexRight,
   vertexTop:[r*(n-m)/(1-m*n),r*(1+m*n)/(1-m*n)],
+  verTop:vertexTop,
   cirCenter:[r*(m-n)/(2*m*n),
              r*(m^2+3*m^2*n^2+n^2-1)/(4*m*n*(1-m*n))],
+  cirC:cirCenter,
   barCenter:[r*(2*m*n-1)*(n-m)/(3*m*n*(1-m*n)),
               r*(3*m*n-1)/(3*(1-m*n))],
+  barC:barCenter,
   ortCenter:[r*(n-m)/(1-m*n),
              r*(3*m^2*n^2-m^2-2*m*n-n^2+1)/(2*m*n*(1-m*n))],
-  exCentera:[r*(m-n)/(m*n),-r*(m*n+1)/(m*n)], 
+  ortC:ortCenter,
+  exCentera:[r*(m-n)/(m*n),-r*(m*n+1)/(m*n)],
+  exCa:exCentera,
   exCenterb:[-r*(1+m^2)/(m*(1-m*n)),r*n*(1+m^2)/(m*(1-m*n))],
+  exCb:exCenterb,
   exCenterc:[r*(1+n^2)/(n*(1-m*n)),r*m*(1+n^2)/(n*(1-m*n))], 
-  
+  exCc:exCenterc,  
   sliderVector:[0,0],
   rotCenter:[0,0],
   rotCsSn:[1,0],
   [vertexTop,vertexLeft,vertexRight,inCenter]
-)$ 
+)$
+putT(m,n,r):=putTriangle(m,n,r)$
+
 putTriangle_btm(m,n,btm):=block(
   [r,ans],
   putTriangle(m,n,r),
@@ -142,35 +153,55 @@ putTriangle_btm(m,n,btm):=block(
   putTriangle(m,n,ans),
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
+
 slideTriangle(A,B):=block(
   sliderVector:[B[1]-A[1],B[2]-A[2]],
-  inCenter:slide(inCenter),
-  vertexLeft:slide(vertexLeft),
-  vertexRight:slide(vertexRight),
-  vertexTop:slide(vertexTop),
-  cirCenter:slide(cirCenter),
-  barCenter:slide(barCenter),
-  ortCenter:slide(ortCenter),
-  exCentera:slide(exCentera),
-  exCenterb:slide(exCenterb),
-  exCenterc:slide(exCenterc),
+  inCenter:slide(inCenter), inC:inCenter,
+  vertexLeft:slide(vertexLeft), verL:vertexLeft,
+  vertexRight:slide(vertexRight), verR:vertexRight,
+  vertexTop:slide(vertexTop), verT:vertexTop,
+  cirCenter:slide(cirCenter), cirC:cirCenter,
+  barCenter:slide(barCenter), barC:barCenter,
+  ortCenter:slide(ortCenter), ortC:ortCenter,
+  exCentera:slide(exCentera), exCa:exCentera,
+  exCenterb:slide(exCenterb), exCb:exCenterb,
+  exCenterc:slide(exCenterc), exCc:exCenterc,
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
+slideT(A,B):=slideTriangle(A,B)$
+
 rotateTriangle(tr,centre):=block(
   rotCenter:centre,
   rotCS:[(1-tr^2)/(1+tr^2),2*tr/(1 + tr^2)],
-  inCenter:rotate(inCenter),
-  vertexLeft:rotate(vertexLeft),
-  vertexRight:rotate(vertexRight),
-  vertexTop:rotate(vertexTop),
-  cirCenter:rotate(barCenter),
-  ortCenter:rotate(ortCenter),
-  exCentera:rotate(exCentera),
-  exCenterb:rotate(exCenterb),
-  exCenterc:rotate(exCenterc),
+  inCenter:rotate(inCenter), inC:inCenter,
+  vertexLeft:rotate(vertexLeft), verL:vertexLeft,
+  vertexRight:rotate(vertexRight), verR:vertexRight,
+  vertexTop:rotate(vertexTop), verT:vertexTop,
+  cirCenter:rotate(barCenter), cirC:cirCenter,
+  ortCenter:rotate(ortCenter), ortC:ortCenter,
+  barCenter:rotate(barCenter), barC:barCenter,
+  exCentera:rotate(exCentera), exCa:exCentera,
+  exCenterb:rotate(exCenterb), exCb:exCenterb,
+  exCenterc:rotate(exCenterc), exCc:exCenterc,
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
+rotateT(tr,centre):=rotateT(tr,centre)$
 
+edgL:edgeLeft$
+edgR:edgeRight$
+edgB:edgeBottom$
+half:halfPer$ 
+inC:inCenter$
+verL:vertexLeft$
+verR:vertexRight$
+verT:vertexTop$
+cirC:cirCenter$
+barC:barCenter$
+ortC:ortCenter$
+exCa:exCentera$ 
+exCb:exCenterb$
+exCc:exCenterc$
+  
 reduceDegree(pL,z,stp):=block(
   [dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 
   tmp1:expand(pL[1]), 

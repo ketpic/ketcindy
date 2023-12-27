@@ -1,5 +1,5 @@
 // 20231227
-// Totexform changed  ( frac => fr)
+// Totexform changed  ( frac => fr, int d..,"")
 // 20231224
 // Totexform changed  ( \dfrac => \displaystye\frac)
 // 20231215

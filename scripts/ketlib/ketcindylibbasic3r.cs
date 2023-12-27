@@ -3217,7 +3217,7 @@ Totexform(str):=( //231215
     ["cos(",["\cos xx ","\cos^{xx}\! yy "]], //210405
     ["tan(",["\tan xx ","\tan^{xx}\! yy "]],  //210228to  //210405
     ["lim(", ["",tmp2+"_{xx \to yy} ",tmp2+"_{xx \to yy} zz"]], //210831from
-    ["int(", [tmp1+" ",tmp1+" xx dyy ",tmp1+" yy dzz ",tmp1+"_{xx}^{yy} zz dww "]],  //211027
+    ["int(", [tmp1+" ",tmp1+" xx yy ",tmp1+" yy zz ",tmp1+"_{xx}^{yy} zz ww "]],  //211027
     ["sum(", ["",tmp3+"_{xx}^{yy} ", tmp3+"_{xx}^{yy} zz"]], //210831to
     ["diff(", ["d ","\frac{dxx}{dyy}"]], //210913
     ["par(", ["\partial ","\frac{\partial xx}{\partial yy}"]] ,//210913
@@ -3290,6 +3290,11 @@ Totexform(str):=( //231215
        if(nn==2,
           tmp1=substring(out,plv_1_1,clv_1_1-1);
           tmp2=substring(out,clv_1_1,length(out)-1);
+		  if(indexof(out,"int(")>0, //231227from
+		    if((length(tmp2)>0)&(substring(tmp2,0,1)!="d"),
+			  tmp2="d"+tmp2;
+            );
+          ); //231227to
           if(contains(parL,fun), //210901from
             tmp2=Addpar(tmp2); //211029
           ); //210901to
@@ -3315,6 +3320,11 @@ Totexform(str):=( //231215
             tmp3=Addpar(tmp3); //211029
           ); //210901to
           tmp4=substring(out,clv_3_1,length(out)-1);
+		  if(indexof(out,"int(")>0, //231227from
+		    if((length(tmp4)>0)&(substring(tmp4,0,1)!="d"),
+			  tmp4="d"+tmp4;
+            );
+          );//231227to
           tmp=replace(rep_2_4,"xx",tmp1);
           tmp=replace(tmp,"yy",tmp2);
           tmp=replace(tmp,"zz",tmp3);

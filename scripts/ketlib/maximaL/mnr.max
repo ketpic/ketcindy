@@ -1,7 +1,9 @@
- /*            MNR method 
+ /*            MNR solver 
                                                   mnrv1
 												   2023.12.12
                                                    2023.12.27
+												   2023.12.29
+												     reduceD
 remvalue(all);
 */
 
@@ -208,10 +210,9 @@ reduceDegree(pL,z,stp):=block(
   tmp2:expand(pL[2]), 
   dg1:hipow(tmp1,z),
   dg2:hipow(tmp2,z), 
-  print([dg1,dg2]),
   ctr:1, 
-  while (0<dg2*dg1) and (ctr<stp) do block(
-    co1:diff(tmp1,z,dg1)/factorial(dg1),
+  while (0<dg2*dg1) and (ctr<=stp) do block(
+	co1:diff(tmp1,z,dg1)/factorial(dg1),
 	co2:diff(tmp2,z,dg2)/factorial(dg2),
 	tmp:gcd(co1,co2),
 	co1:ratsimp(co1/tmp),
@@ -225,12 +226,12 @@ reduceDegree(pL,z,stp):=block(
     ), 
 	ctr:ctr + 1
   ),
-  print([dg1,dg2]), 
   tmp:gcd(tmp1,tmp2),
   tmp1:factor(tmp1/tmp),
   tmp2:factor(tmp2/tmp),
-  [tmp1,tmp2]
+  [tmp1,tmp2,[dg1,dg2,ctr]]
 )$
+reduceD(pL,z,stp):=reduceDegree(pL,z,stp)$
 
 /* inner cirle  */
 inCircle(p1,p2,p3):=block(

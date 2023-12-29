@@ -1,3 +1,6 @@
+// 20231229
+//    Dispexpr->Dispe, Disttex->Disptex (optional)
+//    Dispexpr,Disptexexpr dbg (vsp)
 // 2023126
 //    Vspace added
 // 2023122

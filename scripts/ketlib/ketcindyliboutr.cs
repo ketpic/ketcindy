@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20231226] loaded");
+println("ketcindylibout[20231229] loaded");
 
 //help:start();
 
@@ -2467,6 +2467,14 @@ Mxfactor(str,norg):=(
 ////%Mxfactor end////
 
 ////%Dispexpr start//// 231222
+Dispe(line,name):=Dispexpr(line,name);//231229from
+Dispe(line,name,Arg):=Dispexpr(line,name,Arg);
+Dispe(lineorg,name,str,vsp,op):=
+   Dispexpr(lineorg,name,str,vsp,op);
+Disptex(line,name):=Disptexexpr(line,name);
+Disptex(line,name,Arg):=Disptexexpr(line,name,Arg);
+Disptex(lineorg,name,str,vsp,op):=
+   Disptexexpr(lineorg,name,str,vsp,op); //231229to
 Dispexpr(line,name):=
   Dispexpr(line,name,parse(name),0,["Size=1.5"]);
 Dispexpr(line,name,Arg):=(
@@ -2490,12 +2498,13 @@ Dispexpr(lineorg,name,str,vsp,op):=(
  if(line==0,line="");
  tmp=str;
  if(!isstring(tmp),tmp=format(tmp,12));
+ println([2501,line,name,tmp]);
  if(isreal(line),
-   Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+   Expr(Pos,"e",line+"\;\;"+name+"="+tmp,op);
  ,
    Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
  );
- Pos_2=Pos_2-Dy;
+ Pos_2=Pos_2-vsp-Dy;
 );
 ////%Dispexpr end////
 
@@ -2528,7 +2537,7 @@ Disptexexpr(lineorg,name,str,vsp,op):=(
  ,
    Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
  );
- Pos_2=Pos_2-Dy;
+ Pos_2=Pos_2-vsp-Dy;
 );
 ////%Disptexexpr end////
 

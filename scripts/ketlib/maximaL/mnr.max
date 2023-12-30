@@ -4,6 +4,8 @@
                                                    2023.12.27
 												   2023.12.29
 												     reduceD
+												   2023.12.30
+												     verT
 remvalue(all);
 */
 
@@ -21,7 +23,6 @@ nthfactor(pol,kth):=block(
    tmp:pol
  ,
  j:length(tmp),
- print([numfactor,j]),
  if kth>j then kth:j,
  part(tmp,kth)
 )$
@@ -112,20 +113,27 @@ putTriangle(m,n,r) := block(
   nAng:n,
   inR:r,
   assume(mAng>0,nAng>0,inR>0,mAng*nAng-1<0),
-  edgeLeft:r*(1 + m^2)/(m*(1 - n*m)), edgL:edgeLeft,
-  edgeRight:r*(1 + n^2)/(n*(1 - n*m)), edgR:edgeRight,
-  edgeBottom:r*(m + n)/(n*m), edgB:edgeBottom,
+  edgeLeft:r*(1 + m^2)/(m*(1 - n*m)),
+  edgL:edgeLeft,
+  edgeRight:r*(1 + n^2)/(n*(1 - n*m)),
+  edgR:edgeRight,
+  edgeBottom:r*(m + n)/(n*m),
+  edgB:edgeBottom,
   cirR:r*(m^2+1)*(n^2+1)/(4*m*n*(1-m*n)),
   exRa:r/(m*n),
   exRb:r*(m+n)/(m*(1-m*n)),
   exRc:r*(m+n)/(n*(1-m*n)),
   area:r^2*(m+n)/(m*n*(1-m*n)),
-  halfPer:r*(m+n)/(m*n*(1-m*n)), half:halfPer,
-  inCenter:[0,0], inC:inCenter,
-  vertexLeft:[-r/m,-r], verL:vertexLeft,
-  vertexRight:[r/n,-r], verR:vertexRight,
+  halfPer:r*(m+n)/(m*n*(1-m*n)),
+  half:halfPer,
+  inCenter:[0,0],
+  inC:inCenter,
+  vertexLeft:[-r/m,-r],
+  verL:vertexLeft,
+  vertexRight:[r/n,-r],
+  verR:vertexRight,
   vertexTop:[r*(n-m)/(1-m*n),r*(1+m*n)/(1-m*n)],
-  verTop:vertexTop,
+  verT:vertexTop,
   cirCenter:[r*(m-n)/(2*m*n),
              r*(m^2+3*m^2*n^2+n^2-1)/(4*m*n*(1-m*n))],
   cirC:cirCenter,
@@ -158,16 +166,26 @@ putTriangle_btm(m,n,btm):=block(
 
 slideTriangle(A,B):=block(
   sliderVector:[B[1]-A[1],B[2]-A[2]],
-  inCenter:slide(inCenter), inC:inCenter,
-  vertexLeft:slide(vertexLeft), verL:vertexLeft,
-  vertexRight:slide(vertexRight), verR:vertexRight,
-  vertexTop:slide(vertexTop), verT:vertexTop,
-  cirCenter:slide(cirCenter), cirC:cirCenter,
-  barCenter:slide(barCenter), barC:barCenter,
-  ortCenter:slide(ortCenter), ortC:ortCenter,
-  exCentera:slide(exCentera), exCa:exCentera,
-  exCenterb:slide(exCenterb), exCb:exCenterb,
-  exCenterc:slide(exCenterc), exCc:exCenterc,
+  inCenter:slide(inCenter),
+  inC:inCenter,
+  vertexLeft:slide(vertexLeft),
+  verL:vertexLeft,
+  vertexRight:slide(vertexRight),
+  verR:vertexRight,
+  vertexTop:slide(vertexTop),
+  verT:vertexTop,
+  cirCenter:slide(cirCenter),
+  cirC:cirCenter,
+  barCenter:slide(barCenter),
+  barC:barCenter,
+  ortCenter:slide(ortCenter),
+  ortC:ortCenter,
+  exCentera:slide(exCentera),
+  exCa:exCentera,
+  exCenterb:slide(exCenterb),
+  exCb:exCenterb,
+  exCenterc:slide(exCenterc),
+  exCc:exCenterc,
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
 slideT(A,B):=slideTriangle(A,B)$
@@ -176,34 +194,28 @@ rotateTriangle(tr,centre):=block(
   rotCenter:centre,
   rotCS:[(1-tr^2)/(1+tr^2),2*tr/(1 + tr^2)],
   inCenter:rotate(inCenter), inC:inCenter,
-  vertexLeft:rotate(vertexLeft), verL:vertexLeft,
-  vertexRight:rotate(vertexRight), verR:vertexRight,
-  vertexTop:rotate(vertexTop), verT:vertexTop,
-  cirCenter:rotate(barCenter), cirC:cirCenter,
-  ortCenter:rotate(ortCenter), ortC:ortCenter,
-  barCenter:rotate(barCenter), barC:barCenter,
-  exCentera:rotate(exCentera), exCa:exCentera,
-  exCenterb:rotate(exCenterb), exCb:exCenterb,
-  exCenterc:rotate(exCenterc), exCc:exCenterc,
+  vertexLeft:rotate(vertexLeft),
+  verL:vertexLeft,
+  vertexRight:rotate(vertexRight),
+  verR:vertexRight,
+  vertexTop:rotate(vertexTop),
+  verT:vertexTop,
+  cirCenter:rotate(barCenter),
+  cirC:cirCenter,
+  ortCenter:rotate(ortCenter),
+  ortC:ortCenter,
+  barCenter:rotate(barCenter),
+  barC:barCenter,
+  exCentera:rotate(exCentera),
+  exCa:exCentera,
+  exCenterb:rotate(exCenterb),
+  exCb:exCenterb,
+  exCenterc:rotate(exCenterc),
+  exCc:exCenterc,
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
 rotateT(tr,centre):=rotateT(tr,centre)$
 
-edgL:edgeLeft$
-edgR:edgeRight$
-edgB:edgeBottom$
-half:halfPer$ 
-inC:inCenter$
-verL:vertexLeft$
-verR:vertexRight$
-verT:vertexTop$
-cirC:cirCenter$
-barC:barCenter$
-ortC:ortCenter$
-exCa:exCentera$ 
-exCb:exCenterb$
-exCc:exCenterc$
-  
 reduceDegree(pL,z,stp):=block(
   [dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 
   tmp1:expand(pL[1]), 
@@ -226,9 +238,8 @@ reduceDegree(pL,z,stp):=block(
     ), 
 	ctr:ctr + 1
   ),
-  tmp:gcd(tmp1,tmp2),
-  tmp1:factor(tmp1/tmp),
-  tmp2:factor(tmp2/tmp),
+  tmp1:factor(tmp1),
+  tmp2:factor(tmp2),
   [tmp1,tmp2,[dg1,dg2,ctr]]
 )$
 reduceD(pL,z,stp):=reduceDegree(pL,z,stp)$

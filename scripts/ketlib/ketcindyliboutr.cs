@@ -2498,7 +2498,6 @@ Dispexpr(lineorg,name,str,vsp,op):=(
  if(line==0,line="");
  tmp=str;
  if(!isstring(tmp),tmp=format(tmp,12));
- println([2501,line,name,tmp]);
  if(isreal(line),
    Expr(Pos,"e",line+"\;\;"+name+"="+tmp,op);
  ,

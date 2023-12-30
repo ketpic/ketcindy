@@ -217,13 +217,14 @@ rotateTriangle(tr,centre):=block(
 rotateT(tr,centre):=rotateT(tr,centre)$
 
 reduceDegree(pL,z,stp):=block(
-  [dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 
+  [stpL,dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 
   tmp1:expand(pL[1]), 
   tmp2:expand(pL[2]), 
   dg1:hipow(tmp1,z),
   dg2:hipow(tmp2,z), 
-  ctr:1, 
-  while (0<dg2*dg1) and (ctr<=stp) do block(
+  ctr:1,
+  stpL:[],
+  while ((not dg2=0) and (not dg1=0)) and (ctr<=stp) do block(
 	co1:diff(tmp1,z,dg1)/factorial(dg1),
 	co2:diff(tmp2,z,dg2)/factorial(dg2),
 	tmp:gcd(co1,co2),
@@ -236,11 +237,12 @@ reduceDegree(pL,z,stp):=block(
 	  tmp2:expand(co2*tmp1*z^(dg2-dg1)-co1*tmp2),
 	  dg2:hipow(tmp2,z)
     ), 
+	stpL:append(stpL,[tmp1,tmp2]),
 	ctr:ctr + 1
   ),
   tmp1:factor(tmp1),
   tmp2:factor(tmp2),
-  [tmp1,tmp2,[dg1,dg2,ctr]]
+  [tmp1,tmp2,ctr,dg1,dg2,stpL]
 )$
 reduceD(pL,z,stp):=reduceDegree(pL,z,stp)$
 

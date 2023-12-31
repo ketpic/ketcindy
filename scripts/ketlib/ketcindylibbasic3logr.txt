@@ -1,3 +1,5 @@
+// 20241231
+// Totexform dbg  (str)
 // 20231227
 // Totexform changed  ( frac => fr, int d..,"")
 // 20231224

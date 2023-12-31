@@ -3225,8 +3225,8 @@ Totexform(str):=( //231215
   ];
   parL=["log(","sin(","cos(","tan(","lim(","int(","sum("]; //210901
   out=replace(str,"pi","{\pi}"); //210805
-  out=replace(str,"frac(","fr(");//231227
-  out=replace(str,"sqrt(","sq(");//231215 from
+  out=replace(out,"frac(","fr(");//231227
+  out=replace(out,"sqrt(","sq(");//231215 from
   tmp=indexof(out,")/(");
   ctr=1;
   while((tmp>0)&(ctr<20),

@@ -1,11 +1,16 @@
  /*            MNR solver 
-                                                  mnrv1
 												   2023.12.12
                                                    2023.12.27
 												   2023.12.29
 												     reduceD
 												   2023.12.30
 												     verT
+												   2023.12.31
+												     meetLine
+												   2024.01.01
+													 plusA,minusA
+												
+												
 remvalue(all);
 */
 
@@ -31,11 +36,13 @@ nthfactor(pol,kth):=block(
 angtan(m):=float(2*atan(m)*180/%pi)$
 tanang(t):=float(tan(t/2*%pi/180))$
 
-supAng(m):=ratsimp(1/m)$ /*hokaku*/
-comAng(m):=ratsimp((1-m)/(m+1))$ /*yokaku*/
+supA(m):=ratsimp(1/m)$ /*hokaku*/
+comA(m):=ratsimp((1-m)/(m+1))$ /*yokaku*/
 Hokaku(m):=ratsimp(1/m)$
 Yokaku(m):=ratsimp((1-m)/(m+1))$
-addAng(m1,m2):=ratsimp((m1+m2)/(1-m2*m1))$
+plusA(m1,m2):=ratsimp((m1+m2)/(1-m2*m1))$
+minusA(m1,m2):=ratsimp((m1-m2)/(1+m2*m1))$
+
 dotProd(v1,v2):=
   ratsimp(v1[1]*v2[1]+v1[2]*v2[2])$
 normsq(v):=
@@ -44,25 +51,30 @@ crossProd(v1,v2):=
   ratsimp(v1[1]*v2[2]-v1[2]*v2[1])$ 
 
 eqLine(pa1,pa2):=block(
+  [tmp,tmp1,tmp2,out],
   if pa1[1]=pa2[1] then
-     _X=pa1[1]
-  else
-     _Y=pa1[2]+(pa2[2]-pa1[2])*(_X-pa1[1])/(pa2[1]-pa1[1])
+    tmp:_X-pa1[1]
+  else block(
+    tmp1:pa2[1]-pa1[1],
+	tmp2:pa2[2]-pa1[2],
+    tmp:_Y-(pa1[2]+tmp2/tmp1*(_X-pa1[1]))
+  ),
+  out:numer(tmp)
 )$
 
-intsectLine(line1,line2):=block(
+meetLinell(line1,line2):=block(
   [out],
   out:solve([line1,line2],[_X,_Y]),
   if length(out)>0 then
-    out:ratsimp(ev([_X,_Y],out))
+    out:ratev([_X,_Y],out)
 )$
 
-intsectLinept(pts1,pts2):=block(
+meetLine(pts1,pts2):=block(
   [tmp1,tmp2,out],
   tmp1:eqLine(pts1[1],pts1[2]),
   tmp2:eqLine(pts2[1],pts2[2]),
-  out:intsectLine(tmp1,tmp2),
-  out
+  out:meetLinell(tmp1,tmp2),
+  [out,tmp1,tmp2]
 )$
 
 /*
@@ -129,11 +141,11 @@ putTriangle(m,n,r) := block(
   inCenter:[0,0],
   inC:inCenter,
   vertexLeft:[-r/m,-r],
-  verL:vertexLeft,
+  verL:vertexLeft, vtxL:verL,
   vertexRight:[r/n,-r],
-  verR:vertexRight,
+  verR:vertexRight, vtxR:verR,
   vertexTop:[r*(n-m)/(1-m*n),r*(1+m*n)/(1-m*n)],
-  verT:vertexTop,
+  verT:vertexTop, vtxT:verT,
   cirCenter:[r*(m-n)/(2*m*n),
              r*(m^2+3*m^2*n^2+n^2-1)/(4*m*n*(1-m*n))],
   cirC:cirCenter,
@@ -169,11 +181,11 @@ slideTriangle(A,B):=block(
   inCenter:slide(inCenter),
   inC:inCenter,
   vertexLeft:slide(vertexLeft),
-  verL:vertexLeft,
+  verL:vertexLeft, vtxL:verL,
   vertexRight:slide(vertexRight),
-  verR:vertexRight,
-  vertexTop:slide(vertexTop),
-  verT:vertexTop,
+  verR:vertexRight, vtxR:verR,
+  vertexTop:slide(vertexTop), 
+  verT:vertexTop, vtxT:verT,
   cirCenter:slide(cirCenter),
   cirC:cirCenter,
   barCenter:slide(barCenter),
@@ -195,11 +207,11 @@ rotateTriangle(tr,centre):=block(
   rotCS:[(1-tr^2)/(1+tr^2),2*tr/(1 + tr^2)],
   inCenter:rotate(inCenter), inC:inCenter,
   vertexLeft:rotate(vertexLeft),
-  verL:vertexLeft,
+  verL:vertexLeft, vtxL:verL,
   vertexRight:rotate(vertexRight),
-  verR:vertexRight,
+  verR:vertexRight, vtxR:verR,
   vertexTop:rotate(vertexTop),
-  verT:vertexTop,
+  verT:vertexTop, vtxT:verT,
   cirCenter:rotate(barCenter),
   cirC:cirCenter,
   ortCenter:rotate(ortCenter),
@@ -214,7 +226,7 @@ rotateTriangle(tr,centre):=block(
   exCc:exCenterc,
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
-rotateT(tr,centre):=rotateT(tr,centre)$
+rotateT(tr,centre):=rotateTriangle(tr,centre)$
 
 reduceDegree(pL,z,stp):=block(
   [stpL,dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 
@@ -246,7 +258,7 @@ reduceDegree(pL,z,stp):=block(
 )$
 reduceD(pL,z,stp):=reduceDegree(pL,z,stp)$
 
-/* inner cirle  */
+/* inner cirle  
 inCircle(p1,p2,p3):=block(
   [a,b,c,S,s,tmp,out],
   a:normsq(p2-p3),
@@ -261,11 +273,12 @@ inCircle(p1,p2,p3):=block(
   out:ratsimp([S/s,tmp]),
   out
 )$
+*/
 
 /* common tangent line */
 commonTanLL(nL,C1,r1,C2,r2):=block(
   [mL,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
-   eq,sol,tmp,pts,out],
+   eq,eqorg,sol,tmp,pts,out],
   putTriangle(mL,nL,r1),
   slideTriangle([0,0],C1),
   pA1:vertexTop,
@@ -278,23 +291,25 @@ commonTanLL(nL,C1,r1,C2,r2):=block(
   pC2:vertexRight,
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
-  eq:crossProd(v1,v2),
-  eq:num(ratsimp(eq)),
-  eq:factor(eq/r^2),
-  eq:nthfactor(eq,length(eq)),
+  tmp:crossProd(v1,v2),
+  tmp:numer(tmp),
+  eqorg:factor(tmp/r^2),
+  eq:nthfactor(eqorg,length(eqorg)),
   sol:solve(eq,mL),
-  pA1:ratsimp(ev(pA1,sol)),
-  pB1:ratsimp(ev(pB1,sol)),
+  pA1:factor(ratev(pA1,sol)),
+  pB1:factor(ratev(pB1,sol)),
   pC1:ratsimp(ev(pC1,sol)),
   pA2:ratsimp(ev(pA2,sol)),
   pB2:ratsimp(ev(pB2,sol)),
   pC2:ratsimp(ev(pC2,sol)),
-  out:[sol,[pA1,pB1]],
+  out:[sol,[pA1,pB1],eq,eqorg],
   out
 )$
+comtanLL(nL,C1,r1,C2,r2):=commonTanLL(nL,C1,r1,C2,r2)$
+
 commonTanRR(mR,C1,r1,C2,r2):=block(
    [nR,pA1,pC1,pA2,pC2,v1,v2,
-    eq,sol,tmp,out],
+    eq,eqorg,sol,tmp,out],
   putTriangle(mR,nR,r1),
   slideTriangle([0, 0],C1),
   pA1:vertexTop,
@@ -307,9 +322,10 @@ commonTanRR(mR,C1,r1,C2,r2):=block(
   pC2:vertexRight,
   v1:ratsimp(pA1-pC1),
   v2:ratsimp(pA2-pC1),
-  eq:crossProd(v1,v2),
-  eq:num(ratsimp(eq)),
-  eq:factor(eq/r^2),
+  tmp:crossProd(v1,v2),
+  tmp:numer(tmp),
+  eqorg:factor(tmp/r^2),
+  eq:nthfactor(eqorg,length(eqorg)),
   sol:solve(eq,nR),
   pA1:ratsimp(ev(pA1,sol)),
   pB1:ratsimp(ev(pB1,sol)),
@@ -317,6 +333,7 @@ commonTanRR(mR,C1,r1,C2,r2):=block(
   pA2:ratsimp(ev(pA2,sol)),
   pB2:ratsimp(ev(pB2,sol)),
   pC2:ratsimp(ev(pC2,sol)),
-  out:[sol,[pA1,pC1]],
+  out:[sol,[pA1,pC1],eq,eqorg],
   out
 )$
+comtanRR(mR,C1,r1,C2,r2):=commonTanRR(mR,C1,r1,C2,r2)$

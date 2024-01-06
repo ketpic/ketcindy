@@ -9,8 +9,13 @@
 												     meetLine
 												   2024.01.01
 													 plusA,minusA
-												
-												
+												   2024.01.04
+												     comtanLL(RR)
+												   2024.01.05
+												     comtanLR
+												   2024.01.06
+												     comtan name
+																			
 remvalue(all);
 */
 
@@ -275,16 +280,17 @@ inCircle(p1,p2,p3):=block(
 )$
 */
 
-/* common tangent line */
-commonTanLL(nL,C1,r1,C2,r2):=block(
-  [mL,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
-   eq,eqorg,sol,tmp,pts,out],
-  putTriangle(mL,nL,r1),
+commonTan(x1,y1,r1,x2,y2,r2):=block(
+  [mL,C1,C2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
+   eq,sol,sol1,sol2,tmp,tmp1,out],
+  C1:[x1,y1],
+  C2:[x2,y2],
+  putTriangle(mL,1,r1),
   slideTriangle([0,0],C1),
   pA1:vertexTop,
   pB1:vertexLeft,
   pC1:vertexRight,
-  putTriangle(mL,nL,r2), 
+  putTriangle(mL,1,r2), 
   slideTriangle([0,0],C2),
   pA2:vertexTop,
   pB2:vertexLeft,
@@ -292,48 +298,85 @@ commonTanLL(nL,C1,r1,C2,r2):=block(
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
   tmp:crossProd(v1,v2),
-  tmp:numer(tmp),
-  eqorg:factor(tmp/r^2),
-  eq:nthfactor(eqorg,length(eqorg)),
+  eq:numer(tmp),
   sol:solve(eq,mL),
-  pA1:factor(ratev(pA1,sol)),
-  pB1:factor(ratev(pB1,sol)),
-  pC1:ratsimp(ev(pC1,sol)),
-  pA2:ratsimp(ev(pA2,sol)),
-  pB2:ratsimp(ev(pB2,sol)),
-  pC2:ratsimp(ev(pC2,sol)),
-  out:[sol,[pA1,pB1],eq,eqorg],
+  tmp:sol[1],
+  sol1:ratev(mL,tmp),
+  pA2:pA1,
+  pB2:pB1,
+  pA1:ratev(pA1,tmp),
+  pB1:ratev(pB1,tmp),
+  if length(sol)>1 then tmp:sol[2],
+  sol2:ratev(mL,tmp),
+  pA2:ratev(pA2,tmp),
+  pB2:ratev(pB2,tmp),
+  out:[pA1,pB1,sol1,pA2,pB2,sol2,eq],
   out
 )$
-comtanLL(nL,C1,r1,C2,r2):=commonTanLL(nL,C1,r1,C2,r2)$
+comTan(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2)$
 
-commonTanRR(mR,C1,r1,C2,r2):=block(
-   [nR,pA1,pC1,pA2,pC2,v1,v2,
-    eq,eqorg,sol,tmp,out],
-  putTriangle(mR,nR,r1),
+commonTanR(x1,y1,r1,x2,y2,r2):=block(
+   [C1,C2,pA1,pC1,pA2,pC2,v1,v2,
+    eq,sol,sol1,sol2,tmp,tmp1,out],
+  C1:[x1,y1],
+  C2:[x2,y2],
+  putTriangle(1,nR,r1),
   slideTriangle([0, 0],C1),
   pA1:vertexTop,
-  pB1:vertexLeft,
   pC1:vertexRight,
-  putTriangle(mR,nR,r2),
+  putTriangle(1,nR,r2),
   slideTriangle([0,0],C2),
   pA2:vertexTop,
-  pB2:vertexLeft,
   pC2:vertexRight,
   v1:ratsimp(pA1-pC1),
   v2:ratsimp(pA2-pC1),
-  tmp:crossProd(v1,v2),
-  tmp:numer(tmp),
-  eqorg:factor(tmp/r^2),
-  eq:nthfactor(eqorg,length(eqorg)),
+  eq:crossProd(v1,v2),
+  eq:numer(eq),  
   sol:solve(eq,nR),
-  pA1:ratsimp(ev(pA1,sol)),
-  pB1:ratsimp(ev(pB1,sol)),
-  pC1:ratsimp(ev(pC1,sol)),
-  pA2:ratsimp(ev(pA2,sol)),
-  pB2:ratsimp(ev(pB2,sol)),
-  pC2:ratsimp(ev(pC2,sol)),
-  out:[sol,[pA1,pC1],eq,eqorg],
+  tmp:sol[1],
+  sol1:ratev(nR,tmp),
+  pA2:pA1,
+  pC2:pC1,
+  pA1:ratev(pA1,tmp),
+  pC1:ratev(pC1,tmp),
+  if length(sol)>1 then tmp:sol[2],
+  sol2:ratev(nR,tmp),
+  pA2:ratev(pA2,tmp),
+  pC2:ratev(pC2,tmp),
+  out:[pA1,pC1,sol1,pA2,pC2,sol2,eq],
   out
 )$
-comtanRR(mR,C1,r1,C2,r2):=commonTanRR(mR,C1,r1,C2,r2)$
+comTanR(x1,y1,r1,x2,y2,r2):=commonTanR(x1,y1,r1,x2,y2,r2)$
+
+commonTanC(x1,y1,r1,x2,y2,r2):=block(
+   [C1,C2,pA1,pB1,pA2,pC2,v1,v2,
+    eq1,eq2,sol,sol1,sol2,tmp,tmp1,out],
+  C1:[x1,y1],
+  C2:[x2,y2],
+  putTriangle(mL,1,r1),
+  slideTriangle([0, 0],C1),
+  pA1:vertexTop,
+  pB1:vertexLeft,
+  putTriangle(1,1/mL,r2),
+  slideTriangle([0,0],C2),
+  pA2:vertexTop,
+  pC2:vertexRight,
+  v1:ratsimp(pA1-pB1),
+  v2:ratsimp(pA2-pB1),
+  tmp:crossProd(v1,v2),
+  eq:numer(tmp),
+  sol:solve(eq,mL),
+  tmp:sol[1],
+  sol1:ratev(mL,tmp),
+  pA2:pA1,
+  pB2:pB1,
+  pA1:ratev(pA1,tmp),
+  pB1:ratev(pB1,tmp),
+  if length(sol)>1 then tmp:sol[2],
+  sol2:ratev(mL,tmp),
+  pA2:ratev(pA2,tmp),
+  pC2:ratev(pC2,tmp),  
+  out:[pA1,pB1,sol1,pA2,pC2,sol2,eq],
+  out
+)$
+comTanC(x1,y1,r1,x2,y2,r2):=commonTanC(x1,y1,r1,x2,y2,r2)$

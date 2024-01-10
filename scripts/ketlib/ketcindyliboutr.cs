@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20231229] loaded");
+println("ketcindylibout[20240110] loaded");
 
 //help:start();
 
@@ -4994,18 +4994,18 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
     forall(varL,va, //220128from
       if(length(parse(va))>0, 
-        if(indexof(va,"wire")>0,  //220207from
-          tmp=indexof(va,"3d");
-          tmp1=substring(va,0,tmp+1);
-        ,
+//        if(indexof(va,"wire")>0,  //220207from
+//          tmp=indexof(va,"3d");
+//          tmp1=substring(va,0,tmp+1);
+//        ,
           tmp1=va;
-        );
+//        );
         tmp=select(1..(length(StyleListC)),StyleListC_#==tmp1); //220207to
         if(length(tmp)>0,
           tmp2=StyleListC_(tmp_1+1);
         ,
           tmp2=["nodisp"];
-        );        
+        );
         Projpara(va,append(tmp2,"Msg=n"));
         if(SUBSCR==1, //  15.02.11
           Subgraph(va,"");

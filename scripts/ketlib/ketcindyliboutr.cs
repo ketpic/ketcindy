@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240110] loaded");
+println("ketcindylibout[20240117] loaded");
 
 //help:start();
 
@@ -2186,32 +2186,26 @@ CalcbyM(name,cmdorg,optionorg):=(
           forall(1..length(tmp1),println(tmp1_#)); //2016.02.24 until
           flg=2;  //2016.02.23
         ,
-          tmp=select(1..(length(tmp1)),indexof(tmp1_#,"closefile()")>0); //200515from
-          if(length(tmp)>0,
-            tmp1=select(tmp1,length(#)>0);
-            tmp2=select(1..(length(tmp1)),indexof(tmp1_#,"disp(")>0);
-            tmp2=append(tmp2,length(tmp1));
-            tmp4=[];
-            forall(1..(length(tmp2)-1),tmp3,
-              tmp="";
-              forall((tmp2_tmp3+1)..(tmp2_(tmp3+1)-1),
-                tmp=tmp+tmp1_#;
-              );
-              tmp4=append(tmp4,tmp);
-            );
-            num="1234567890+-.";
-            tmp1="[";
-            forall(tmp4,st,
-              tmp=select(1..(length(st)),indexof(num,substring(st,#-1,#))==0);
-              if((length(tmp)==0) & (length(st)<4), // 16.05.10 16=>4
-                tmp1=tmp1+st+",";
-              ,
-                tmp1=tmp1+Dq+st+Dq+",";
-              );
-            );
-            tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
-            tmp1=replace(tmp1,".d+0",""); // 15.11.23
-            parse(name+"="+tmp1+";"); //190415
+          tmp2=select(1..(length(tmp1)), //24.01.17from
+                indexof(tmp1_#,"disp(")>0);
+		  if(length(tmp2)==0,
+		    tmp3="[";
+		  ,
+		    tmp=select(1..(length(tmp1)),
+			      indexof(tmp1_#,"closefile")>0);
+			tmp2=append(tmp2,tmp_1);
+		    tmp3="[";
+			line=tmp2_1+1;
+			forall(1..(length(tmp2)-1),nc,
+			  tmp="";
+			  forall((tmp2_(nc)+1)..(tmp2_(nc+1)-1),
+			    tmp=tmp+Removespace(tmp1_#);
+			  );
+			  tmp3=tmp3+Dqq(tmp)+",";
+			);
+			tmp3=substring(tmp3,0,length(tmp3)-1)+"]";//24.01.17to
+            tmp3=replace(tmp3,".d+0",""); // 15.11.23
+            parse(name+"="+tmp3+";"); //190415
             tmp=parse(name);
             if(length(tmp)==1,
               tmp1=substring(tmp1,1,length(tmp1)-1);
@@ -2450,15 +2444,16 @@ Mxsetvar(var,ansorg,parflg):=(
 ////%Mxfactor start////
 Mxfactor(str,norg):=(
 //help:Mxfactor("(a+b)*(c+d)",-1);
-  regional(n,tmp,tmp1,tmp2,out);
+  regional(n,tmp,tmp1,tmp,out);
   out=str;
   n=norg;
   tmp=Bracket(str);
-  tmp1=select(tmp,#_2==1);
+  tmp1=select(tmp,#_2>0); //240116
   if(length(tmp1)>0,
-    if(n<0,n=length(tmp1)+1+n);
-    tmp1=tmp1_n_1;
-    tmp2=select(tmp,(#_1>tmp1)&(#_2==-1));
+    if(n<0,n=length(tmp1)-(-n-1)); //240116from
+    tmp1=tmp1_n;
+    tmp2=select(tmp,(#_1>tmp1_1)&(#_2==-tmp1_2));
+   tmp1=tmp1_1; //240116to
     tmp2=tmp2_1_1;
     out=substring(str,tmp1,tmp2-1);
   );
@@ -4994,18 +4989,18 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
     forall(varL,va, //220128from
       if(length(parse(va))>0, 
-//        if(indexof(va,"wire")>0,  //220207from
-//          tmp=indexof(va,"3d");
-//          tmp1=substring(va,0,tmp+1);
-//        ,
+        if(indexof(va,"wire")>0,  //220207from
+          tmp=indexof(va,"3d");
+          tmp1=substring(va,0,tmp+1);
+        ,
           tmp1=va;
-//        );
+        );
         tmp=select(1..(length(StyleListC)),StyleListC_#==tmp1); //220207to
         if(length(tmp)>0,
           tmp2=StyleListC_(tmp_1+1);
         ,
           tmp2=["nodisp"];
-        );
+        );        
         Projpara(va,append(tmp2,"Msg=n"));
         if(SUBSCR==1, //  15.02.11
           Subgraph(va,"");

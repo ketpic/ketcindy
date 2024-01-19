@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240117] loaded");
+println("ketcindylibout[20240119] loaded");
 
 //help:start();
 
@@ -2208,7 +2208,7 @@ CalcbyM(name,cmdorg,optionorg):=(
             parse(name+"="+tmp3+";"); //190415
             tmp=parse(name);
             if(length(tmp)==1,
-              tmp1=substring(tmp1,1,length(tmp1)-1);
+              tmp1=tmp1_1; //230119
               parse(name+"="+tmp1+";"); //190415
             );
             flg=1;

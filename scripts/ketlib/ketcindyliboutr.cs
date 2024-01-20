@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240119] loaded");
+println("ketcindylibout[20240120] loaded");
 
 //help:start();
 
@@ -2166,7 +2166,7 @@ CalcbyM(name,cmdorg,optionorg):=(
       println(SCEOUTPUT,"");
       closefile(SCEOUTPUT);
     );
-    WritetoM(file+".max",cmdlist,allflg); // 2016.02.23
+    WritetoM(file+".max",cmdlist,allflg); // 20160223
     kcM(file,concat(options,["m"]));
   );
   flg=0;
@@ -2178,38 +2178,34 @@ CalcbyM(name,cmdorg,optionorg):=(
       ,
         tmp1=[];
       ); //201015to
-      if(wflg==1,wait(WaitUnit)); // 2016.02.23
+      if(wflg==1,wait(WaitUnit)); // 20160223
       if(length(tmp1)>0,
         tmp=select(tmp1,(indexof(#,"error")>0)%(indexof(#,"syntax")>0));
         if((length(tmp)>0)&(errchk=="Y"), //190411
           println("Some error(s) occurred"); //2016.02.24 from
           forall(1..length(tmp1),println(tmp1_#)); //2016.02.24 until
-          flg=2;  //2016.02.23
+          flg=2;  //20160223
         ,
-          tmp2=select(1..(length(tmp1)), //24.01.17from
+          tmp2=select(1..(length(tmp1)), //240117from
                 indexof(tmp1_#,"disp(")>0);
 		  if(length(tmp2)==0,
-		    tmp3="[";
+		    tmp3=[]; //240120
 		  ,
 		    tmp=select(1..(length(tmp1)),
 			      indexof(tmp1_#,"closefile")>0);
 			tmp2=append(tmp2,tmp_1);
-		    tmp3="[";
+		    tmp3=[]; //240120
 			line=tmp2_1+1;
 			forall(1..(length(tmp2)-1),nc,
 			  tmp="";
 			  forall((tmp2_(nc)+1)..(tmp2_(nc+1)-1),
 			    tmp=tmp+Removespace(tmp1_#);
 			  );
-			  tmp3=tmp3+Dqq(tmp)+",";
-			);
-			tmp3=substring(tmp3,0,length(tmp3)-1)+"]";//24.01.17to
-            tmp3=replace(tmp3,".d+0",""); // 15.11.23
-            parse(name+"="+tmp3+";"); //190415
-            tmp=parse(name);
-            if(length(tmp)==1,
-              tmp1=tmp1_1; //230119
-              parse(name+"="+tmp1+";"); //190415
+			  tmp3=append(tmp3,tmp); //240120
+			);//240117to
+            tmp3=apply(tmp3,replace(#,".d+0","")); //240120
+            if(length(tmp3)==1, //240120
+              parse(name+"="+Dqq(tmp3_1)+";");
             );
             flg=1;
             tmp2=#*WaitUnit/1000;
@@ -2238,7 +2234,7 @@ CalcbyM(name,cmdorg,optionorg):=(
       );
     );
   ,
-    if(flg==1,  // 2016.02.23
+    if(flg==1,  // 20160223
       println("      CalcbyM succeeded "+name+" ("+text(tmp2)+" sec)");
     );
   );
@@ -2303,16 +2299,16 @@ Mxfun(name,fun,argL,optionorg):=(
   );
   cmdL=concat(cmdL,[
     "ans"+":"+fun,tmp,
-    "ans",[]
+    "ans"
   ]);
   CalcbyM(nm,cmdL,options);
   if(ErrFlag==0,
-    if(disp==1, // 15.11.24
+    if(disp==1, //240120from
       println(nm+" is : ");
       println(parse(nm));
-    );
+    ); //240120to
   );
-  parse(nm);
+  nm; //240120to
 );
 ////%Mxfun end////
 

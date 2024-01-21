@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240120] loaded");
+println("ketcindylibout[20240121] loaded");
 
 //help:start();
 
@@ -2195,7 +2195,6 @@ CalcbyM(name,cmdorg,optionorg):=(
 			      indexof(tmp1_#,"closefile")>0);
 			tmp2=append(tmp2,tmp_1);
 		    tmp3=[]; //240120
-			line=tmp2_1+1;
 			forall(1..(length(tmp2)-1),nc,
 			  tmp="";
 			  forall((tmp2_(nc)+1)..(tmp2_(nc+1)-1),
@@ -2204,9 +2203,16 @@ CalcbyM(name,cmdorg,optionorg):=(
 			  tmp3=append(tmp3,tmp); //240120
 			);//240117to
             tmp3=apply(tmp3,replace(#,".d+0","")); //240120
-            if(length(tmp3)==1, //240120
+            if(length(tmp3)==1,//240121from
               parse(name+"="+Dqq(tmp3_1)+";");
-            );
+            ,
+              tmp="";
+              forall(1..(length(tmp3)),
+                tmp=tmp+Dqq(tmp3_#)+",";
+              );
+              tmp="["+substring(tmp,0,length(tmp)-1)+"]";
+              parse(name+"="+tmp+";");
+            ); //240121to
             flg=1;
             tmp2=#*WaitUnit/1000;
           );

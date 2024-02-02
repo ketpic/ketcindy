@@ -17,12 +17,20 @@
 												     comtan name
 												   2024.01.12
 												     lenSeg
+												   2024.02.12
+												     denomf,Denom
+													 frfactor
 																			
 remvalue(all);
 */
 
 numer(f):=factor(num(ratsimp(f)))$
 Numer(f):=numer(f)$
+denomf(f):=factor(denom(ratsimp(f)))$
+Denom(f):=factor(denom(ratsimp(f)))$
+fracfactor(f):=numer(f)/denomf(f)$
+frfactor(f):=numer(f)/denomf(f)$
+
 ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 

@@ -1,5 +1,6 @@
  /*            MNR solver 
 
+2024.02.09 ratevL,frevL
 2024.02.07 comTan1, comTan2, comTanC1, comTanC2
 2024.02.03 denomf,Denom,factorfr,frev
 2024.01.12 lenSeg
@@ -26,6 +27,14 @@ factorfr(f):=numer(f)/denomf(f)$
 ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 frev(eq,rep):=frfactor(ratev(eq,rep))$
+ratevL(eq,repL):=block(
+ [out,tmp],
+ out:eq,
+ for tmp from 1 thru length(repL) do 
+   out:ratev(out,repL[tmp]),
+ out
+)$
+frevL(eq,repL):=ratevL(eq,repL)$
 
 nthfactor(pol,kth):=block(
  [tmp,j,out],
@@ -82,7 +91,7 @@ meetLine(pts1,pts2):=block(
   tmp1:eqLine(pts1[1],pts1[2]),
   tmp2:eqLine(pts2[1],pts2[2]),
   out:meetLinell(tmp1,tmp2),
-  [out,tmp1,tmp2]
+  out
 )$
 
 /*

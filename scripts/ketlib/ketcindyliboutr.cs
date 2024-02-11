@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240121] loaded");
+println("ketcindylibout[20240212] loaded");
 
 //help:start();
 
@@ -2247,6 +2247,36 @@ CalcbyM(name,cmdorg,optionorg):=(
   flg;
 );
 ////%CalcbyM end////
+
+////%CalcbyMset start////
+CalcbyMset(var,ans,cmdL):=
+ CalcbyMset(var,ans,cmdL,["Wait=10"]);
+CalcbyMset(var,ans,cmdL,oporg):=(
+//help:CalcMset(var1,"ans1",cmdL1,[""]);
+ regional(op,tmp,tmp1);
+ op=oporg;
+ tmp=select(op,indexof(#,"W")>0);
+ if(length(tmp)==0,
+  op=append(op,"Wait=10");
+ );
+ CalcbyM("ans",append(cmdL,var),op);
+ Mxsetvar(var,ans,"n");
+);
+////%CalcbyMset end////
+
+////%Parsel start////
+ParseL(strL):=(
+//help:ParseL(strlist);
+ regional(sL,out,tmp);
+ sL=strL;
+ out=[];
+ forall(sL,
+   tmp=#;
+   if(isstring(tmp),tmp=parse(tmp));
+   out=append(out,tmp);
+ );
+);
+////%Parsel end////
 
 ////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);

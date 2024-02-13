@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240212] loaded");
+println("ketcindylibout[20240213] loaded");
 
 //help:start();
 
@@ -2253,16 +2253,74 @@ CalcbyMset(var,ans,cmdL):=
  CalcbyMset(var,ans,cmdL,["Wait=10"]);
 CalcbyMset(var,ans,cmdL,oporg):=(
 //help:CalcMset(var1,"ans1",cmdL1,[""]);
- regional(op,tmp,tmp1);
+ regional(op,tmp,tmp1,flg,ctr);
  op=oporg;
  tmp=select(op,indexof(#,"W")>0);
  if(length(tmp)==0,
   op=append(op,"Wait=10");
  );
- CalcbyM("ans",append(cmdL,var),op);
- Mxsetvar(var,ans,"n");
+ ctr=1;
+ flg=-1;
+ while((flg<1)&(ctr<10), //240212from
+  flg=CalcbyM(ans,append(cmdL,var),op);
+  ctr=ctr+1;
+ );
+ if(flg==1,
+   Mxsetvar(var,parse(ans),"n");
+ ,
+   println("CalcbyM failed");
+ ); //240212to
 );
 ////%CalcbyMset end////
+
+////%Mxdata start////
+Mxdata(fname):=Mxdata(fname,"");
+Mxdata(fname,rmv):=
+    Mxdata(Dircdy+"/fig",fname,rmv);
+Mxdata(dir,fnameorg,rmv):=(
+ regional(var,fname,data,tmp,tmp1,tmp2,tmp3,nc,name);
+ fname=Cdyname()+fnameorg;
+ fname=replace(fname,rmv,"")+".txt";
+ var=[];
+ data=Readlines(dir,fname);
+ tmp2=select(1..(length(data)),
+         indexof(data_#,"disp(")>0);
+ var=[];
+ forall(1..(length(tmp2)),nc,
+   tmp=tmp2_nc;
+   tmp3=data_tmp;
+   tmp=indexof(tmp3,"disp(");
+   tmp3=substring(tmp3,tmp,length(tmp3));
+   tmp=indexof(tmp3,"(");
+   tmp3=substring(tmp3,tmp,length(tmp3)-1);
+   var=append(var,tmp3);
+ );
+ tmp=select(1..(length(data)),
+			   indexof(data_#,"closefile")>0);
+ tmp2=append(tmp2,tmp_1);
+ tmp3=[];
+ forall(1..(length(tmp2)-1),nc,
+   tmp="";
+   forall((tmp2_(nc)+1)..(tmp2_(nc+1)-1),
+     tmp=tmp+Removespace(data_#);
+   );
+   tmp3=append(tmp3,tmp);
+ );
+ tmp3=apply(tmp3,replace(#,".d+0",""));
+ forall(1..(length(var)),nc,
+   tmp1=var_nc;
+   tmp2=Dqq(tmp3_nc);
+   parse(tmp1+"="+tmp2+";");
+ );
+ tmp=var;
+ var="";
+ forall(tmp,
+  var=var+#+"::";
+ );
+ var=substring(var,0,length(var)-2);
+ var;
+);
+////%Mxdata end////
 
 ////%Parsel start////
 ParseL(strL):=(
@@ -2451,9 +2509,9 @@ Mxbatch(dir,file):=(
 ////%Mxsetvar start//// 231212
 Mxsetvar(var,ansorg):=Mxsetvar(var,ansorg,"p");
 Mxsetvar(var,ansorg,parflg):=(
-//help:Mxaddvar("A::B",ans);
-//help:Mxaddvar(["p1","p2"],ans,"p");
-//help:Mxaddvar(["eq1","eq2"],ans,"n");
+//help:Mxsetvar("A::B",ans);
+//help:Mxsetvar(["p1","p2"],ans,"p");
+//help:Mxsetvar(["eq1","eq2"],ans,"n");
  regional(tmp,vst,ans);
  vst=var;
  if(isstring(var),

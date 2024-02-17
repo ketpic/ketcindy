@@ -36,6 +36,15 @@ ratevL(eq,repL):=block(
 )$
 frevL(eq,repL):=ratevL(eq,repL)$
 
+disc(eq,v):=block(
+ [eqe,v2,v1,v0],
+ eqe:expand(eq),
+ v2:coeff(eqe,v,2),
+ v1:coeff(eqe,v,1),
+ v0:coeff(eqe,v,0),
+ frfactor(v1^2-4*v2*v0)
+)$
+
 nthfactor(pol,kth):=block(
  [tmp,j,out],
  tmp:part(pol,0),

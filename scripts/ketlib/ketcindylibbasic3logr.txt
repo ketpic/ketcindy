@@ -1,4 +1,6 @@
-// 20241231
+// 20240220
+// Mvlist,Mvplotdata changed, Mvdraw deleted
+// 20231231
 // Totexform dbg  (str)
 // 20231227
 // Totexform changed  ( frac => fr, int d..,"")

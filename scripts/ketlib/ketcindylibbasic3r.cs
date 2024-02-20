@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20231227] loaded");
+println("ketcindylibbasic3[20240220] loaded");
 
 //help:start();
 
@@ -5184,8 +5184,11 @@ Mvdraw(num,opt):=(
 
 ////%Mvlist start////
 Mvlist(num,pdata):=Mvlist(num,pdata,[]);
-Mvlist(num,pdata,opt):=(
-  regional(tmp);
+Mvlist(num,pdataorg,opt):=( //240220
+//help:Mvlist(num,"cr1");
+  regional(pdata,tmp);
+  pdata=pdataorg;
+  if(isstring(pdataorg),pdata=parse(pdata));
   tmp=apply(pdata,Mvpt(#));
   Listplot("-m"+num,tmp,opt);
 );
@@ -5197,7 +5200,7 @@ Mvplotdata(num,fun,rng,op1):=Mvplotdata(num,fun,rng,op1,[]);
 Mvplotdata(num,fun,rng,op1,op2):=(
   //help:Mvplotdata("1","sin(x)","x",["Num=200"],["dr,2"]);
   Plotdata(num,fun,rng,append(op1,"nodisp"));
-  Mvdraw("gr"+num,op2);
+  Mvlist("gr"+num,op2); //220220
 );
 ////%Mvplotdata end////
 

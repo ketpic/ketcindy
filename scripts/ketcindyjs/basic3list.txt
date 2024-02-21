@@ -79,6 +79,7 @@ Rmpt,basic3,5151,5154
 Pt2sc,basic3,5157,5161
 Sc2pt,basic3,5164,5168,log
 Mvdraw,basic3,5171,5182,Pointdata,Mvpt,Listplot
-Mvlist,basic3,5186,5191,Mvpt,Listplot
-Mvplotdata,basic3,5195,5201,Plotdata,Mvdraw
-Mvdrwxy,basic3,5205,5219,Mvlist,Arrowhead,Expr,Letter,Mvpt
+Mvlist,basic3,5186,5213,Mvpt,Listplot
+Mvplotdata,basic3,5217,5229,Plotdata,Mvlist
+Mvcircledata,basic3,5233,5238,Circledata,Mvlist
+Mvdrwxy,basic3,5242,5256,Mvlist,Arrowhead,Expr,Letter,Mvpt

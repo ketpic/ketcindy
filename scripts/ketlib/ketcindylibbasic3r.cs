@@ -5233,6 +5233,11 @@ Mvplotdata(num,fun,rng,op):=(
 Mvcircledata(num,cirdata):=Mvcircledata(num,cirdata,[]);
 Mvcircledata(num,cirdata,op):=(
   //help:Mvcircledata("1",[C,r],[]);
+  regional(tmp1,tmp2,op1,op2);
+  tmp1=select(op,substring(#,0,1)=="N");
+  tmp2=select(op,substring(#,0,1)=="R");
+  op1=concat(tmp1,tmp2);
+  op2=remove(op,op1);
   Circledata(num,cirdata,["nodisp"]);
   Mvlist("cr"+num,"cr"+num,op2);
 );

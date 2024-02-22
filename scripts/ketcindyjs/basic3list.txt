@@ -81,5 +81,5 @@ Sc2pt,basic3,5164,5168,log
 Mvdraw,basic3,5171,5182,Pointdata,Mvpt,Listplot
 Mvlist,basic3,5186,5213,Mvpt,Listplot
 Mvplotdata,basic3,5217,5229,Plotdata,Mvlist
-Mvcircledata,basic3,5233,5238,Circledata,Mvlist
-Mvdrwxy,basic3,5242,5256,Mvlist,Arrowhead,Expr,Letter,Mvpt
+Mvcircledata,basic3,5233,5243,Circledata,Mvlist
+Mvdrwxy,basic3,5247,5261,Mvlist,Arrowhead,Expr,Letter,Mvpt

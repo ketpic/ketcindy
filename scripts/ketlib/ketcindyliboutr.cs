@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240220] loaded");
+println("ketcindylibout[2024026] loaded");
 
 //help:start();
 
@@ -2270,8 +2270,41 @@ CalcbyMset(var,ans,cmdL,oporg):=(
  ,
    println("CalcbyM failed");
  ); //240212to
+ flg;
 );
 ////%CalcbyMset end////
+
+////%CalcbyMsetdisp start////240226
+CalcbyMsetdisp(var,ans,cmdL,oporg):=(
+//help:CalcMsetdisp(var1,"ans1",cmdL1,[""]);
+//help:CalcMsetdisp(var1,"ans1",cmdL1,[[1,,0.5],""]);
+ regional(op,varL,bwL,flg,tmp,tmp1);
+//global Pos,Dy,Size
+//help:CalcMset(var1,"ans1",cmdL1,[""]);
+ op=oporg;
+ varL=Strsplit(var,"::");
+ bwL=[];
+ tmp=select(op,islist(#));
+ if(length(tmp)>0,
+   bwL=tmp_1;
+   op=remove(op,tmp);
+ );
+ flg=CalcbyMset(var,ans,cmdL,op);
+ if(flg==1,
+   forall(1..(length(varL)),
+     if(#<=length(bwL),
+       if(length(bwL_#)>0,
+          Disptex(varL_#,bwL_#);
+	   ,
+	      Disptex(varL_#);
+       );
+	 ,
+	   Disptex(varL_#);
+     );
+   );
+ );
+);
+////%CalcbyMsetdisp end////
 
 ////%Mxdata start////
 Mxdata(fname):=Mxdata(fname,"");

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20230705] loaded");
+println("ketcindylibbasic3[20240222] loaded");
 
 //help:start();
 
@@ -1205,7 +1205,7 @@ Usegraphics(gpack):=(
     if((indexof(PathT,"pdflatex")==0)&(indexof(PathT,"lualatex")==0),
       GPACKL_1="[dvipdfmx]{pict2e}";
     );
-    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}","{ketlayermorewith2e}"]);
+    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}"]);
   );
   if(tmp=="{TIKZ}",
     GPACKL=concat(GPACKL,["{pgf}","{tikz}"]);
@@ -1214,7 +1214,7 @@ Usegraphics(gpack):=(
     ,
       GPACKL=append(GPACKL,"{pict2e}");
     ); 
-    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}","{ketlayermorewith2e}"]);
+    GPACKL=concat(GPACKL,["{ketpic2e}","{ketlayer2e}"]);
   );
 );
 ////%Usegraphics end////
@@ -3196,10 +3196,10 @@ Convtrigpow(strorg):=(
 ////%Convtrigpow end
 
 ////%Totexform start////
-Totexform(str):=( //210803from[renew]
+Totexform(str):=( //231215
 //help:Totexform("fr(2,3)");
-  regional(plv,funL,repL,parL,out,head,flg,rep,fun,pre,post,ctr,clv,nn,
-      tmp,tmp1,tmp2,tmp3,tmp4);
+  regional(plv,funL,repL,parL,out,head,flg,rep,fun,pre,
+    post,ctr,clv,nn,tmp,tmp1,tmp2,tmp3,tmp4);
   tmp1="\displaystyle\int"; //210831from
   tmp2="\displaystyle\lim";
   tmp3="\displaystyle\sum"; //210831to
@@ -3208,7 +3208,7 @@ Totexform(str):=( //210803from[renew]
     ["_(",["_{xx}"]], //210831
     ["tx(",["\text{xx}"]], //210907
     ["tfr(",["","\frac{xx}{yy}"]], //210831,220523
-    ["fr(",["","\dfrac{xx}{yy}"]], //210228from
+    ["fr(",["","\displaystyle\frac{xx}{yy}"]], //210228from 231224
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["ln(",["\ln xx "]], //210903
     ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
@@ -3217,7 +3217,7 @@ Totexform(str):=( //210803from[renew]
     ["cos(",["\cos xx ","\cos^{xx}\! yy "]], //210405
     ["tan(",["\tan xx ","\tan^{xx}\! yy "]],  //210228to  //210405
     ["lim(", ["",tmp2+"_{xx \to yy} ",tmp2+"_{xx \to yy} zz"]], //210831from
-    ["int(", [tmp1+" ",tmp1+" xx dyy ",tmp1+" yy dzz ",tmp1+"_{xx}^{yy} zz dww "]],  //211027
+    ["int(", [tmp1+" ",tmp1+" xx yy ",tmp1+" yy zz ",tmp1+"_{xx}^{yy} zz ww "]],  //211027
     ["sum(", ["",tmp3+"_{xx}^{yy} ", tmp3+"_{xx}^{yy} zz"]], //210831to
     ["diff(", ["d ","\frac{dxx}{dyy}"]], //210913
     ["par(", ["\partial ","\frac{\partial xx}{\partial yy}"]] ,//210913
@@ -3225,6 +3225,27 @@ Totexform(str):=( //210803from[renew]
   ];
   parL=["log(","sin(","cos(","tan(","lim(","int(","sum("]; //210901
   out=replace(str,"pi","{\pi}"); //210805
+  out=replace(out,"frac(","fr(");//231227
+  out=replace(out,"sqrt(","sq(");//231215 from
+  tmp=indexof(out,")/(");
+  ctr=1;
+  while((tmp>0)&(ctr<20),
+    tmp1=substring(out,0,tmp);
+    tmp2=substring(out,tmp+1,length(out));
+    tmp=Bracket(tmp1);
+    tmp3=tmp_(-1)_2;
+    tmp=select(tmp,#_2==-tmp3);
+    tmp=tmp_(-1)_1;
+    tmp1=substring(tmp1,0,tmp-1)+"fr("+
+           substring(tmp1,tmp,length(tmp1)-1)+",";
+    tmp=Bracket(tmp2);
+    tmp=select(tmp,#_2==-1);
+    tmp=tmp_1_1;
+    tmp2=substring(tmp2,1,length(tmp2));
+    out=tmp1+tmp2;
+    tmp=indexof(out,")/(");
+    ctr=ctr+1;
+  );//231215 to
   head="";
   flg=0;
   plv=Bracket(out,"()");
@@ -3269,6 +3290,11 @@ Totexform(str):=( //210803from[renew]
        if(nn==2,
           tmp1=substring(out,plv_1_1,clv_1_1-1);
           tmp2=substring(out,clv_1_1,length(out)-1);
+		  if(indexof(out,"int(")>0, //231227from
+		    if((length(tmp2)>0)&(substring(tmp2,0,1)!="d"),
+			  tmp2="d"+tmp2;
+            );
+          ); //231227to
           if(contains(parL,fun), //210901from
             tmp2=Addpar(tmp2); //211029
           ); //210901to
@@ -3294,6 +3320,11 @@ Totexform(str):=( //210803from[renew]
             tmp3=Addpar(tmp3); //211029
           ); //210901to
           tmp4=substring(out,clv_3_1,length(out)-1);
+		  if(indexof(out,"int(")>0, //231227from
+		    if((length(tmp4)>0)&(substring(tmp4,0,1)!="d"),
+			  tmp4="d"+tmp4;
+            );
+          );//231227to
           tmp=replace(rep_2_4,"xx",tmp1);
           tmp=replace(tmp,"yy",tmp2);
           tmp=replace(tmp,"zz",tmp3);
@@ -5151,24 +5182,66 @@ Mvdraw(num,opt):=(
 );
 ////%Mvdraw end////
 
-////%Mvlist start////
-Mvlist(num,pdata):=Mvlist(num,pdata,[]);
-Mvlist(num,pdata,opt):=(
-  regional(tmp);
+////%Mvlist start//// 240222changed
+Mvlist(pdatastr):=Mvlist(pdatastr,pdatastr,[]);
+Mvlist(Arg1,Arg2):=(
+ regional(tmp);
+ if(islist(Arg2),
+   tmp=select(Arg2,isstring(#));
+   if(length(tmp)==0,
+     Mvlist(Arg1,Arg2,[]);
+   ,
+     Mvlist(Arg1,Arg1,Arg2);
+   );
+ ,
+   Mvlist(Arg1,Arg2,[]);
+ );
+);
+Mvlist(num,pdataorg,opt):=(
+//help:Mvlist(num,"cr1");
+  regional(name,pdata,tmp);
+  println(pdataorg);
+  pdata=pdataorg;
+  if(isstring(pdataorg),
+    name="m"+pdata;
+    pdata=parse(pdata);
+  ,
+    name="m"+num;
+  );
   tmp=apply(pdata,Mvpt(#));
-  Listplot("-m"+num,tmp,opt);
+  Listplot("-"+name,tmp,opt);
 );
 ////%Mvlist end////
 
 ////%Mvplotdata start////
-Mvplotdata(num,fun,rng):=Mvplotdata(num,fun,rng,[],[]);
-Mvplotdata(num,fun,rng,op1):=Mvplotdata(num,fun,rng,op1,[]);
-Mvplotdata(num,fun,rng,op1,op2):=(
-  //help:Mvplotdata("1","sin(x)","x",["Num=200"],["dr,2"]);
-  Plotdata(num,fun,rng,append(op1,"nodisp"));
-  Mvdraw("gr"+num,op2);
+Mvplotdata(num,fun,rng):=Mvplotdata(num,fun,rng,[]);
+Mvplotdata(num,fun,rng,op):=(
+  //help:Mvplotdata("1","sin(x)","x",["Num=200","dr,2"]);
+  regional(op1,op2,tmp1,tmp2,tmp3);
+  tmp1=select(op,substring(#,0,1)=="N");
+  tmp2=select(op,substring(#,0,1)=="E");
+  tmp3=select(op,substring(#,0,1)=="M");
+  op1=concat(tmp1,tmp2);
+  op1=concat(op1,tmp3);
+  op2=remove(op,op1);
+  Plotdata(num,fun,rng,concat(op2,["nodisp"]));
+  Mvlist("gr"+num,"gr"+num,op2);
 );
 ////%Mvplotdata end////
+
+////%Mvcircledata start//// 240222
+Mvcircledata(num,cirdata):=Mvcircledata(num,cirdata,[]);
+Mvcircledata(num,cirdata,op):=(
+  //help:Mvcircledata("1",[C,r],[]);
+  regional(tmp1,tmp2,op1,op2);
+  tmp1=select(op,substring(#,0,1)=="N");
+  tmp2=select(op,substring(#,0,1)=="R");
+  op1=concat(tmp1,tmp2);
+  op2=remove(op,op1);
+  Circledata(num,cirdata,["nodisp"]);
+  Mvlist("cr"+num,"cr"+num,op2);
+);
+////%Mvcircledata end////
 
 ////%Mvdrwxy start////
 Mvdrwxy():=(

@@ -1,3 +1,41 @@
+// 20240226
+//    CalcbyMsetdisp adde
+// 20240220
+//    Disptex,Dispe changed
+/// 20240213
+//    Mxdata added
+// 20240212
+//    CalcbyMset,ParsL added
+// 20240121
+//    CalcbyM dbg
+// 20240120
+//    Mxfun changed
+// 20240119
+//    CalcbyM dbg
+// 20240117
+//    CalcbyM changed (return making)
+// 20240116
+//    Mxcalc changed (for nesting par)
+// 20240110
+//    ExeccmdC dbg (wireparadata)
+// 20231229
+//    Dispexpr->Dispe, Disttex->Disptex (optional)
+//    Dispexpr,Disptexexpr dbg (vsp)
+// 2023126
+//    Vspace added
+// 2023122
+//    Dispexpr,Disptexexpr added
+// 20231217
+//    CalcbyM changed  ( str1,str2,... )
+// 20231213
+//    Mxaddvar changed to Mxsetvar
+//    Mxfactor added
+// 20231212
+//    Mxaddvar changed (start added)
+// 20231206
+//    Mxaddvar added
+// 20231204
+//    Mxbatch changed (specifying of dir is available)
 // 20230318
 //    ExeccmdC debugged  ( Arg=>Arg1 )
 //    Crv3onsfparadata debugged/changed (=Crvsfparadata) 

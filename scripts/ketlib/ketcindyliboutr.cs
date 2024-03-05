@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20230318] loaded");
+println("ketcindylibout[2024026] loaded");
 
 //help:start();
 
@@ -1979,14 +1979,30 @@ kcM(fname,optionorg):=(
 );
 ////%kcM end////
 
-////%CalcbyM start////
+////%CalcbyM start//// 231217
 CalcbyM(name,cmd):=CalcbyM(name,cmd,[]);
-CalcbyM(name,cmd,optionorg):=(
+CalcbyM(name,cmdorg,optionorg):=(
 //help:CalcbyM("a",cmdL);
 //help:CalcbyM(options1= ["m/r","Wait=5","Errchk=y(/n)","Dig=6","Pow=no","All=y"]);
 //help:CalcbyM(options2= ["line=1000"]);
-  regional(options,tmp,tmp0,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,allflg,indL,line,
-      dig,flg,wflg,file,nc,arg,add,powerd,cmdM,cmdlist,wfile,errchk,waiting,num,st);
+  regional(options,tmp,tmp0,tmp1,tmp2,tmp3,tmp4,realL,strL,eqL,
+      allflg,indL,line,dig,flg,wflg,file,nc,arg,add,powerd,
+      cmdM,cmd.cmdlist,wfile,errchk,waiting,num,st);
+  cmd=[]; //231217from
+  forall(1..(length(cmdorg)),
+    tmp1=cmdorg_#;
+    if(#<length(cmdorg),
+	    tmp2=cmdorg_(#+1);
+	  ,
+	    tmp2="";
+	  );
+    cmd=append(cmd,tmp1);
+    if(isstring(tmp1),
+      if(isstring(tmp2),
+        cmd=append(cmd,[]);
+      );
+    );
+  ); //231217to
   ErrFlag=0;
   options=optionorg;
   tmp=divoptions(options);
@@ -2150,7 +2166,7 @@ CalcbyM(name,cmd,optionorg):=(
       println(SCEOUTPUT,"");
       closefile(SCEOUTPUT);
     );
-    WritetoM(file+".max",cmdlist,allflg); // 2016.02.23
+    WritetoM(file+".max",cmdlist,allflg); // 20160223
     kcM(file,concat(options,["m"]));
   );
   flg=0;
@@ -2162,45 +2178,41 @@ CalcbyM(name,cmd,optionorg):=(
       ,
         tmp1=[];
       ); //201015to
-      if(wflg==1,wait(WaitUnit)); // 2016.02.23
+      if(wflg==1,wait(WaitUnit)); // 20160223
       if(length(tmp1)>0,
         tmp=select(tmp1,(indexof(#,"error")>0)%(indexof(#,"syntax")>0));
         if((length(tmp)>0)&(errchk=="Y"), //190411
           println("Some error(s) occurred"); //2016.02.24 from
           forall(1..length(tmp1),println(tmp1_#)); //2016.02.24 until
-          flg=2;  //2016.02.23
+          flg=2;  //20160223
         ,
-          tmp=select(1..(length(tmp1)),indexof(tmp1_#,"closefile()")>0); //200515from
-          if(length(tmp)>0,
-            tmp1=select(tmp1,length(#)>0);
-            tmp2=select(1..(length(tmp1)),indexof(tmp1_#,"disp(")>0);
-            tmp2=append(tmp2,length(tmp1));
-            tmp4=[];
-            forall(1..(length(tmp2)-1),tmp3,
+          tmp2=select(1..(length(tmp1)), //240117from
+                indexof(tmp1_#,"disp(")>0);
+		  if(length(tmp2)==0,
+		    tmp3=[]; //240120
+		  ,
+		    tmp=select(1..(length(tmp1)),
+			      indexof(tmp1_#,"closefile")>0);
+			tmp2=append(tmp2,tmp_1);
+		    tmp3=[]; //240120
+			forall(1..(length(tmp2)-1),nc,
+			  tmp="";
+			  forall((tmp2_(nc)+1)..(tmp2_(nc+1)-1),
+			    tmp=tmp+Removespace(tmp1_#);
+			  );
+			  tmp3=append(tmp3,tmp); //240120
+			);//240117to
+            tmp3=apply(tmp3,replace(#,".d+0","")); //240120
+            if(length(tmp3)==1,//240121from
+              parse(name+"="+Dqq(tmp3_1)+";");
+            ,
               tmp="";
-              forall((tmp2_tmp3+1)..(tmp2_(tmp3+1)-1),
-                tmp=tmp+tmp1_#;
+              forall(1..(length(tmp3)),
+                tmp=tmp+Dqq(tmp3_#)+",";
               );
-              tmp4=append(tmp4,tmp);
-            );
-            num="1234567890+-.";
-            tmp1="[";
-            forall(tmp4,st,
-              tmp=select(1..(length(st)),indexof(num,substring(st,#-1,#))==0);
-              if((length(tmp)==0) & (length(st)<4), // 16.05.10 16=>4
-                tmp1=tmp1+st+",";
-              ,
-                tmp1=tmp1+Dq+st+Dq+",";
-              );
-            );
-            tmp1=substring(tmp1,0,length(tmp1)-1)+"]";
-            tmp1=replace(tmp1,".d+0",""); // 15.11.23
-            parse(name+"="+tmp1+";"); //190415
-            tmp=parse(name);
-            if(length(tmp)==1,
-              tmp1=substring(tmp1,1,length(tmp1)-1);
-              parse(name+"="+tmp1+";"); //190415
-            );
+              tmp="["+substring(tmp,0,length(tmp)-1)+"]";
+              parse(name+"="+tmp+";");
+            ); //240121to
             flg=1;
             tmp2=#*WaitUnit/1000;
           );
@@ -2228,13 +2240,134 @@ CalcbyM(name,cmd,optionorg):=(
       );
     );
   ,
-    if(flg==1,  // 2016.02.23
+    if(flg==1,  // 20160223
       println("      CalcbyM succeeded "+name+" ("+text(tmp2)+" sec)");
     );
   );
   flg;
 );
 ////%CalcbyM end////
+
+////%CalcbyMset start////
+CalcbyMset(var,ans,cmdL):=
+ CalcbyMset(var,ans,cmdL,["Wait=10"]);
+CalcbyMset(var,ans,cmdL,oporg):=(
+//help:CalcMset(var1,"ans1",cmdL1,[""]);
+ regional(op,tmp,tmp1,flg,ctr);
+ op=oporg;
+ tmp=select(op,indexof(#,"W")>0);
+ if(length(tmp)==0,
+  op=append(op,"Wait=10");
+ );
+ ctr=1;
+ flg=-1;
+ while((flg<1)&(ctr<10), //240212from
+  flg=CalcbyM(ans,append(cmdL,var),op);
+  ctr=ctr+1;
+ );
+ if(flg==1,
+   Mxsetvar(var,parse(ans),"n");
+ ,
+   println("CalcbyM failed");
+ ); //240212to
+ flg;
+);
+////%CalcbyMset end////
+
+////%CalcbyMsetdisp start////240226
+CalcbyMsetdisp(var,ans,cmdL,oporg):=(
+//help:CalcMsetdisp(var1,"ans1",cmdL1,[""]);
+//help:CalcMsetdisp(var1,"ans1",cmdL1,[[1,,0.5],""]);
+ regional(op,varL,bwL,flg,tmp,tmp1);
+//global Pos,Dy,Size
+//help:CalcMset(var1,"ans1",cmdL1,[""]);
+ op=oporg;
+ varL=Strsplit(var,"::");
+ bwL=[];
+ tmp=select(op,islist(#));
+ if(length(tmp)>0,
+   bwL=tmp_1;
+   op=remove(op,tmp);
+ );
+ flg=CalcbyMset(var,ans,cmdL,op);
+ if(flg==1,
+   forall(1..(length(varL)),
+     if(#<=length(bwL),
+       if(length(bwL_#)>0,
+          Disptex(varL_#,bwL_#);
+	   ,
+	      Disptex(varL_#);
+       );
+	 ,
+	   Disptex(varL_#);
+     );
+   );
+ );
+);
+////%CalcbyMsetdisp end////
+
+////%Mxdata start////
+Mxdata(fname):=Mxdata(fname,"");
+Mxdata(fname,rmv):=
+    Mxdata(Dircdy+"/fig",fname,rmv);
+Mxdata(dir,fnameorg,rmv):=(
+ regional(var,fname,data,tmp,tmp1,tmp2,tmp3,nc,name);
+ fname=Cdyname()+fnameorg;
+ fname=replace(fname,rmv,"")+".txt";
+ var=[];
+ data=Readlines(dir,fname);
+ tmp2=select(1..(length(data)),
+         indexof(data_#,"disp(")>0);
+ var=[];
+ forall(1..(length(tmp2)),nc,
+   tmp=tmp2_nc;
+   tmp3=data_tmp;
+   tmp=indexof(tmp3,"disp(");
+   tmp3=substring(tmp3,tmp,length(tmp3));
+   tmp=indexof(tmp3,"(");
+   tmp3=substring(tmp3,tmp,length(tmp3)-1);
+   var=append(var,tmp3);
+ );
+ tmp=select(1..(length(data)),
+			   indexof(data_#,"closefile")>0);
+ tmp2=append(tmp2,tmp_1);
+ tmp3=[];
+ forall(1..(length(tmp2)-1),nc,
+   tmp="";
+   forall((tmp2_(nc)+1)..(tmp2_(nc+1)-1),
+     tmp=tmp+Removespace(data_#);
+   );
+   tmp3=append(tmp3,tmp);
+ );
+ tmp3=apply(tmp3,replace(#,".d+0",""));
+ forall(1..(length(var)),nc,
+   tmp1=var_nc;
+   tmp2=Dqq(tmp3_nc);
+   parse(tmp1+"="+tmp2+";");
+ );
+ tmp=var;
+ var="";
+ forall(tmp,
+  var=var+#+"::";
+ );
+ var=substring(var,0,length(var)-2);
+ var;
+);
+////%Mxdata end////
+
+////%Parsel start////
+ParseL(strL):=(
+//help:ParseL(strlist);
+ regional(sL,out,tmp);
+ sL=strL;
+ out=[];
+ forall(sL,
+   tmp=#;
+   if(isstring(tmp),tmp=parse(tmp));
+   out=append(out,tmp);
+ );
+);
+////%Parsel end////
 
 ////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);
@@ -2293,16 +2426,16 @@ Mxfun(name,fun,argL,optionorg):=(
   );
   cmdL=concat(cmdL,[
     "ans"+":"+fun,tmp,
-    "ans",[]
+    "ans"
   ]);
   CalcbyM(nm,cmdL,options);
   if(ErrFlag==0,
-    if(disp==1, // 15.11.24
+    if(disp==1, //240120from
       println(nm+" is : ");
       println(parse(nm));
-    );
+    ); //240120to
   );
-  parse(nm);
+  nm; //240120to
 );
 ////%Mxfun end////
 
@@ -2385,12 +2518,16 @@ MxtexL(nm,exlist,options):=(
   apply(out,println(#));
   out;
 );
+////%MxtexL end////
 
-Mxbatch(file):=(
+////%Mxbatch start////  //20231204
+Mxbatch(file):=Mxbatch(Dirlib+"/maximaL/",file);
+Mxbatch(dir,file):=(
 //help:Mxbatch(["matoperation.max"]);
+//help:Mxbatch(Dircdy,["matoperation.max"]);
   regional(figL,out,path,tmp,tmp1,tmp2);
   if(!islist(file),figL=[file],figL=file);
-  path=replace(Dirlib+"/maximaL/","\","/");
+  path=replace(dir,"\","/");
   out=[];
   forall(figL,
     if(indexof(#,".")==0,tmp1=#+".max",tmp1=#);
@@ -2400,7 +2537,147 @@ Mxbatch(file):=(
   );
   out;
 );
-////%MxtexL end////
+////%Mxbatch end////
+
+////%Mxsetvar start//// 231212
+Mxsetvar(var,ansorg):=Mxsetvar(var,ansorg,"p");
+Mxsetvar(var,ansorg,parflg):=(
+//help:Mxsetvar("A::B",ans);
+//help:Mxsetvar(["p1","p2"],ans,"p");
+//help:Mxsetvar(["eq1","eq2"],ans,"n");
+ regional(tmp,vst,ans);
+ vst=var;
+ if(isstring(var),
+   tmp=Strsplit(var,"::");
+   vst=apply(tmp,#);
+ );
+ ans=ansorg;
+ if(!islist(ans),ans=[ans]);
+ forall(1..(length(vst)),
+   if(contains(["p","1"],parflg),
+     tmp=vst_#+"="+ans_#+";";
+   ,
+     tmp=vst_#+"="+Dqq(ans_#)+";";
+   );
+   parse(tmp);
+ );
+);
+////%Mxsetvar end////
+
+////%Mxfactor start////
+Mxfactor(str,norg):=(
+//help:Mxfactor("(a+b)*(c+d)",-1);
+  regional(n,tmp,tmp1,tmp,out);
+  out=str;
+  n=norg;
+  tmp=Bracket(str);
+  tmp1=select(tmp,#_2>0); //240116
+  if(length(tmp1)>0,
+    if(n<0,n=length(tmp1)-(-n-1)); //240116from
+    tmp1=tmp1_n;
+    tmp2=select(tmp,(#_1>tmp1_1)&(#_2==-tmp1_2));
+   tmp1=tmp1_1; //240116to
+    tmp2=tmp2_1_1;
+    out=substring(str,tmp1,tmp2-1);
+  );
+  out;
+);
+////%Mxfactor end////
+
+////%Dispexpr start//// 240220
+Dispe(name):=Dispexpr(0,name,0,[]);
+Dispe(Arg1,Arg2):=(
+  if(isstring(Arg1),
+    if(islist(Arg2),
+	  Dispexpr(0,Arg1,0,Arg2);
+	,
+      Dispexpr(0,Arg1,Arg2,[]);
+	);
+  ,
+    Dispexpr(Arg1,Arg2,0,[]);
+  );
+);
+Dispe(Arg1,Arg2,Arg3):=(
+  if(isstring(Arg1),
+    Dispexpr(0,Arg1,Arg2,Arg3);
+  ,
+    if(islist(Arg3),
+      Dispexpr(Arg1,Arg2,0,Arg3);
+	,
+	  Dispexpr(Arg1,Arg2,Arg3,[]);
+	);
+  );
+);  
+Dispexpr(lineorg,name,vsp,op):=(
+//help:Dispexpr("pA");
+//help:Dispexpr(3,"pA");
+//help:Dispexpr(0,"pA",["Size=1.2"]);
+//help:Dispexpr(0,"pA",0.5);
+ regional(line,tmp);
+// global Pos, Dy
+ line=lineorg;
+ if(line==0,line="");
+ tmp=parse(name);
+ if(!isstring(tmp),tmp=format(tmp,12));
+ if(isreal(line),
+   Expr(Pos,"e",line+"\;\;"+name+"="+tmp,op);
+ ,
+   Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+ );
+ Pos_2=Pos_2-vsp-Dy;
+);
+////%Dispexpr end////
+
+////%Disptexexpr start//// 231222
+Disptex(name):=Disptexexpr(0,name,0,[]);
+Disptex(Arg1,Arg2):=(
+  if(isstring(Arg1),
+    if(islist(Arg2),
+	  Disptexexpr(0,Arg1,0,Arg2);
+	,
+      Disptexexpr(0,Arg1,Arg2,[]);
+	);
+  ,
+    Disptexexpr(Arg1,Arg2,0,[]);
+  );
+);
+Disptex(Arg1,Arg2,Arg3):=(
+  if(isstring(Arg1),
+    Disptexexpr(0,Arg1,Arg2,Arg3);
+  ,
+    if(islist(Arg3),
+      Disptexexpr(Arg1,Arg2,0,Arg3);
+	,
+	  Disptexexpr(Arg1,Arg2,Arg3,[]);
+	);
+  );
+);  
+Disptexexpr(lineorg,name,vsp,op):=(
+//help:Disptexexpr(0,"pA");
+//help:Disptexexpr(3,"pA");
+//help:Disptexexpr("","pA",["Size=1.2"]);
+//help:Disptexexpr("","pA",0.5);
+ regional(line,tmp);
+// global Pos, Dy
+ line=lineorg;
+ if(line==0,line="");
+ tmp=Totexform(parse(name));
+ if(!isstring(tmp),tmp=format(tmp,12));
+ if(isreal(line),
+   Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+ ,
+   Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+ );
+ Pos_2=Pos_2-vsp-Dy;
+);
+////%Disptexexpr end////
+
+////%Vspace start//// 231226
+Vspace(dy):=(
+  //global Pos
+  Pos_2=Pos_2-dy;
+);
+////%Vspace end//// 231226
 
 ////%Mxload start////
 Mxload(file):=( //17.06.16

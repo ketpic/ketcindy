@@ -3873,7 +3873,8 @@ KoutenList<- function(PA,V,Bdy)
     for (K in Looprange(1, Nrow(KL)-1))
     {
       P<- Op(K,KL); Q<- Op(K+1,KL)
-      if(P!="/" && Q!="/")
+#      if((P!="/") && (Q!="/"))
+       if((length(P)==2)&&(length(Q)==2))      
       {
         Tmp<- Kouten(PA,V,P,Q);
         if(Tmp[[1]]!=Inf)

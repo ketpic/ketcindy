@@ -1,16 +1,18 @@
 \documentclass[papersize,a4paper,12pt]{article}
-\usepackage{ketpic,ketlayer}
+\usepackage{ketpic2e,ketlayer2e}% kubo231111
 \usepackage{amsmath}
 % \usepackage{amsmath,newtxmath}
 %\usepackage[dvipdfmx]{graphicx,color}
 \usepackage{graphicx,color}
 \usepackage{wrapfig}
-%\usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
-\usepackage[bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+%\usepackage[bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
 \setmargin{20}{20}{15}{25}
 \usepackage{setspace}
 \usepackage{comment}
 \usepackage{bm,enumerate}
+\usepackage[dvipdfmx]{pict2e}% kubo231115
+
 
 \newcommand{\bs}{$\backslash$}
 
@@ -144,14 +146,14 @@ It displays ``\ketcalcwh{abc}''.
 \begin{cmd}{\bs dangerbendmark}{dangerbendmark}
 \itemket{Usage}\verb|\dangerbendmark[size]|
 \itemket{Description}This function displays the symbol ``Dangerous turning point'' of Bulbaki.
-\itemket{Examples} \verb|\dangerbendmark[1.2]| --->\ \ \dangerbendmark[1.2]
+\itemket{Examples} \verb|\dangerbendmark[1.2]| ---$>$\ \ \dangerbendmark[1.2]
 \end{cmd}
 
 %------------ cautionmark ------------
 \begin{cmd}{\bs cautionmark}{cautionmark}
 \itemket{Usage}\verb|\cautionmark[size]|
 \itemket{Description}This function displays the caution mark.
-\itemket{Examples} \verb|\caoutionmark[1.2]| --->\ \ \cautionmark[1.2]
+\itemket{Examples} \verb|\cautionmark[1.2]| ---$>$\ \ \cautionmark[1.2]
 \end{cmd}
 
 %------------ circlemark ------------
@@ -159,14 +161,15 @@ It displays ``\ketcalcwh{abc}''.
 \itemket{Usage}\verb|\circlemark[thickness]{size}|
 \itemket{Description}This function displays the circle.
 If size=1, the diameter of the circle is 4mm.
-\itemket{Examples} \verb|\circlemark[8]{1.2}| --->\ \ \circlemark[8]{1.2}
+\itemket{Examples} \verb|\circlemark[8]{1.2}| ---$>\ $\ \ \circlemark[8]{1.2}
 \end{cmd}
 
 %------------ circleshade ------------
 \begin{cmd}{\bs circleshade}{circleshade}
 \itemket{Usage}\verb|\circleshade[thickness]{size}{density}|
 \itemket{Description}This function displays the solid circle.
-\itemket{Examples} \verb|\circleshade[8]{1.2}{0.3}| --->\ \ \circleshade[8]{1.2}{0.3}
+If size=1, the diameter of the circle is 4mm.
+\itemket{Examples} \verb|\circleshade[8]{1.2}{0.7}| ---$>\ $\ \ \circleshade[8]{1.2}{0.7}
 \end{cmd}
 
 %------------ arrow of increase or decrease ------------
@@ -266,7 +269,7 @@ If F=0, they don't draw border lines. By default, F=0.
  \dashboxframese{035}{0}{30}{16}{dashboxframe}
 \jaggyboxframese{070}{0}{30}{16}{jaggyboxframe}
   \diaboxframese{105}{0}{30}{16}{diaboxframe}
-  \shadeboxse[0]{140}{0}{30}{16}{yellow}{black}
+  \shadeboxse[1]{140}{0}{30}{16}{yellow}{red}
 \end{layer}
 
 \vspace{15mm}
@@ -295,7 +298,7 @@ If F=0, they don't draw border lines. By default, F=0.
 \end{cmd}
 
 %-------------example 2-------------------------------
-\vspace{15mm}
+\vspace{10mm}
 \noindent{\bf Examples.}\par
 \verb|\definecolor{shade}{cmyk}{0,0,0,0.4}| $\gets$ color name ``shade'' defined.\par
 \verb|\popframe[16]{40}{5}{white}{shade}{white}{cyan}{red}{\Large\tt POP frame}| \par
@@ -335,39 +338,44 @@ If F=0, they don't draw border lines. By default, F=0.
 \end{cmd}
 
 \begin{layer}{170}{0}
-\putnotec{30}{25}{\cirscoremark{0.8}}
-\putnotec{60}{25}{\scirscoremark{0.8}}
-\putnotec{90}{25}{\triscoremark{0.8}}
-\putnotec{120}{25}{\crosscoremark{0.8}}
+\putnotec{30}{15}{\cirscoremark{0.8}}
+\putnotec{60}{15}{\scirscoremark{0.8}}
+\putnotec{90}{15}{\triscoremark{0.8}}
+\putnotec{120}{15}{\crosscoremark{0.8}}
 \end{layer}
 
-\vspace{45mm}
+\vspace{30mm}
 
 %-------------lineseg-------------------------------
-\begin{cmd}{\bs lineseg}{lineseg}
+\begin{cmd}{\bs lineseg, \bs dashlineseg}{lineseg}
 \itemket{Usage}\verb|\lineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
-\itemket{Description}This function draws a line segment of length L from the coordinates (x, y) in the direction of $\theta^\circ$ degrees. 
+\itemket{}\verb|\dashlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
+\itemket{Description}The function \verb|\lineseg| draws a line segment of length L from the coordinates (x, y) in the direction of $\theta^\circ$ degrees. 
+The function \verb|\dashlineseg| draws a dash line segment of length L from the coordinates (x, y) in the direction of $\theta^\circ$ degrees. 
 \itemket{Details}Unit of length L is mm.\par
 \Ltab{18.5mm}{}The line thickness is 12 by default. Unit is milli inch\par
 \Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
-\itemket{Example}\verb|\lineseg[16]{135}{25}{30}{25}|
+\itemket{Example}\verb|\lineseg[16]{60}{15}{30}{25}|\vspace{-2mm}
+\itemket{}\verb|\dashlineseg[16]{80}{15}{30}{25}|
 
 \begin{layer}{160}{0}
-\lineseg[16]{60}{20}{30}{25}
+\lineseg[16]{60}{15}{30}{25}
+\dashlineseg[12]{80}{15}{30}{25}
 %\arrowlineseg[16]{130}{50}{10}{45}
 \end{layer}
 
-\vspace{25mm}
+\vspace{20mm}
 \end{cmd}
-%-------------dashlineseg-------------------------------
-\begin{cmd}{\bs dashlineseg}{dashlineseg}
-\itemket{Usage}\verb|\dashlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
-\itemket{Description}This function draws a dash line segment of length L from the coordinates \text{(x, y)} in the direction of $\theta^\circ$ degrees. 
-\itemket{Details}Unit of length L is mm.\par
-\Ltab{18.5mm}{}The line thickness is 12 by default. Unit is milli inch\par
-\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
 
-\end{cmd}
+%%-------------dashlineseg-------------------------------
+%\begin{cmd}{\bs dashlineseg}{dashlineseg}
+%\itemket{Usage}\verb|\dashlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
+%\itemket{Description}This function draws a dash line segment of length L from the coordinates \text{(x, y)} in the direction of $\theta^\circ$ degrees. 
+%\itemket{Details}Unit of length L is mm.\par
+%\Ltab{18.5mm}{}The line thickness is 12 by default. Unit is milli inch\par
+%\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
+%
+%\end{cmd}
 %-------------arrowlineseg-------------------------------
 \begin{cmd}{\bs arrowlineseg}{arrowlineseg}
 \itemket{Usage}\verb|\arrowlineseg[thickness]{x}{y}{L}{|{$\theta$}\verb|}|
@@ -379,10 +387,10 @@ If F=0, they don't draw border lines. By default, F=0.
 
 \begin{layer}{160}{0}
 %\lineseg[16]{60}{20}{30}{25}
-\arrowlineseg[16]{60}{15}{10}{45}
+\arrowlineseg[16]{60}{10}{10}{45}
 \end{layer}
 
-\vspace{20mm}
+\vspace{10mm}
 \end{cmd}
 
 %-------------arrowhead-------------------------------
@@ -391,6 +399,27 @@ If F=0, they don't draw border lines. By default, F=0.
 \itemket{Description}This function draws a arrowhead on the coordinates (x, y) in the direction of $\theta^\circ$ degrees. 
 \itemket{Details}The line thickness is 12 by default. Unit is milli inch.\par
 \Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
+\end{cmd}
+
+%-------------qarrowline-------------------------------
+\begin{cmd}{\bs qarrowline, \bs qarrowlinesize}{qarrowline}
+\itemket{Usage}\verb|\qarrowline[thickness]{x}{y}{L}{|{$\theta$}\verb|}{ctr}|\\
+\Ltab{18.5mm}{{\tt\bs qarrowlinesize[thickness]\br{x}\br{y}\br{L}\br{$\theta$}\br{ctr}\br{size}}}
+\itemket{Description}The function {\tt \bs qarrowline} draws a bended arrow.
+The function {\bs qarrowlinesize} has an argument for the size of the arrow. 
+(both are for pict2e). \\% kubo231115
+%\Chuu 鏃は始点(x, y)に描く. \\
+%\Chuu 線の太さ (thickness)のデフォルトは 12 (単位は milli inch).\\
+%\Chuu x, y, $\theta$ は小数でもよい.
+\itemket{Example}\verb|\qarrowline[16]{60}{20}{10}{45}{30}|
+
+\vspace*{-5mm}
+\begin{layer}{160}{0}
+%\lineseg[16]{60}{20}{30}{25}
+\qarrowline[16]{60}{20}{10}{45}{30}
+\end{layer}
+
+\vspace{20mm}
 \end{cmd}
 
 %-------------hjaggyline-------------------------------
@@ -421,37 +450,40 @@ If F=0, they don't draw border lines. By default, F=0.
 
 %-------------example 3-------------------------------
 \noindent{\bf Examples.}\par
-\Ltab{18.5mm}{}\verb|\hjaggyline{40}{10}{15}| \par
-\Ltab{18.5mm}{}\verb|\hjaggylineb{40}{20}{15}| \par
-\Ltab{18.5mm}{}\verb|\vjaggyline{70}{10}{15}| \par
-\Ltab{18.5mm}{}\verb|\vjaggylineb{90}{10}{15}| \par
 
 \begin{layer}{160}{0}
- \hjaggyline{40}{10}{15}
-\hjaggylineb{40}{20}{15}
- \vjaggyline{70}{10}{15}
-\vjaggylineb{90}{10}{15}
+ \hjaggyline[6]{90}{5}{15}
+\hjaggylineb{90}{15}{15}
+ \vjaggyline{120}{5}{15}
+\vjaggylineb{140}{5}{15}
 \end{layer}
 
-\vspace{35mm}
+\Ltab{18.5mm}{}\verb|\hjaggyline[6]{90}{10}{15}| \par
+\Ltab{18.5mm}{}\verb|\hjaggylineb{90}{20}{15}| \par
+\Ltab{18.5mm}{}\verb|\vjaggyline{120}{10}{15}| \par
+\Ltab{18.5mm}{}\verb|\vjaggylineb{140}{10}{15}| \par
+
+\vspace{5mm}
 
 %-------------circleline-------------------------------
 \begin{cmd}{\bs circleline}{circleline}
 \itemket{Usage}\verb|\circleline{x}{y}{size}|
 \itemket{Description}This function draws a circle with (x, y) as the center.
+If size=1, the diameter of the circle is 4mm.
 \end{cmd}
 
 %-------------ballonr-------------------------------
-\begin{cmd}{\bs ballonr}{ballonr}
+\begin{cmd}{\bs ballonr, \bs ballonl}{ballonr}
 \itemket{Usage}\verb|\ballonr[thickness]{x}{y}{size}{Char}|
-\itemket{Description}This function draws a balloon in the upper right side from (x, y) and, puts Char inside.
+\itemket{Description}The function \verb|\ballonr| draws a balloon in the upper right side from \mbox{(x, y)} and, puts Char inside.
+The function \verb|\ballonl| draws a balloon in the upper left side from \mbox{(x, y)} and, puts Char inside.
 \end{cmd}
 
-%-------------ballonl-------------------------------
-\begin{cmd}{\bs ballonl}{ballonl}
-\itemket{Usage}\verb|\ballonl[thickness]{x}{y}{size}{Char}|
-\itemket{Description}This function draws a balloon in the upper left side from (x, y) and, puts Char inside.
-\end{cmd}
+%%-------------ballonl-------------------------------
+%\begin{cmd}{\bs ballonl}{ballonl}
+%\itemket{Usage}\verb|\ballonl[thickness]{x}{y}{size}{Char}|
+%\itemket{Description}This function draws a balloon in the upper left side from (x, y) and, puts Char inside.
+%\end{cmd}
 
 %-------------lefthand-------------------------------
 \begin{cmd}{\bs lefthand}{lefthand}
@@ -530,15 +562,17 @@ If F=0, they don't draw border lines. By default, F=0.
 \hyperlink{triscoremark}{\bs triscoremark} \> draws a handwritten triangle\\
 \hyperlink{crosscoremark}{\bs crosscoremark} \> draws a handwritten cross mark\\
 \hyperlink{lineseg}{\bs lineseg} \> draws a line segment specified angle\\
-\hyperlink{dashlineseg}{\bs dashlineseg} \> draws a dashed line segment specified angle\\
+\hyperlink{lineseg}{\bs dashlineseg} \> draws a dashed line segment specified angle\\
 \hyperlink{arrowlineseg}{\bs arrowlineseg} \> draws a arrow line segment specified angle\\
 \hyperlink{arrowhead}{\bs arrowhead} \> draws a arrowhead specified angle\\
+\hyperlink{qarrowline}{\bs qarrowline} \> draws a arrow curve specified angle\\
+\hyperlink{qarrowline}{\bs qarrowlinesize} \> draws a arrow curve specified size the arrowhead\\
 \hyperlink{hjaggyline}{\bs hjaggyline} \> draws a horizontal jaggy line segment\\
 \hyperlink{hjaggylineb}{\bs hjaggylineb} \> draws a horizontal jaggy line segment against \bs hjaggyline\\
 \hyperlink{vjaggyline}{\bs vjaggyline} \> draws a vertical jaggy line segment\\
 \hyperlink{vjaggylineb}{\bs vjaggylineb} \> draws a vertical jaggy line segment against \bs vjaggyline\\
 \hyperlink{circleline}{\bs circleline} \> draws a circle\\
-\hyperlink{ballonl}{\bs ballonl} \> draws a ballon and puts strings inside\\
+\hyperlink{ballonr}{\bs ballonl} \> draws a ballon and puts strings inside\\
 \hyperlink{ballonr}{\bs ballonr} \> draws a ballon and puts strings inside\\
 %\hyperlink{lefthand}{\bs lefthand} \> draws a leftward fingertip\\
 %\hyperlink{righthand}{\bs righthand} \> draws rightward fingertip\\

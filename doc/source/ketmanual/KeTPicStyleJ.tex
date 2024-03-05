@@ -1,6 +1,7 @@
 \documentclass[a4j,12pt,dvipdfmx]{ujarticle}
 %\documentclass[papersize,a4paper,12pt]{article}
-\usepackage{ketpic,ketlayer}
+%\usepackage{ketpic,ketlayer}
+\usepackage{ketpic2e,ketlayer2e}% kubo231111
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx,color}
 \usepackage{wrapfig}
@@ -10,6 +11,7 @@
 \usepackage{setspace}
 \usepackage{comment}
 \usepackage{bm,enumerate}
+\usepackage[dvipdfmx]{pict2e}% kubo231109
 
 \newcommand{\tab}[2][50mm]{% % \tabの定義でzwを㎜に変換した。
 \noindent
@@ -67,7 +69,6 @@
 \item \verb|\usepackage{graphicx,color}| が必要.
 \item 距離変数 \bs\verb|Width|, \bs\verb|Height|,\ \bs\verb|Depth| を定義してある.
 \item 10個の一時カウンタ \verb|ketpictctra|,\ $\cdots$,\ \verb|ketpicctrj| を定義してある.
-
 \end{itemize}
 
 \section{プリアンブル用マクロ(ketpic)}
@@ -82,27 +83,33 @@
 %========= Envilonment =====================
 %\setcounter{subsection}{-1}
 
-\subsection{方向指定}
+%\subsection{方向指定}
+%
+%ketpic,ketlayer,\ketcindy では，方向を指定するのに，東西南北の頭文字 e,w,s,n を用いることがよくある．なお，中心は c．
+%
+%\hspace{60mm} n
+%
+%\hspace{50.5mm} w\hspace{5mm}  c\hspace{5mm}  e
+%
+%\hspace{60mm} s
+%
+%
+%さらに，これを組み合わせて en または en は北東すなわち右上 などとなる．
+%
+%本マニュアルでは，これらの方向を "\verb|dir|'' として表し，c,e,w,s,n が使えることを示す．
+%
+%たとえば，"\verb|putnote+dir|'' は，"\verb|putnotec|'', "\verb|putnotee|'' などとして，方向指定を合わせて使うことを意味する．
 
-ketpic,ketlayer,\ketcindy では，方向を指定するのに，東西南北の頭文字 e,w,s,n を用いることがよくある．なお，中心は c．
-
-\hspace{60mm} n
-
-\hspace{50.5mm} w\hspace{5mm}  c\hspace{5mm}  e
-
-\hspace{60mm} s
-
-
-さらに，これを組み合わせて en または en は北東すなわち右上 などとなる．
-
-本マニュアルでは，これらの方向を "\verb|dir|'' として表し，c,e,w,s,n が使えることを示す．
-
-たとえば，"\verb|putnote+dir|'' は，"\verb|putnotec|'', "\verb|putnotee|'' などとして，方向私邸を合わせて使うことを意味する．
+%\vspace{-10mm}
+%\begin{cmd}{}{}
+%\item[注意]以下に紹介するマクロには，pic2eに非対応のマクロがある．（\quad）で示す。
+%\end{cmd}
 
 
 %=-=-=-=-= Macros of ketpic =-=-=-=-=
 \subsection{ketpicのマクロ}
 ketpic のマクロは，通常の\TeX\ コマンドと同様に使用する.
+\newpage
 
 %------------ ketpic ------------
 \vspace{\baselineskip}
@@ -124,13 +131,13 @@ ketpic のマクロは，通常の\TeX\ コマンドと同様に使用する.
 \Ltab{50mm}{{\tt \bs Ltab\br{W}\br{S}}}{}幅Wを確保してSを左寄せで書く.\\
 \tab{{\tt \bs Rtab\br{W}\br{S}}}{}幅Wを確保してSを右寄せで書く.\\
 \tab{{\tt \bs Ctab\br{W}\br{S}}}{}幅Wを確保してSを中央寄せで書く.
-\itemketj{例}
-\Ltab{30mm}{text}text2
-
-\Rtab{30mm}{text}text2
-
-\Ctab{30mm}{text}text2
-
+%\itemketj{例}
+%\Ltab{30mm}{text}text2
+%
+%\Rtab{30mm}{text}text2
+%
+%\Ctab{30mm}{text}text2
+%
 \end{cmd}
 
 %------------ ketcalc ------------
@@ -166,14 +173,18 @@ ketpic のマクロは，通常の\TeX\ コマンドと同様に使用する.
 %------------ circlemark ------------
 \begin{cmd}{\bs circlemark}{circlemark}
 \itemketj{使用法}\verb|\circlemark[thickness]{size}|
-\itemketj{説明}円を出力する. size=1のとき, 円の直径は4mm.
+\itemketj{説明}円を出力する．size=1のとき, 円の直径は4mm.
+\itemketj{例} \verb|\circlemark[8]{1.2}| で ``\makebox[8mm]{\circlemark{1.2}}'' が出力される.\\
+\Chuu 線の太さ(thickness)のデフォルトは12とする.
+%(pict2e非対応)% kubo231109
 \end{cmd}
 
 %------------ circleshade ------------
 \begin{cmd}{\bs circleshade}{circleshade}
 \itemketj{使用法}\verb|\circleshade[thickness]{size}{density}|
 \itemketj{説明}中塗りの円を出力する. 中塗りの濃さをdensity で指定する.
-\itemketj{例} \verb|\circleshade[8]{1.2}{0.3}| で \circleshade[8]{1.2}{0.3} が出力される.
+\itemketj{例} \verb|\circleshade[8]{1.2}{0.7}| で ``\makebox[8mm]{\circleshade[8]{1.2}{0.7}}'' が出力される.
+%(pict2e非対応)% kubo231109
 \end{cmd}
 
 %------------ arrow of increase or decrease ------------
@@ -198,7 +209,24 @@ ketpic のマクロは，通常の\TeX\ コマンドと同様に使用する.
 
 %=-=-=-=-= Macros of ketlayer =-=-=-=-=
 \subsection{ketlayerのマクロ}
-ketlayer のマクロは，layer環境の中で使用する.\\
+ketlayer のマクロは，layer環境の中で使用する．%\\
+%
+%\subsection{方向指定}
+%
+ketpic, ketlayer, \ketcindy では，方向を指定するのに，東西南北の頭文字 e,w,s,n を用いることがよくある．なお，中心は c．
+
+\hspace{60mm} n
+
+\hspace{50.5mm} w\hspace{5mm}  c\hspace{5mm}  e
+
+\hspace{60mm} s
+
+
+さらに，これを組み合わせて en または en は北東すなわち右上 などとなる．
+
+本マニュアルでは，これらの方向を "\verb|dir|'' として表し，c,e,w,s,n が使えることを示す．
+
+たとえば，"\verb|putnote+dir|'' は，"\verb|putnotec|'', "\verb|putnotee|'' などとして，方向指定を合わせて使うことを意味する．
 
 %%==========layer環境==========
 %\subsection*{layer環境}
@@ -226,7 +254,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 
 \vspace{35mm}
 
-\item[注意]対象物の配置が決まれば，\verb|\begin{layer}{120}{0}|とすることで方眼が消えて思い通りの配置が得られる.
+\item[注意]対象物の配置が決まれば，\verb|\begin{layer}{120}{0}|とすることで方眼が消えて思い通りの配置が得られる．
 \end{cmd}
 
 %-------------putnote+dir-------------------------------
@@ -289,6 +317,8 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \itemketj{説明}(x, y) の dir 方向に，矩形を描き，内部を色C1で塗る.\\
 \Chuu F=1 なら枠線を色C2で描く (デフォルトは F=0 : 枠線を描かない).
 
+%\qquad(pict2e非対応)% kubo231109
+
 \vspace{\baselineskip}
 以下に，\verb|boxframe|系のコマンドを例示する．\\
 \verb|    \begin{layer}{160}{0}|\\
@@ -296,7 +326,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \verb|    \dashboxframese{035}{0}{30}{16}{dashboxframe}|\\
 \verb|    \jaggyboxframese{070}{0}{30}{16}{jaggyboxframe}|\\
 \verb|    \diaboxframese{105}{0}{30}{16}{diaboxframe}|\\
-\verb|    \shadeboxse[0]{140}{0}{30}{16}{yellow}{black}|\\
+\verb|    \shadeboxse[1]{140}{0}{30}{16}{yellow}{red}|\\
 \verb|    \end{layer}|
 
 \vspace{\baselineskip}
@@ -305,7 +335,8 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \dashboxframese{035}{0}{30}{16}{dashboxframe}
 \jaggyboxframese{070}{0}{30}{16}{jaggyboxframe}
 \diaboxframese{105}{0}{30}{16}{diaboxframe}
-\shadeboxse[0]{140}{0}{30}{16}{yellow}{black}
+\shadeboxse[1]{140}{0}{30}{16}{yellow}{red}
+%\eraserse[0]{143}{3}{10}{17}
 \end{layer}
 
 \vspace{15mm}
@@ -314,6 +345,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \begin{cmd}{\bs popframe}{popframe}
 \itemketj{使用法}\verb|\popframe[thickness]{x}{y}{ダミー色}{色s}{ダミー色}{色p}{色f}{文字列}|
 \itemketj{説明}(x, y) の 右下(se方向)に，文字入りの矩形を描き，色sの陰を付ける. \\
+%\qquad(pict2e非対応)\\% kubo231109
 \Chuu 色p：背景色，色f：枠の色.
 (ダミー色には適当な色を入れる)\\
 %% Ds, Dp は空白でもよい。
@@ -334,8 +366,9 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \Chuu 文字列は，幅$\leqq$ 200mm, 高さ$\leqq$ 100mm とすること.\\
 
 \itemketj{例}色 "shade'' を定義しておく．
+%
+( \verb|\definecolor{shade}{cmyk}{0,0,0,0.4}| )%$\gets$ 色``shade'' を定義.\par
 
-%\verb|\definecolor{shade}{cmyk}{0,0,0,0.4}| $\gets$ 色``shade'' を定義.\par
 \verb|\popframe[16]{40}{5}{white}{shade}{white}{cyan}{red}{\Large\tt POP frame}| \par
 \verb|\colorframe[16]{90}{5}{yellow}{white}{blue}{\Large\tt COLOR frame}| \\
 
@@ -347,7 +380,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 %\colorframe[16]{90}{5}{yellow}{}{blue}{\Large\tt COLOR frame}
 \end{layer}
 
-\vspace{25mm}
+\vspace{10mm}
 \end{cmd}
 
 %-------------cirscoremark-------------------------------
@@ -383,7 +416,7 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \putnotec{120}{15}{\crosscoremark{0.8}}
 \end{layer}
 
-\vspace{35mm}
+\vspace{30mm}
 \end{cmd}
 %-------------lineseg, dashlineseg-------------------------------
 \begin{cmd}{\bs lineseg, \bs dashlineseg}{lineseg}
@@ -393,10 +426,13 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \tab{\bs dashlineseg は破線を描く.}\\
 \Chuu 線の太さ (thickness)のデフォルトは 12 (単位は milli inch).\\
 \Chuu x, y, $\theta$ は小数でもよい.
-\itemketj{例}\verb|\lineseg[16]{135}{25}{30}{25}|
+%\ (pict2eでは太さ指定が効かない．)% kubo231109
+\itemketj{例}\verb|\lineseg[16]{60}{15}{30}{25}|\vspace{-2mm}
+\itemketj{}\verb|\dashlineseg[16]{80}{15}{30}{25}|
 
 \begin{layer}{160}{0}
-\lineseg[16]{60}{20}{30}{25}
+\lineseg[16]{60}{15}{30}{25}
+\dashlineseg[12]{80}{15}{30}{25}
 %\arrowlineseg[16]{130}{50}{10}{45}
 \end{layer}
 
@@ -418,14 +454,15 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 \itemketj{説明}{\tt \bs arrowlineseg}は，点 (x, y) から長さ L の矢印を $\theta^\circ$ 方向に描く(単位はmm).\\
 \Chuu 鏃は始点(x, y)に描く. \\
 \Chuu 線の太さ (thickness)のデフォルトは 12 (単位は milli inch).\\
-\tab{\bs arrowhead は鏃だけを描く.}\\
+\tab{\bs arrowhead は鏃だけを描く. sizeのデフォルトは 1倍}\\
 \Chuu x, y, $\theta$ は小数でもよい.
-\itemketj{例}\verb|\arrowlineseg[16]{60}{20}{10}{45}|
+\itemketj{例}\verb|\arrowlineseg[16]{60}{20}{10}{45}|\vspace{-2mm}
+\itemketj{}\verb|\arrowhead[3]{80}{20}{45}|
 
 \vspace*{-5mm}
 \begin{layer}{160}{0}
-%\lineseg[16]{60}{20}{30}{25}
 \arrowlineseg[16]{60}{20}{10}{45}
+\arrowhead[3]{80}{20}{45}
 \end{layer}
 
 \vspace{20mm}
@@ -438,6 +475,30 @@ ketlayer のマクロは，layer環境の中で使用する.\\
 %\itemket{Details}The line thickness is 12 by default. Unit is milli inch.\par
 %\Ltab{18.5mm}{}x, y, $\theta$ may be decimal.
 %\end{cmd}
+
+\newpage
+%-------------qarrowline-------------------------------
+\begin{cmd}{\bs qarrowline, \bs qarrowlinesize}{qarrowline}
+\itemketj{使用法}\verb|\qarrowline[thickness]{x}{y}{L}{|{$\theta$}\verb|}|\\
+\tab{\bs qarrowlinesize[thickness]\br{x}\br{y}\br{L}\br{$\theta$}\br{size}}
+\itemketj{説明}{\tt \bs qarrowline}, {\tt\bs qarrowlinesize}は，点 (x, y) から長さ L (単位はmm) の矢印を $\theta^\circ$ 方向にctrで指定した曲がり具合で描く.
+(これらは，pict2e限定)\\% kubo231115
+\Chuu 鏃は始点(x, y)に描く. {{\tt\bs qarrowlinesize} は鏃の大きさを変更できる.}\\
+\Chuu 線の太さ (thickness)のデフォルトは 12 (単位は milli inch).\\
+\Chuu x, y, $\theta$ は小数でもよい.
+\itemketj{例}\verb|\qarrowline[16]{60}{20}{10}{45}{30}|\vspace{-2mm}
+\itemketj{}\verb|\qarrowlinesize[16]{80}{20}{10}{45}{30}{300}|
+
+\vspace*{-5mm}
+\begin{layer}{160}{0}
+%\lineseg[16]{60}{20}{30}{25}
+\qarrowline[16]{60}{20}{10}{45}{30}
+\qarrowlinesize[16]{80}{20}{10}{45}{30}{300}
+\end{layer}
+
+\vspace{15mm}
+\end{cmd}
+
 
 %-------------hjaggyline-------------------------------
 \begin{cmd}{\bs hjaggyline, \bs hjaggylineb}{hjaggyline}
@@ -460,26 +521,36 @@ b を付加すると，線の出方が逆になる.
 \tab{\bs vjaggylineb[thickness]\br{x}\br{y}\br{W}}
 \itemketj{説明}{\tt \bs vjaggyline}は，(x, y) から下に幅Wのギザ線を描く. 
 b を付加すると，線の出方が逆になる.
-\itemketj{例}次のようになる．
+\itemketj{例}\ %次のようになる．
+\vspace{-\baselineskip}
 
 \begin{layer}{160}{0}
-\hjaggyline{70}{10}{10}
+ \hjaggyline[6]{70}{10}{10}
 \hjaggylineb{70}{20}{10}
-\vjaggyline{100}{10}{10}
+ \vjaggyline{100}{10}{10}
 \vjaggylineb{120}{10}{10}
 \end{layer}
 
-\verb|\hjaggyline{70}{10}{10}| \\
+\verb|\hjaggyline[6]{70}{10}{10}| \\
 \verb|\hjaggylineb{70}{20}{10}| \\
 \verb|\vjaggyline{100}{10}{10}| \\
-\verb|\vjaggylineb{120}{10}{10}| \\
+\verb|\vjaggylineb{120}{10}{10}| 
 
 \end{cmd}
 %-------------circleline-------------------------------
 \begin{cmd}{\bs circleline}{circleline}
-\itemketj{使用法}\verb|\circleline{x}{y}{size}|
-\itemketj{説明}(x, y) を中心に円を描く.
+\itemketj{使用法}\verb|\circleline[thickness]{x}{y}{size}|
+\itemketj{説明}(x, y) を中心に円を描く. size=1のとき, 円の直径は4mm.
+%\ (pict2e非対応)
+\itemketj{例}\verb|\circleline[12]{40}{10}{2}|\vspace{3mm}
+
+\begin{layer}{100}{20}
+ \circleline[12]{40}{10}{2}
+\end{layer}
+\vspace{10mm}
+
 \end{cmd}
+\vspace{5mm}
 
 %-------------ballonr-------------------------------
 \begin{cmd}{\bs ballonr, \bs ballonl}{ballon}
@@ -496,7 +567,7 @@ b を付加すると，線の出方が逆になる.
 \tab{\bs leftdownhand[thickness]\br{x}\br{y}}\\
 \tab{\bs rightdownhand[thickness]\br{x}\br{y}}
 \itemketj{説明}(x, y) に，それぞれの向きで指先を描く.
-\itemketj{例} {\bs ballon }などの例
+\itemketj{例} {\bs ballon }, {\bs lefthand }などの例
 
 \begin{layer}{170}{0}
       \ballonr{30}{35}{1}{Example1}
@@ -553,6 +624,8 @@ b を付加すると，線の出方が逆になる.
 \hyperlink{lineseg}{\bs lineseg, \bs dashlineseg} \> 角度を指定した線分と破線\\
 \hyperlink{popframe}{\bs popframe} \> 文字列に合わせたサイズの矩形（色指定，影付き）\\
 \hyperlink{putnote}{\bs putnote+dir} \> 文字・図・表の配置\\
+\hyperlink{qarrowline}{\bs qarrowline} \> 角度と曲がり具合を指定した矢印\\
+\hyperlink{qarrowline}{\bs qarrowlinesize} \> 角度と曲がり具合と鏃の大きさを指定した矢印\\
 \hyperlink{scirscoremark}{\bs scirscoremark} \> 手書きの単丸\\
 \hyperlink{shadebox}{\bs shadebox+dir} \> 文字入りの矩形（中塗り）\\
 \hyperlink{triscoremark}{\bs triscoremark} \> 手書きの三角\\

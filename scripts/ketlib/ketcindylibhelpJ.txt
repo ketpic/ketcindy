@@ -1,9 +1,11 @@
 //help:Acos*(逆余弦三角関数の値を返す);
+//help:Addasterisk*(数式文字列に\verb|*|を追加する);
 //help:Addax*(座標軸を描くかどうかを定める);
 //help:Addglist*(ketlib スロットで定義された描画データを追加する);
 //help:Addgraph*(ユーザー定義のプロットデータを描画する);
 //help:Addpackage*(プレビュー用のパッケージを追加);
 //help:Anglemark*(角の印を入れる);
+//help:Animationkey*(アニメーションkeyを設定);
 //help:Animationparam*(アニメーションボタンのパラメータ値を取得);
 //help:Arrowdata*(2点間を結ぶ矢線を描く);
 //help:Arrowhead*(点に矢じりだけを描く);
@@ -217,6 +219,7 @@
 //help:Setplaybuttons*(Playなどのボタンの位置とフォントサイズを設定);
 //help:Setpt*(表示する点の大きさを設定する);
 //help:Setscaling*(縦方向の倍率を設定する);
+//help:Settextkey*(文字要素 (Text) を生成または設定);
 //help:Settitle*(スライドのタイトル設定);
 //help:Setunitlen*(単位長を設定する);
 //help:Setwindow*(描画領域を設定する);
@@ -240,6 +243,7 @@
 //help:Tangentplot*(曲線の接線を引く);
 //help:Texcom*(\TeX のコードを書き出す);
 //help:Textedit*(KeTJSで入力窓に入れた文字列を取得);
+//help:Textedit*(文字列を識別番号の入力窓に入れる);
 //help:Textformat*(小数点以下の桁数を指定して数値を文字列化する);
 //help:Tgrid*(セル（格子点）の座標を返す);
 //help:Tlistplot*(セルに斜線を引く);

@@ -1,0 +1,8 @@
+pict2eで説明通りにならないもの，tikzと異なる動作となるものに，
+コメント“(pict2e非対応)”などを追加。
+\circlemark，\circleshade，\shadebox+dir，\popframe，\circleline，\lineseq，\dashlineseg
+
+pict2e限定のコマンドとして，\qarrowline，\qarrowlinesize の紹介を追加。
+※　texソースのプリアンブルに，次の2行を追加。
+\usepackage[dvipdfmx]{pict2e}
+\usepackage{ketlayermorewith2e}

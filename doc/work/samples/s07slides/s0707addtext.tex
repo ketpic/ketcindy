@@ -1,0 +1,311 @@
+%%% Title s0707addtext
+\documentclass[landscape,10pt]{jarticle}
+\special{papersize=\the\paperwidth,\the\paperheight}
+\usepackage{ketpic,ketlayer}
+\usepackage{ketslide}
+\usepackage{amsmath,amssymb}
+\usepackage{bm,enumerate}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{color}
+\definecolor{slidecolora}{cmyk}{0.98,0.13,0,0.43}
+\definecolor{slidecolorb}{cmyk}{0.2,0,0,0}
+\definecolor{slidecolorc}{cmyk}{0.2,0,0,0}
+\definecolor{slidecolord}{cmyk}{0.2,0,0,0}
+\definecolor{slidecolore}{cmyk}{0,0,0,0.5}
+\definecolor{slidecolorf}{cmyk}{0,0,0,0.5}
+\definecolor{slidecolori}{cmyk}{0.98,0.13,0,0.43}
+\def\setthin#1{\def\thin{#1}}
+\setthin{0}
+\newcommand{\slidepage}[1][s]{%
+\setcounter{ketpicctra}{18}%
+\if#1m \setcounter{ketpicctra}{1}\fi
+\hypersetup{linkcolor=black}%
+
+\begin{layer}{118}{0}
+\putnotee{122}{-\theketpicctra.05}{\small\thepage/\pageref{pageend}}
+\end{layer}\hypersetup{linkcolor=blue}
+
+}
+\usepackage{pict2e}
+\usepackage[dvipdfmx,colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}
+\newcommand{\sbunsuu}[2]{\scalebox{0.6}{$\bunsuu{#1}{#2}$}}
+\def\pow{$\hspace{-1.5mm}＾\hspace{-1mm}$}
+\def\dlim{\displaystyle\lim}
+\newcommand{\brd}[2][1]{\scalebox{#1}{\color{red}\fbox{\color{black}$#2$}}}
+\newcommand\down[1][0.5zw]{\vspace{#1}\\}
+\newcommand{\sfrac}[3][0.65]{\scalebox{#1}{$\frac{#2}{#3}$}}
+\newcommand{\phn}[1]{\phantom{#1}}
+\newcommand{\scb}[2][0.6]{\scalebox{#1}{#2}}
+\newcommand{\dsum}{\displaystyle\sum}
+
+\setmargin{25}{145}{15}{100}
+
+\ketslideinit
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{layer}{120}{0}
+\putnotese{0}{0}{\input{fig/slide0.tex}}
+\end{layer}
+
+\def\mainslidetitley{22}
+\def\ketcletter{slidecolora}
+\def\ketcbox{slidecolorb}
+\def\ketdbox{slidecolorc}
+\def\ketcframe{slidecolord}
+\def\ketcshadow{slidecolore}
+\def\ketdshadow{slidecolorf}
+\def\slidetitlex{6}
+\def\slidetitlesize{1.3}
+\def\mketcletter{slidecolori}
+\def\mketcbox{yellow}
+\def\mketdbox{yellow}
+\def\mketcframe{yellow}
+\def\mslidetitlex{62}
+\def\mslidetitlesize{2}
+
+\color{black}
+\Large\bf\boldmath
+\addtocounter{page}{-1}
+
+\def\MARU{}
+\renewcommand{\MARU}[1]{{\ooalign{\hfil$#1$\/\hfil\crcr\raise.167ex\hbox{\mathhexbox20D}}}}
+\renewcommand{\slidepage}[1][s]{%
+\setcounter{ketpicctra}{18}%
+\if#1m \setcounter{ketpicctra}{1}\fi
+\hypersetup{linkcolor=black}%
+\begin{layer}{118}{0}
+\putnotee{115}{-\theketpicctra.05}{\small\hiduke-\thepage/\pageref{pageend}}
+\end{layer}\hypersetup{linkcolor=blue}
+}
+\newcounter{ban}
+\setcounter{ban}{1}
+\newcommand{\monban}[1][\hiduke]{%
+#1-\theban\ %
+\addtocounter{ban}{1}%
+}
+\newcommand{\monbannoadd}[1][\hiduke]{%
+#1-\theban\ %
+}
+\newcommand{\addban}{%
+\addtocounter{ban}{1}%%210614
+}
+\newcounter{edawidth}
+\newcounter{edactr}
+\newcommand{\seteda}[1]{
+\setcounter{edawidth}{#1}
+\setcounter{edactr}{1}
+}
+\newcommand{\eda}[2][\theedawidth ]{%
+\noindent\Ltab{#1 mm}{[\theedactr]\ #2}%
+\addtocounter{edactr}{1}%
+}
+%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+\mainslide{平均変化率}
+
+
+\slidepage[m]
+%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+
+\newslide{平均変化率の意味}
+
+\vspace*{18mm}
+
+\hypertarget{para1pg1}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg2}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 1/7}
+\end{layer}
+
+\slidepage
+%%layer::{120}{0}
+%%putnote::se{80}{10}::henka1,0.7
+%%[3,-]::putnote::se{80}{10}::henka2,0.7
+%%dend
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg2}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg3}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 2/7}
+\end{layer}
+
+\slidepage
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\addtext{10}{・$f(x)$の$[a,\ b]$での変化量は}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg3}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para1pg2}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg4}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 3/7}
+\end{layer}
+
+\slidepage
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\addtext{10}{・$f(x)$の$[a,\ b]$での変化量は}
+\addtext{20}{$f(b)-f(a)$}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg4}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para1pg3}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg5}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 4/7}
+\end{layer}
+
+\slidepage
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\addtext{10}{・$f(x)$の$[a,\ b]$での変化量は}
+\addtext{20}{$f(b)-f(a)$}
+\addtext{10}{・区間幅$b-a$で割る}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg5}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para1pg4}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg6}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 5/7}
+\end{layer}
+
+\slidepage
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\addtext{10}{・$f(x)$の$[a,\ b]$での変化量は}
+\addtext{20}{$f(b)-f(a)$}
+\addtext{10}{・区間幅$b-a$で割る}
+\addtext[5]{20}{$\bunsuu{f(b)-f(a)}{b-a}$}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg6}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para1pg5}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 6/7}
+\end{layer}
+
+\slidepage
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\addtext{10}{・$f(x)$の$[a,\ b]$での変化量は}
+\addtext{20}{$f(b)-f(a)$}
+\addtext{10}{・区間幅$b-a$で割る}
+\addtext[5]{20}{$\bunsuu{f(b)-f(a)}{b-a}$}
+\addtext{10}{・これを{\color{red}平均変化率}という}
+\end{layer}
+
+
+\sameslide
+
+\vspace*{18mm}
+
+\hypertarget{para1pg7}{}
+
+\begin{layer}{120}{0}
+\putnotew{96}{73}{\hyperlink{para0pg0}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut||\!\lhd$}}}}}
+\putnotew{101}{73}{\hyperlink{para1pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut|\!\lhd$}}}}}
+\putnotew{108}{73}{\hyperlink{para1pg6}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}
+\putnotew{115}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{4.5mm}{\scalebox{1}{\scriptsize $\mathstrut\!\rhd\!$}}}}}
+\putnotew{120}{73}{\hyperlink{para1pg7}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}
+\putnotew{125}{73}{\hyperlink{para2pg1}{\fbox{\Ctab{2.5mm}{\scalebox{1}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}
+\putnotee{126}{73}{\scriptsize\color{blue} 7/7}
+\end{layer}
+
+\slidepage
+
+\begin{layer}{120}{0}
+\settext{10}{9}{110}
+\addtext{10}{関数$y=f(x)$,\ 区間$[a,\ b]$}
+\addtext{10}{・$f(x)$の$[a,\ b]$での変化量は}
+\addtext{20}{$f(b)-f(a)$}
+\addtext{10}{・区間幅$b-a$で割る}
+\addtext[5]{20}{$\bunsuu{f(b)-f(a)}{b-a}$}
+\addtext{10}{・これを{\color{red}平均変化率}という}
+\addtext{10}{・平均変化率は直線ABの傾き}
+\end{layer}
+
+\label{pageend}\mbox{}
+
+\end{document}

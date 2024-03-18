@@ -12,6 +12,8 @@
 %* 
 %* You should have received a copy of the GNU General Public License
 %* along with this program.  If not, see <http://www.gnu.org/licenses/>
+%%% ketslide.sty 2022-3-4 
+%%%    addtext,settext added
 %%% ketslide.sty 2017-1-9 11:50
 %%% ketslide170109.sce 2017-1-9 11:50
 %       2017.01.09 ketslide%
@@ -149,3 +151,27 @@
 }%
 %
 }%
+
+%% 240304from
+\newcounter{txtLi}%%startheight
+\newcounter{txtLii}%%linebreakwidth
+\newcounter{txtLiii}%%linewidth
+\newcommand{\addtext}[3][0]{\putnotese{#2}{\thetxtLi}{\begin{minipage}[t]{\thetxtLiii mm}#3\end{minipage}}\addtocounter{txtLi}{#1}\addtocounter{txtLi}{\thetxtLii}}
+\newcommand{\settext}[3]{\setcounter{txtLi}{#1}\setcounter{txtLii}{#2}\setcounter{txtLiii}{#3}}
+\newcommand{\addth}[1]{\addtocounter{txtLii}{#1}}
+\newcommand{\hako}[2][1]{\fbox{\raisebox{#1mm}{\mbox{}}\raisebox{-#1mm}{\mbox{}}\,\phantom{#2}\,}}
+\newcommand{\hakoa}[2][1]{\fbox{\raisebox{#1mm}{\mbox{}}\raisebox{-#1mm}{\mbox{}}\,#2\,}}
+\newcommand{\hakom}[2][1]{\hako[#1]{$#2$}}
+\newcommand{\hakoma}[2][1]{\hakoa[#1]{$#2$}}
+\def\rad{\;\mathrm{rad}}
+\def\deg#1{#1^{\circ}}
+\newcommand{\sbunsuu}[2]{\scalebox{0.6}{$\bunsuu{#1}{#2}$}}
+\def\pow{$\hspace{-1.5mm}＾\hspace{-1mm}$}
+\def\dlim{\displaystyle\lim}
+\newcommand{\brd}[2][1]{\scalebox{#1}{\color{red}\fbox{\color{black}$#2$}}}
+\newcommand\down[1][0.5zw]{\vspace{#1}\\}
+\newcommand{\sfrac}[3][0.65]{\scalebox{#1}{$\frac{#2}{#3}$}}
+\newcommand{\phn}[1]{\phantom{#1}}
+\newcommand{\scb}[2][0.6]{\scalebox{#1}{#2}}
+\newcommand{\dsum}{\displaystyle\sum}
+%% 240304to

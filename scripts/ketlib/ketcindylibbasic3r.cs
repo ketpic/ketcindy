@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20240222] loaded");
+println("ketcindylibbasic3[202403-6] loaded");
 
 //help:start();
 
@@ -5200,7 +5200,6 @@ Mvlist(Arg1,Arg2):=(
 Mvlist(num,pdataorg,opt):=(
 //help:Mvlist(num,"cr1");
   regional(name,pdata,tmp);
-  println(pdataorg);
   pdata=pdataorg;
   if(isstring(pdataorg),
     name="m"+pdata;

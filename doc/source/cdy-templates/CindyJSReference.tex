@@ -1,0 +1,478 @@
+\documentclass[papersize,a4paper,12pt,uplatex]{jsarticle}
+\usepackage{ketpic,ketlayer}
+\usepackage{amsmath}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage{wrapfig}
+\usepackage[dvipdfmx,bookmarks=false,colorlinks=true,linkcolor=blue]{hyperref}
+\setmargin{20}{20}{15}{25}
+\usepackage{setspace}
+\usepackage{comment}
+\setcounter{tocdepth}{3}
+
+\begin{document}
+
+\section{Cindy3D}
+
+Cinderellaでレイトレーシングを用いた空間図形を描くには，同梱されている Cindy3Dプラグインを用いる。Initailiazarion スロットの先頭に次の１行を書く。
+
+\vspace{\baselineskip}
+\verb|use("Cindy3D");|
+
+\vspace{\baselineskip}
+これで Cindy3Dの各関数が使えるようになる。スクリプトを書いて実行すると別ウィンドウが開いて描画がされる。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 【重要な注意】}
+
+Cindy3D は，ファイルメニューの「HTMLに書き出す」でHTMLファイルに書き出してもCindyJSでは使えない。CindyJSで3Dを扱うには，HTMLファイルを直接編集する必要がある。
+
+ \subsection{設定}
+
+以下の関数は初期値の設定なので，最初に一度だけ実行すればよく， Initialization スロットに\verb|use("Cindy3D");| に続いて記述すればよい。
+ 
+\vspace{\baselineskip}
+\noindent
+{\bf 色の初期設定}：\verb|color3d([R,G,B])|
+
+すべてのオブジェクトの表示色の初期値をRGB値に設定する。
+
+\noindent
+【例】\verb| color3d([0.8,0.8,0]);|  表示色を少し暗い黄色に設定する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 点の色の初期設定}：\verb|pointcolor3d([R,G,B])|
+
+点の表示色の初期値をRGB値に設定する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 線の色の初期設定}：\verb|linecolor3d([R,G,B])|
+
+線の表示色の初期値をRGB値に設定する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 面の色の初期設定}：\verb|surfacecolor3d([R,G,B])|
+
+面の表示色の初期値をRGB値に設定する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 透明度の初期設定}：\verb|alpha3d(<real>)| または \verb|surfacealpha3d(<real>)|
+
+面の透明度の初期値を設定する。引数は0以上1以下の実数。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 光沢の初期設定}：\verb|shininess3d(<real>)|
+
+すべてのオブジェクトの光沢の初期値を\verb|<real>|に変更する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 点の光沢の初期設定}：\verb|pointshininess3d(<real>)|
+
+点の光沢の初期値を\verb|<real>|に変更する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 線の光沢の初期設定}：\verb|lineshininess3d(<real>)|
+
+線の光沢の初期値を\verb|<real>|に変更する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 面の光沢の初期設定}：\verb|surfaceshininess3d(<real>)|
+
+面の光沢の初期値を\verb|<real>|に変更する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf サイズの初期設定}：\verb|size3d(<real>)|
+
+点と線のサイズの初期値を\verb|<real>|に変更する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 点のサイズの初期設定}：\verb|pointsize3d(<real>)|
+
+点のサイズの初期値を\verb|<real>|に変更する。
+
+\vspace{\baselineskip}
+\noindent
+{\bf 線の太さの初期設定}：\verb|linesize3d(<real>)|
+
+線のサイズの初期値を\verb|<real>|に変更する。
+
+\subsection{描画関数}
+
+以下の関数は Draw スロットに記述する。
+
+\noindent 
+{\bf Cindy3Dの描画開始}：\verb|begin3d()|
+
+\vspace{\baselineskip}
+\noindent
+{\bf Cindy3Dの描画終了}：\verb|end3d()|
+
+Cindy3Dの描画関数の使い始めと使い終わりを宣言する。Cindy3Dの描画関数は、\verb|begin3d()| から \verb|end3d()| までの間に書かれたものが実行される。
+
+\hypertarget{gsave3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 現在の描画設定の保存}：\verb|gsave3d()|
+
+現在の描画に関する諸設定をスタックに保存する。
+
+\hypertarget{grestore3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 描画設定の復帰}：\verb|grestore3d()|
+
+スタックに保存された描画に関する諸設定を呼び出して、その状態に復帰する。
+
+\hypertarget{draw3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 点を描く}：\verb|draw3d(<point>)|
+
+座標\verb| <point> |に点を打つ。
+
+\vspace{\baselineskip}
+ \input{Cfig/draw3d}
+
+\vspace{\baselineskip}
+\noindent
+{\bf 線を描く}：\verb|draw3d(<point1>,<point2>)|
+
+線分，反直線，直線を描く。線の種類は type  修飾子で指定する。指定がなければ線分が描かれる。２つの引数は、線の種類に応じて解釈される。
+
+\vspace{\baselineskip}
+ \input{Cfig/draw3d2}
+
+\vspace{\baselineskip}
+ \input{Cfig/draw3d3}
+
+\vspace{\baselineskip}
+\noindent
+【例】次の例は3種類の線を描画する。
+
+・ (0,0,0) と (1,0,0) を端点とする線分
+
+\hspace{5mm} \verb|draw3d([0,0,0],[1,0,0],color->[1,0,0])| 
+
+・ (0,0,0) と (0,1,0) を端点とする緑色の線分
+
+\hspace{5mm} \verb|draw3d([0,0,0],[0,1,0],type->"segment",color->[0,1,0])| 
+
+・(0,0,0)を始点として、(0,0,1)を通る青の半直線
+
+\hspace{5mm} \verb|draw3d([0,0,0],[0,0,1],type->"ray",color->[0,0,1])|
+
+・ (1,1,1) と (2,1,1) を通る黄色の直線
+
+\hspace{5mm} \verb|draw3d([1,1,1],[2,1,1],type->"line",color->[1,1,0])| 
+
+\hspace{30mm} \includegraphics[bb=0 0 346 226 , width=5cm]{Cfig/draw3d.png} 
+
+\hypertarget{connect3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 点を結ぶ}：\verb|connect3d(<list>)|
+
+\verb|<list>|で与えられた各点を線分で結ぶ。
+
+\vspace{\baselineskip}
+ \input{Cfig/connect3d}
+
+\hypertarget{drawpoly3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 多角形を描く}：\verb|drawpoly3d(<list>)|
+
+\verb|<list>|で与えられた各点を線分で結んで多角形を描く。
+
+\vspace{\baselineskip}
+ \input{Cfig/connect3d}
+
+\hypertarget{fillpoly3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 多角形の面を描く}：\verb|fillpoly3d(<list>)|
+
+\verb|<list>|で与えられた各点を線分で結んで多角形の面を描く。
+
+\vspace{\baselineskip}
+ \input{Cfig/fillpoly3d}
+
+\vspace{\baselineskip}
+\noindent
+{\bf 法線ベクトルを指定して多角形の面を描く}：\verb|fillpoly3d(<list1>,<list2>)|
+
+ユーザー定義の法線ベクトルによる多角形の面を描く。法線ベクトルは、光の当たり方を計算するものである。
+
+\verb|<list1>|は多角形の頂点の座標，\verb|<list2>| は多角形の各頂点の法線ベクトル。 \verb|<list1>| と \verb|<list2>| の長さは一致する必要がある。
+
+\vspace{\baselineskip}
+ \input{Cfig/fillpoly3d}
+
+\hypertarget{fillcircle3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 円盤を描く}：\verb|fillcircle3d(<point>,<vec>,<real>)|
+
+\verb|<point>|を中心、\verb|<vec>|を法線ベクトル、\verb|<real>|を半径とする円盤を描く。
+
+\vspace{\baselineskip}
+ \input{Cfig/fillpoly3d}
+
+\vspace{\baselineskip}
+\noindent
+【例】座標軸と円盤を描く。
+
+Initialization スロットに次のコードを書く。以後の例も同様。
+
+\begin{verbatim}
+  use("Cindy3D");
+  background3d([0.9,0.9,1]);
+  renderhints3d(quality->4);
+  lookat3d([4,4,4],[0,0,0],[-1,-1,0]);
+\end{verbatim}
+
+drawスロットに次のコードを書く。
+
+\begin{verbatim}
+  renderhints3d(quality->4);
+  begin3d();
+  draw3d([0,0,0],[3,0,0],color->[1,0,0],size->0.3);  // 座標軸
+  draw3d([0,0,0],[0,3,0],color->[0,1,0],size->0.3);
+  draw3d([0,0,0],[0,0,3],color->[0,0,1],size->0.3);
+  fillcircle3d([sqrt(3)/6,sqrt(3)/6,sqrt(3)/6],[1,1,1],
+    sqrt(3)/2,color->[1,0,0],alpha->0.3);
+  end3d()
+\end{verbatim}
+
+\verb|renderhints3d(quality->4)| はレンダリングの品質を指定する関数。（後述）
+
+左が実行結果。右はマウスで画面上をドラッグし，回転したもの。
+
+\vspace{\baselineskip}
+\hspace{10mm} \includegraphics[bb=0 0 800 298 , width=10cm]{Cfig/fillcircle.jpg} 
+
+\hypertarget{drawsphere3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 球面を描く}：\verb|drawsphere3d(<point>,<real>)|
+
+\verb|<point>|を中心、\verb|<real>|を半径とする球面を描く。
+
+\vspace{\baselineskip}
+ \input{Cfig/fillpoly3d}
+
+\hypertarget{mesh3d}{} 
+\vspace{\baselineskip}
+\noindent
+{\bf 網目上の曲面を描く}：\verb|mesh3d(<int1>,<int2>,<list>)|
+
+曲面を、m行n列の格子点でできる網目状に区切る。（メッシュモデル）
+
+\verb|<int1>| 格子点の行数 m
+
+\verb|<int2>| 格子点の列数 n
+
+\verb|<list>| 格子点のリスト
+
+リストは2次元の格子点のリストを平坦化したもので，リストの長さは m × n 。
+
+\vspace{\baselineskip}
+\noindent
+【例】図は、５行７列の格子点からなる放物線状の面。修飾子の効果を比較するため、かなり荒い網目にしてある。
+
+\begin{verbatim}
+  begin3d();
+  pt=apply(-2..2,s,
+        apply(-3..3,t,
+          y = s/3; 
+          x = t/3;
+          z = x^2+y^2;
+          (x,y,z);
+        );
+     );
+  pt=flatten(pt,levels->1);
+  mesh3d(5,7,pt);
+  end3d()
+\end{verbatim}
+
+\begin{layer}{150}{0}
+\putnotese{70}{-60}{\includegraphics[bb=0 0 321 165 , width=5cm]{Cfig/mesh1.png}}
+\end{layer}
+
+\verb|apply|関数のネストにより作成した格子点のリストを、\verb|flattenn()|により平坦化して引数に与えている。
+
+\vspace{\baselineskip}
+ \input{Cfig/mesh3d3}
+
+\vspace{\baselineskip}
+「normaltype」修飾子は，各面の法線の計算方法を指定する。指定がなければ「perface 」として処理される。
+
+\vspace{\baselineskip}
+ \input{Cfig/mesh3d2}
+
+\vspace{\baselineskip}
+\hspace{20mm} \includegraphics[bb=0 0 600 178 , width=8cm]{Cfig/nomal.png}
+
+\hspace{35mm} perface \hspace{25mm} pervertex 
+
+\vspace{\baselineskip}
+\verb|topology| 修飾子は面の端の状態を指定する。指定がなければ、openとして処理される。
+
+\vspace{\baselineskip}
+ \input{Cfig/mesh3d1}
+
+\hspace{20mm} \includegraphics[bb=0 0 600 232 , width=8cm]{Cfig/topology.png}
+
+\hspace{30mm} closerows \hspace{25mm} closecolumns 
+ 
+\vspace{\baselineskip}
+\noindent
+{\bf 法線ベクトルを指定して網目を描く}：\verb|mesh3d(<int1>,<int2>,<list1>,<list2>)|
+
+ユーザー定義による法線ベクトルによって網目を描く。
+
+\verb|<int1>| 格子点の行数： m　\verb|<int2>|：格子点の列数 n　\verb|<list>|：格子点のリスト
+
+\verb|<list2>| 各格子点での法線ベクトルのリスト。
+
+リストの長さはいずれも m × n 。
+
+\vspace{\baselineskip}
+ \input{Cfig/mesh3d4}
+
+\subsection{光の当て方と表現}
+
+\hypertarget{background3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 背景の色を設定する}：\verb|background3d(<colorvec>)|
+
+背景の色 \verb|<colorvec>| をRGB値で設定する。
+
+\hypertarget{lookat3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf カメラの位置}：\verb|lookat3d(<point1>,<point2>,<vec>)|
+
+３Ｄグラフィクスの表示は、空間に置いたカメラで物体を写していると考える。この関数は、カメラの位置と向きを設定する。カメラにはレンズがついていて、レンズの向き（視線の方向）で物を見ていると考える。
+
+\verb|<point1>|：カメラの位置　\verb|<point2>|：回転の中心　\verb|<vec>|：視線の方向
+
+\hypertarget{fieldofview3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 画角の設定 }：\verb|fieldofview3d(<real>)|
+
+カメラの画角を設定する。実際のカメラの画角と同じ。画角が小さいと望遠（被写体が大きく写る）、大きいと広角（小さく写る）になる。初期設定は45°。
+
+\hypertarget{depthrange3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf カメラ深度の設定}：\verb|depthrange3d(<real1>,<real2>)|
+
+カメラの最小・最大深度を設定する。カメラの深度とは、カメラ面（カメラを通り、視線方向に垂直な面）と点の距離。カメラ深度に入らないものは表示されない。第1引数が最小値、第2引数が最大値。
+
+\hypertarget{renderhints3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf レンダリングのヒントを設定する}：\verb|renderhints3d()|
+
+レンダリングの過程における様々な比率のヒントを設定する。
+
+\vspace{\baselineskip}
+ \input{Cfig/render}
+
+"quality" 修飾子は規定の品質レベルのいずれかを選ぶ。レベル 0 は最低の品質だが、最小のリソースですむ。最大の品質は 8 で、非常によい品質だが多くのリソースを必要とする。あらかじめ品質レベルが設定されているのは、個々のレンダリングヒントを操作することなく、全体の品質を簡単に管理できるようにするため。要請された品質レベルがサポートされない（例えばハードウェアの制限やリソースの制約のため）とき、Cindy3Dは下位のレベルに移行するかもしれない。
+
+\vspace{\baselineskip}
+\hspace{20mm} \includegraphics[bb=0 0 600 256 , width=8cm]{Cfig/render.png}
+
+\hspace{30mm}\verb|quality->1| \hspace{20mm} \verb|quality->4|
+
+\vspace{\baselineskip}
+"renderMode" 修飾子は、オブジェクトのレンダリングについて指定する。"simple"の場合は、すべてのオブジェクトは三角形の網目としてレンダリングされる。このモードではシェーディングは頂点ごとに行われ、上図左のように粗削りになる。 "raycasted"の場合は、点・直線・球面はレイ・キャスティングを用いた連続面としてレンダリングされる。また、シェーディングは点ごとに行われる。上図右のようになる。 "raycasted" モードでは高品質が得られるがハードウェアの条件によっては時間がかかる。
+
+"screenError" 修飾子は、スクリーン・スペース・エラーをデティール・アルゴリズムのレベルに設定する。 "simple" モードでは、 点・直線・球面は三角形の網目で近似される。最適化のために、小さい、あるいは遠いオブジェクトはレンダリング時間を節約するために少しの三角形網目にする。これを "level of detail"と呼ぶ。 Cindy3Dは、それぞれのプリミティブに対して、異なる三角形網目ごとに決められた定数を用いている。あるプリミティブに対しどの定数を用いるかは、各網目をスクリーン上に仮想的に投影し、ピクセルごとに最大の三角形の大きさを計測して決定される。それから、最大と予測される三角形サイズが「screenError」の下にある最も小さな網目が、プリミティブを生成するために使われる。これは、「screenError」の低い値がより高い品質となることを意味する。この修飾子は "raycasted"レンダリングモードのもとでは無効になる。
+
+ "samplingRate" 修飾子は、オブジェクトのシルエットの滑らかさに影響する。サンプリング・レートは、出力イメージの各々のピクセルに対するサンプルの数を定める。最終的なピクセルの色はそれらのサンプルの平均値。サンプリングレートが高いほど、記憶領域と時間を消費するがオブジェクトシルエットはより滑らかになる。要請されたサンプリング・レートをサポートできないとき（例えばハードウェアの制限やリソースの制約のための）、Cindy3Dは低いサンプリング・レートに移行するかもしれない。
+
+\vspace{\baselineskip}
+※訳者の実験では、品質は quality の例で示した2通りくらいで、数値を変えてもあまり変化はなかった。（ハードウェアの制限などによるかもしれない）renderMode の ”simple” , ”raycasted” の違いも同様。あとの２つの修飾子の効果については翻訳時点では不明だった。デフォルトでは \verb|quality->1| なので、 \verb|renderhints3d(quality->4)| もしくは \verb|renderhints3d(renderMode->"raycasted")| で運用するのがよさそうだ。
+
+\hypertarget{pointlight3d}{} 
+\vspace{\baselineskip}
+\noindent
+{\bf 点光源の設定}：\verb|pointlight3d(<int>)|
+
+\verb|<int>| は，光源の番号で0以上７以下の整数。
+
+点光源を発生または修正する。指定された光源がすでに存在するならば修飾子によって指定された状態に修正し、利用可能にする。そうでなければ、指定された点光源を作る。修飾子がなければ初期値が使われる。点光源は８つまで作ることができ、それぞれに番号を振る。
+
+\vspace{\baselineskip}
+ \input{Cfig/light}
+
+\vspace{\baselineskip}
+\hspace{15mm} \includegraphics[bb=0 0 572 216 , width=10cm]{Cfig/light1.png}
+
+\hspace{25mm}点光源の指定なし \hspace{20mm} 点光源１ \verb|diffuse->[1,1,0]|
+
+\vspace{\baselineskip}
+\hspace{15mm} \includegraphics[bb=0 0 572 215 , width=10cm]{Cfig/light2.png}
+
+\hspace{5mm}点光源2 \verb|position->[8,0,0],diffuse->[0,0,1])| \hspace{5mm} 点光源１と２
+
+\hypertarget{directionallight3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 方向光源の設定}：\verb|directionallight3d(<int>)|
+
+\verb|<int>|は，方向光源の番号で0以上７以下の整数。
+
+方向光源を発生または修正する。 指定された方向光源がすでに存在するならば修飾子によって指定された状態に修正し、利用可能にする。そうでなければ、指定された方向光源を作る。修飾子がなければ初期値が使われる。
+
+\vspace{\baselineskip}
+ \input{Cfig/direclight}
+
+\vspace{\baselineskip}
+\hspace{15mm} \includegraphics[bb=0 0 549 213 , width=10cm]{Cfig/direclight1.png}
+
+\hspace{20mm}方向光源の指定なし \hspace{20mm} 方向光源１ \verb|diffuse->[1,1,0]|
+
+\vspace{\baselineskip}
+\hspace{15mm} \includegraphics[bb=0 0 550 214 , width=10cm]{Cfig/direclight2.png}
+
+\hspace{2mm}方向光源2 \verb|direction->[8,0,0],diffuse->[0,0,1])| \hspace{5mm} 方向光源１と２
+
+\hypertarget{spotlight3d}{} 
+\vspace{\baselineskip}
+\noindent
+{\bf スポットライトの設定}：\verb|spotlight3d(<int>)|
+
+\verb|<int>|は，光源の番号で0以上７以下の整数。
+
+スポットライトを発生または修正する。 指定された光源がすでに存在するならば修飾子によって指定された状態に修正し、利用可能にする。そうでなければ、指定された光源を作る。修飾子がなければ初期値が使われる。
+
+\vspace{\baselineskip}
+ \input{Cfig/spot}
+
+\hypertarget{disablelight3d}{}
+\vspace{\baselineskip}
+\noindent
+{\bf 光源を無効にする}：\verb|disablelight3d(<int>)|
+
+\verb|<int>|は，光源の番号で0以上７以下の整数。
+
+与えられた番号の光源を無効にする。
+
+ 
+\end{document}

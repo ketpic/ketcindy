@@ -31,7 +31,7 @@ Setslidehyper,basic3,1532,1605,Divoptions,Addpackage,Indexall,Toupper
 Settitle,basic3,1609,1678,Toupper,Indexall
 Maketitle,basic3,1682,1773,iswindows,Makebat,Makeshell,kc,Cindyname,isexists,PaO
 Repeatsameslide,basic3,1777,1932,Indexall
-Presentation,basic3,1936,2588,readfile2str,isexists,Removespace,fileslist,Repeatsameslide
+Presentation,basic3,1936,2588,readfile2str,Removespace,fileslist,Repeatsameslide
 Mkslides,basic3,2592,2656,Fillblack,Changework,Setdirectory,setexec,isexists,Presentation,iswindows,Makebat,Makeshell,kc,pathsep,Fillrestore
 Mkslidesummary,basic3,2660,2725,Fillblack,pathsep,ismacosx,setexec,PPa,PaO,CalcbyR,iswindows,Makebat,Makeshell,kc,Changework,Fillrestore
 BBdata,basic3,2729,2860,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,isexists,Readlines,Removespace,Strsplit,Sprintf

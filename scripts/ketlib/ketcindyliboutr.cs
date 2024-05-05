@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[2024026] loaded");
+println("ketcindylibout[20240502] loaded");
 
 //help:start();
 
@@ -1849,7 +1849,6 @@ WritetoM(fname,cmdL,allflg):=(
   outflg=0;
   forall(1..(length(cmdL)),
     tmp1=cmdL_#;
-
     if(allflg==1,  // 2016.02.23 from
       if(#==1,
         tmp="writefile("+Dq+Dirwork+"/"+wfilename+Dq+")$/*##*/";
@@ -1858,9 +1857,17 @@ WritetoM(fname,cmdL,allflg):=(
         outflg=1;
         println(SCEOUTPUT,tmp1+"$/*##*/");
       ,
-        println(SCEOUTPUT,tmp1+"$/*##*/");
-      );
-    ,
+        if(length(tmp1)>0, //240501from
+          tmp=substring(tmp1,length(tmp1)-1,length(tmp1));
+          if(!contains(["(",","],tmp),
+            tmp1=tmp1+"$/*##*/";
+          ,
+            tmp1=replace(tmp1,",,","");
+          );//240501to
+          println(SCEOUTPUT,tmp1);
+        );//240501to
+	  );
+	,
       if((indexof(tmp1,"disp(")>0) & (outflg==0),
         tmp="writefile("+Dq+Dirwork+"/"+wfilename+Dq+")$/*##*/";
         tmp=replace(tmp,"\","/");
@@ -2077,19 +2084,23 @@ CalcbyM(name,cmdorg,optionorg):=(
         tmp="["+tmp1;
       );
       tmp2="";
-      forall(1..length(tmp1),
-         if(substring(tmp1,#-1,#+1)=="::",
-         if(substring(tmp2,0,1)==":", tmp2=substring(tmp2,1,length(tmp2)));
-           cmdlist=append(cmdlist,"disp("+tmp2+")");
-           tmp2="";
-         ,
-            tmp2=tmp2+substring(tmp1,#-1,#);
-         );
+      forall(1..(length(tmp1)),
+        if(substring(tmp1,#-1,#+1)=="::",
+          if(substring(tmp2,0,1)==":",
+            tmp2=substring(tmp2,1,length(tmp2))
+          );
+          cmdlist=append(cmdlist,"disp("+tmp2+")");
+          tmp2="";
+        ,
+          tmp2=tmp2+substring(tmp1,#-1,#);
+        );
       );
       if(length(tmp2)>0,
-         if(substring(tmp2,0,1)==":", tmp2=substring(tmp2,1,length(tmp2)));
-         cmdlist=append(cmdlist,"disp("+tmp2+")");
-      );
+         if(substring(tmp2,0,1)==":",
+           tmp2=substring(tmp2,1,length(tmp2))
+         );
+  	     cmdlist=append(cmdlist,"disp("+tmp2+")");
+	  );
     ,
       tmp2=cmdM_(2*nc);  // list of argments
       tmp3="";

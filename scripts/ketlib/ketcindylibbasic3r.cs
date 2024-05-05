@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[202403-6] loaded");
+println("ketcindylibbasic3[202404-26] loaded");
 
 //help:start();
 
@@ -1936,7 +1936,8 @@ Repeatsameslide(repeatflg,sestr,addedL):=(
 Presentation(texfile):=Presentation(texfile,texfile);
 Presentation(texfile,txtfile):=(
 //help:Presentation(texfile,txtfile);
-  regional(file,flgL,flg,verbflg,slideL,ns,slideorgL,wall,sld,slidecmd,tmp,tmp0,tmp1,
+  regional(packL,file,flgL,flg,verbflg,slideL,ns,slideorgL,
+     wall,sld,slidecmd,tmp,tmp0,tmp1,
      tmp2,tmp3,tmp4,tmp5,newoption,top,repeatflg,nrep,nrepprev,,repstr,
      sestr,npara,paradt,parafiles,hyperflg,paractr,
      letterc,boxc,shadowc,mboxc,sep);
@@ -2004,56 +2005,66 @@ Presentation(texfile,txtfile):=(
   );
   println(SCEOUTPUT,tmp);// 16.06.09from
   tmp=select(1..(length(tmp3)),indexof(tmp3_#,"\usepackage")>0);//17.06.18from
+  packL=[]; //240412from
   forall(tmp,
-    println(SCEOUTPUT,tmp3_#);
+	packL=append(packL,tmp3_#);
   );
-  tmp=remove(1..(length(tmp3)),tmp);
-  tmp3=tmp3_tmp;//17.06.18until
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
-    if(indexof(PathT,"lualatex")>0,
-      println(SCEOUTPUT,"\usepackage{luatexja}");
-    );
-    println(SCEOUTPUT,"\usepackage{pict2e}");
-    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");// 17.04.08from
-  ,
-    println(SCEOUTPUT,"\special{papersize=\the\paperwidth,\the\paperheight}");
-  );// 17.04.08until
-  tmp=replace(Dirhead,"\","/");//17.11.01from
-  tmp=replace(tmp,"scripts","tex/latex");
-  if(isexists(tmp,""),
+  tmp3=remove(tmp3,packL);//240412to
+  if(GPACK=="tpic", //240412from
     println(SCEOUTPUT,"\usepackage{ketpic,ketlayer}");
   ,
-    tmp=replace(Dirhead+"/ketpicstyle","\","/");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
+    if(GPACK=="pict2e",
+      println(SCEOUTPUT,"\usepackage{pict2e}");
+    ,
+      println(SCEOUTPUT,"\usepackage{tikz}");
+    );
+    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
   );
-  if(length(wall)==0,
-    tmp=replace(Dirhead,"\","/");//17.11.01from
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketslide}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketslide}");
+  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
+    println(SCEOUTPUT,"\setlength{\pdfpageheight}{210mm}");//240412[2lines]
+    println(SCEOUTPUT,"\setlength{\pdfpagewidth}{297mm}");
+	if(indexof(PathT,"lualatex")>0,
+      println(SCEOUTPUT,"\usepackage{luatexja}");
     );
+    println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
   ,
-    tmp=replace(Dirhead,"\","/");
-    tmp=replace(tmp,"scripts","tex/latex");
-    if(isexists(tmp,""),
-      println(SCEOUTPUT,"\usepackage{ketslide2}");
-    ,
-      tmp=replace(Dirhead+"/ketpicstyle","\","/");
-      println(SCEOUTPUT,"\usepackage{"+tmp+"/ketslide2}");
-    );
-  );//17.04.08until
+    println(SCEOUTPUT,"\special{papersize=\the\paperwidth,\the\paperheight}");
+  ); //240412to
+  if(length(wall)==0, //240412from
+    println(SCEOUTPUT,"\usepackage{ketslide}");
+  ,
+    println(SCEOUTPUT,"\usepackage{ketslide2}");
+  );
   println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
   println(SCEOUTPUT,"\usepackage{bm,enumerate}");
   if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
-    println(SCEOUTPUT,"\usepackage{graphicx}");
+    tmp="\usepackage{graphicx}";
   ,
-    println(SCEOUTPUT,"\usepackage[dvipdfmx]{graphicx}");
+    tmp="\usepackage[dvipdfmx]{graphicx}";
   );
+  println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"\usepackage{color}");//190222
+  hyperflg=0;
+//  tmp=select(packL,indexof(#,"emath")>0);//240412from
+//  if(tmp==0,
+    tmp="colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}";
+    if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
+      println(SCEOUTPUT,"\usepackage["+tmp);
+    ,
+      println(SCEOUTPUT,"\usepackage[dvipdfmx,"+tmp);
+    );
+//  );
+  hyperflg=1;
+  forall(packL,
+    println(SCEOUTPUT,#); 
+  );
+   println(SCEOUTPUT,"");
+//  tmp=remove(1..(length(tmp3)),tmp);
+//  tmp3=tmp3_tmp;
+  forall(tmp3,
+    println(SCEOUTPUT,#);
+  );//240412to
+  println(SCEOUTPUT,"");
   letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
   shadowc=[0,0,0,0.5]; mboxc="yellow";
   tmp4="abcdefghijklmno";
@@ -2063,7 +2074,8 @@ Presentation(texfile,txtfile):=(
       tmp=text(tmp);
       tmp=substring(tmp,1,length(tmp)-1);
       if(length(SlideColorList_#)==4,//17.01.07from
-        println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{cmyk}{"+tmp+"}");
+        println(SCEOUTPUT,
+           "\definecolor{slidecolor"+tmp4_#+"}{cmyk}{"+tmp+"}");
       );
       if(length(SlideColorList_#)==3,
         println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{rgb}{"+tmp+"}");
@@ -2073,28 +2085,16 @@ Presentation(texfile,txtfile):=(
   );
   println(SCEOUTPUT,"\def\setthin#1{\def\thin{#1}}");//17.08.23
   println(SCEOUTPUT,"\setthin{"+text(ThinDense)+"}");//17.08.23
-  println(SCEOUTPUT,"\newcommand{\slidepage}[1][s]{%");//180524from
+  println(SCEOUTPUT,"\newcounter{pagectr}");
+  println(SCEOUTPUT,"\setcounter{pagectr}{1}");
+  println(SCEOUTPUT,"\newcommand{\slidepage}[1][\monthday-]{%");//180524from
   println(SCEOUTPUT,"\setcounter{ketpicctra}{18}%");
-  println(SCEOUTPUT,"\if#1m \setcounter{ketpicctra}{1}\fi");
-  println(SCEOUTPUT,"\hypersetup{linkcolor=black}%");
   println(SCEOUTPUT,"");//180908
   println(SCEOUTPUT,"\begin{layer}{118}{0}");
-  println(SCEOUTPUT,"\putnotee{122}{-\theketpicctra.05}{\small\thepage/\pageref{pageend}}");
-  println(SCEOUTPUT,"\end{layer}\hypersetup{linkcolor="+LinkColor+"}");
+  println(SCEOUTPUT,"\putnotew{130}{-\theketpicctra.05}{\small#1\thepage/\pageref{pageend}}");
+  println(SCEOUTPUT,"\end{layer}");
   println(SCEOUTPUT,"");//180908
   println(SCEOUTPUT,"}");//189524to
-  forall(ADDPACK,// 16.06.09from
-    println(SCEOUTPUT,"\usepackage"+#); 
-  );// 16.06.09to
-  tmp=select(ADDPACK,indexof(#,"{hyperref}")>0);//16.12.31from
-  if(length(tmp)>0,
-    hyperflg=1;
-  ,
-    hyperflg=0; //16.12.31until
-  );
-  forall(tmp3,
-    println(SCEOUTPUT,#);
-  );
   if(indexof(PathT,"platex")>0, //180903,180908from
     tmp="\setmargin{"+text(25+SlideMargin_1)+"}{";
     tmp=tmp+text(145-SlideMargin_1)+"}{";
@@ -3386,13 +3386,12 @@ Tomaxform(str):=(
       sharpL,tmp,tmp1,tmp2,tmp3,tmp4);
   repL=[ //190515from
     ["fr(",["","((xx)/(yy))"]], //220505
-    ["log",["{log}(xx)","{log}(yy)/{log}(xx)"]], //230520
-    ["ln(",["{log}(xx)"]], //210903
-    ["sq",["{sqrt}(xx)","(yy)^(1/(xx))"]], //230520
+    ["log(",["{log}(xx)","{log}(yy)/{log}(xx)"]], //240226
+    ["sq(",["{sqrt}(xx)","(yy)^(1/(xx))"]], //240226
     ["po",["","(xx)^(yy)"]],
-    ["sin",["{sin}(xx)","{sin}(yy)^(xx)"]], //230520
-    ["cos",["{cos}(xx)","{cos}(yy)^(xx)"]], //230520
-    ["tan",["{tan}(xx)","{tan}(yy)^(xx)"]], //230520
+    ["sin(",["{sin}(xx)","{sin}(yy)^(xx)"]], //240226
+    ["cos(",["{cos}(xx)","{cos}(yy)^(xx)"]], //240226
+    ["tan(",["{tan}(xx)","{tan}(yy)^(xx)"]], //240226
     ["|(",["{abs}(xx)"]], //210902
     ["pi(",["{%pi}()"]]
   ];

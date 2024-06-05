@@ -1,0 +1,92 @@
+NIL
+(%i3) powerdisp:false
+(%i4) display2d:false
+(%i5) linel:1000
+(%i6) batch("/Applications/KeTTeX.app/texlive/texmf-dist/scripts/ketcindy/ketlib/maximaL/mnr.max")
+
+read and interpret file: /Applications/KeTTeX.app/texlive/texmf-dist/scripts/ketcindy/ketlib/maximaL/mnr.max
+(%i7) numer(f):=factor(num(ratsimp(f)))
+(%i8) Numer(f):=numer(f)
+(%i9) denomf(f):=factor(denom(ratsimp(f)))
+(%i10) Denom(f):=factor(denom(ratsimp(f)))
+(%i11) fracfactor(f):=numer(f)/denomf(f)
+(%i12) frfactor(f):=numer(f)/denomf(f)
+(%i13) factorfr(f):=numer(f)/denomf(f)
+(%i14) ratev(eq,rep):=ratsimp(ev(eq,rep))
+(%i15) Ratev(eq,rep):=ratev(eq,rep)
+(%i16) frev(eq,rep):=frfactor(ratev(eq,rep))
+(%i17) ratevL(eq,repL):=block([out,tmp],out:eq,for tmp thru length(repL) do out:ratev(out,repL[tmp]),out)
+(%i18) frevL(eq,repL):=ratevL(eq,repL)
+(%i19) disc(eq,v):=block([eqe,v2,v1,v0],eqe:expand(eq),v2:coeff(eqe,v,2),v1:coeff(eqe,v,1),v0:coeff(eqe,v,0),frfactor(v1^2-4*v2*v0))
+(%i20) nthfactor(pol,kth):=block([tmp,j,out],tmp:part(pol,0),if tmp = "-" then tmp:part(pol,1) else tmp:pol,j:length(tmp),if kth > j then kth:j,part(tmp,kth))
+(%i21) angtan(m):=float((2*atan(m)*180)/%pi)
+(%i22) tanang(t):=float(tan(((t/2)*%pi)/180))
+(%i23) supA(m):=ratsimp(1/m)
+(%i24) comA(m):=ratsimp((1-m)/(m+1))
+(%i25) Hokaku(m):=ratsimp(1/m)
+(%i26) Yokaku(m):=ratsimp((1-m)/(m+1))
+(%i27) plusA(m1,m2):=ratsimp((m1+m2)/(1-m2*m1))
+(%i28) minusA(m1,m2):=ratsimp((m1-m2)/(1+m2*m1))
+(%i29) dotProd(v1,v2):=ratsimp(v1[1]*v2[1]+v1[2]*v2[2])
+(%i30) normsq(v):=ratsimp(v[1]^2+v[2]^2)
+(%i31) crossProd(v1,v2):=ratsimp(v1[1]*v2[2]-v1[2]*v2[1])
+(%i32) eqLine(pa1,pa2):=block([tmp,tmp1,tmp2,out],if pa1[1] = pa2[1] then tmp:_X-pa1[1] else block(tmp1:pa2[1]-pa1[1],tmp2:pa2[2]-pa1[2],tmp:_Y-(pa1[2]+(tmp2/tmp1)*(_X-pa1[1]))),out:numer(tmp))
+(%i33) meetLinell(line1,line2):=block([out],out:solve([line1,line2],[_X,_Y]),if length(out) > 0 then out:ratev([_X,_Y],out))
+(%i34) meetLine(pts1,pts2):=block([tmp1,tmp2,out],tmp1:eqLine(pts1[1],pts1[2]),tmp2:eqLine(pts2[1],pts2[2]),out:meetLinell(tmp1,tmp2),out)
+(%i35) lenSeg2(p1,[p2]):=block([tmp],if length(p2) > 0 then tmp:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2 else tmp:p1[1]^2+p1[2]^2,ratsimp(tmp))
+(%i36) lenSeg(p1,[p2]):=block([tmp],if length(p2) > 0 then tmp:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2 else tmp:p1[1]^2+p1[2]^2,ratsimp(sqrt(tmp)))
+(%i37) vect(A,B):=ratsimp(B-A)
+(%i38) ptDirSeg(A,B,t):=ratsimp([A[1]+t*(B[1]-A[1]),A[2]+t*(B[2]-A[2])])
+(%i39) slide(v):=ratsimp(v+sliderVector)
+(%i40) rotate(v):=block([x,y,c,s,u],x:v[1]-rotCenter[1],y:v[2]-rotCenter[2],c:rotCS[1],s:rotCS[2],u:[c*x-s*y,s*x+c*y],ratsimp(u+rotCenter))
+(%i41) putTriangle(m,n,r):=block(mAng:m,nAng:n,inR:r,assume(mAng > 0,nAng > 0,inR > 0,mAng*nAng-1 < 0),edgeLeft:(r*(1+m^2))/(m*(1-n*m)),edgL:edgeLeft,edgeRight:(r*(1+n^2))/(n*(1-n*m)),edgR:edgeRight,edgeBottom:(r*(m+n))/(n*m),edgB:edgeBottom,cirR:(r*(m^2+1)*(n^2+1))/(4*m*n*(1-m*n)),exRa:r/(m*n),exRb:(r*(m+n))/(m*(1-m*n)),exRc:(r*(m+n))/(n*(1-m*n)),area:(r^2*(m+n))/(m*n*(1-m*n)),halfPer:(r*(m+n))/(m*n*(1-m*n)),half:halfPer,inCenter:[0,0],inC:inCenter,vertexLeft:[(-r)/m,-r],verL:vertexLeft,vtxL:verL,vertexRight:[r/n,-r],verR:vertexRight,vtxR:verR,vertexTop:[(r*(n-m))/(1-m*n),(r*(1+m*n))/(1-m*n)],verT:vertexTop,vtxT:verT,cirCenter:[(r*(m-n))/(2*m*n),(r*(m^2+3*m^2*n^2+n^2-1))/(4*m*n*(1-m*n))],cirC:cirCenter,barCenter:[(r*(2*m*n-1)*(n-m))/(3*m*n*(1-m*n)),(r*(3*m*n-1))/(3*(1-m*n))],barC:barCenter,ortCenter:[(r*(n-m))/(1-m*n),(r*(3*m^2*n^2-m^2+(-2)*m*n-n^2+1))/(2*m*n*(1-m*n))],ortC:ortCenter,exCentera:[(r*(m-n))/(m*n),((-r)*(m*n+1))/(m*n)],exCa:exCentera,
+                   exCenterb:[((-r)*(1+m^2))/(m*(1-m*n)),(r*n*(1+m^2))/(m*(1-m*n))],exCb:exCenterb,exCenterc:[(r*(1+n^2))/(n*(1-m*n)),(r*m*(1+n^2))/(n*(1-m*n))],exCc:exCenterc,sliderVector:[0,0],rotCenter:[0,0],rotCsSn:[1,0],[vertexTop,vertexLeft,vertexRight,inCenter])
+(%i42) putT(m,n,r):=putTriangle(m,n,r)
+(%i43) putTriangle_btm(m,n,btm):=block([r,ans],putTriangle(m,n,r),ans:ratsimp(solve(edgeBottom = btm,r)),putTriangle(m,n,ans),[vertexTop,vertexLeft,vertexRight,inCenter])
+(%i44) slideTriangle(A,B):=block(sliderVector:[B[1]-A[1],B[2]-A[2]],inCenter:slide(inCenter),inC:inCenter,vertexLeft:slide(vertexLeft),verL:vertexLeft,vtxL:verL,vertexRight:slide(vertexRight),verR:vertexRight,vtxR:verR,vertexTop:slide(vertexTop),verT:vertexTop,vtxT:verT,cirCenter:slide(cirCenter),cirC:cirCenter,barCenter:slide(barCenter),barC:barCenter,ortCenter:slide(ortCenter),ortC:ortCenter,exCentera:slide(exCentera),exCa:exCentera,exCenterb:slide(exCenterb),exCb:exCenterb,exCenterc:slide(exCenterc),exCc:exCenterc,[vertexTop,vertexLeft,vertexRight,inCenter])
+(%i45) slideT(A,B):=slideTriangle(A,B)
+(%i46) rotateTriangle(tr,centre):=block(rotCenter:centre,rotCS:[(1-tr^2)/(1+tr^2),(2*tr)/(1+tr^2)],inCenter:rotate(inCenter),inC:inCenter,vertexLeft:rotate(vertexLeft),verL:vertexLeft,vtxL:verL,vertexRight:rotate(vertexRight),verR:vertexRight,vtxR:verR,vertexTop:rotate(vertexTop),verT:vertexTop,vtxT:verT,cirCenter:rotate(barCenter),cirC:cirCenter,ortCenter:rotate(ortCenter),ortC:ortCenter,barCenter:rotate(barCenter),barC:barCenter,exCentera:rotate(exCentera),exCa:exCentera,exCenterb:rotate(exCenterb),exCb:exCenterb,exCenterc:rotate(exCenterc),exCc:exCenterc,[vertexTop,vertexLeft,vertexRight,inCenter])
+(%i47) rotateT(tr,centre):=rotateTriangle(tr,centre)
+(%i48) reduceDegree(pL,z,stp):=block([stpL,dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out],tmp1:expand(pL[1]),tmp2:expand(pL[2]),dg1:hipow(tmp1,z),dg2:hipow(tmp2,z),ctr:1,stpL:[],while (not dg2 = 0 and not dg1 = 0) and ctr <= stp do block(co1:diff(tmp1,z,dg1)/dg1!,co2:diff(tmp2,z,dg2)/dg2!,tmp:gcd(co1,co2),co1:ratsimp(co1/tmp),co2:ratsimp(co2/tmp),if dg2 < dg1 then block(tmp1:expand(co2*tmp1-co1*tmp2*z^(dg1-dg2)),dg1:hipow(tmp1,z)) else block(tmp2:expand(co2*tmp1*z^(dg2-dg1)-co1*tmp2),dg2:hipow(tmp2,z)),stpL:append(stpL,[tmp1,tmp2]),ctr:ctr+1),tmp1:factor(tmp1),tmp2:factor(tmp2),[tmp1,tmp2,ctr,dg1,dg2,stpL])
+(%i49) reduceD(pL,z,stp):=reduceDegree(pL,z,stp)
+(%i50) commonTan(C1,r1,C2,r2,ch):=block([mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,eq,sol,sol1,sol2,tmp,tmp1,out],x1:C1[1],y1:C1[2],x2:C2[1],y2:C2[2],putTriangle(mL,1,r1),slideTriangle([0,0],C1),pA1:vertexTop,pB1:vertexLeft,pC1:vertexRight,putTriangle(mL,1,r2),slideTriangle([0,0],C2),pA2:vertexTop,pB2:vertexLeft,pC2:vertexRight,v1:ratsimp(pA1-pB1),v2:ratsimp(pA2-pB1),tmp:crossProd(v1,v2),eq:numer(tmp),sol:solve(eq,mL),tmp:sol[ch],pA1:ratev(pA1,tmp),pB1:ratev(pB1,tmp),out:[pA1,pB1],out)
+(%i51) comTan1(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,1)
+(%i52) comTan2(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,2)
+(%i53) commonTanR(C1,r1,C2,r2,ch):=block([x1,y1,x2,y2,pA1,pC1,pA2,pC2,v1,v2,eq,sol,sol1,sol2,tmp,tmp1,out],x1:C1[1],y1:C1[2],x2:C2[1],y2:C2[2],putTriangle(1,nR,r1),slideTriangle([0,0],C1),pA1:vertexTop,pC1:vertexRight,putTriangle(1,nR,r2),slideTriangle([0,0],C2),pA2:vertexTop,pC2:vertexRight,v1:ratsimp(pA1-pC1),v2:ratsimp(pA2-pC1),eq:crossProd(v1,v2),eq:numer(eq),sol:solve(eq,nR),tmp:sol[ch],pA1:ratev(pA1,tmp),pC1:ratev(pC1,tmp),out:[pA1,pC1],out)
+(%i54) comTanR(C1,r1,C2,r2):=commonTanR(C1,r1,C2,r2,1)
+(%i55) commonTanC(C1,r1,C2,r2,ch):=block([x1,y1,x2,y2,pA1,pB1,pA2,pC2,v1,v2,eq1,eq2,sol,sol1,sol2,tmp,tmp1,out],x1:C1[1],y1:C1[2],x2:C2[1],y2:C2[2],putTriangle(mL,1,r1),slideTriangle([0,0],C1),pA1:vertexTop,pB1:vertexLeft,putTriangle(1,1/mL,r2),slideTriangle([0,0],C2),pA2:vertexTop,pC2:vertexRight,v1:ratsimp(pA1-pB1),v2:ratsimp(pA2-pB1),tmp:crossProd(v1,v2),eq:numer(tmp),sol:solve(eq,mL),tmp:sol[ch],pA1:ratev(pA1,tmp),pB1:ratev(pB1,tmp),out:[pA1,pB1],out)
+(%i56) comTanC1(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,1)
+(%i57) comTanC2(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,2)
+(%i58) Ca:[x1,y1]
+(%i59) Cb:[x2,y2]
+(%i60) putT(m,1,r1)
+(%i61) slideT([0,0],Ca)
+(%i62) A1:vtxT
+(%o62) [x1+r1,((m-1)*y1+((-m)-1)*r1)/(m-1)]
+(%i63) B1:vtxL
+(%o63) [(m*x1-r1)/m,y1-r1]
+(%i64) C1:vtxR
+(%i65) putT(m,1,r2)
+(%i66) slideT([0,0],Cb)
+(%i67) A2:vtxT
+(%i68) B2:vtxL
+(%i69) C2:vtxR
+(%i70) disp(A1)
+[x1+r1,((m-1)*y1+((-m)-1)*r1)/(m-1)]
+
+(%i71) disp(B1)
+[(m*x1-r1)/m,y1-r1]
+
+(%i72) disp(C1)
+[x1+r1,y1-r1]
+
+(%i73) disp(A2)
+[x2+r2,((m-1)*y2+((-m)-1)*r2)/(m-1)]
+
+(%i74) disp(B2)
+[(m*x2-r2)/m,y2-r2]
+
+(%i75) disp(C2)
+[x2+r2,y2-r2]
+
+(%i76) closefile()

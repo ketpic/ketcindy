@@ -1,3 +1,5 @@
+// 20240321
+//    ketcindysettings changed (Initlocal added)
 // 20230801
 //    Pointdata dbg  ( no ketjs removed)
 // 20230704

@@ -1,5 +1,9 @@
+// 20240502
+//    CalcbyM changed (case of no ::)
+// 20240430
+//    CalcbyM changed ($/**)
 // 20240226
-//    CalcbyMsetdisp adde
+//    CalcbyMsetdisp added
 // 20240220
 //    Disptex,Dispe changed
 /// 20240213

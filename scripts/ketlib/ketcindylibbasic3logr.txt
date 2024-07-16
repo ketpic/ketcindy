@@ -1,3 +1,7 @@
+// 20240426
+// Tomaxform changed (for blank arguments)
+// 20240412
+// Presentation changed significally
 // 20240222
 // Mvlist,Mvplotdata changed, Mvcircledata added
 // Totexform dbg  (str)

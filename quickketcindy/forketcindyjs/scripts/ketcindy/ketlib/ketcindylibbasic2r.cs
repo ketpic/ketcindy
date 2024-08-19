@@ -3708,7 +3708,7 @@ Mkbeziercrv(nm,ptctrL,options):=(
     name=nm+text(#);
     ptlist=ptctrLL_#_1;
     ctrlist=ptctrLL_#_2;
-    Bezier(nm,ptlist,ctrlist,options); // 17.01.06
+    Bezier(name,ptlist,ctrlist,options); // 17.01.06
   );  
 );
 ////%Mkbeziercrv end////

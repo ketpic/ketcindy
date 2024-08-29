@@ -1,0 +1,47 @@
+/*  Maxima tips http://www.cymric.jp/maxima/tips.html */
+
+rowmult(X, n, c) := block([M],
+	M:matrix(),
+	for i:1 thru length(X) do
+		if i=n then M:addrow(M, c*row(X, i))
+		else M:addrow(M, row(X, i)),
+	M
+);
+rowadd(X, n, m, c) := block([M],
+	M:matrix(),
+	for i:1 thru length(X) do
+		if i=n then M:addrow(M, c * row(X, m) + row(X, i))
+		else M:addrow(M, row(X, i)),
+	M
+);
+rowch(X, m, n) := block([M],
+	M:matrix(),
+	for i:1 thru length(X) do
+		if i=m then M:addrow(M, row(X, n))
+		else if i=n then M:addrow(M, row(X, m))
+			 else M:addrow(M, row(X, i)),
+	M
+);
+
+colmult(X, n, c) := block([M],
+	M:matrix(),
+	for i:1 thru length(transpose(X)) do
+		if i=n then M:addcol(M, c*col(X, i))
+		else M:addcol(M, col(X, i)),
+	M
+);
+coladd(X, n, m, c) := block([M],
+	M:matrix(),
+	for i:1 thru length(transpose(X)) do
+		if i=n then M:addcol(M, c * col(X, m) + col(X, i))
+		else M:addcol(M, col(X, i)),
+	M
+);
+colch(X, m, n) := block([M],
+	M:matrix(),
+	for i:1 thru length(transpose(X)) do
+		if i=m then M:addcol(M, col(X, n))
+		else if i=n then M:addcol(M, col(X, m))
+			 else M:addcol(M, col(X, i)),
+	M
+);

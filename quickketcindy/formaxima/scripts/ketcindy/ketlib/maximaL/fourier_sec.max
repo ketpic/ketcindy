@@ -1,0 +1,260 @@
+/* 
+Package fourier_sec, to study piecewise defined functions
+(sectionally defined, hence the name).
+
+Author: Jose A. Vallejo
+	Faculty of Sciences
+	Universidad Autonoma de San Luis Potosi (Mexico)
+	http://galia.fc.uaslp.mx/~jvallejo
+
+It is assumed that the functions are defined using the format
+                 if ... then ... else ...
+as, for example, 
+(%i1) absolute(x):=if (x<=0) then -x elseif (x>0) then x$
+(it will not work with 'abs').
+It provides three functions:
+1. 'paritycheck', to check if a given piecewise defined
+   function is even or odd (or none). For instance,
+   (%i2) paritycheck(absolute(x),x);
+   (%o2) 0
+   A '0' means 'even', '1' is 'odd', and '-1' is 'none'
+2. 'fourier_sec_coeff', to compute the Fourier sine and cosine
+   coefficients. The function must have compact support.For
+   instance, for the unit step we have:
+   (%i3) h(x):=if (-%pi<=x and x<0) then 0 elseif (0<=x and x<=%pi) then 1$
+   (%i4) fourier_sec_coeff(h(x),x);
+   (%o4) [1/2,0,-((-1)^n-1)/(%pi*n)]
+3. 'fourier_sec_series', to compute the Fourier series, truncated
+   or not. The series for the unit step to the 10th order:
+   (%i5) fourier_sec_series(h(x),x,10);
+   (%o5) (2*sin(9*x))/(9*%pi)+(2*sin(7*x))/(7*%pi)+(2*sin(5*x))/(5*%pi)+(2*sin(3*x))/(3*%pi)+(2*sin(x))/%pi+1/2
+   and the whole Fourier series
+   (%i6) fourier_sec_series(h(x),x,inf);
+   (%o6) (sum(((1/n-(-1)^n/n)*sin(n*x))/%pi,n,1,inf))+1/2
+*/
+
+
+load(fourie)$
+
+load(simplify_sum)$
+
+paritycheck(funvar,x):=block([subintervals,subvalues,tmp1,tmp2,token1,token0,tmp3,
+                                        subvalues_list,subintervals_list,icentral:0,middle,minusmiddle,token2,
+                                        side_subintervals_list,L,side_subvalues_list,
+                                        zero_subintervals,tmp4,tmp5,non_zero_side_subvalues_list,
+                                        non_zero_side_subintervals_list,LL,token3,expr1,expr2],
+                                        local(M,N,P,Q,count1,count2,count3,count4),
+    subintervals:makelist(part(funvar,i),i,makelist(2*k-1,k,1,(length(funvar)-2)/2)),
+    subvalues:makelist(part(funvar,i),i,makelist(2*k,k,1,(length(funvar)-2)/2)),
+    for j:1 thru length(subintervals) do (if operatorp(subintervals[j],["<",">","<=",">="]) then tmp1[j]:1 else tmp1[j]:0),
+    tmp1:makelist(tmp1[j],j,1,length(subintervals)),                    
+    tmp2:sublist_indices(tmp1,lambda([x],x=1)),
+    
+    /* if length(tmp2)=0 all the subintervals in the domain of funvar are bounded! */
+    
+    if is(equal(length(tmp2),0)) then
+                     (
+                          subvalues_list:copylist(subvalues),
+                          tmp3:copylist(subintervals),
+                          for j:1 thru length(tmp3) do
+                                (
+                                  M[j]:makelist(part(tmp3[j],k),k,1,length(tmp3[j])),
+                                  for m:1 thru 2 do N[j,m]:makelist(part(M[j],m,n),n,1,length(M[j])),
+                                  P[j]:append(N[j,1],N[j,2]),Q[j]:sort(delete(x,P[j]),"<")
+                                 ),
+                          subintervals_list:makelist(Q[j],j,1,length(tmp3)),
+                          for i:1 thru length(subintervals_list) do (if is(lmin(subintervals_list[i])*lmax(subintervals_list[i])<0) then icentral:i),
+                     if is(icentral>0) then middle:subvalues_list[icentral],
+                     if is(icentral>0) then 
+                        (if evenfunp(middle,x) then token2:0 elseif oddfunp(middle,x) then token2:1 else return(-1))
+                     else
+    
+    /* now we analyze what happens if icentral=0, so there are only side intervals */
+        
+                                 (
+                                    /* as before, there must be an even number of symmetric intervals, otherwise -1 */
+                                    side_subintervals_list:copylist(subintervals_list),
+                                    if not(evenp(length(side_subintervals_list))) then return(-1),
+                                    L:length(side_subintervals_list)/2,
+                                    for k:1 thru L do count1[k]:charfun(is(equal(side_subintervals_list[k],reverse(map("-",side_subintervals_list[2*L+1-k]))))),
+                                    if sum(count1[j],j,1,L)#L then return(-1),
+                                    side_subvalues_list:copylist(subvalues_list),
+                                    for k:1 thru L do count2[k]:charfun(is(equalp(side_subvalues_list[k],ratsubst(-x,x,side_subvalues_list[2*L+1-k])))),
+                                    if is(equal(sum(count2[j],j,1,L),L)) then token3:0,
+                                    for k:1 thru L do count3[k]:charfun(is(equalp(side_subvalues_list[k],-ratsubst(-x,x,side_subvalues_list[2*L+1-k])))),
+                                    if is(equal(sum(count3[j],j,1,L),L)) then token3:1,
+                                    if  is(not(equalp(token3,0)) and not(equalp(token3,1))) then return(-1) ,
+                                    return(token3)       
+                                  ),
+        
+    /* and what happens if icentral#0 */
+    
+                         side_subintervals_list:delete(subintervals_list[icentral],subintervals_list),
+                         if is(equal(length(side_subintervals_list),0)) then (if is(equal(token1,token2)) then return(token1*token2) else return(-1)),
+                         if not(evenp(length(side_subintervals_list))) then return(-1),
+                         L:length(side_subintervals_list)/2,
+                         for k:1 thru L do count1[k]:charfun(is(equal(side_subintervals_list[k],reverse(map("-",side_subintervals_list[2*L+1-k]))))),
+                         if sum(count1[j],j,1,L)#L then return(-1),
+                         side_subvalues_list:delete(subvalues_list[icentral],subvalues_list),
+    
+    /* remove those subintervals in which funvar vanishes */
+    
+                        zero_subintervals:sublist_indices(side_subvalues_list,lambda([x],x=0)),
+                        tmp4:copylist(side_subintervals_list),
+                        for j:1 thru length(zero_subintervals) do
+                           (tmp4:delete(side_subintervals_list[zero_subintervals[j]],tmp4)),
+                        non_zero_side_subintervals_list:tmp4,
+                        tmp5:copylist(side_subvalues_list),
+                        for j:1 thru length(zero_subintervals) do
+                           (tmp5:delete(side_subvalues_list[zero_subintervals[j]],tmp5)),
+                        non_zero_side_subvalues_list:tmp5, 
+    
+    /* if length(non_zero_side_subintervals_list)=0 then we are done just with token2 */
+    
+                        if is(equal(length(non_zero_side_subintervals_list),0)) then return(token2),
+    
+    /* otherwise, we must also take into account token3 */
+                        LL:length(non_zero_side_subintervals_list)/2,
+                        for k:1 thru LL do count2[k]:charfun(is(equalp(non_zero_side_subvalues_list[k],ratsubst(-x,x,non_zero_side_subvalues_list[2*LL+1-k])))),
+                        if is(equal(sum(count2[j],j,1,LL),LL)) then token3:0,
+                        for k:1 thru LL do count3[k]:charfun(is(equalp(non_zero_side_subvalues_list[k],-ratsubst(-x,x,non_zero_side_subvalues_list[2*LL+1-k])))),
+                        if is(equal(sum(count3[j],j,1,LL),LL)) then token3:1,
+                        if is(not(equal(token3,0) or equal(token3,1))) then return(-1) elseif
+                             is(token2#token3) then return(-1)
+                                 elseif is(equal(token2,0)) then return(0)
+                                       elseif is(equal(token2,1)) then return(1)   
+    
+                       ),
+    
+    /* we continue here with unbounded intervals */
+            
+    expr1:subvalues[tmp2[1]],
+    expr2:ratsubst(-x,x,subvalues[tmp2[2]]),
+    if is(equalp(expr1,expr2)) then token1:0 
+               elseif is(equalp(expr1,-expr2)) then token1:1
+                        else return(-1),
+           
+    /* the problem when defining token1 is that if the asymptotic value is 0, then it is always token1:0 */
+    /* although the function could be odd. To cope with this, we define token0 below */
+    
+    tmp3:makelist(subintervals[i],i,sublist_indices(tmp1,lambda([x],x=0))),
+    if is(equal(length(tmp3),0)) then return(token1),
+    subvalues_list:makelist(subvalues[i],i,sublist_indices(tmp1,lambda([x],x=0))),
+    token0:if member(0,makelist(subvalues[i],i,tmp2)) then 0 else 7,
+    for j:1 thru length(tmp3) do
+        (
+         M[j]:makelist(part(tmp3[j],k),k,1,length(tmp3[j])),
+         for m:1 thru 2 do N[j,m]:makelist(part(M[j],m,n),n,1,length(M[j])),
+         P[j]:append(N[j,1],N[j,2]),Q[j]:sort(delete(x,P[j]),"<")
+         ),
+    subintervals_list:makelist(Q[j],j,1,length(tmp3)),
+    for i:1 thru length(subintervals_list) do (if is(lmin(subintervals_list[i])*lmax(subintervals_list[i])<0) then icentral:i),
+    if is(icentral>0) then middle:subvalues_list[icentral],
+    if is(icentral>0) then 
+    (if evenfunp(middle,x) then token2:0 elseif oddfunp(middle,x) then token2:1 else return(-1))
+    else
+        
+    /* now we analyze what happens if icentral=0, so there are only non-bounded intervals and side intervals */
+        
+    (
+        /* as before, there must be an even number of symmetric intervals, otherwise -1 */
+    side_subintervals_list:copylist(subintervals_list),
+    if not(evenp(length(side_subintervals_list))) then return(-1),
+    L:length(side_subintervals_list)/2,
+    for k:1 thru L do count1[k]:charfun(is(equal(side_subintervals_list[k],reverse(map("-",side_subintervals_list[2*L+1-k]))))),
+    if sum(count1[j],j,1,L)#L then return(-1),
+    side_subvalues_list:copylist(subvalues_list),
+    for k:1 thru L do count2[k]:charfun(is(equalp(side_subvalues_list[k],ratsubst(-x,x,side_subvalues_list[2*L+1-k])))),
+    if is(equal(sum(count2[j],j,1,L),L)) then token3:0,
+    for k:1 thru L do count3[k]:charfun(is(equalp(side_subvalues_list[k],-ratsubst(-x,x,side_subvalues_list[2*L+1-k])))),
+    if is(equal(sum(count3[j],j,1,L),L)) then token3:1,
+    if is(not(equal(token3,0)) and not(equal(token3,1))) then return(-1) elseif 
+         is(not(equal(token1,token3)) and not(equal(token0,0))) then return(-1)
+            elseif is( equal(token0,0) and equal(token3,0)) then return(0)
+                     elseif is( equal(token0,0) and  equal(token3,1)) then return(1)
+                             elseif is(not(equal(token0,0)) and equal(token1,token3)) then return(token3) 
+                                  elseif is(not(equal(token0,0)) and not(equal(token1,token3))) then return(-1)       
+    ),    
+    
+    /* and what happens if icentral#0 */
+    
+    side_subintervals_list:delete(subintervals_list[icentral],subintervals_list),
+    if is(equal(length(side_subintervals_list),0)) then (if is(equal(token1,token2)) then return(token1*token2) else return(-1)),
+    if not(evenp(length(side_subintervals_list))) then return(-1),
+    L:length(side_subintervals_list)/2,
+    for k:1 thru L do count1[k]:charfun(is(equal(side_subintervals_list[k],reverse(map("-",side_subintervals_list[2*L+1-k]))))),
+    if sum(count1[j],j,1,L)#L then return(-1),
+    side_subvalues_list:delete(subvalues_list[icentral],subvalues_list),
+    
+    /* remove those subintervals in which funvar vanishes */
+    
+    zero_subintervals:sublist_indices(side_subvalues_list,lambda([x],x=0)),
+    tmp4:copylist(side_subintervals_list),
+    for j:1 thru length(zero_subintervals) do
+    (tmp4:delete(side_subintervals_list[zero_subintervals[j]],tmp4)),
+    non_zero_side_subintervals_list:tmp4,
+    tmp5:copylist(side_subvalues_list),
+    for j:1 thru length(zero_subintervals) do
+    (tmp5:delete(side_subvalues_list[zero_subintervals[j]],tmp5)),
+    non_zero_side_subvalues_list:tmp5, 
+    
+    /* if length(non_zero_side_subintervals_list)=0 then we are done just with token1 and token2 */
+    
+    if is(equal(length(non_zero_side_subintervals_list),0)) then (if is(equal(token1,token2)) then return(token1*token2) else return(-1)),
+    
+    /* otherwise, we must also take into account token3 */
+    LL:length(non_zero_side_subintervals_list)/2,
+    for k:1 thru LL do count2[k]:charfun(is(equalp(non_zero_side_subvalues_list[k],ratsubst(-x,x,non_zero_side_subvalues_list[2*LL+1-k])))),
+    if is(equal(sum(count2[j],j,1,LL),LL)) then token3:0,
+    for k:1 thru LL do count3[k]:charfun(is(equalp(non_zero_side_subvalues_list[k],-ratsubst(-x,x,non_zero_side_subvalues_list[2*LL+1-k])))),
+    if is(equal(sum(count3[j],j,1,LL),LL)) then token3:1,
+    if is(not(equal(token0,0)) and is(not(equal(token1,token2)) or not(equal(token1,token3)) or not(equal(token2,token3))) ) then return(-1)
+       elseif  is(not(equal(token0,0)) and is(equal(token1,0))  ) then return(0)
+             elseif  is(not(equal(token0,0)) and is(equal(token1,1))  ) then return(1)
+                  elseif is( equal(token0,0) and equal(token3,0) and equal(token2,0)) then return(0)
+                     elseif is( equal(token0,0) and equal(token3,1) and equal(token2,1)) then return(1)
+                           else return(-1)
+      
+)$
+
+fourier_sec_coeff(fuvar,x):=
+block([pp,LL,lm,a0,coeff],
+ local(a,b,n,MM,NN,PP,QQ),
+ declare(n,integer),
+ pp:((length(fuvar)/2)-1),
+ LL:makelist(part(fuvar,i),i,makelist(2*s-1,s,1,pp)),
+ for j:1 thru length(LL) step 1 do
+	(
+	 MM[j]:makelist(part(LL[j],r),r,1,length(LL[j])),
+	 for r:1 thru 2 do NN(j,r):=makelist(part(MM[j],r,k),k,1,length(MM[j])),
+	 PP[j]:append(NN(j,1),NN(j,2)),QQ[j]:delete(x,PP[j])
+	 ),
+ for i:1 thru pp step 1 do partsums[i]:sort(QQ[i],"<"),
+ for i:1 thru pp step 1 do partfunc[i]:part(fuvar,2*i),
+ lm:lmax(unique(flatten(makelist(QQ[q],q,1,length(LL))))),
+ a0:(1/(2*lm))*sum(integrate(partfunc[i],x,partsums[i][1],partsums[i][2]),i,1,pp),
+ if is(equal(paritycheck(fuvar,x),1)) then a(n):=0 else a(n):=(1/lm)*sum(adefint(partfunc[i]*cos(%pi*n*x/lm),x,partsums[i][1],partsums[i][2]),i,1,pp),
+ if is(equal(paritycheck(fuvar,x),0)) then b(n):=0 else b(n):=(1/lm)*sum(adefint(partfunc[i]*sin(%pi*n*x/lm),x,partsums[i][1],partsums[i][2]),i,1,pp),
+ coeff:[a0,simplify_sum(a(n)),simplify_sum(b(n))],
+ factor(ratsimp(coeff))
+)$
+
+fourier_sec_series(fuvar,x,u):=
+block([pp,LL,lm,a0,coeff],
+ local(a,b,n,MM,NN,PP,QQ),
+ declare(n,integer),
+ pp:((length(fuvar)/2)-1),
+ LL:makelist(part(fuvar,i),i,makelist(2*s-1,s,1,pp)),
+ for j:1 thru length(LL) step 1 do
+	(
+	 MM[j]:makelist(part(LL[j],r),r,1,length(LL[j])),
+	 for r:1 thru 2 do NN(j,r):=makelist(part(MM[j],r,k),k,1,length(MM[j])),
+	 PP[j]:append(NN(j,1),NN(j,2)),QQ[j]:delete(x,PP[j])
+	 ),
+ for i:1 thru pp step 1 do partsums[i]:sort(QQ[i],"<"),
+ for i:1 thru pp step 1 do partfunc[i]:part(fuvar,2*i),
+ lm:lmax(unique(flatten(makelist(QQ[q],q,1,length(LL))))),
+ a0:(1/(2*lm))*sum(integrate(partfunc[i],x,partsums[i][1],partsums[i][2]),i,1,pp),
+ if is(equal(paritycheck(fuvar,x),1)) then a(n):=0 else a(n):=(1/lm)*sum(adefint(partfunc[i]*cos(%pi*n*x/lm),x,partsums[i][1],partsums[i][2]),i,1,pp),
+ if is(equal(paritycheck(fuvar,x),0)) then b(n):=0 else b(n):=(1/lm)*sum(adefint(partfunc[i]*sin(%pi*n*x/lm),x,partsums[i][1],partsums[i][2]),i,1,pp),
+ a0+intosum(sum(a(n)*cos(%pi*n*x/lm),n,1,u))+intosum(sum(b(n)*sin(%pi*n*x/lm),n,1,u)))$

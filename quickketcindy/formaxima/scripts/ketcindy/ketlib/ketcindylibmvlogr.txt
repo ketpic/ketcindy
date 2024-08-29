@@ -1,0 +1,70 @@
+// 20220219
+//    Mkflipanime,Mkanime changed (Major change)
+// 20190415
+//    parse( ..=  ) changed ( ; added )
+// 20190404
+//  Mkanimation, Mkflipanime changed  ( Filename )
+// 20190317
+//  Setpara debugged  (  default value of Frate changed to 20)
+// 20181224
+//  Setpara debugged  ( ADDAXES=="1")
+// 20181128
+//  Mkviewobj changed  (Fillblack added)
+// 20181125
+//  Mkflipanime,Mkanimation,Parafolder changed (Fillblack added)
+// 20180711
+//  Setpara changed  ("Mag" removed )
+// 20180617
+//  Setpara changed (Changework removed)
+//  Parafolder debugged/changed  ( fbkup, some of Changework removed)
+//  Parafolder changed  (time added )
+//  Animatefiles,Mkflipfiles debugged  ( sorting of tex files )
+// 20180615
+//  Setpara changed (GLISTbkup)
+// 20180614
+//  Setpara changed (ReadOutData&Projpara removed fromGLISTbkup)
+//  Setpara changed (the above also removed from COM2ndlist)
+// 20180611
+//  Parafolder changed (path removed, Dirworkbkup&Dirworksubbkup used)
+// 20180610
+//  Parafolder debugged (files not removed, waiting time for R)
+//  Parafolder changed  ( pause option adde )
+// 20180609
+//  Parafolder changed (CommonMake)
+//  Mkflipanime,Animationfile  changed  ( length(ParaSL) )
+// 20180608
+//  Parafolder changed (to "all.r", to delete file)
+// 20180607
+//  Parafolder debugged ( FnameR,.. => Setfiles)
+// 20180606
+//  Setpara,Parafolder renewed
+// 20180602
+//   divoptions ( 8,9 ->length(tmp)-1,length(tmp))
+//2017.12.09
+//   Parafolder debugged (Viewtex ->WritetoRS)
+//   Mkanimation debugged ( \ -> / for windows )
+//2017.12.07
+//   Setpara options changed
+//   Animatefile changed   (\figsize, OpA)
+//2017.11.24
+//   Mkflipanime added
+//   Old movie function removed
+//   Flipbook removed
+//   Mkanimation changed (for R)
+//2017.11.21
+//   Ketinitmv, Paraamble, Mkmovie changed (for R)
+//2017.11.03
+//   Mkanimation changed (ketpic.sty etc )
+//2017.10.28
+//   Parafolder changed (timing of display of counter,time)
+//2017.10.24
+//   Parafolder changed (file.exists added)
+//2017.10.14
+//    Mkanimation changed ("Rem=" option added)
+//2017.10.13
+//    Ketinitmv changed (Shellfile removed)
+//    Parafolder debugged
+//2017.10.12
+//    Parafolder changed ( cmdL for making TeX files)
+//2017.10.08
+//    Mkanimation added

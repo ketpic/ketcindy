@@ -1,0 +1,71 @@
+/* Poincare.mac is a set of routines for the computation
+of Poincare surfaces of sections of Hamiltonian systems */
+
+/* Author: Jose A Vallejo
+Universidad Autonoma de San Luis Potosi (Mexico)
+josanv@gmail.com */
+
+/* To avoid messages when loading draw, execute
+with_stdout("/dev/null",load(draw))$ (in Linux)
+with_stdout("NUL",load(draw))$ (in Windows) */
+
+/* Poincare.mac requires a compiled version of
+rkfun.lisp, a LISP implementation of the RK4
+algorithm due to Richard Fateman. The original
+code can be downloaded from
+https://people.eecs.berkeley.edu/~fateman/lisp/rkfun.lisp */
+
+/*load("rkfun.fasl");*/
+/*load("rkfun.lisp");*/
+
+
+hameqs(H,name):=block(
+[vv,t,tvv,n,Q,P,eqq,eqp,eqs],
+vv:args(lhs(apply(fundef,[H]))),
+tvv:cons(t,vv),
+n:length(vv)/2,
+Q:makelist(vv[2*j-1],j,1,n),
+P:makelist(vv[2*k],k,1,n),
+eqq:makelist(float(diff(apply(H,vv),P[j])),j,1,n),
+eqp:makelist(float(-diff(apply(H,vv),Q[j])),j,1,n),
+eqs:join(eqq,eqp),
+for j:1 thru 2*n do define(funmake(concat(name,j),tvv),block([],mode_identity(float,vv),eqs[j])),
+apply(compile,makelist(concat(name,j),j,1,2*n)),
+[makelist(apply(concat(name,j),tvv),j,1,2*n),vv,makelist(concat(name,j),j,1,2*n)]
+)$
+
+lextract(ll,n):=block([l,a,b],
+l:length(ll),
+a:rest(ll,n),
+b:rest(ll,n-l-1),
+append(b,a)
+)$
+
+poincare3d(H,name,inicond,timestep,coord):=block(
+[heq,vars,tvars,hfuns,c,sol],
+heq:hameqs(H,name),
+vars:heq[2],
+tvars:cons(t,vars),
+hfuns:heq[3],
+c:first(sublist_indices(vars,lambda([x],x=coord))),  
+sol:rkfun(hfuns,tvars,float(inicond),timestep),
+map(lambda([x],lextract(x,c)),map(lambda([x],rest(x)),sol))
+)$
+
+poincare2d(H,name,inicond,timestep,scene):=block(
+[heq,vars,tvars,hfuns,solu,c,soluc,sola,solb,subind,sol,e,f],
+heq:hameqs(H,name),
+vars:heq[2],
+tvars:cons(t,vars),
+hfuns:heq[3],
+solu:rkfun(hfuns,tvars,float(inicond),timestep),
+c:first(sublist_indices(vars,lambda([x],x=first(scene)))),
+soluc:map(lambda([x],x[c+1]),solu), 
+sola:rest(soluc,-1)-second(scene),
+solb:rest(soluc)-second(scene),
+subind:sublist_indices(sola*solb,lambda([x],is(x < 0))),
+sol:makelist(solu[k],k,subind),
+e:first(sublist_indices(vars,lambda([x],x=third(scene))))+1,
+f:first(sublist_indices(vars,lambda([x],x=fourth(scene))))+1,
+makelist([j[e],j[f]],j,sol)
+)$

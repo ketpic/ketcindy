@@ -1,0 +1,47 @@
+if(!isstring(PathThead),
+ PathThead="";
+);
+if(iswindows(),
+  PathS="C:\Program Files\scilab-6.0.0\bin\scilex";
+  PathC="C:\MinGW\bin\gcc.exe";
+  Pathpdf="C:\Program Files\SumatraPDF\SumatraPDF.exe";
+  PathR="C:\Program Files\R\R-3.4.2\bin";
+  PathA="C:\Program Files\asir\bin\asir";
+  PathM="C:\maxima-5.37.3\bin\maxima.bat";
+  PathV3="C:\Program Files\VCG\MeshLab\meshlab";
+  PathF="C:\cygwin\bin";
+  PathAd="C:\Program Files\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+);
+if(ismacosx(),
+  PathS="/Applications/scilab-6.0.0.app/Contents/MacOS/bin/scilab";
+  Pathpdf="preview";
+  PathC="gcc";
+  PathR="/Library/Frameworks/R.framework/Versions/Current/Resources/bin/R";
+  PathA="/Applications/cfep.app/OpenXM/rc/asir";
+  PathM="/Applications/Maxima.app/Contents/Resources/maxima.sh";
+  PathV3="/Applications/meshlab.app/Contents/MacOS/MeshLab";
+  PathF="/Applications/FriCAS.app/Contents/Resources/bin/fricas";
+  PathAd="/Applications/Adobe Acrobat Reader DC.app/Contents/MacOS/AdobeReader";
+  Mackc="sh";
+);
+if(islinux(),
+  PathS="scilab";
+  Pathpdf="evince";
+  PathC="gcc";
+  PathR="R";
+  PathA="asir";
+  PathM="maxima";
+  PathV3="Meshlab";
+  PathF="fricas";
+  PathAd="acroread";
+);
+
+if(Langhelp=="e",
+  Helplist(["+","+3d","+mv"],"helpE");
+,
+  Helplist(["+","+3d","+mv"],"helpJ");
+);
+
+setdirectory(Dircdy);
+
+

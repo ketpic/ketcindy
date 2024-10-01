@@ -1,3 +1,6 @@
+// 20240915
+//    CalcbyM changed (removelist)
+//    Disptex changed  ("a::b..." is supported )
 // 20240502
 //    CalcbyM changed (case of no ::)
 // 20240430

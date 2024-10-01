@@ -1,5 +1,28 @@
  /*            MNR solver 
 
+numer(f),denomf(f),frfactor(f)
+ratev(eq,rep),frev(eq,rep)
+ratevL(eq,repL),frevL(eq,repL)
+disc(eq,v),nthfactor(pol,kth)
+angtan(m),tanang(t),supA(m),comA(m)
+plusA(m1,m2),minusA(m1,m2)
+dotProd(v1,v2),normsq(v),crossProd(v1,v2)
+eqLine(pa1,pa2),meetLinell(line1,line2)
+meetLine(pts1,pts2),
+lenSeg2(p1,[p2]),lenSeg(p1,[p2])
+vect(A,B),ptDirSeg(A,B,t)
+slide(v),rotate(v)
+putT(m,n,r)=putTriangle
+putTriangle_btm(m,n,btm)
+slideT(A,B)=slideTriangle
+rotateT(tr,centre)=rotateTriangle
+reduceD(pL,z,stp)=reduceDegree
+inCircle(p1,p2,p3)
+comTan1(C1,r1,C2,r2),comTan2(C1,r1,C2,r2)
+comTanR(C1,r1,C2,r2)
+comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
+
+////log
 2024.02.09 ratevL,frevL
 2024.02.07 comTan1, comTan2, comTanC1, comTanC2
 2024.02.03 denomf,Denom,factorfr,frev

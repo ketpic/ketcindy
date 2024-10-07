@@ -1,0 +1,598 @@
+// 20240321
+//    ketcindysettings changed (Initlocal added)
+// 20230801
+//    Pointdata dbg  ( no ketjs removed)
+// 20230704
+//    Ketinit changed  ( AXSTYLE )
+// 20230423
+//    Pointdata debugged ( Color option )
+// 20221218
+//    Ketinit changed  (Mackc)
+// 20221003
+//    Ptselected changed  (Eps set to StrictSep )
+// 20220915
+//    Pointdata dbg  ( "dispflg" changed to local )
+// 20220910
+//    Plotdata changed ( "y" supported)
+// 20220823
+//    Derivative dbg  ( substring misused)
+// 20220731
+//    Strsplit changed   ( use of tokenize avoided )
+// 20220722
+//    Pointdata dbg  ( case of "notex", subgraph )
+// 20220719
+//    Ketinit changed (JSBODY 2->3 )
+// 20220614
+//    Changestyle dbg ( no ketjs off )
+// 20220528
+//    Readlines debugged  ( for long number )
+// 20220316
+//    Changesttke changed (GCLIST)
+// 20220219
+//    Ketinit changed (GPACK)
+// 20220115
+//    Nearestpt debugged
+// 20211125
+//    Integrate changed  ( SCALEY added )
+// 20211106
+//    Orgplotlist added
+// 20210926
+//    Getlevel debugged again ( case of no bracket )
+// 20210907
+//    Getlevel debugged  ( case of no bracket )
+// 20210823
+//    Changestyle debugged  ( for "shade" )
+// 20210624
+//    Intersegseg debugged  ( for small segments )
+// 20210609
+//    Pointdata debugged  (color for ketcindyjs)
+// 20210602
+//    Pointdata changed/debugged  (for ketcindyjs)
+// 20210601
+//    Letter changed (Off)
+// 20210425
+//    Drwxy debugged ( Yaangle )
+// 20210423
+//    Addgraph changed changed  (Form of data)
+// 20210422
+//    Ketinit changed  (AddGraphList,PointDataList added )w
+//    Strsplit changed  (almost same as tokenize )
+//    Parselist added ( only parse the list at first level  )
+//    Pointdata changed
+//       ( one of Scaledata removed, registration to PointDataList )
+//    Changestyle changed  ( for pointdata )
+//    Addgraph changed
+// 20210419
+//    Ketinit changed  (Fillstore() only for no ketjs )
+// 20210412
+//    Ketinit changed  (Message  in case of including minus )
+// 20210325
+//    Nearestpt,Intersectline  changed  ( precision )
+// 20210319
+//    Nearestpt debugged  ( for too short seg )
+// 20210316
+//    Ketinit changed  ( Warning of (-) in case of windows )
+// 20210311
+//    format, textformat => 10
+// 20210308
+//    Ketinit() changed  ( Dircdy, %20=>" " )
+// 20210216
+//    help of 'isexists' added
+// 20201106
+//    Partcrv changed ( -name)   
+// 20201101
+//    Addgraph debugged    
+// 20201031
+//    Partcrv, Nearestpt  changed(renewed)
+// 20201029
+//    Doscaling,Unscaling changed ( recursive call used)
+// 20201027
+//    Pointdata debugged ( Scaling )
+// 20201006
+//    Getlevel modified
+// 20201005
+//    Ketinit changed  ( for Addglist)
+// 20201004
+//    Filelist debugged
+// 20200923
+//    Getlevel added
+// 20200922
+//    Filelist added
+// 20200911
+//    Getlinestyle debugged  (case of no comma in tmp2)
+// 20200813
+//    Pointdata debugged  (Inside)
+// 20200716
+//    Plotdata,Paramplot debugged  ( Exfun )
+// 20200708
+//    Pointdata debugged/changed ( inside=="N", COM2ndlist, ratio)
+// 20200706
+//    Readlines changed ( isexists added )
+// 20200701
+//    Readcsv readded/changed (from out)
+// 20200629
+//    Plotdata,Addgraph, Joincrvs debugged  ( color4)
+// 20200626
+//    Lineplot debugged  ( color4)
+// 20200619
+//    Msg="N" for ketcindyjs
+// 20200618
+//    Colorrgb2cmyk, Colorcmyk2rgb changed (length checked)
+//    Listplot changed  ( color4)
+//    Ketinit changed  ( KCOLOR=[0,0,0,1])
+// 20200529
+//    Ketinit changed  ( Ptpos )
+//    Pointdata debugged (for js)
+// 20200527
+//    Fillstore changed (Ketjson,Ketjsoff)
+// 20200524
+//    Pointdata changed  (change [[A]] to [A] for the single point))
+// 20200523
+//    Pointdata changed  (Draw circle with "Msg=n"))
+// 20200519
+//    Pointdata changed  (Inside=color supported)
+// 20200516
+//    Pointdata changed  (fillpoly used for ketcindyjs)
+// 20200514
+//    Changestyle debugged  (color in rgb,etc)
+// 20200511
+//    Changestyle debugged/changed  (mainly for pointdata)
+//    Pointdata changed, debugged 
+// 20200510
+//    Pointdata rewritten
+// 20200509
+//    Ketinit changed (scy,range removed)
+// 20200502
+//    Changesetting removed, Ketinit changed
+// 20200425
+//    Colorname2cmyk added
+//    Colorname2rgb changed (+name list added)
+//    Divoptions, Setcolor changed  ( for color name)
+// 20200423
+//    Readlines changed ( case of not string)
+// 20200422
+//    Polygonplot debugged  (println deleted)
+//    Segmark changed  ( type="s/c/p" )
+// 20200403
+//    Factorial changed  (product used)
+//    Binomial added
+// 20200123
+//    Ketinit changed  (GLIST,GCLIST,VLIST,FUNLIST,COM..list)
+// 20200119
+//    Ketinit changed  (JSMAIN=[])
+// 20200117
+//    Pointdata debugged  (re removed)
+// 20200101
+//    Pcrd,Lcrd,LLcrd changed  (re added)
+// 20191227
+//    Framedata debugged  ( "corner" for geometric points )
+//    Pointdata changed  ( for i included )
+// 20191203
+//    Ketinit changed  (Yacut 0.2 as default)
+//    Changestyle changed  ( for list setting, color->)
+// 20191126
+//    Framedata changed  ("corner" option)
+// 20191027
+//    Ellipseplot, Hyperbolaplot debugged  ( for Ptpos )
+// 20191025
+//    Pointdata debugged  ( Inside=numeric )
+// 20191005
+//    Setwindow(str) changed  ( in case of deleting NE,SW)
+// 20191002
+//    Ketinit changed  (GPACK)
+// 20190927
+//    Setwindow debugged  ( for Strictmove)
+// 20190917
+//    Ketinit changed (Strictmove moved from windispg)
+//    Intersectcurves debugged  (op => pp)
+// 20190916
+//    Ketinit changed (JSBODY moved from Setketincyjs,  KETJSOP=[] added)
+// 20190912
+//    Setwindow changed  ( Ptpos used )
+// 20190909
+//    Setwindow debugged  ( Strictmove added to another place )
+// 20190901
+//    Ketinit changed (AXSTYLE)
+// 20190831
+//    Ketinit changed (StrictSep added)
+// 20190829
+//    Setwindow changed (Strictmove(SW,NE))
+// 20190818
+//    Getlinestyle changed  ( to register  "nodisp"(2) dat to GCLIST )
+//    Chanestyle,AddGraph,Joincrvs,Partcrv,Pointdata,Listplot,Lineplot,Plotdata,
+//        Paramplot,Implicitplot,Circledata,Ovaldata
+//    changed  (Nflg<2 => Nflg<3 )
+// 20190813
+//    Assign debugged
+// 20190811
+//    Assign changed  ( precise options added (def=6))
+// 20190809
+//    lightgray 0.17=>0.15
+//    offwhite added
+// 20190805
+//    Ptselected change (Isptselected removed)
+// 20190803
+//    Reparse added
+// 20190802
+//    Ketinit() changed (MOVETOLIST commented out)
+//    Initglist changed  (GCLISTadd + Ketinit);
+//    Koutenseg changed  ( re(out)  for JS)
+// 20190719
+//    Initglist debugged  (GCLISTadd)
+//    Setglist changed (GLIST (//no ketjs)
+// 20190704
+//    Ketinit changed (MOVETOJSLIST added)
+// 20190628
+//    Pointdata debugged  ( Inside )
+// 20190622
+//    Implicitplot changed  ("x","y" supported)
+// 20190603
+//    Initglist changed (XMIN,... added )
+// 20190530
+//    Initglist, Setglist, Addglist added
+// 20190514
+//    Setenglish removed
+// 20190511
+//    Implicitplot changed (Eps=>10^(-6))
+//    Ketinit changed (KetcindyDataList initialized)
+// 20190508
+//    Implicitplot debugged  (bisection method employed )
+// 20190507
+//    Replaceall added
+// 20190505
+//    Ptselected changed (for KeTCinyJS, one point)
+//    text(pt) => pt.name
+// 20190504
+//    Ketinit changed (REMOVEPT,SLIDEFLG)
+//    Colorname2rgb changed  ("cindycolor" added)
+// 20190502
+//    Pp -> pp, etc
+// 20190429
+//    Colorname2rgb changed (lightgray added)
+// 20190426
+//    Pointdata debugged ( case of geo-point )
+// 20190428
+//    Ketinit changed (TABLECOUNT added )
+// 20190424
+//    Framedata majorly changed/debugged
+// 20190423
+//    Ketinit changed  ( Frame not appeared in KeTCindyJS )
+//    MeasureDepth majorly changed
+// 20190420
+//    Plotdata changed  (name in case of "-...")
+// 20190416
+//    Ketinit changed  (zenkaku space)
+// 20190415
+//    parse( ..=  ) changed ( ; added )
+// 20190412
+//    Some functions moved to basic2
+// 20190409
+//    Pointdata changed (color)
+// 20190406
+//    Pointdata changed (size)
+//    Implicitplot debugged (opstr )
+// 20190405
+//    Pointdata changed  (color,inside )
+// 20190323
+//    Circledata changed  ([Center,r] supported
+//    Colorname2rgb changed ( in the case of no color, "Assign" added )
+// 20190311
+//    Shade changed  ( order of COM2ndlist)
+//    Com2nd changed  ("before" removed )
+// 20190301
+//    Pointdata changed  ( a single point => [[ , ]])
+//    MeasureDepth => Measuredepth
+// 20190224
+//    Shade changed ("Trim=n" added )
+// 20190223
+//    Shadein debugged
+//    Ketinit, Shade changed  (SHADCTR added)
+//    Ketinit debugged (positon Changework)
+// 20190221
+//    Intersectcurves changed ( "out" sorted )
+//    Changework changed ( "/kc.command" => Shellparent)
+// 20190220
+//    Shadein added, Shade changed (Shadein for 1 data)
+//    Shadein debugged
+// 20190219
+//    Anglemark debugged  ( tmp => tmp_2 )
+// 20190211
+//    Deqplot changed  ( for incorret form of equation )
+// 20190210
+//    bug of "Msg=" fixed
+// 20190206
+//    Deqplot changed  ( ‘ replace to  ` )
+//    Lineplot,Plotdata,Paramplot,Circledata,Bowdata,Anglemark changed ("Msg" option)
+//    Pointdata changed ("Msg" option)
+// 20190128
+//    Ketinit changed  (Userhome added)
+//    Changesetting majorly changed 
+// 20190127
+//    Mvprod added
+// 20190126
+//    Pointdata changed ( list of list removed, Ltype)
+// 20190125
+//    Assign debugged  ( for 1 argument)
+//    Getlinestyle changed  ( Ltype)
+// 20190122
+//    no ketjs added (Ketinit)
+// 20190119
+//    Getlinestyle changed/debugged  (Ltype changed )
+// 20190118
+//    Divoptions  changed  ("dr,thickness" )
+// 20190116
+//    Ketinit() debuggded ( Mackc for Linux)
+// 20190801
+//    Ketinit changed (KetcindyjsDataList=[] removed)
+// 20190115
+//    Plotdata debugged( ( => [ )
+//    Pointdata change( colorcode => colorcmyk2rgb)
+// 20190103
+//    Paramplot debugged  ( "pt" localized )
+// 20181231
+//    Pointdata changed  ( "Inside=(cmyk list)" option added )
+//    Setorigin debugged  (GENTEN used)
+// 20181230
+//    Pointdata changed  ( "Inside" option added )
+//    Integrate debugged (case of funstr)
+// 20181216
+//    Ketinit changed (AXSTYLE changed)
+// 20181215
+//    Ketinit changed (AXSTYLE added)
+//    Setarrow debugged
+// 20181214
+//    Acos, Asin, Atan, Sqr added
+//    Setarrow added
+//    Arrowhead changed (options)
+// 20181212
+//    Colorrgb2cmyk debugged
+//    Colorcode changed ( some have been deleted)
+//    Colorname2rgb added
+//    Divoptions changed  (color name)
+//    Ketinit changed  (Fillstore added)
+/ 20181209
+//    Fillstore changed  ( The color of ketcindy buttons fixed)
+// 20181125
+//    Fillstore,Fillblack,Fillrestore added
+// 2018111
+//    Connectseg debugged  ( concat )
+// 20181112
+//    Connectseg debugged  ( concat )
+//    Implicitplot changed  ( "Msg=" added)
+// 20181111
+//    eqL : Only the1st character used (basic2,... )
+// 20181110
+//    Arrowdata,Arrowheaddata debugged  ( option position,cut )
+//    Arrowdata changed  ( automatic naming supported)
+//    Arrowhead changed  ( cut option supported)
+// 20181109
+//   Hatchdata changed  (Default of "Max" changed to 50)
+// 20181103
+//   Anyselected added
+//   Hatchdata changed  (option "File=", "Not=","Check=" added)
+// 20181030
+//   Drawprocess,Workprocess changed (dispflg added)
+// 20181026
+//   Findarea changed  ( default of length=1)
+// 20181020
+//   if(color!=KCOLOR => if((Noflg==0)&(color!=KCOLOR)
+//   Setscaling,...   ([SCALEX,SCALEY])
+// 20181018
+//   Arrowheaddata,Arrowhead, Arrowdata changed (let pcrd be default )
+//   Setscaling moved from basic2
+// 20181017
+//   Ketinit,Changesetting changed (.ketcindy.conf and ketcindy.conf)
+// 20181016
+//   Setwindow debugged  (Pcrd removed)
+// 20181013
+//   FindareaO, Findarea changed ( case of a curve with line segment)
+//   Pointdata changed ( Size option )
+// 20181005
+//   Hatchdata changed  (option "Max=[1st,2nd]", second=total+restof1st)
+// 20181003
+//   Hatchdata changed  (option "Out=","Max=" added. "Out=" is for HatchdataR )
+//   Hatchdata debugged (case of multiple points)
+// 20181001
+//   Ketinit changed  ( Ketinit(work) for workdirectory )
+// 20180929
+//   Shade changed ("En=y" option added)
+// 20180928
+//   Paramplot changed (case of stationary point, name -option)
+//   Polarplot added
+//   Divoptions changed (color in case of scalar*list)
+// 20180913
+//   Chengesetting, Ketinit changed (getname() used)
+// 20180908
+//   Ketinit changed (SlideMargin added)
+// 20180904
+//   Color setting changed ( for KCOLOR)
+// 20180902
+//   Arrowhead changed ( head trimmed if Inwindow==false )
+// 20180817
+//   Ketinit changed (GPACK added)
+//   Plotdata debugged ( Exc )
+// 20180801
+//   Framedata changed ( Option "corner"("center") added to call Framedata2)
+// 20180723
+//   Nearestptcrv changed ( for geometric point )
+//   Paramoncurve(pP,Gdata) changed (for geometric point)
+// 20180722
+//   color localized
+//   Findarea changed (FindareaP,FindareaO)
+//20180720
+//  Derivative, Tangentplot changed  ( ch option added, coping with case of no interesects)
+//20180719
+//  Listplot,Arrowdata changed  ("Cutend"option added)
+//  Derivative, Tangentplot changed  ( Oshima's formula used )
+//20180718
+//  Derivative chnaged (for plotdata)
+//  Tangentplot added 
+//20180717
+//   Enclosing debugged ( min => min+Eps0)
+//   Makehatch debugged (case where same point )
+//   Hatchdata debugged  ( "s",... )
+//20180716
+//   Enclosing debugged ( selection of KL)
+//20180714
+//   Setfiles changed ( OCNAME added )
+//20180713
+//   Enclosing debugged (for Lineplot : distance of pts added )
+//20180711
+//   Listplot,Pointdata changed (color localized )
+//   Ptselected ( =Isptselected )
+//20180708
+//   Integrate changed (Integratefn (o))
+//   Polygonplot changed ( putpoint only in case ispoint(B), Geo)
+//20180707
+//   Enclosing changed (epspara=1)
+//20180706
+//   Enclosing changed (Enclosing2 => Enclosing)
+//   Isptselected added
+//   Hatchdata changed (Interval > *2 )
+//   Enclosing debugged
+//20180705
+//   Arrowhead debugged  ( color )
+//   Paramark debugged  (Bname )
+//20180704
+//   Drawsegmark debugged  ( color option)
+//20180624
+//   Ovaldata debugged  ( case where Rc= 0)
+//20180619
+//   Hatchdata debugged  ( ns..ne=>ns..ne-1, near point removed )
+//20180618
+//   Setfiles,Setparent,Changework changed (for null string)
+//20180613
+//   Shade changed  ( name, pointlist supported, Com2nd("before"))
+//   Shade debugged  (color,opcindy)
+//   WritetoRS  changed (for COM2ndlistb)
+//20180612
+//   Com2nd changed  ("before" options added )
+//20180609
+//   Ketinit changed  (CommonMake added )
+//20180608
+//   Ketinit changed  (Namecdy defined )
+//20180606
+//   Changework debugged ( case where "Sub=n"  )
+//20180605
+//   Changework changed  ( "Sub=n" option supported )
+//20180603
+//   Shade changed  ( option density supported )
+//   Addcolor removed
+//   Setcolor(color,option),Setcolorrgb removed
+//   Setcolor renewed
+//   Divoptions degugged  (KCOLOR)
+//   Listplot,... changed  (KCOLOR)
+//   Pointdata changed  (color)
+//20180602
+//   Divoptions changed  ( "Color=" supported )
+//   Changestyle,.... changed  ("Color=" supported)
+//   Changetyle changed (case in which name not found)
+//   Shade debugged  ( color )
+//   Rotatedata,... degugged  ( for list of plotdata )
+//20180530
+//   Anglemark changed  (opstr,Brat=1.2)
+//   Pointdata degugged  (for single point)
+//20180527
+//   Deqplot changed  ( ' as default )
+//20180513
+//   Setunitlen debugged  ( string => UI )
+//20180506
+//   Anglemark changed  ( [A,B,angle] supported )
+//20180505
+//   Strsplit added
+//20180501
+//   MeasureDepth debugged  ( for blank list )
+//20180420
+//   Ketinit changed ( Changesetting moved to ketoutset.txt )
+//20180413
+//   Ketinit changed ( utf for windows removed )
+//20180408
+//   Divoptions changed ( to remove null string )
+//   Changework changed (nkfwin)
+//   Hyperbolaplot debugged
+//   Derivative debugged
+//20180405
+//   Ketinit changed (order of changesettiing, Dircdy)
+//20180402
+//   Implicitplot, Connectseg added
+//20180329
+//   Ketinit changed  (changing of Dircdy)
+//   Changesetting added
+//   Derivative changed  ( Numerical method supportted )
+//20180328
+//   Cindyname (=Cdyname ) added
+//   Cindyfile,Cindypath deleted
+//20180317
+//    IntersectcurvesPp changed
+//    Collectsameseg added, Collectnear commented out
+// 2018.02.11
+//    Dqq added  ( = DqDq)
+// 2018.02.06
+//    Intersectpartseg debugged 
+// 2018.02.02
+//    Enclosing2 changed (for distanted curves, startpt option removed )
+// 2018.02.01
+//    Makehatch changed ( in accordance with Intersectseg )
+// 2018.01.30
+//    Intersectseg changed ( for the case of no intersect )
+// 2018.01.29
+//    Intersectpartseg changed ( for the case curves are strings )
+//    Textformat changed ( for null list )
+// 2018.01.26
+//    Enclosing2 (new enclosing ), Makehatch, Hatchdatacindy added
+// 2018.01.15
+//    Setunitlen changed ( as R )
+//    Ketinit changed (Marklennow,... added as R )
+// 2018.01.07
+//    Collectnear added 
+//    Intersectcurves changed (Collectnear used)
+// 2018.01.05
+//    Intersectcurves changed (LLcrd)
+//    Intersectcurvespt added
+//    Intersectpartseg debugged
+//    Intersectline changed 
+// s:2018.01.04
+//    PointonCurve debugged   ( t >=1, t<=length(g) )
+//    Intersectcurves....  added
+// s:2017.12.27
+//    Getcdyname(Cdyname) changed 
+// s:2017.12.03
+//    Ketinit changed (definition of LibnameS )
+// s:2017.12.01
+//    Ketinit changed (to modify Dircdy )
+// s:2017.11.27
+//    Setparent added  ( for Texparent)
+//    Getcdyname added  ( name of the current cdy file)
+// s:2017.11.24
+//    Changework changed ( for the case of double pathsep() in dir, subdir )
+// s:2017.11.20
+//    Changework changed ( for the case of (ex) dir=".../" )
+// s:2017.11.12
+//    Ketinit debugged  (Fhead)
+// s:2017.10.24
+//    Ketinit changed  (Slidename added)
+// s:2017.10.23
+//    Pointdata changed  (for string )
+// s:2017.10.14
+//    Ketinit() changed  (Fhead)
+// s:2017.10.13
+//    Ketinit() changed  (definition of Shellparent,Shellchild)
+// s:2017.10.07
+//    Pointdata debugged 
+// s:2017.10.07
+//    Setcolor debugged  ( \ => \\ )
+// s:2017.10.06
+//    Deqplot changed 
+// s:2017.08.29
+//    Ketinit changed  (LibnameS)
+//2017.09.22
+//    Texcom debugged
+//    Setcolor changed ( Texcom used )
+//2017.09.18
+//    SCIWR,SCIRE removed
+// 2017.09.17
+//    Ketinit changed ( PathS=6... removed )
+// 2017.09.13
+//    Changed to FnameR
+
+

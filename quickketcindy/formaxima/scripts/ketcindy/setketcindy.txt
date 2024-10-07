@@ -1,0 +1,13 @@
+// e:2018.02.26
+Dirlib=Dirhead+pathsep()+"ketlib";
+Libname=Dirlib+pathsep()+"ketpiccurrent";
+DirlibC=Dirhead+pathsep()+"ketlibC";
+setdirectory(Dirlib);
+import("ketcindylibbasic1r.cs");
+import("ketcindylibbasic2r.cs");
+import("ketcindylibbasic3r.cs");
+import("ketcindyliboutr.cs");
+import("ketcindylib3dr.cs");
+import("ketcindylibmvr.cs");
+
+setdirectory(Dirhead);

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240915] loaded");
+println("ketcindylibout[20240502] loaded");
 
 //help:start();
 
@@ -2289,21 +2289,30 @@ CalcbyMset(var,ans,cmdL,oporg):=(
 CalcbyMsetdisp(var,ans,cmdL,oporg):=(
 //help:CalcMsetdisp(var1,"ans1",cmdL1,[""]);
 //help:CalcMsetdisp(var1,"ans1",cmdL1,[[1,,0.5],""]);
- regional(op,varL,bwL,flg,tmp,tmp1,tmp2);
+ regional(op,varL,bwL,flg,tmp,tmp1);
 //global Pos,Dy,Size
 //help:CalcMset(var1,"ans1",cmdL1,[""]);
  op=oporg;
  varL=Strsplit(var,"::");
- bwL=varL;
- tmp=select(op,indexof(#,"::")>0);//240915from
+ bwL=[];
+ tmp=select(op,islist(#));
  if(length(tmp)>0,
-   tmp1=Strsplit(tmp_1,"::");
-   bwL=remove(varL,tmp1);//240915to   
+   bwL=tmp_1;
    op=remove(op,tmp);
- );//240915to
+ );
  flg=CalcbyMset(var,ans,cmdL,op);
  if(flg==1,
-   forall(bwL,Disptex(#));//240915
+   forall(1..(length(varL)),
+     if(#<=length(bwL),
+       if(length(bwL_#)>0,
+          Disptex(varL_#,bwL_#);
+	   ,
+	      Disptex(varL_#);
+       );
+	 ,
+	   Disptex(varL_#);
+     );
+   );
  );
 );
 ////%CalcbyMsetdisp end////
@@ -2631,31 +2640,13 @@ Dispexpr(lineorg,name,vsp,op):=(
 ////%Dispexpr end////
 
 ////%Disptexexpr start//// 231222
-Disptex(name):=( //240915from
-  regional(tmp,tmp1);
-  if(indexof(name,"::")>0,
-    tmp=Strsplit(name,"::");
-	forall(tmp,
-	  Disptexexpr(0,#,0,[]);
-	);
-  ,
-    Disptexexpr(0,name,0,[]);
-  );
-);
+Disptex(name):=Disptexexpr(0,name,0,[]);
 Disptex(Arg1,Arg2):=(
-  regional(tmp,tmp1);
   if(isstring(Arg1),
     if(islist(Arg2),
 	  Disptexexpr(0,Arg1,0,Arg2);
 	,
-      if(indexof(Arg1,"::")>0, //240915from
-        tmp=Strsplit(Arg1,"::");
-	    forall(tmp,
-	      Disptexexpr(0,#,0,Arg2);
-	    );
-      ,	 //240915to
-        Disptexexpr(0,Arg1,Arg2,[]);
-      );
+      Disptexexpr(0,Arg1,Arg2,[]);
 	);
   ,
     Disptexexpr(Arg1,Arg2,0,[]);

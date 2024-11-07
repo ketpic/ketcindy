@@ -1,0 +1,379 @@
+// 20240826
+// MvptL added
+// 20240426
+// Tomaxform changed (for blank arguments)
+// 20240412
+// Presentation changed significally
+// 20240222
+// Mvlist,Mvplotdata changed, Mvcircledata added
+// Totexform dbg  (str)
+// 20231227
+// Totexform changed  ( frac => fr, int d..,"")
+// 20231224
+// Totexform changed  ( \dfrac => \displaystye\frac)
+// 20231215
+// Totexform changed  ( /, sqrt )
+// 20231110
+// ketlayermore removed
+// 20230705
+// Convtrigpow added
+// 20230704
+// Mvplotdata, Mvlist, Mvdrwxy added
+// 20230628
+// Mvpt, Rmvpt, Pt2sc, Sc2pt, Mvdraw, ...  added
+// 20230520
+// Tomaxform debugged ( log( => log, ... )
+// 20230505
+// Tomaxform changed ( tfr, dot() )
+// 20230206
+// Settextkey changed ( the 5th argument size supported )
+// 20230131
+// Settextkey.Animationkey added
+// 20221010
+//    Totexform changed ( println removed)
+// 20220826
+//    Ketcindyjsbody changed ( list )
+//    Headline changed  ( pos added as the option )
+// 20220719
+//    Headline added
+//    Mkketcndyjs changed (JSBODY  2->3, top added)
+//    License changed ( help added )
+//    Copyright added 
+// 220625
+//  Totexform dbg  ( addpar => Addpar)
+// 220617
+//  Tocindyform,Tomaxform changed ( " " removed )
+// 220615
+//  Tocindyform,Tomaxform debugged ( (cross)=>* )
+// 220610
+//  Tocindyform,Tomaxform changed ( e^ -> (exp(1))^ )
+// 220523
+//  Tocindyform changed ( tfr supported )
+//  Totexform changed ( tfr => \frac )
+// 220520
+//  Tocindyform debugged ( log )
+// 220513
+//  Tocindyform debugged
+// 220227
+//  Figpdf debugged  ( GPACKL
+// 220219
+//  Usegraphics changed (major change)
+//  GPACKL added
+// 211228
+//  Readoutdata changed  ( option "Rflg=")
+// 211226
+//  Writeoutdata changed  ( option "Msg=")
+// 211217
+//  Licencedata added
+//  Mkketcindyjs changed  ("Lic" option)
+// 211215
+// Copyketcindyjs changed  ( .map not copied )
+// 211214
+//  Mkketcindyjs changed  ( "v0.8/" > "v0.8.8/" for json )
+// 211212
+//  Addpar ---  start debugged
+// 211118
+//  Tocindyform,Tomaxform changed (! removed)
+//  Addpar changed  ( 2 => 3)
+// 211029
+//  Addpar,Totexform changed ( !str )
+// 211027
+//  Totexform changed ( int )
+// 211019
+//  Totexform changed ( []( => br( )
+// 210923
+//  Totexform debugged ( []( added )
+//  Addgraph changed  ( for string with multi chars )
+// 210913
+//  Totexform changed  ( diff,par added )
+// 210910
+//  Setslidebody changed  ( order of strings )
+// 210909
+//  Addpar added
+//  Totexform changed (Addpar used)
+// 210908
+//  Tomaxform debugged( remving [])
+// 210907
+//  Totexform changed ( tx( added)
+// 210903
+//  Tomaxform debugged ([] as comment etc)
+//  Totexform,Tomaxform changed (ln added)
+// 210901
+//  Totexform changed (adding "()" for sin,...)
+// 210831
+//  Totexform changed (int,lim,sum)
+// 210828
+//  Usepackage debugged ( for pict2d )
+// 210821
+//  Tomaxform debugged
+// 210819
+//  Tocindyform,Tomaxform Addasterisk rebuild (debugged)
+// 210817
+//  Tocindyform,Tomaxform changed ( [ ] for comment )
+// 210816
+//  Tocindyform,Tomaxform debugged
+// 210806
+//  Tocindyform debugged
+//  Tomaxform debugged
+//  Totexform debugged
+// 210805
+//  Totexform remade
+//  Tocindyform remade
+//  Tomaxform added
+// 210726
+//  Mkketcindyjs changed (jquery updated to 3-6-0)
+// 210724
+//  Copyketcindyjs changed  (jquery updated to 3-6-0)
+// 210716
+//   Addasterisk changed ( for adding () in case of * )
+// 210702
+//   Addasterisk debugged  ( res2="" )
+// 210629
+//    Addasterisk debugged ( for e^ )
+// 210611
+//   Addasterisk debugged  ( case of ( , +/- ) )
+// 210514
+//   Addasterisk debugged  ( case of "\.." )
+// 210513
+//   Mkketcindyjs debugged  ( case of using Cdyname() )
+// 210503
+//   Copyketcindyjs debugged  ( for mac, add Dqq )
+// 210428
+//   Mkketcindyjs debugged  ( for "import" )
+// 210406
+//   Textedit changed  ( sep(= as default) option added )
+// 210405
+//   Addasterisk changed  ( \...(sp)  remain unchanged )
+//   Addasterisk debugged  ( position +/-,for example,"sin(x)+sin(y)" )
+//   Mkketcindyjs changed  ( "import" supported )
+// 210404
+//   Mkketcindyjs changed   ( "import" supported )
+// 210403
+//   Movetojs  changed  ( textsize be optional)
+// 210312
+//   makebat debugged  (for Homehead=="")
+// 210311
+//   format,textformat  =>10
+// 210303
+//   Totexform changed ('substring(str,1,0)' differs between Cindy and CindyJS)
+// 210302
+//   Addasterisk,Tocindyform,Totexform changed ( for sin(-1,x) )
+// 210301
+//   Addasterisk changed ( sin(x+y)=>sin((x+y)) )
+// 210227
+//   Addasterisk changed (e -> exp(1))
+//   Totexform changed  (exp(1)->e)
+// 210225
+//   Addasterisk debugged
+// 210224
+//   Addasterisk added
+// 210211
+//   Subsedit debugged  ( parse )
+// 210208
+//   Textedit changed  ( 2nd arg is the default )
+//   Subsedit added
+// 20210122
+//    Tohtmltagpf changed  ( tag )
+// 20210120
+//    Setketcindyjs debugged  ( println for debug removed )
+// 20210105
+//    Mkketcindyjs changed   ("Label=" added)
+// 20201205
+//    Seteditable changed   ( Size, Width  not accepted in abbreviation ))
+// 20201111
+//    Mkketcindyjs changed   ( definition of "Invert" added )
+// 20201018
+//    Sla2fra added
+//    Totexform changed  ("%" -> " ")
+// 20201013
+//    BBdata debugged  (path => Dirwork)
+// 20200914
+//    Readoutdata debugged  (GOUTLIST recovered)
+// 20200911
+//    Mkketcindyjs debugged (</body>)
+//                         changed(JSBODY_1,2)
+// 20200823
+//    Totexform changed  (sin^n, cos^n ,tan^n  \! added)
+// 20200803
+//    Mkslidesummary debugged (Fillstore > Fillrestore)
+// 20200802
+//    Mkketcindyjs changed  ( align center for .js )
+// 20200730
+//    Totexformpart changed  ( { } added )
+// 20200717
+//    Tohtmltagpf changed  ( tag only for "<p")
+// 20200717
+//    Addpackage debugged ('set' not used)
+// 20200716
+//    Addpackage changed  ('set' used)
+// 20200713
+//    Gcd changed  (for larger list)
+// 20200709
+//    BBdata debugged (Readlines)
+// 20200707
+//    BBdata changed/debugged (dir added, Readlines)
+// 20200624
+//    Readoutdata changed ("Disp"=>"Msg")
+// 20200622
+//    Tonormalform changed ( "po" supported )
+// 20200612
+//    Mkketcindyjs changed (oprion 'local' omitted)
+// 20200611
+//    Mkketcindyjs changed (default color to  offwhite)
+// 20200605
+//    Tonormalform added
+// 20200527
+//    Mkketcindyjs changed (Ketjson, Ketjsoff);
+// 20200704
+//    BBdata changed  ( path)
+// 20200524
+//    Seteditable changed  ( "Size=","Width=")
+//    Seteditable debugged (width)
+// 20200523
+//    BBdata debugged
+//    Setedittext => Seteditable
+// 20200520
+//    Mkketcindyjs changed  ( Editable Text)
+//    Setedittext added
+// 20200517
+//    Copyketcindyjs, Mkketcindyjs changed  ( trial of 0.11.1 for main)
+// 20200515
+//    Readbezier changed  (path added)
+// 20200514
+//    BBdata debugged/changed  (Readlines)
+// 20200506
+//    Mkketcindyjs changed (for katex online)
+//    Tohtmltagpf added
+//    Mkketcindyjs changed ( for Ketcindyjsmain )
+// 20200505
+//    Mkketcindyjs debugged ( color )
+// 20200329
+//    Fracform changed  (denL, err)
+// 20200127
+//    Copyketcindyjs debugged  (for windows)
+// 20200123
+//    Copyketcindyjs changed  (jquery, autorender added )
+// 20200122
+//    Mkketcindyjs debugged ("html" added to "main")
+// 20200119
+//    Ketcindyjsmain added
+//    Mkketcindyjs changed (JSMAIN)
+// 20200116
+//    Mkketcindyjs changed ("import" removed , message)
+// 20200115
+//    Ketcindyjsdata debugged ( for list )
+// 20200111
+//    Getcindystr changed ( value)
+// 20200109
+//    Getcindystr added
+// 20191004
+//    Mkketcindyjs changed  ( import for ketcindyjs supported)
+// 20191003
+//    Usegraphics changed ( for tpic )
+// 201908918
+//    Defvar changed ( precision 5 -> 16)
+// 201908916
+//    Setketcindyjs changed ( JSBODY moved to Ketinit)
+// 201908915
+//    Tocindyform,Totexform debugged ( ^ )
+//    Totexform change ( "*" to "\cdot " or "" )
+// 201908914
+//    Fracform changed  ( numer, denom added to output)
+// 201908911
+//    Mketcindyjs debugged  (JSBODY, ` => ')
+// 201908910
+//    Ketcindyjsbody added  (JSBODY)
+//    Setketcindyjs,Mkketcindyjs changed  (JSBODY)
+// 201908905
+//    Mkketcindyjs debugged (multi-initialization)
+// 20190827
+//    Mkketcindyjs debugged (case of no "axes:"  )
+// 20190816
+//    Deffun debugged (return )
+// 20190814
+//    Deffun changed( for ketcindyjs )
+// 20190808
+//    Setplaybuttons changed  ( space option added )
+// 20190802
+//    Movetojs debugged  ( MOVETOJSLIST initialized )
+//    Ketcindyjsdata debugged  ( set() used to remove identical elements )
+// 20190801
+//    Ketcindyjsdata debugged  ( KetcindyjsDataList initialized )
+//    Mkketcindyjs debugged  ( position of KetcindyjsDataList)
+// 20190731
+//    Setplaybuttons added
+// 20190729
+//    Mkketcindyjs changed  (Axes option)
+//    Movetojs changed (number of text available)
+// 20190715
+//    Totexform debugged  ( for pi )
+// 20190712
+//    Totexformpart changed (double spaces replaced with \;)
+//    Tocindyformpart changed (single space replaced with *)
+// 20190704
+//    Parsejson,Resizetextsize,Movetojs,Movetojsexe added
+// 20190629
+//    Fracform changed
+// 20190627
+//    Mkketcindyjs ( Axes and Figure options added )
+// 20190623
+//    Fracform,Gcd added
+// 20190618
+//    Mkketcindyjs changed (Error message)
+// 20190615
+//    WritetoRS,Usegraphics,Viewtex,Figpdf changed  ( indexof for pict2e,tikz )
+// 20190604
+//    Mkketcindyjs changed ( eqflg added )
+// 20190528
+//    Animationparam changed  ( stop => rng)
+// 20190524
+//    Animationparam added
+// 20190522
+//    Textedit2value changed
+//    Tocindyform,Tocindyformpart debugged
+//    Toctexform,Totexformpart debugged
+// 20190521
+//    Textedit2value added
+//    Tocindyform,Tocindyformpart adde
+//    Totexform changed  (pi => \pi, case without "()")
+// 20190515
+//    Totexform,Totexformpart changed(enhanced)
+// 20190514
+//    Totexform,Totexformpart added
+//    Copyketcindyjs debugged  ( "/" added for "cd")
+// 20190506
+//    Setketcindyjs,Mkketcindyjs debugged (color)
+// 20190504
+//    Mkketcindyjs changed ( rmptL,REMOVEPTJS,border,"z" )
+// 20190502
+//    Mkketcindyjs changed ( only ketjs on/off added )
+// 20190430
+//    Textedit added
+//    Mkketcindyjs debugged  ( only ketjs)
+// 20190428
+//    Mkketcindyjs debugged  ( basic3d => basic3 )
+//    Tenkeybrd, Getkey changed
+// 20190427
+//    Tenkeybrd, Getkey added
+// 20190423
+//    Ketcindyjsdata and Mkketcindyjs changed
+// 20190422
+//    Ketcindyjsdata added
+//    Setketcindyjs, Mkketcindyjs changed ( for Ketcindyjsdata )
+// 20190419
+//    Findfun debugged  ( inside of "" removed )
+// 20190417
+//    Mkketcindyjs changed  ( Ignore options )
+// 20190416
+//    Findfun, Extractun, Extractall moved from basic2
+//    Mkketcindyjs, Extractall debugged   ( IgnoreList, DL globalized )
+// 20190415
+//    Makeshell debugged ( Dq -> Dqq )
+//    Makebat debugged ( tex,path  (\) )
+//    parse( ..=  ) changed ( ; added )
+// 20190414
+//    Makeshell Makebat changed  ( Dqq(fname )
+// 20190412
+//    newly generated
+//    Some functions moved from basic2
+//    Figpdf debugged  (SCALEY)

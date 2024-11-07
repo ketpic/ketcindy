@@ -16,10 +16,162 @@
 
 #########################################
 
-ThisVersion<- "KeTpic for R  v5_2_4(18.02.26)" 
+ThisVersion<- "KeTpic for R  v5_2_6(20230725)" 
 
 print(ThisVersion)
 
+# 2023.07.25
+#  class=   (Appendrow,Ncol,Nrow)
+#  Circledata debugged
+#  Makecurves debugged# 20230121
+#   Sprintf  %*.3f
+# 20220910
+#   Plotdata changed ( for "y" )
+# 2021119
+#   Hatchdata debugged  ( case of scaling )
+# 20210625
+#   Partcrv changed ( for not matrix data )
+# 20210503
+#   Koutenseg debugged  (Tmp< )
+# 20210421
+#   Enclosing2( bug confirmed, not fixed yet)
+# 20210325
+#   Intersectlne,Nearestpt changed ( precision )
+# 20210320
+#   Nearestpt debugged  ( case of not list as result )
+# 20210111
+#   Nearestpt changed according to that of KeTCindy
+# 20201024
+#   Texif, Texendif changed  ("}" removed)
+# 20200616
+#   Plotdata,Paramplot debugged  ( E=,sort)
+# 20200519
+#   class changed to class(dt)[1] ( according to specification of R)
+# 20200512
+#   Drwpt changed ( incolor removed, inside added )
+# 20200510
+#   Drwpt debugged ( duplicate removed )
+# 20200420
+#   Exprrot,Letterrot debugged ( Theta )
+# 20201231
+#   Exprrot,Letterrot debugged ( for setscaling, rotate )
+# 20191231
+#   Anglemark debugged  ( for scaling )
+# 20191126
+#   Drwpt debugge/changed  (sh 1, pen)
+# 20191001
+#   Intersectpartseg, Enclosing2 debugged  (Listplot => rbind)
+# 20190921
+#   Enclosing2 debugged/changed  (epspara removed)
+# 20190627
+#   Plotdata, Paramplot debugged (Exc)
+# 20190511
+#   Implicitplot changed  (Eps=> 10^(-6))
+# 20190508
+#   Implicitplot debugged  ( bisection method employed )
+# 20190409
+#   Plotdata debugged  ( Exclution at left side)
+# 20190408
+#   Projpara debugged ( for a single point )
+# 20190405
+#   Drwpt changed(Incolor,Same)
+#   Makecurves changed(Drwpt)
+# 20190322
+#   Plotdata debugged  (in the case fo Exc)
+# 20190127
+#   Mvprod added
+# 20181231
+#   Drwpt debugged/changed  ( grep removed, N=8 set )
+# 20181230
+#   Drwpt changed  ( Same, Incolor )
+# 20181128
+#   Objthicksurf debugged
+# 20181031
+#   space before # removed
+# 20181024
+#   Wireparadata debugged ( for DuL(DvL)=c(..) )
+#   Nohiddenpara2 debugged  (for SeL=Null )
+# 20181020
+#   Setscaling changed  ( Setscaling(scalex,scaley) supported )
+# 20181019
+#   Arrowhead changed(debugged)  ( for basic1.cs )
+# 20181017
+#   Drwxy debugged  (Doscaling)
+#   Arrowhead debugged (Unscaling removed)
+#   Paramplot debugged  (Assign(fun,var,"t"))
+# 20181015
+#   Listplot debugged  ( Unscaling implemented )
+# 20180929
+#   Paramplot Plotdata, Spacecurve , Implicitplot changed 
+#                                ( Dt,dx not divided by N)
+#   Shade changed  (Kyoukai => Joincrvs)
+# 20180928
+# Paramplot changed ( case of stationary point)
+# 20180901
+# Objcurve debugged  ( Assign rewritten )
+# 20180820,21
+#  Drwxy changed  ( optional arguments added )
+#  Setax changed  (ARROWSIZE removed )
+# 20180812
+#  Assign debugged ( case nchar(vname)>1)
+# 20180808
+#  Scalept3pt changed  (ratio)
+# 20180807
+#  Reflect3pt,Reflect3data,Scale3pt,Scale3data added
+# 20180717
+#  Hatchdata debugged  (width option)
+#  Enclosing debugged  ( for closed curve )
+# 20180713
+#  Enclosing2 debugged  (for Lineplot: distance of pts added)
+# 20180711
+#  Enclosing2 debugged  (length => Length)
+# 20180707
+#  Enclosing2 debugged  (epspara)
+# 20180706
+#  Enclosing2 debugged  (crv => c)
+#  Hatchdata changed ( Interval > *2 )
+# 20180621
+#  Kyoukai debugged  (1st point converted to matrix, length=>Length)
+# 20180615
+#  Assign changed (Replace function added)
+# 20180603
+#  Setcolor debugged (length(Iro))
+#  Scaledata,Reflectdata,Rotatedata,Translatedata changed ( for point list)
+# 20180602
+#  Setcolor changed  (rgb supported)
+# 20180523
+#  Mkskeletondata debugged
+# 20180517
+#  Sfbdparadata debugged  ( tmp2[]=>tmp[2])
+# 20180511
+#  Arrowhead,Arrowheaddata debugged  ( for closed curve)
+# 20180510
+#  Plotdata,Paramplot changed  ( Assign added for KeTCindy )
+#  Texsetctr debugged  (grep, fixed=T)
+#   Anglemark debugged ( for PB,PA,angle)
+# 20180509
+#  Crvonsfparadata renamed to Crv2onsfparadata
+#  Makecurves debugged  ( Looprange used )
+# 20180506
+#  Anglemark changed  ( PB,PA,angle) supported
+# 20180501
+#  Wireparadata changed and debugged ( is.numeric => length==1 )
+# 20180402
+#  Implicitplot largely changed
+# 20180327
+#  Kyoukai debugged
+# 20180317
+#  IntersectcurvesPp changed and debugged
+#  Intersectpartseg changed  (Eps00 )
+#  Collectsameseg added, Collectnear commented out
+# 20180306
+#  PthiddenQ,Meetpoints,Sfcutparadata changed (to avoid duplications )
+#  Sfbdparadata changed ( for near points in Implicitdata )
+#  Envelopedata, Evlpfun added
+# 20180305
+#  (for surface drwaings ) Eps => Eps1
+# 2018.02.27
+#  Nohiddenpara2,Crvsfparadara debugged  (Eps=>Eps0)
 # 2018.02.26
 #  Sfcutparadata changed
 #  Partcrv3 debugged
@@ -388,8 +540,8 @@ print(ThisVersion)
 XMIN<- -5
 XMAX<- 5
 YMIN<- -5 ; YMAX<- 5
-ZIKU<- "line"
-ARROWSIZE<- 1
+ZIKU<- "l"
+#ARROWSIZE<- 1
 XNAME<- "$x$"
 XPOS<- "e"
 YNAME<- "$y$"
@@ -435,8 +587,8 @@ Ketinit<- function(){
 XMIN<<- -5
 XMAX<<- 5
 YMIN<<- -5 ; YMAX<<- 5
-ZIKU<<- "line"
-ARROWSIZE<<- 1
+ZIKU<<- "l"
+#ARROWSIZE<<- 1
 XNAME<<- "$x$"
 XPOS<<- "e"
 YNAME<<- "$y$"
@@ -489,7 +641,7 @@ Appendrow<- function(...)
   {
     Dt<- varargin[[I]]
     Nc<- max(Nc,Ncol(Dt))
-    if(class(Dt)=="matrix") Dt<-as.numeric(t(Dt))
+    if(class(Dt)[1]=="matrix") Dt<-as.numeric(t(Dt))
     Out<- c(Out,Dt)
   }
   if(Nc>0)
@@ -500,22 +652,6 @@ Appendrow<- function(...)
   else
   {
     Out<-c()
-  }
-  return(Out)
-}
-
-Crossprod<-function(a,b)
-{
-  if(length(a)==3)
-  {
-    Tmp1<-a[2]*b[3]-a[3]*b[2]
-    Tmp2=a[3]*b[1]-a[1]*b[3]
-    Tmp3=a[1]*b[2]-a[2]*b[1]
-    Out=c(Tmp1,Tmp2,Tmp3)
-  }
-  else
-  {
-    Out=a[1]*b[2]-a[2]*b[1]
   }
   return(Out)
 }
@@ -537,6 +673,7 @@ Crossprod<- function (a,b){ # 17.12.22
   }else{
     Out=a[1]*b[2]-a[2]*b[1]
   }
+  return(Out)
 }
 
 Dotprod<-function(a,b){ # 18.02.05
@@ -544,6 +681,29 @@ Dotprod<-function(a,b){ # 18.02.05
   out=0
   for(jj in Looprange(1,nn)){
     out=out+a[jj]*b[jj]
+  }
+  return(out)
+}
+
+Mvprod<- function(...){ # 190127
+  varargin<- list(...)
+  mat=varargin[[1]]
+  vec=varargin[[2]]
+  if(length(varargin)>2){
+    nn=varargin[[3]]
+  }else{
+    nn=1
+  }
+  mm=round(length(vec)/nn)
+  mat=matrix(mat,ncol=mm,byrow=TRUE)
+  vec=matrix(vec,nrow=nn,byrow=TRUE)
+  out=c()
+  for(jj in 1:nn){
+    tmp=mat%*%Op(jj,vec)
+    out=c(out,tmp)
+  }
+  if(nn>1){
+    out=matrix(out,nrow=nn,byrow=TRUE)
   }
   return(out)
 }
@@ -569,7 +729,7 @@ Member<-function(A,L)
   if(length(N)==0) return(FALSE)
   for (I in 1:N)
   {
-    if(class(L)=="list")
+    if(class(L)[1]=="list")
     {
       Tmp<-L[[I]]
     }
@@ -600,14 +760,14 @@ Norm<-function(V)
 
 Ncol<-function(P)
 {
-  if(class(P)=="matrix") return(ncol(P))
+  if(class(P)[1]=="matrix") return(ncol(P))
   else return(length(P))
 }
 
 Nrow<-function(P)
 {
   if(length(P)==0) return(0)
-  if(class(P)=="matrix") return(nrow(P))
+  if(class(P)[1]=="matrix") return(nrow(P))
   else return(1)
 }
 
@@ -767,41 +927,70 @@ Integrate<- function(...)
 #--------------------------------------
 
 #########################
+# 180506   (pB,pA,angle) supported
 
 Anglemark<- function(...)
 {
   varargin<- list(...) 
   Nargs<- length(varargin)
   Eps<- 10^(-3)
-  PA<- varargin[[1]]
-  PB<- varargin[[2]]
-  PC=varargin[[3]]
+  PB<- Doscaling(varargin[[1]]) #####3######
+  PA<- Doscaling(varargin[[2]])
+  PC<- Doscaling(varargin[[3]])
+  scaley=SCALEY #191231
+  SCALEY=1
   r <-  0.5
   if(Nargs>=4){
     r<-  varargin[[4]]*r  
   }
   Out=c()
-  if(r>min(Norm(PA-PB),Norm(PC-PB))){
+  if(length(PC)>1){ #180506from
+    Tmp=min(Norm(PB-PA),Norm(PC-PA))
+  }else{
+    Tmp=Norm(PB-PA)
+  }
+  if(r>Tmp){ #180506to
     return(Out)
   }
-  Cir<- Circledata(c(PB,r)) #17.11.29
-  Tmp<- IntersectcrvsPp(Cir,Listplot(PA,PB))
+  Cir<- Circledata(c(PA,r)) #17.11.29
+  Tmp<- IntersectcrvsPp(Cir,rbind(PA,PB))
   P1<- Op(2,Op(1,Tmp))
-  Tmp<- IntersectcrvsPp(Cir,Listplot(PC,PB))
-  P2<- Op(2,Op(1,Tmp))
-  if(abs(P1-P2)<Eps){
-    Out<-c()
-    return(Out)
+  if(length(PC)>1){
+    Tmp<- IntersectcrvsPp(Cir,rbind(PA,PC))
+    P2<- Op(2,Op(1,Tmp))
+    if(abs(P1-P2)<Eps){
+      Out<-c()
+      return(Out)
+    }
+    if(P1<P2-Eps){
+      Out<- Partcrv(P1,P2,Cir)
+    }
+    else{  
+      Tmp<- Numptcrv(Cir)
+      Tmp1<- Partcrv(P1,Tmp,Cir)
+      Tmp2<- Partcrv(1,P2,Cir)
+      Out<- Joincrvs(Tmp1,Tmp2)
+    }
+  }else{
+    Tmp1=Pointoncurve(1,Cir)-PA
+    Tmp2=Pointoncurve(2,Cir)-PA
+    Tmp=Dotprod(Tmp1,Tmp2)/(Norm(Tmp1)*Norm(Tmp2))
+	Tmp=PC/acos(Tmp)
+    if(P1+Tmp<Length(Cir)){
+      Out<- Partcrv(P1,P1+Tmp,Cir)
+    }else{
+      Tmp1= Partcrv(P1,Length(Cir),Cir)
+      Tmp2= Partcrv(1,P1+Tmp-Length(Cir)+1,Cir)
+      Out<- Joincrvs(Tmp1,Tmp2)
+    }
   }
-  if(P1<P2-Eps){
-    Out<- Partcrv(P1,P2,Cir)
+  SCALEY=scaley #191231from
+  Tmp1=c()
+  for(J in Looprange(1,Length(Out))){
+    Tmp=Unscaling(Op(J,Out))
+    Tmp1=rbind(Tmp1,Tmp)
   }
-  else{  
-    Tmp<- Numptcrv(Cir)
-    Tmp1<- Partcrv(P1,Tmp,Cir)
-    Tmp2<- Partcrv(1,P2,Cir)
-    Out<- Joincrvs(Tmp1,Tmp2)
-  }
+  Tmp1 #191231to
 }
 
 ##############################################
@@ -870,11 +1059,13 @@ Arrowdata<- function(...)
 
 ######################################
 
+#  2018.10.19   for new basic1.cs
 #  2013.11.13   No Intersect debugged
 
-Arrowhead<-function(...)
-{       ## Scaling is implemented
-        ## 12.01.08  Kirikomi 
+Arrowhead<-function(...){
+## Scaling is implemented
+## 12.01.08  Kirikomi 
+  Eps=10^(-3)
   varargin<-list(...)
   Nargs<-length(varargin)
   P<-varargin[[1]]
@@ -898,7 +1089,7 @@ Arrowhead<-function(...)
        }
       }else{
         Str<- Tmp
-      }  #  12.01.07 upto
+      }  #  12.01.07 until
     }
     if(is.numeric(Tmp) && length(Tmp)==1){
       if(Flg==0) Ookisa<-Ookisa*Tmp
@@ -912,55 +1103,56 @@ Arrowhead<-function(...)
   }
   Ookisa<-1000/2.54/MilliIn*Ookisa
   Theta<-Hiraki*pi/180
+  P<- Doscaling(P)
+  Houkou<- Doscaling(Houkou)
   if(Nrow(Houkou)>1){
-    P<- Doscaling(P)
-    Houkou<- Doscaling(Houkou)
-    Tmp<-Nearestpt(P,Houkou)
-    A<-Tmp[[1]]
+    Tmp<-Nearestpt(P,Houkou) #181019 (2lines)
+    P<- Tmp[[1]]
     I<-floor(Tmp[[2]])
-    G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
+    if(I==1){# 180511
+      if(Norm(Ptend(Houkou)-Ptstart(Houkou))<Eps){
+        I=Numptcrv(Houkou)
+      }
+    }
+    G<-Circledata(c(P,Ookisa*cos(Theta)),"Num=10") #181019(2lines)
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
     for (J in JL){
-      B<-Ptcrv(J,Houkou)
-      Tmp<-IntersectcrvsPp(Listplot(list(A,B)),G)
-      if(length(Tmp)>0){
-         Flg<- 1
-         break
+      Tmp1=matrix(c(P,Op(J,Houkou)),ncol=2,byrow=TRUE) #181019
+#      Tmp<-IntersectcurvesPp(Tmp1,G,0.001,0.01) 
+      Tmp<-IntersectcrvsPp(Tmp1,G) 
+      if(Length(Tmp)>0){
+        Houkou<-P-Op(1,Tmp[[1]])
+	    Flg<- 1
+	    break
       }
-      A<-B
     }
     if(Flg==0){ # 13.11.13
 	   print("Arrowhead may be too large (no intersect)")
        return(P)
     }
-    Houkou<-P-Op(1,Tmp[[1]])
-    Houkou<- Unscaling(Houkou)
-    P<- Unscaling(P)
   }
-  P<- Doscaling(P)
-  Houkou<- Doscaling(Houkou)  
   Ev<--1/Norm(Houkou)*Houkou
   Nv<-c(-Ev[2],Ev[1])
   if(length(grep("c",Str))>0){
-    P<-P-0.5*Ookisa*cos(Theta)*Ev
+    P<- P-0.5*Ookisa*cos(Theta)*Ev
   }
   if(length(grep("b",Str))>0){
-    P<-P-Ookisa*cos(Theta)*Ev
+    P<- P-Ookisa*cos(Theta)*Ev
   }
-  A<-P+Ookisa*cos(Theta)*Ev+Ookisa*sin(Theta)*Nv
-  B<-P+Ookisa*cos(Theta)*Ev-Ookisa*sin(Theta)*Nv
-  if(length(grep("l",Str))>0){
-    Tmp<-Listplot(list(A,P,B))
+  A<- P+Ookisa*cos(Theta)*Ev+Ookisa*sin(Theta)*Nv
+  B<- P+Ookisa*cos(Theta)*Ev-Ookisa*sin(Theta)*Nv
+  if(length(grep("l",Str,fixed=TRUE))>0){
+    Tmp<- matrix(c(A,P,B),ncol=2,byrow=TRUE)#181019(2lines)
     Tmp1<- Unscaling(Tmp)  
     Drwline(Tmp1,Futosa)
   }
   else{
     C<- P+(1-Cut)*((A+B)/2-P) # 12.01.07
-    Tmp<- Listplot(list(A,P,B,C,A))   # 12.01.07
+    Tmp<-  matrix(c(A,P,B,C,A),ncol=2,byrow=TRUE) #181019(2lines)
     Tmp1<- Unscaling(Tmp)
     Shade(Tmp1)
-    Tmp=Listplot(c(A,P,B,C,A,P))  # 15.6.20
+    Tmp= matrix(c(A,P,B,C,A,P),ncol=2,byrow=TRUE)#181019(2lines)
     Tmp1=Unscaling(Tmp)
     Drwline(Tmp1,0.1)  # 15.06.11, 15.06.14
   }
@@ -972,6 +1164,7 @@ Arrowhead<-function(...)
 
 Arrowheaddata<- function(...)
 {  ## Scaling is implemented
+  Eps=10^(-3)
   varargin<- list(...)
   Nargs<- length(varargin)
   P<- varargin[[1]]
@@ -1011,6 +1204,11 @@ Arrowheaddata<- function(...)
     Tmp<-Nearestpt(P,Houkou)
     A<-Tmp[[1]]
     I<-floor(Tmp[[2]])
+    if(I==1){# 180511
+      if(Norm(Ptend(Houkou)-Ptstart(Houkou))<Eps){
+        I=Numptcrv(Houkou)
+      }
+    }
     G<-Circledata(c(P,Ookisa*cos(Theta)),N=10) #17.11.29
     Flg<- 0  # 13.11.13
     JL<-seq(I,1,by=-1)
@@ -1077,7 +1275,7 @@ Arrowline<- function(...)
       }
       else{
         Str<- Tmp
-      }  # 12.01.07 upto
+      }  # 12.01.07 until
     }
     if(is.numeric(Tmp) && length(Tmp)==1){
       if(Flg==0) Ookisa<- Ookisa*Tmp
@@ -1093,13 +1291,38 @@ Arrowline<- function(...)
   R<- P+Yapos*(Q-P)
   Tmp=Q-Unscaling(0.2*Ookisa/2*(Q-P)/Norm(Q-P)) # 15.10.24
   Drwline(Listplot(c(P,Tmp)),Futosa)
+  Tmp=SCALEY
+  Setscaling(1)
   Arrowhead(R,Q-P,Ookisa,Hiraki,Futosa,Cutstr,Str)
+  Setscaling(Tmp)
 }
 
 #########################################
 
-Assign<- function(...)
-{
+Assign<- function(...){
+  Replace=function (vname,rep,str){#180615from
+    opv=c("+","-","*","/","(",")","=","<",">",""," ",",") #180812
+    out=""
+    start=1
+    Tmp=gregexpr(vname,str,fixed=TRUE)
+    Vp=Op(1,Tmp)
+    if(min(Vp)>0){
+      for(j in Vp){
+        if(j==1){bf=""}else{bf=substring(str,j-1,j-1)}
+        Tmp=j+nchar(vname)-1 #180812(2lines)
+        if(Tmp==nchar(str)){af=""}else{af=substring(str,Tmp+1,Tmp+1)}
+        tmp1=length(intersect(bf,opv))
+        tmp2=length(intersect(af,opv))
+		tmp=substring(str,start,j+nchar(vname)-1) #180812
+        if((tmp1>0)&&(tmp2>0)){
+          tmp=gsub(vname,rep,tmp,fixed=TRUE)
+        }
+        out=paste(out,tmp,sep='')
+        start=j+nchar(vname) #180812
+      }
+    }
+    out=paste(out,substring(str,start,nchar(str)),sep='')
+  }#180615to
   varargin<- list(...)
   Nargs<- length(varargin)
   if(Nargs==0){
@@ -1143,7 +1366,7 @@ Assign<- function(...)
               }
             }
             Tmp3<- paste(Tmp3,")",sep="")
-            if(class(Tmp2)=="matrix"){
+            if(class(Tmp2)[1]=="matrix"){
               Nr<- as.character(nrow(Tmp2))
               Tmp3<- paste("matrix(",Tmp3,"nrow=",Nr,")",sep="")
             }
@@ -1182,20 +1405,28 @@ Assign<- function(...)
       }
     }
   }
+
+FlagL<<- 0
+
   for (I in seq(1,length(L),by=2)){
     Vname<- L[[I]]
     Val<- L[[I+1]]
     if(mode(Val)=="numeric"){
-      if(Nrow(Val)==1){ 
+      if(Nrow(Val)==1){
         for (K in Looprange(1,length(Val))){
-          Tmp<- paste(Vname,"[", as.character(K),"]",sep="")
+          if(length(Val)==1){
+           Tmp<- Vname
+          }
+          else{
+            Tmp<- paste(Vname,"[", as.character(K),"]",sep="")
+          }
           if(mode(Val[K])=="numeric"){
             Tmp1<- paste("(",as.character(Val[K]),")",sep="")
           }
           else{
             Tmp1<- Val[K]
           }
-          Fnstr<- gsub(Tmp,Tmp1,Fnstr,fixed=TRUE)
+          Fnstr<- Replace(Tmp,Tmp1,Fnstr)#180615
         }
       }
       else{
@@ -1208,7 +1439,7 @@ Assign<- function(...)
             else{
               Tmp1<- Val[J,K]
             }
-            Fnstr<- gsub(Tmp,Tmp1,Fnstr,fixed=TRUE)
+            Fnstr<- Replace(Tmp,Tmp1,Fnstr)#180615
           }
         }
       }
@@ -1217,7 +1448,7 @@ Assign<- function(...)
       }
       else{
         Rep<-""
-        if(class(Val)=="matrix"){
+        if(class(Val)[1]=="matrix"){
           Rep<- "matrix("
         }
         Rep<- paste(Rep,"c(",sep="")
@@ -1230,7 +1461,7 @@ Assign<- function(...)
             Rep<- paste(Rep,")",sep="")
           }
         }
-        if(class(Val)=="matrix"){
+        if(class(Val)[1]=="matrix"){
           Rep<- paste(Rep,",nrow=",as.character(nrow(Val)),")",sep="")
         }
       }
@@ -1242,7 +1473,7 @@ Assign<- function(...)
     if(mode(Val)=="list"){
       Tmp1<- Makeliststr(Val)
     }
-    Fnstr<- gsub(Vname,Tmp1,Fnstr,fixed=TRUE)  # 10.11.20
+	Fnstr<- Replace(Vname,Tmp1,Fnstr) #180615
   }
   return(Fnstr)
 }
@@ -1359,46 +1590,59 @@ Beginpicture<-function(ul)
 
 Bowdata<- function(...)  #17.09.17
 {       
- varargin <- list(...) 
- Nargs <- length(varargin)
- PA <- varargin[[1]]
- PB <- varargin[[2]]
- Cut <- 0
- D <- 1/2*Norm(PB-PA)  
- if(Nargs>=3) {
-   H <- varargin[[3]]*D*0.2 
- }
- else {
-   H <- D*0.2
- }
- H <- min(H,D)
- if(Nargs>=4){  
-   Cut <- varargin[[4]]
- }
- Ydata <- MakeBowdata(PA,PB,H) 
- C <- Op(1,Ydata)  
- r <- Op(2,Ydata)  
- R1 <- Op(3,Ydata)  
- R2 <- Op(4,Ydata)  
- Rng <- paste("R=c(",as.character(R1),",",as.character(R2),")",sep="")  
- Theta <- (R1+R2)*0.5
- BOWMIDDLE <<- list(c(C[1]+r*cos(Theta),C[2]+r*sin(Theta)),Theta)  
- M <- Op(1,BOWMIDDLE)  
- ThetaM <- Op(2,BOWMIDDLE)  
- BOWSTART <<- PA  
- BOWEND <<- PB
- if(Cut==0){
-   Pd<- Circledata(c(C,r),Rng)
- }
- else{
-   Alpha <- R1; Beta <- ThetaM-Cut/(2*r)
-   Rng <- paste("Rng=c(",as.character(Alpha),",",as.character(Beta),")",sep="") 
-   Pd <- Circledata(c(C,r),Rng)
-   Alpha <- ThetaM+Cut/(2*r); Beta <- R2
-   Rng <- paste("R=c(",as.character(Alpha),",",as.character(Beta),")",sep="")  
-   Tmp <- Circledata(c(C,r),Rng)
-   Pd <- Appendrow(Pd,c(Inf,Inf),Tmp)  
- }
+  varargin <- list(...) 
+  Nargs <- length(varargin)
+  PA <- Doscaling(varargin[[1]]) #191231from
+  PB <- Doscaling(varargin[[2]]) 
+  scaley=SCALEY
+  SCALEY=1 #191231to
+  Cut <- 0
+  D <- 1/2*Norm(PB-PA)  
+  if(Nargs>=3) {
+    H <- varargin[[3]]*D*0.2 
+  }
+  else {
+    H <- D*0.2
+  }
+  H <- min(H,D)
+  if(Nargs>=4){  
+    Cut <- varargin[[4]]
+  }
+  Ydata <- MakeBowdata(PA,PB,H) 
+  C <- Op(1,Ydata)  
+  r <- Op(2,Ydata)  
+  R1 <- Op(3,Ydata)  
+  R2 <- Op(4,Ydata)  
+  Rng <- paste("R=c(",as.character(R1),",",as.character(R2),")",sep="")  
+  Theta <- (R1+R2)*0.5
+  BOWMIDDLE <<- list(c(C[1]+r*cos(Theta),C[2]+r*sin(Theta)),Theta)  
+  M <- Op(1,BOWMIDDLE)  
+  ThetaM <- Op(2,BOWMIDDLE)  
+  BOWSTART <<- PA  
+  BOWEND <<- PB
+  if(Cut==0){
+    Pd<- Circledata(c(C,r),Rng)
+  }
+  else{
+    Alpha <- R1; Beta <- ThetaM-Cut/(2*r)
+    Rng <- paste("Rng=c(",as.character(Alpha),",",as.character(Beta),")",sep="") 
+    Pd <- Circledata(c(C,r),Rng)
+    Alpha <- ThetaM+Cut/(2*r); Beta <- R2
+    Rng <- paste("R=c(",as.character(Alpha),",",as.character(Beta),")",sep="")  
+    Tmp <- Circledata(c(C,r),Rng)
+    Pd <- Appendrow(Pd,c(Inf,Inf),Tmp)  
+  }
+  SCALEY=scaley #191231from
+  Tmp=Unscaling(Op(1,BOWMIDDLE))
+  Tmp=list(Tmp,Op(2,BOWMIDDLE))
+  BOWMIDDLE <<- Tmp
+  Tmp1=c()
+  for(J in Looprange(1,nrow(Pd))){
+    Tmp=Pd[J,]
+    if(Tmp[1]<Inf){Tmp=Unscaling(Tmp)}
+    Tmp1=rbind(Tmp1,Tmp)
+  }
+  Tmp1 #191231to
 }
 
 Bowmiddle <- function(...)
@@ -1452,7 +1696,8 @@ Bowmiddle <- function(...)
    #M <- list(P,T)  
    M <- P  
  }
- return(M)
+ Setscaling(scaley)
+ return(Unscaling(M))
 }
 
 ##########################
@@ -1619,6 +1864,7 @@ CalcWidth<-function(Hoko,Moji)
 #########################
 # 17.09.17
 # 17.09.24
+# 23.07.25
 
 Circledata<- function(...){
   varargin<- list(...)
@@ -1629,9 +1875,13 @@ Circledata<- function(...){
     ra=Norm(C-Cr[3:4])
     Nop=2
   }
-  else{
+  if(length(Cr)==3){
     ra=Cr[3]
     Nop=2
+  }
+  if(length(Cr)==2){
+    ra=Cr[2]
+    Nop=3
   }
   R=c(0,2*pi)
   N=50
@@ -1643,7 +1893,7 @@ Circledata<- function(...){
       Tmp1=substring(Tmp,1,Tmp1)
       Tmp1=gsub("NUM", "N", toupper(Tmp1))
       Tmp1=gsub("RNG", "R", Tmp1)
-      Tmp=paste(Tmp1,Tmp2,sep="") #17.09.24upto
+      Tmp=paste(Tmp1,Tmp2,sep="") #17.09.24until
       eval(parse(text=Tmp))
     }
   }
@@ -1715,7 +1965,7 @@ Dataindex<-function(P)
   {
     Ndm<-Appendrow(Ndm,c(N1,Nrow(P)))
   }
-  if(class(Ndm)=="numeric")
+  if(class(Ndm)[1]=="numeric")
   {
     Tmp<-matrix(Ndm,nrow=1)
     Ndm<- Tmp
@@ -1836,7 +2086,7 @@ Dividetable<- function(Tb)
 Doscaling<- function(G)
 {
   GLg<- G
-  if(class(GLg)=="numeric")
+  if(class(GLg)[1]=="numeric")
   {
     if(LOGX==1) GLg[1]<- log(G[1], base=10)
     if(LOGY==1) GLg[2]<- log(G[2], base=10)
@@ -2225,29 +2475,27 @@ Drwline<-function(...)
 
 ###########################################
 
-Drwpt<-function(...)
-{       ##  Scaling is implemented
+Drwpt<-function(...){
   varargin<-list(...)
   Nargs<-length(varargin)
   if(TenSize>TenSizeInit){
-    N<- round(6*sqrt(TenSize/TenSizeInit))
+    N=round(10*sqrt(TenSize/TenSizeInit)) #181231
   }
   else{
-    N<-4
+    if(TenSize==TenSizeInit){  #181231from
+      N=10
+    }else{
+      N=4
+    }  #181231to
   }
-  Tmp<- varargin[[Nargs]]
-  if(mode(Tmp)=="numeric"){
-    if(length(Tmp)>1){
-      Kosa<- 1; All<- Nargs
-    }
-    else{
-      Kosa<- Tmp; All<- Nargs-1
-    }
-  }
-  else if(mode(Tmp)=="list"){
-      Kosa<- 1; All<- Nargs
-  }
-  CL<-c()
+  All=Nargs  #181230from
+  Inside="1"
+  Tmp=varargin[[All]]
+  if(is.character(Tmp)){ #
+    if(Tmp=="0"){Inside="0"}
+    All=All-1
+  }#190405to
+  CL<- c()
   for (J in 0:N){
     Tmp<- TenSize*0.5*1000/2.54/MilliIn
     Tmp<- Tmp*c(cos(pi/4+J*2*pi/N),sin(pi/4+J*2*pi/N))
@@ -2269,8 +2517,8 @@ Drwpt<-function(...)
       for (J in 0:N){
         PL<- c(PL,P+CL[J+1,])
       }
-      PL<-matrix(PL,nrow=2)
-      PL<-t(PL)
+      PL<- matrix(PL,nrow=2)
+      PL<- t(PL)
       Mojisu<-0
       for (J in 1:Nrow(PL)){
         Q<- PL[J,]
@@ -2284,34 +2532,83 @@ Drwpt<-function(...)
         }
         Mojisu=0
       }
-      Str1<- paste("\\special{sh ",as.character(Kosa),"}",sep="")
-      Str2<- "\\special{fp}%\n"
+      if(Inside=="1"){ #200512from
+        Str1<- "\\special{sh 1}\\special{fp}"
+      }else{
+        Str1<- "\\special{fp}"
+      } #200512to
+      Str1<- paste(Str1,"%\n",sep="") #190405to
       cat(Str1,file=Wfile,append=TRUE)
-      cat(Str2,file=Wfile,append=TRUE)
     }
+    cat("\\special{pn 8}",file=Wfile,append=TRUE) #181231,191126
   }
 }
 
 ######################################################
 
-Drwxy<-function(...)
-{
+Drwxy<-function(...){ #180820
   varargin<-list(...)
   Nargs <- length(varargin)
-  Tmp<-grep("arrow", ZIKU)
-  if(length(Tmp)>0)
-  { 
-    Arrowline(c(XMIN,GENTEN[2]),c(XMAX,GENTEN[2]),ARROWSIZE)
-    Arrowline(c(GENTEN[1],YMIN),c(GENTEN[1],YMAX),ARROWSIZE)
+  Origin=GENTEN
+  Origins=Doscaling(Origin) #181016
+  Xrng=c(XMIN,XMAX)
+  Yrng=c(YMIN,YMAX)
+  Tmp1=Doscaling(c(XMIN,YMIN)) #181017from
+  Tmp2=Doscaling(c(XMAX,YMAX))
+  Xrngs=c(Tmp1[1],Tmp2[1])
+  Yrngs=c(Tmp1[2],Tmp2[2]) #181017from
+  Ziku=ZIKU #180821from
+  Xname=XNAME
+  Xpos=XPOS
+  Yname=YNAME
+  Ypois=YPOS
+  Oname=ONAME
+  Opos=OPOS #180821to
+  for(J in Looprange(1,Nargs)){
+    Tmp=strsplit(varargin[[J]],"=")
+    Tmp=Tmp[[1]]
+    Tmp1=toupper(substring(Tmp[1],1,1))
+    Tmp2=Tmp[2]
+    if(Tmp1=="O"){
+      Origin=eval(parse(text=Tmp2))
+    }
+    if(Tmp1=="X"){
+      Xrng=eval(parse(text=Tmp2))
+    }
+    if(Tmp1=="Y"){
+      Yrng=eval(parse(text=Tmp2))
+    }
+    if(Tmp1=="A"){ #180821from
+      if(substring(Tmp2,1,1)=="c"){
+        Tmp2=substring(Tmp2,3,nchar(Tmp2)-1)
+      }
+      Tmp2=gsub(",","','",Tmp2,fixed=TRUE)
+      Tmp2=paste("'",Tmp2,"'",sep="")
+      Tmp=paste("Setax(",Tmp2,")",sep="")
+      eval(parse(text=Tmp)) #180821to
+    }
+  }
+  Xrng=Xrng+Origin[1]
+  Yrng=Yrng+Origin[2]
+  Xrngs=Xrngs+Origins[1] #181016(2lines)
+  Yrngs=Yrngs+Origins[2]
+  Tmp<- substring(ZIKU,1,1) #180821
+  if(Tmp=="a")
+  {
+    Tmp=substring(ZIKU,2,nchar(ZIKU))
+    if(nchar(Tmp)==0){Tmp=1}else{Tmp=eval(parse(text=Tmp))}
+    Arrowline(c(Xrngs[1],Origins[2]),c(Xrngs[2],Origins[2]),Tmp)#181016(2lines)
+    Arrowline(c(Origins[1],Yrngs[1]),c(Origins[1],Yrngs[2]),Tmp)
   }
   else
   {
-    Drwline(Listplot(c(XMIN,GENTEN[2]),c(XMAX,GENTEN[2])))
-    Drwline(Listplot(c(GENTEN[1],YMIN),c(GENTEN[1],YMAX)))
+    Drwline(Listplot(c(Xrngs[1],Origins[2]),c(Xrngs[2],Origins[2])))#181016(2lines)
+    Drwline(Listplot(c(Origins[1],Yrngs[1]),c(Origins[1],Yrngs[2])))
   }
-  Letter(c(XMAX,GENTEN[2]),XPOS,XNAME)
-  Letter(c(GENTEN[1],YMAX),YPOS,YNAME)
-  Letter(GENTEN,OPOS,ONAME);
+  Letter(c(Xrng[2],Origin[2]),XPOS,XNAME)
+  Letter(c(Origin[1],Yrng[2]),YPOS,YNAME)
+  Letter(Origin,OPOS,ONAME)
+  Setax(Ziku,Xname,Xpos,Yname,Ypois,Oname,Opos) #180821
 }
 
 ##########################################
@@ -2571,8 +2868,8 @@ Expr<-function(...)
     CalcWidth(Hoko,Mojiretu)
     CalcHeight(Hoko,Mojiretu)
     cat("\\put(",file=Wfile,append=TRUE)
-    Tmp1<- sprintf("%7.7f",X)  # 11.07.19
-    Tmp2<- sprintf("%7.7f",Y)  # 11.07.19
+    Tmp1<- sprintf("%7.3f",X)  # 11.07.19
+    Tmp2<- sprintf("%7.3f",Y)  # 11.07.19
     Str<-paste(Tmp1,",",Tmp2,sep="")
     cat(Str,file=Wfile,append=TRUE)
     Tmp<-"){\\hspace*{\\Width}"
@@ -2584,38 +2881,30 @@ Expr<-function(...)
 
 ##########################################
 
-Exprrot<- function(...)
+Exprrot<- function(...) # 200101renewal
 {
   varargin<- list(...)
+  Nargs=length(varargin)
   P<- varargin[[1]]
-  V<- varargin[[2]]; N<- 3
-  P<- Doscaling(P)
-  V<- Doscaling(V)
-  Tmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Tmov<- Tmp; N<- N+1
+  V<- varargin[[2]];
+  Pu<- Unscaling(P)
+  Vu<- Unscaling(V)
+  Tmov=0; Nmov=0; Rot=1
+  for(N in Looprange(3,Nargs-1)){
+    if(N==3){Tmov=varargin[[N]]}
+    if(N==4){Nmov=varargin[[N]]}
+    if(N==5){Rot=varargin[[N]]}
   }
-  Nmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Nmov<- Tmp; N<- N+1
-  }
-  Mojiretu<- paste("$",Assign(varargin[[N]]),"$",sep="") # 2017.11.26
+  Mojiretu<- paste("$",varargin[[Nargs]],"$",sep="")
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
-  P<- P+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
-  Tmp<- acos(V[1]/Norm(V))
+  Pu<- Pu+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
+  if(abs(V[1])<10^(-4)){Tmp=pi/2}else{Tmp=atan(V[2]/V[1])} #200420
   Theta<- round(Tmp*180/pi)
-  if(V[2]>=0){
-    Units<- ""
-  }
-  else{
-    Units<- "units=-360,"
-  }
-  Tmp<- paste("\\rotatebox[",Units,"origin=c]{",as.character(Theta),sep="")
-  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
-  Letter(P,"c",Tmp)
+  if(Rot<0){Theta=Theta+180}
+  Tmp<- paste("\\rotatebox[origin=c]{",as.character(Theta),"}{",Mojiretu,"}",sep="")
+#  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
+  Letter(Pu,"c",Tmp)
 }
 
 ######################################################
@@ -2937,7 +3226,8 @@ Hatchdata<- function(...)
   ShaL<- list()
   Nargs<- length(varargin)
   Kakudo<- 45
-  Kankaku<- 0.125*1000/2.54/MilliIn
+#  Kankaku<- 0.125*1000/2.54/MilliIn
+  Kankaku<- 0.25*1000/2.54/MilliIn #180706
   Tmp<- Doscaling(c(XMIN,YMIN))
   Xmn<- Tmp[1]; Ymn<- Tmp[2]
   Tmp<- Doscaling(c(XMAX,YMAX))
@@ -2955,7 +3245,7 @@ Hatchdata<- function(...)
     Kakudo<- varargin[[N+1]]
     if(N==Nargs-2)
     {
-      Kankaku<- 0.125*varargin[[Nargs]]
+      Kankaku<- Kankaku*varargin[[Nargs]] #180716
     }
   }
   NaitenL<- varargin[[1]]
@@ -3094,8 +3384,8 @@ Hatchdata<- function(...)
   ShaLs<-list()
   for (I in Looprange(1,length(ShaL)))
   {
-    Tmp<- ShaL[[I]]
-    Tmp1<- Unscaling(Tmp)
+    Tmp1<- ShaL[[I]]
+#    Tmp1<- Unscaling(Tmp) #211119
     Tmp2<- Mixjoin(ShaLs, list(Tmp1))
     ShaLs<- Tmp2
   }
@@ -3583,7 +3873,8 @@ KoutenList<- function(PA,V,Bdy)
     for (K in Looprange(1, Nrow(KL)-1))
     {
       P<- Op(K,KL); Q<- Op(K+1,KL)
-      if(P!="/" && Q!="/")
+#      if((P!="/") && (Q!="/"))
+       if((length(P)==2)&&(length(Q)==2))      
       {
         Tmp<- Kouten(PA,V,P,Q);
         if(Tmp[[1]]!=Inf)
@@ -3646,7 +3937,7 @@ Koutenseg<-function(...)
   Sv2 <- V[1]^2+V[2]^2
   if(Sv2<10^(-6))
   {
-    Out<-Inf
+    Out<- Inf
     return(Out)
   }    
   P<-varargin[[3]]-A; Q<-varargin[[4]]-A
@@ -3754,7 +4045,7 @@ Koutenseg<-function(...)
   {
     T<-min(max(Q1,0),1)
   }
-  Tmp<A+T*V
+  Tmp<- A+T*V #210503
   Out<-list(Tmp,T,1)
   return(Out)
 }
@@ -3865,19 +4156,19 @@ Kyoukai<- function(...)
   Eps<- 10.0^(-4)   #17.09.24
   PLall<- list()
   Sflg<- 0
-  N<- length(DataL)
-  for (I in 1:N){
+  N<- Length(DataL)  #180621
+  for (I in Looprange(1,N)){
     Data<- Op(I, DataL)
-    Tmp<- Op(length(Data),Data)
-    if(mode(Tmp)=="numeric" && Nrow(Tmp)==1 && length(Tmp)>1){
-      Rg<-Tmp ; Nd<-length(Data)-1
+    Tmp<- Op(Length(Data),Data)
+    if(mode(Tmp)=="numeric" && Nrow(Tmp)==1 && Length(Tmp)>1){ #180621
+      Rg<-Tmp ; Nd<- Length(Data)-1 #180621
     }
     else{
       if(mode(Tmp)=="character"){
-        Rg<- Tmp ; Nd<-length(Data)-1
+        Rg<- Tmp ; Nd<- Length(Data)-1 #180621
       }
       else{ 
-        Rg<- "c" ; Nd<-length(Data)
+        Rg<- "c" ; Nd<- Length(Data) #180621
       }
     }
     for (J in Looprange(1,Nd)){
@@ -3894,11 +4185,11 @@ Kyoukai<- function(...)
         Pfirst<- P1
         Plast<- P2
         if(Nd>=2){
-          Tmp<- Data[[2]]
+          Tmp<- Op(2,Data)
           P<- Ptstart(Tmp)
           Q<- Ptend(Tmp)
           if(Norm(P2-P)>Eps && Norm(P2-Q)>Eps){
-            Tmp< Nrow(PL)
+            Tmp< Length(PL) #180621
             PL<-PL[Tmp:1,]
             Pfirst<- Ptstart(PL)
             Plast<- Ptend(PL)
@@ -3907,19 +4198,19 @@ Kyoukai<- function(...)
       }
       else{
         if(Norm(P1-Plast)<Eps){ 
-          Stp<-1; Ks<-2; Ke=Nrow(Points)
+          Stp<-1; Ks<-2; Ke=Length(Points) #180621
         }
         else{
           if(Norm(P2-Plast)<Eps) {
-            Stp<- -1; Ks<-Nrow(Points)-1; Ke=1
+            Stp<- -1; Ks<-Length(Points)-1; Ke=1 #180621
           }
           else{
-            Tmp<-Appendrow(PL,c(Inf,Inf),Points)
-            PL<- Tmp
+            Tmp<-Appendrow(PL,c(Inf,Inf))
+            PL<- Appendrow(Tmp,Points)
             Sflg<- 1
             Pfirst<- P1
             Plast<- P2
-            Stp<- 1; Ks<- Nrow(Points)-1; Ke<- 1
+            Stp<- 1; Ks<- Length(Points)-1; Ke<- 1 #180621
           }
         }
         for (K in seq(Ks,Ke, by=Stp)){
@@ -3930,7 +4221,7 @@ Kyoukai<- function(...)
       }
     }  
     if(Norm(Pfirst-Plast)>Eps){
-      Np<- Nrow(PL)
+      Np<- Length(PL) #180621
       if(Rg=="c"){
         Tmp<- Appendrow(PL,Pfirst)
         PL<- Tmp
@@ -3939,31 +4230,35 @@ Kyoukai<- function(...)
         Tmp<- c(PL[1:Np,2],YMIN)
         Y<- min(Tmp)-1
         P<- c(Plast[1],Y); Q<- c(Pfirst[1],Y)
-        Tmp<- Appendrow(PL,P,Q,Pfirst)
-        PL<- Tmp
+        Tmp<- Appendrow(PL,P)
+        Tmp=Appendrow(Tmp,Q)
+        PL=Appendrow(Tmp,Pfirst)
       }
       else if(Rg=="n"){
         Tmp<- c(PL[1:Np,2],YMAX)
         Y<-max(Tmp)+1
         P<- c(Plast[1],Y); Q<- c(Pfirst[1],Y)
-        Tmp<- Appendrow(PL,P,Q,Pfirst)
-        PL<- Tmp
+        Tmp<- Appendrow(PL,P)
+        Tmp<- Appendrow(Tmp,Q)
+        PL<- Appendrow(Tmp,Pfirst)
       }
       else if(Rg=="w"){
         Tmp<- c(PL[1:Np,1],XMIN)
         X<- min(Tmp)-1
         P<- c(X,Plast[2]); Q<- c(X,Pfirst[2])
-        Tmp<- Appendrow(PL,P,Q,Pfirst)
-        PL<- Tmp
+        Tmp<- Appendrow(PL,P)
+        Tmp<- Appendrow(Tmp,Q)
+        PL<- Appendrow(Tmp,Pfirst)
       }
       else if(Rg=="e"){
         Tmp<- c(PL[1:Np,1],XMAX)
         X<- max(Tmp)+1
         P<- c(X,Plast[2]); Q<- c(X,Pfirst[2])
-        Tmp<- Appendrow(PL,P,Q,Pfirst)
-        PL<- Tmp
+        Tmp<- Appendrow(PL,P)
+        Tmp<- Appendrow(Tmp,Q)
+        PL<- Appendrow(Tmp,Pfirst)
       }
-      else if(mode(Rg)=="numeric" && Nrow(Rg)==1 && length(Rg)>1){
+      else if(mode(Rg)=="numeric" && Nrow(Rg)==1 && Length(Rg)>1){ #180621
         Tmp<- Kukeiwake(PL)
         Tmp1<- Op(1,Tmp)
         Tmp2<- Naigai(Rg,list(Tmp1)) 
@@ -3975,19 +4270,19 @@ Kyoukai<- function(...)
         }
       }
     }
-    Tmp<- Ptstart(PL)
-    for (J in 2:Nrow(PL)){
+    Tmp<- matrix(Ptstart(PL),nrow=1) #180621
+	for (J in Looprange(2,Length(PL))){
       P<- Op(J,PL)
-      Q<- Op(Nrow(Tmp),Tmp)
+      Q<- Op(Length(Tmp),Tmp)
       if(Norm(P-Q)>Eps){
         Tmp1<-Appendrow(Tmp,P)
         Tmp<-Tmp1
       }
     }
     PL<-Tmp
-    PLall<-Mixjoin(PLall,list(PL))
+    PLall<-c(PLall,list(PL))
   }
-  if(length(PLall)==1 && Sflg==0){
+  if(Length(PLall)==1 && Sflg==0){
     Tmp<- Op(1,PLall)
 #    Tmp<- Op(1,Tmp)
     if(Norm(Ptstart(Tmp)-Ptend(Tmp))>Eps0){
@@ -4071,8 +4366,8 @@ Letter<-function(...)
     CalcWidth(Hoko,Mojiretu)
     CalcHeight(Hoko,Mojiretu)
     cat("\\put(",file=Wfile,append=TRUE)
-    Tmp1<- sprintf("%7.7f",X)  # 11.07.19
-    Tmp2<- sprintf("%7.7f",Y)  # 11.07.19
+    Tmp1<- sprintf("%7.3f",X)  # 11.07.19
+    Tmp2<- sprintf("%7.3f",Y)  # 11.07.19
     Str<-paste(Tmp1,",",Tmp2,sep="")
     cat(Str,file=Wfile,append=TRUE)
     Tmp<-"){\\hspace*{\\Width}"
@@ -4084,38 +4379,30 @@ Letter<-function(...)
 
 ######################################################
 
-Letterrot<- function(...)
+Letterrot<- function(...) #200101renewal
 {
   varargin<- list(...)
+  Nargs=length(varargin)
   P<- varargin[[1]]
-  V<- varargin[[2]]; N<- 3
-  P<- Doscaling(P)
-  V<- Doscaling(V)
-  Tmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Tmov<- Tmp; N<- N+1
-  }
-  Nmov<- 0
-  Tmp<- varargin[[N]]
-  if(mode(Tmp)=="numeric"){
-    Nmov<- Tmp; N<- N+1
-  }
-  Mojiretu<- Assign(varargin[[N]]) #2017.11.26
+  V<- varargin[[2]];
+  Pu<- Unscaling(P) 
+  Vu<- Unscaling(V)
+  Tmov=0; Nmov=0; Rot=1
+  for(N in Looprange(3,Nargs-1)){
+    if(N==3){Tmov=varargin[[N]]}
+    if(N==4){Nmov=varargin[[N]]}
+    if(N==5){Rot=varargin[[N]]}
+  } #20200101to
+  Mojiretu<- varargin[[Nargs]]
   Tv<- 1/Norm(V)*V
   Nv<- c(-Tv[2],Tv[1])
-  P<- P+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
-  Tmp<- acos(V[1]/Norm(V))
+  Pu<- Pu+MEMORI*Tmov*Tv+MEMORI*Nmov*Nv
+  if(abs(V[1])<10^(-4)){Tmp=pi/2}else{Tmp=atan(V[2]/V[1])} #200420
   Theta<- round(Tmp*180/pi)
-  if(V[2]>=0){
-    Units<- ""
-  }
-  else{
-    Units<- "units=-360,"
-  }
-  Tmp<- paste("\\rotatebox[",Units,"origin=c]{",as.character(Theta),sep="")
-  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
-  Letter(P,"c",Tmp)
+  if(Rot<0){Theta=Theta+180}
+  Tmp<- paste("\\rotatebox[origin=c]{",as.character(Theta),"}{",Mojiretu,"}",sep="")
+#  Tmp<- paste(Tmp,"}{",Mojiretu,"}",sep="")
+  Letter(Pu,"c",Tmp)
 }
 
 ###################################
@@ -4166,34 +4453,27 @@ V<- Mag/Norm(B-A)*(B-A)      ## 10.12.04 from here
 
 ################################
 
-Listplot<-function(...)
-{
+Listplot<-function(...){
   varargin<-list(...);
   Z<-c();
-  for (I in 1:length(varargin))
-  {
+  for (I in 1:length(varargin)){
     Data<-varargin[[I]];
-    if(mode(Data)=="numeric")
-    {
-      if(class(Data)=="numeric")
-      {
-        Tmp<-matrix(Data,nrow=2);
-        Tmp<-t(Tmp);
-        Z<-Appendrow(Z,Tmp)
+    if(mode(Data)=="numeric"){
+      if(class(Data)[1]=="numeric"){
+        Tmp<- matrix(Data,nrow=2);
+        Tmp<- t(Tmp);
+        Z<-Appendrow(Z,Unscaling(Tmp)) #181015
+      }else{
+        Z<-Appendrow(Z,Unscaling(Data)) #181015
       }
-      else
-        Z<-Appendrow(Z,Data)
-    }
-    else
-    {
-      for (J in 1:length(Data))
-      {
+    }else{
+      for (J in 1:length(Data)){
         Tmp<-Data[[J]];
-        Z<-Appendrow(Z,Tmp)
+        Z<-Appendrow(Z,Unscaling(Tmp)) #181015
       }
     }
-  }
- return(Z)
+  }  
+  return(Z)
 }
 
 ##############################
@@ -4254,7 +4534,7 @@ MakeBowdata <- function(PA,PB,H)
 MakeCurves<-function(...){        ## Scaling is implemented
   varargin<-list(...)
   Figdata<-varargin[[1]]
-  if(class(Figdata)=="numeric"){
+  if(!is.matrix(Figdata)){
     Figdata<-matrix(Figdata,nrow=1)
   } 
   Ptout<-1
@@ -4314,9 +4594,9 @@ MakeCurves<-function(...){        ## Scaling is implemented
    }
  }
   Outdata<-Atos[2:Nrow(Atos),]
-  if(class(Outdata)=="numeric")
+  if((length(Outdata)>0)&&(!is.matrix(Outdata)))
   {
-    Outdata<-matrix(Outdata,nrow=1)
+    Outdata<- as.matrix(Outdata,nrow=1) #20230725
   }
   return(Outdata)
 }
@@ -4710,7 +4990,7 @@ Nearestpt<- function(...){
   }
   if(Nrow(PL1)==1) Flg=0
   else Flg=1
-  Eps<- 10.0^(-6)
+  Eps<- 10.0^(-5) #210325
   PL<- varargin[[2]]
   Ans<- list(PL1[1,],1,PL[1,],1,Norm(PL1[1,]-PL[1,]))
   for(N in Looprange(1,Nrow(PL1))){
@@ -4749,6 +5029,43 @@ Nearestpt<- function(...){
   return(Ans)
 }
 
+##### new 201111 ####
+Nearestpt<- function(pt,ptL){
+  pt=Unscaling(pt)
+  Eps=10^(-6)
+  dtL=list()
+  rk=c()
+  for(nn in Looprange(1,Length(ptL)-1)){
+    pt1=Op(nn,ptL)
+    pt2=Op(nn+1,ptL)
+    if(Norm(pt2-pt1)<Eps){
+      dt=list(pt1,nn,Norm(pt1-pt)); rk=c(rk,dt[[3]])
+    }else{
+      dv=pt2-pt1
+      nv=c(-Op(2,dv),Op(1,dv))
+      tmp1=Intersectline(pt1,dv,pt,nv);
+      if(length(tmp1)>1){ #210320
+        if((Op(2,tmp1)>=0)&&(Op(2,tmp1)<=1)){
+          dt=list(Op(1,tmp1),nn+Op(2,tmp1),Norm(Op(1,tmp1)-pt)); rk=c(rk,dt[[3]])
+        }else{
+          if(Op(2,tmp1)<0){
+            dt=list(pt1,nn,Norm(pt1-pt)); rk=c(rk,dt[[3]])
+          }else{
+            dt=list(pt2,nn+1,Norm(pt2-pt)); rk=c(rk,dt[[3]])
+          }
+        }
+      }
+    }
+    dtL=c(dtL,list(dt))
+  }
+  rk=order(rk)
+  dtL=dtL[rk]
+  dtL=dtL[[1]]
+ tmp=dtL[[1]]
+  dtL[[1]]=Doscaling(tmp)
+  return(dtL)
+}
+
 #########################################
 
 Newlength<- function()
@@ -4782,7 +5099,7 @@ Op<-function(N,Data)
   C <- c()
   if(length(Data)==0) return(C)
   if(mode(Data)=="list"){
-    if(class(Data)=="data.frame"){   # 10.02.23
+    if(class(Data)[1]=="data.frame"){   # 10.02.23
       C<- Data[N,]
     }
     else{ 
@@ -4800,7 +5117,7 @@ Op<-function(N,Data)
     return(C)
   }
   if(mode(Data)=="numeric"){
-    if(class(Data)=="matrix"){
+    if(class(Data)[1]=="matrix"){
       Din<- Dataindex(Data)
       if(nrow(Din)==1){
         C<- Data[N,]
@@ -4984,9 +5301,11 @@ Paramark<- function(...)
 {
   varargin<- list(...)
   Nargs<- length(varargin)
-  PA<- varargin[[1]]
-  PB<- varargin[[2]]
-  PC<- varargin[[3]]
+  PA<- Doscaling(varargin[[1]])
+  PB<- Doscaling(varargin[[2]])
+  PC<- Doscaling(varargin[[3]])
+  scaley=SCALEY #191231
+  SCALEY=1
   R<- 0.5
   if(Nargs>=4){
     R<- varargin[[4]]*R
@@ -4999,6 +5318,8 @@ Paramark<- function(...)
   else{
     P<- c()
   }
+  SCALEY=scaley #191231from
+  P
 }
 
 ###########################################
@@ -5028,7 +5349,7 @@ Paramoncurve<-function(...){
   if(D2<Eps) return(0)
   S<-Dotprod(V,W)/D2
   S<-min(max(S,0),1)
-  Out=N+S  #18.02.11upto
+  Out=N+S  #18.02.11until
   return(Out)
 }
 
@@ -5042,6 +5363,10 @@ Paramplot<- function(...)
   Fnflg<- 0
   Fnstr<- varargin[[1]]; Is=2
   Rgstr<- varargin[[Is]]; Is<- Is+1
+  Tmp=strsplit(Rgstr,"=") #181017from
+  Var=Tmp[[1]][1]
+  Fnstr=Assign(Fnstr,Var,"t")
+  Rgstr=Assign(Rgstr,Var,"t")  #181017from
   Range<- c(0,2*pi)
   N<- 50      # Numpoints
   E<-c()       # Exclusions
@@ -5071,7 +5396,7 @@ Paramplot<- function(...)
     Rng<- c(0,2*pi)
   }
   T1<- Rng[1]; T2<- Rng[2]
-  Dt<- (T2-T1)/N #17.09.22
+  Dt<- (T2-T1) #180929
    if(Fnflg==0)
   {
     Str<-  gsub(Vname,"t",Fnstr)
@@ -5082,18 +5407,16 @@ Paramplot<- function(...)
     return(P)
   }
   P<-c()
-  if(length(E)>0)
-  {
+  if(length(E)>0){
     E<-sort(E)
-    E<E[length(E):1]
+#    E<E[length(E):1] #200616
   }
   E<- c(E, Inf)
   Tmp<- sort(E)
-  E<- E[length(Tmp):1]
+#  E<- E[length(Tmp):1]  #200616
   Ke<- 1
-#  for (t in seq(T1, T2+Eps, by=Dt)){#18.02.05
   for(jj in 1:(N+1)){
-    t=T1+(jj-1)*Dt
+    t=T1+(jj-1)*Dt/N #180929
     Pa<- c()
     if(t-E[Ke]< Eps)
     {
@@ -5125,37 +5448,26 @@ Paramplot<- function(...)
       }
       Ke<-Ke+1
     }
-    if(length(Pa)>0)
-    {
-      if(Pa[1]==Inf)
-      {
+    if(length(Pa)>0){
+      if(Pa[1]==Inf){
         Tmp<-Appendrow(P,Pa)
         P<-Tmp
-      }
-      else
-      {
-        if(Nrow(P)==0)
-        {
+      }else{
+        if(Nrow(P)==0){
           Tmp<- Appendrow(P,Pa)
           P<-Tmp
-        }          
-        else
-        {
+        }else{
           Tmp<- Op(Nrow(P),P)
-          if(Tmp[1]==Inf)
-          {
+          if(Tmp[1]==Inf){
             Tmp<- Appendrow(P,Pa)
             P<- Tmp
-          }
-          else
-          {
-            if(Norm(Tmp-Pa)<D)
-            {
-              Tmp<-Appendrow(P,Pa)
-              P<-Tmp
-            }
-            else
-            {
+          }else{
+            if(Norm(Tmp-Pa)<D){
+              if(Norm(Tmp-Pa)>Eps){ #180928
+                Tmp<-Appendrow(P,Pa)
+                P<-Tmp
+              } #180928
+            }else{
               Tmp<- Appendrow(P,c(Inf,Inf),Pa)
               P<- Tmp
             }
@@ -5164,19 +5476,26 @@ Paramplot<- function(...)
       }
     }
   }
+  Tmp<- Nrow(P) #190627from
+  Tmp1<- Op(1,P)
+  if(Tmp1[1]==Inf){
+    P<- P[2:Tmp,]
+  } #190627to
   Tmp<- Nrow(P)
   Tmp1<- Op(Tmp,P)
-  if(Tmp1[1]==Inf)
-  {
+  if(Tmp1[1]==Inf){
     P<- P[1:(Tmp-1),]
   }
   return(P)
 }
 
 #####################################
-
-Partcrv<- function(A,B,PkL)
+Partcrv<- function(A,B,PkLorg)
 {
+  PkL=PkLorg  #210625from
+  if(!is.matrix(PkL)){
+    PkL=matrix(PkL,ncol=2,byrow=TRUE)
+  }   #210625to
   Eps<- 10.0^(-3)
   if(mode(A)=="numeric" && length(A)==1){
     if(A>B+Eps){
@@ -5255,18 +5574,26 @@ Plotdata<- function(...)
   varargin<- list(...)
   Eps<- 10^(-5)
   Fnstr<- varargin[[1]]; Is<- 2
+  Fnstr=Assign(Fnstr) #180510(for KeTCindy)
   Fnflg<- 0
   Rgstr<- varargin[[Is]]; Is<- Is+1
+  Rgstr=Assign(Rgstr) #180510(for KeTCindy)
   Tmp<- strsplit(Rgstr,"=")
   K<-Tmp[[1]]
   if(length(K)>1){
     Vname<- K[1]
+    if(Vname=="y") Yflg=1 else Yflg=0
     Tmp1<- K[2]
     Rng<- eval(parse(text=Tmp1))
   }
   else{
     Vname<- Rgstr
-    Rng<- c(XMIN,XMAX)
+    if(Vname=="y") Yflg=1 else Yflg=0
+    if(Yflg==0){ #220910from
+      Rng<- c(XMIN,XMAX)
+    }else{
+      Rng<- c(YMIN,YMAX)
+    } #220910to
   }
   N<- 50      # Numpoints
   E<-c()       # Exclusions
@@ -5288,11 +5615,11 @@ Plotdata<- function(...)
     }
   }
   X1<- Rng[1]; X2<- Rng[2]
-  dx<- (X2-X1)/N # 17.09.22
+  dx<- (X2-X1) #180929
   if(Fnflg==0){
     Str<-  gsub(Vname,"x",Fnstr,fixed=TRUE)
   }
-  if(abs(dx)<Eps){  # Scilab 16.12.13
+  if(abs(dx/N)<Eps){  #180929
     x=X1
     P=c(X1,eval(parse(text=Str)))
     return(P)
@@ -5301,13 +5628,14 @@ Plotdata<- function(...)
   P<-c()
   if(length(E)>0){
     E<-sort(E)
-    E<E[length(E):1]
+#    E<E[length(E):1] #200616
   }
   E<- c(E, Inf)
   Tmp<- sort(E)
-  E<- E[length(Tmp):1]
+#  E<- E[length(Tmp):1] #200616
   Ke<- 1
-  for (x in seq(X1,X2,by=dx)){
+  for (J in 0:N){ #180929
+    x=X1+dx*J/N #180929
     if(nchar(Exfun)>0){
       Tmp<-eval(parse(text=Exfun))
       if(abs(Tmp)<Eps){
@@ -5331,7 +5659,8 @@ Plotdata<- function(...)
        Ke<-Ke+1
     }
     if(length(Pa)>0){
-      if(Pa[1]==Inf){
+      if((abs(Pa[1])==Inf)||(abs(Pa[2])==Inf)){ #190409
+        Pa=c(Inf,Inf) #190322
         Tmp<-Appendrow(P,Pa)
         P<-Tmp
       }
@@ -5360,12 +5689,19 @@ Plotdata<- function(...)
       }
     }
   }
+  Tmp<- Nrow(P) #190627from
+  Tmp1<- P[1,]
+  if(Tmp1[1]==Inf){
+    P<- P[2:Tmp,]
+  } #190627to
   Tmp<- Nrow(P)
-  Tmp1<-P[Tmp,]
-  if(Tmp1[1]==Inf)
-  {
+  Tmp1<- P[Tmp,]
+  if(Tmp1[1]==Inf){
     P<- P[1:(Tmp-1),]
   }
+  if(Yflg==1){ #220910from
+    P=cbind(P[,2],P[,1])
+  } #220910to
   return(P)
 }
 
@@ -6124,17 +6460,14 @@ Reflectdata<- function(...)
       PtA<- Pts[1:2]; PtB<- Pts[3:4]
     }
   }  
+  ML=Flattenlist(ML) #180603
   OutL<- list()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){   # 10.12.07
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,]
       X1<- Tmp[1]
       Y1<- Tmp[2]
       if(X1==Inf){
@@ -6224,10 +6557,10 @@ WriteOutData<- function(...){
             Str=paste(Str,",",sep="")
           }
           if(length(Pt)<3){
-            Str=paste(Str,sprintf("[%5.5f,%5.5f]",Pt[1],Pt[2]),sep="")
+            Str=paste(Str,sprintf("[%5.3f,%5.3f]",Pt[1],Pt[2]),sep="")
           }
           else{
-            Str=paste(Str,sprintf("[%5.5f,%5.5f,%5.5f]",Pt[1],Pt[2],Pt[3]),sep="")
+            Str=paste(Str,sprintf("[%5.3f,%5.3f,%5.3f]",Pt[1],Pt[2],Pt[3]),sep="")
           }
           if(nchar(Str)>80){
             cat("[",Str,"]//","\n",sep="",file=Fname,append=TRUE)
@@ -6291,7 +6624,7 @@ ReadOutData<- function(...){
           flg=1
         }else{
           outdt=c(outdt,list(ptL))
-        }  # 17.10.07upto
+        }  # 17.10.07until
         ptL=c()
       }
     }
@@ -6347,7 +6680,7 @@ ReadOutData<- function(...){ #2017.10.23
             tmp=paste("if(length(",varname,")==1){",varname,"<<- ",varname,"[[1]]}",sep="")
             eval(parse(text=tmp))
           }
-          # 17.12.13upto
+          # 17.12.13until
         varname=cmd
         tmp=paste(varname,"<<- list()",sep="")
         eval(parse(text=tmp))
@@ -6355,14 +6688,14 @@ ReadOutData<- function(...){ #2017.10.23
         if(flg==0){  # 17.10.07from
           flg=1
         }else{
-        }  # 17.10.07upto
+        }  # 17.10.07until
       }
     }
   }
   # 17.12.13from
   tmp=paste("if(length(",varname,")==1){",varname,"<<- ",varname,"[[1]]}",sep="")
   eval(parse(text=tmp))
-  # 17.12.13upto
+  # 17.12.13until
 }
 
 ####################################################
@@ -6384,18 +6717,15 @@ Rotatedata<- function(..., deg=FALSE)
   else{ 
     Pt<- varargin[[3]]
   }
+  ML=Flattenlist(ML) #180603
   Cx<- Pt[1]; Cy<- Pt[2]
   OutL<- c()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,]
       X1<- Tmp[1]         
       Y1<- Tmp[2]    
       if(X1==Inf){
@@ -6438,17 +6768,14 @@ Scaledata<- function(...)
   else{
     Pt<- varargin[[4]]
   }
+  ML=Flattenlist(ML) #180603
   OutL<- list()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){   # 10.12.07
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,]
       X1<- Tmp[1]         
       Y1<- Tmp[2]    
       if(X1==Inf){
@@ -6509,21 +6836,14 @@ Setax<- function(...)
 {
   varargin<- list(...)
   Nargs<- length(varargin)
-  if(Nargs==0){
-    if(ZIKU=="line"){
-      Tmp<- ","
-    }
-    else{
-      Tmp<- paste("(Arrowsize=", as.character(ARROWSIZE),"),",sep="")
-    }
-    Str<- paste(ZIKU,Tmp,XNAME,",",XPOS,",",sep="")
+  if(Nargs==0){ #180821(next 2 lines)
+    Str<- paste(ZIKU,",",XNAME,",",XPOS,",",sep="")
     Str<- paste(Str,YNAME,",",YPOS,",",ONAME,",",OPOS,sep="")
     return(Str)
   }
   ArgL<- c()
-  Is<- 1
   Tmp<- varargin[[1]]
-  if(mode(Tmp)=="numeric" && length(Tmp)==1){
+  if(is.numeric(Tmp)){ #180821
     Is<- varargin[[1]]
     ArgL<- c()
     for (I in Looprange(1,Is-1)){
@@ -6533,50 +6853,18 @@ Setax<- function(...)
       ArgL<- c(ArgL,varargin[[I]])
     }
   }
-  else{
-    if(Nargs==1){ 
-      ArgL<- c(varargin[[1]])
-    }
-    else{
-      Tmp<- varargin[[2]]
-      if(mode(Tmp)=="numeric" && length(Tmp)==1){
-        ARROWSIZE<<-Tmp
-        ArgL<- c(varargin[[1]])
-        for (I in Looprange(3,Nargs)){
-          ArgL<- c(ArgL,varargin[[I]])
-        }
-      }
-      else{
-        ArgL<- c()
-        for (I in 1:Nargs){
-          ArgL<- c(ArgL,varargin[[I]])
-        }
-      }
+  else{ #180821from
+    for (I in Looprange(1,Nargs)){
+       ArgL<- c(ArgL,varargin[[I]])
     }
   }
   for (I in Looprange(length(ArgL)+1,7)){
     ArgL<- c(ArgL,"")
-  }
-  Zk<- ArgL[1]
-  if(nchar(Zk)>0){ 
-    ZL<-substr(Zk,2,nchar(Zk))
-    Zk<-substr(Zk,1,1)
-    if(nchar(ZL)>0){
-      ARROWSIZE<<- as.numeric(ZL)
-    }
-  }
+  } #180821to
   Xn<- ArgL[2]; Xp<- ArgL[3]
   Yn<- ArgL[4]; Yp<- ArgL[5]
-  Genn<- ArgL[6]; Genp<- ArgL[7]
-  if(nchar(Zk)>0){ 
-    C<- Zk
-    if(C=="a"){ 
-      ZIKU<<- "arrow"
-    }
-    else{
-      ZIKU<<- "line" 
-    }
-  }
+  On<- ArgL[6]; Op<- ArgL[7]
+  ZIKU<<- ArgL[1] #180821
   if(nchar(Xn)>0){
     XNAME<<- paste("$",Xn,"$",sep="")
   }
@@ -6589,11 +6877,11 @@ Setax<- function(...)
   if(nchar(Yp)>0){
     YPOS<<-Yp
   }
-  if(nchar(Genn)>0){
-    ONAME<<- Genn
+  if(nchar(On)>0){
+    ONAME<<- On
   }
-  if(nchar(Genp)>0){
-    OPOS<<- Genp
+  if(nchar(Op)>0){
+    OPOS<<- Op
   }
   Out<- "";
 }
@@ -6619,10 +6907,14 @@ Setcolor<- function(...){
   }
   Iro<- Ratiocmyk(Color)
   if(length(Iro)==0) return(c())
-  Str<- "\\color[cmyk]{" #17.09.22
-  for(J in 1:4){
+  if(length(Iro)==4){ #180602from
+    Str<- "\\color[cmyk]{"
+  }else{
+    Str<- "\\color[rgb]{"
+  } #180602to
+  for(J in 1:length(Iro)){
     Str<- paste(Str,as.character(Kosa*Iro[J]),sep="")
-    if(J<4){
+    if(J<length(Iro)){ #180603
       Str<- paste(Str,",",sep="")
     }
   }
@@ -6661,41 +6953,39 @@ Setorigin<- function(...)
 
 ################################
 
-Setscaling<- function(...)
-{
+Setscaling<- function(...){
   varargin<- list(...)
   Nargs<- length(varargin)
-  if(Nargs==0)
-  {
-      return(c(SCALEY,LOGX,LOGY))
+  if(Nargs==0){
+    return(c(SCALEX,SCALEY,LOGX,LOGY))
   }
-  for (I in 1:Nargs)
-  {
+  Tmp=varargin[[1]] #181020from
+  if((Nargs==1)&&(is.numeric(Tmp))){
+    SCALEY<<- Tmp
+	return(invisible(c(SCALEX,SCALEY,LOGX,LOGY)))
+  }
+  nCtr=1 #181020to
+  for (I in 1:Nargs){
     Tmp<- varargin[[I]]
-    if(mode(Tmp)=="numeric")
-    {
-      SCALEY<<- Tmp
+    if(mode(Tmp)=="numeric"){
+      if(nCtr==1)SCALEX<<- Tmp #181020(2llines)
+      if(nCtr==2)SCALEY<<- Tmp
+      nCtr=nCtr+1
     }
-    if(mode(Tmp)=="character")
-    {
-      if(Tmp=="l")
-      {
+    if(mode(Tmp)=="character"){
+      if(Tmp=="l"){
         LOGX<<- 0
         LOGY<<- 1
-      }
-      else if(Tmp=="ll")
-      {
+      }else if(Tmp=="ll"){
         LOGX<<- 1
         LOGY<<- 1
-      }
-      else
-      {
+      }else{
         LOGX<<- 0
         LOGY<<- 0
       }
     }
   }
-  Tmp<- c(SCALEY,LOGX,LOGY);
+  Tmp<- c(SCALEX,SCALEY,LOGX,LOGY)
 }
 
 #########################################
@@ -6818,7 +7108,7 @@ Setwindow<-function(...)
 
 #########################################
 
-Shade<- function(...)
+Shadeold<- function(...)
 {           ##  Scaling is implemented
   varargin<- list(...)
   Nargs<- length(varargin)
@@ -6864,7 +7154,8 @@ Shade<- function(...)
     }
   }
   Tmp=varargin[[1]]
-  Data=Kyoukai(Tmp)
+  Data=Kyokai(Tmp)
+  Data=list(Data) ####180327
   for (I in Looprange(1, length(Data))){
     PL<- Op(I,Data)
     Mojisu<- 0
@@ -6926,51 +7217,35 @@ Shade<- function(...)
       }
     }
     if(Iroflg==1){
-      if(Wfile=="default")
-        cat(Str,"%\n",file="",append=TRUE,sep="")
-      else
-        cat(Str,"%\n",file=Wfile,append=TRUE,sep="")
     }
   }
   Tmp<- varargin[[1]]
-  Data<- Kyoukai(Tmp)
-  for (I in Looprange(1, length(Data))){
+#  Data<- Kyoukai(Tmp)
+  Data= Joincrvs(Tmp) #180929from
+  Data=list(Data) #180929to
+  for (I in Looprange(1, Length(Data))){ #180621
     PL<- Op(I,Data)
+    PL=Appendrow(PL,Op(1,PL)) #180929
     Mojisu<- 0
-    for (J in  1:Nrow(PL)){
+    for (J in  Looprange(1,Length(PL))){
       P<- Doscaling(Op(J,PL))
       X<- as.character(round(MilliIn*P[1]))
       Y<- as.character(-round(MilliIn*P[2]))
       Str<- paste("\\special{pa ",X," ",Y,"}",sep="")
-      if(Wfile=="default")
-        cat(Str,file="",append=TRUE,sep="")
-      else
-        cat(Str,file=Wfile,append=TRUE,sep="")
+      cat(Str,file=Wfile,append=TRUE,sep="")
       Mojisu<- Mojisu+nchar(Str)
       if(Mojisu>80){
-        if(Wfile=="default")
-          cat("%\n",file="",append=TRUE,sep="")
-        else
-          cat("%\n",file=Wfile,append=TRUE,sep="")
+	    cat("%\n",file=Wfile,append=TRUE,sep="")
         Mojisu<- 0
       }
     }
     Str1<- paste("\\special{sh ",as.character(Kosa),"}",sep="")
     Str2<- paste("\\special{ip}%\n",sep="")
-    if(Wfile=="default"){
-       cat(Str1,file="",append=TRUE,sep="")
-       cat(Str2,file="",append=TRUE,sep="")
-    }
-    else{
-       cat(Str1,file=Wfile,append=TRUE,sep="")
-       cat(Str2,file=Wfile,append=TRUE,sep="")
-    }
+    cat(Str1,file=Wfile,append=TRUE,sep="")
+    cat(Str2,file=Wfile,append=TRUE,sep="")
   }
   if(Iroflg==1){
-    if(Wfile=="default")
-      cat("}%\n",file="",append=TRUE,sep="")
-    else
-      cat("}%\n",file=Wfile,append=TRUE,sep="")
+    cat("}%\n",file=Wfile,append=TRUE,sep="")
   }
 }
 
@@ -7087,7 +7362,7 @@ Tabledata<- function(...){
     Domain<- c(-1,-1)
     VL<- varargin[[1]]
     HL<- varargin[[2]]
-  } # 130503 upto
+  } # 130503 until
   Hsize<- Domain[1]
   SvL<- list(0)
   S<- 0
@@ -7278,7 +7553,7 @@ Texendfor<- function(I){
 Texendif<- function(){
   Texcom("")
   Texcom("\\fi")
-  Texcom("}")
+#  Texcom("}")
 }
 
 ###############################################
@@ -7311,9 +7586,9 @@ Texif<- function(...){
     Tp<- varargin[[2]]
   }
   Texcom("")
-  Texcom("{")
+#  Texcom("{")
   if(Tp==0){
-    Texcom("\\ifnum")
+    Texcom("\\ifnum ")
   }
   else{
     Texcom("\\ifdim ")
@@ -7456,7 +7731,7 @@ Texsetctr<- function(Nctr,Opstr)
       Va<- paste(Va,Tmp,sep="")
       next
     }
-    if(length(grep(Tmp,OperL))==0){
+    if(length(grep(Tmp,OperL,fixed=TRUE))==0){ #180510
       Va<- paste(Va,Tmp,sep="")
     }
     else{
@@ -7603,17 +7878,14 @@ Translatedata<- function(...)
       B<- 0
     }
   }
+  ML=Flattenlist(ML) #180603
   OutL<- list()
-  for (N in Looprange(1,length(ML))){
+  for (N in Looprange(1,Length(ML))){
     GL<- Op(N,ML)
+    if(!is.matrix(GL)){GL=matrix(GL,ncol=2)} #180603
     Out<- c()
-    for (I in Looprange(1,Nrow(GL))){
-      if(is.matrix(GL)){   # 10.12.07
-        Tmp<- GL[I,]
-      }
-      else{
-        Tmp<- GL
-      }
+    for (I in Looprange(1,Length(GL))){
+      Tmp<- GL[I,] #180603
       X1<- Tmp[1]         
       Y1<- Tmp[2]    
       if(X1==Inf){
@@ -7639,7 +7911,7 @@ Translatedata<- function(...)
 Unscaling<- function(G)
 {
   GLg<- G
-  if(class(GLg)=="numeric"){
+  if(class(GLg)[1]=="numeric"){
     GLg<-c(G[1]/SCALEX, G[2]/SCALEY)
     Tmp<-GLg
     if(LOGX==1) Tmp[1]<- 10^(GLg[1])
@@ -8183,7 +8455,7 @@ Facesdata<- function(...){
     if(Cflg==0){
       HiddenL<- c(HiddenL,list(Spaceline(Edge)))
    }
-  }  # upto 14.03.30
+  }  # until 14.03.30
   PHHIDDENDATA<<- HiddenL
   return(NohiddenL)
 }
@@ -8435,7 +8707,7 @@ Kukannozoku<- function(Jokyo,KukanL){
 ########################################
 
 Makeskeletondata<- function(Obj2L,Plt2L,R0,Eps2){
-  Eps<- 10.0^(-3)
+ Eps<- 10.0^(-3)
   Dmat<- c()
   Dind<- c()
   for (I in Looprange(1,Mixlength(Plt2L))){
@@ -8461,7 +8733,7 @@ Makeskeletondata<- function(Obj2L,Plt2L,R0,Eps2){
       for (I in Looprange(1,Nrow(Dind))){
         Tmp<- Dmat[Dind[I,1]:Dind[I,2],]
         P2<- Tmp[,1:2]
-        KC<- IntersectcrvsPp(P1,P2,Eps)
+        KC<- IntersectcrvsPp(P1,P2)
         if(Mixlength(KC)>0){
           for (J in 1:Mixlength(KC)){
             P<- Op(1,Op(J,KC))
@@ -8852,8 +9124,8 @@ MakeveLfaceL<- function(VfL){
 }
 
 ###########################
-#// 09.10.29
-#// 09.11.15
+# 09.10.29
+# 09.11.15
 
 Menkakusi2<- function(Face,Nf,Ptype){
 #  global THETA PHI EyePoint FocusPoint VELNO VELHI
@@ -8949,7 +9221,7 @@ Menkakusi2<- function(Face,Nf,Ptype){
         Tmp1<- Invparapt(P,Spaceline(Face))
       }
       P3<- Tmp[[1]]; Q3<- Tmp1[[1]]
-      if(Ts>1-Eps){#  // P3, Q3 are necessary
+      if(Ts>1-Eps){#   P3, Q3 are necessary
         Flg<- I
         break
       }
@@ -9061,8 +9333,8 @@ Parapt<- function(Plist){  # 18.02.19 changed (for point list)
 
 Partcrv3<- function(T1,T2,Fk){
   Eps0=10^(-4)
-#// Tmp=Mixop(1,Fk)
-#// new part from
+# Tmp=Mixop(1,Fk)
+# new part from
   if(T1>(T2+Eps0)){
     Npt<- Nrow(Fk)
     Out1<- Partcrv3(T1,Npt,Fk)
@@ -9080,7 +9352,7 @@ Partcrv3<- function(T1,T2,Fk){
     Tmp=floor(T1)
     p1=Op(Tmp,Fk); p2=Op(Tmp+1,Fk)
     PL=c(p1+(T1-Tmp)*(p2-p1)) 
-    PL=Appendrow(PL, p1+(T2-Tmp)*(p2-p1)) #18.02.26upto
+    PL=Appendrow(PL, p1+(T2-Tmp)*(p2-p1)) #18.02.26until
   }else{
     Is<- ceiling(T1)
     Ie<- floor(T2)
@@ -9601,6 +9873,9 @@ Projpara<- function(...){
   for (N in Looprange(1,Nargs)){
     Crv<- varargin[[N]]
     if(is.numeric(Crv)){
+      if(!is.matrix(Crv)){ # 190408from
+        Crv=matrix(Crv,ncol=3)
+      } # 190408to
       Tmp<- ProjCurve(Crv)
       CL<- c(CL,list(Tmp))
     }
@@ -9672,6 +9947,142 @@ Projpers<- function(...){
 }
 
 #########################################
+# 180807
+
+Reflect3data<- function(...){
+  varargin<-list(...)
+  Nargs<- length(varargin)
+  Pd3<- varargin[[1]]
+  VL<- varargin[[2]]
+  if(Mixtype(Pd3)==1){
+    Pd3<- list(Pd3)
+  } else if(Mixtype(Pd3)==3){
+    Tmp<- list()
+    for (I in Looprange(1,Length(Pd3))){
+      Tmp<- c(Tmp,Op(I,Pd3))
+    }
+    Pd3<- Tmp
+  }
+  Out<- list() 
+  for (I in Looprange(1,Length(Pd3))){
+     PD<- Op(I,Pd3)
+     Ans<- c() 
+     for (J in Looprange(1,Nrow(PD))){
+      if(is.matrix(PD)){
+        P<- PD[J,]
+      }
+      else{
+        P<- PD
+      } 
+      Tmp<- Reflect3pt(P,VL)
+      Ans<- rbind(Ans,Tmp)
+    }
+    rownames(Ans)<- 1:Nrow(Ans)
+    Out<- c(Out,list(Ans))
+   }
+   if(Length(Out)==1){
+     Out<- Op(1,Out)
+  }
+  return(Out)
+}
+
+#######################################
+
+Reflect3pt<- function(...){
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  P<- varargin[[1]]
+  VL<- varargin[[2]]
+  if(Length(VL)==1){
+    Ans=2*Op(1,VL)-P
+  }
+  if(Length(VL)==2){
+    V1=Op(1,VL)
+    V2=Op(2,VL)
+    V3=(V2-V1)/Norm(V2-V1)
+    Tmp=V1+Dotprod(P-V1,V3)*V3
+    Ans=2*Tmp-P
+  }
+  if(Length(VL)==3){
+    V1=Op(1,VL)
+    V2=Op(2,VL)
+    V3=Op(3,VL)
+    Tmp=Crossprod(V2-V1,V3-V1)
+    Tmp1=P-Dotprod(Tmp, P-V1)/Norm(Tmp)^2*Tmp
+    Ans=2*Tmp1-P
+  }
+  return(Ans)
+}
+
+#########################################
+# 180807
+
+Scale3data<- function(...){
+  varargin<-list(...)
+  Nargs<- length(varargin)
+  Pd3<- varargin[[1]]
+  R<- varargin[[2]]
+  C<- varargin[[3]]
+  C<- c(0,0,0)
+  if(Nargs>=3){
+    C<- varargin[[3]]
+  }
+  if(Mixtype(Pd3)==1){
+    Pd3<- list(Pd3)
+  } else if(Mixtype(Pd3)==3){
+    Tmp<- list()
+    for (I in Looprange(1,Length(Pd3))){
+      Tmp<- c(Tmp,Op(I,Pd3))
+    }
+    Pd3<- Tmp
+  }
+  Out<- list() 
+  for (I in Looprange(1,Length(Pd3))){
+    PD<- Op(I,Pd3)
+    Ans<- c() 
+    for (J in Looprange(1,Nrow(PD))){
+      if(is.matrix(PD)){
+        P<- PD[J,]
+      }
+      else{
+        P<- PD
+      } 
+      Tmp<- Scale3pt(P,R,C)
+      Ans<- rbind(Ans,Tmp)
+    }
+    rownames(Ans)<- 1:Nrow(Ans)
+    Out<- c(Out,list(Ans))
+  }
+  if(Length(Out)==1){
+    Out<- Op(1,Out)
+  }
+  return(Out)
+}
+
+#######################################
+
+Scale3pt<- function(...){
+  varargin<-list(...)
+  Nargs<-length(varargin)
+  P<- varargin[[1]]
+  R<- varargin[[2]]
+  if(length(R)==1){ #180808from
+    R=c(R,R,R)
+  } #180808to
+  C<- c(0,0,0)
+  if(Nargs>=3){
+    C<- varargin[[3]]
+  }
+  X1=P[1]; Y1=P[2];  Z1=P[3]
+  Cx=C[1]; Cy=C[2]; Cz=C[3]
+  X2=Cx+R[1]*(X1-Cx)
+  Y2=Cy+R[2]*(Y1-Cy)
+  Z2=Cz+R[3]*(Z1-Cz)
+  Ans=c(X2,Y2,Z2)
+  return(Ans)
+}
+
+#########################################
 # 11.08.27
 # 14.03.23   Debugged "center"
 
@@ -9705,7 +10116,7 @@ Rotate3data<- function(...){
       }
       else{
         P<- PD
-      } 
+      }
        Tmp<- Rotate3pt(P,W1,W2,C) # 14.03.23
        Ans<- rbind(Ans,Tmp)
      } # 11.08.27
@@ -9804,6 +10215,45 @@ Rotate3pt<- function(...){
     Ans<- Op(1,Ans)
   }
  return(Ans)
+}
+
+#################################
+
+Translate3data<- function(...){
+  varargin<- list(...)
+  Nargs<- length(varargin)
+  Pd3<- varargin[[1]]
+  Mv<- varargin[[2]]
+  if(mode(Mv)=="numerice" && length(Mv)==1){
+    Mv<- c(varargin[[2]],varargin[[3]],varargin[[4]])
+  }
+  if(Mixtype(Pd3)==1){
+    Pd3<- list(Pd3)
+  }
+  else if(Mixtype(Pd3)==3){
+    Tmp<-list()
+    for(I in Looprange(1,Mixlength(Pd3))){
+      Tmp<- c(Tmp, Op(I,Pd3))
+    }
+    Pd3<- Tmp
+  }
+  Out<- list()
+  for(I in Looprange(1,Mixlength(Pd3))){
+    PD<- Op(I,Pd3)
+    PD<- rbind(c(),PD)
+    Ans<- c()
+    for(J in Looprange(1,Nrow(PD))){
+      P<- PD[J,]
+      Tmp<- P+Mv
+      Ans<- rbind(Ans,Tmp)
+    }
+    rownames(Ans)<- 1:Nrow(Ans)
+    Out<- c(Out,list(Ans))
+  }
+  if(Mixlength(Out)==1){
+    Out<- Op(1,Out)
+  }
+  return(Out)
 }
 
 ######################################
@@ -10118,11 +10568,11 @@ Spacecurve<- function(...){
     Rng<- c(XMIN,XMAX)
   }
   T1<- Rng[1]; T2<- Rng[2]
-  Dt<- (T2-T1)/N #17.09.22
+  Dt<- (T2-T1) #180929
   Str<- gsub(Vname,"t",Fnstr)
   Str=gsub("[","c(",Str,fixed=TRUE) #17.12.22(2lines)
   Str=gsub("]",")",Str,fixed=TRUE)
-  if(abs(Dt)<Eps){ # 16.12.13
+  if(abs(Dt/N)<Eps){ #180929
     t=T1
     P=eval(parse(text=Str))
     return(P)
@@ -10133,7 +10583,7 @@ Spacecurve<- function(...){
   E<- sort(E,decreasing=FALSE)
   Ke<- 1
   for(jj in 1:(N+1)){
-    t=T1+(jj-1)*Dt
+    t=T1+(jj-1)*Dt/N #180929
     Pa<- c()
     if(t-E[Ke]< Eps){
 	  Pa<-  eval(parse(text=Str))
@@ -10202,45 +10652,6 @@ Spaceline<- function(...){
   }
   Z<- matrix(Z,ncol=3,byrow=TRUE)                
   return(Z)
-}
-
-#################################
-
-Translate3data<- function(...){
-  varargin<- list(...)
-  Nargs<- length(varargin)
-  Pd3<- varargin[[1]]
-  Mv<- varargin[[2]]
-  if(mode(Mv)=="numerice" && length(Mv)==1){
-    Mv<- c(varargin[[2]],varargin[[3]],varargin[[4]])
-  }
-  if(Mixtype(Pd3)==1){
-    Pd3<- list(Pd3)
-  }
-  else if(Mixtype(Pd3)==3){
-    Tmp<-list()
-    for(I in Looprange(1,Mixlength(Pd3))){
-      Tmp<- c(Tmp, Op(I,Pd3))
-    }
-    Pd3<- Tmp
-  }
-  Out<- list()
-  for(I in Looprange(1,Mixlength(Pd3))){
-    PD<- Op(I,Pd3)
-    PD<- rbind(c(),PD)
-    Ans<- c()
-    for(J in Looprange(1,Nrow(PD))){
-      P<- PD[J,]
-      Tmp<- P+Mv
-      Ans<- rbind(Ans,Tmp)
-    }
-    rownames(Ans)<- 1:Nrow(Ans)
-    Out<- c(Out,list(Ans))
-  }
-  if(Mixlength(Out)==1){
-    Out<- Op(1,Out)
-  }
-  return(Out)
 }
 
 ###############################################
@@ -10458,7 +10869,7 @@ Xyzaxpersname<- function(...){
 
 #########################
 #100815
-Zparapt<- function(P){#function Out=Zparapt(P)
+Zparapt<- function(P){
   x<- P[1]; y<- P[2]; z<- P[3]
   Out<- x*cos(PHI)*sin(THETA)+y*sin(PHI)*sin(THETA)+z*cos(THETA)
   return(Out)
@@ -10909,7 +11320,7 @@ Boxplotdata2 <- function(Data,Ratio, ...)
     Tmp<- DataF[[J]]
     ymin<- min(ymin, min(Tmp))
     ymax<- max(ymax,max(Tmp))
-  }                                           # 11.07.21(upto)
+  }                                           # 11.07.21(until)
   dy <- ymax-ymin
   Setwindow(c(0,XMAX-XMIN),c(ymin-0.1*dy,ymax+0.1*dy))
   R1<- (YMAX-YMIN)/(XMAX-XMIN)
@@ -11021,7 +11432,7 @@ Drwboxplot<- function(dataf,var,size,
     Tmp<- DataF[[J]]
     ymin<- min(ymin, min(Tmp))
     ymax<- max(ymax,max(Tmp))
-  }                                           # 11.07.21(upto)
+  }                                           # 11.07.21(until)
   Hako<- Boxplotdata2(dataf, size[2]/size[1], ...)
   if(plot){
     Windisp(Hako)
@@ -11370,136 +11781,113 @@ Connectseg<- function(...){
   return(PlotL)
 }
 
-Makevaltable<- function(MS){
-  Eps=10^(-6)
-  Nargs=length(MS)
-  Fstr=Op(1,MS)
-  Tmp=Op(2,MS)
-  Tmp1=strsplit(Tmp,"=",fixed=TRUE)
-  Tmp1=Tmp1[[1]]
-  Xname=Tmp1[1]
-  Xrange=eval(parse(text=Tmp1[2]))
-  Tmp=Op(3,MS)
-  Tmp1=strsplit(Tmp,"=",fixed=TRUE)
-  Tmp1=Tmp1[[1]]
-  Yname=Tmp1[1]
-  Yrange=eval(parse(text=Tmp1[2]))
-  Tmp=gsub(Xname,"x",Fstr)
-  Fstr=gsub(Yname,"y",Tmp)
-  Tmp=grep(Xname,Fstr)
-  if(length(Tmp)==0){
-    Fstr=paste(Fstr,'+0*x',sep="")
-  }
-  Mdv=50
-  Ndv=50
-  if(Nargs>=4){
-    Tmp=Op(4,MS)
-    if(Length(Tmp)>1){ #18.02.09
-      Mdv=Op(1,Tmp)
-      Ndv=Op(2,Tmp)
-    }else{
-      Mdv=Tmp
-      if(Nargs==4){
+Implicitplot<- function(...){ #180402
+  varargin=list(...)
+  Eps=10^(-6)  #190511
+  Nargs=length(varargin)
+  Func=varargin[[1]]
+  Xrng=varargin[[2]]
+  Yrng=varargin[[3]]
+  Mdv=50;Ndv=50
+  for (I in Looprange(4,length(varargin))){
+    Str= varargin[[I]]
+    Tmp=strsplit(Str,"=",fixed=TRUE)
+    Tmp=Tmp[[1]]
+	Tmp1=toupper(Tmp[1])
+    if(substring(Tmp1,1,1)=="N"){
+      Mdv=eval(parse(text=Tmp[2]))
+      if(length(Mdv)==1){
         Ndv=Mdv
       }else{
-        Tmp1=Op(5,MS)
-        if((is.numeric(Tmp1))&&(length(Tmp1)==1)){
-          Ndv=Tmp1
-        }else{
-          Ndv=Mdv
-        }
+        Ndv=Mdv[2]
+        Mdv=Mdv[1]
       }
     }
   }
-  X1=Xrange[1]; X2=Xrange[2]
-  Y1=Yrange[1]; Y2=Yrange[2]
-  Dx=(X2-X1)/Mdv
-  Dy=(Y2-Y1)/Ndv
-  Xval=c()
-  Tmp=X1
-  for(ii in 1:(Mdv+1)){
-    Tmp=X1+(ii-1)*Dx
-    Xval=c(Xval,Tmp)
-   }
-  Yval=c()
-  Tmp=Y1
-  for(jj in 1:(Ndv+1)){
-    Tmp=Y1+(jj-1)*Dy
-    Yval=c(Yval,Tmp)
-  }
-  Zval=matrix(nrow=Ndv+1,ncol=Mdv+1)
-  I=1
-  for(y in Yval){
-    J=1
-    for(x in Xval){
-      Zval[I,J]=eval(parse(text=Fstr))
-      J=J+1
-    }
-    I=I+1
-  }
-  return(list(Zval,Xval,Yval))
-}
-
-Implicitplot<- function(...){
-  varargin=list(...)
-  Eps0=10^(-4)
-  Nargs=length(varargin)
-  Fstr=varargin[[1]]
-  if(is.list(Fstr)){
-    MS=Fstr
-    Tmp=Makevaltable(MS)
-    Zval=Tmp[[1]]; Xval=Tmp[[2]]; Yval=Tmp[[3]]
-  }else if(is.character(Fstr)){
-#    MS=list()
-#    for(I in 1:Nargs){
-#      MS=c(MS,varargin[I])
-#    }
-#    Tmp=Makevaltable(MS)
-    Tmp=Makevaltable(varargin) #18.02.24
-    Zval=Tmp[[1]]; Xval=Tmp[[2]]; Yval=Tmp[[3]]
+  Tmp=strsplit(Func,"=",fixed=TRUE)
+  Tmp=Tmp[[1]]
+  if(length(Tmp)==1){
+    Fn=Func
   }else{
-    Zval=varargin[[1]]
-    Xval=varargin[[2]]
-    Yval=varargin[[3]]
+    Fn=paste(Tmp[1],"-(",Tmp[2],")",sep="")
   }
-  Out=c()
-  for(J in Looprange(1,length(Yval)-1)){
-    for(I in Looprange(1,length(Xval)-1)){
-      a1=Xval[I]; b1=Yval[J]; c1=Zval[J,I]
-      a2=Xval[I+1]; b2=Yval[J]; c2=Zval[J,I+1]
-      a3=Xval[I+1]; b3=Yval[J+1]; c3=Zval[J+1,I+1]
-      a4=Xval[I];b4=Yval[J+1];c4=Zval[J+1,I]
-      PL=matrix(c(a1,b1,a2,b2,a3,b3,a4,b4,a1,b1),ncol=2,byrow=TRUE)
-      VL=c(c1,c2,c3,c4,c1)
-      QL=c()
-      for(K in 1:4){
-        if(abs(VL[K])<=Eps0){
-          QL=Appendrow(QL,PL[K,])
-        }else if(VL[K]>Eps0){
-          if(VL[K+1]< -Eps0){
-            Tmp=1/(VL[K]-VL[K+1])*(-VL[K+1]*PL[K,]+VL[K]*PL[K+1,])
-            QL=Appendrow(QL,Tmp)
-          }
+  Tmp=strsplit(Xrng,"=",fixed=TRUE)
+  Tmp=Tmp[[1]]
+  Varx=Tmp[1]
+  Rngx=eval(parse(text=Tmp[2]))
+  Tmp=strsplit(Yrng,"=",fixed=TRUE)
+  Tmp=Tmp[[1]]
+  Vary=Tmp[1]
+  Rngy=eval(parse(text=Tmp[2]))
+  Tmp=paste("Impfun<- function(",Varx,",",Vary,"){",Fn,"}",sep="")
+  eval(parse(text=Tmp))
+  dx=(Rngx[2]-Rngx[1]) #180929
+  dy=(Rngy[2]-Rngy[1]) #180929
+  out=list()  
+  for(jj in 1:Ndv){
+    yval1=Rngy[1]+(jj-1)*dy/Ndv #180929
+    yval2=Rngy[1]+jj*dy/Ndv #180929
+    xval1=Rngx[1]
+    eval11=Impfun(xval1,yval1)
+    eval12=Impfun(xval1,yval2)
+    for(ii in 1:Mdv){
+      xval2=Rngx[1]+ii*dx/Mdv #180929
+      eval21=Impfun(xval2,yval1)
+      eval22=Impfun(xval2,yval2)
+      pL=list(c(xval1,yval1));vL=c(eval11)
+      pL=c(pL,list(c(xval2,yval1)));vL=c(vL,eval21)
+      pL=c(pL,list(c(xval2,yval2)));vL=c(vL,eval22)
+      pL=c(pL,list(c(xval1,yval2)));vL=c(vL,eval12)
+      pL=c(pL,list(c(xval1,yval1)));vL=c(vL,eval11)
+      qL=c()
+      for(kk in 1:4){
+        if(abs(vL[kk])<=Eps){
+          qL=Appendrow(qL,pL[[kk]])
         }else{
-          if(VL[K+1]>Eps0){
-            Tmp=1/(-VL[K]+VL[K+1])*(VL[K+1]*PL[K,]-VL[K]*PL[K+1,])
-            QL=Appendrow(QL,Tmp)
+          if(vL[kk]>Eps){
+            if(vL[kk+1]< -Eps){
+#              tmp=1/(vL[kk]-vL[kk+1])*
+#                    (-vL[kk+1]*pL[[kk]]+vL[kk]*pL[[kk+1]])
+              tmp1=pL[[kk]]; tmp2=pL[[kk+1]] #190508from
+              for(ii in 1:20){  #190511
+                tmp=(tmp1+tmp2)/2
+                tmp3=Impfun(tmp[1],tmp[2])
+                if(abs(tmp3)<=Eps){break}
+                if(tmp3>Eps){tmp1=tmp}else{tmp2=tmp}
+              } #190508to
+              qL=Appendrow(qL,tmp)
+			}
+          }else{
+            if(vL[kk+1]>Eps){
+#              tmp=1/(-vL[kk]+vL[kk+1])*
+#                    (vL[kk+1]*pL[[kk]]-vL[kk]*pL[[kk+1]])
+              tmp1=pL[[kk]]; tmp2=pL[[kk+1]] #190508from
+              for(ii in 1:20){ #190511
+                tmp=(tmp1+tmp2)/2
+                tmp3=Impfun(tmp[1],tmp[2])
+                if(abs(tmp3)<=Eps){break}
+                if(tmp3>Eps){tmp2=tmp}else{tmp1=tmp}
+              } #190508to
+              qL=Appendrow(qL,tmp)
+			}
           }
         }
       }
-	  if(Length(QL)==2){
-        Out=Appendrow(Out,c(Inf,Inf))
-        Out=Appendrow(Out,QL)
+      xval1=xval2
+      eval11=eval21
+      eval12=eval22
+	  if(Length(qL)==2){
+        out=c(out,list(qL))
       }
     }
   }
-  Out=Out[2:nrow(Out),]
-  if(Length(Out)>0){
-    Out=Connectseg(Out)
-  }else{
-    Out=c()
+  if(length(out)>0){
+    out=Connectseg(out)
   }
-  return(Out)
+  if(length(out)==1){
+    out=out[[1]]
+  }
+  return(out)
 }
 
 #########################
@@ -11748,25 +12136,25 @@ Objsurf<- function(...){ #17.12.18
 Objthicksurf<- function(...){
   Args=list(...)
   Nargs=length(Args)
-  Sel=Args[[Nargs]]; Nargs=Nargs-1
+  Sel=Args[[Nargs]]; Nargs=Nargs-1 #181128from
   Selsurf=substring(Sel,1,1)
   Selside=c("0","0","0","0")
-  Tmp=grep("w",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[1]="w"
+  Tmp=strsplit(Sel,"w");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[1]]=substr(Tmp[2],1,1)
   }
-  Tmp=grep("e",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[2]="e"
+  Tmp=strsplit(Sel,"e");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[2]]=substr(Tmp[2],1,1)
   }
-  Tmp=grep("s",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[3]="s"
+  Tmp=strsplit(Sel,"s");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[3]]=substr(Tmp[2],1,1)
   }
-  Tmp=grep("n",Sel,fixed=TRUE)
-  if(length(Tmp)>0){
-    Selside[4]="n"
-  }
+  Tmp=strsplit(Sel,"n");Tmp=Tmp[[1]]
+  if(length(Tmp)==2){
+    Selside[[4]]=substr(Tmp[2],1,1)
+  } #181128to
   Nfth=Args[[Nargs-2]]
   Thick1=Args[[Nargs-1]]
   Thick2=Args[[Nargs]]
@@ -11852,21 +12240,20 @@ Objthicksurf<- function(...){
   }
   Dt2=Objsurf(F2,U,V,Tmp);
   Out=list(Dt1,Dt2);
-
-  if(Selside[1]!="0"){
-    Dt=Objrecs(Op(3,Dt1),Op(3,Dt2),Selside[1])
+  if(Selside[[1]]!="0"){
+    Dt=Objrecs(Op(3,Dt1),Op(3,Dt2),Selside[[1]])
     Out=c(Out,list(Dt))
   }
-  if(Selside[2]!="0"){
-    Dt=Objrecs(Op(4,Dt1),Op(4,Dt2),Selside[2])
+  if(Selside[[2]]!="0"){
+    Dt=Objrecs(Op(4,Dt1),Op(4,Dt2),Selside[[2]])
     Out=c(Out,list(Dt))
   }
-  if(Selside[3]!="0"){
-    Dt=Objrecs(Op(5,Dt1),Op(5,Dt2),Selside[3])
+  if(Selside[[3]]!="0"){
+    Dt=Objrecs(Op(5,Dt1),Op(5,Dt2),Selside[[3]])
     Out=c(Out,list(Dt))
   }
-  if(Selside[4]!="0"){
-    Dt=Objrecs(Op(6,Dt1),Op(6,Dt2),Selside[4])
+  if(Selside[[4]]!="0"){
+    Dt=Objrecs(Op(6,Dt1),Op(6,Dt2),Selside[[4]])
     Out=c(Out,list(Dt))
   }
   OBJJOIN<<- Join
@@ -11883,7 +12270,7 @@ Objrecs<- function(...){
     if(!is.matrix(Tmp)){ 
       PtL[[J]]=matrix(Tmp,nrow=1)
     }
-  }  #17.12.23upto
+  }  #17.12.23until
   PL1=list()
   for(J in Looprange(1,length(PtL))){
     Tmp=PtL[[J]]
@@ -11930,7 +12317,7 @@ Objrecs<- function(...){
       if(!is.matrix(Tmp)){ 
         PtL[[J]]=matrix(Tmp,nrow=1)
       }
-    }  #17.12.23upto
+    }  #17.12.23until
     PL2=list()
     for(J in Looprange(1,length(PtL))){
       Tmp=PtL[[J]]
@@ -11979,7 +12366,7 @@ Objpolygon<- function(...){
     if(!is.matrix(Tmp)){ 
       PtL[[J]]=matrix(Tmp,nrow=1)
     }
-  }  #17.12.23upto
+  }  #17.12.23until
   PL=list()
   for(J in Looprange(1,length(PtL))){
     Tmp=PtL[[J]]
@@ -12069,7 +12456,7 @@ Objcurve<- function(...){
     if(!is.matrix(Tmp)){ 
       PtL[[J]]=matrix(Tmp,nrow=1)
     }
-  }  #17.12.23upto
+  }  #17.12.23until
   PL=list()
   for(J in Looprange(1,length(PtL))){
     Tmp=PtL[[J]]
@@ -12092,18 +12479,18 @@ Objcurve<- function(...){
   if(Nargs>=3){
     Np=Args[[3]]
   }
-  Assign("Sz",Sz)
+#  Assignadd("Sz",Sz) #180901
   if(Pstr=="xy"){
     Vz=c(0,0,1)
-    Fs=Assign("c(Sz*cos(t),Sz*sin(t),0)")
+    Fs=Assign("c(Sz*cos(t),Sz*sin(t),0)","Sz",Sz) #180901
   }
   if(Pstr=="yz"){
     Vz=c(1,0,0)
-    Fs=Assign("c(0,Sz*cos(t),Sz*sin(t))")
+    Fs=Assign("c(0,Sz*cos(t),Sz*sin(t))","Sz",Sz) #180901
   }
   if(Pstr=="zx"){
     Vz=c(0,1,0)
-    Fs=Assign("c(Sz*sin(t),0,Sz*cos(t))")
+    Fs=Assign("c(Sz*sin(t),0,Sz*cos(t))","Sz",Sz) #180901
   }
   Gc0=Spacecurve(Fs,"t=c(0,2*pi)",paste("Num=",as.character(Np),sep=""))
   P=PL[[1]]; Q=PL[[2]]; R=PL[[length(PL)-1]]
@@ -12175,7 +12562,7 @@ Objcurve<- function(...){
 }
 
 Objsymb<- function(Symb,Thick,Face,Dir){
-  for(J in Looprange(1,length(Symb))){
+  for(J in Looprange(1,Length(Symb))){
     Objcurve(Op(J,Symb),Thick,Face,Dir)
   }
 }
@@ -12215,7 +12602,7 @@ Symb3data<- function(Moji,Size,Kaiten,NV,Pos){
 ############## New Intersect 18.02.01 #############
 
 Intersectline<- function(p1,v1,p2,v2){
-  Eps0=10^(-5)
+  Eps0=10^(-8) #210325
   tmp=Dotprod(v1,v2)
   tmp1=c(tmp,Norm(v1)^2)
   tmp2=c(-Norm(v2)^2,-tmp)
@@ -12257,7 +12644,7 @@ Intersectseg<- function(...){
       }else{
         t=min(max(t,0),1)
         s=min(max(s,0),1)
-        tmp3=c(Norm(p1-p2),Norm(p1-q2),Norm(p2-p1),Norm(p2-q1))
+        tmp3=c(Norm(p1-p2),Norm(p1-q2),Norm(q1-p2),Norm(q1-q2)) #180317
         tmp1=c(Op(2,q2-p2),-Op(1,q2-p2))
         tmp=Intersectline(p1,tmp1,p2,q2-p2)
         if(length(Op(1,tmp))>1){
@@ -12278,6 +12665,7 @@ Intersectseg<- function(...){
             tmp3=c(tmp3,Norm(Op(1,tmp)-p2))
           }
         }
+        tmp=Intersectline(q2,tmp1,p1,q1-p1); #180322
         if(length(Op(1,tmp))>1){
           if(Op(3,tmp)*(Op(3,tmp)-1)<Eps0){
             tmp3=c(tmp3,Norm(Op(1,tmp)-q2))
@@ -12367,10 +12755,11 @@ Intersectpartseg<- function(...){
   Eps2=varargin[[6]]
   Dist=10*Eps2
   if(Nargs>6){Dist=varargin[[7]]}
+  Eps00=10^(-8)
   Eps0=10^(-4)
   out=list()
-  seg1=Listplot(Op(ii,crv1),Op(ii+1,crv1))
-  seg2=Listplot(Op(jj,crv2),Op(jj+1,crv2))
+  seg1=rbind(Op(ii,crv1),Op(ii+1,crv1)) #191001
+  seg2=rbind(Op(jj,crv2),Op(jj+1,crv2)) #191001
   tmp1=Op(2,seg1)-Op(1,seg1)
   tmp2=Op(2,seg2)-Op(1,seg2)
   snang=abs(Crossprod(tmp1,tmp2))/(Norm(tmp1)*Norm(tmp2))
@@ -12422,14 +12811,14 @@ Intersectpartseg<- function(...){
         }
         os2=Osplineseg(list(p0,p1,p2,p3))
       }
-      tmp2=list()
+	  tmp2=list()
       for(kk in Looprange(1,Length(os1)-1)){
         for(ll in Looprange(1,Length(os2)-1)){
-          seg1=Listplot(Op(kk,os1),Op(kk+1,os1))
-          seg2=Listplot(Op(ll,os2),Op(ll+1,os2))
+          seg1=rbind(Op(kk,os1),Op(kk+1,os1)) #191001
+          seg2=rbind(Op(ll,os2),Op(ll+1,os2)) #191001
           tmp=Intersectseg(seg1,seg2,Eps1)
           if((Op(1,tmp)<Eps1)&&(length(tmp)>1)){ #18.02.05
-            if(Op(1,tmp)<dst+Eps0){
+            if(Op(1,tmp)<dst+Eps00){
               dst=Op(1,tmp)
               tmp3=list()
               for( nn in Looprange(1,length(tmp2))){
@@ -12466,6 +12855,8 @@ Intersectpartseg<- function(...){
   return(out)
 }
 
+if(1==0){ #start of skip
+
 Collectnear<- function(ptdL,Eps2){
   gL=list(Op(1,ptdL))
   rL=ptdL[Looprange(2,length(ptdL))] #18.02.07
@@ -12490,10 +12881,60 @@ Collectnear<- function(ptdL,Eps2){
   return(list(gL,rL))
 }
 
+}# end of skip
+
+Collectsameseg<- function(ptdL){
+  Eps00=10^(-8)
+  if(length(ptdL)==0){
+    gL=list();rL=list()
+  }else{
+    tmp1md=ptdL[1]
+    rL=ptdL[Looprange(2,length(ptdL))]
+    tmp1=tmp1md[[1]]
+    kk=floor(Op(2,tmp1))
+    if(Op(2,tmp1)<kk+Eps00){
+      s1=kk-1-Eps00; e1=s1+2+2*Eps00
+    }else{
+      s1=kk-Eps00; e1=s1+1+2*Eps00
+    }
+    kk=floor(Op(3,tmp1))
+    if(Op(3,tmp1)<kk+Eps00){
+      s2=kk-1-Eps00; e2=s2+2+2*Eps00
+    }else{
+      s2=kk-Eps00; e2=s2+1+2*Eps00
+    }
+    diffL=c()
+    for(ii in Looprange(1,length(rL))){
+      tmp=rL[[ii]]
+      tmp1=Op(2,tmp);tmp2=Op(3,tmp)
+      if((tmp1>s1)&&(tmp1<e1)&&(tmp2>s2)&&(tmp2<e2)){
+        tmp1md=c(tmp1md,list(tmp))
+      }else{
+        diffL=c(diffL,ii)
+      }
+    }
+    tmp=c()
+    for(ii in Looprange(1,length(tmp1md))){
+      tmp=c(tmp,Op(4,tmp1md[[ii]]))
+    }
+	dst=min(tmp)
+    gL=list()
+    for(ii in Looprange(1,length(tmp1md))){
+      tmp=tmp1md[[ii]]
+      if(Op(4,tmp)<dst+Eps00){
+        gL=c(gL,list(tmp))
+      }
+    }
+    tmp1=rL
+    rL=rL[diffL]
+  }
+  return(list(gL,rL))
+}
+
 Groupnearpt<- function(...){
   varargin=list(...)
   Nargs=length(varargin)
-  Eps=varargin[[Nargs]]
+  Eps1=varargin[[Nargs]]
   plist=varargin[[1]]
   qlist=varargin[[2]]
   if(!is.list(qlist)){
@@ -12512,7 +12953,7 @@ Groupnearpt<- function(...){
     for(ii in Looprange(1,length(plist))){
       gL=plist[[ii]]
       for(jj in Looprange(1,Length(gL))){
-        if(Norm(Op(jj,gL)-pt)<Eps){
+        if(Norm(Op(jj,gL)-pt)<Eps1){
           flg=1
           break
         }
@@ -12526,7 +12967,7 @@ Groupnearpt<- function(...){
       plist=c(plist,list(matrix(pt,nrow=1)))
     }
   }
-  out=Groupnearpt(plist,qlist,Eps)
+  out=Groupnearpt(plist,qlist,Eps1)
   return(out)
 }
 
@@ -12535,7 +12976,8 @@ IntersectcurvesPp<- function(...){
   Nargs=length(varargin)
   Eps0=10^(-4)
   Eps1=0.01
-  Eps2=0.05
+#  Eps2=0.05
+  Eps2=0.1
   Dist=10*Eps2
   if(Nargs>2){Eps1=varargin[[3]]}
   if(Nargs>3){Eps2=varargin[[4]]}
@@ -12596,9 +13038,9 @@ IntersectcurvesPp<- function(...){
   out=list()
   tmp1=tmp2
   for(ii in Looprange(1,length(tmp2))){
-    tmp=Collectnear(tmp1,Eps2)
+    tmp=Collectsameseg(tmp1)
     out=c(out,list(Op(1,tmp)))
-   if(length(Op(2,tmp))==0){
+    if(length(Op(2,tmp))==0){
       break
     }else{
       tmp1=Op(2,tmp)
@@ -12659,7 +13101,7 @@ Enclosing2<- function(...){
   for(ii in Looprange(2,Nargs)){
     tmp=varargin[[ii]]
     if(length(tmp)>1){
-#      Start=tmp
+      Start=tmp
     }else{
      if(flg==0){Eps1=tmp}
      if(flg==1){Eps2=tmp}
@@ -12686,46 +13128,54 @@ Enclosing2<- function(...){
     if(length(KL)==0){
       tmp1=Op(Length(Gdata),Gdata)
       tmp2=Op(1,Fdata)
-      tmp=Listplot(tmp1,tmp2)
+      tmp=rbind(tmp1,tmp2) #191001
       plist=c(plist,list(tmp))
       Start=tmp2
       tst=1
-#      flg=1
     }else{
       if(length(KL)==1){
         tmp=Op(1,KL)
         tst=Op(2,tmp)
-        Start=crv(tst,Fdata)
+        Start=Op(1,tmp) #180706
       }
       if(length(KL)>1){
-        KL=Quicksort(KL,2)
+        KL=Quicksort(KL,2) #180706from
         if(length(Start)==0){
           tmp=Op(1,KL)
           tst=Op(2,tmp)
-          Start=Pointoncurve(tst,Fdata)
+          Start=Op(1,tmp)
         }else{
           tmp=c()
-          for(ii in Looprange(1,length(KL))){
-            tmp=c(tmp,Norm(Op(1,KL[[ii]]-Start)))
-          }
-          tmp=min(tmp)
           tmp1=list()
           for(ii in Looprange(1,length(KL))){
             tmp2=Op(1,KL[[ii]])
-            if(Norm(tmp2-Start)==tmp){
-              tmp1=c(tmp1,list(tmp2))
+            flgsame=0 #180717from
+            for(jj in Looprange(1,length(tmp1))){
+              if(Norm(tmp2-Op(jj,tmp1))<Eps1){
+                flgsame=1
+                break
+              }
             }
+            if(flgsame==0){
+              tmp=c(tmp,Norm(Op(1,KL[[ii]])-Start))
+              tmp1=c(tmp1,list(tmp2))
+            } #180717to
           }
-          tmp=Op(1,tmp1)
+          tmp=order(tmp)
+          tmp=Op(tmp[1],KL)
           tst=Op(2,tmp)
-          Start=Pointoncurve(tst,Fdata)
+          Start=Op(1,tmp)#180706to
         }
       }
     }
   }
   if(flg==0){
     t1=tst
+    p1=Pointoncurve(t1,Fdata)#180713
     for(nn in Looprange(1,length(plist))){
+
+print(c(144,nn))
+
       Fdata=Op(nn,plist)
       if(nn==length(plist)){
         nxtno=1
@@ -12739,19 +13189,31 @@ Enclosing2<- function(...){
         Gdata=Appendrow(tmp,Gdata)
         plist[[nxtno]]=Gdata
         t2=Length(Fdata)
-        ss=1 #18.02.02upto
+        ss=1 #18.02.02to
       }else{
-        tmp=Op(1,KL)
-        t2=Op(2,tmp)
-        ss=Op(3,tmp)
+        tmp=c(Op(2,KL[[1]]))  #180711from #190921, #bug between 13162-13176
+        for(j in Looprange(2,length(KL))){
+          tmp=c(tmp,Op(2,KL[[j]]))
+        }
+        tmp1=order(tmp)
+        tmp2=KL
+        KL=list()
+        for(j in tmp1){
+          tmp=tmp2[[j]]
+          tmp3=t1+Eps0
+          tmp4=Op(2,tmp)
+          if((tmp4>tmp3)||((tmp4>t1)&&(Norm(Op(1,tmp)-p1)>Eps1))){
+            KL=c(KL,list(tmp))
+          }
+        }
+        t2=Op(2,KL[[1]])
+        ss=Op(3,KL[[1]])  #180711from
         if(abs(t2-t1)<Eps0){
           if(length(KL)>1){
             tmp=Op(2,KL)
             t2=Op(2,tmp)
             ss=Op(3,tmp)
           }else{
-#            println(text(nn)+" and "+text(nn+1)+" not intersect");
-#            flg=1
           }
         }
       }
@@ -12763,8 +13225,9 @@ Enclosing2<- function(...){
           tmp=tmp[2:Length(tmp),]
           AnsL=Appendrow(AnsL,tmp)
         }
-        t1=ss
       }
+      t1=ss
+      p1=Pointoncurve(t1,Gdata)#180713
     }
   }
   return(AnsL)
@@ -12788,14 +13251,14 @@ Fullformfunc<- function(FdL){
   Tmp=strsplit(Urg,"=",fixed=TRUE)
   UNAME<<- Tmp[[1]][1]
   URNG<<- eval(parse(text=Tmp[[1]][2]))
-  Urg=paste(UNAME,"=c(",sprintf("%6.7f",URNG[1]),",",
-               sprintf("%6.7f",URNG[2]),")",sep="")
+  Urg=paste(UNAME,"=c(",sprintf("%6.3f",URNG[1]),",",
+               sprintf("%6.3f",URNG[2]),")",sep="")
   Vrg=Stripblanks(Op(Jrg+1,FdL))
   Tmp=strsplit(Vrg,"=",fixed=TRUE)
   VNAME<<- Tmp[[1]][1]
   VRNG<<- eval(parse(text=Tmp[[1]][2]))
-  Vrg=paste(VNAME,"=c(",sprintf("%6.7f",VRNG[1]),",",
-               sprintf("%6.7f",VRNG[2]),")",sep="")
+  Vrg=paste(VNAME,"=c(",sprintf("%6.3f",VRNG[1]),",",
+               sprintf("%6.3f",VRNG[2]),")",sep="")
   if(Jrg==2){
     Xf=UNAME
     Yf=VNAME
@@ -12878,12 +13341,12 @@ Makexybdy<- function(Np){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:2){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umax),")",sep=""),Xystr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umax),")",sep=""),Xystr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -12902,7 +13365,7 @@ Makexybdy<- function(Np){
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -12928,12 +13391,12 @@ Makexybdy<- function(Np){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:2){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umin),")",sep=""),Xystr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umin),")",sep=""),Xystr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -12959,12 +13422,12 @@ Makexybdy<- function(Np){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:2){
-      Tmp=gsub(VNAME,paste("(",sprintf("%7.7f",Vmin),")",sep=""),Xystr[jj])
+      Tmp=gsub(VNAME,paste("(",sprintf("%7.3f",Vmin),")",sep=""),Xystr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]))
     Tmp=Paramplot(Tmp1,Tmp2,Tmp3)
@@ -12996,9 +13459,9 @@ Partitionseg<- function(...){
   GL=varargin[[2]]; N=3
   if(!is.list(GL)){GL=list(GL)} #18.02.21
   Eps0=10^(-4)
-  Eps=0.01
+  Eps1=0.01
   if(Nargs>2){
-    Eps=varargin[[3]]
+    Eps1=varargin[[3]]
   }
   Eps2=0.1
   if(Nargs>3){
@@ -13010,7 +13473,7 @@ Partitionseg<- function(...){
       Other=Op(Ns,OTHERPARTITION)
     }else{
       Other=c()
-    }#18.02.21upto
+    }#18.02.21until
   }else{
     Ns=1
     Other=c()
@@ -13019,7 +13482,7 @@ Partitionseg<- function(...){
   ParL=c(1,Npt,Other)
   for(N in Looprange(max(1,Ns),Length(GL))){ #18.02.21
 	G=Op(N,GL)
-    KouL=IntersectcurvesPp(Fig,G,Eps,Eps2)
+    KouL=IntersectcurvesPp(Fig,G,Eps1,Eps2)
     Tmp1=c(); Tmp2=c()
     for(jj in Looprange(1,length(KouL))){
       tmp=Op(2,KouL[[jj]])
@@ -13042,7 +13505,7 @@ Partitionseg<- function(...){
   tmp2=-1
   for(jj in Looprange(1,length(tmp1))){
     tmp=Op(jj,tmp1)
-    if(abs(tmp-tmp2)>Eps){
+    if(abs(tmp-tmp2)>Eps1){
       ParL=c(ParL,tmp)
       tmp2=tmp
     }
@@ -13080,10 +13543,10 @@ Evlptablepara<- function(...){
   V1=VRNG[1]; V2=VRNG[2]
   Du=(U2-U1)/(Mdv)
   Dv=(V2-V1)/(Ndv)
-  sph=sprintf("%7.7f",sin(PHI))
-  cph=sprintf("%7.7f",cos(PHI))
-  sth=sprintf("%7.7f",sin(THETA))
-  cth=sprintf("%7.7f",cos(THETA))
+  sph=sprintf("%7.3f",sin(PHI))
+  cph=sprintf("%7.3f",cos(PHI))
+  sth=sprintf("%7.3f",sin(THETA))
+  cth=sprintf("%7.3f",cos(THETA))
   xstr=paste("-(",XYZstr[1],")*(",sph,")+(",XYZstr[2],")*(",cph,")",sep="")
   tmp=paste("-(",XYZstr[1],")*(",cph,")*(",cth,")-(",XYZstr[2],")*(",sph,")*(",cth,")",sep="")
   ystr=paste(tmp,"+(",XYZstr[3],")*(",sth,")",sep="")
@@ -13098,8 +13561,8 @@ Evlptablepara<- function(...){
     ZuL=c()
     for(ii in 1:(Mdv+1)){
       u=U1+(ii-1)*Du
-      tmp1=paste(UNAME,"=(",sprintf("%7.7f",u),")",sep="")
-      tmp2=paste(VNAME,"=(",sprintf("%7.7f",v),")",sep="")
+      tmp1=paste(UNAME,"=(",sprintf("%7.3f",u),")",sep="")
+      tmp2=paste(VNAME,"=(",sprintf("%7.3f",v),")",sep="")
       Dxu=Funvalue(dxu,tmp1,tmp2)
       Dxv=Funvalue(dxv,tmp1,tmp2)
       Dyu=Funvalue(dyu,tmp1,tmp2)
@@ -13122,7 +13585,112 @@ Evlptablepara<- function(...){
   return(list(Zval,Xval,Yval))
 }
 
-Dropnumlistcrv<- function(QdL,Eps){
+Evlpfun<- function(u,v){
+  tmp1=paste(UNAME,"=(",sprintf("%7.3f",u),")",sep="")
+  tmp2=paste(VNAME,"=(",sprintf("%7.3f",v),")",sep="")
+  Dxu=Funvalue(dxu,tmp1,tmp2)
+  Dxv=Funvalue(dxv,tmp1,tmp2)
+  Dyu=Funvalue(dyu,tmp1,tmp2)
+  Dyv=Funvalue(dyv,tmp1,tmp2)
+  Tmp=Dxu*Dyv-Dxv*Dyu
+  return(Tmp)
+}
+
+Envelopedata<- function(...){
+  varargin=list(...)
+  Eps0=10^(-4)
+  Nargs=length(varargin)
+  Fd=varargin[[1]]
+  Fullformfunc(Fd)
+  Mdv=50
+  Ndv=50
+  if(Nargs>=2){
+    Tmp=varargin[[2]]
+    if(is.list(Tmp)){Tmp=Op(1,Tmp)}
+    if(length(Tmp)>1){
+      Mdv=Tmp[1]
+      Ndv=Tmp[2]
+    }else{
+      Mdv=Tmp
+      if(Nargs==2){
+        Ndv=Mdv
+      }else{
+        Tmp1=varargin[[3]]
+        if((is.numeric(Tmp1)) && (length(Tmp1)==1)){
+          Ndv=Tmp1
+        }else{
+          Ndv=Mdv
+        }
+      }
+    }
+  }
+  sph=sprintf("%7.3f",sin(PHI))
+  cph=sprintf("%7.3f",cos(PHI))
+  sth=sprintf("%7.3f",sin(THETA))
+  cth=sprintf("%7.3f",cos(THETA))
+  xstr=paste("-(",XYZstr[1],")*(",sph,")+(",XYZstr[2],")*(",cph,")",sep="")
+  tmp=paste("-(",XYZstr[1],")*(",cph,")*(",cth,")-(",XYZstr[2],")*(",sph,")*(",cth,")",sep="")
+  ystr=paste(tmp,"+(",XYZstr[3],")*(",sth,")",sep="")
+  dxu<<- Diff(xstr,UNAME)
+  dxv<<- Diff(xstr,VNAME)
+  dyu<<- Diff(ystr,UNAME)
+  dyv<<- Diff(ystr,VNAME)
+  U1=URNG[1]; U2=URNG[2]
+  V1=VRNG[1]; V2=VRNG[2]
+  Du=(U2-U1)/Mdv
+  Dv=(V2-V1)/Ndv
+  Out=c()
+  for(J in 1:(Ndv)){
+    Vval1=VRNG[1]+(J-1)*Dv
+    Vval2=VRNG[1]+J*Dv
+    Uval1=URNG[1]
+    Eval11=Evlpfun(Uval1,Vval1)
+    Eval12=Evlpfun(Uval1,Vval2)
+    for(I in 1:(Mdv)){
+      Uval2=URNG[1]+I*Du
+      Eval21=Evlpfun(Uval2,Vval1)
+      Eval22=Evlpfun(Uval2,Vval2)
+      a1=Uval1;b1=Vval1;c1=Eval11
+      a2=Uval2;b2=Vval1;c2=Eval21
+      a3=Uval2;b3=Vval2;c3=Eval22
+      a4=Uval1;b4=Vval2;c4=Eval12
+      PL=matrix(c(a1,b1,a2,b2,a3,b3,a4,b4,a1,b1),ncol=2,byrow=TRUE)
+      VL=c(c1,c2,c3,c4,c1)
+      QL=c()
+      for(K in 1:4){
+        if(abs(VL[K])<=Eps0){
+          QL=Appendrow(QL,PL[K,])
+        }else if(VL[K]>Eps0){
+          if(VL[K+1]< -Eps0){
+            Tmp=1/(VL[K]-VL[K+1])*(-VL[K+1]*PL[K,]+VL[K]*PL[K+1,])
+            QL=Appendrow(QL,Tmp)
+          }
+        }else{
+          if(VL[K+1]>Eps0){
+            Tmp=1/(-VL[K]+VL[K+1])*(VL[K+1]*PL[K,]-VL[K]*PL[K+1,])
+            QL=Appendrow(QL,Tmp)
+          }
+        }
+      }
+      Uval1=Uval2
+      Eval11=Eval21
+      Eval12=Eval22
+	  if(Length(QL)==2){
+        Out=Appendrow(Out,c(Inf,Inf))
+        Out=Appendrow(Out,QL)
+      }
+    }
+  }
+  Out=Out[2:nrow(Out),]
+  if(Length(Out)>0){
+    Out=Connectseg(Out)
+  }else{
+    Out=c()
+  }
+  return(Out)
+}
+
+Dropnumlistcrv<- function(QdL,Eps1){
   Eps0=10^(-4)
   if(!is.list(QdL)){
     PdL=list(QdL)
@@ -13135,17 +13703,14 @@ Dropnumlistcrv<- function(QdL,Eps){
     PtL=c(1)
     P=Op(1,Pd)
     for(K in Looprange(2,Length(Pd)-1)){
-      if(Norm(P-Op(K,Pd))>Eps){
+      if(Norm(P-Op(K,Pd))>Eps1){
         PtL=c(PtL,K)
         P=Op(K,Pd)
       }
     }
     K=Length(Pd)
-    if(Norm(P-Op(K,Pd))>Eps){ #18.02.12 eps
+    if(Norm(P-Op(K,Pd))>Eps1){ #18.02.12 eps
       PtL=c(PtL,K)
-    }
-    if(length(PtL)==1){
-      PtL=c()
     }
     OutL=c(OutL,list(PtL))
   }
@@ -13160,8 +13725,8 @@ Cuspsplitpara<- function(...){
     Gdxy=list(Gdxy)
   }
   Eps0=10^(-4)
-  Eps=0.01
-  if(Nargs>2){Eps=varargin[[2]]}
+  Eps1=0.01
+  if(Nargs>2){Eps1=varargin[[2]]}
   N=2
   CUSPSPLITPT<<- list()
   OutkL=list()
@@ -13171,9 +13736,9 @@ Cuspsplitpara<- function(...){
     PthL=c()
     for(I in Looprange(1,Length(PtxyL))){
       Tmp=Op(I,PtxyL)
-      Tmp1=paste(UNAME,'=',sprintf("%7.7f",Tmp[1]),sep="")
+      Tmp1=paste(UNAME,'=',sprintf("%7.3f",Tmp[1]),sep="")
       eval(parse(text=Tmp1))
-      Tmp1=paste(VNAME,'=',sprintf("%7.7f",Tmp[2]),sep="")
+      Tmp1=paste(VNAME,'=',sprintf("%7.3f",Tmp[2]),sep="")
       eval(parse(text=Tmp1))
       Tmp2=c(eval(parse(text=XYZstr[1])))
       Tmp2=c(Tmp2,eval(parse(text=XYZstr[2])))
@@ -13195,7 +13760,7 @@ Cuspsplitpara<- function(...){
     }
     Ps=Op(1,PthL); Pe=Op(Length(PthL),PthL)
     Cflg=0
-    if(Norm(Ps-Pe)<Eps){Cflg=1}
+    if(Norm(Ps-Pe)<Eps1){Cflg=1}
     CuspL=c()
     Cva=cos(10*pi/180)
     for(I in Looprange(1,Length(PthL)-1)){
@@ -13225,7 +13790,7 @@ Cuspsplitpara<- function(...){
             break
           }
           Q=Op(J,PthL)
-          if(Norm(P-Q)>Eps){
+          if(Norm(P-Q)>Eps1){
             break
           }
           V1=Q-Op(J-1,PthL)
@@ -13278,7 +13843,7 @@ Cuspsplitpara<- function(...){
     for(I in Looprange(1,length(CuspL)-1)){
       Tmp1=CuspL[Is]; Tmp2=CuspL[I+1]
       Tmp3=Op(Tmp1,PthL); Tmp4=Op(Tmp2,PthL)
-      if(Norm(Tmp3-Tmp4)>Eps){
+      if(Norm(Tmp3-Tmp4)>Eps1){
         Tmpk=PtkL[Tmp1:Tmp2,]
         Outk=c(Outk,list(Tmpk))
         CUSPSPLITPT<<- c(CUSPSPLITPT,list(Tmp4))
@@ -13287,7 +13852,7 @@ Cuspsplitpara<- function(...){
     }
     OutkL=c(OutkL,Outk)
   }
-  Tmp1=Dropnumlistcrv(Projpara(OutkL),Eps*0.5)
+  Tmp1=Dropnumlistcrv(Projpara(OutkL),Eps1*0.5)
   Tmp=list()
   for(I in Looprange(1,length(OutkL))){
     Tmp2=Op(I,OutkL)
@@ -13304,7 +13869,7 @@ Cuspsplitpara<- function(...){
   return(Tmp)
 }
 
-PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
+PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps1,Eps2){
   Eps0=10^(-4)
   Out=c()
   Vec=1/Norm(Vec)*Vec
@@ -13313,8 +13878,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
   }
   Tmp=paste("Eqfun<- function(U,V){",sep='')
   if((abs(Vec[2])>Eps0) || (abs(Vec[1])>Eps0)){
-    Vstr=sprintf("%6.6f",Vec)
-    Pstr=sprintf("%6.6f",PtA)
+    Vstr=sprintf("%6.3f",Vec)
+    Pstr=sprintf("%6.3f",PtA)
     Tmp=paste(Tmp,"(",Vstr[2],")*(Xfunc(U,V)-(",Pstr[1],"))",sep='')
     Tmp=paste(Tmp,"-(",Vstr[1],")*(Yfunc(U,V)-(",Pstr[2],"))}",sep='')
   }else{
@@ -13323,14 +13888,14 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
   eval(parse(text=Tmp))
   Dx=(URNG[2]-URNG[1])/Np[1]
   Dy=(VRNG[2]-VRNG[1])/Np[2]
-  for(J in Looprange(1,Np[2])){ #####
+  for(J in Looprange(1,Np[2])){ #180227
     Vval1=VRNG[1]+(J-1)*Dy
     Vval2=VRNG[1]+J*Dy
-    for(I in Looprange(1,Np[1])){ #####
-      Uval1=URNG[1]+(I-1)*Dx
+    Uval1=URNG[1] #180306(3lines)
+    Eval11=Eqfun(Uval1,Vval1)
+    Eval12=Eqfun(Uval1,Vval2)
+    for(I in Looprange(1,Np[1])){ #180227
       Uval2=URNG[1]+I*Dx
-      Eval11=Eqfun(Uval1,Vval1)
-      Eval12=Eqfun(Uval1,Vval2)
       Eval21=Eqfun(Uval2,Vval1)
       Eval22=Eqfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -13348,7 +13913,6 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
           next
         }
         if(abs(M2)<Eps0){
-#          QL=Appendrow(QL,P2)
           next
         }
         if((M1> 0) && (M2> 0)){
@@ -13360,6 +13924,9 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
         Tmp=1/(M1-M2)*(-M2*P1+M1*P2)
         QL=Appendrow(QL,Tmp)
       }
+      Uval1=Uval2 #180306(3lines)
+      Eval11=Eval21
+      Eval12=Eval22
       if(Length(QL)==2){
         Puv1=Op(1,QL); Puv2=Op(2,QL)
         Tmp1=Op(1,Puv1)
@@ -13399,8 +13966,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
           Ptuv=1/(M1-M2)*(-M2*Puv1+M1*Puv2)
         }
         if(is.character(Uveq)){		
-          Tmp1=paste('(',sprintf("%6.6f",Ptuv[1]),')',sep='')
-          Tmp2=paste('('+sprintf("%6.6f",Ptuv[2]),')',sep='')
+          Tmp1=paste('(',sprintf("%6.3f",Ptuv[1]),')',sep='')
+          Tmp2=paste('('+sprintf("%6.3f",Ptuv[2]),')',sep='')
           Tmp=gsub(UNAME,Tmp1,Uveq,fixed=TRUE)
           Tmp=gsub(VNAME,Tmp2,Tmp,fixed=TRUE)
           Tmp=eval(parse(text=Tmp))
@@ -13409,8 +13976,8 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
           }
         }
         Tmp1=Crossprod(Pt-PtA,Vec)
-        if(Norm(Tmp1)<Eps){ #18.02.19
-          if(Zparapt(Pt)>Zparapt(PtA)+Eps2){
+       if(Norm(Tmp1)<Eps1){ #18.02.19
+		  if(Zparapt(Pt)>Zparapt(PtA)+Eps2){
             return(list(1,Pt,Zparapt(Pt),Zparapt(PtA)))
           }else{
             Out=Appendrow(Out,Pt)
@@ -13425,7 +13992,7 @@ PthiddenQ<- function(PtA,Vec,Uveq,Np,Eps,Eps2){
   return(c(list(0,Out)))
 }
 
-Nohiddenpara2<- function (Par,Fk,Uveq,Np,Eps,Eps2){
+Nohiddenpara2<- function (Par,Fk,Uveq,Np,Eps1,Eps2){
   Eps0=10^(-4)
   Fh=Projpara(Fk)
   P1=Ptstart(Fh)
@@ -13450,26 +14017,26 @@ Nohiddenpara2<- function (Par,Fk,Uveq,Np,Eps,Eps2){
   tmp2=-1
   for(jj in Looprange(1,length(Par)-1)){
     tmp1=Op(jj,Par)
-    if(abs(tmp1-tmp2)>Eps2){
+    if(abs(tmp1-tmp2)>Eps0){ #180227
       PaL=c(PaL,tmp1)
       tmp2=tmp1
     }
   }
   tmp1=PaL[length(PaL)] #18.02.26from
   tmp2=Par[length(Par)]
-  if(abs(tmp1-tmp2)<Eps2){
+  if(abs(tmp1-tmp2)<Eps0){ #180227
     PaL[length(PaL)]=tmp2
   }else{
     PaL=c(PaL,tmp2)
-  } #18.02.26upto
+  } #18.02.26to
   SeL=c()
   for(N in Looprange(1,length(PaL)-1)){
     S=(PaL[N]+PaL[N+1])/2
     Tmp=Invparapt(S,Fh,Fk)
-	PtA=Op(1,Tmp)
+    PtA=Op(1,Tmp)
     PtAp=Parapt(PtA)
-	Vec=c(sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA))
-    Flg=PthiddenQ(PtA,Vec,Uveq,Np,Eps,Eps2)
+    Vec=c(sin(THETA)*cos(PHI),sin(THETA)*sin(PHI),cos(THETA))
+    Flg=PthiddenQ(PtA,Vec,Uveq,Np,Eps1,Eps2)
     if(Flg[[1]]==0){
       SeL=c(SeL,N)
     }
@@ -13511,10 +14078,14 @@ Nohiddenpara2<- function (Par,Fk,Uveq,Np,Eps,Eps2){
       FigkL=c(FigkL,list(Fk))
     }
   }
-  Tmp=c()
-  for(I in Looprange(1,length(PaL)-1)){
-    if(!Member(I,SeL)){
-      Tmp=c(Tmp,I)
+  if(length(SeL)==0){#181024from
+    Tmp=Looprange(1,length(PaL)-1) 
+  }else{ #181024to
+    Tmp=c()
+    for(I in Looprange(1,length(PaL)-1)){
+      if(!Member(I,SeL)){
+        Tmp=c(Tmp,I)
+      }
     }
   }
   SeL=Tmp
@@ -13560,7 +14131,7 @@ Borderparadata<- function(...){
   Nargs=length(varargin)
   FkL=varargin[[1]]
   Np=c(50,50)
-  Eps=0.01
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(2,Nargs)){
@@ -13572,7 +14143,7 @@ Borderparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
@@ -13583,12 +14154,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umax),")",sep=""),XYZstr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umax),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]),sep="")
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -13598,12 +14169,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(VNAME,paste("(",sprintf("%7.7f",Vmax),")",sep=""),XYZstr[jj])
+      Tmp=gsub(VNAME,paste("(",sprintf("%7.3f",Vmax),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]),sep="")
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -13613,12 +14184,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(UNAME,paste("(",sprintf("%7.7f",Umin),")",sep=""),XYZstr[jj])
+      Tmp=gsub(UNAME,paste("(",sprintf("%7.3f",Umin),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",VRNG)
+    Tmp=sprintf("%6.3f",VRNG)
     Tmp2=paste(VNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[2]))
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -13628,12 +14199,12 @@ Borderparadata<- function(...){
   if(length(Tmp)>0){
     Tmp1="c("
     for(jj in 1:3){
-      Tmp=gsub(VNAME,paste("(",sprintf("%7.7f",Vmin),")",sep=""),XYZstr[jj])
+      Tmp=gsub(VNAME,paste("(",sprintf("%7.3f",Vmin),")",sep=""),XYZstr[jj])
       Tmp1=paste(Tmp1,Tmp,",",sep="")
     }
     Tmp=substring(Tmp1,1,Length(Tmp1)-1)
     Tmp1=paste(Tmp,")",sep="")
-    Tmp=sprintf("%6.6f",URNG)
+    Tmp=sprintf("%6.3f",URNG)
     Tmp2=paste(UNAME,"=c(",Tmp[1],",",Tmp[2],")",sep='')
     Tmp3=paste('N=',as.character(Np[1]))
     Tmp=Spacecurve(Tmp1,Tmp2,Tmp3)
@@ -13659,9 +14230,9 @@ Borderparadata<- function(...){
   for(I in Looprange(1,length(FkL))){
     Tmp=Op(I,FkL)
     Tmp=Projpara(Tmp)
-    Par=Partitionseg(Tmp,Fall,Eps,Eps2,I)
+    Par=Partitionseg(Tmp,Fall,Eps1,Eps2,I)
     Tmp1=Op(I,FkL)
-    Tmp=Nohiddenpara2(Par,Tmp1,1,Np,Eps,Eps2)
+    Tmp=Nohiddenpara2(Par,Tmp1,1,Np,Eps1,Eps2)
 	if(length(HIDDENDATA)>0){
       BORDERHIDDENDATA<<- c(BORDERHIDDENDATA,HIDDENDATA)
     }
@@ -13682,7 +14253,8 @@ Sfbdparadata<- function(...){
   Fd=varargin[[1]]
   FdL=Fullformfunc(Fd)
   Np=c(50,50)
-  Eps=0.01
+  Eps0=10^(-4)
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(2,Nargs)){
@@ -13694,15 +14266,14 @@ Sfbdparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
   starttime=proc.time()
-  tmp=Evlptablepara(Np)
-  Zval=tmp[[1]]; Xval=tmp[[2]]; Yval=tmp[[3]]
-  Out3=Implicitplot(Zval,Xval,Yval)
+  Out3=Envelopedata(Fd) #180306
   tmp3=list()
+  pts=list() #180306
   for(jj in Looprange(1,length(Out3))){
     tmp1=Op(jj,Out3)
     tmp2=c()
@@ -13710,31 +14281,77 @@ Sfbdparadata<- function(...){
       tmp=Op(kk,tmp1)
       tmp2=Appendrow(tmp2,XYZfunc(tmp[1],tmp[2]))
     }
-    Nlist=Dropnumlistcrv(tmp2,Eps)
+    Nlist=Dropnumlistcrv(tmp2,Eps1)
     Nlist=Nlist[[1]]
-    tmp=c()
-    for(kk in Looprange(1,length(Nlist))){
-      tmp=Appendrow(tmp,Op(Nlist[kk],tmp1)) #18.02.18
-    }
-    if(Length(tmp)>0){
-      tmp3=c(tmp3,list(tmp))
+    if(Length(Nlist)==1){ #180306from
+      tmp=Op(1,Nlist)
+      tmp=Op(tmp,tmp1)
+      pts=c(pts,list(tmp))
+    }else{      
+      tmp=c()
+      for(kk in Looprange(1,length(Nlist))){
+        tmp=Appendrow(tmp,Op(Nlist[kk],tmp1)) #18.02.18
+      }
+      if(Length(tmp)>0){
+        tmp3=c(tmp3,list(tmp))
+      }
     }
   }
   Out3=tmp3
+  tmp3=pts #180306from
+  pts=list()
+  for(ii in Looprange(1,length(tmp3))){
+    tmp=Op(ii,tmp3)
+    tmp1=XYZfunc(tmp[1],tmp[2])
+    flg=0
+    for(jj in Looprange(1,length(pts))){
+      tmp=Op(jj,pts)
+      tmp2=XYZfunc(tmp[1],tmp[2]) #180517
+      if(Norm(tmp1-tmp2)<Eps1){
+        flg=1; break
+      }
+    }
+    if(flg==0){pts=c(pts,list(Op(ii,tmp3)))}
+  }
+  for(ii in Looprange(1,length(pts))){
+    tmp=Op(ii,pts)
+    tmp1=XYZfunc(tmp[1],tmp[2])
+    for(jj in Looprange(1,length(Out3))){
+      tmp2=Op(jj,Out3)
+      eps=1
+      for(kk in Looprange(1,Length(tmp2)-1)){
+        tmp=Op(kk,tmp2)
+        tmp1=XYZfunc(tmp[1],tmp[2])
+        tmp=Op(kk+1,tmp2)
+        tmp=XYZfunc(tmp[1],tmp[2])
+        eps=min(c(eps,Norm(tmp1-tmp)))
+      }
+      tmp=Ptstart(tmp2)
+      if(Norm(tmp1-XYZfunc(tmp[1],tmp[2]))<eps+Eps0){
+        Out3[[jj]]=Appendrow(Op(ii,pts),tmp2)
+        next
+      }
+      tmp=Ptend(tmp2)
+      if(Norm(tmp1-XYZfunc(tmp[1],tmp[2]))<eps+Eps0){
+        Out3[[jj]]=Appendrow(tmp2,Op(ii,pts))
+        next
+      }
+    }
+  } #180306to
   IMPLICITDATA<<- Out3
   Tmp=proc.time()-starttime
   print(paste('ImplicitData obtained : Time =',sprintf("%6.3f",Tmp[1]),sep=''))
   starttime=proc.time()
-  Out4=Cuspsplitpara(Out3,Eps)
+  Out4=Cuspsplitpara(Out3,Eps1)
   CUSPDATA<<- Out4
   CUSPPT<<- CUSPSPLITPT
   Tmp=proc.time()-starttime
   print(paste('CuspData obtained     : Time =',sprintf("%6.3f",Tmp[1]),sep=''))
-  Out5=Borderparadata(Out4,Np,Eps,Eps2)
+  Out5=Borderparadata(Out4,Np,Eps1,Eps2)
   return(Out5)
 }
 
-Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
+Meetpoints<- function(PtA,PtB,Uveq,Np,Eps1){
   Eps0=10^(-4)
   Vec=PtB-PtA
   if(Norm(Vec)<Eps0){return(list())} #18.02.24
@@ -13745,8 +14362,8 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
   }
   Tmp=paste("Eqfun<- function(U,V){",sep='')
   if((abs(Vec[2])>Eps0) || (abs(Vec[1])>Eps0)){
-    Vstr=sprintf("%6.6f",Vec)
-    Pstr=sprintf("%6.6f",PtA)
+    Vstr=sprintf("%6.3f",Vec)
+    Pstr=sprintf("%6.3f",PtA)
     Tmp=paste(Tmp,"(",Vstr[2],")*(Xfunc(U,V)-(",Pstr[1],"))",sep='')
     Tmp=paste(Tmp,"-(",Vstr[1],")*(Yfunc(U,V)-(",Pstr[2],"))}",sep='')
   }else{
@@ -13755,14 +14372,14 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
   eval(parse(text=Tmp))
   Dx=(URNG[2]-URNG[1])/Np[1]
   Dy=(VRNG[2]-VRNG[1])/Np[2]
-  for(J in Looprange(1,Np[2])){ #####
+  for(J in Looprange(1,Np[2])){ 
     Vval1=VRNG[1]+(J-1)*Dy
     Vval2=VRNG[1]+J*Dy
-    for(I in Looprange(1,Np[1])){ #####
-      Uval1=URNG[1]+(I-1)*Dx
+    Uval1=URNG[1]  #180305(3lines)
+    Eval11=Eqfun(Uval1,Vval1)
+    Eval12=Eqfun(Uval1,Vval2)
+    for(I in Looprange(1,Np[1])){ 
       Uval2=URNG[1]+I*Dx
-      Eval11=Eqfun(Uval1,Vval1)
-      Eval12=Eqfun(Uval1,Vval2)
       Eval21=Eqfun(Uval2,Vval1)
       Eval22=Eqfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -13780,7 +14397,6 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
           next
         }
         if(abs(M2)<Eps0){
-#          QL=Appendrow(QL,P2)
           next
         }
         if((M1> 0) && (M2> 0)){
@@ -13792,6 +14408,9 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
         Tmp=1/(M1-M2)*(-M2*P1+M1*P2)
         QL=Appendrow(QL,Tmp)
       }
+      Uval1=Uval2 #180306(3lines)
+      Eval11=Eval21
+      Eval12=Eval22
       if(Length(QL)==2){
         Puv1=Op(1,QL); Puv2=Op(2,QL)
         Tmp1=Op(1,Puv1)
@@ -13831,8 +14450,8 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
           Ptuv=1/(M1-M2)*(-M2*Puv1+M1*Puv2)
         }
         if(is.character(Uveq)){
-          Tmp1=paste('(',sprintf("%6.6f",Ptuv[1]),')',sep='')
-          Tmp2=paste('('+sprintf("%6.6f",Ptuv[2]),')',sep='')
+          Tmp1=paste('(',sprintf("%6.3f",Ptuv[1]),')',sep='')
+          Tmp2=paste('('+sprintf("%6.3f",Ptuv[2]),')',sep='')
           Tmp=gsub(UNAME,Tmp1,Uveq,fixed=TRUE)
           Tmp=gsub(VNAME,Tmp2,Tmp,fixed=TRUE)
           Tmp=eval(parse(text=Tmp))
@@ -13841,16 +14460,16 @@ Meetpoints<- function(PtA,PtB,Uveq,Np,Eps){
           }
         }
         Tmp1=Crossprod(Pt-PtA,Vec)
-        if(Norm(Tmp1)<Eps){ #18.02.19
+        if(Norm(Tmp1)<Eps1){ #18.02.19
           Tmp1=Dotprod(Pt-PtA,Vec) #18.02.21
-          if((Tmp1>-Eps0)&&(Tmp1<Norm(PtB-PtA)+Eps0)){
+          if((Tmp1>-Eps0)&&(Norm(Pt-PtA)<Norm(PtB-PtA)+Eps0)){#180429
             Out=c(Out,list(Pt))
           }
         }
       }
     }
   }
-  tmp1=Groupnearpt(Out,Eps)
+  tmp1=Groupnearpt(Out,Eps1)
   Out=list()
   for(jj in Looprange(1,length(tmp1))){
     tmp=Op(jj,tmp1)
@@ -13897,7 +14516,7 @@ Clipindomain<- function(ObjL,FigL){
     ParL=Tmp
     Tmp1=Op(length(ParL),ParL)
     Tmp2=Length(Obj)
-    if(abs(Tmp1-Tmp2)<Eps){
+    if(abs(Tmp1-Tmp2)<Eps1){
       ParL=c(ParL[Looprange(1,length(ParL)-1)],Tmp2)
     }
     Fig=list()
@@ -13936,7 +14555,8 @@ Crvsfparadata<- function(...){
   Fd=varargin[[3]]; 
   Fullformfunc(Fd) #18.02.17
   Np=c(50,50)
-  Eps=0.01
+  Eps0=10^(-4)
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(4,Nargs)){
@@ -13948,7 +14568,7 @@ Crvsfparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
@@ -13957,18 +14577,18 @@ Crvsfparadata<- function(...){
   for(Nn in Looprange(1,length(FkL))){
     Fk=Op(Nn,FkL)
     Tmp=Projpara(Fk)
-    Par=Partitionseg(Tmp,Fbdy,Eps,Eps2,0)
+    Par=Partitionseg(Tmp,Fbdy,Eps1,Eps2,0)
     if(Sepflg==0){
       for(I in Looprange(1,Length(Fk)-1)){
         Pa=Op(I,Fk)
         Pb=Op(I+1,Fk)
-        PtL=Meetpoints(Pa,Pb,1,Np,Eps)
+        PtL=Meetpoints(Pa,Pb,1,Np,Eps1)
         for(J in Looprange(1,Length(PtL))){
           Tmp=Op(J,PtL)
           Tmp=Parapt(Tmp)
           Tmp1=Paramoncurve(Tmp,I,Projpara(Fk))
           Tmp2=min(abs(Par-Tmp1))
-          if(Tmp2*Norm(Parapt(Pb-Pa))>Eps) {
+          if(Tmp2*Norm(Parapt(Pb-Pa))>Eps0) { #180227
             Par=c(Par,Tmp1)
           }
         }
@@ -13978,21 +14598,21 @@ Crvsfparadata<- function(...){
     for(jj in Looprange(1,length(ADDPOINT))){ #18.02.19from
       tmp=Parapt(Op(jj,ADDPOINT))
       tmp=Nearestpt(tmp,Projpara(Fk))
-      if(tmp[[3]]<Eps){
+      if(tmp[[3]]<Eps1){
         Par=c(Par,tmp[[2]])
       }
-    } #18.02.19upto
+    } #18.02.19until
     tmp1=sort(Par)
     Par=c()
     tmp2=-1
     for(jj in Looprange(1,length(tmp1))){
       tmp=Op(jj,tmp1)
-      if(abs(tmp-tmp2)>Eps){
+      if(abs(tmp-tmp2)>Eps0){ #180227
         Par=c(Par,tmp)
         tmp2=tmp
       }
     }
-    Tmp1=Nohiddenpara2(Par,Fk,1,Np,Eps,Eps2)
+    Tmp1=Nohiddenpara2(Par,Fk,1,Np,Eps1,Eps2)
     Out=c(Out,Tmp1)
     CRVSFHIDDENDATA<<- c(CRVSFHIDDENDATA,HIDDENDATA)
     Tmp=paste('Crvsfdata',formatC(Nn,width=2,flag="0"),'/',sep='')
@@ -14017,7 +14637,7 @@ Crv3onsfparadata<- function(...){
   Fd=varargin[[3]]
   Fullformfunc(Fd) #18.02.17
   Np=c(50,50)
-  Eps=0.01
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(4,Nargs)){
@@ -14029,7 +14649,7 @@ Crv3onsfparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
@@ -14038,16 +14658,16 @@ Crv3onsfparadata<- function(...){
   for(Nn in Looprange(1,length(FkL))){
     Fk=Op(Nn,FkL)
     Tmp=Projpara(Fk)
-    Par=Partitionseg(Tmp,Fbdy,Eps,Eps2,0)
+    Par=Partitionseg(Tmp,Fbdy,Eps1,Eps2,0)
     for(jj in Looprange(1,length(ADDPOINT))){
       tmp=Parapt(Op(jj,ADDPOINT))
       tmp=Nearestpt(tmp,Projpara(Fk))
-      if(tmp[[3]]<Eps){
+      if(tmp[[3]]<Eps1){
         Par=c(Par,tmp[[2]])
       }
     }
     Par=sort(Par)
-    Tmp1=Nohiddenpara2(Par,Fk,1,Np,Eps,Eps2)
+    Tmp1=Nohiddenpara2(Par,Fk,1,Np,Eps1,Eps2)
     Out=c(Out,Tmp1)
     CRVONSFHIDDENDATA<<- c(CRVONSFHIDDENDATA,HIDDENDATA)
     Tmp=paste('Crvonsfdata',formatC(Nn,width=2,flag="0"),'/',sep='')
@@ -14058,7 +14678,7 @@ Crv3onsfparadata<- function(...){
   return(Out)
 }
 
-Crvonsfparadata<- function(...){
+Crv2onsfparadata<- function(...){
   starttime=proc.time()
   varargin=list(...)
   Nargs=length(varargin)
@@ -14080,7 +14700,7 @@ Crvonsfparadata<- function(...){
     FkL=c(FkL,list(tmp2))
   }
   Np=c(50,50)
-  Eps=0.01
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(4,Nargs)){
@@ -14092,11 +14712,11 @@ Crvonsfparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
-  Out=Crv3onsfparadata(FkL,Fbdy3,Fd,Np,Eps,Eps2)
+  Out=Crv3onsfparadata(FkL,Fbdy3,Fd,Np,Eps1,Eps2)
   return(Out)
 }
 
@@ -14110,8 +14730,8 @@ Wireparadata<- function(...){
   DuL=varargin[[3]]
   DvL=varargin[[4]]
   Np=c(50,50)
-  Eps=0.01
-  Eps2=0.05
+  Eps1=0.01
+  Eps2=0.1
   ctr=0
   for(jj in Looprange(5,Nargs)){
     tmp=varargin[[jj]]
@@ -14122,11 +14742,11 @@ Wireparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
-  if(is.numeric(DuL)){
+  if(!is.list(DuL)){ #181024
     tmp1=DuL
     DuL=list()
     for(jj in Looprange(1,tmp1)){
@@ -14134,7 +14754,7 @@ Wireparadata<- function(...){
       DuL=c(DuL,list(tmp))
     }
   }
-  if(is.numeric(DvL)){
+  if(!is.list(DvL)){ #181024
     tmp1=DvL
     DvL=list()
     for(jj in Looprange(1,tmp1)){
@@ -14166,7 +14786,7 @@ Wireparadata<- function(...){
   }
   Tmp1=proc.time()-starttime
   cat(UNAME,"direction started","\n")
-  Out1=Crv3onsfparadata(FkL,Fbdy3,Fd,Np,Eps,Eps2)
+  Out1=Crv3onsfparadata(FkL,Fbdy3,Fd,Np,Eps1,Eps2)
   WIREHIDDENDATA<<- CRVONSFHIDDENDATA
   Fuv=list()
   for(jj in Looprange(1,length(DvL))){
@@ -14191,7 +14811,7 @@ Wireparadata<- function(...){
     FkL=c(FkL,list(tmp2))
   }
   cat(VNAME,"direction started","\n")
-  Out2=Crv3onsfparadata(FkL,Fbdy3,Fd,Np,Eps,Eps2)
+  Out2=Crv3onsfparadata(FkL,Fbdy3,Fd,Np,Eps1,Eps2)
   WIREHIDDENDATA<<- c(WIREHIDDENDATA, CRVONSFHIDDENDATA)
   Out=c(Out1,Out2)
   return(Out)
@@ -14220,7 +14840,7 @@ Intersectcrvsf<- function(...){
   }
   Eps0=10^(-4)
   Np=c(50,50)
-  Eps=0.01
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(3,Nargs)){
@@ -14232,7 +14852,7 @@ Intersectcrvsf<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=tmp}
+      if(ctr==1){Eps1=tmp}
       if(ctr==2){Eps2=tmp}
     }
   }
@@ -14241,7 +14861,7 @@ Intersectcrvsf<- function(...){
     Pa=Op(I,crv)
     Pb=Op(I+1,crv)
     if(bdyflg==0){
-      tmp=Meetpoints(Pa,Pb,1,Np,Eps)
+      tmp=Meetpoints(Pa,Pb,1,Np,Eps1)
     }else{
       M1=bdyeq(Pa); M2=bdyeq(Pb)
       if(M1*M2>= 0){ #18.02.21
@@ -14285,7 +14905,7 @@ Sfcutparadata<- function(...){
   FdL=Fullformfunc(Fd)
   Np=c(50,50)
   Eps0=10^(-4)
-  Eps=0.01
+  Eps1=0.01
   Eps2=0.05
   ctr=0
   for(jj in Looprange(4,Nargs)){
@@ -14297,7 +14917,7 @@ Sfcutparadata<- function(...){
       }
     }else{
       ctr=ctr+1
-      if(ctr==1){Eps=Tmp}
+      if(ctr==1){Eps1=Tmp}
       if(ctr==2){Eps2=Tmp}
     }
   }
@@ -14312,19 +14932,19 @@ Sfcutparadata<- function(...){
   Eq=gsub("x","Xfunc(U,V)",Eq,fixed=TRUE)
   Eq=gsub("y","Yfunc(U,V)",Eq,fixed=TRUE)
   Eq=gsub("z","Zfunc(U,V)",Eq,fixed=TRUE)
-  Tmp=paste("Eqfun<<- function(U,V){",Eq,"}",sep="")  ########
+  Tmp=paste("Eqfun<<- function(U,V){",Eq,"}",sep="") 
   eval(parse(text=Tmp))
   Du=(URNG[2]-URNG[1])/Np[1]
   Dv=(VRNG[2]-VRNG[1])/Np[2]
   Out=list();Out2=list()
-  for(J in Looprange(1,Np[2])){ #####
+  for(J in Looprange(1,Np[2])){
     Vval1=VRNG[1]+(J-1)*Dv
     Vval2=VRNG[1]+J*Dv
-    for(I in Looprange(1,Np[1])){ #####
-      Uval1=URNG[1]+(I-1)*Du
+    Uval1=URNG[1]  #180305(3lines)
+    Eval11=Eqfun(Uval1,Vval1)
+    Eval12=Eqfun(Uval1,Vval2)
+    for(I in Looprange(1,Np[1])){
       Uval2=URNG[1]+I*Du
-      Eval11=Eqfun(Uval1,Vval1)
-      Eval12=Eqfun(Uval1,Vval2)
       Eval21=Eqfun(Uval2,Vval1)
       Eval22=Eqfun(Uval2,Vval2)
       a1=Uval1;b1=Vval1;c1=Eval11
@@ -14342,7 +14962,6 @@ Sfcutparadata<- function(...){
           next
         }
         if(abs(M2)<Eps0){
-#          QL=Appendrow(QL,P2)
           next
         }
         if((M1> 0) && (M2> 0)){
@@ -14354,6 +14973,9 @@ Sfcutparadata<- function(...){
         Tmp=1/(M1-M2)*(-M2*P1+M1*P2)
         QL=Appendrow(QL,Tmp)
       }
+      Uval1=Uval2 #180306(3lines)
+      Eval11=Eval21
+      Eval12=Eval22
       if(Length(QL)==2){
         q11=QL[1,1];q12=QL[1,2];q21=QL[2,1];q22=QL[2,2]
         if(((q11==a1)&&(q21==a1))||((q11==a3)&&(q21==a3))){
@@ -14392,7 +15014,7 @@ Sfcutparadata<- function(...){
     }
     Out2=Out2[-rmv]
   }
-  Out=Connectseg(Out,Eps)
+  Out=Connectseg(Out,Eps1)
   Tmp1=Out
   Out=list()
   for(ii in Looprange(1,length(Tmp1))){
@@ -14402,12 +15024,12 @@ Sfcutparadata<- function(...){
       Tmp=Op(jj,Tmp2)
       Tmp=XYZfunc(Tmp[1],Tmp[2])
       if(Length(Tmp3)>0){
-        if(Norm(Op(Length(Tmp3),Tmp3)-Tmp)<Eps){next}
+        if(Norm(Op(Length(Tmp3),Tmp3)-Tmp)<Eps1){next}
       }
       Tmp3=Appendrow(Tmp3,Tmp)
     }
     Out=c(Out,list(Tmp3))
   }
-  Out=Crv3onsfparadata(Out,Fbdy3,Fd,Np,Eps,Eps2)
+  Out=Crv3onsfparadata(Out,Fbdy3,Fd,Np,Eps1,Eps2)
   return(Out)
 }

@@ -1,5 +1,4 @@
 // e:2018.02.26
-Dircdy=replace(Dircdy,"/C:","C:); //241106
 Dirlib=Dirhead+pathsep()+"ketlib";
 Libname=Dirlib+pathsep()+"ketpiccurrent";
 DirlibC=Dirhead+pathsep()+"ketlibC";

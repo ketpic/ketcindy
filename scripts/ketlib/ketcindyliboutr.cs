@@ -2357,7 +2357,7 @@ Mxdata(dir,fnameorg,rmv):=(
 );
 ////%Mxdata end////
 
-////%Parsel start////
+////%ParseL start////
 ParseL(strL):=(
 //help:ParseL(strlist);
  regional(sL,out,tmp);
@@ -2369,7 +2369,22 @@ ParseL(strL):=(
    out=append(out,tmp);
  );
 );
-////%Parsel end////
+////%ParseL end////
+
+////%Parsev start////241130
+Parsev(vs):=(
+//help:Parsev("a::b::c");
+  regional(tmp,tmp1,out);
+  tmp1=Strsplit(vs,"::");
+  out=[];
+  forall(tmp1,
+    tmp=parse(#);
+    tmp=parse(tmp);
+    out=append(out,tmp);
+  );
+  out;
+);
+////%Parsev end////
 
 ////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);

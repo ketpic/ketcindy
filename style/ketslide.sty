@@ -12,6 +12,7 @@
 %* 
 %* You should have received a copy of the GNU General Public License
 %* along with this program.  If not, see <http://www.gnu.org/licenses/>
+%%% 241224 enm,\enminit,\addenm
 %%% 240422 \monbannoadd dbg
 %%% 240420 \textinit,\settext,\addtext,\ten, \ban
 %%% 240420 \monban,eda
@@ -155,6 +156,16 @@
 }%
 %
 }%
+
+%% 241224from
+\newcounter{enm}
+\newcommand{\enminit}{
+\setcounter{enm}{1}
+}
+\newcommand{\addenm}{%
+\addtocounter{enm}{1}
+}
+%% 241224to
 
 %% 240420from
 \newcounter{txtLi}%%startheight

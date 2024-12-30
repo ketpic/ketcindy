@@ -1,3 +1,5 @@
+// 20241226
+//    htan=tanhalf added (tanh changed)
 // 20241221
 //    tanhalf added
 // 20241130

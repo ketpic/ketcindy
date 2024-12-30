@@ -1,10 +1,34 @@
 タイトル::slide0::%wallpaper
 ::\def\monthday{1223}%ページ番号の日付
-::\def\deg#1{#1^{\circ}}
 ::\def\bs{$\backslash$}%記号としてバックスペースを使う
 ::\def\dc{:\hspace{0.01mm}:}%記号としてダブルコロンを使う
+::\def\pep{(\theenm)}%addtextにおける番号の書式
+::\newcommand{\adde}{\addenm}
+::\def\deg#1{#1^{\circ}}
 
-\setthin{0.1}
+%%\setthin{0.1}
+
+%%%%%%%%%%%%%%%%
+main::準備
+\slidepage[m]
+
+%%%%%%%%%%%%%%%%
+new::\ketcindy のインストール
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\pep}{ketcindy homeからketcindyの最新版をダウンロード}\adde
+\addtext{8}{\pep}{doc/ketcinsysettings.cdyを実行}\adde
+
+end
+
+%%%%%%%%%%%%%%%%
+new::ファイル
+%repeat=1
+\slidepage
 
 %%%%%%%%%%%%%%%%
 main::layer環境と\bs addtext

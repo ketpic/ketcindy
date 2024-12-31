@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20241226] loaded");
+println("ketcindylibout[20250101] loaded");
 
 //help:start();
 
@@ -2360,7 +2360,7 @@ Mxdata(dir,fnameorg,rmv):=(
 ////%htan start//// 20241226
 //help:tanhalf(45);
 htan(th):=tan(th/2*pi/180);
-tanhalf(th):=htan(th)
+tanhalf(th):=htan(th); //250101(; added)
 ////%htan end////
 
 ////%ParseL start////

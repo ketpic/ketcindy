@@ -1,3 +1,11 @@
+// 20241226
+//    htan=tanhalf added (tanh changed)
+// 20241221
+//    tanhalf added
+// 20241130
+//    Parsev added
+// 20241106
+//    Disptex changed
 // 20240915
 //    CalcbyM changed (removelist)
 //    Disptex changed  ("a::b..." is supported )

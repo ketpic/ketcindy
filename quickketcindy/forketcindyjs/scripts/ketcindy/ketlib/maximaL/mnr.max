@@ -23,6 +23,8 @@ comTanR(C1,r1,C2,r2)
 comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
 
 ////log
+20230102 edg2m(c,a,b),cos2m,edge added
+2024.11.07 frsbsL added
 2024.02.09 ratevL,frevL
 2024.02.07 comTan1, comTan2, comTanC1, comTanC2
 2024.02.03 denomf,Denom,factorfr,frev
@@ -59,6 +61,16 @@ ratevL(eq,repL):=block(
 )$
 frevL(eq,repL):=ratevL(eq,repL)$
 
+frsbsL(vL,sol):=block(/*241106*/
+  [k,tmp,tmp1,tmp2,out],
+  out:[],
+  for k from 1 thru length(vL) do block(
+    tmp1:frevL(vL[k],sol),
+    out:endcons(tmp1,out)
+  ),
+  return(out)
+ )$
+
 disc(eq,v):=block(
  [eqe,v2,v1,v0],
  eqe:expand(eq),
@@ -91,7 +103,22 @@ Hokaku(m):=ratsimp(1/m)$
 Yokaku(m):=ratsimp((1-m)/(m+1))$
 plusA(m1,m2):=ratsimp((m1+m2)/(1-m2*m1))$
 minusA(m1,m2):=ratsimp((m1-m2)/(1+m2*m1))$
-
+edge(A,B):=block(
+  [out],
+  out:frfactor(lenSeg2(A,B)),
+  out:frfactor(sqrt(out))
+)$
+edg2m(c,a,b):=block(
+  [cs,out],
+  cs:(a^2+b^2-c^2)/(2*a*b),
+  out:sqrt(frfactor((1-cs)/(1+cs))),
+  out:frfactor(out)
+)$
+cos2m(c):=block(
+  [out],
+  out:sqrt(frfactor((1-c)/(1+c))),
+  out:frfactor(out)
+)$
 dotProd(v1,v2):=
   ratsimp(v1[1]*v2[1]+v1[2]*v2[2])$
 normsq(v):=

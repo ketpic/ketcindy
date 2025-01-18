@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[202408-26] loaded");
+println("ketcindylibbasic3[2025-01-18] loaded");
 
 //help:start();
 
@@ -1541,25 +1541,18 @@ Setslidehyper(Arg):=(
 );
 Setslidehyper(driverorg,options):=(
 //help:Setslidehyper();
-//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue","Pos=[125,73]","Size=1"]);
-  regional(driver,eqL,reL,stL,,str,tmp,tmp1,tmp2);
+//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue"]);
+  regional(driver,eqL,str,tmp,tmp1,tmp2);
   driver=driverorg;
   if(length(driver)==0,
     if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
-      driver="dvipdfmx";
+      driver="[dvipdfmx]";
     );
   );
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  reL=tmp_6;
-  stL=tmp_7;
-  tmp1=select(eqL,length(Indexall(#,"="))>1); //180813from
-  eqL=remove(eqL,tmp1);
-  stL=concat(stL,tmp1); //180813to
-  if(length(stL)>0,
-    str=stL_1;
+  if(islist(options), //250118from
+    str=options_1;
   ,
-    str="";
+    str=options;
   );
   if(length(str)==0,
     str="cl=true,lc=blue,fc=blue";
@@ -1574,35 +1567,8 @@ Setslidehyper(driverorg,options):=(
   tmp1=replace(tmp1,"fc=","filecolor=");
   tmp1=replace(tmp1,"uc=","urlcolor=");
   ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
-  Addpackage(tmp1+"{hyperref}");
-  tmp=indexof(tmp1,"linkcolor=");//180813from
-  tmp1=substring(tmp1,tmp-1,length(tmp1));
-  tmp=indexof(tmp1,"=");
-  tmp1=substring(tmp1,tmp,length(tmp1));
-  tmp=indexof(tmp1,",");
-  if(length(tmp)>0,
-    tmp1=substring(tmp1,0,tmp-1);
-  );//180813to
-  LinkColor=tmp1; 
-  LinkPosH=125;
-  LinkPosV=73;//180524
-  LinkSize=1;
-  forall(eqL,
-    tmp=Indexall(#,"=");//180524from
-    if(length(tmp)==1,
-      tmp1=Toupper(substring(#,0,1));
-      tmp2=substring(#,tmp_1,length(#));
-      tmp2=parse(tmp2);
-      if(tmp1=="P",
-        LinkPosH=tmp2_1;
-        LinkPosV=tmp2_2;
-      );
-      if(tmp1=="S",
-        LinkSize=max(tmp2,0.1);
-      );
-    );//180524to
-  );
-); //17.12.16to
+  Addpackage(tmp1+"{hyperref}"); //250118to
+);
 ////%Setslidehyper end////
 
 ////%Settitle start////
@@ -2045,15 +2011,19 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"\usepackage{color}");//190222
   hyperflg=0;
-//  tmp=select(packL,indexof(#,"emath")>0);//240412from
-//  if(tmp==0,
+  tmp=select(ADDPACK,indexof(#,"hyperref")>0);//250118from
+println([2015,tmp]);
+  if(length(tmp)==0,
     tmp="colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}";
     if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
       println(SCEOUTPUT,"\usepackage["+tmp);
     ,
       println(SCEOUTPUT,"\usepackage[dvipdfmx,"+tmp);
     );
-//  );
+  ,
+    tmp=tmp_1;
+    println(SCEOUTPUT,"\usepackage"+tmp);
+  );//250118to
   hyperflg=1;
   forall(packL,
     println(SCEOUTPUT,#); 

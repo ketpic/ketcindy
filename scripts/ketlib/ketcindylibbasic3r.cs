@@ -1528,40 +1528,49 @@ Setslidebody(str1,str2,density):=( // 16.12.22,17.01.06,01.08
 );
 ////%Setslidebody end////
 
-////%Setslidehyper start////
+////%Setslidehyper start//// 250128
 Setslidehyper():=( 17.12.16from
-  Setslidehyper(["cl=true,lc=blue,fc=blue",125,70,1]);
+  Setslidehyper("cl=true,lc=blue,fc=blue");
 );
 Setslidehyper(Arg):=(
-  if(isstring(Arg),
-    Setslidehyper(Arg,["cl=true,lc=blue,fc=blue",125,70,1]);
+  regional(driver,tmp);
+  if(indexof(Arg,"dvipdfmx")==0,
+    if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
+      driver="dvipdfmx";
+    ,
+      driver="";
+    );
+    Setslidehyper(driver,Arg); //250128
   ,
-    Setslidehyper("",Arg);
+    tmp=replace(Arg,"dvipdfmx,","");
+    tmp=replace(tmp,"dvipdfmx","");
+    Setslidehyper("dvipdfmx",tmp);
   );
 );
-Setslidehyper(driverorg,options):=(
+Setslidehyper(driver,optionsorg):=(
 //help:Setslidehyper();
-//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue"]);
-  regional(driver,eqL,str,tmp,tmp1,tmp2);
-  driver=driverorg;
-  if(length(driver)==0,
-    if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
-      driver="[dvipdfmx]";
+//help:Setslidehyper("cl=true,lc=blue,fc=blue");
+//help:Setslidehyper("dvipdfmx,cl=true,lc=blue,fc=blue");
+//help:Setslidehyper("dvipdfmx","cl=true,lc=blue,fc=blue");
+//help:Setslidehyper("","cl=true,lc=blue,fc=blue");
+  regional(options,str,tmp,tmp1);
+  if(islist(optionsorg),
+    if(indexof(optionsorg_1,",")>0,
+      options=optionsorg_1;
+    ,
+      options="";
+      forall(optionsorg,
+        options=options+#+",";
+      );
+      options=options_(1..(length(options)-1));
     );
-  );
-  if(islist(options), //250118from
-    str=options_1;
   ,
-    str=options;
+    options=optionsorg;
   );
-  if(length(str)==0,
-    str="cl=true,lc=blue,fc=blue";
+  if(length(driver)>0,
+    options=driver+","+options;
   );
-  if(length(driver)==0,
-    tmp1="["+str+"]";
-  ,
-    tmp1="["+driver+","+str+"]";
-  );
+  tmp1="["+options+"]";
   tmp1=replace(tmp1,"cl=","colorlinks=");
   tmp1=replace(tmp1,"lc=","linkcolor=");
   tmp1=replace(tmp1,"fc=","filecolor=");
@@ -3181,7 +3190,7 @@ Totexform(str):=( //231215
     ["fr(",["","\displaystyle\frac{xx}{yy}"]], //210228from 231224
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["ln(",["\ln xx "]], //210903
-    ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
+    ["sq(",["{\sqrt{xx}}","{\sqrt[xx]{yy}}"]], //250203
     ["po(",["","{xx}^{yy}"]],
     ["sin(",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
     ["cos(",["\cos xx ","\cos^{xx}\! yy "]], //210405

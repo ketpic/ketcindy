@@ -309,7 +309,7 @@ rotateTriangle(tr,centre):=block(
 )$
 rotateT(tr,centre):=rotateTriangle(tr,centre)$
 
-angT(m,n):=supA(plusA(m,n)); /*250208 */
+angT(m,n):=supA(plusA(m,n));
 
 reduceDegree(pL,z,stp):=block(
   [stpL,dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 

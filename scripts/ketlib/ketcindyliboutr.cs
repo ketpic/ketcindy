@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250101] loaded");
+println("ketcindylibout[20250216] loaded");
 
 //help:start();
 
@@ -2357,40 +2357,6 @@ Mxdata(dir,fnameorg,rmv):=(
 );
 ////%Mxdata end////
 
-////%htan start//// 20241226
-//help:tanhalf(45);
-htan(th):=tan(th/2*pi/180);
-tanhalf(th):=htan(th); //250101(; added)
-////%htan end////
-
-////%ParseL start////
-ParseL(strL):=(
-//help:ParseL(strlist);
- regional(sL,out,tmp);
- sL=strL;
- out=[];
- forall(sL,
-   tmp=#;
-   if(isstring(tmp),tmp=parse(tmp));
-   out=append(out,tmp);
- );
-);
-////%ParseL end////
-
-////%Parsev start////241130
-Parsev(vs):=(
-//help:Parsev("a::b::c");
-  regional(tmp,tmp1,out);
-  tmp1=Strsplit(vs,"::");
-  out=[];
-  forall(tmp1,
-    tmp=parse(#);
-    tmp=parse(tmp);
-    out=append(out,tmp);
-  );
-  out;
-);
-////%Parsev end////
 
 ////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);

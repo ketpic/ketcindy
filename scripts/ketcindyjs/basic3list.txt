@@ -84,3 +84,8 @@ Mvlist,basic3,5169,5195,Mvpt,Listplot
 Mvplotdata,basic3,5199,5211,Plotdata,Mvlist
 Mvcircledata,basic3,5215,5225,Circledata,Mvlist
 Mvdrwxy,basic3,5229,5243,Mvlist,Arrowhead,Expr,Letter,Mvpt
+tanhalf,basic3,5247,5248
+ParseL,basic3,5252,5262
+Parsev,basic3,5266,5277,Strsplit
+Parsevv,basic3,5281,5291,Strsplit,Parsev
+Nchoice,basic3,5295,5300

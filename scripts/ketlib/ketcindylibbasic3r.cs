@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[2025-01-18] loaded");
+println("ketcindylibbasic3[20250216] loaded");
 
 //help:start();
 
@@ -5242,6 +5242,63 @@ Mvdrwxy():=(
   Letter(Mvpt(org),tmp_7,tmp_6,AXSTYLE_3);
 );
 ////%Mvdrwxy end////
+
+////%tanhalf start//// 250215 (moved from out.cs)
+//help:tanhalf(45);
+tanhalf(th):=tan(th/2*pi/180);
+////%tanhalf end////
+
+////%ParseL start////
+ParseL(strL):=(
+//help:ParseL(strlist);
+ regional(sL,out,tmp);
+ sL=strL;
+ out=[];
+ forall(sL,
+   tmp=#;
+   if(isstring(tmp),tmp=parse(tmp));
+   out=append(out,tmp);
+ );
+);
+////%ParseL end////
+
+////%Parsev start////241130
+Parsev(vs):=(
+//help:Parsev("a::b::c");
+  regional(tmp,tmp1,out);
+  tmp1=Strsplit(vs,"::");
+  out=[];
+  forall(tmp1,
+    tmp=parse(#);
+    tmp=parse(tmp);
+    out=append(out,tmp);
+  );
+  out;
+);
+////%Parsev end////
+
+////%Parsevv start////250215
+Parsevv(vs):=Parsevv("",vs);
+Parsevv(head,vs):=(
+//help:Parsevv("a::b::c");
+  regional(tmp,tmp1,tmp2);
+  tmp1=Strsplit(vs,"::");
+  tmp2=Parsev(vs);
+  forall(1..(length(tmp1)),
+    tmp=head+tmp1_#+"="+format(tmp2_#,6);
+    parse(tmp);
+  );
+);
+////%Parsevv end////
+
+////%Nchoice start////
+Nchoice(no,nlist):=(
+  forall(nlist,
+    inspect(parse("Text"+#),"colorfill",0);
+    inspect(parse("Text"+no),"colorfill",2);
+  );
+);
+////%Nchoice end////
 
 //help:end();
 

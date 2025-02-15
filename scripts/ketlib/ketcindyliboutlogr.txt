@@ -1,3 +1,5 @@
+// 20250216
+      tanhalf, Parse* moved to basic3
 // 20241226
 //    htan=tanhalf added (tanh changed)
 // 20241221

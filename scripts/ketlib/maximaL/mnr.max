@@ -23,6 +23,7 @@ comTanR(C1,r1,C2,r2)
 comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
 
 ////log
+20250217 frevL,ratevL dbg
 20250212 ratden changed(frfactor, for list)
 20250211 commonTan,commonTanR,commonTanC (ev -> subst)
 20250208 angT(m,n) added
@@ -56,15 +57,25 @@ factorfr(f):=numer(f)/denomf(f)$
 ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 frev(eq,rep):=frfactor(ratev(eq,rep))$
-ratevL(eq,repL):=block(
- [out,tmp],
- out:eq,
- for tmp from 1 thru length(repL) do 
-   out:ratev(out,repL[tmp]),
+ratevL(eqL,rep):=block( /*250217*/
+ [out,ne,tmp],
+ out:[],
+ for ne from 1 thru length(repL) do block(
+   tmp:ratev(eqL[ne],rep),
+   out:endcons(tmp,out)
+ ),
  out
 )$
-frevL(eq,repL):=ratevL(eq,repL)$
-
+/*frevL(eq,repL):=ratevL(eq,repL)$*/
+frevL(eqL,rep):=block( /* 250217 */
+ [out,ne,tmp],
+ out:[],
+ for ne from 1 thru length(eqL) do block(
+   tmp:frev(eqL[ne],rep),
+   out:endcons(tmp,out)
+ ),
+ out
+)$
 frsbsL(vL,sol):=block(/*241106*/
   [k,tmp,tmp1,tmp2,out],
   out:[],

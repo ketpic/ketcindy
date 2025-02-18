@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250218] loaded");
+println("ketcindylibbasic3[20250219] loaded");
 
 //help:start();
 
@@ -5320,15 +5320,16 @@ Readymnr(x,y,dx):=(
    println(" Text bottons created");
  );
  
- tmp=Cdyname()+"ketlib.txt";
+ tmp=Cdyname()+"mkcmd.txt";
  if(!Isexists(Dircdy,tmp),
   setdirectory(Dircdy);
   fd=openfile(tmp);
   println(fd,"Mkcmd1():=(");
-  tmp="  cmdL1=concat(Mxbatch("
+  tmp=" cmdL1=concat(Mxbatch("
         +Dqq("mnr")+"),[";
   println(fd,tmp);
-  println(fd," ");
+  println(fd," "+Dqq("")+",");
+  println(fd," "+Dqq("end"));
   println(fd," ]);");
   println(fd," var1="+Dqq("")+";");
   println(fd," var=var1;");
@@ -5337,53 +5338,61 @@ Readymnr(x,y,dx):=(
   println(fd,"Mkcmd2():=(");
   tmp=" cmdL2=concat(cmdL1,[";
   println(fd,tmp);
-  println(fd,"");
+  println(fd," "+Dqq("")+",");
+  println(fd," "+Dqq("end"));
   println(fd," ]);");
   println(fd," var2="+Dqq("")+";");
   println(fd," var=var1+"+Dqq("::")+"+var2;");
   println(fd,");");
   closefile(fd);
-  println(" ketlib.txt created");
+  println(" mkcmd.txt created");
  );
 
+ tmp=Cdyname()+"ketlib.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"use("+Dqq("KetCindyPlugin")+");");
+  println(fd,"Dircdy=loaddirectory;");
+  println(fd,"setdirectory(gethome());");
+  println(fd,"import("+Dqq("ketcindy.ini")+");");
+  println(fd,"");
+  println(fd,"//Readymnr(1,1,1);");
+  println(fd,"");
+  println(fd,"Ch=[]; nL=0..4;");
+  println(fd,"Nchoice(0,nL);");
+  println(fd,"");
+  println(fd,"setdirectory(Dircdy);");
+  println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
+  closefile(fd);
+  println(" ketlib.txt created");
+  print("=> Copy the contents of ");
+  print(Dqq(Cdyname()+"ketlib.txt"));
+  println(" into "+Dqq("ketlib slot")+")");
+ );
+ 
  tmp=Cdyname()+"figures.txt";
  if(!Isexists(Dircdy,tmp),
   setdirectory(Dircdy);
   fd=openfile(tmp);
   println(fd,"Ketinit();");
-  println(fd,"");
-  println(fd,"Pos=NE+[1,-0.5]; Dy=0.9;");
-  println(fd,"Mkcmd1();");
-  println(fd,"Mkcmd2();");
-  println(fd,"nL=0..4;");
-  println(fd,"");
-  println(fd,"if(Ch==[],Nchoice(0,nL));");
+  println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=0.7;");
+  println(fd,"mkcmd1();");
   println(fd,"");
   println(fd,"if(contains(Ch,1),");
-  println(fd,"  Nchoice(1,nL);");
-  println(fd,"  Setfiles(Namecdy+"+Dqq("1")+");");
-  println(fd,"  CalcbyMset(var,"+Dqq("mxans1")
-          +",cmdL1,["+Dqq("")+"]);");
-  println(fd,"  Disptex(Pos,Dy,1,var);");
-  println(fd,"  m=0.6;n=0.4; r=2;");
-  println(fd,"  Parsevv(var);");
+  println(fd," Nchoice(1,0..2);");
+  println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
+  println(fd," CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,[]);");
+  println(fd," Disptex(Pos,Dy,1,var);");
   println(fd,");");
   println(fd,"");
-  println(fd,"if(contains(Ch,2),");
-  println(fd,"  Nchoice(2,nL);");
-  println(fd,"  Setfiles(Namecdy+"+Dqq("2")+");");
-  println(fd,"  CalcbyMset(var,"+Dqq("mxans2")
-          +",cmdL2,["+Dqq("")+"]);");
-  println(fd,"  Disptex(Pos,Dy,2,var);");
-  println(fd,"  Parsevv(var);");
-  println(fd,");");
-
+  println(fd,"Windispg();");
   closefile(fd);
   println(" figures.txt created");
   print("=> Copy the contents of ");
   print(Dqq(Cdyname()+"figures.txt"));
-  println(" into "+Dqq("figures slot")+")");
- );
+  println(" into "+Dqq("figure slot")+")");
+ ); 
 );
 ////%Readymnr end////
 

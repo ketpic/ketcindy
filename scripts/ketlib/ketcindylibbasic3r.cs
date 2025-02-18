@@ -5325,22 +5325,23 @@ Readymnr(x,y,dx):=(
   setdirectory(Dircdy);
   fd=openfile(tmp);
   println(fd,"Mkcmd1():=(");
-  tmp="  cmdL1()=concat(Mxbatch("
-        +Dqq("mnr")+",[";
+  tmp="  cmdL1=concat(Mxbatch("
+        +Dqq("mnr")+"),[";
   println(fd,tmp);
   println(fd," ");
-  println(fd," ])");
+  println(fd," ]);");
   println(fd," var1="+Dqq("")+";");
   println(fd," var=var1;");
+  println(fd,");");
   println(fd,"");
   println(fd,"Mkcmd2():=(");
-  tmp=" cmdL2()=concat(cmdL1,[";
+  tmp=" cmdL2=concat(cmdL1,[";
   println(fd,tmp);
   println(fd,"");
-  println(fd," ])");
-  println(fd,"var2="+Dqq("")+";");
-  println(fd,"var=var1+::var2;");
-  println(fd,"");
+  println(fd," ]);");
+  println(fd," var2="+Dqq("")+";");
+  println(fd," var=var1+"+Dqq("::")+"+var2;");
+  println(fd,");");
   closefile(fd);
   println(" ketlib.txt created");
  );
@@ -5360,7 +5361,7 @@ Readymnr(x,y,dx):=(
   println(fd,"");
   println(fd,"if(contains(Ch,1),");
   println(fd,"  Nchoice(1,nL);");
-  println(fd,"  Setfiles(Namecdy"+Dqq("1")+");");
+  println(fd,"  Setfiles(Namecdy+"+Dqq("1")+");");
   println(fd,"  CalcbyMset(var,"+Dqq("mxans1")
           +",cmdL1,["+Dqq("")+"]);");
   println(fd,"  Disptex(Pos,Dy,1,var);");
@@ -5370,7 +5371,7 @@ Readymnr(x,y,dx):=(
   println(fd,"");
   println(fd,"if(contains(Ch,2),");
   println(fd,"  Nchoice(2,nL);");
-  println(fd,"  Setfiles(Namecdy"+Dqq("2")+");");
+  println(fd,"  Setfiles(Namecdy+"+Dqq("2")+");");
   println(fd,"  CalcbyMset(var,"+Dqq("mxans2")
           +",cmdL2,["+Dqq("")+"]);");
   println(fd,"  Disptex(Pos,Dy,2,var);");

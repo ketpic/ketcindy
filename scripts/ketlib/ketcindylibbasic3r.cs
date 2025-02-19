@@ -5312,11 +5312,11 @@ Readymnr(x,y,dx):=(
    tmp=screenbounds();
    tmp1=tmp_2_1-x;
    tmp2=tmp_1_2-y;
-   Settextkey(4,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
-   Settextkey(3,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
-   Settextkey(2,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
-   Settextkey(1,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
-   Settextkey(0,[tmp1,tmp2],"0","Ch=[];",24);
+   Settextkey(104,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
+   Settextkey(103,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
+   Settextkey(102,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
+   Settextkey(101,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
+   Settextkey(100,[tmp1,tmp2],"0","Ch=[];",24);
    println(" Text bottons created");
  );
  
@@ -5390,7 +5390,7 @@ Readymnr(x,y,dx):=(
   println(fd,"if(contains(Ch,2),");
   println(fd," Nchoice(2,0..2);");
   println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
-  println(fd," var=var1+Dqq("::")+var2;");
+  println(fd," var=var1+"+Dqq("::")+"+var2;");
   println(fd," CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,[]);");
   println(fd," Disptex(Pos,Dy,2,var);");
   println(fd,");");

@@ -5312,11 +5312,11 @@ Readymnr(x,y,dx):=(
    tmp=screenbounds();
    tmp1=tmp_2_1-x;
    tmp2=tmp_1_2-y;
-   Settextkey(4,[tmp1,tmp2],"4","Ch=[4]",24);tmp1=tmp1-dx;
-   Settextkey(3,[tmp1,tmp2],"3","Ch=[]",24);tmp1=tmp1-dx;
-   Settextkey(2,[tmp1,tmp2],"2","Ch=[1]",24);tmp1=tmp1-dx;
-   Settextkey(1,[tmp1,tmp2],"1","Ch=[2]",24);tmp1=tmp1-dx;
-   Settextkey(0,[tmp1,tmp2],"0","Ch=[3]",24);
+   Settextkey(4,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
+   Settextkey(3,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
+   Settextkey(2,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
+   Settextkey(1,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
+   Settextkey(0,[tmp1,tmp2],"0","Ch=[];",24);
    println(" Text bottons created");
  );
  
@@ -5331,9 +5331,8 @@ Readymnr(x,y,dx):=(
   println(fd," "+Dqq("")+",");
   println(fd," "+Dqq("end"));
   println(fd," ]);");
-  println(fd," var1="+Dqq("")+";");
-  println(fd," var=var1;");
   println(fd,");");
+  println(fd,"var1="+Dqq("")+";");
   println(fd,"");
   println(fd,"Mkcmd2():=(");
   tmp=" cmdL2=concat(cmdL1,[";
@@ -5341,9 +5340,8 @@ Readymnr(x,y,dx):=(
   println(fd," "+Dqq("")+",");
   println(fd," "+Dqq("end"));
   println(fd," ]);");
-  println(fd," var2="+Dqq("")+";");
-  println(fd," var=var1+"+Dqq("::")+"+var2;");
   println(fd,");");
+  println(fd,"var2="+Dqq("")+";");
   closefile(fd);
   println(" mkcmd.txt created");
  );
@@ -5377,14 +5375,26 @@ Readymnr(x,y,dx):=(
   fd=openfile(tmp);
   println(fd,"Ketinit();");
   println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=0.7;");
-  println(fd,"mkcmd1();");
   println(fd,"");
+  println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");
   println(fd," Nchoice(1,0..2);");
   println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
+  println(fd," var=var1;");
   println(fd," CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,[]);");
   println(fd," Disptex(Pos,Dy,1,var);");
   println(fd,");");
+
+  println(fd,"");
+  println(fd,"mkcmd2();");
+  println(fd,"if(contains(Ch,2),");
+  println(fd," Nchoice(2,0..2);");
+  println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
+  println(fd," var=var1+Dqq("::")+var2;");
+  println(fd," CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,[]);");
+  println(fd," Disptex(Pos,Dy,2,var);");
+  println(fd,");");
+
   println(fd,"");
   println(fd,"Windispg();");
   closefile(fd);

@@ -5329,7 +5329,7 @@ Readymnr(x,y,dx):=(
  if(!Isexists(Dircdy,tmp),
   setdirectory(Dircdy);
   fd=openfile(tmp);
-  println(fd,"Mkcmd1():=(");
+  println(fd,"mkcmd1():=(");
   tmp=" cmdL1=concat(Mxbatch("
         +Dqq("mnr")+"),[";
   println(fd,tmp);
@@ -5339,7 +5339,7 @@ Readymnr(x,y,dx):=(
   println(fd,");");
   println(fd,"var1="+Dqq("")+";");
   println(fd,"");
-  println(fd,"Mkcmd2():=(");
+  println(fd,"mkcmd2():=(");
   tmp=" cmdL2=concat(cmdL1,[";
   println(fd,tmp);
   println(fd," "+Dqq("")+",");
@@ -5386,7 +5386,8 @@ Readymnr(x,y,dx):=(
   println(fd,"if(contains(Ch,1),");
   println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
   println(fd," var=var1;");
-  println(fd," //CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,[]);");
+  println(fd," //CalcbyMset(var,"
+      +Dqq("mxans1")+",cmdL1,["+Dqq("Wait=5")+"]);");
   println(fd," Disptex(Pos,Dy,1,var);");
   println(fd,");");
 
@@ -5395,7 +5396,8 @@ Readymnr(x,y,dx):=(
   println(fd,"if(contains(Ch,2),");
   println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
   println(fd," var=var1+"+Dqq("::")+"+var2;");
-  println(fd," //CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,[]);");
+  println(fd," //CalcbyMset(var,"
+       +Dqq("mxans2")+",cmdL2,["+Dqq("Wait=5")+"]);");
   println(fd," Disptex(Pos,Dy,2,var);");
   println(fd,");");
 

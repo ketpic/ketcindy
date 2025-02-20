@@ -5292,16 +5292,21 @@ Parsevv(head,vs):=(
 ////%Parsevv end////
 
 ////%Nchoice start////
-Nchoice(no,nlist):=(
-  forall(nlist,
-    inspect(parse("Text"+#),"colorfill",0);
-    inspect(parse("Text"+no),"colorfill",2);
+Nchoice(no):=Nchoice(no,100..104); //250220
+Nchoice(no,nL):=(
+//help:Nchoice(1(,option));
+//help:Nchoice(option=100..104);
+  regional(tmp);
+  tmp=remove(1..(length(nL)),no+1);
+  inspect(parse("Text"+nL_(no+1)),"colorfill",2);
+  forall(tmp,
+    inspect(parse("Text"+nL_(#)),"colorfill",0);
   );
 );
 ////%Nchoice end////
 
 ////%Readymnr start////
-Readymnr():=Readymnr(1.5,1,1.5);
+Readymnr():=Readymnr(1,1,1); //250220
 Readymnr(x,y,dx):=(
 //help:Readymnr();
  regional(tmp,tmp1,tmp2,fd);
@@ -5311,13 +5316,13 @@ Readymnr(x,y,dx):=(
  if(!contains(tmp,"Text0"),
    tmp=screenbounds();
    tmp1=tmp_2_1-x;
-   tmp2=tmp_1_2-y;
+   tmp2=tmp_1_2-y; //250220from
    Settextkey(104,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
    Settextkey(103,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
    Settextkey(102,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
    Settextkey(101,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
-   Settextkey(100,[tmp1,tmp2],"0","Ch=[];",24);
-   println(" Text bottons created");
+   Settextkey(100,[tmp1,tmp2],"0","Ch=[0];",24);
+   println(" Text bottons created"); //250220to
  );
  
  tmp=Cdyname()+"mkcmd.txt";
@@ -5357,8 +5362,8 @@ Readymnr(x,y,dx):=(
   println(fd,"");
   println(fd,"//Readymnr(1,1,1);");
   println(fd,"");
-  println(fd,"Ch=[]; nL=0..4;");
-  println(fd,"Nchoice(0,nL);");
+  println(fd,"Ch=[0];");
+  println(fd,"Nchoice(0);");
   println(fd,"");
   println(fd,"setdirectory(Dircdy);");
   println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
@@ -5374,24 +5379,23 @@ Readymnr(x,y,dx):=(
   setdirectory(Dircdy);
   fd=openfile(tmp);
   println(fd,"Ketinit();");
-  println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=0.7;");
+  println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
+  println(fd,"Nchoice(max(Ch));"); //250220
   println(fd,"");
   println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");
-  println(fd," Nchoice(1,0..2);");
   println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
   println(fd," var=var1;");
-  println(fd," CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,[]);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,[]);");
   println(fd," Disptex(Pos,Dy,1,var);");
   println(fd,");");
 
   println(fd,"");
   println(fd,"mkcmd2();");
   println(fd,"if(contains(Ch,2),");
-  println(fd," Nchoice(2,0..2);");
   println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
   println(fd," var=var1+"+Dqq("::")+"+var2;");
-  println(fd," CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,[]);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,[]);");
   println(fd," Disptex(Pos,Dy,2,var);");
   println(fd,");");
 

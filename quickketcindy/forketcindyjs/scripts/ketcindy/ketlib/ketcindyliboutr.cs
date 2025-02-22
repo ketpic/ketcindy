@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240502] loaded");
+println("ketcindylibout[20250101] loaded");
 
 //help:start();
 
@@ -2289,30 +2289,21 @@ CalcbyMset(var,ans,cmdL,oporg):=(
 CalcbyMsetdisp(var,ans,cmdL,oporg):=(
 //help:CalcMsetdisp(var1,"ans1",cmdL1,[""]);
 //help:CalcMsetdisp(var1,"ans1",cmdL1,[[1,,0.5],""]);
- regional(op,varL,bwL,flg,tmp,tmp1);
+ regional(op,varL,bwL,flg,tmp,tmp1,tmp2);
 //global Pos,Dy,Size
 //help:CalcMset(var1,"ans1",cmdL1,[""]);
  op=oporg;
  varL=Strsplit(var,"::");
- bwL=[];
- tmp=select(op,islist(#));
+ bwL=varL;
+ tmp=select(op,indexof(#,"::")>0);//240915from
  if(length(tmp)>0,
-   bwL=tmp_1;
+   tmp1=Strsplit(tmp_1,"::");
+   bwL=remove(varL,tmp1);//240915to   
    op=remove(op,tmp);
- );
+ );//240915to
  flg=CalcbyMset(var,ans,cmdL,op);
  if(flg==1,
-   forall(1..(length(varL)),
-     if(#<=length(bwL),
-       if(length(bwL_#)>0,
-          Disptex(varL_#,bwL_#);
-	   ,
-	      Disptex(varL_#);
-       );
-	 ,
-	   Disptex(varL_#);
-     );
-   );
+   forall(bwL,Disptex(#));//240915
  );
 );
 ////%CalcbyMsetdisp end////
@@ -2366,7 +2357,13 @@ Mxdata(dir,fnameorg,rmv):=(
 );
 ////%Mxdata end////
 
-////%Parsel start////
+////%htan start//// 20241226
+//help:tanhalf(45);
+htan(th):=tan(th/2*pi/180);
+tanhalf(th):=htan(th); //250101(; added)
+////%htan end////
+
+////%ParseL start////
 ParseL(strL):=(
 //help:ParseL(strlist);
  regional(sL,out,tmp);
@@ -2378,7 +2375,22 @@ ParseL(strL):=(
    out=append(out,tmp);
  );
 );
-////%Parsel end////
+////%ParseL end////
+
+////%Parsev start////241130
+Parsev(vs):=(
+//help:Parsev("a::b::c");
+  regional(tmp,tmp1,out);
+  tmp1=Strsplit(vs,"::");
+  out=[];
+  forall(tmp1,
+    tmp=parse(#);
+    tmp=parse(tmp);
+    out=append(out,tmp);
+  );
+  out;
+);
+////%Parsev end////
 
 ////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);
@@ -2639,49 +2651,56 @@ Dispexpr(lineorg,name,vsp,op):=(
 );
 ////%Dispexpr end////
 
-////%Disptexexpr start//// 231222
-Disptex(name):=Disptexexpr(0,name,0,[]);
-Disptex(Arg1,Arg2):=(
-  if(isstring(Arg1),
-    if(islist(Arg2),
-	  Disptexexpr(0,Arg1,0,Arg2);
-	,
-      Disptexexpr(0,Arg1,Arg2,[]);
-	);
-  ,
-    Disptexexpr(Arg1,Arg2,0,[]);
-  );
-);
+///%Disptex start//// 231222,240915,241106
+// global Pos,Dy
+Disptex(name):=Disptex(0,name);
+Disptex(Arg1,Arg2):=Disptex(Pos,Dy,Arg1,Arg2);
 Disptex(Arg1,Arg2,Arg3):=(
-  if(isstring(Arg1),
-    Disptexexpr(0,Arg1,Arg2,Arg3);
+  if(isstring(Arg2),
+    Disptex(Pos,Dy,Arg1,Arg2,Arg3);
   ,
-    if(islist(Arg3),
-      Disptexexpr(Arg1,Arg2,0,Arg3);
-	,
-	  Disptexexpr(Arg1,Arg2,Arg3,[]);
-	);
+    Disptex(Arg1,Arg2,0,Arg3,[]);
   );
-);  
-Disptexexpr(lineorg,name,vsp,op):=(
-//help:Disptexexpr(0,"pA");
-//help:Disptexexpr(3,"pA");
-//help:Disptexexpr("","pA",["Size=1.2"]);
-//help:Disptexexpr("","pA",0.5);
- regional(line,tmp);
-// global Pos, Dy
- line=lineorg;
- if(line==0,line="");
- tmp=Totexform(parse(name));
- if(!isstring(tmp),tmp=format(tmp,12));
- if(isreal(line),
-   Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
- ,
-   Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
- );
- Pos_2=Pos_2-vsp-Dy;
 );
-////%Disptexexpr end////
+Disptex(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Disptex(Arg1,Arg2,0,Arg3,Arg4);
+  ,
+    Disptex(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+Disptex(pos,dy,lineorg,nameorg,op):=(
+//help:Disptex("pA");
+//help:Disptex(3,"pA::pB");
+//help:Disptex(2,"pA",["Size=1.2"]);
+//help:Disptex(pos,dy,"pA");
+//help:Disptex(pos,dy,"pA",["Size=1.2"]);
+//help:Disptex(pos,dy,2,"pA");
+//help:Disptex(pos,dy,2,"pA",["Size=1.2"]);
+ regional(line,nameL,name,nn,tmp);
+// global Pos,Dy
+ Pos=pos; Dy=dy;
+ line=lineorg;
+ if(line==0,line="",line=text(line));
+ if(indexof(nameorg,"::")>0,
+   nameL=Strsplit(nameorg,"::");
+ ,
+   nameL=[nameorg];
+ );
+ forall(1..(length(nameL)),nn,
+   name=nameL_nn;
+   tmp=Totexform(parse(name));
+   if(!isstring(tmp),tmp=format(tmp,12));
+   if(length(line)>0,
+     Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+   ,
+     Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+   );
+   if(nn==1,line="");
+   Pos_2=Pos_2-Dy;
+ );
+);
+////%Disptex end////
 
 ////%Vspace start//// 231226
 Vspace(dy):=(

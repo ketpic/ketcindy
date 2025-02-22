@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20240915] loaded");
+println("ketcindylibout[20250216] loaded");
 
 //help:start();
 
@@ -2357,19 +2357,6 @@ Mxdata(dir,fnameorg,rmv):=(
 );
 ////%Mxdata end////
 
-////%Parsel start////
-ParseL(strL):=(
-//help:ParseL(strlist);
- regional(sL,out,tmp);
- sL=strL;
- out=[];
- forall(sL,
-   tmp=#;
-   if(isstring(tmp),tmp=parse(tmp));
-   out=append(out,tmp);
- );
-);
-////%Parsel end////
 
 ////%Mxfun start////
 Mxfun(name,fun,argL):=Mxfun(name,fun,argL,[]);
@@ -2630,67 +2617,56 @@ Dispexpr(lineorg,name,vsp,op):=(
 );
 ////%Dispexpr end////
 
-////%Disptexexpr start//// 231222
-Disptex(name):=( //240915from
-  regional(tmp,tmp1);
-  if(indexof(name,"::")>0,
-    tmp=Strsplit(name,"::");
-	forall(tmp,
-	  Disptexexpr(0,#,0,[]);
-	);
-  ,
-    Disptexexpr(0,name,0,[]);
-  );
-);
-Disptex(Arg1,Arg2):=(
-  regional(tmp,tmp1);
-  if(isstring(Arg1),
-    if(islist(Arg2),
-	  Disptexexpr(0,Arg1,0,Arg2);
-	,
-      if(indexof(Arg1,"::")>0, //240915from
-        tmp=Strsplit(Arg1,"::");
-	    forall(tmp,
-	      Disptexexpr(0,#,0,Arg2);
-	    );
-      ,	 //240915to
-        Disptexexpr(0,Arg1,Arg2,[]);
-      );
-	);
-  ,
-    Disptexexpr(Arg1,Arg2,0,[]);
-  );
-);
+///%Disptex start//// 231222,240915,241106
+// global Pos,Dy
+Disptex(name):=Disptex(0,name);
+Disptex(Arg1,Arg2):=Disptex(Pos,Dy,Arg1,Arg2);
 Disptex(Arg1,Arg2,Arg3):=(
-  if(isstring(Arg1),
-    Disptexexpr(0,Arg1,Arg2,Arg3);
+  if(isstring(Arg2),
+    Disptex(Pos,Dy,Arg1,Arg2,Arg3);
   ,
-    if(islist(Arg3),
-      Disptexexpr(Arg1,Arg2,0,Arg3);
-	,
-	  Disptexexpr(Arg1,Arg2,Arg3,[]);
-	);
+    Disptex(Arg1,Arg2,0,Arg3,[]);
   );
-);  
-Disptexexpr(lineorg,name,vsp,op):=(
-//help:Disptexexpr(0,"pA");
-//help:Disptexexpr(3,"pA");
-//help:Disptexexpr("","pA",["Size=1.2"]);
-//help:Disptexexpr("","pA",0.5);
- regional(line,tmp);
-// global Pos, Dy
- line=lineorg;
- if(line==0,line="");
- tmp=Totexform(parse(name));
- if(!isstring(tmp),tmp=format(tmp,12));
- if(isreal(line),
-   Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
- ,
-   Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
- );
- Pos_2=Pos_2-vsp-Dy;
 );
-////%Disptexexpr end////
+Disptex(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Disptex(Arg1,Arg2,0,Arg3,Arg4);
+  ,
+    Disptex(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+Disptex(pos,dy,lineorg,nameorg,op):=(
+//help:Disptex("pA");
+//help:Disptex(3,"pA::pB");
+//help:Disptex(2,"pA",["Size=1.2"]);
+//help:Disptex(pos,dy,"pA");
+//help:Disptex(pos,dy,"pA",["Size=1.2"]);
+//help:Disptex(pos,dy,2,"pA");
+//help:Disptex(pos,dy,2,"pA",["Size=1.2"]);
+ regional(line,nameL,name,nn,tmp);
+// global Pos,Dy
+ Pos=pos; Dy=dy;
+ line=lineorg;
+ if(line==0,line="",line=text(line));
+ if(indexof(nameorg,"::")>0,
+   nameL=Strsplit(nameorg,"::");
+ ,
+   nameL=[nameorg];
+ );
+ forall(1..(length(nameL)),nn,
+   name=nameL_nn;
+   tmp=Totexform(parse(name));
+   if(!isstring(tmp),tmp=format(tmp,12));
+   if(length(line)>0,
+     Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+   ,
+     Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+   );
+   if(nn==1,line="");
+   Pos_2=Pos_2-Dy;
+ );
+);
+////%Disptex end////
 
 ////%Vspace start//// 231226
 Vspace(dy):=(

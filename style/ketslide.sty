@@ -12,6 +12,8 @@
 %* 
 %* You should have received a copy of the GNU General Public License
 %* along with this program.  If not, see <http://www.gnu.org/licenses/>
+%%% 241229 \addtext,\addenm changed
+%%% 241224 enm,\enminit,\addenm
 %%% 240422 \monbannoadd dbg
 %%% 240420 \textinit,\settext,\addtext,\ten, \ban
 %%% 240420 \monban,eda
@@ -156,6 +158,16 @@
 %
 }%
 
+%% 241224from
+\newcounter{enm}
+\newcommand{\enminit}{
+\setcounter{enm}{1}
+}
+\newcommand{\addenm}{%
+\addtocounter{enm}{1}%% add "%" by kubo 20241229 %%
+}
+%% 241224to
+
 %% 240420from
 \newcounter{txtLi}%%startheight
 \newcounter{txtLii}%%linebreakwidth
@@ -163,8 +175,8 @@
 \newcommand{\addtext}[4][0]{
 \addtocounter{txtLi}{#1}
 \putnotese{#2}{\thetxtLi}%
-{#3 \begin{minipage}[t]{\thetxtLiii mm}#4\end{minipage}}
-\addtocounter{txtLi}{\thetxtLii}
+{#3 \begin{minipage}[t]{\thetxtLiii mm}\rule{0mm}{0mm}#4\end{minipage}}%% add \rule by kubo 20241230 %%
+\addtocounter{txtLi}{\thetxtLii}%% add "%" by kubo 20241229 %%
 }
 \newcommand{\settext}[3]{\setcounter{txtLi}{#1}\setcounter{txtLii}{#2}\setcounter{txtLiii}{#3}}
 %settext{8}{8}{110}

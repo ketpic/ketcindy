@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[202404-26] loaded");
+println("ketcindylibbasic3[202408-26] loaded");
 
 //help:start();
 
@@ -5146,6 +5146,11 @@ Mvpt(pt):=(
 );
 Mvpt(x,y):=Mvpt([x,y]);
 ////%Mvpt end////
+////%MvptL start////240826
+MvptL(ptL):=(
+  apply(ptL,Mvpt(#));
+);
+////%MvptL end////
 ////%Rmpt start////
 Rmpt(mpt):=(
   (mpt-Center)/Scale;

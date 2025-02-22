@@ -1,3 +1,7 @@
+// 20241024
+//    basic?list.txt updated
+// 20241008
+//    Dircdy changed ( case of Windows "/C:")
 // 20240321
 //    ketcindysettings changed (Initlocal added)
 // 20230801

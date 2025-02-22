@@ -1,0 +1,191 @@
+タイトル::slide0::%wallpaper
+::\def\monthday{1223}%ページ番号の日付
+::\def\bs{$\backslash$}%記号としてバックスペースを使う
+::\def\dc{:\hspace{0.01mm}:}%記号としてダブルコロンを使う
+::\def\pep{(\theenm)}%addtextにおける番号の書式
+::\newcommand{\adde}{\addenm}
+::\def\deg#1{#1^{\circ}}
+
+%%\setthin{0.1}
+
+%%%%%%%%%%%%%%%%
+main::準備
+\slidepage[m]
+
+%%%%%%%%%%%%%%%%
+new::\ketcindy のインストール
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\pep}{ketcindy homeからketcindyの最新版をダウンロード}\adde
+\addtext{8}{\pep}{doc/ketcinsysettings.cdyを実行}\adde
+
+end
+
+%%%%%%%%%%%%%%%%
+new::ファイル
+%repeat=1
+\slidepage
+
+%%%%%%%%%%%%%%%%
+main::layer環境と\bs addtext
+\slidepage[m]
+
+%%%%%%%%%%%%%%%%
+new::layer環境
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{\bs begin\{layer\}\{120\}\{60\}〜\bs end\{layer\}}
+\addtext{16}{・}{横120mm,縦60mmの範囲で10mmごとに格子線を引く}
+\addtext[8]{16}{・}{KeTSlideではlayer\dc \{120\}\{60\}〜end でよい}
+\addtext{16}{・}{縦を0とすると格子を描かない}
+\addtext{8}{\ten}{layer自体は高さ0のpicture環境}
+\addtext{16}{・}{したがって行幅をとらない}
+
+end
+
+%%%%%%%%%%%%%%%%
+new::putnote
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{\bs putnote(s,se,...)\{8\}\{6\}\{要素\}}
+\addtext{16}{・}{8,6を基準点として(s,se,...)方向に要素をおく}
+\addtext{16}{・}{KeTSlideでは以下のように書いてもよい\\\hspace*{10mm}putnote\dc (s,se,...)\{8\}\{6\}\{要素\}}
+\addtext[8]{16}{・}{figフォルダに\TeX の描画コードファイル(例えばfigure.tex)を置いたときは以下のように書いてもよい(0.6は縮小率)\\\hspace*{10mm}
+putnote\dc se\{5\}\{6\}\dc figure,0.6}
+end
+
+%%%%%%%%%%%%%%%
+new::\bs addtext (1)
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{layer環境の中で文を順に置いていく}
+\addtext{16}{}{\bs textinit[105]}
+\addtext{24}{\%}{初期位置設定．横幅(default100)を決める}
+\addtext{16}{}{layer\dc \{120\}\{0\}}
+\addtext{16}{}{\bs addtext\{8\}\{\bs ten\}\{文1\}}
+\addtext{24}{\%}{書き出しの水平位置 左から8mm}
+\addtext{24}{\%}{次の行の書き出しの垂直位置は+8mm}
+\addtext{16}{}{\bs addtext\{8\}\{\bs ten\}\{文2\}}
+\addtext{16}{}{end}
+end
+
+%%%%%%%%%%%%%%%
+new::\bs addtext (2)
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{\bs addtext[8]\{8\}\{\bs ten\}\{文または図\}}
+\addtext{16}{\ten[0.5]}{最初のオプション引数[8]は前の行からの改行幅(通常は8mm)への追加分}
+\addtext[8]{24}{}{前の行が複数行の時などに用いる}
+\addtext{16}{\ten[0.5]}{\bs ten[s]は\$\bs bullet\$のs倍(デフォルトは0.9)}
+\addtext{8}{\ten}{番号付けは，enmカウンタで制御}
+\addtext{16}{\ten[0.5]}{最初に\bs enminit(=\bs setcounter\{enm\}\{1\})}
+\addtext{16}{\ten[0.5]}{\bs addtext\{8\}\{(\bs theenm)\}\{...\}\bs addenm}
+\addtext{8}{\ten}{テキストに\bs verbは使えない}
+
+end
+
+%%%%%%%%%%%%%%%%
+main::段階的表示
+\slidepage[m]
+
+%%%%%%%%%%%%
+new::段階的表示の方法
+%repeat=1
+\slidepage
+
+\enminit
+\def\bed{\theenm.}
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\bed}{repeat=に段階数を入れる(決まってから)}\addenm
+\addtext{16}{}{{\large\%}repeat=4}
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[1]\dc 要素}1段のみ}\addenm
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[2,-]\dc 要素}2段以降}\addenm
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[-,2]\dc 要素}2段まで}\addenm
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[2..4]\dc 要素}2段から4段まで}\addenm
+end
+
+%%%%%%%%%%%%
+new::スクリプト例
+%repeat=1
+\slidepage
+
+\noindent
+\verb|%repeat=4|\\
+\verb|\enminit|\\
+\verb|layer|\dc\verb|{120}{0}|\\
+\verb|\addtext{8}{(\theenm)}{$...x_k$}\addenm|\\
+\verb|%[3,-]|\dc\verb|\addtext[8]{8}{(\theenm)}{$f(x)\varDelta x$を合計して極限をとればよい}\addenm|\\
+\verb|%[4,-]|\dc\verb|\addtext[8]{8}{\ten}{面積でなくてもよい}|\\
+\verb|%[2]|\dc\verb|putnote:se{70}{25}:kubunkyuuseki8,1.25|\\
+\verb|%[3,-]|\dc\verb|putnote|\dc\verb|se{70}{25}:kubunkyuuseki8b,1.25|\\
+\verb|end|
+
+
+%%%%%%%%%%%%
+new::区分求積法と定積分(段階的表示の例)
+%repeat=4
+\slidepage
+
+\textinit[105]
+\enminit
+\def\pep{(\theenm)}
+layer::{120}{0}
+\addtext{8}{\pep}{$\displaystyle\int_a^b f(x)\,dx=\lim_{\varDelta x_k \to 0}\sum_{k}f(x_k)\varDelta x_k$}\addenm
+%[3,-]::\addtext[8]{8}{\pep}{$f(x)\varDelta x$を合計して\\極限をとればよい}\addenm
+%[4,-]::\addtext[8]{8}{\pep}{面積でなくてもよい}
+%[2]::putnote::se{70}{25}::kubunkyuuseki8,1.25
+%[3,-]::putnote::se{70}{25}::kubunkyuuseki8b,1.25
+end
+
+
+%%%%%%%%%%%%%%%%
+main::その他
+\slidepage[m]
+
+%%%%%%%%%%%%%%%%
+new::itemize環境の使い方
+%repeat=1
+\slidepage
+
+\textinit[110]
+layer::{120}{0}
+\addtext{8}{\ten}{itemize〜end}
+\addtext{16}{}{itemize}
+\addtext{16}{}{item\dc 内容}
+\addtext{16}{}{item\dc 結論}
+\addtext{16}{}{end}
+end
+
+%%%%%%%%%%%%%%%%
+new::enumerate環境の使い方
+\slidepage
+
+\textinit[110]
+layer::{120}{0}
+\addtext{8}{\ten}{enumerate\dc[]〜end}
+\addtext{16}{}{enumerate\dc[(1)]}
+\addtext{16}{}{item\dc 内容}
+\addtext{16}{}{item\dc 結論}
+\addtext{16}{}{end}
+end

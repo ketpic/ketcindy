@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[202408-26] loaded");
+println("ketcindylibbasic3[20250219] loaded");
 
 //help:start();
 
@@ -1528,81 +1528,56 @@ Setslidebody(str1,str2,density):=( // 16.12.22,17.01.06,01.08
 );
 ////%Setslidebody end////
 
-////%Setslidehyper start////
+////%Setslidehyper start//// 250128
 Setslidehyper():=( 17.12.16from
-  Setslidehyper(["cl=true,lc=blue,fc=blue",125,70,1]);
+  Setslidehyper("cl=true,lc=blue,fc=blue");
 );
 Setslidehyper(Arg):=(
-  if(isstring(Arg),
-    Setslidehyper(Arg,["cl=true,lc=blue,fc=blue",125,70,1]);
-  ,
-    Setslidehyper("",Arg);
-  );
-);
-Setslidehyper(driverorg,options):=(
-//help:Setslidehyper();
-//help:Setslidehyper("dvipdfmx",["cl=true,lc=blue,fc=blue","Pos=[125,73]","Size=1"]);
-  regional(driver,eqL,reL,stL,,str,tmp,tmp1,tmp2);
-  driver=driverorg;
-  if(length(driver)==0,
+  regional(driver,tmp);
+  if(indexof(Arg,"dvipdfmx")==0,
     if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
       driver="dvipdfmx";
+    ,
+      driver="";
     );
-  );
-  tmp=Divoptions(options);
-  eqL=tmp_5;
-  reL=tmp_6;
-  stL=tmp_7;
-  tmp1=select(eqL,length(Indexall(#,"="))>1); //180813from
-  eqL=remove(eqL,tmp1);
-  stL=concat(stL,tmp1); //180813to
-  if(length(stL)>0,
-    str=stL_1;
+    Setslidehyper(driver,Arg); //250128
   ,
-    str="";
+    tmp=replace(Arg,"dvipdfmx,","");
+    tmp=replace(tmp,"dvipdfmx","");
+    Setslidehyper("dvipdfmx",tmp);
   );
-  if(length(str)==0,
-    str="cl=true,lc=blue,fc=blue";
-  );
-  if(length(driver)==0,
-    tmp1="["+str+"]";
+);
+Setslidehyper(driver,optionsorg):=(
+//help:Setslidehyper();
+//help:Setslidehyper("cl=true,lc=blue,fc=blue");
+//help:Setslidehyper("dvipdfmx,cl=true,lc=blue,fc=blue");
+//help:Setslidehyper("dvipdfmx","cl=true,lc=blue,fc=blue");
+//help:Setslidehyper("","cl=true,lc=blue,fc=blue");
+  regional(options,str,tmp,tmp1);
+  if(islist(optionsorg),
+    if(indexof(optionsorg_1,",")>0,
+      options=optionsorg_1;
+    ,
+      options="";
+      forall(optionsorg,
+        options=options+#+",";
+      );
+      options=options_(1..(length(options)-1));
+    );
   ,
-    tmp1="["+driver+","+str+"]";
+    options=optionsorg;
   );
+  if(length(driver)>0,
+    options=driver+","+options;
+  );
+  tmp1="["+options+"]";
   tmp1=replace(tmp1,"cl=","colorlinks=");
   tmp1=replace(tmp1,"lc=","linkcolor=");
   tmp1=replace(tmp1,"fc=","filecolor=");
   tmp1=replace(tmp1,"uc=","urlcolor=");
   ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
-  Addpackage(tmp1+"{hyperref}");
-  tmp=indexof(tmp1,"linkcolor=");//180813from
-  tmp1=substring(tmp1,tmp-1,length(tmp1));
-  tmp=indexof(tmp1,"=");
-  tmp1=substring(tmp1,tmp,length(tmp1));
-  tmp=indexof(tmp1,",");
-  if(length(tmp)>0,
-    tmp1=substring(tmp1,0,tmp-1);
-  );//180813to
-  LinkColor=tmp1; 
-  LinkPosH=125;
-  LinkPosV=73;//180524
-  LinkSize=1;
-  forall(eqL,
-    tmp=Indexall(#,"=");//180524from
-    if(length(tmp)==1,
-      tmp1=Toupper(substring(#,0,1));
-      tmp2=substring(#,tmp_1,length(#));
-      tmp2=parse(tmp2);
-      if(tmp1=="P",
-        LinkPosH=tmp2_1;
-        LinkPosV=tmp2_2;
-      );
-      if(tmp1=="S",
-        LinkSize=max(tmp2,0.1);
-      );
-    );//180524to
-  );
-); //17.12.16to
+  Addpackage(tmp1+"{hyperref}"); //250118to
+);
 ////%Setslidehyper end////
 
 ////%Settitle start////
@@ -2045,15 +2020,19 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,tmp);
   println(SCEOUTPUT,"\usepackage{color}");//190222
   hyperflg=0;
-//  tmp=select(packL,indexof(#,"emath")>0);//240412from
-//  if(tmp==0,
+  tmp=select(ADDPACK,indexof(#,"hyperref")>0);//250118from
+println([2015,tmp]);
+  if(length(tmp)==0,
     tmp="colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}";
     if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
       println(SCEOUTPUT,"\usepackage["+tmp);
     ,
       println(SCEOUTPUT,"\usepackage[dvipdfmx,"+tmp);
     );
-//  );
+  ,
+    tmp=tmp_1;
+    println(SCEOUTPUT,"\usepackage"+tmp);
+  );//250118to
   hyperflg=1;
   forall(packL,
     println(SCEOUTPUT,#); 
@@ -3211,7 +3190,7 @@ Totexform(str):=( //231215
     ["fr(",["","\displaystyle\frac{xx}{yy}"]], //210228from 231224
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["ln(",["\ln xx "]], //210903
-    ["sq(",["\sqrt{xx}","\sqrt[xx]{yy}"]],
+    ["sq(",["{\sqrt{xx}}","{\sqrt[xx]{yy}}"]], //250203
     ["po(",["","{xx}^{yy}"]],
     ["sin(",["\sin xx ","\sin^{xx}\! yy "]], //200823[3lines]  //210405
     ["cos(",["\cos xx ","\cos^{xx}\! yy "]], //210405
@@ -5263,6 +5242,175 @@ Mvdrwxy():=(
   Letter(Mvpt(org),tmp_7,tmp_6,AXSTYLE_3);
 );
 ////%Mvdrwxy end////
+
+////%tanhalf start//// 250215 (moved from out.cs)
+//help:tanhalf(45);
+tanhalf(th):=tan(th/2*pi/180);
+////%tanhalf end////
+
+////%ParseL start////
+ParseL(strL):=(
+//help:ParseL(strlist);
+ regional(sL,out,tmp);
+ sL=strL;
+ out=[];
+ forall(sL,
+   tmp=#;
+   if(isstring(tmp),tmp=parse(tmp));
+   out=append(out,tmp);
+ );
+);
+////%ParseL end////
+
+////%Parsev start////241130
+Parsev(vs):=(
+//help:Parsev("a::b::c");
+  regional(tmp,tmp1,out);
+  tmp1=Strsplit(vs,"::");
+  out=[];
+  forall(tmp1,
+    tmp=parse(#);
+    tmp=parse(tmp);
+    out=append(out,tmp);
+  );
+  out;
+);
+////%Parsev end////
+
+////%Parsevv start////250215
+Parsevv(vs):=Parsevv("",vs);
+Parsevv(head,vs):=(
+//help:Parsevv("a::b::c");
+  regional(tmp,tmp1,tmp2);
+  tmp1=Strsplit(vs,"::");
+  tmp2=Parsev(vs);
+  forall(1..(length(tmp1)),
+    tmp=head+tmp1_#+"="+format(tmp2_#,6);
+    parse(tmp);
+  );
+);
+////%Parsevv end////
+
+////%Nchoice start////
+Nchoice(no):=Nchoice(no,100..104); //250220
+Nchoice(no,nL):=(
+//help:Nchoice(1(,option));
+//help:Nchoice(option=100..104);
+  regional(tmp);
+  tmp=remove(1..(length(nL)),no+1);
+  inspect(parse("Text"+nL_(no+1)),"colorfill",2);
+  forall(tmp,
+    inspect(parse("Text"+nL_(#)),"colorfill",0);
+  );
+);
+////%Nchoice end////
+
+////%Readymnr start////
+Readymnr():=Readymnr(1,1,1); //250220
+Readymnr(x,y,dx):=(
+//help:Readymnr();
+ regional(tmp,tmp1,tmp2,fd);
+ tmp=allelements();
+ tmp=select(tmp,indexof(#.name,"Text")>0);
+ tmp=apply(tmp,#.name);
+ if(!contains(tmp,"Text0"),
+   tmp=screenbounds();
+   tmp1=tmp_2_1-x;
+   tmp2=tmp_1_2-y; //250220from
+   Settextkey(104,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
+   Settextkey(103,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
+   Settextkey(102,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
+   Settextkey(101,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
+   Settextkey(100,[tmp1,tmp2],"0","Ch=[0];",24);
+   println(" Text bottons created"); //250220to
+ );
+ 
+ tmp=Cdyname()+"mkcmd.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"mkcmd1():=(");
+  tmp=" cmdL1=concat(Mxbatch("
+        +Dqq("mnr")+"),[";
+  println(fd,tmp);
+  println(fd," "+Dqq("")+",");
+  println(fd," "+Dqq("end"));
+  println(fd," ]);");
+  println(fd,");");
+  println(fd,"var1="+Dqq("")+";");
+  println(fd,"");
+  println(fd,"mkcmd2():=(");
+  tmp=" cmdL2=concat(cmdL1,[";
+  println(fd,tmp);
+  println(fd," "+Dqq("")+",");
+  println(fd," "+Dqq("end"));
+  println(fd," ]);");
+  println(fd,");");
+  println(fd,"var2="+Dqq("")+";");
+  closefile(fd);
+  println(" mkcmd.txt created");
+ );
+
+ tmp=Cdyname()+"ketlib.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"use("+Dqq("KetCindyPlugin")+");");
+  println(fd,"Dircdy=loaddirectory;");
+  println(fd,"setdirectory(gethome());");
+  println(fd,"import("+Dqq("ketcindy.ini")+");");
+  println(fd,"");
+  println(fd,"//Readymnr(1,1,1);");
+  println(fd,"");
+  println(fd,"Ch=[0];");
+  println(fd,"Nchoice(0);");
+  println(fd,"");
+  println(fd,"setdirectory(Dircdy);");
+  println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
+  closefile(fd);
+  println(" ketlib.txt created");
+  print("=> Copy the contents of ");
+  print(Dqq(Cdyname()+"ketlib.txt"));
+  println(" into "+Dqq("ketlib slot")+")");
+ );
+ 
+ tmp=Cdyname()+"figures.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"Ketinit();");
+  println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
+  println(fd,"Nchoice(max(Ch));"); //250220
+  println(fd,"");
+  println(fd,"mkcmd1();");
+  println(fd,"if(contains(Ch,1),");
+  println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
+  println(fd," var=var1;");
+  println(fd," //CalcbyMset(var,"
+      +Dqq("mxans1")+",cmdL1,["+Dqq("Wait=5")+"]);");
+  println(fd," Disptex(Pos,Dy,1,var);");
+  println(fd,");");
+
+  println(fd,"");
+  println(fd,"mkcmd2();");
+  println(fd,"if(contains(Ch,2),");
+  println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
+  println(fd," var=var1+"+Dqq("::")+"+var2;");
+  println(fd," //CalcbyMset(var,"
+       +Dqq("mxans2")+",cmdL2,["+Dqq("Wait=5")+"]);");
+  println(fd," Disptex(Pos,Dy,2,var);");
+  println(fd,");");
+
+  println(fd,"");
+  println(fd,"Windispg();");
+  closefile(fd);
+  println(" figures.txt created");
+  print("=> Copy the contents of ");
+  print(Dqq(Cdyname()+"figures.txt"));
+  println(" into "+Dqq("figure slot")+")");
+ ); 
+);
+////%Readymnr end////
 
 //help:end();
 

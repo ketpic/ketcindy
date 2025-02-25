@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250219] loaded");
+println("ketcindylibbasic3[20250221] loaded");
 
 //help:start();
 
@@ -5387,7 +5387,7 @@ Readymnr(x,y,dx):=(
   println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
   println(fd," var=var1;");
   println(fd," //CalcbyMset(var,"
-      +Dqq("mxans1")+",cmdL1,["+Dqq("Wait=5")+"]);");
+      +Dqq("mxans1")+",cmdL1,["+Dqq("m")+","+Dqq("Wait=5")+"]);");
   println(fd," Disptex(Pos,Dy,1,var);");
   println(fd,");");
 
@@ -5397,7 +5397,7 @@ Readymnr(x,y,dx):=(
   println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
   println(fd," var=var1+"+Dqq("::")+"+var2;");
   println(fd," //CalcbyMset(var,"
-       +Dqq("mxans2")+",cmdL2,["+Dqq("Wait=5")+"]);");
+      +Dqq("mxans2")+",cmdL2,["+Dqq("m")+","+Dqq("Wait=5")+"]);");
   println(fd," Disptex(Pos,Dy,2,var);");
   println(fd,");");
 

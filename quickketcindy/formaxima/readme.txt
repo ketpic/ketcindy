@@ -1,1 +1,0 @@
-If necessary, change the path to Maxima in 'ketcindy.ini'

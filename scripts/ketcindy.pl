@@ -3,8 +3,13 @@
 # KETCindy starter script
 #
 # (C) 2017-2018 Norbert Preining
+# (C) 2025 Munehiro Yamamoto
 # Licensed under the same license terms as ketpic itself, that is GPLv3+
 #
+
+# Requirements
+#  - Cinderella 3.0 beta
+#  - ketcindy 4.5.x
 
 use strict;
 $^W = 1;
@@ -12,8 +17,8 @@ $^W = 1;
 use Digest::MD5;
 use File::Copy;
 
-my $BinaryName = "Cinderella2";
-my $TemplateFile = "template1basic.cdy";
+my $BinaryName = "Cinderella";
+my $TemplateFile = "s0101figure.cdy";
 my $devnull = "/dev/null";
 my $prog = "ketcindy";
 my $systype;
@@ -38,12 +43,14 @@ if ($#ARGV >= 0) {
 
 if (! "$cinderella") {
   if ($systype eq 'Darwin') {
-    if (-r '/Applications/Cinderella2.app/Contents/MacOS/Cinderella2') {
-      $cinderella = '/Applications/Cinderella2.app/Contents/MacOS/Cinderella2';
+    if (-r '/Applications/Cinderella.app/Contents/MacOS/JavaApplicationStub') {
+      $cinderella = '/Applications/Cinderella.app/Contents/MacOS/JavaApplicationStub';
     }
   } elsif ($systype eq 'Windows') {
-    if (-f 'c:/Program Files (x86)/Cinderella/Cinderella2.exe') {
-      $cinderella = 'c:/Program Files (x86)/Cinderella/Cinderella2.exe';
+    if (-f 'c:/Program Files/Cinderella/Cinderella.exe') {
+      $cinderella = 'c:/Program Files/Cinderella/Cinderella.exe';
+    } elsif (-f 'c:/Program Files (x86)/Cinderella/Cinderella.exe') {
+      $cinderella = 'c:/Program Files (x86)/Cinderella/Cinderella.exe';
     }
   }
 }
@@ -61,7 +68,7 @@ my $realcind = win32() ? $cinderella : `realpath "$cinderella"`;
 chomp($realcind);
 my ($cinddir, $bn) = dirname_and_basename($realcind);
 
-my $plugindir = ($systype eq 'Darwin') ? "$cinddir/../PlugIns" : "$cinddir/Plugins";
+my $plugindir = ($systype eq 'Darwin') ? "$cinddir/../Resources/app/PlugIns" : "$cinddir/Plugins";
 
 my $plugin = "$plugindir/KetCindyPlugin.jar";
 my $dirheadplugin = "$plugindir/ketcindy.ini";
@@ -69,7 +76,7 @@ my $dirheadplugin = "$plugindir/ketcindy.ini";
 # find Jar
 chomp(my $KetCdyJar = `kpsewhich -format=texmfscripts KetCindyPlugin.jar`);
 # search for template.cdy
-chomp(my $TempCdy = `kpsewhich -format=texmfscripts $TemplateFile`);
+chomp(my $TempCdy = `kpsewhich -format=doc $TemplateFile`);
 chomp(my $DirHead=`kpsewhich -format=texmfscripts ketcindy.ini`);
 
 if (-z "$TempCdy" || -z "$KetCdyJar") {
@@ -108,6 +115,8 @@ copy($TempCdy, $workdir) or die "$prog: Copy failed: $!";
 if (win32()) {
   # no idea why a normal call with exec did not find the template file
   my $out = `"$cinderella" "$workdir/$TemplateFile"`;
+} elsif ($systype eq 'Darwin') {
+  my $out = `open -a Cinderella -- "$workdir/$TemplateFile"`;
 } else {
   exec($cinderella, "$workdir/$TemplateFile");
 }
@@ -199,5 +208,3 @@ sub getenv {
   }
   return "$var";
 }
-
-

@@ -2553,19 +2553,33 @@ Mxsetvar(var,ansorg,parflg):=(
 );
 ////%Mxsetvar end////
 
-////%Mxfactor start////
-Mxfactor(str,norg):=(
+////%Mxlen start////250305
+Mxlen(str):=Mxlen(str,1);
+Mxlen(str,lvl):=(
+//help:Mxlen("(a+b)*(c+d)");
+//help:Mxlen(str,level);
+  regional(n,tmp,tmp1,tmp,out);
+  tmp=Bracket(str);
+  tmp1=select(tmp,#_2==lvl);
+  out=length(tmp1);
+);
+////%Mxlen end////
+
+////%Mxfactor start////250305
+Mxfactor(str,norg):=Mxfactor(str,norg,1);
+Mxfactor(str,norg,lvl):=(
 //help:Mxfactor("(a+b)*(c+d)",-1);
+//help:Mxfactor(str,1,level);
   regional(n,tmp,tmp1,tmp,out);
   out=str;
   n=norg;
   tmp=Bracket(str);
-  tmp1=select(tmp,#_2>0); //240116
+  tmp1=select(tmp,#_2==lvl);
   if(length(tmp1)>0,
-    if(n<0,n=length(tmp1)-(-n-1)); //240116from
+    if(n<0,n=length(tmp1)-(-n-1));
     tmp1=tmp1_n;
-    tmp2=select(tmp,(#_1>tmp1_1)&(#_2==-tmp1_2));
-   tmp1=tmp1_1; //240116to
+    tmp2=select(tmp,(#_1>tmp1_1)&(#_2==-lvl));
+    tmp1=tmp1_1; //240116to
     tmp2=tmp2_1_1;
     out=substring(str,tmp1,tmp2-1);
   );

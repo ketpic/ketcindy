@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250221] loaded");
+println("ketcindylibbasic3[20250307] loaded");
 
 //help:start();
 
@@ -5381,13 +5381,17 @@ Readymnr(x,y,dx):=(
   println(fd,"Ketinit();");
   println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
   println(fd,"Nchoice(max(Ch));"); //250220
+  tmp1=Dqq(""); tmp2=Dqq("Wait=5");//250307from
+  println(fd,"op=["+tmp1+","+tmp2+"];");
+  tmp1=Dqq("m");
+  println(fd,"opm=["+tmp1+","+tmp2+"];");
+  println(fd,"Setparent(Namecdy+"+Dqq("p")+");");//250307to
   println(fd,"");
   println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");
   println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
   println(fd," var=var1;");
-  println(fd," //CalcbyMset(var,"
-      +Dqq("mxans1")+",cmdL1,["+Dqq("m")+","+Dqq("Wait=5")+"]);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,opm);");
   println(fd," Disptex(Pos,Dy,1,var);");
   println(fd,");");
 
@@ -5396,8 +5400,7 @@ Readymnr(x,y,dx):=(
   println(fd,"if(contains(Ch,2),");
   println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
   println(fd," var=var1+"+Dqq("::")+"+var2;");
-  println(fd," //CalcbyMset(var,"
-      +Dqq("mxans2")+",cmdL2,["+Dqq("m")+","+Dqq("Wait=5")+"]);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,opm);");
   println(fd," Disptex(Pos,Dy,2,var);");
   println(fd,");");
 

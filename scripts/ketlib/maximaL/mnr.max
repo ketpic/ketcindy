@@ -23,6 +23,7 @@ comTanR(C1,r1,C2,r2)
 comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
 
 ////log
+20250311 edg2m,m2edg added
 20250217 frevL,ratevL dbg
 20250212 ratden changed(frfactor, for list)
 20250211 commonTan,commonTanR,commonTanC (ev -> subst)
@@ -129,6 +130,13 @@ edg2m(c,a,b):=block(
   out:sqrt(frfactor((1-cs)/(1+cs))),
   out:frfactor(out)
 )$
+m2edg(m,a,b):=block(/*250311*/
+  [cs,out],
+  cs:(1-m^2)/(1+m^2),
+  out:sqrt(frfactor(a^2+b^2-2*a*b*cs)),
+  out:frfactor(out)
+)$
+
 cos2m(c):=block(
   [out],
   out:sqrt(frfactor((1-c)/(1+c))),

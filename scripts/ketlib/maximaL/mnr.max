@@ -23,6 +23,7 @@ comTanR(C1,r1,C2,r2)
 comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
 
 ////log
+20250321 contCL
 20250311 edg2m,m2edg added
 20250217 frevL,ratevL dbg
 20250212 ratden changed(frfactor, for list)
@@ -488,4 +489,11 @@ ratden(s,x,a):=block( /*Rationalize denom 250206*/
     )
   ),
   return(out)
+)$
+
+contCL(C,r,P1,P2):=block(
+   [eq],
+  eq:crossProd(P2-P1,C-P1)^2/lenSeg2(P2-P1)-r^2,
+  eq:numer(eq),
+  return(eq)
 )$

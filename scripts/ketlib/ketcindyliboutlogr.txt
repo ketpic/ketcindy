@@ -1,3 +1,5 @@
+// 20250329
+      Disptex changed (= > :=)
 // 20250306
       Mxlen added, Mxfactor changed (level added)
 // 20250216

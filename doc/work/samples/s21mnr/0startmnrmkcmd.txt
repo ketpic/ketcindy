@@ -1,0 +1,15 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+ "",
+ "end"
+ ]);
+);
+var1="";
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+ "",
+ "end"
+ ]);
+);
+var2="";

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250216] loaded");
+println("ketcindylibout[20250329] loaded");
 
 //help:start();
 
@@ -2631,7 +2631,7 @@ Dispexpr(lineorg,name,vsp,op):=(
 );
 ////%Dispexpr end////
 
-///%Disptex start//// 231222,240915,241106
+///%Disptex start//// 231222,240915,241106,250329
 // global Pos,Dy
 Disptex(name):=Disptex(0,name);
 Disptex(Arg1,Arg2):=Disptex(Pos,Dy,Arg1,Arg2);
@@ -2672,9 +2672,9 @@ Disptex(pos,dy,lineorg,nameorg,op):=(
    tmp=Totexform(parse(name));
    if(!isstring(tmp),tmp=format(tmp,12));
    if(length(line)>0,
-     Expr(Pos,"e",line+"\;\:"+name+"="+tmp,op);
+     Expr(Pos,"e",line+"\;\:"+name+":="+tmp,op);//250329
    ,
-     Expr(Pos+[0.3,0],"e",name+"="+tmp,op);
+     Expr(Pos+[0.3,0],"e",name+":="+tmp,op);//250329
    );
    if(nn==1,line="");
    Pos_2=Pos_2-Dy;

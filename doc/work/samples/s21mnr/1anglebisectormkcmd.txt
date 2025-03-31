@@ -1,0 +1,23 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+ "putT(m,n1,r1)",
+ "A:vtxT; B:vtxL; D:vtxR; AB:edgL; BD:edgB; aA:angT",
+ 
+ "putT(supA(n1),n,r2); slideT(vtxL,D)",
+ "C:vtxR; AC:edgR; DC:edgB; aA1:angT",
+ "eq1:numer(vtxT[2]-A[2]); eq2:numer(aA1-aA)",
+ "sol:solve([eq1,eq2],[n1,r2])",
+ "fe:frevL([AC,DC,AB/AC,BD/DC],sol[1])",
+ "AC:fe[1]; DC:fe[2]; ABC:fe[3]; DBC:fe[4]",
+ "end"
+ ]);
+);
+var1="eq1::eq2::AB::AC::BD::DC::ABC::DBC";
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+ "",
+ "end"
+ ]);
+);
+var2="";

@@ -1,0 +1,47 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+  "putT(m,n,r)",
+  "slideT((vtxL+vtxR)/2,[0,0])",
+  "eq1:edgB-2*c",
+  "eq2:edgL+edgR-2*a",
+  "eq3:vtxT[1]-x",
+  "eq4:vtxT[2]-y",
+  "sol:solve(eq1,r)",
+  "fe:frevL([eq2,eq3,eq4],sol)",
+  "eq1a:numer(fe[1])",
+  "eq2a:numer(fe[2])",
+  "eq3a:numer(fe[3])",
+  "sol:solve([eq1,eq2,eq3],[m,n,r])",
+  "end"
+ ]);
+);
+var1="eq1::eq2::eq3::eq4::sol::eq1a::eq2a::eq3a::sol";
+
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+  "putT(m,n,r)",
+  "slideT((vtxL+vtxR)/2,[0,0])",
+  "tmp:solve(edgB-2*c,r)",
+  "eq1:numer(ratev(edgL+edgR-2*a,tmp))",
+  "eq2:numer(ratev(x-vtxT[1],tmp))",
+  "eq3:numer(ratev(y-vtxT[2],tmp))",
+  "out:reduceD([eq1,eq2],m,5)",
+  "out1:out[2]",
+  "out:reduceD([eq2,eq3],n,5)",
+  "out2:out[2]",
+  "out1a:nthfactor(out1,3)",
+  "out2a:nthfactor(out2,5)",
+  "eq1:out1a","eq2:out2a",
+  "end"
+ ]);
+ var2="out1::out2::out1a::out2a::tmp";
+);
+
+mkcmd3():=(
+ cmdL3=concat(cmdL2,[
+  "out:reduceD([eq1,eq2],n,10)",
+  "end"
+ ]);
+ var3="eq1::eq2::out";
+);

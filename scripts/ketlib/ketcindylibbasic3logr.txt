@@ -1,3 +1,7 @@
+// 20250329
+// Readymnr changed(Nchoice,op,opm,etc moved to ketlib)
+// 20250307
+// Readymnr changed (op,opm,setparent added)
 // 20250220
 // Readymnr changed
 // 20250218

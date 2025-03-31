@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250221] loaded");
+println("ketcindylibbasic3[20250329] loaded");
 
 //help:start();
 
@@ -5362,11 +5362,18 @@ Readymnr(x,y,dx):=(
   println(fd,"");
   println(fd,"//Readymnr(1,1,1);");
   println(fd,"");
-  println(fd,"Ch=[0];");
-  println(fd,"Nchoice(0);");
-  println(fd,"");
   println(fd,"setdirectory(Dircdy);");
   println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
+  println(fd,"");
+  println(fd,"op():=["+Dqq("")+","+Dqq("Wait=5")+"];");
+  println(fd,"opm():=["+Dqq("m")+","+Dqq("Wait=5")+"];");
+  println(fd,"op(t):=["+Dqq("")+","+Dqq("Wait=")+"+t];");
+  println(fd,"opm(t):=["+Dqq("m")+","+Dqq("Wait=")+"+t];");
+  println(fd,"opr():=["+Dqq("r")+"];");
+  println(fd,"Ch=[0];");
+  println(fd,"Nchoice(0,100..104);");
+  println(fd,"");
+
   closefile(fd);
   println(" ketlib.txt created");
   print("=> Copy the contents of ");
@@ -5380,15 +5387,14 @@ Readymnr(x,y,dx):=(
   fd=openfile(tmp);
   println(fd,"Ketinit();");
   println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
-  println(fd,"Nchoice(max(Ch));"); //250220
+  println(fd,"Setparent(Namecdy+Dqq("p"));");
   println(fd,"");
   println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");
   println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
   println(fd," var=var1;");
-  println(fd," //CalcbyMset(var,"
-      +Dqq("mxans1")+",cmdL1,["+Dqq("m")+","+Dqq("Wait=5")+"]);");
-  println(fd," Disptex(Pos,Dy,1,var);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,op(5));");
+  println(fd," //Disptex(Pos,Dy,1,var);");
   println(fd,");");
 
   println(fd,"");
@@ -5396,14 +5402,15 @@ Readymnr(x,y,dx):=(
   println(fd,"if(contains(Ch,2),");
   println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
   println(fd," var=var1+"+Dqq("::")+"+var2;");
-  println(fd," //CalcbyMset(var,"
-      +Dqq("mxans2")+",cmdL2,["+Dqq("m")+","+Dqq("Wait=5")+"]);");
-  println(fd," Disptex(Pos,Dy,2,var);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,op(5));");
+  println(fd," //Disptex(Pos,Dy,2,var);");
   println(fd,");");
 
   println(fd,"");
   println(fd,"Windispg();");
+  println(fd,"//Help();");
   closefile(fd);
+  
   println(" figures.txt created");
   print("=> Copy the contents of ");
   print(Dqq(Cdyname()+"figures.txt"));

@@ -12,12 +12,9 @@ mkcmd1():=(
  "end"
  ]);
 );
-var1="eq1::eq2::AB::AC::BD::DC::ABC::DBC";
-
-mkcmd2():=(
- cmdL2=concat(cmdL1,[
- "",
- "end"
- ]);
+var1="A::B::D::C::AB::AC::BD::DC::ABC::DBC";
+dispfig1():=(
+  Listplot("1a",[A,B,D,A]);
+  Listplot("1b",[A,D,C,A]);
+  Letter([A,"n","A",B,"w","B",D,"s","D",C,"e","C"]);
 );
-var2="";

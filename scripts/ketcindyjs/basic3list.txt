@@ -89,4 +89,3 @@ ParseL,basic3,5252,5262
 Parsev,basic3,5266,5277,Strsplit
 Parsevv,basic3,5281,5291,Strsplit,Parsev
 Nchoice,basic3,5295,5305
-Readymnr,basic3,5309,5417,screenbounds,Settextkey,Isexists,Cdyname,Dqq

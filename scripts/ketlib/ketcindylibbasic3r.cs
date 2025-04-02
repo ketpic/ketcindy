@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250329] loaded");
+println("ketcindylibbasic3[20250402] loaded");
 
 //help:start();
 
@@ -5305,119 +5305,7 @@ Nchoice(no,nL):=(
 );
 ////%Nchoice end////
 
-////%Readymnr start////
-Readymnr():=Readymnr(1,1,1); //250220
-Readymnr(x,y,dx):=(
-//help:Readymnr();
- regional(tmp,tmp1,tmp2,fd);
- tmp=allelements();
- tmp=select(tmp,indexof(#.name,"Text")>0);
- tmp=apply(tmp,#.name);
- if(!contains(tmp,"Text0"),
-   tmp=screenbounds();
-   tmp1=tmp_2_1-x;
-   tmp2=tmp_1_2-y; //250220from
-   Settextkey(104,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
-   Settextkey(103,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
-   Settextkey(102,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
-   Settextkey(101,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
-   Settextkey(100,[tmp1,tmp2],"0","Ch=[0];",24);
-   println(" Text bottons created"); //250220to
- );
- 
- tmp=Cdyname()+"mkcmd.txt";
- if(!Isexists(Dircdy,tmp),
-  setdirectory(Dircdy);
-  fd=openfile(tmp);
-  println(fd,"mkcmd1():=(");
-  tmp=" cmdL1=concat(Mxbatch("
-        +Dqq("mnr")+"),[";
-  println(fd,tmp);
-  println(fd," "+Dqq("")+",");
-  println(fd," "+Dqq("end"));
-  println(fd," ]);");
-  println(fd,");");
-  println(fd,"var1="+Dqq("")+";");
-  println(fd,"");
-  println(fd,"mkcmd2():=(");
-  tmp=" cmdL2=concat(cmdL1,[";
-  println(fd,tmp);
-  println(fd," "+Dqq("")+",");
-  println(fd," "+Dqq("end"));
-  println(fd," ]);");
-  println(fd,");");
-  println(fd,"var2="+Dqq("")+";");
-  closefile(fd);
-  println(" mkcmd.txt created");
- );
 
- tmp=Cdyname()+"ketlib.txt";
- if(!Isexists(Dircdy,tmp),
-  setdirectory(Dircdy);
-  fd=openfile(tmp);
-  println(fd,"use("+Dqq("KetCindyPlugin")+");");
-  println(fd,"Dircdy=loaddirectory;");
-  println(fd,"setdirectory(gethome());");
-  println(fd,"import("+Dqq("ketcindy.ini")+");");
-  println(fd,"");
-  println(fd,"//Readymnr(1,1,1);");
-  println(fd,"");
-  println(fd,"setdirectory(Dircdy);");
-  println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
-  println(fd,"");
-  println(fd,"op():=["+Dqq("")+","+Dqq("Wait=5")+"];");
-  println(fd,"opm():=["+Dqq("m")+","+Dqq("Wait=5")+"];");
-  println(fd,"op(t):=["+Dqq("")+","+Dqq("Wait=")+"+t];");
-  println(fd,"opm(t):=["+Dqq("m")+","+Dqq("Wait=")+"+t];");
-  println(fd,"opr():=["+Dqq("r")+"];");
-  println(fd,"Ch=[0];");
-  println(fd,"Nchoice(0,100..104);");
-  println(fd,"");
-
-  closefile(fd);
-  println(" ketlib.txt created");
-  print("=> Copy the contents of ");
-  print(Dqq(Cdyname()+"ketlib.txt"));
-  println(" into "+Dqq("ketlib slot")+")");
- );
- 
- tmp=Cdyname()+"figures.txt";
- if(!Isexists(Dircdy,tmp),
-  setdirectory(Dircdy);
-  fd=openfile(tmp);
-  println(fd,"Ketinit();");
-  println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
-  println(fd,"Setparent(Namecdy+Dqq("p"));");
-  println(fd,"");
-  println(fd,"mkcmd1();");
-  println(fd,"if(contains(Ch,1),");
-  println(fd," Setfiles(Namecdy+"+Dqq("1")+");");
-  println(fd," var=var1;");
-  println(fd," //CalcbyMset(var,"+Dqq("mxans1")+",cmdL1,op(5));");
-  println(fd," //Disptex(Pos,Dy,1,var);");
-  println(fd,");");
-
-  println(fd,"");
-  println(fd,"mkcmd2();");
-  println(fd,"if(contains(Ch,2),");
-  println(fd," Setfiles(Namecdy+"+Dqq("2")+");");
-  println(fd," var=var1+"+Dqq("::")+"+var2;");
-  println(fd," //CalcbyMset(var,"+Dqq("mxans2")+",cmdL2,op(5));");
-  println(fd," //Disptex(Pos,Dy,2,var);");
-  println(fd,");");
-
-  println(fd,"");
-  println(fd,"Windispg();");
-  println(fd,"//Help();");
-  closefile(fd);
-  
-  println(" figures.txt created");
-  print("=> Copy the contents of ");
-  print(Dqq(Cdyname()+"figures.txt"));
-  println(" into "+Dqq("figure slot")+")");
- ); 
-);
-////%Readymnr end////
 
 //help:end();
 

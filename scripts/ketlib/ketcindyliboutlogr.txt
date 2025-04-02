@@ -1,3 +1,7 @@
+// 250402
+//    Readymnr changed (to use Setmnrstep)
+//    Setmnrstep added
+//    Mxfactor,Disptex,Readymnr moved from basic3
 // 20250329
       Disptex changed (= > :=)
 // 20250306

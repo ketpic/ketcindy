@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250329] loaded");
+println("ketcindylibout[20250402] loaded");
 
 //help:start();
 
@@ -2553,40 +2553,6 @@ Mxsetvar(var,ansorg,parflg):=(
 );
 ////%Mxsetvar end////
 
-////%Mxlen start////250305
-Mxlen(str):=Mxlen(str,1);
-Mxlen(str,lvl):=(
-//help:Mxlen("(a+b)*(c+d)");
-//help:Mxlen(str,level);
-  regional(n,tmp,tmp1,tmp,out);
-  tmp=Bracket(str);
-  tmp1=select(tmp,#_2==lvl);
-  out=length(tmp1);
-);
-////%Mxlen end////
-
-////%Mxfactor start////250305
-Mxfactor(str,norg):=Mxfactor(str,norg,1);
-Mxfactor(str,norg,lvl):=(
-//help:Mxfactor("(a+b)*(c+d)",-1);
-//help:Mxfactor(str,1,level);
-  regional(n,tmp,tmp1,tmp,out);
-  out=str;
-  n=norg;
-  tmp=Bracket(str);
-  tmp1=select(tmp,#_2==lvl);
-  if(length(tmp1)>0,
-    if(n<0,n=length(tmp1)-(-n-1));
-    tmp1=tmp1_n;
-    tmp2=select(tmp,(#_1>tmp1_1)&(#_2==-lvl));
-    tmp1=tmp1_1; //240116to
-    tmp2=tmp2_1_1;
-    out=substring(str,tmp1,tmp2-1);
-  );
-  out;
-);
-////%Mxfactor end////
-
 ////%Dispexpr start//// 240220
 Dispe(name):=Dispexpr(0,name,0,[]);
 Dispe(Arg1,Arg2):=(
@@ -2630,57 +2596,6 @@ Dispexpr(lineorg,name,vsp,op):=(
  Pos_2=Pos_2-vsp-Dy;
 );
 ////%Dispexpr end////
-
-///%Disptex start//// 231222,240915,241106,250329
-// global Pos,Dy
-Disptex(name):=Disptex(0,name);
-Disptex(Arg1,Arg2):=Disptex(Pos,Dy,Arg1,Arg2);
-Disptex(Arg1,Arg2,Arg3):=(
-  if(isstring(Arg2),
-    Disptex(Pos,Dy,Arg1,Arg2,Arg3);
-  ,
-    Disptex(Arg1,Arg2,0,Arg3,[]);
-  );
-);
-Disptex(Arg1,Arg2,Arg3,Arg4):=(
-  if(islist(Arg4),
-    Disptex(Arg1,Arg2,0,Arg3,Arg4);
-  ,
-    Disptex(Arg1,Arg2,Arg3,Arg4,[]);
-  );
-);
-Disptex(pos,dy,lineorg,nameorg,op):=(
-//help:Disptex("pA");
-//help:Disptex(3,"pA::pB");
-//help:Disptex(2,"pA",["Size=1.2"]);
-//help:Disptex(pos,dy,"pA");
-//help:Disptex(pos,dy,"pA",["Size=1.2"]);
-//help:Disptex(pos,dy,2,"pA");
-//help:Disptex(pos,dy,2,"pA",["Size=1.2"]);
- regional(line,nameL,name,nn,tmp);
-// global Pos,Dy
- Pos=pos; Dy=dy;
- line=lineorg;
- if(line==0,line="",line=text(line));
- if(indexof(nameorg,"::")>0,
-   nameL=Strsplit(nameorg,"::");
- ,
-   nameL=[nameorg];
- );
- forall(1..(length(nameL)),nn,
-   name=nameL_nn;
-   tmp=Totexform(parse(name));
-   if(!isstring(tmp),tmp=format(tmp,12));
-   if(length(line)>0,
-     Expr(Pos,"e",line+"\;\:"+name+":="+tmp,op);//250329
-   ,
-     Expr(Pos+[0.3,0],"e",name+":="+tmp,op);//250329
-   );
-   if(nn==1,line="");
-   Pos_2=Pos_2-Dy;
- );
-);
-////%Disptex end////
 
 ////%Vspace start//// 231226
 Vspace(dy):=(
@@ -6493,6 +6408,213 @@ TocindyM(str):=(
   out;
 );
 ////%TocindyM end////
+
+////%Mxlen start////250305
+Mxlen(str):=Mxlen(str,1);
+Mxlen(str,lvl):=(
+//help:Mxlen("(a+b)*(c+d)");
+//help:Mxlen(str,level);
+  regional(n,tmp,tmp1,tmp,out);
+  tmp=Bracket(str);
+  tmp1=select(tmp,#_2==lvl);
+  out=length(tmp1);
+);
+////%Mxlen end////
+
+////%Mxfactor start////250305
+Mxfactor(str,norg):=Mxfactor(str,norg,1);
+Mxfactor(str,norg,lvl):=(
+//help:Mxfactor("(a+b)*(c+d)",-1);
+//help:Mxfactor(str,1,level);
+  regional(n,tmp,tmp1,tmp,out);
+  out=str;
+  n=norg;
+  tmp=Bracket(str);
+  tmp1=select(tmp,#_2==lvl);
+  if(length(tmp1)>0,
+    if(n<0,n=length(tmp1)-(-n-1));
+    tmp1=tmp1_n;
+    tmp2=select(tmp,(#_1>tmp1_1)&(#_2==-lvl));
+    tmp1=tmp1_1; //240116to
+    tmp2=tmp2_1_1;
+    out=substring(str,tmp1,tmp2-1);
+  );
+  out;
+);
+////%Mxfactor end////
+
+////%Setmnrstep start////250402
+Setmnrstep(nch):=(
+//help:Setmnrch(1);
+ Setfiles(Namecdy+nch);
+ var=parse("var"+nch);
+ mxans="mxans"+nch;
+ cmdL=parse("cmdL"+nch);
+);
+////%Setmnrstep end////
+
+////%Disptex start//// 231222,240915,241106,250329
+// global Pos,Dy
+Disptex(name):=Disptex(0,name);
+Disptex(Arg1,Arg2):=Disptex(Pos,Dy,Arg1,Arg2);
+Disptex(Arg1,Arg2,Arg3):=(
+  if(isstring(Arg2),
+    Disptex(Pos,Dy,Arg1,Arg2,Arg3);
+  ,
+    Disptex(Arg1,Arg2,0,Arg3,[]);
+  );
+);
+Disptex(Arg1,Arg2,Arg3,Arg4):=(
+  if(islist(Arg4),
+    Disptex(Arg1,Arg2,0,Arg3,Arg4);
+  ,
+    Disptex(Arg1,Arg2,Arg3,Arg4,[]);
+  );
+);
+Disptex(pos,dy,lineorg,nameorg,op):=(
+//help:Disptex("pA");
+//help:Disptex(3,"pA::pB");
+//help:Disptex(2,"pA",["Size=1.2"]);
+//help:Disptex(pos,dy,"pA");
+//help:Disptex(pos,dy,"pA",["Size=1.2"]);
+//help:Disptex(pos,dy,2,"pA");
+//help:Disptex(pos,dy,2,"pA",["Size=1.2"]);
+ regional(line,nameL,name,nn,tmp);
+// global Pos,Dy
+ Pos=pos; Dy=dy;
+ line=lineorg;
+ if(line==0,line="",line=text(line));
+ if(indexof(nameorg,"::")>0,
+   nameL=Strsplit(nameorg,"::");
+ ,
+   nameL=[nameorg];
+ );
+ forall(1..(length(nameL)),nn,
+   name=nameL_nn;
+   tmp=Totexform(parse(name));
+   if(!isstring(tmp),tmp=format(tmp,12));
+   if(length(line)>0,
+     Expr(Pos,"e",line+"\;\:"+name+":"+tmp,op);//250329
+   ,
+     Expr(Pos+[0.3,0],"e",name+":"+tmp,op);//250329
+   );
+   if(nn==1,line="");
+   Pos_2=Pos_2-Dy;
+ );
+);
+////%Disptex end////
+
+////%Readymnr start////
+Readymnr():=Readymnr(1,1,1); //250220
+Readymnr(x,y,dx):=(
+//help:Readymnr();
+ regional(tmp,tmp1,tmp2,fd);
+ tmp=allelements();
+ tmp=select(tmp,indexof(#.name,"Text")>0);
+ tmp=apply(tmp,#.name);
+ if(!contains(tmp,"Text0"),
+   tmp=screenbounds();
+   tmp1=tmp_2_1-x;
+   tmp2=tmp_1_2-y; //250220from
+   Settextkey(104,[tmp1,tmp2],"4","Ch=[4];",24);tmp1=tmp1-dx;
+   Settextkey(103,[tmp1,tmp2],"3","Ch=[3];",24);tmp1=tmp1-dx;
+   Settextkey(102,[tmp1,tmp2],"2","Ch=[2];",24);tmp1=tmp1-dx;
+   Settextkey(101,[tmp1,tmp2],"1","Ch=[1];",24);tmp1=tmp1-dx;
+   Settextkey(100,[tmp1,tmp2],"0","Ch=[0];",24);
+   println(" Text bottons created"); //250220to
+ );
+ 
+ tmp=Cdyname()+"mkcmd.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"mkcmd1():=(");
+  tmp=" cmdL1=concat(Mxbatch("
+        +Dqq("mnr")+"),[";
+  println(fd,tmp);
+  println(fd," "+Dqq("")+",");
+  println(fd," "+Dqq("end"));
+  println(fd," ]);");
+  println(fd,");");
+  println(fd,"var1="+Dqq("")+";");
+  println(fd,"");
+  println(fd,"mkcmd2():=(");
+  tmp=" cmdL2=concat(cmdL1,[";
+  println(fd,tmp);
+  println(fd," "+Dqq("")+",");
+  println(fd," "+Dqq("end"));
+  println(fd," ]);");
+  println(fd,");");
+  println(fd,"var2="+Dqq("")+";");
+  closefile(fd);
+  println(" mkcmd.txt created");
+ );
+ tmp=Cdyname()+"ketlib.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"use("+Dqq("KetCindyPlugin")+");");
+  println(fd,"Dircdy=loaddirectory;");
+  println(fd,"setdirectory(gethome());");
+  println(fd,"import("+Dqq("ketcindy.ini")+");");
+  println(fd,"");
+  println(fd,"//Readymnr(1,1,1);");
+  println(fd,"");
+  println(fd,"setdirectory(Dircdy);");
+  println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
+  println(fd,"");
+  println(fd,"op():=["+Dqq("")+","+Dqq("Wait=5")+"];");
+  println(fd,"opm():=["+Dqq("m")+","+Dqq("Wait=5")+"];");
+  println(fd,"op(t):=["+Dqq("")+","+Dqq("Wait=")+"+t];");
+  println(fd,"opm(t):=["+Dqq("m")+","+Dqq("Wait=")+"+t];");
+  println(fd,"opr(tmp):=opr();");
+  println(fd,"opr():=["+Dqq("r")+"];");
+  println(fd,"Ch=[0];");
+  println(fd,"Nchoice(0,100..104);");
+  println(fd,"");
+
+  closefile(fd);
+  println(" ketlib.txt created");
+  print("=> Copy the contents of ");
+  print(Dqq(Cdyname()+"ketlib.txt"));
+  println(" into "+Dqq("ketlib slot")+")");
+ );
+ 
+ tmp=Cdyname()+"figures.txt";
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"Ketinit();");
+  println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
+  println(fd,"Setparent(Namecdy+Dqq("p"));");
+  println(fd,"");
+  println(fd,"mkcmd1();");
+  println(fd,"if(contains(Ch,1),");
+  println(fd," Setmnrstep(1);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans")+",cmdL,op(5));");
+  println(fd," //Disptex(Pos,Dy,1,var);");
+  println(fd,");");
+
+  println(fd,"");
+  println(fd,"mkcmd2();");
+  println(fd,"if(contains(Ch,2),");
+  println(fd," Setmnrstep(2);");
+  println(fd," //CalcbyMset(var,"+Dqq("mxans")+",cmdL,op(5));");
+  println(fd," //Disptex(Pos,Dy,2,var);");
+  println(fd,");");
+ 
+  println(fd,"");
+  println(fd,"Windispg();");
+  println(fd,"//Help();");
+  closefile(fd);
+  
+  println(" figures.txt created");
+  print("=> Copy the contents of ");
+  print(Dqq(Cdyname()+"figures.txt"));
+  println(" into "+Dqq("figure slot")+")");   
+ );
+);
+////%Readymnr end////
 
 //help:end();
 

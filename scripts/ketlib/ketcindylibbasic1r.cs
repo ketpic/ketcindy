@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.5.27");
+println("KeTCindy V.4.5.28");
 println(ketjavaversion());
 println("ketcindylibbasic1[20230801] loaded");
 
@@ -497,12 +497,13 @@ Reparse(str):=( //190803
 ////%Reparse end////
 
 ////%Dqq start////
+Dq=unicode("0022");//250404
 Dqq(str):=DqDq(str); //18.02.11
 ////%Dqq end////
 ////%DqDq start////
 DqDq(str):=(
 //help:Dqq("ab");
-  unicode("0022")+str+unicode("0022");
+  Dq+str+Dq;
 );
 ////%DqDq end////
 

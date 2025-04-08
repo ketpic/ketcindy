@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250402] loaded");
+println("ketcindylibout[20250408] loaded");
 
 //help:start();
 
@@ -6512,7 +6512,7 @@ Readymnr(x,y,dx):=(
  tmp=allelements();
  tmp=select(tmp,indexof(#.name,"Text")>0);
  tmp=apply(tmp,#.name);
- if(!contains(tmp,"Text0"),
+ if(!contains(tmp,"Text100"), //250404
    tmp=screenbounds();
    tmp1=tmp_2_1-x;
    tmp2=tmp_1_2-y; //250220from
@@ -6549,6 +6549,33 @@ Readymnr(x,y,dx):=(
   closefile(fd);
   println(" mkcmd.txt created");
  );
+ 
+ tmp=Cdyname()+"mkcmdt.txt"; //250406 added
+ if(!Isexists(Dircdy,tmp),
+  setdirectory(Dircdy);
+  fd=openfile(tmp);
+  println(fd,"mkcmd1():=(");
+  tmp=" cmdL1=concat(Mxbatch("
+        +Dqq("mnr")+"),[";
+  println(fd,tmp);
+  println(fd," ");
+  println(fd," "+"end");
+  println(fd," ]);");
+  println(fd,");");
+  println(fd,"var1="+Dqq("")+";");
+  println(fd,"");
+  println(fd,"mkcmd2():=(");
+  tmp=" cmdL2=concat(cmdL1,[";
+  println(fd,tmp);
+  println(fd," ");
+  println(fd," "+"end");
+  println(fd," ]);");
+  println(fd,");");
+  println(fd,"var2="+Dqq("")+";");
+  closefile(fd);
+  println(" mkcmd.txt created");
+ );
+ 
  tmp=Cdyname()+"ketlib.txt";
  if(!Isexists(Dircdy,tmp),
   setdirectory(Dircdy);
@@ -6560,8 +6587,10 @@ Readymnr(x,y,dx):=(
   println(fd,"");
   println(fd,"//Readymnr(1,1,1);");
   println(fd,"");
-  println(fd,"setdirectory(Dircdy);");
-  println(fd,"import("+Dqq(Cdyname()+"mkcmd.txt")+");");
+  println(fd,"//Setmkcmd();");//250406
+  println(fd,"");
+  println(fd,"//setdirectory(Dircdy);");
+  println(fd,"//import(Cdyname()+"+Dqq("mkcmd.txt")+");");//250404
   println(fd,"");
   println(fd,"op():=["+Dqq("")+","+Dqq("Wait=5")+"];");
   println(fd,"opm():=["+Dqq("m")+","+Dqq("Wait=5")+"];");
@@ -6591,7 +6620,7 @@ Readymnr(x,y,dx):=(
   println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");
   println(fd," Setmnrstep(1);");
-  println(fd," //CalcbyMset(var,"+Dqq("mxans")+",cmdL,op(5));");
+  println(fd," //CalcbyMset(var,mxans,cmdL,op(5));"); //250403
   println(fd," //Disptex(Pos,Dy,1,var);");
   println(fd,");");
 
@@ -6599,7 +6628,7 @@ Readymnr(x,y,dx):=(
   println(fd,"mkcmd2();");
   println(fd,"if(contains(Ch,2),");
   println(fd," Setmnrstep(2);");
-  println(fd," //CalcbyMset(var,"+Dqq("mxans")+",cmdL,op(5));");
+  println(fd," //CalcbyMset(var,mxans,cmdL,op(5));"); //250403
   println(fd," //Disptex(Pos,Dy,2,var);");
   println(fd,");");
  
@@ -6615,6 +6644,99 @@ Readymnr(x,y,dx):=(
  );
 );
 ////%Readymnr end////
+
+////%Setmkcmd start////
+Setmkcmd():=Setmkcmd("mkcmdt"); //250406
+Setmkcmd(mkfile):=(
+//help:Setmkcmd("mkcmdt");
+  regional(fname,dqL,scL,scr,flg,dqflg,nall,nl,
+     tmp,tmp1,tmp2,out);
+  fname=Cdyname()+mkfile+".txt"; //250406
+  if(isexists(Dircdy,fname),
+    scL=Readlines(Dircdy,fname);
+    scL=apply(scL,Removespace(#));
+    nall=length(scL);
+    tmp1=select(1..(nall),substring(scL_#,0,4)=="cmdL");
+    tmp2=select(1..(nall),substring(scL_#,0,2)=="])");
+    dqL=[];
+    forall(1..(length(tmp1)),
+      tmp=(tmp1_#+1)..(tmp2_#-1);
+      dqL=concat(dqL,tmp);
+    );
+    forall(1..nall,nl,
+      scr=scL_nl;
+      tmp=indexof(scr,"//");
+      if(tmp>0,scr=substring(scr,0,tmp-1));
+      tmp=Indexall(scr,Dq);
+      if(mod(length(tmp),2)==1,
+        println(Dq+"incorrect in "+nl+":"+scr);
+      );
+      if(contains(dqL,nl),
+        if(length(scr)==0,
+          scr=Dqq("");
+        ,
+          if(substring(scr,0,3)=="end",
+            scr=Dqq(scr)
+          , 
+            if(scr_(-1)==",",
+              scr=Dqq(substring(scr,0,length(scr)-1))
+            );
+            scr=Dqq(scr)+","
+          );
+        );
+        scL_nl=scr;
+      ,
+        if(substring(scr,0,3)=="var",
+          if(scr_(-1)!=";",scr=scr+";");
+        );
+        if(substring(scr,0,2)=="])",
+          if(scr_(-1)!=";",scr=scr+";");
+        );
+        if(substring(scr,0,1)==")",
+          if(scr_(-1)!=";",scr=scr+";");
+        );
+        scL_nl=scr
+      );
+    );
+    out="";
+    forall(scL,out=out+#);
+    parse(out);
+  );
+  scL;
+);
+////%Setmkcmd end////
+
+////%Checkmnr start////
+Checkmnr():=(
+//help:Checkmnr();
+  regional(fname,scL,scr,flg,nall,ns,nl,scmd,ecmd,
+      tmp,tmp1,tmp2);
+  fname=Namecdy+"mkcmd.txt";
+  if(isexists(Dircdy,fname),
+    scL=Readlines(Dircdy,fname);
+    nall=length(scL);
+    scmd=select(1..nall,indexof(scL_#,"cmdL")>0);
+    ecmd=select(1..nall,indexof(scL_#,"]);")>0);
+    forall(1..(length(scmd)),ns,
+      flg=0;
+      forall((scmd_ns+1)..(ecmd_ns-1),nl,
+        scr=Removespace(scL_nl);
+        tmp=indexof(scr,"//");
+        if(tmp>0,scr=substring(scr,0,tmp-1));
+        if(length(scr)>0,
+          tmp2=Indexall(scr,Dq);
+          if(mod(length(tmp2),2)==1,
+            println(nl+": "+Dq+" incorrect");
+            flg=1;
+          );
+        );
+      );
+    );
+  );
+);
+
+////%Checkmnr end////
+
 
 //help:end();
 

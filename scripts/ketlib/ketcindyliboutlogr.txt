@@ -1,3 +1,12 @@
+// 250408
+//    Setmkcmd recreated
+// 250406
+//    Setmkcmd changed (filename can be specified)
+//    Readymnr changed ("mkcmdt.txt" added)
+// 250405
+//    Setmkcmd added
+// 250403
+//    Readymnr changed ("mxans"=>mxans)
 // 250402
 //    Readymnr changed (to use Setmnrstep)
 //    Setmnrstep added

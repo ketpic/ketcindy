@@ -708,3 +708,5 @@ Disptex(pos,dy,"pA",["Size=1.2"]);
 Disptex(pos,dy,2,"pA");
 Disptex(pos,dy,2,"pA",["Size=1.2"]);
 Readymnr();
+Setmkcmd("mkcmdt");
+Checkmnr();

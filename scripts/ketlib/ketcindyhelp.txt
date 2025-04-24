@@ -710,5 +710,6 @@ Readymnr();
 Setmkcmd("mkcmdt");
 Checkmnr();
 Setmnrch(1);
+RepLvv("a::b::c",["m1","sqrt(m^2+1)"]);
 Repquvv("a::b::c","m:n");
 Printmnr("var3",["m"]);

@@ -1,0 +1,58 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+  putT(m,n,r)
+  A:vtxT; B:vtxL; C:vtxR; I:inC; r:inR
+  Ca:exCa; Ra:exRa; Cb:exCb
+  Rb:exRb; Cc:exCc; Rc:exRc
+  end
+ ]);
+);
+var1="A::B::C::I::Ca::Ra::Cb::Rb::Cc::Rc";
+dispfig1():=(
+  Parsevv(var1);
+  Listplot("1",[A,B,C,A]);
+  Circledata("1",[I,r]);
+  Circledata("1a",[Ca,Ra]);
+  Circledata("1b",[Cb,Rb]);
+  Circledata("1c",[Cc,Rc]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+  out:comTan1(Ca,Ra,Cb,Rb); pts1:[out[1],out[2]]
+  out:comTan1(Cc,Rc,Ca,Ra)
+  pts2:[out[1],out[2]]
+  out:comTan1(Cb,Rb,Cc,Rc); pts3:[out[1],out[2]]
+  D:frfactor(meetLine(pts1,pts2))
+  E:frfactor(meetLine(pts2,pts3))
+  F:frfactor(meetLine(pts3,pts1))
+  end
+ ]);
+);
+var2="D::E::F";
+dispfig2():=(
+ Parsevv(var2);
+ Listplot("2",[D,E,F,D]);
+ Letter([D,"s","D",E,"e","E",F,"w","F"]);
+);
+
+mkcmd3():=(
+ cmdL3=concat(cmdL2,[
+  assume(m>0,n>0,m<1,n<1,m*n-1<0)
+  assume((m+1)*n+m-1>0) //tan(A/2)<1
+  DE:edge(D,E); EF:edge(E,F); FD:edge(F,D)
+  mD:edg2m(EF,DE,FD); mE:edg2m(FD,EF,DE)
+  mF:edg2m(DE,FD,EF)
+  mrotD:cos2m((D[1]-F[1])/FD)
+  putT(mF,mD,r1);slideT(vtxR,D);rotateT(-mrotD,D)
+  eq:vtxT[1]-E[1]; sol:solve(eq,r1)
+  R:frev(r1,sol); CR:frev(inC,sol)
+  r0:r; sum:frfactor(r+Ra+Rb+Rc)
+  end
+ ]);
+);
+var3="r0::sum::CR::R";
+dispfig3():=(
+ Parsevv(var3);
+ Circledata("3",[CR,R],["Color=red"]);
+);

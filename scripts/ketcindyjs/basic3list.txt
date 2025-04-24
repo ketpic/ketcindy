@@ -86,6 +86,6 @@ Mvcircledata,basic3,5215,5225,Circledata,Mvlist
 Mvdrwxy,basic3,5229,5243,Mvlist,Arrowhead,Expr,Letter,Mvpt
 tanhalf,basic3,5247,5248
 ParseL,basic3,5252,5262
-Parsev,basic3,5266,5277,Strsplit
-Parsevv,basic3,5281,5291,Strsplit,Parsev
-Nchoice,basic3,5295,5305
+Parsev,basic3,5266,5284,Strsplit
+Parsevv,basic3,5288,5305,Strsplit,Parsev
+Nchoice,basic3,5309,5319

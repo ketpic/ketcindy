@@ -1,0 +1,174 @@
+
+
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+  putT(m,n,R)
+  A:frfactor(vtxT)
+  B:frfactor(vtxL)
+  C:frfactor(vtxR)
+  I0:inC
+  putT(m,n1,r1); slideT(vtxL,B)
+  D:vtxT; E:vtxR; I1:inC
+  putT(m,supA(m1),r1); slideT(vtxL,B)
+  G:vtxT; F:vtxR
+  putT(m,n2,r1); slideT(vtxL,B)
+  H:vtxT; J:vtxR
+  K:meetLine([F,G],[A,C])
+  L:meetLine([H,J],[A,C])
+  end
+ ]);
+ var0="A::B::C::I0";
+ var1a1="D::E::I1::G::F::H::J::K::L";
+ var1=var0+"::"+var1a1;
+);
+
+dispfig0(var):=(
+  Parsevv(var);
+  Listplot("0",[A,B,C,A],["dr,1.5"]);
+  Circledata("0",[[0,0],R],["do,1,1.5"]);
+  Anglemark("0a",[C,B,A],["do,0.7","E=1.4,m"]);
+  Anglemark("0b",[A,C,B],["do,0.7","E=n"]);
+  Letter([A,"n","A",B,"w","B",C,"e","C"]);
+);
+
+dispfig1(var):=(
+  Parsevv(var);
+  Listplot("1a",[D,E]);
+  Circledata("1a",[I1,r1],["dr,1.5"]);
+  Listplot("1b",[H,L],["dr,1.5"]);
+  Listplot("1c",[K,F],["dr,1.5"]);
+  Anglemark("1a",[E,F,K],["do,0.7","E=0.7,m_1"]);
+  Anglemark("1b",[D,E,B],["do,0.7","E=0.7,n_1"]);
+  Letter([D,"nw","D",E,"s","E",F,"s","F"]);//,G,"n","G"]);
+  Letter([H,"nw","H",L,"ne","L",K,"e","K",I1,"c","I1"]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+ putT(m1,n,r2); slideT(vtxR,C)
+ I2a:frfactor(inC)
+ eq1:numer(vtxL[1]-F[1])
+ 
+ putT(supA(n1),n,r2); slideT(vtxR,C)
+ I2b:frfactor(inC)
+ eq2:numer(vtxL[1]-E[1])
+
+ sol12:solve([eq1,eq2],[r1,r2])
+ fe:frevL([r1,r2,D,E,G,F,H,J,K,I1,I2a],sol12)
+ r1:fe[1]; r2:fe[2]; D:fe[3]; E:fe[4]
+ G:fe[5]; F:fe[6]; H:fe[7]; J:fe[8]
+ K:fe[9]; I1:fe[10]; I2:fe[11]
+ 
+ putT(m1,n2,r2); slideT(vtxL,F)
+ I2c:frfactor(inC)
+ eq2b:numer(vtxR[1]-J[1])
+ sol2b:solve(eq2b,n2)
+ fe:frev([n2,H,L],sol2b)
+ n2:fe[1]; H:fe[2]","L:fe[3]
+ end
+ ]);
+ var2a="n2::D::E::G::F::H::L::K::J::r1::I1::r2::I2";
+ var2=var1+"::"+var2a;
+);
+
+dispfig2(var):=(
+  Parsevv(var);
+  Circledata("21",[I1,r1],["dr,1.5"]);
+  Circledata("22",[I2,r2],["dr,1.5"]);
+  Letter([I1,"c","I1",I2,"c","I2"]);
+);
+
+mkcmd3():=(
+ cmdL3=concat(cmdL2,[
+  putT(plusA(m,n2),minusA(n,n2),r3)
+  slideT(vtxT,A); rotateT(-n2,A)
+  H3:frfactor(vtxL); L3:frfactor(vtxR)
+  eq3:numer(H3[1]-H[1])
+  sol3:solve(eq3,r3)
+  len:length(sol3)
+  fe:frevL([H3,L3,inC,r3],sol3)
+  H:fe[1]; L:fe[2]; I3:fe[3]; r3:fe[4]
+  end
+ ]);
+ var3a1="I3::r3";
+ var3=var2+"::"+var3a1;
+);
+dispfig3(var):=(
+ Parsevv(var);
+ Circledata("3",[I3,r3],["dr,1.5"]);
+ Letter([I3,"c","I3"]);
+);
+
+mkcmd4():=(
+ cmdL4=concat(cmdL3,[
+  eq4a:contCL(I3,r3,D,E)
+  eq4b:contCL(I3,r3,K,F)
+  leneqab:[length(eq4a),length(eq4b)]
+  eq4a1:nthfactor(eq4a,6)
+  eq4a2:nthfactor(eq4a,7)
+  eq4b1:nthfactor(eq4b,6)
+  eq4b2:nthfactor(eq4b,7)
+  rd11:reduceD([eq4a1,eq4b1],n1,10)
+  rd11m:rd11[2]
+  rd12:reduceD([eq4a1,eq4b2],n1,10)
+  rd12m:rd12[2]
+  rd21:reduceD([eq4a2,eq4b1],n1,10)
+  rd21m:rd21[2]
+  rd22:reduceD([eq4a2,eq4b2],n1,10)
+  rd22m:rd22[2]
+  lenrd:[length(rd11m),length(rd12m),length(rd21m),length(rd22m)]
+  rd11mm:nthfactor(rd11m,6)
+  rd12mm:nthfactor(rd12m,5)
+  rd21mm:nthfactor(rd21m,4)
+  rd22mm:nthfactor(rd22m,6)
+ 
+  rdm:rd12mm
+  rdn:numer(remainder(eq4b2,rdm))
+  rdn:nthfactor(rdn,2)
+
+  solm:solve(rdm,m1)
+  soln:solve(rdn,n1)
+  ansm1:frev(m1,solm[2])
+  ansn1:frev(n1,soln[2])
+ 
+  end
+ ]);
+ var4a1="eq4a::eq4b::leneqab::rd11m::rd12m::rd21m::rd22m::lenrd:: ansm1::ansn1";
+ var4=var3+"::"+var4a1;
+);
+
+mkcmd5a():=(
+ cmdL5a=concat(Mxbatch("mnr"),[
+  "D:"+D,"E:"+E,"K:"+K,"F:"+F,"H:"+H,"L:"+L
+  "n2:"+n2,"r1:"+r1,"r2:"+r2,"r3:"+r3
+  P1:meetLine([K,F],[H,L])
+  P2:meetLine([D,E],[H,L])
+  putT(plusA(m1,n2),minusA(n1,n2),r0)
+  slideT(vtxL,P1); rotateT(supA(n2),P1)
+  eq:vtxR[1]-P2[1]; sol:solve(eq,r0)
+  fe:frevL([r0,inC,vtxT,vtxL,vtxR],sol)
+  r0:fe[1]; I0:fe[2]; Q1:fe[3]; Q2:fe[4]; Q3:fe[5]
+  P3:Q1
+  S:frfactor(r0+r1+r2+r3)
+  end
+ ]);
+ var5a="P1::P2::P3::I0::r0::r1::r2::r3::S";
+);
+
+dispfig5a(var):=(
+ Parsevv(var);
+ Pointdata("5a",[P1,P2,P3],["Size=4"]);
+ Circledata("5a",[I0,r0]);
+);
+
+mkcmd5b():=(
+ cmdL5b=concat(cmdL5a,[
+  "r0:"+r0,"r1:"+r1,"r2:"+r2,"r3:"+r3
+  assume(M>0,N>0)
+  out:frfactorL([r0,r1,r2,r3])
+  r0:out[1]; r1:out[2]; r2:out[3]; r3:out[4]
+  S:frfactor(r0+r1+r2+r3)
+ end
+ ]);
+ var5b="r0::r1::r2::r3::S";
+);

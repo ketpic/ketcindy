@@ -1,0 +1,67 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+  putT(m,n,r)
+  I:inC; r:inR ;A:vtxT; B:vtxL; C:vtxR
+  putT(m,n1,r1); slideT(vtxL,B)
+  eq:C[1]-vtxR[1]; sol:solve(eq,r1)
+  fe:frevL([vtxT,cirC,cirR],sol)
+  D:fe[1]; O:fe[2]; R:fe[3]
+  end
+ ]);
+);
+var1="A::B::C::I::r1::D::O::R";
+dispfig1():=(
+  Listplot("1",[A,B,C,A]);
+  Circledata("1",[I,r]);
+  Listplot("1b",[D,B,C,D]);
+  Circledata("1b",[O,R]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+  E:(1-t)*A+t*C
+  eq:numer(normsq(E-O)-R^2); sol:solve(eq,t)
+  len:length(sol)
+  sol:sol[1]
+  E:frev(E,sol)
+  end
+ ]);
+);
+var2="len::sol::E";
+dispfig2():=(
+  Pointdata("2",E,["Size=2"]);
+  Letter(E,"ne","E");
+);
+
+mkcmd3():=(
+ cmdL3=concat(cmdL2,[
+  tmp1:crossProd(D-E,I-E)^2; tmp2:r^2*normsq(D-E)
+  eq:numer(tmp1-tmp2); sol:solve(eq,n1)
+  len:length(sol)
+  k:1
+  n1:frev(n1,sol[k])
+  D:frev(D,sol[k]); E:frev(E,sol[k])
+  O:frev(O,sol[k]); R:frev(R,sol[k])
+  end
+ ]);
+);
+var3="len::sol::n1::D::E::O::R";
+
+dispfig3():=(
+  Pointdata("3",[D,E,O],["Size=4"]);
+  Letter([D,"ne","D",E,"c","E",O,"c","O"]);
+);
+
+mkcmd4():=(
+ cmdL4=concat(cmdL3,[
+  assume(m>0,n>0,r>0)
+  d2:frfactor(lenSeg2(O,I))
+  d:sqrt(d2)
+  leftF:1/('R+'d)^2+1/('R-'d)^2
+  left:frfactor(1/(R+d)^2+1/(R-d)^2)
+  right:1/r^2
+  end
+ ]);
+);
+var4="r::R::d::leftF::left::right";
+

@@ -23,6 +23,7 @@ comTanR(C1,r1,C2,r2)
 comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
 
 ////log
+250424 quaL added
 250402 timesA(rp,m), qua[rter](expr,m,M) added
 250329 angT ( angT(m,n) changed )
 20250321 contCL
@@ -55,16 +56,24 @@ numer(f):=factor(num(ratsimp(f)))$
 Numer(f):=numer(f)$
 denomf(f):=factor(denom(ratsimp(f)))$
 Denom(f):=factor(denom(ratsimp(f)))$
-fracfactor(f):=numer(f)/denomf(f)$
 frfactor(f):=numer(f)/denomf(f)$
-factorfr(f):=numer(f)/denomf(f)$
+frfactorL(fL):=block( /*250424*/
+ [out,ne,tmpm],
+ out:[],
+ for ne from 1 thru length(fL) do block(
+   tmpm:frfactor(fL[ne]),
+   out:endcons(tmpm,out)
+ ),
+ out
+)$
+/*factorfr(f):=numer(f)/denomf(f)$*/
 ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 frev(eq,rep):=frfactor(ratev(eq,rep))$
 ratevL(eqL,rep):=block( /*250217*/
  [out,ne,tmp],
  out:[],
- for ne from 1 thru length(repL) do block(
+ for ne from 1 thru length(eqL) do block( /*250424dbg*/
    tmp:ratev(eqL[ne],rep),
    out:endcons(tmp,out)
  ),
@@ -173,8 +182,10 @@ eqLine(pa1,pa2):=block(
 meetLinell(line1,line2):=block(
   [out],
   out:solve([line1,line2],[_X,_Y]),
-  if length(out)>0 then
-    out:ratev([_X,_Y],out)
+  if length(out)>0 then block( /*250422from*/
+    out:ratev([_X,_Y],out),
+    out:frfactor(out)
+  ) /*250422to*/
 )$
 
 meetLine(pts1,pts2):=block(
@@ -506,6 +517,18 @@ contCL(C,r,P1,P2):=block(
   return(eq)
 )$
 
-quarter(expr,m,M):=
-  frev(expr,[sqrt(m^2+1)=(1-M)/(1+M),m=2*M/(1-M^2)])$
+quarter(expr,m,M):=block(
+  [out],
+  out:frev(expr,sqrt(m^2+1)=(1+M^2)/(1-M^2)),
+  out:frev(out,m=2*M/(1-M^2))
+)$
 qua(expr,m,M):=quarter(expr,m,M)$
+quaL(exL,m,M):=block(
+  [k,tmpm,out],
+  out:[],
+  for k from 1 thru length(exL) do block(
+    tmpm:qua(exL[k],m,M),
+    out:endcons(tmpm,out)
+  ),
+  return(out)
+)$

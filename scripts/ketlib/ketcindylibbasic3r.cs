@@ -5263,27 +5263,41 @@ ParseL(strL):=(
 ////%ParseL end////
 
 ////%Parsev start////241130
-Parsev(vs):=(
+Parsev(vs,dflg):=(
 //help:Parsev("a::b::c");
   regional(tmp,tmp1,out);
   tmp1=Strsplit(vs,"::");
   out=[];
   forall(tmp1,
+    if(dflg==1,print(#)); //250416
     tmp=parse(#);
-    tmp=parse(tmp);
+    if(isstring(tmp), //250417from
+      tmp=parse(tmp);
+      if(dflg==1,print(":"));
+    ,  
+      if(dflg==1,print("(!s):"));
+    ); //250417to
     out=append(out,tmp);
   );
+  if(dflg==1,println()); //250416
   out;
 );
 ////%Parsev end////
 
 ////%Parsevv start////250215
-Parsevv(vs):=Parsevv("",vs);
-Parsevv(head,vs):=(
+Parsevv(vs):=Parsevv("",vs,1);
+Parsevv(Arg1,Arg2):=(
+  if(isreal(Arg2),
+    Parsevv("",Arg1,Arg2);
+  ,
+    Parsevv(Arg1,Arg2,dflg);
+  );
+);
+Parsevv(head,vs,dflg):=(
 //help:Parsevv("a::b::c");
   regional(tmp,tmp1,tmp2);
   tmp1=Strsplit(vs,"::");
-  tmp2=Parsev(vs);
+  tmp2=Parsev(vs,dflg);
   forall(1..(length(tmp1)),
     tmp=head+tmp1_#+"="+format(tmp2_#,6);
     parse(tmp);

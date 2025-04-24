@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250408] loaded");
+println("ketcindylibout[20250424] loaded");
 
 //help:start();
 
@@ -6443,16 +6443,6 @@ Mxfactor(str,norg,lvl):=(
 );
 ////%Mxfactor end////
 
-////%Setmnrstep start////250402
-Setmnrstep(nch):=(
-//help:Setmnrch(1);
- Setfiles(Namecdy+nch);
- var=parse("var"+nch);
- mxans="mxans"+nch;
- cmdL=parse("cmdL"+nch);
-);
-////%Setmnrstep end////
-
 ////%Disptex start//// 231222,240915,241106,250329
 // global Pos,Dy
 Disptex(name):=Disptex(0,name);
@@ -6588,6 +6578,7 @@ Readymnr(x,y,dx):=(
   println(fd,"//Readymnr(1,1,1);");
   println(fd,"");
   println(fd,"//Setmkcmd();");//250406
+  println(fd,"//Checkmkcmd();");//250410
   println(fd,"");
   println(fd,"//setdirectory(Dircdy);");
   println(fd,"//import(Cdyname()+"+Dqq("mkcmd.txt")+");");//250404
@@ -6598,10 +6589,10 @@ Readymnr(x,y,dx):=(
   println(fd,"opm(t):=["+Dqq("m")+","+Dqq("Wait=")+"+t];");
   println(fd,"opr(tmp):=opr();");
   println(fd,"opr():=["+Dqq("r")+"];");
+  println(fd,"Chlist=100..105;");
   println(fd,"Ch=[0];");
-  println(fd,"Nchoice(0,100..104);");
+  println(fd,"Nchoice(0,Chlist);");
   println(fd,"");
-
   closefile(fd);
   println(" ketlib.txt created");
   print("=> Copy the contents of ");
@@ -6642,6 +6633,7 @@ Readymnr(x,y,dx):=(
   print(Dqq(Cdyname()+"figures.txt"));
   println(" into "+Dqq("figure slot")+")");   
  );
+ setdirectory(Dirwork);
 );
 ////%Readymnr end////
 
@@ -6649,19 +6641,31 @@ Readymnr(x,y,dx):=(
 Setmkcmd():=Setmkcmd("mkcmdt"); //250406
 Setmkcmd(mkfile):=(
 //help:Setmkcmd("mkcmdt");
-  regional(fname,dqL,scL,scr,flg,dqflg,nall,nl,
-     tmp,tmp1,tmp2,out);
-  fname=Cdyname()+mkfile+".txt"; //250406
+  regional(fname,dqL,dqeL,hdL,scL,scr,flg,dqflg,
+     nall,nl,tmp,tmp1,tmp2,out);
+  fname=Cdyname()+mkfile+".txt"; 
   if(isexists(Dircdy,fname),
     scL=Readlines(Dircdy,fname);
-    scL=apply(scL,Removespace(#));
     nall=length(scL);
+    hdL=[];//250409from
+    forall(1..nall,nl,
+      tmp1=scL_nl;
+      scL_nl=Removespace(tmp1);
+      if(length(scL_nl)>0,
+        tmp2=indexof(tmp1,scL_nl);
+        tmp=substring(tmp1,0,tmp2-1);
+      ,
+        tmp="";
+      );
+      hdL=append(hdL,tmp);
+    );//250409to
     tmp1=select(1..(nall),substring(scL_#,0,4)=="cmdL");
     tmp2=select(1..(nall),substring(scL_#,0,2)=="])");
-    dqL=[];
+    dqL=[]; dqeL=[];
     forall(1..(length(tmp1)),
       tmp=(tmp1_#+1)..(tmp2_#-1);
       dqL=concat(dqL,tmp);
+      dqeL=append(dqeL,tmp2_#-1);
     );
     forall(1..nall,nl,
       scr=scL_nl;
@@ -6672,19 +6676,22 @@ Setmkcmd(mkfile):=(
         println(Dq+"incorrect in "+nl+":"+scr);
       );
       if(contains(dqL,nl),
-        if(length(scr)==0,
-          scr=Dqq("");
-        ,
-          if(substring(scr,0,3)=="end",
-            scr=Dqq(scr)
-          , 
+        if(length(scr)>0, //250415from
+          if(scr_1==Dq, //250415from
+            if(scr_(-1)!=",", scr=scr+",");
+          , //250415to
             if(scr_(-1)==",",
-              scr=Dqq(substring(scr,0,length(scr)-1))
+              scr=substring(scr,0,length(scr)-1);
             );
-            scr=Dqq(scr)+","
+            scr=Dqq(scr);//250415from
+            if(!contains(dqeL,nl),
+              scr=scr+","
+            ,
+              scr=Dqq("end")
+            );//250415to
           );
         );
-        scL_nl=scr;
+        scL_nl=hdL_nl+scr;//250409
       ,
         if(substring(scr,0,3)=="var",
           if(scr_(-1)!=";",scr=scr+";");
@@ -6695,7 +6702,7 @@ Setmkcmd(mkfile):=(
         if(substring(scr,0,1)==")",
           if(scr_(-1)!=";",scr=scr+";");
         );
-        scL_nl=scr
+        scL_nl=hdL_nl+scr;//250409
       );
     );
     out="";
@@ -6705,6 +6712,24 @@ Setmkcmd(mkfile):=(
   scL;
 );
 ////%Setmkcmd end////
+
+////%Checkmkcmd start////250410
+Checkmkcmd():=Checkmkcmd("mkcmdt");
+Checkmkcmd(mkfile):=(
+//help Checkmkcmd();
+  regional(out,fname,fd);
+  out=Setmkcmd(mkfile);
+  fname=Cdyname()+mkfile+"chk.txt";
+  setdirectory(Dircdy);
+  fd=openfile(fname);
+  forall(out,println(fd,#));
+  closefile(fd);
+  wait(500);
+  import(fname);
+  setdirectory(Dirwork);
+);
+////%Savemkcmd end////
+
 
 ////%Checkmnr start////
 Checkmnr():=(
@@ -6734,9 +6759,125 @@ Checkmnr():=(
     );
   );
 );
-
 ////%Checkmnr end////
 
+////%Setmnrstep start////250402
+Setmnrstep(nch):=(
+//help:Setmnrch(1);
+//global Chlist
+ Setfiles(Namecdy+nch);
+ var=parse("var"+nch);
+ mxans="mxans"+nch;
+ cmdL=parse("cmdL"+nch);
+ Nchoice(nch,Chlist);
+);
+////%Setmnrstep end////
+
+////%RepLvv start////250424
+RepLvv(exprsq,rL):=(
+//help:RepLvv("a::b::c",["m1","sqrt(m^2+1)"]);
+  regional(vL,out,nall,ne,tmp,tmp1);  
+  vL=Strsplit(exprsq,"::");
+  nall=length(vL);
+  out=[];
+  forall(1..nall,ne,
+    tmp1=parse(vL_ne);
+    forall(1..(length(rL)/2),
+      tmp1=replace(tmp1,rL_(2*#-1),"("+rL_(2*#)+")");
+    );
+    out=append(out,tmp1);
+    tmp=vL_ne+"="+Dqq(tmp1);
+    parse(tmp);
+  );
+  out;
+);
+////%RepLvv end////
+
+////%Repqua start////250415,0424
+Repqua(expr,mseq):=(
+  regional(out,mML,nall,m,M,nn,sbs,tmp);
+  mML=Strsplit(mseq,"::");
+  nall=length(mML);
+  out=expr;//250416
+  forall(1..(floor(nall/2)),nn,
+    m=mML_(2*nn-1); M=mML_(2*nn);
+    sbs=[
+      ["sqrt("+m+"^2+1)","((1+"+M+"^2)/(1-"+M+"^2))"],
+      [m,"(2*"+M+"/(1-"+M+"^2))"]
+    ];
+    out=replace(out,sbs);//250416
+  );
+  out;
+);
+////%Repqua end////
+
+////%Repquavv start////250416
+Repquavv(exprseq,mseq):=(
+//help:Repquvv("a::b::c","m:n");
+  regional(vL,out,nall,tmp,tmp1);  
+  vL=Strsplit(exprseq,"::");
+  nall=length(vL);
+  out=[];
+  forall(1..nall,
+    tmp=Repqua(parse(vL_#),mseq);
+    out=append(out,tmp);
+  );
+  forall(1..nall,
+    tmp=vL_#+"="+Dqq(out_#);
+    parse(tmp);
+  );
+  out;
+);
+////%Repquavv end////
+
+////%Printmnr start////250418
+Printmnr(varname):=Printmnr(varname,[]);
+Printmnr(varname,option):=(
+//help:Printmnr("var3",["m"]);
+  regional(var,fname,fd,make,tmp,tmp1,tmp2);
+  make=0;
+  fname=Cdyname()+varname+".txt";//250421from
+  if(contains(option,"m"),
+    make=1;
+  );
+  if(contains(option,"r"),
+    make=-1;
+  );
+  if(make==0,
+    tmp1=Readlines(Dircdy,fname);
+    var=Strsplit(parse(varname),"::");
+    tmp2=[];
+    forall(var,
+      tmp2=append(tmp2,#+"="+Dqq(parse(#))+";");
+    );
+    if(tmp1!=tmp2,
+      make=1;
+    );
+  );//250421to
+  if(make==1,
+    var=parse(varname);
+    setdirectory(Dircdy);
+    fd=openfile(fname);
+    tmp1=Strsplit(var,"::");
+    forall(tmp1,
+      println(fd,#+"="+Dqq(parse(#))+";");    
+    );
+    closefile(fd);
+    setdirectory(Dirwork);
+  );
+);
+////%Printmnr end////
+
+////%Importmnr start//// 250418
+Importmnr(varname):=(
+//help(Importmnr("var4");
+  regional(fname);
+  fname=Cdyname()+varname+".txt";
+  setdirectory(Dircdy);
+  import(fname);
+  setdirectory(Dirwork);
+);
+////%Importmnr end////
 
 //help:end();
 

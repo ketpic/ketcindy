@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250402] loaded");
+println("ketcindylibbasic3[20250513] loaded");
 
 //help:start();
 
@@ -1528,55 +1528,71 @@ Setslidebody(str1,str2,density):=( // 16.12.22,17.01.06,01.08
 );
 ////%Setslidebody end////
 
-////%Setslidehyper start//// 250128
-Setslidehyper():=( 17.12.16from
-  Setslidehyper("cl=true,lc=blue,fc=blue");
+////%Setslidehyper start//
+Setslidehyper():=(//250513from
+  Setslidehyper("dvipdfmx",[125,73,"cl=true,lc=blue,fc=blue"]);
 );
 Setslidehyper(Arg):=(
-  regional(driver,tmp);
-  if(indexof(Arg,"dvipdfmx")==0,
-    if(indexof(PathT,"pdflatex")+indexof(PathT,"lualatex")==0,
-      driver="dvipdfmx";
-    ,
-      driver="";
-    );
-    Setslidehyper(driver,Arg); //250128
+  if(isstring(Arg),
+    Setslidehyper(Arg,[125,73,"cl=true,lc=blue,fc=blue"]);
   ,
-    tmp=replace(Arg,"dvipdfmx,","");
-    tmp=replace(tmp,"dvipdfmx","");
-    Setslidehyper("dvipdfmx",tmp);
+    Setslidehyper("dvipdfmx",Arg);
   );
-);
+);//250513to
 Setslidehyper(driver,optionsorg):=(
 //help:Setslidehyper();
-//help:Setslidehyper("cl=true,lc=blue,fc=blue");
-//help:Setslidehyper("dvipdfmx,cl=true,lc=blue,fc=blue");
-//help:Setslidehyper("dvipdfmx","cl=true,lc=blue,fc=blue");
-//help:Setslidehyper("","cl=true,lc=blue,fc=blue");
+//help:Setslidehyper(["cl=true,lc=blue,fc=blue"]);
+//help:Setslidehyper("dvipdfmx");
+//help:Setslidehyper([123,73,"cl=true,lc=blue,fc=blue"]);
+//help:Setslidehyper("dvipdfmx",[123,73,"cl=true,lc=blue,fc=blue"]);
   regional(options,str,tmp,tmp1);
-  if(islist(optionsorg),
-    if(indexof(optionsorg_1,",")>0,
-      options=optionsorg_1;
-    ,
-      options="";
-      forall(optionsorg,
-        options=options+#+",";
-      );
-      options=options_(1..(length(options)-1));
-    );
-  ,
-    options=optionsorg;
-  );
-  if(length(driver)>0,
-    options=driver+","+options;
-  );
-  tmp1="["+options+"]";
+  options=Divoptions(optionsorg);
+  tmp1=options_5_1;//250513from
   tmp1=replace(tmp1,"cl=","colorlinks=");
   tmp1=replace(tmp1,"lc=","linkcolor=");
   tmp1=replace(tmp1,"fc=","filecolor=");
   tmp1=replace(tmp1,"uc=","urlcolor=");
   ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
-  Addpackage(tmp1+"{hyperref}"); //250118to
+  if(driver=="dvipdfmx",
+    tmp="[dvipdfmx,"
+  ,
+    tmp="[";
+  );
+  Addpackage(tmp+tmp1+"]{hyperref}");
+  tmp=indexof(tmp1,"linkcolor=");//180813from
+  tmp1=substring(tmp1,tmp-1,length(tmp1));
+  tmp=indexof(tmp1,"=");
+  tmp1=substring(tmp1,tmp,length(tmp1));
+  tmp=indexof(tmp1,",");
+  if(length(tmp)>0,
+    tmp1=substring(tmp1,0,tmp-1);
+  );
+  LinkColor=tmp1;
+  LinkPosH=125;
+  LinkPosV=73;
+  tmp1=options_6;
+  if(length(tmp1)>=1,
+    LinkPosH=tmp1_1;
+  );
+  if(length(tmp1)>=2,
+    LinkPosv=tmp1_2;
+  );//250513to
+  LinkSize=1;
+  forall(eqL,
+    tmp=Indexall(#,"=");//180524from
+    if(length(tmp)==1,
+      tmp1=Toupper(substring(#,0,1));
+      tmp2=substring(#,tmp_1,length(#));
+      tmp2=parse(tmp2);
+      if(tmp1=="P",
+        LinkPosH=tmp2_1;
+        LinkPosV=tmp2_2;
+      );
+      if(tmp1=="S",
+        LinkSize=max(tmp2,0.1);
+      );
+    );//250513to
+  );
 );
 ////%Setslidehyper end////
 
@@ -2021,7 +2037,6 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"\usepackage{color}");//190222
   hyperflg=0;
   tmp=select(ADDPACK,indexof(#,"hyperref")>0);//250118from
-println([2015,tmp]);
   if(length(tmp)==0,
     tmp="colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}";
     if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),

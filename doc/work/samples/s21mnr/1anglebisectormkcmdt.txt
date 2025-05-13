@@ -7,17 +7,18 @@ mkcmd1():=(
  C:vtxR; AC:edgR; DC:edgB; aA1:angT
  eq1:numer(vtxT[2]-A[2]); eq2:numer(aA1-aA)
  sol:solve([eq1,eq2],[n1,r2])
- fe:frevL([AC,DC,AB/AC,BD/DC],sol[1])
- AC:fe[1]; DC:fe[2]; ABC:fe[3]; DBC:fe[4]
- 
+ fe:frevL([n1,r2,AC,DC,AB/AC,BD/DC],sol[1])
+ n1:fe[1]; r2:fe[2]; AC:fe[3]; DC:fe[4]; ABovAC:fe[5]; BDovDC:fe[6]
  end
  ]);
 );
-var1="A::B::D::C::AB::AC::BD::DC::ABC::DBC";
-dispfig1():=(
-  Listplot("1a",[A,B,D,A]);
-  Listplot("1b",[A,D,C,A]);
-  Letter([A,"n","A",B,"w","B",D,"s","D",C,"e","C"]);
+var1="n1::r2::A::B::D::C::ABovAC::BDovDC";
+dispfig1(var):=(
+  Parsevv(var);
+  println([A,B,C]);
+  Listplot("1",[A,B,C,A]);
+  Listplot("2",[A,D]);
+  Letter([A,"n","A",B,"w","B",C,"e","C",D,"s","D"]);
 );
 
 mkcmd2():=(

@@ -3613,6 +3613,8 @@ Animationparam(start,ratio,stop):=( //190524
   if(isreal(Animeflg),
     if(Animeflg==1,
       sstart=Dirflg*ratio*seconds()+sorg;
+    ,
+      Animeflg=""; //250604
     );
   ,
     Current=start;

@@ -1,3 +1,6 @@
+// 250616
+//    Readymnr changed
+//         ( "import" => figures, "Nchoice")
 // 250424
 //    RepLvv added, Repqua dbg
 // 250421

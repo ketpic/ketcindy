@@ -1,3 +1,4 @@
+// 250604 Animationparam changed  (if Animeflg==0, change to "")
 // 250513 Presentation,Setslidehyper dbg&changed
 // 250402 Mxlen, Mxfactor, Disptex moved to out
 // 20250329

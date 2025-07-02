@@ -6607,6 +6607,12 @@ Readymnr(x,y,dx):=(
   println(fd,"Ketinit();");
   println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
   println(fd,"Setparent(Namecdy+Dqq("p"));");
+  println(fd,"Setparent(Namecdy+Dqq("p"));");
+  println(fd,"if(Ch==[0],Nchoice(0,Chlist));");//250703
+  println(fd,"");
+  println(fd,"//setdirectory(Dircdy);");
+  println(fd,"//import(Cdyname()+"+Dqq("mkcmd.txt")+");");//250703
+  println(fd,"//setdirectory(Dirwork);");//250703
   println(fd,"");
   println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");

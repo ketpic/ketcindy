@@ -1,0 +1,76 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+ "putT(m0,m0,r0)",// "m0:1/sqrt(3)",
+ "eq:edgB-a; sola:solve(eq,r0)",
+ "fe:frevL([vtxT,vtxL,vtxR],sola); A:fe[1]; B:fe[2]; C:fe[3]",
+ "n1:comA(m0)",
+ "putT(m1,n1,r1); slideT(vtxR,C); rotateT(-m0,C)",
+ "D:vtxT; I1:inC",
+ "eq1:numer(edgB-a); eq2:numer(edgR-a)",
+ "sol:algsys([eq1,eq2],[r1,m1]); fe:frevL([r1,m1,D,I1],sol)",
+ "r1:fe[1]; m1:fe[2]; D:fe[3]; I1:fe[4]",
+ "tmp:plusA(m0,m1)",
+ "putT(n1,supA(tmp),r2)",
+ "slideT(vtxL,B); rotateT(m0,B)",
+ "eq:numer(edgB-a); sol:solve(eq,r2)",
+ "fe:frevL([vtxT,inC,r2],sol)",
+ "E:fe[1]; I2:fe[2]; r2:fe[3]",
+ "ans1:frfactor(a/(2*(r1-r2)))",
+ "F:[E[1],D[2]]",
+ "end"
+ ]);
+ var1="A::B::C::D::E::F::I1::r1::I2::r2::ans1";
+ var1d="r1::r2::ans1";
+);
+Dispfig1(a,m0):=(
+  Addax(0);
+  Setwindow([-4,4],[-3,6]);
+  Parsevv("A::B::C::D::E::F::I1::r1::I2::r2");
+  Listplot("1",[A,B,C,A]);
+  Listplot("2",[B,F,D,C]);
+  Listplot("3",[D,E]);
+  Circledata("1",[I1,r1]);
+  Circledata("2",[I2,r2]);
+  Letter([0,1],"c","三角");
+  Letter(I1,"c","甲円");
+  Letter(I2,"c","乙円");
+);
+
+mkcmd2():=(
+ cmdL2=concat(Mxbatch("mnr"),[
+ "putT(m0,m0,r0)",// "m0:1/sqrt(3)",
+ "eq:edgB-a; sola:solve(eq,r0)",
+ "fe:frevL([vtxT,vtxL,vtxR],sola); A:fe[1]; B:fe[2]; C:fe[3]",
+ "n1:comA(m0)",
+ "putT(m1,n1,r1); slideT(vtxR,C); rotateT(-m0,C)",
+ "D:vtxT; I1:inC",
+ "eq1:numer(edgB-a); eq2:numer(edgR-a)",
+ "sol:algsys([eq1,eq2],[r1,m1]); fe:frevL([r1,m1,D,I1],sol)",
+ "r1:fe[1]; m1:fe[2]; D:fe[3]; I1:fe[4]",
+ "tmp:plusA(m0,m1)",
+ "putT(n1,supA(tmp),r2)",
+ "slideT(vtxL,B); rotateT(m0,B)",
+ "eq:numer(edgB-a); sol:solve(eq,r2)",
+ "fe:frevL([vtxT,inC,r2],sol)",
+ "E:fe[1]; I2:fe[2]; r2:fe[3]",
+ "ans1:frfactor(a/(2*(r1-r2)))",
+ "ans2:ratden(ans1,m0,1/3)",
+ "F:[E[1],D[2]]",
+ "end"
+ ]);
+ var2="A::B::C::D::E::F::I1::r1::I2::r2::ans1::ans2";
+ var2d="r1::r2::ans1::ans2";
+);
+Dispfig2(a,m0):=(
+  Addax(0);
+  Setwindow([-4,4],[-3,6]);
+  Parsevv("A::B::C::D::E::F::I1::r1::I2::r2");
+  Listplot("1",[A,B,C,A]);
+  Listplot("2",[B,F,D,C]);
+  Listplot("3",[D,E]);
+  Circledata("1",[I1,r1]);
+  Circledata("2",[I2,r2]);
+  Letter([0,1],"c","三角");
+  Letter(I1,"c","甲円");
+  Letter(I2,"c","乙円");
+);

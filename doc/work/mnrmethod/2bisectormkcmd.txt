@@ -1,0 +1,34 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+ "D:[0,0]",
+ "putT(m,n,r); slideT(vtxR,D)",
+ "B:vtxL; A:vtxT; AB:edgL; BD:edgB; aA:angT",
+ "putT(supA(n),n1,r1); slideT(vtxL,D)",
+ "C:vtxR; A1:vtxT; AC:edgR; DC:edgB; aA1:angT",
+ "eq1:numer(A[2]-A1[2])",
+ "eq2:numer(aA-aA1)",
+ "sol:solve([eq1,eq2],[n1,r1])",
+ "fe:frevL([A,C,AC,DC,n,r2],sol)",
+ "A:fe[1]; C:fe[2]; AC:fe[3]; DC:fe[4]; n:fe[5]; r2:fe[6]",
+ "ABdAC:frfactor(AB/AC); BDdDC:frfactor(BD/DC)",
+ "end"
+ ]);
+ var1="eq1::eq2::sol::A::B::C::D::AB::AC::BD::DC::ABdAC::BDdDC";
+ var1d="eq1::eq2::sol::AB::AC::BD::DC::ABdAC::BDdDC";
+);
+Dispfig1(m,n,r):=(
+  Setwindow([-4,4],[-1,5]);
+  Setax([6,"D"]);
+  Parsevv("A::B::C::D::AB::AC::BD::DC");
+  Listplot("1",[A,B,C,A]);
+  Listplot("2",[A,D]);
+  Letter([A,"n","A",B,"w","B",C,"e","C"]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+ "",
+ "end"
+ ]);
+);
+var2="";

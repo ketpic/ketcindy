@@ -1,0 +1,45 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+ "putT(m,n,r)",
+ "eq:vtxL[2]-cirC[2]",
+ "sol:solve(eq,m)",
+ "fe:frevL([vtxT,vtxL,vtxR,cirC,cirR,angT],sol[1])",
+ "A:fe[1]; B:fe[2]; C:fe[3]; O:fe[4]; R:fe[5]; aA:fe[6]",
+ "end"
+ ]);
+ var1="sol::A::B::C::O::R::aA";
+ Pos=NE.xy+[0.5,-0.5]; Dy=1;
+);
+Dispfig1(r,n):=(
+  Setwindow([-5,5],[-5.5,3]);
+//  r=1.5; n=tanhalf(40);
+  Parsevv(var1);
+  Listplot("1",[A,B,C,A]);
+  Circledata("1",[O,R]);
+  Letter([A,"n","A",B,"w","B",C,"e","C"]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(Mxbatch("mnr"),[
+  "putT(m,n,r)",
+  "slideT(cirC,[0,0])",
+  "eq1:numer(cirR-R)",
+  "eq2:numer(edgB-2*a)",
+  "sol:solve([eq1,eq2],[n,r])",
+  "fe:frevL([vtxT,vtxL,vtxR,n,angT],sol[2])",
+  "A:fe[1]; B:fe[2]; C:fe[3]; n:fe[4]; aT:fe[5]",
+  "pf:partfrac(aT,m)",
+//  "qu:quotient(numer(aT),denom(aT),m)",
+//  "rm:remainder(numer(aT),denom(aT),m)",
+ "end"
+ ]);
+ var2="eq1::eq2::sol::A::B::C::n::aT::pf";//::qu::rm";
+ Pos=NE.xy+[0.5,-0.5]; Dy=1;
+);
+Dispfig2(R,a,m):=(
+  Setwindow([-4,4],[-4,4]);
+  Parsevv("A::B::C");
+  println(R);
+  Listplot("2",[A,B,C,A]);
+  Circledata("2",[[0,0],R]);
+);

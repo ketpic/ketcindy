@@ -1,0 +1,12 @@
+use("KetCindyPlugin");
+Dircdy=loaddirectory;
+setdirectory(gethome());
+import("ketcindy.ini");
+
+//Readymnr(1,1,1);
+
+Ch=[0];
+Nchoice(0);
+
+setdirectory(Dircdy);
+import("2chuusonjizomkcmd.txt");

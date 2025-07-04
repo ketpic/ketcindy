@@ -1,0 +1,205 @@
+mkcmd0(option):=(
+ Setfiles(Namecdy+"0");
+ cmdL0=concat(Mxbatch("mnr"),[
+  "db(M):=2*M/(1-M^2)",
+  "putT(m,n,R)",
+  "A:frfactor(vtxT)",
+  "B:frfactor(vtxL)",
+  "C:frfactor(vtxR)",
+  "vA:A; vB:B; vC:C"
+ ]);
+ var0="A::B::C::vA::vB::vC";
+ CalcbyMset(var0,"mxans0",cmdL0,option);
+// Pos=SW.xy+[0,-1]; Dy=1;
+// Disptex(Pos,1.3,0,"A::B::C");
+ Pos=NE.xy+[0.5,-0.5]; Dy=1;
+);
+dispfig0():=(
+ Parsevv("vA::vB::vC");
+ Listplot("0",[vA,vB,vC,vA],["dr,1.5"]);
+ Circledata("0",[[0,0],R],["do,1,1.5"]);
+ Anglemark("0a",[vC,vB,vA],["do,0.7","E=1.4,m"]);
+ Anglemark("0b",[vA,vC,vB],["do,0.7","E=n"]);
+ Letter([vA,"n","A",vB,"w","B",vC,"e","C"]);
+);
+
+mkcmd1():=(
+ cmdL1=concat(cmdL0,[
+  "putT(m,n1,r1)","slideT(vtxL,B)",
+  "D:vtxT","E:vtxR","I1:inC",
+  "putT(m,supA(m1),r1)","slideT(vtxL,B)",
+  "G:vtxT","F:vtxR",
+  "putT(m,n2,r1)","slideT(vtxL,B)",
+  "H:vtxT","J:vtxR",
+  "K:meetLine([F,G],[A,C])",
+  "L:meetLine([H,J],[A,C])",
+  "end"
+ ]);
+);
+var1="D::E::I1::G::F::H::J::K::L";
+dispfig1():=(
+  B=parse(B);
+  Listplot("1a",[D,E]);
+  Circledata("1a",[I1,r1],["dr,1.5"]);
+//  Circledata("1b",[I2,r2]);
+  Listplot("1b",[H,L],["dr,1.5"]);
+  Listplot("1c",[K,F],["dr,1.5"]);
+  Anglemark("1a",[E,F,K],["do,0.7","E=0.7,m_1"]);
+  Anglemark("1b",[D,E,vB],["do,0.7","E=0.7,n_1"]);
+  Letter([D,"nw","D",E,"s","E",F,"s","F"]);//,G,"n","G"]);
+  Letter([H,"nw","H",L,"ne","L",K,"e","K",I1,"c","I1"]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+ "putT(m1,n,r2)","slideT(vtxR,C)",
+ "I2a:frfactor(inC)",
+ "eq1:numer(vtxL[1]-F[1])",
+ 
+ "putT(supA(n1),n,r2)","slideT(vtxR,C)",
+ "I2b:frfactor(inC)",
+ "eq2:numer(vtxL[1]-E[1])",
+
+ "sol12:solve([eq1,eq2],[r1,r2])",
+ "fe:frevL([r1,r2,D,E,I1,G,F,H,J,K,I2a],sol12)",
+ "r1:fe[1]; r2:fe[2]; D:fe[3]; E:fe[4]; I1:fe[5]",
+ "G:fe[6]; F:fe[7]; H:fe[8]; J:fe[9]",
+ "K:fe[10]; I2:fe[11]",
+ 
+ "putT(m1,n2,r2)","slideT(vtxL,F)",
+ "I2c:frfactor(inC)",
+ "eq2b:numer(vtxR[1]-J[1])",
+ "sol2b:solve(eq2b,n2)",
+ "fe:frev([n2,H,L],sol2b)",
+ "n2:fe[1]; H:fe[2]","L:fe[3]",
+ "end"
+ ]);
+);
+var2="n2::r1::r2::D::E::I1::G::F::H::L::K::I2";
+dispfig2():=(
+  Circledata("2",[I2,r2],["dr,1.5"]);
+  Letter([I1,"c","I1",I2,"c","I2"]);
+);
+
+mkcmd3():=(
+ cmdL3=concat(cmdL2,[
+ "putT(plusA(m,n2),minusA(n,n2),r3)",
+ "slideT(vtxT,A)","rotateT(-n2,A)",
+ "H3:frfactor(vtxL); L3:frfactor(vtxR)",
+ "eq3:numer(H3[1]-H[1])",
+ "sol3:solve(eq3,r3)",
+ "len:length(sol3)",
+ "fe:frevL([H3,L3,inC,r3],sol3)",
+ "H:fe[1]; L:fe[2]; I3:fe[3]; r3:fe[4]",
+ "end"
+ ]);
+);
+var3="H::L::I3::r3";
+
+dispfig3():=(
+ Circledata("3",[I3,r3],["dr,1.5"]);
+ Letter([I3,"c","I3"]);
+);
+
+mkcmd4():=(
+ cmdL4=concat(cmdL3,[
+ "eq4a:contCL(I3,r3,D,E)",
+ "eq4b:contCL(I3,r3,K,F)",
+ "eq4a1:nthfactor(eq4a,6)",
+ "eq4a2:nthfactor(eq4a,7)",
+ "eq4b1:nthfactor(eq4b,6)",
+ "eq4b2:nthfactor(eq4b,7)",
+ "rd11:reduceD([eq4a1,eq4b1],n1,10)",
+ "rd11m:rd11[2]",
+ "rd12:reduceD([eq4a1,eq4b2],n1,10)",
+ "rd12m:rd12[2]",
+ "rd21:reduceD([eq4a2,eq4b1],n1,10)",
+ "rd21m:rd21[2]",
+ "rd22:reduceD([eq4a2,eq4b2],n1,10)",
+ "rd22m:rd22[2]",
+ "rd11mm:nthfactor(rd11m,6)",
+ "rd12mm:nthfactor(rd12m,5)",
+ "rd21mm:nthfactor(rd21m,4)",
+ "rd22mm:nthfactor(rd22m,6)",
+ 
+ "rdm:rd12mm",
+ "rdn:numer(remainder(eq4b2,rdm))",
+ "rdn:nthfactor(rdn,2)",
+
+ "solm:solve(rdm,m1)",
+ "soln:solve(rdn,n1)",
+ "ansm1:frev(m1,solm[2])",
+ "ansn1:frev(n1,soln[2])",
+ 
+ "P1:meetLine([K,F],[H,L])",
+ "P2:meetLine([D,E],[H,L])",
+// "P12:lenSeg2(P1,P2)",
+ "end"
+ ]);
+);
+var4a="n2::eq4a::eq4b::eq4a1::eq4b2";
+//var4b=
+//"rd11m::rd11mm::rd12m::rd12mm::rd21m::rd21mm::rd22m::rd22mm";
+var4=var4a+"::"+var4b;
+//var4c="rdm::rdn::solm::soln::ansm1::ansn1";
+var4="ansm1::ansn1::n2::P1::P2";
+
+repMN(vstr):=(
+  regional(vL,repMN,out,tmp);
+  repMN=[
+   ["m1","(1-N)/(1+N)"],
+   ["n1","(1-M)/(1+M)"],
+   ["m","(2*M)/(1-M^2)"],
+   ["n","(2*N)/(1-N^2)"],
+  ];
+  vL=Strsplit(vstr,"::");
+  out=[];
+  forall(vL,
+   tmp=replace(parse(#),repMN);
+   out=append(out,tmp);
+  );
+  out;
+);
+
+mkcmd5pre():=(
+ cmdL5p=concat(Mxbatch("mnr"),[
+ "assume(M>0,N>0,M<1,N<1)",
+ "n:(2*N)/(1-N^2)",
+ "m:(2*M)/(1-M^2)",
+ "m1:sqrt(factor(n^2+1))-n",
+ "n1:sqrt(factor(m^2+1))-m",
+// "m1:ratsimp(m1)",
+// "n1:ratsimp(n1)",
+ "end"
+ ]);
+);
+var5p="m1::n1";
+
+mkcmd5():=(
+ cmdL5=concat(cmdL4,[
+  "sbs:[m1=(1-N)/(1+N),n1=(1-M)/(1+M),
+        m=2*M/(1-M^2),n=2*N/(1-N^2)]",
+  "fe:frevL([m1,n1,n2,P1,P2,r1,r2,r3],sbs)",
+  "m1:frfactor(fe[1])",
+  "n1:frfactor(fe[2])",
+  "n2:frfactor(fe[3])",
+  "P1:frfactor(fe[4])",
+  "P2:frfactor(fe[5])",
+  "r1:frfactor(fe[6])",
+  "r2:frfactor(fe[7])",
+  "r3:frfactor(fe[8])",
+  "putT(plusA(m1,n2),minusA(n1,n2),r0)",
+  "slideT(vtxL,P1)",
+  "rotateT(supA(n2),P1)",
+  "eq:vtxR[1]-P2[1]",
+  "sol:solve(eq,r0)",
+  "fe:frevL([r0,inC,vtxT,vtxL,vtxR],sol)",
+  "r0:fe[1]; I0:fe[2]; Q1:fe[3]; Q2:fe[4]; Q3:fe[5]",
+  "P3:Q1",
+  "S:frfactor(r0+r1+r2+r3)",
+  "end"
+  ]);
+);
+//var5="m1::n1::n2::P1::P2::r0::Q1::Q2::Q3";
+var5="m1::n1::P1::P2::P3::r0::r1::r2::r3::S";
+var5="ansm1::ansn1::I0::r0::r1::r2::r3::S";

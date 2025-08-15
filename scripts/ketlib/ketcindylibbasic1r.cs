@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.5.35");
+println("KeTCindy V.4.5.36");
 println(ketjavaversion());
-println("ketcindylibbasic1[20230801] loaded");
+println("ketcindylibbasic1[20230813] loaded");
 
 if((isstring(Dircdy))&(iswindows()), //241008from
   Dircdy=replace(Dircdy,"/C:","C:");

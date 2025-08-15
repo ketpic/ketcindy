@@ -1,3 +1,5 @@
+// 250813 Maketitle,Presentation,... replaced for lua
+// 250727 Totexform changed  (sin(^(2)x),...)
 // 250604 Animationparam changed  (if Animeflg==0, change to "")
 // 250513 Presentation,Setslidehyper dbg&changed
 // 250402 Mxlen, Mxfactor, Disptex moved to out

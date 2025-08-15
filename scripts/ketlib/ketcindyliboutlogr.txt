@@ -1,3 +1,5 @@
+// 250815
+//    Readymnr changed (figures "mxans*")
 // 250703
 //    Readymnr changed (figures)
 // 250616

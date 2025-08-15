@@ -1,0 +1,205 @@
+title::slide0
+::\usepackage{qrcode}
+::\usepackage{setspace}
+::\def\deg#1{#1^{\circ}}
+::\def\bs{$\backslash$}
+::\newcommand{\monthday}{0814}
+
+\renewcommand{\eda}[2][\theedactr]{%
+\setcounter{edactr}{#1}
+\Ltab{\theedawidth mm}{[#1]\ #2}%
+\addtocounter{edactr}{1}%
+}
+
+
+\setthin{0.1}
+\def\colorthin{\color[cmyk]{\thin,\thin,\thin,\thin}}
+
+\def\dint{\displaystyle\int}
+\newcommand{\dpar}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\dps}{\displaystyle}
+\newcommand{\dpint}{\displaystyle\int}
+
+\renewcommand{\slidepage}[1][s]{%
+\setcounter{ketpicctra}{18}%
+\hypersetup{linkcolor=black}%
+
+\begin{layer}{130}{0}
+\putnotee{125}{-\theketpicctra.05}{\small\monthday-\thepage/\pageref{pageend}}
+\end{layer}\hypersetup{linkcolor=blue}
+
+}
+
+\newcommand{\setwidth}[1]{\setcounter{txtLiii}{#1}}
+\newcommand{\adde}{\addtocounter{enm}{1}}
+%%\newcommand{enminit}{\setcounter{enm}{1}}
+\newcommand\pnp{(\theenm)}
+\newcommand\pt{・}
+\renewcommand{\monban}[1][\monthday]{%
+#1-\themban\,%
+\addtocounter{mban}{1}%
+}
+\renewcommand{\monbannoadd}[1][\monthday]{%
+#1-\themban\,%
+}
+\newcommand{\eds}[1][1]{\setcounter{edactr}{#1}}%
+
+\newcommand{\footslide}[3][]{\putnotee{5}{#2}{{\color{blue}\small *#1:#3}}}
+\newcommand{\addrem}[1]{{\color{blue}{}\scriptsize\;\raisebox{3mm}{*#1}}}
+
+\setcounter{figure}{1}
+
+%%%%%%%%%%%%%%%%
+main::準備
+\slidepage[m]
+
+%%%%%%%%%%%%%%%%
+new::\ketcindy のインストール
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[120]
+layer::{120}{0}
+\addtext{8}{\pnp}{ketcindy homeからketcindyの最新版をダウンロード}\adde
+\addtext{8}{\pnp}{doc/ketcinsysettings.cdyを実行}\adde
+
+end
+
+%%%%%%%%%%%%%%%%
+main::layer環境と\bs addtext
+\slidepage[m]
+
+%%%%%%%%%%%%%%%%
+new::layer環境
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[120]
+layer::{120}{0}
+\addtext{8}{\ten}{\bs begin\{layer\}\{120\}\{60\}〜\bs end\{layer\}}
+\addtext{16}{・}{横120mm,縦60mmの範囲で10mmごとに格子線を引く}
+\addtext[8]{16}{・}{KeTSlideではlayer:\hspace{0mm}:\{120\}\{60\}〜end でよい}
+\addtext{16}{・}{縦を0とすると格子を描かない}
+\addtext{8}{\ten}{layer自体は高さ0のpicture環境}
+\addtext{16}{・}{したがって行幅をとらない}
+
+end
+
+%%%%%%%%%%%%%%%%
+new::putnote
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{\bs putnote(s,se,...)\{8\}\{6\}\{要素\}}
+\addtext{16}{・}{8,6を基準点として(s,se,...)方向に要素をおく}
+\addtext{16}{・}{KeTSlideでは以下のように書いてもよい\\\hspace*{10mm}putnote:\hspace{0mm}:(s,se,...)\{8\}\{6\}\{要素\}}
+\addtext[8]{16}{・}{figフォルダに\TeX の描画コードファイル(例えばfigure.tex)を置いたときは以下のように書いてもよい(0.6は縮小率)\\\hspace*{10mm}
+putnote:\hspace{0mm}: se\{5\}\{6\}:\hspace{0mm}:figure,0.6}
+end
+
+%%%%%%%%%%%%%%%
+new::\bs addtext (1)
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{layer環境の中で文を順に置いていく}
+\addtext{16}{}{\bs textinit[105]}
+\addtext{24}{\%}{初期位置設定．横幅(default100)を決める}
+\addtext{16}{}{layer:\hspace{0mm}:\{120\}\{0\}}
+\addtext{16}{}{\bs addtext\{8\}\{\bs ten\}\{文1\}}
+\addtext{24}{\%}{書き出しの水平位置 左から8mm}
+\addtext{24}{\%}{次の行の書き出しの垂直位置は+8mm}
+\addtext{16}{}{\bs addtext\{8\}\{\bs ten\}\{文2\}}
+\addtext{16}{}{end}
+end
+
+%%%%%%%%%%%%%%%
+new::\bs addtext (2)
+%repeat=1
+\slidepage
+
+\enminit
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\ten}{\bs addtext[8]\{8\}\{\bs ten\}\{文または図\}}
+\addtext{16}{\ten[0.5]}{最初のオプション引数[8]は前の行からの改行幅(通常は8mm)への追加分}
+\addtext[8]{24}{}{前の行が複数行の時などに用いる}
+\addtext{16}{\ten[0.5]}{\bs ten[s]は\$\bs bullet\$のs倍(デフォルトは0.9)}
+\addtext{8}{\ten}{番号付けは，enmカウンタで制御}
+\addtext{16}{\ten[0.5]}{最初に\bs enminit(=\bs setcounter\{enm\}\{1\})}
+\addtext{16}{\ten[0.5]}{\bs addtext\{8\}\{(\bs theenm)\}\{...\}\bs addenm}
+\addtext{8}{\ten}{テキストに\bs verbは使えない}
+
+end
+
+%%%%%%%%%%%%%%%%
+main::段階的表示
+\slidepage[m]
+
+%%%%%%%%%%%%
+new::段階的表示の方法
+%repeat=1
+\slidepage
+
+\enminit
+\def\bed{\theenm.}
+\textinit[105]
+layer::{120}{0}
+\addtext{8}{\bed}{\%repeat=に段階数を入れる(決まってから)}\adde
+\addtext{16}{}{{\large\%}repeat=4}
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[1]:\hspace{0mm}:要素}1段のみ}\adde
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[2,-]:\hspace{0mm}:要素}2段以降}\adde
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[-,2]:\hspace{0mm}:要素}2段まで}\adde
+\addtext{8}{\bed}{\Ltab{40mm}{{\large\%}[2..4]:\hspace{0mm}:要素}2段から4段まで}\adde
+end
+
+
+
+%%%%%%%%%%%%
+new::区分求積法と定積分(段階的表示の例)
+%repeat=4
+\slidepage
+
+\textinit[120]
+\enminit
+layer::{120}{0}
+\addtext{8}{\pnp}{$\displaystyle\int_a^b f(x)\,dx=\lim_{\varDelta x_k \to 0}\sum_{k}f(x_k)\varDelta x_k$}\adde
+%[2]::putnote::se{75}{25}::kubunkyuuseki8,1.25
+%[3,-]::\setwidth{60}
+%[3,-]::\addtext[8]{8}{\pnp}{$f(x)\varDelta x$を合計して極限をとればよい}\adde
+%[4,-]::\addtext[8]{8}{\pnp}{面積でなくてもよい}\adde
+%[3,-]::putnote::se{75}{25}::kubunkyuuseki8b,1.25
+end
+
+
+%%%%%%%%%%%%%%%%
+new::itemizeとenumerate環境の使い方
+%repeat=1
+\slidepage
+
+\textinit[120]
+layer::{120}{0}
+\addtext{8}{\ten}{段階的表示では，後ろの行の位置がずれることがある}
+\addtext{8}{\ten}{itemize〜end}
+\addtext{16}{}{itemize}
+\addtext{16}{}{item:\hspace{0mm}:内容}
+\addtext{16}{}{item:\hspace{0mm}:結論}
+\addtext{16}{}{end}
+
+\textinit[120]
+\addtext[8]{72}{\ten}{enumerate:\hspace{0mm}:[]〜end}
+\addtext{80}{}{enumerate:\hspace{0mm}:[(1)]}
+\addtext{80}{}{item:\hspace{0mm}:内容}
+\addtext{80}{}{item:\hspace{0mm}:結論}
+\addtext{80}{}{end}
+end
+
+

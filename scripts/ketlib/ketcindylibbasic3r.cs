@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20250513] loaded");
+println("ketcindylibbasic3[20250727] loaded");
 
 //help:start();
 
@@ -2719,6 +2719,7 @@ Mkslidesummary(inputfile,outputfile,options):=(
 );
 ////%Mkslidesummary end////
 
+
 ////%BBdata start////
 BBdata(fname):=BBdata(fname,[]); //200704from
 BBdata(Arg1,Arg2):=(
@@ -3190,10 +3191,35 @@ Convtrigpow(strorg):=(
 ////%Convtrigpow end
 
 ////%Totexform start////
-Totexform(str):=( //231215
+Totexform(strorg):=( //250726
 //help:Totexform("fr(2,3)");
-  regional(plv,funL,repL,parL,out,head,flg,rep,fun,pre,
+  regional(str,plv,funL,repL,parL,out,head,flg,rep,fun,pre,
     post,ctr,clv,nn,tmp,tmp1,tmp2,tmp3,tmp4);
+  str=strorg;//250727from
+  tmp1=indexof(str,"(^(");
+  while(tmp1>0,
+    tmp=Indexall(str,")");
+    tmp=select(tmp,#>tmp1);
+    tmp2=tmp_1;
+    tmp=substring(str,tmp1-1,tmp2);
+    if(indexof(tmp,"?")==0,
+      tmp=substring(str,tmp1+2,tmp2-1)+",";
+      str=substring(str,0,tmp1)+tmp+substring(str,tmp2,length(str));
+    );
+    tmp1=indexof(str,"(^(");
+  );
+  tmp1=indexof(str,"(_(");
+  while(tmp1>0,
+    tmp=Indexall(str,")");
+    tmp=select(tmp,#>tmp1);
+    tmp2=tmp_1;
+    tmp=substring(str,tmp1-1,tmp2);
+    if(indexof(tmp,"?")==0,
+      tmp=substring(str,tmp1+2,tmp2-1)+",";
+      str=substring(str,0,tmp1)+tmp+substring(str,tmp2,length(str));
+    );
+    tmp1=indexof(str,"(_(");
+  );//250727to
   tmp1="\displaystyle\int"; //210831from
   tmp2="\displaystyle\lim";
   tmp3="\displaystyle\sum"; //210831to
@@ -5336,6 +5362,751 @@ Nchoice(no,nL):=(
 );
 ////%Nchoice end////
 
+//// 250813 for ketslidelua
+//// for ketslidelua (def of Maketitle,... changed) ////
+
+PathT=PathThead+"/lualatex";
+
+//250811 new
+////%Maketitle start////
+Maketitle():=(
+  if(!isstring(TitleName), //17.04.13from
+    drawtext(mouse().xy,"Settitle not defined",
+      size->24,color->[1,0,0]);
+  , //17.04.13until
+    Maketitle(TitleName);
+  );
+);
+Maketitle(name):=(
+//help:Maketitle();
+  regional(texfile,texmain,tmp,tmp1,sep,txtfile);
+  texfile=name;
+  texmain=name+"main";
+  SCEOUTPUT=openfile(texfile+".tex");
+  forall(TitleCmdL,
+    println(SCEOUTPUT,#);
+  );
+  closefile(SCEOUTPUT);  
+  SCEOUTPUT=openfile(texmain+".tex");
+  println(SCEOUTPUT,"\documentclass{article}");
+  println(SCEOUTPUT,"\usepackage{geometry}");
+  println(SCEOUTPUT,"\geometry{paperwidth=80mm,paperheight=57mm}");
+  println(SCEOUTPUT,"\usepackage{luatexja}");
+  println(SCEOUTPUT,"\usepackage{pict2e}");
+  println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
+  println(SCEOUTPUT,"\usepackage{ketslide}");
+  println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
+  println(SCEOUTPUT,"\usepackage{bm,enumerate}");
+  println(SCEOUTPUT,"\usepackage{graphicx}");
+  println(SCEOUTPUT,"\usepackage{color}");
+  println(SCEOUTPUT,"\setmargin{15}{15}{5}{5}");
+
+  forall(ADDPACK, 
+      println(SCEOUTPUT,"\usepackage"+#);
+  );
+  println(SCEOUTPUT,"\ketslideinit");
+  println(SCEOUTPUT,"\pagestyle{empty}");
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\begin{document}");
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\input{"+texfile+".tex}");
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\end{document}");
+  closefile(SCEOUTPUT); 
+  if(iswindows(),
+    Makebat(texmain,"tv");
+  ,
+    Makeshell(texmain,"tv");
+  );
+  kc();
+  setdirectory(Dirwork);
+);
+////%Maketitle end////
+
+////%Presentation start////
+Presentation(texfile):=Presentation(texfile,texfile);
+Presentation(texfile,txtfile):=(
+//help:Presentation(texfile,txtfile);
+  regional(packL,file,flgL,flg,verbflg,slideL,ns,slideorgL,
+     wall,sld,slidecmd,tmp,tmp0,tmp1,
+     tmp2,tmp3,tmp4,tmp5,newoption,top,repeatflg,nrep,nrepprev,,repstr,
+     sestr,npara,paradt,parafiles,hyperflg,paractr,
+     letterc,boxc,shadowc,mboxc,sep);
+  MiniFlg=0;//180526
+  slidecmd=["\ketcletter","\ketcbox","\ketdbox","\ketcframe",
+         "\ketcshadow","\ketdshadow","\slidetitlex","\slidetitlesize",
+         "\mketcletter","\mketcbox","\mketdbox","\mketcframe",
+         "\mslidetitlex","\mslidetitlesize"];
+  if(!isstring(BodyStyle),//17.01.06
+    BodyStyle="\Large\bf\boldmath";
+  );
+  repeatflg=0;
+  RepeatList=[];
+  paractr=0; //16.12.31
+  if(indexof(texfile,".")==0,file=texfile+".tex",file=texfile);
+  if(indexof(txtfile,".")==0,tmp1=txtfile+".txt",tmp1=txtfile);
+  tmp=readfile2str(Dirwork,tmp1);
+  tmp=replace(tmp,"////","||||");
+  tmp=replace(tmp,"/L"+"F/::","::");
+  tmp=replace(tmp,"///L"+"F/","/L"+"F/");
+  slideL=tokenize(tmp,"/L"+"F/"); //181125to
+  slideorgL=slideL; // 16.07.11
+  slideL=apply(slideL,Removespace(#));
+  tmp=select(1..length(slideL),length(slideL_#)>0); // 16.07.11from
+  slideL=apply(tmp,slideL_#);
+  slideorgL=apply(tmp,slideorgL_#);
+  flg=0; // 16.06.09from
+  forall(1..10,
+    if(flg==0,
+      if(substring(slideL_1,0,1)!="%",
+        flg=1;
+     ,
+        slideL=slideL_(2..length(slideL));
+        slideorgL=slideorgL_(2..length(slideorgL));
+      );
+    );
+  ); // 16.06.09until
+  flgL=[];
+  SCEOUTPUT = openfile(file);
+  tmp=tokenize(slideL_1,"::");
+  tmp1=tmp_1;
+  if(length(tmp)>1,
+    tmp2=tmp_2;
+    tmp3=tmp_(3..length(tmp));//16.06.25
+  ,
+    tmp2="";
+    tmp3=tmp_(2..length(tmp));//16.06.25
+  );
+  wall=""; // 16.06.10
+  if(length(tmp3)>0,//16.06.25from
+    tmp=substring(tmp3_1,0,1);//180330
+    if((tmp!="\")&(tmp!="%")&(indexof(tmp3_1,"=")==0), //180330
+      wall=tmp3_1;
+      tmp3=tmp3_(2..length(tmp3));
+    );
+  );//16.06.25until
+  tmp="%%% "+tmp1+" "+txtfile;// 16.06.09from
+  println(SCEOUTPUT,tmp);
+  println(SCEOUTPUT,"\documentclass{article}");
+  println(SCEOUTPUT,"\usepackage{geometry}");
+  println(SCEOUTPUT,"\geometry{paperwidth=80mm,paperheight=57mm}");
+  println(SCEOUTPUT,"\usepackage{luatexja}");
+  println(SCEOUTPUT,"\usepackage{pict2e}");
+  println(SCEOUTPUT,"\usepackage{ketpic2e,ketlayer2e}");
+  println(SCEOUTPUT,"\usepackage{ketslide}");
+  println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
+  println(SCEOUTPUT,"\usepackage{bm,enumerate}");
+  println(SCEOUTPUT,"\usepackage{graphicx}");
+  println(SCEOUTPUT,"\usepackage{color}");
+//  println(SCEOUTPUT,"\setmargin{15}{15}{5}{5}");
+  forall(ADDPACK, 
+      println(SCEOUTPUT,"\usepackage"+#);
+  );
+  println(SCEOUTPUT,"");
+  if(length(wall)==0, //240412from
+    println(SCEOUTPUT,"\usepackage{ketslide}");
+  ,
+    println(SCEOUTPUT,"\usepackage{ketslide2}");
+  );
+//  hyperflg=0;
+//  tmp=select(ADDPACK,indexof(#,"hyperref")>0);//250118from
+//  if(length(tmp)==0,
+//    tmp="colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}";
+//    println(SCEOUTPUT,"\usepackage["+tmp);
+//  ,
+//    tmp=tmp_1;
+//    println(SCEOUTPUT,"\usepackage"+tmp);
+//  );//250118to
+//  hyperflg=1;
+//  forall(packL,
+//    println(SCEOUTPUT,#); 
+//  );
+  println(SCEOUTPUT,"");
+  forall(tmp3,
+    println(SCEOUTPUT,#);
+  );//240412to
+  println(SCEOUTPUT,"");
+  letterc=[0.98,0.13,0,0.43]; boxc=[0,0.32,0.52,0];
+  shadowc=[0,0,0,0.5]; mboxc="yellow";
+  tmp4="abcdefghijklmno";
+  forall(1..15,
+    tmp=SlideColorList_#;
+    if(islist(tmp),
+      tmp=text(tmp);
+      tmp=substring(tmp,1,length(tmp)-1);
+      if(length(SlideColorList_#)==4,//17.01.07from
+        println(SCEOUTPUT,
+           "\definecolor{slidecolor"+tmp4_#+"}{cmyk}{"+tmp+"}");
+      );
+      if(length(SlideColorList_#)==3,
+        println(SCEOUTPUT,"\definecolor{slidecolor"+tmp4_#+"}{rgb}{"+tmp+"}");
+      );//17.01.07until
+      SlideColorList_#="slidecolor"+tmp4_#;
+    );
+  );
+  println(SCEOUTPUT,"\def\setthin#1{\def\thin{#1}}");//17.08.23
+  println(SCEOUTPUT,"\setthin{"+text(ThinDense)+"}");//17.08.23
+  println(SCEOUTPUT,"\newcounter{pagectr}");
+  println(SCEOUTPUT,"\setcounter{pagectr}{1}");
+  println(SCEOUTPUT,"\newcommand{\slidepage}[1][\monthday-]{%");//180524from
+  println(SCEOUTPUT,"\setcounter{ketpicctra}{18}%");
+  println(SCEOUTPUT,"");//180908
+  println(SCEOUTPUT,"\begin{layer}{118}{0}");
+  println(SCEOUTPUT,"\putnotew{160}{-\theketpicctra.05}{\small#1\thepage/\pageref{pageend}}");
+  println(SCEOUTPUT,"\end{layer}");
+  println(SCEOUTPUT,"");//180908
+  println(SCEOUTPUT,"}");//189524to
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\ketslideinit");
+  println(SCEOUTPUT,"");
+  forall(tmp, // 15.07.21
+    if(substring(#,0,1)=="\", println(SCEOUTPUT,#));
+  );
+  println(SCEOUTPUT,"\setmargin{15}{15}{5}{5}");
+  println(SCEOUTPUT,"\pagestyle{empty}");//180524to
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\begin{document}");
+  println(SCEOUTPUT,"");
+  if(length(wall)>0,
+    println(SCEOUTPUT,"\input{fig/"+wall+".tex}");
+    println(SCEOUTPUT,"");
+  );
+  if(length(tmp2)>0,
+    if(indexof(tmp2," no")==0, // 16.11.11from
+      println(SCEOUTPUT,"\begin{layer}{120}{0}");
+      if(substring(tmp2,0,1)!="\",
+        tmp2="\putnotese{0}{0}{\input{fig/"+tmp2+".tex}}";//16.12.27
+      );
+      println(SCEOUTPUT,tmp2);
+      println(SCEOUTPUT,"\end{layer}");
+      println(SCEOUTPUT,"");
+    ,
+      tmp=indexof(tmp2,"=");
+      if(tmp==0,
+        top="10mm";
+      ,
+        top=substring(tmp2,tmp,length(tmp2));
+      );
+      println(SCEOUTPUT,"");
+      println(SCEOUTPUT,"\vspace*{"+top+"}");
+      println(SCEOUTPUT,"");
+    ); // 16.11.11until
+  );
+  println(SCEOUTPUT,"\def\mainslidetitley{22}");
+  forall(1..14, //16.12.22from
+    tmp=SlideColorList_#;
+    if(!isstring(tmp),tmp=text(tmp));
+    if(length(tmp)>0,
+      tmp="\def"+slidecmd_#+"{"+tmp+"}";
+      println(SCEOUTPUT,tmp);
+    );
+  );//16.12.22until
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\color{"+SlideColorList_(15)+"}");
+  println(SCEOUTPUT,BodyStyle);//17.01.07
+  println(SCEOUTPUT,"\addtocounter{page}{-1}");//17.01.29
+  println(SCEOUTPUT,"");
+  verbflg=0; //16.06.28
+  repeatflg=0;//16.12.02
+  nrep=0;//16.12.27
+  nrepprev=0;//17.01.03
+  npara=0;//16.12.27
+  forall(2..length(slideL),ns,
+    ThinFlg=0;
+    NonThinFlg=0;
+    flg=0;
+    tmp1="";
+    tmp2="";
+    tmp3="";
+    sld=Removespace(slideL_ns); // 16.06.28
+    sestr="";
+    if((substring(sld,0,1)=="%") & (substring(sld,0,2)!="%%"), // 17.06.23
+      Repeatsameslide(repeatflg,"",[slideL_ns]);
+      if(repeatflg>0,
+        tmp=indexof(sld,"]::");
+        if(tmp>0,
+          if(substring(sld,1,2)!="%",//17.05.31
+            if(substring(sld,1,5)=="thin",
+              ThinFlg=1;
+            ); 
+            sestr=substring(sld,1,tmp);
+            sld=substring(sld,tmp+2,length(sld));
+            tmp=indexof(sestr,"[");
+            sestr=substring(sestr,tmp-1,length(sestr));//17.01.05
+         );
+        );
+      );
+      if(substring(sld,1,7)=="repeat", // 16.12.09from
+        tmp=indexof(sld,"=");
+        tmp5=substring(sld,tmp,length(sld));
+        tmp=indexof(tmp5,",");
+        if(tmp>0,//17.01.03from
+          tmp5=substring(tmp5,0,tmp-1);
+        );//17.01.03until
+        repeatflg=1;
+        if(length(tmp5)>0,
+          nrep=parse(tmp5);
+          tmp=[];
+          if(length(wall)>0,
+            tmp=["","\input{fig/"+wall+".tex}"];
+          );
+          tmp=concat(tmp,
+             ["","\sameslide"+NewSlideOption,"","\vspace*{18mm}",""]);//180524
+          RepeatList=apply(1..nrep,if(#==1,[],tmp));
+        );
+        if(sestr=="",flg=1);
+        tmp=indexof(sld,",");//17.01.03from
+        if(tmp>0,
+          sld="%"+substring(sld,tmp,length(sld));
+          if(indexof(sld,"=")==0,sld=sld+"=");
+        );//17.01.03until
+      );
+      if(substring(sld,1,5)=="para",
+        paractr=paractr+1;
+        repeatflg=1;
+        tmp=indexof(sld,"=");
+        tmp=substring(sld,tmp,length(sld));
+        if(length(tmp)==0, //17.01.03
+          npara=0;
+        ,
+          paradt=tokenize(tmp,":");
+          tmp=fileslist(Dirwork+"/fig/"+paradt_1);
+          if(length(tmp)>0,
+            parafiles=tokenize(tmp,",");
+            if(indexof(paradt_4,"input")>0,
+              tmp0=indexof(paradt_4,",");//17.01.29from
+              if(tmp0>0,
+                paradt=append(paradt,substring(paradt_4,tmp0,length(paradt_4)));
+                paradt_4=substring(paradt_4,0,tmp0-1);
+              );//17.01.29until
+              parafiles=select(parafiles,indexof(#,".tex")>0);
+              parafiles=sort(parafiles); //180627
+              if(indexof(paradt_4,"\input")==0,paradt_4="\"+paradt_4);//16.12.17
+            );
+            if(indexof(paradt_4,"include")>0,
+              parafiles=select(parafiles,indexof(#,".pdf")>0);
+              parafiles=sort(parafiles); //180627
+            );
+            npara=length(parafiles);
+          ,
+            println(Dirwork+"/fig/"+paradt_1+" not found");
+            parafiles=[];
+            npara=0;
+          );
+          if(nrep==0,
+            nrep=npara;
+            if(length(wall)>0,
+              tmp=["","\input{fig/"+wall+".tex}"];
+            );
+            tmp=concat(tmp,
+                ["","\sameslide"+NewSlideOption,"","\vspace*{18mm}",""]);//180524
+            RepeatList=apply(1..nrep,if(#==1,[],tmp));
+          );
+        );
+        forall(1..nrep, //16.12.28
+          tmp4=[]; //16.12.31from
+          if(hyperflg>0,
+            tmp4=["\hypertarget{para"+text(paractr)+"pg"+text(#)+"}{}"];
+          );//16.12.31to
+          if(npara>0, //17.01.03
+            tmp4=concat(tmp4,["","\begin{layer}{120}"+paradt_2]);
+            if(#<=npara, //16.12.28from
+              tmp=parafiles_#;
+            ,
+              tmp=parafiles_npara;
+            );
+            tmp="{"+paradt_4+"{fig/"+paradt_1+"/"+tmp+"}}";
+            if(length(paradt)>=5,
+              tmp="{\scalebox{"+text(paradt_5)+"}"+tmp+"}";
+            );
+            if(substring(paradt_3,0,1)=="\",
+              tmp=paradt_3+tmp;
+            ,
+              tmp="\putnote"+paradt_3+tmp;
+            );
+            tmp4=concat(tmp4,[tmp]);//16.12.31
+          ,
+            tmp4=concat(tmp4,["","\begin{layer}{120}{0}"]);
+          );
+          if((hyperflg>0) & (LinkSize>0.15), 
+            tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
+            tmp1=tmp+text(paractr)+"pg";
+            tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);
+            tmp=tmp2; //180526from
+            tmp3=[text(LinkPosH-29*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut||\!\lhd$}}}}}"];
+            if(nrep>1,//180526
+              tmp="{"+text(LinkPosV)+"}{\hyperlink{para"; // 17.01.12from
+              tmp1=tmp+text(paractr)+"pg";
+              tmp2=tmp+text(paractr-1)+"pg"+text(nrepprev);
+              tmp=tmp1+text(1);
+              tmp3=append(tmp3,
+                 text(LinkPosH-24*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                    +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                    +"}{\scriptsize $\mathstrut|\!\lhd$}}}}}"); //180526to
+              if(#>1,tmp=tmp1+text(#-1),tmp=tmp2);
+              tmp3=append(tmp3,
+                 text(LinkPosH-17*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                    +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                    +"}{\scriptsize $\mathstrut\!\!\lhd\!\!$}}}}}");
+              if(#<nrep,tmp=tmp1+text(#+1),tmp=tmp1+text(nrep));
+              tmp3=append(tmp3,
+                 text(LinkPosH-10*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{"
+                    +text(4.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                    +"}{\scriptsize $\mathstrut\!\rhd\!$}}}}}");
+              tmp=tmp1+text(nrep); //180526from
+              tmp3=append(tmp3,
+              text(LinkPosH-5*LinkSize)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut \!\rhd\!\!|$}}}}}"); 
+            );
+            tmp="{"+text(LinkPosV)+"}{\hyperlink{para";  //180529[2lines]
+            tmp=tmp+text(paractr+1)+"pg"+text(1);
+            tmp3=append(tmp3,
+               text(LinkPosH)+"}"+tmp+"}{\fbox{\Ctab{" // 17.01.19
+                  +text(2.5*LinkSize)+"mm}{\scalebox{"+text(LinkSize)
+                  +"}{\scriptsize $\mathstrut \!\rhd\!\!||$}}}}}");  //180526to
+          );
+          tmp3=apply(tmp3,tmp,"\putnotew{"+tmp);
+          tmp4=concat(tmp4,tmp3);// 17.01.12to
+          tmp="\putnotee{"+text(LinkPosH+1)+"}{"+text(LinkPosV)+"}";//180524
+          tmp=tmp+"{\scriptsize\color{blue} "+text(#)+"/"+text(nrep)+"}"; //180524[blue]
+          tmp4=append(tmp4,tmp);
+          tmp4=concat(tmp4,["\end{layer}",""]);//16.12.31until
+          Repeatsameslide(repeatflg,text([#]),tmp4);
+        );
+      );
+    );
+    if(substring(sld,0,2)=="%%", //17.06.23from
+      println(SCEOUTPUT,sld);
+      flg=1;
+    ); //17.06.23to
+    if(flg==0,  
+      if(indexof(sld,"\begin{verbatim}")==1, // 16.06.28from
+        Repeatsameslide(repeatflg,sestr,[slideL_ns]);
+        verbflg=1;
+        flg=1;
+      ); // 16.06.28
+      if(indexof(sld,"\end{verbatim}")==1,
+        Repeatsameslide(repeatflg,sestr,[slideL_ns]);
+        verbflg=0;
+        flg=1;
+      ); // 16.06.28until
+      if(flg==0,
+        tmp=replace(sld,"||||","//"); // 16.05.11
+        tmp=tokenize(tmp,"::"); // 16.05.11
+        tmp1=tmp_1;
+        if(length(tmp)>1,tmp2=tmp_2,tmp2="");
+        if(length(tmp)>2,tmp3=tmp_3,tmp3="");
+        if(length(tmp)>3,tmp4=tmp_4,tmp4="");
+        if(length(tmp)>4,tmp5=tmp_5,tmp5="");
+        if(contains(["main","new","same"],tmp1),
+          if(tmp1=="new", // 16.11.09from
+            newoption="";
+            if(substring(tmp2,0,1)=="[",newoption=tmp2);
+          );
+          if(tmp1=="same",
+             if(length(tmp2)==0,tmp2=newoption); 
+          );// 16.11.09until
+          println(SCEOUTPUT,"");
+          println(SCEOUTPUT,"%%%%%%%%%%%%%%%%%%%%");
+          println(SCEOUTPUT,"");
+        );
+      );
+      if(flg==0&tmp1=="main",
+        if(repeatflg==1,
+          forall(2..(length(RepeatList)),nrep,
+            tmp=RepeatList_nrep;
+            forall(tmp,
+              if(substring(#,0,1)!="%", //16.01.04
+                println(SCEOUTPUT,#);
+              );
+            );
+          );
+          println(SCEOUTPUT,"");
+          repeatflg=0;RepeatList=[];
+          nrepprev=nrep;//17.01.03
+          nrep=0;//16.12.27
+          npara=0;//16.12.27
+        );
+        if(length(wall)>0,
+          println(SCEOUTPUT,"\input{fig/"+wall+".tex}");
+        );
+        println(SCEOUTPUT,"\mainslide{"+tmp2+"}");
+        println(SCEOUTPUT,"");
+        println(SCEOUTPUT,"");
+        tmp2="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="new",
+        if(repeatflg==1,
+          forall(2..(length(RepeatList)),nrep,
+            tmp=RepeatList_nrep;
+            forall(tmp,
+              if(substring(#,0,1)!="%", //16.01.04
+                println(SCEOUTPUT,#);
+              );
+            );
+          );
+          println(SCEOUTPUT,"");
+          repeatflg=0;RepeatList=[];
+          nrepprev=nrep;//17.01.03
+          nrep=0;
+          npara=0;
+        );
+        if(length(wall)>0,
+          Repeatsameslide(repeatflg,sestr,["\input{fig/"+wall+".tex}"]);
+        );
+        tmp="\newslide";
+        NewSlideOption=""; //17.01.04
+        if(substring(tmp2,0,1)=="[",
+          NewSlideOption=tmp2; //17.01.04
+          tmp=tmp+tmp2;
+          tmp2=tmp3;
+          tmp3=tmp4;
+          tmp4=tmp5;
+        );
+        tmp=tmp+"{"+tmp2+"}";
+        Repeatsameslide(repeatflg,sestr,[tmp,"","\vspace*{18mm}",""]);//180524
+        tmp2="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="same",
+        if(repeatflg==1,
+          forall(2..(length(RepeatList)),nrep,
+            tmp=RepeatList_nrep;
+            forall(tmp,
+              if(substring(#,0,1)!="%", //16.01.04
+                println(SCEOUTPUT,#);
+              );
+            );
+          );
+          println(SCEOUTPUT,"");
+          repeatflg=0;RepeatList=[];
+          nrepprev=nrep;//17.01.03
+          nrep=0;
+          npara=0;
+       );
+        if(length(wall)>0,
+          println(SCEOUTPUT,"\input{fig/"+wall+".tex}");
+        );
+        tmp="\sameslide"+NewSlideOption; //17.01.04;
+        println(SCEOUTPUT,tmp);
+        println(SCEOUTPUT,""); //180524
+        println(SCEOUTPUT,"\vspace*{18mm}");
+        println(SCEOUTPUT,"");
+        tmp4=tmp3;
+        tmp3=tmp2;
+        tmp2="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="itemize",
+        Repeatsameslide(repeatflg,sestr,["\begin{itemize}"]);
+        flgL=append(flgL,"i");
+        tmp2="";
+        tmp3="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="enumerate",
+        Repeatsameslide(repeatflg,sestr,["\begin{enumerate}"+tmp2]);
+        flgL=append(flgL,"e");
+        tmp2="";
+        tmp3="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="verbatim", //16.06.28from
+        Repeatsameslide(repeatflg,sestr,["\begin{verbatim}"]);
+        flgL=append(flgL,"v");
+        tmp1="";
+        tmp2="";
+        tmp3="";
+        verbflg=1;
+        flg=1;
+      ); //16.06.28until
+      if(flg==0&tmp1=="layer",
+        Repeatsameslide(repeatflg,sestr,[""]);
+        tmp="\begin{layer}";
+        if(length(tmp2)>0,
+          tmp=tmp+tmp2;
+        ,
+          tmp=tmp+"{120}{0}";
+        );
+        Repeatsameslide(repeatflg,sestr,[tmp]);
+        flgL=append(flgL,"l");
+        tmp2="";
+        tmp3="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="putnote",
+        tmp="\putnote"+tmp2+"{";
+        if(indexof(tmp3,"include")==0,
+          tmp1=indexof(tmp3,",");
+          if(tmp1==0,
+            tmp=tmp+"\input{fig/"+tmp3+".tex}}";
+          ,
+            tmp2=substring(tmp3,tmp1,length(tmp3));
+            tmp3=substring(tmp3,0,tmp1-1);
+            tmp=tmp+"\scalebox{"+tmp2+"}{\input{fig/"+tmp3+".tex}}}";
+          );
+        ,
+          tmp2=indexof(tmp3,"[");
+          tmp3=substring(tmp3,tmp2-1,length(tmp3));
+          tmp=tmp+"\includegraphics"+tmp3+"{fig/"+tmp4+"}}";
+        );
+        Repeatsameslide(repeatflg,sestr,[tmp]);
+        tmp2="";
+        tmp3="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="item",
+        NonThinFlg=1;
+        Repeatsameslide(repeatflg,sestr,["\item"]);
+        tmp3="";
+        flg=1;
+      );
+      if(flg==0&tmp1=="end"&(length(flgL)>0), //180526 
+        tmp=flgL_(length(flgL));
+        if(tmp=="i",
+          Repeatsameslide(repeatflg,sestr,["\end{itemize}"]);
+        );
+        if(tmp=="e",
+          Repeatsameslide(repeatflg,sestr,["\end{enumerate}"]);
+        );
+        if(tmp=="l",
+          Repeatsameslide(repeatflg,sestr,["\end{layer}",""]);
+        );
+        if(tmp=="v",  // 16.06.28from
+          Repeatsameslide(repeatflg,sestr,["\end{verbatim}",""]);
+          verbflg=0;
+        ); // 16.06.28until
+        flgL=flgL_(1..(length(flgL)-1));
+        tmp2="";
+        tmp3="";
+        flg=1;
+      );
+      if(flg==0, // 16.06.28from
+        if(verbflg==0,
+          tmp2=tmp1;
+        ,
+          tmp2=slideorgL_ns; // 16.07.11
+          tmp2=replace(tmp2,"||","//"); // 16.07.10
+          tmp3="";
+        );
+      ); // 16.06.28until
+      if(length(tmp2)>0,
+        if(tmp2=="...", tmp2="");
+          if(NonThinFlg==1,NonThinFlg=2);
+          Repeatsameslide(repeatflg,sestr,[tmp2]);
+      );
+      if(length(tmp3)>0,
+        Repeatsameslide(repeatflg,sestr,["\begin{layer}{120}{0}"]);        
+        if(substring(tmp3,0,1)=="{",
+          tmp=tmp3;
+          tmp3=tmp4;
+        ,
+          tmp="{60}{0}";
+        );
+        tmp1=indexof(tmp3,",");
+        if(tmp1==0,
+          tmp3="\putnotes"+tmp+"{\input{fig/"+tmp3+".tex}}";
+        ,
+          tmp2=substring(tmp3,tmp1,length(tmp3));
+          tmp3=substring(tmp3,0,tmp1-1);
+          tmp3="\putnotes"+tmp+"{\scalebox{"+tmp2+"}  
+              {\input{fig/"+tmp3+".tex}}}";
+        );
+        Repeatsameslide(repeatflg,sestr,[tmp3,"\end{layer}",""]);        
+      );
+    );
+  );
+  if(repeatflg==1,
+    forall(2..(length(RepeatList)),nrep,
+       tmp=RepeatList_nrep;
+       forall(tmp,
+         if(substring(#,0,1)!="%", //16.01.04
+           println(SCEOUTPUT,#);
+         );
+       );
+    );
+  );
+  println(SCEOUTPUT,"\label{pageend}\mbox{}"); //180529
+  println(SCEOUTPUT,"");
+  println(SCEOUTPUT,"\end{document}");
+  closefile(SCEOUTPUT);
+);
+////%Presentation end////
+
+////%Mkslidesummary start////
+Mkslidesummary():=( // 17.10.26 for R
+  regional(texparentorg);
+  texparentorg=Texparent;
+  if(isstring(Slidename),
+    Texparent=Slidename;
+  );
+  Mkslidesummary(Texparent,Texparent+"digest",["m","Wait=3"]);
+  Texparent=texparentorg;
+);
+Mkslidesummary(fin,fout):= 
+   Mkslidesummary(fin,fout,["m","Wait=3"]);
+Mkslidesummary(inputfile,outputfile,options):=(
+//help:Mkslidesummary(fin,fout,options);
+  regional(store,fin,fout,out,figflg,dirworkorg,dirtop,tmp);
+  store=Fillblack();//181125
+  dirworkorg=Dirwork;//17.04.10from
+  dirtop=replace(Dirwork,pathsep()+"fig","");
+  Changework(dirtop);//17.04.10uptp
+  if(ismacosx(), //180604from
+    println(setexec(Dirwork,Shellparent));
+  ); //180604to
+  fin=inputfile;
+  if(indexof(fin,".")==0,fin=fin+".tex");
+  fout=outputfile;
+  if(indexof(fout,".")==0,fout=fout+".tex");
+  cmdL=[
+   "Dt=readLines"+PaO()+"'"+fin+"',encoding='UTF-8')",[],
+   "num=grep"+PaO()+"'hypertarget',Dt,fixed=TRUE)",[], //180412
+   "Dt=Dt[setdiff"+PaO()+"1:length"+PaO()+"Dt),num)]",[],
+   "Smain=c"+PPa("")+";Snew=c"+PPa("")+";Ssame=c"+PPa(""),[],
+   "for"+PaO()+"J in 1:length"+PaO()+"Dt)){",[],
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'mainslide{',Dt[J],fixed=TRUE))",[], //180412
+   "  if"+PaO()+"Tmp>0){Smain=c"+PaO()+"Smain,1)}else{Smain=c"+PaO()+"Smain,0)}",[],
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'newslide{',Dt[J],fixed=TRUE))",[], //180412
+   "  if"+PaO()+"Tmp>0){Snew=c"+PaO()+"Snew,1)}else{Snew=c"+PaO()+"Snew,0)}",[],
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'sameslide',Dt[J],fixed=TRUE))",[], //180412
+   "  if"+PaO()+"Tmp>0){Ssame=c"+PaO()+"Ssame,1)}else{Ssame=c"+PaO()+"Ssame,0)}",[],
+   "}",[],
+  "Nnew=c"+PPa("")+";Nsame=c"+PPa(""),[],
+   "for"+PaO()+"J in 1:length"+PaO()+"Dt)){",[],
+   "  if"+PaO(2)+"Snew[J]==1)|"+PaO()+"Smain[J]==1)){Nnew=c"+PaO()+"Nnew,J)}",[],
+   "  if"+PaO()+"Ssame[J]==1){Nsame=c"+PaO()+"Nsame,J)}",[],
+   "}",[],
+   "Out=Dt[1:Nnew[1]]",[],
+   "for"+PaO()+"J in Looprange"+PaO()+"2,length"+PaO()+"Nnew))){",[],
+    "  Tmp=max"+PaO()+"c"+PaO()+"1,Nsame[Nsame<Nnew[J]]))",[],
+    "  Tmp=max"+PaO()+"c"+PaO()+"Tmp,Nnew[J-1]))+1",[],
+    "  Out=c"+PaO()+"Out,Dt[Tmp:Nnew[J]])",[],
+   "}",[],
+   "Tmp=max"+PaO()+"c"+PaO()+"Nsame[-1],Nnew[-1]))+1",[],
+   "Out=c"+PaO()+"Out,Dt[Tmp:length"+PaO()+"Dt)])",[],
+   "writeLines"+PaO()+"Out,'"+fout+"',sep='\n')",[] //180412[2lines removed] 
+  ];
+  CalcbyR("",cmdL,append(options,"Cat=n"));//180412
+  wait(1000);
+  Changework(dirtop);//17.04.10
+  tmp=replace(fout,".tex","");
+  if(iswindows(),
+    Makebat(tmp,"tv");
+  ,
+    Makeshell(tmp,"tv");
+  );
+  kc();
+  Changework(dirworkorg);//17.04.10
+  Fillrestore(store);//181125
+);
+////%Mkslidesummary end////
+
+//// end for ketslide lua
 
 
 //help:end();

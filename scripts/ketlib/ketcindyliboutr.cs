@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250813] loaded");
+println("ketcindylibout[20250819] loaded");
 
 //help:start();
 
@@ -6607,7 +6607,8 @@ Readymnr(x,y,dx):=(
   fd=openfile(tmp);
   println(fd,"Ketinit();");
   println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
-  println(fd,"Setparent(Namecdy+"p");
+  println(fd,"Setparent(Namecdy+Dqq("p"));");
+  println(fd,"Setparent(Namecdy+Dqq("p"));");
   println(fd,"if(Ch==[0],Nchoice(0,Chlist));");//250703
   println(fd,"");
   println(fd,"//setdirectory(Dircdy);");
@@ -6617,7 +6618,7 @@ Readymnr(x,y,dx):=(
   println(fd,"mkcmd1();");
   println(fd,"if(contains(Ch,1),");
   println(fd," Setmnrstep(1);");
-  println(fd," //CalcbyMset(var,"mxans1",cmdL1,op(5));"); //250815
+  println(fd," //CalcbyMset(var1,"mxans1",cmdL1,op(5));"); //250819
   println(fd," //Disptex(Pos,Dy,1,var1);"); //250815
   println(fd,");");
 
@@ -6625,12 +6626,11 @@ Readymnr(x,y,dx):=(
   println(fd,"mkcmd2();");
   println(fd,"if(contains(Ch,2),");
   println(fd," Setmnrstep(2);");
-  println(fd," //CalcbyMset(var,"mxans2",cmdL2,op(5));"); //250815
+  println(fd," //CalcbyMset(var2,"mxans2",cmdL2,op(5));"); //250819
   println(fd," //Disptex(Pos,Dy,2,var2);"); //250815
   println(fd,");");
  
   println(fd,"");
-  println(fd,"//Figpdf();"); //250815
   println(fd,"Windispg();");
   println(fd,"//Help();");
   closefile(fd);

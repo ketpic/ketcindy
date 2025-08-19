@@ -1,3 +1,5 @@
+// 250819
+//    Readymnr changed (var => var1(,var2))
 // 250815
 //    Readymnr changed (figures "mxans*")
 // 250703

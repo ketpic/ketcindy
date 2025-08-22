@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250819] loaded");
+println("ketcindylibout[20250822] loaded");
 
 //help:start();
 
@@ -6607,7 +6607,6 @@ Readymnr(x,y,dx):=(
   fd=openfile(tmp);
   println(fd,"Ketinit();");
   println(fd,"Pos=NE.xy+[0.5,-0.5]; Dy=1;");
-  println(fd,"Setparent(Namecdy+Dqq("p"));");
   println(fd,"Setparent(Namecdy+Dqq("p"));");
   println(fd,"if(Ch==[0],Nchoice(0,Chlist));");//250703
   println(fd,"");

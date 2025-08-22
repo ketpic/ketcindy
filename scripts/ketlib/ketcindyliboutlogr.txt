@@ -1,3 +1,5 @@
+// 250822
+//    Readymnr dbg (removed doubled setparent)
 // 250819
 //    Readymnr changed (var => var1(,var2))
 // 250815

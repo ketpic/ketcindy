@@ -58,11 +58,11 @@ denomf(f):=factor(denom(ratsimp(f)))$
 Denom(f):=factor(denom(ratsimp(f)))$
 frfactor(f):=numer(f)/denomf(f)$
 frfactorL(fL):=block( /*250424*/
- [out,ne,tmpm],
+ [out,ne,tmpmnrm],
  out:[],
  for ne from 1 thru length(fL) do block(
-   tmpm:frfactor(fL[ne]),
-   out:endcons(tmpm,out)
+   tmpmnrm:frfactor(fL[ne]),
+   out:endcons(tmpmnrm,out)
  ),
  out
 )$
@@ -71,30 +71,30 @@ ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 frev(eq,rep):=frfactor(ratev(eq,rep))$
 ratevL(eqL,rep):=block( /*250217*/
- [out,ne,tmp],
+ [out,ne,tmpmnr],
  out:[],
  for ne from 1 thru length(eqL) do block( /*250424dbg*/
-   tmp:ratev(eqL[ne],rep),
-   out:endcons(tmp,out)
+   tmpmnr:ratev(eqL[ne],rep),
+   out:endcons(tmpmnr,out)
  ),
  out
 )$
 /*frevL(eq,repL):=ratevL(eq,repL)$*/
 frevL(eqL,rep):=block( /* 250217 */
- [out,ne,tmp],
+ [out,ne,tmpmnr],
  out:[],
  for ne from 1 thru length(eqL) do block(
-   tmp:frev(eqL[ne],rep),
-   out:endcons(tmp,out)
+   tmpmnr:frev(eqL[ne],rep),
+   out:endcons(tmpmnr,out)
  ),
  out
 )$
 frsbsL(vL,sol):=block(/*241106*/
-  [k,tmp,tmp1,tmp2,out],
+  [k,tmpmnr,tmpmnr1,tmpmnr2,out],
   out:[],
   for k from 1 thru length(vL) do block(
-    tmp1:frevL(vL[k],sol),
-    out:endcons(tmp1,out)
+    tmpmnr1:frevL(vL[k],sol),
+    out:endcons(tmpmnr1,out)
   ),
   return(out)
  )$
@@ -109,16 +109,16 @@ disc(eq,v):=block(
 )$
 
 nthfactor(pol,kth):=block(
- [tmp,j,out],
- tmp:part(pol,0),
- if tmp="-" then
-   tmp:part(pol,1)
+ [tmpmnr,j,out],
+ tmpmnr:part(pol,0),
+ if tmpmnr="-" then
+   tmpmnr:part(pol,1)
  else
-   tmp:pol
+   tmpmnr:pol
  ,
- j:length(tmp),
+ j:length(tmpmnr),
  if kth>j then kth:j,
- part(tmp,kth)
+ part(tmpmnr,kth)
 )$
 
 
@@ -168,15 +168,15 @@ crossProd(v1,v2):=
   ratsimp(v1[1]*v2[2]-v1[2]*v2[1])$ 
 
 eqLine(pa1,pa2):=block(
-  [tmp,tmp1,tmp2,out],
+  [tmpmnr,tmpmnr1,tmpmnr2,out],
   if pa1[1]=pa2[1] then
-    tmp:_X-pa1[1]
+    tmpmnr:_X-pa1[1]
   else block(
-    tmp1:pa2[1]-pa1[1],
-	tmp2:pa2[2]-pa1[2],
-    tmp:_Y-(pa1[2]+tmp2/tmp1*(_X-pa1[1]))
+    tmpmnr1:pa2[1]-pa1[1],
+	tmpmnr2:pa2[2]-pa1[2],
+    tmpmnr:_Y-(pa1[2]+tmpmnr2/tmpmnr1*(_X-pa1[1]))
   ),
-  out:numer(tmp)
+  out:numer(tmpmnr)
 )$
 
 meetLinell(line1,line2):=block(
@@ -189,10 +189,10 @@ meetLinell(line1,line2):=block(
 )$
 
 meetLine(pts1,pts2):=block(
-  [tmp1,tmp2,out],
-  tmp1:eqLine(pts1[1],pts1[2]),
-  tmp2:eqLine(pts2[1],pts2[2]),
-  out:meetLinell(tmp1,tmp2),
+  [tmpmnr1,tmpmnr2,out],
+  tmpmnr1:eqLine(pts1[1],pts1[2]),
+  tmpmnr2:eqLine(pts2[1],pts2[2]),
+  out:meetLinell(tmpmnr1,tmpmnr2),
   out
 )$
 
@@ -203,20 +203,20 @@ intsectLine(line1,line2);
 */
 
 lenSeg2(p1,[p2]):=block(
- [tmp],
+ [tmpmnr],
  if length(p2)>0 then
-   tmp:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
+   tmpmnr:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
  else
-   tmp:(p1[1])^2+(p1[2])^2,
- ratsimp(tmp)
+   tmpmnr:(p1[1])^2+(p1[2])^2,
+ ratsimp(tmpmnr)
 )$
 lenSeg(p1,[p2]):=block(
- [tmp],
+ [tmpmnr],
  if length(p2)>0 then
-   tmp:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
+   tmpmnr:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
  else
-   tmp:(p1[1])^2+(p1[2])^2,
- ratsimp(sqrt(tmp))
+   tmpmnr:(p1[1])^2+(p1[2])^2,
+ ratsimp(sqrt(tmpmnr))
 )$
 vect(A,B):=ratsimp(B-A)$
 ptDirSeg(A,B,t):=ratsimp([A[1]+t*(B[1]-A[1]),A[2]+t*(B[2]-A[2])])$
@@ -351,38 +351,38 @@ rotateT(tr,centre):=rotateTriangle(tr,centre)$
 /*angT(m,n):=supA(plusA(m,n));*/
 
 reduceDegree(pL,z,stp):=block(
-  [stpL,dg1,dg2,co1,co2,tmp,tmp1,tmp2,ctr,out], 
-  tmp1:expand(pL[1]), 
-  tmp2:expand(pL[2]), 
-  dg1:hipow(tmp1,z),
-  dg2:hipow(tmp2,z), 
+  [stpL,dg1,dg2,co1,co2,tmpmnr,tmpmnr1,tmpmnr2,ctr,out], 
+  tmpmnr1:expand(pL[1]), 
+  tmpmnr2:expand(pL[2]), 
+  dg1:hipow(tmpmnr1,z),
+  dg2:hipow(tmpmnr2,z), 
   ctr:1,
   stpL:[],
   while ((not dg2=0) and (not dg1=0)) and (ctr<=stp) do block(
-	co1:diff(tmp1,z,dg1)/factorial(dg1),
-	co2:diff(tmp2,z,dg2)/factorial(dg2),
-	tmp:gcd(co1,co2),
-	co1:ratsimp(co1/tmp),
-	co2:ratsimp(co2/tmp),
+	co1:diff(tmpmnr1,z,dg1)/factorial(dg1),
+	co2:diff(tmpmnr2,z,dg2)/factorial(dg2),
+	tmpmnr:gcd(co1,co2),
+	co1:ratsimp(co1/tmpmnr),
+	co2:ratsimp(co2/tmpmnr),
 	if dg2<dg1 then block(
-      tmp1:expand(co2*tmp1-co1*tmp2*z^(dg1-dg2)),
-   	  dg1:hipow(tmp1,z)
+      tmpmnr1:expand(co2*tmpmnr1-co1*tmpmnr2*z^(dg1-dg2)),
+   	  dg1:hipow(tmpmnr1,z)
     )else block(
-	  tmp2:expand(co2*tmp1*z^(dg2-dg1)-co1*tmp2),
-	  dg2:hipow(tmp2,z)
+	  tmpmnr2:expand(co2*tmpmnr1*z^(dg2-dg1)-co1*tmpmnr2),
+	  dg2:hipow(tmpmnr2,z)
     ), 
-	stpL:append(stpL,[tmp1,tmp2]),
+	stpL:append(stpL,[tmpmnr1,tmpmnr2]),
 	ctr:ctr + 1
   ),
-  tmp1:factor(tmp1),
-  tmp2:factor(tmp2),
-  [tmp1,tmp2,ctr,dg1,dg2,stpL]
+  tmpmnr1:factor(tmpmnr1),
+  tmpmnr2:factor(tmpmnr2),
+  [tmpmnr1,tmpmnr2,ctr,dg1,dg2,stpL]
 )$
 reduceD(pL,z,stp):=reduceDegree(pL,z,stp)$
 
 /* inner cirle  
 inCircle(p1,p2,p3):=block(
-  [a,b,c,S,s,tmp,out],
+  [a,b,c,S,s,tmpmnr,out],
   a:normsq(p2-p3),
   b:normsq(p3-p1),
   c:normsq(p1-p2),
@@ -391,15 +391,15 @@ inCircle(p1,p2,p3):=block(
   c:ratsimp(sqrt(c)),
   s:(a+b+c)/2,
   S:sqrt(s*(s-a)*(s-b)*(s-c)),
-  tmp:(a*p1+b*p2+c*p3)/(2*s),
-  out:ratsimp([S/s,tmp]),
+  tmpmnr:(a*p1+b*p2+c*p3)/(2*s),
+  out:ratsimp([S/s,tmpmnr]),
   out
 )$
 */
 
 commonTan(C1,r1,C2,r2,ch):=block(
   [mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
-   eq,sol,sol1,sol2,tmp,tmp1,out],
+   eq,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
   x1:C1[1], y1:C1[2],
   x2:C2[1], y2:C2[2],
   putTriangle(mL,1,r1),
@@ -414,14 +414,14 @@ commonTan(C1,r1,C2,r2,ch):=block(
   pC2:vertexRight,
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
-  tmp:crossProd(v1,v2),
-  eq:numer(tmp),
+  tmpmnr:crossProd(v1,v2),
+  eq:numer(tmpmnr),
   sol:solve(eq,mL),
-  tmp:sol[ch],
-/*  pA1:ratev(pA1,tmp),
-    pB1:ratev(pB1,tmp), */
-  pA1:frfactor(subst(tmp,pA1)),
-  pB1:frfactor(subst(tmp,pB1)),
+  tmpmnr:sol[ch],
+/*  pA1:ratev(pA1,tmpmnr),
+    pB1:ratev(pB1,tmpmnr), */
+  pA1:frfactor(subst(tmpmnr,pA1)),
+  pB1:frfactor(subst(tmpmnr,pB1)),
   out:[pA1,pB1],
   out
 )$
@@ -430,7 +430,7 @@ comTan2(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,2)$
 
 commonTanR(C1,r1,C2,r2,ch):=block(
    [x1,y1,x2,y2,pA1,pC1,pA2,pC2,v1,v2,
-    eq,sol,sol1,sol2,tmp,tmp1,out],
+    eq,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
   x1:C1[1], y1:C1[2],
   x2:C2[1], y2:C2[2],
   putTriangle(1,nR,r1),
@@ -446,11 +446,11 @@ commonTanR(C1,r1,C2,r2,ch):=block(
   eq:crossProd(v1,v2),
   eq:numer(eq),  
   sol:solve(eq,nR),
-  tmp:sol[ch],
-/*  pA1:ratev(pA1,tmp),
-    pC1:ratev(pC1,tmp), */
-  pA1:frfactor(subst(tmp,pA1)),
-  pC1:frfactor(subst(tmp,pC1)),
+  tmpmnr:sol[ch],
+/*  pA1:ratev(pA1,tmpmnr),
+    pC1:ratev(pC1,tmpmnr), */
+  pA1:frfactor(subst(tmpmnr,pA1)),
+  pC1:frfactor(subst(tmpmnr,pC1)),
   out:[pA1,pC1],
   out
 )$
@@ -458,7 +458,7 @@ comTanR(C1,r1,C2,r2):=commonTanR(C1,r1,C2,r2,1)$
 
 commonTanC(C1,r1,C2,r2,ch):=block(
    [x1,y1,x2,y2,pA1,pB1,pA2,pC2,v1,v2,
-    eq1,eq2,sol,sol1,sol2,tmp,tmp1,out],
+    eq1,eq2,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
   x1:C1[1], y1:C1[2],
   x2:C2[1], y2:C2[2],
   putTriangle(mL,1,r1),
@@ -471,14 +471,14 @@ commonTanC(C1,r1,C2,r2,ch):=block(
   pC2:vertexRight,
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
-  tmp:crossProd(v1,v2),
-  eq:numer(tmp),
+  tmpmnr:crossProd(v1,v2),
+  eq:numer(tmpmnr),
   sol:solve(eq,mL),
-  tmp:sol[ch],
-/*  pA1:ratev(pA1,tmp),
-    pB1:ratev(pB1,tmp), */
-  pA1:frfactor(subst(tmp,pA1)),
-  pB1:frfactor(subst(tmp,pB1)),
+  tmpmnr:sol[ch],
+/*  pA1:ratev(pA1,tmpmnr),
+    pB1:ratev(pB1,tmpmnr), */
+  pA1:frfactor(subst(tmpmnr,pA1)),
+  pB1:frfactor(subst(tmpmnr,pB1)),
   out:[pA1,pB1],
   out
 )$
@@ -486,7 +486,7 @@ comTanC1(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,1)$
 comTanC2(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,2)$
 
 ratden(s,x,a):=block( /*Rationalize denom 250206*/
-  [sL,lflg,len,j,tmpn,tmpd,tmpr,ns,ds,mul,out],
+  [sL,lflg,len,j,tmpmnrn,tmpmnrd,tmpmnrr,ns,ds,mul,out],
   if not listp(s) then block(
     ns:num(s), ds:denom(s),
     ns:remainder(ns,x^2-a),
@@ -495,16 +495,16 @@ ratden(s,x,a):=block( /*Rationalize denom 250206*/
     c1:coeff(ds,x,1),
     c0:coeff(ds,x,0),
     mul:c1*x-c0,
-    tmpn:remainder(ns*mul,x^2-a),
-    tmpd:remainder(ds*mul,x^2-a),
-    out:frfactor(tmpn/tmpd)
+    tmpmnrn:remainder(ns*mul,x^2-a),
+    tmpmnrd:remainder(ds*mul,x^2-a),
+    out:frfactor(tmpmnrn/tmpmnrd)
   ),
   if listp(s) then block(
     len:length(s),
     out:[],
     for j from 1 thru len do block(
-      tmpr:ratden(s[j],x,a),
-      out:endcons(tmpr,out)
+      tmpmnrr:ratden(s[j],x,a),
+      out:endcons(tmpmnrr,out)
     )
   ),
   return(out)
@@ -524,11 +524,11 @@ quarter(expr,m,M):=block(
 )$
 qua(expr,m,M):=quarter(expr,m,M)$
 quaL(exL,m,M):=block(
-  [k,tmpm,out],
+  [k,tmpmnrm,out],
   out:[],
   for k from 1 thru length(exL) do block(
-    tmpm:qua(exL[k],m,M),
-    out:endcons(tmpm,out)
+    tmpmnrm:qua(exL[k],m,M),
+    out:endcons(tmpmnrm,out)
   ),
   return(out)
 )$

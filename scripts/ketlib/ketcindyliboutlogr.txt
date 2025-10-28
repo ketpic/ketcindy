@@ -1,3 +1,5 @@
+// 251024
+//    Mnrqua,Mnrhalf added
 // 250822
 //    Readymnr dbg (removed doubled setparent)
 // 250819

@@ -1,4 +1,4 @@
-// 251014 Totexform chg  ( \displaystyle \frac=>\dfrac )
+// 251018 Totexformjs added (\displaystyle \frac=>\dfrac for js)
 // 250813 Maketitle,Presentation,... replaced for lua
 // 250727 Totexform changed  (sin(^(2)x),...)
 // 250604 Animationparam changed  (if Animeflg==0, change to "")

@@ -393,6 +393,7 @@ Fracform(1.33,200 (,err(-5)));
 :Sla2fra("x/y+(a/b)/c+(pi/2)/(3/4)");
 p:Convtrigpow("sin(x)^(2)");
 Totexform("fr(2,3)");
+Totexformjs("fr(2,3)");
 Addasterisk("ax^2+bx+c");
 Tomaxform("[comment]2cos(pi)");
 Tocindyform("fr(2,3)");

@@ -520,7 +520,8 @@ contCL(C,r,P1,P2):=block(
 quarter(expr,m,M):=block(
   [out],
   out:frev(expr,sqrt(m^2+1)=(1+M^2)/(1-M^2)),
-  out:frev(out,m=2*M/(1-M^2))
+  out:frev(out,m=2*M/(1-M^2)),
+  return(out)
 )$
 qua(expr,m,M):=quarter(expr,m,M)$
 quaL(exL,m,M):=block(
@@ -532,3 +533,7 @@ quaL(exL,m,M):=block(
   ),
   return(out)
 )$
+
+quasubs(p,m,M):=
+  frev(p,[sqrt(m^2+1)=(1+M^2)/(1-M^2),m=2*M/(1-M^2)])$
+

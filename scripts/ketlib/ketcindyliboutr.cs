@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20250822] loaded");
+println("ketcindylibout[20251023] loaded");
 
 //help:start();
 
@@ -6718,6 +6718,38 @@ Setmkcmd(mkfile):=(
   scL;
 );
 ////%Setmkcmd end////
+
+////%Mnrqua start////251024
+Mnrqua(expr,mML):=(
+//help Mnrqua(expr,["m","M","n","N"]);
+  regional(m,M,out);
+  out=expr;
+  forall(1..(length(mML)/2),
+    m=mML_(2*#-1); M=mML_(2*#);
+    out=replace(out,
+        "sqrt("+m+"^2+1)","(1+"+M+"^2)/(1-"+M+"^2)");
+    out=replace(out,
+        m,"2*"+M+"/(1-"+M+"^2)");
+  );
+  out;
+);
+////%Mnrqua end////
+
+////%Mnhalf start////251024
+Mnrhalf(expr,MmL):=(
+//help Mnrhalf(expr,["M","m","N","n"]);
+  regional(m,M,out);
+  out=expr;
+  forall(1..(length(MmL)/2),
+    M=MmL_(2*#-1); m=MmL_(2*#);
+    out=replace(out,
+        "(1+"+M+"^2)/(1-"+M+"^2)","sqrt("+m+"^2+1)");
+    out=replace(out,
+        M,"(sqrt(1+"+m+"^2)-1)");
+  );
+  out;
+);
+////%Mnrqua end////
 
 ////%Checkmkcmd start////250410
 Checkmkcmd():=Checkmkcmd("mkcmdt");

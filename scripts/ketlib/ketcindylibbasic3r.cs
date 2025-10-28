@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20251014] loaded");
+println("ketcindylibbasic3[20251018] loaded");
 
 //help:start();
 
@@ -3228,7 +3228,7 @@ Totexform(strorg):=( //250726
     ["_(",["_{xx}"]], //210831
     ["tx(",["\text{xx}"]], //210907
     ["tfr(",["","\frac{xx}{yy}"]], //210831,220523
-    ["fr(",["","\dfrac{xx}{yy}"]], //210228from 231224,251014
+    ["fr(",["","\displaystyle \frac{xx}{yy}"]], //210228from 231224
     ["log(",["\log xx ","\log_{xx} yy"]], //210405
     ["ln(",["\ln xx "]], //210903
     ["sq(",["{\sqrt{xx}}","{\sqrt[xx]{yy}}"]], //250203
@@ -3361,6 +3361,16 @@ Totexform(strorg):=( //250726
   out;
 );
 ////%Totexform end////
+
+////%Totexformjs start////
+Totexformjs(str):=( //251018
+//help:Totexformjs("fr(2,3)");
+  regional(out);
+  out=Totexform(str);
+  out=replace(out,"\displaystyle \frac","\dfrac");
+  out;
+);
+////%Totexformjs end////
 
 ////%Addasterisk start////
 Addasterisk(strorg):=(

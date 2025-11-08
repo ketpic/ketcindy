@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20251104] loaded");
+println("ketcindylibout[20251109] loaded");
 
 //help:start();
 
@@ -6493,6 +6493,24 @@ Disptex(pos,dy,lineorg,nameorg,op):=(
  );
 );
 ////%Disptex end////
+
+////%DispT start////251109
+dispT(name,exstr):=dispT(name,exstr,1,[]);
+dispT(name,exstr,Arg):=(
+  if(islist(Arg),
+    dispT(name,exstr,1,Arg);
+  ,
+    dispT(name,exstr,Arg,[]);
+  );
+);
+dispT(name,exstr,dyr,op):=(
+//help:dispT("a",a (,["Size=1.5"]));
+//help:dispT("a",a (0.8,["Size=1.5"]);
+//help:dispT(Pos,Dy:global);
+  Expr(Pos,"e",name+":"+Totexform(exstr),op);
+  Pos_2=Pos_2-Dy*dyr;
+);
+////%DispT end////
 
 ////%Readymnr start////
 Readymnr():=Readymnr(1,1,1); //250220

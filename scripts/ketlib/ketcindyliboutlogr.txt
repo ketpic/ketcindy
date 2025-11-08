@@ -1,3 +1,5 @@
+// 251109
+//    dispT added
 // 251104
 //    Readymnr changed ( position of mkcmd() )
 // 251024

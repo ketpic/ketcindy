@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20230831] loaded");
+println("ketcindylibbasic2[20231123] loaded");
 
 //help:start();
 
@@ -2996,7 +2996,7 @@ Setax(arg1,arg2,arg3):=(
 );
 ////%Setax end////
 
-////%Drwxy start////230704
+////%Drwxy start////230704,251123
 Drwxy():=(
 //help:Drwxy();
   regional(org,tmp,tmp1,tmp2);
@@ -3004,10 +3004,15 @@ Drwxy():=(
   Listplot("-axx",[[XMIN,org_2],[XMAX,org_2]],AXSTYLE_2);
   Listplot("-axy",[[org_1,YMIN],[org_1,YMAX]],AXSTYLE_2);
   tmp=AXSTYLE_1;
-  if(tmp_1=="a",
-    Arrowhead([XMAX,org_2],[1,0],AXSTYLE_2);
-    Arrowhead([org_1,YMAX],[0,1],AXSTYLE_2);
-  );
+  if(indexof(tmp_1,"a")>0,//251123from
+    tmp1=replace(tmp_1,"a","");
+    AXSTYLE_1_1="a";
+    if(length(tmp1)>0,
+      tmp1=parse(tmp1);
+    );//251123to
+    Arrowhead([XMAX,org_2],[1,0],prepend(tmp1,AXSTYLE_2));
+    Arrowhead([org_1,YMAX],[0,1],prepend(tmp1,AXSTYLE_3));
+  );//251123to
   Expr([XMAX,org_2],tmp_3,tmp_2,AXSTYLE_3); 
   Expr([org_1,YMAX],tmp_5,tmp_4,AXSTYLE_3); 
   Letter(org,tmp_7,tmp_6,AXSTYLE_3);

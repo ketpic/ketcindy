@@ -425,6 +425,40 @@ commonTan(C1,r1,C2,r2,ch):=block(
   out:[pA1,pB1],
   out
 )$
+
+/* 251122 */
+commonTan(C1,r1,C2,r2,ch):=block(
+  [mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
+   eq,c2,c1,c0,Dis,sol,tempmnr,tempmnr1,out],
+  x1:C1[1], y1:C1[2],
+  x2:C2[1], y2:C2[2],
+  putTriangle(mL,1,r1),
+  slideTriangle([0,0],C1),
+  pA1:vertexTop,
+  pB1:vertexLeft,
+  pC1:vertexRight,
+  putTriangle(mL,1,r2), 
+  slideTriangle([0,0],C2),
+  pA2:vertexTop,
+  pB2:vertexLeft,
+  pC2:vertexRight,
+  v1:ratsimp(pA1-pB1),
+  v2:ratsimp(pA2-pB1),
+  tmpmnr:crossProd(v1,v2),
+  eq:expand(numer(tmpmnr)),
+  c2:coeff(eq,mL,2),
+  c1:coeff(eq,mL,1),
+  c0:coeff(eq,mL,0),
+  Dis:frfactor(c1^2-4*c2*c0),
+  sol:[mL=(-c1+sqrt(dis))/(2*c2),mL=(-c1-sqrt(dis))/(2*c2)],
+  tempmnr:sol[ch],
+  pA1:frfactor(subst(tempmnr,pA1)),
+  pB1:frfactor(subst(tempmnr,pB1)),
+  out:[pA1,pB1,Dis],
+  out
+)$
+
+
 comTan1(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,1)$
 comTan2(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,2)$
 

@@ -1,3 +1,5 @@
+// 20251122
+//    commonTan in mnr.max changed
 // 20250626
 //    algebrite added in ketcindyjs
 // 20250404

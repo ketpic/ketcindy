@@ -1,3 +1,5 @@
+// 20251123
+//    Arrowhead changed (a(size) added)
 // 20230830
 //    Arrowhead debugged again  ( Pcrd )
 //    Putcol, Putcolexpr debugged  (cell=>col)

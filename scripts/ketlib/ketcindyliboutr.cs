@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibout[20251109] loaded");
+println("ketcindylibout[20251203] loaded");
 
 //help:start();
 
@@ -4423,7 +4423,7 @@ Startsurf(nm,Nplist,Dsizelist,Epslist):=(
     "  char fnameall[256] = {'\0'};",
     "  char fnameread[256] = {'\0'};",
     "  short chfd[2];", //220203
-    "  /* starsurfend */"
+    "  /* startsurfend */"
   ]; //220121to
 );
 ////%Startsurf end////
@@ -4975,7 +4975,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   tmp3=append(tmp3,"  /* usedata3dend  */");
   tmp2=CommandListC; //220122from
-  tmp=select(1..(length(tmp2)),indexof(tmp2_#,"starsurfend")>0);
+  tmp=select(1..(length(tmp2)),indexof(tmp2_#,"startsurfend")>0);
   tmp1=tmp2_(1..(tmp_1));
   tmp2=tmp2_((tmp_1+1)..(length(tmp2)));
   CommandListC=concat(tmp1,tmp3);
@@ -5051,13 +5051,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
     GLIST=append(GLIST,"ReadOutData("+Dqq(fname)+")");
     forall(varL,va, //220128from
       if(length(parse(va))>0, 
-        if(indexof(va,"wire")>0,  //220207from
-          tmp=indexof(va,"3d");
-          tmp1=substring(va,0,tmp+1);
-        ,
-          tmp1=va;
-        );
-        tmp=select(1..(length(StyleListC)),StyleListC_#==tmp1); //220207to
+        tmp=select(1..(length(StyleListC)),StyleListC_#==va);//251203
         if(length(tmp)>0,
           tmp2=StyleListC_(tmp_1+1);
         ,
@@ -5072,7 +5066,7 @@ ExeccmdC(nm,optionorg,optionhorg):=(
   );
   tmp1=select(NodispList,indexof(#,"3d")==0); //220207from
   Changestyle(tmp1,["nodisp"]);
-  NodispList,=remove(NodispList,tmp1); //220207to
+  NodispList=remove(NodispList,tmp1); //220207to,251202
   Changestyle3d(NodispList,["nodisp"]);
   SurfList=SurfList_(1..LenAddSurf); //220208[2lines]
   FuncListC=FuncListC_(1..LenAddSurf); 
@@ -6768,6 +6762,46 @@ Mnrhalf(expr,MmL):=(
   out;
 );
 ////%Mnrqua end////
+
+////%Extractsqr start//// //251121
+Extractsqr(expr):=Extractsqr(expr,10); //251120
+Extractsqr(expr,mx):=(
+ //help:Extractsqr("a*b*sqr(d+e)"(,10));
+  regional(tmp,tmp1,first,last,rest,flg,nn,exL);
+  exL=[];
+  rest=expr;
+  while(length(rest)>mx,
+    tmp=indexof(rest,"sqrt(");
+    if(tmp>0,
+      rest=substring(rest,tmp-1,length(rest));
+      tmp=Bracket(rest);
+      tmp1=select(tmp,#_2==1);
+      first=tmp1_1_1;
+      tmp2=select(tmp,#_2==-1);
+      if(length(tmp2)>0,
+        last=tmp2_1_1;
+        tmp=substring(rest,first,last-1);
+        if(length(tmp)>mx,
+          exL=append(exL,tmp);
+        );
+        rest=substring(rest,last,length(rest));
+      ,
+        println("() does not match");
+        rest="";
+      );
+    );
+  );
+  tmp1=exL;
+  exL=[];
+  forall(1..(length(tmp1)),
+    tmp=tmp1_#;
+    if(!contains(exL,tmp),
+      exL=append(exL,tmp);
+    );
+  );
+  exL;
+);
+////%Extractsqr end////
 
 ////%Checkmkcmd start////250410
 Checkmkcmd():=Checkmkcmd("mkcmdt");

@@ -1,3 +1,7 @@
+// 251203
+//    ExeccmdC debugged ( for wiredata)
+// 251121
+//    Extractsqr added
 // 251109
 //    dispT added
 // 251104

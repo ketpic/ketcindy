@@ -17,7 +17,7 @@ mkcmd0(option):=(
 dispfig0():=(
  Parsevv("vA::vB::vC");
  Listplot("0",[vA,vB,vC,vA],["dr,1.5"]);
- Circledata("0",[[0,0],R],["do,1,1.5"]);
+ Circledata("0",[[0,0],R],["Color=red"]);
  Anglemark("0a",[vC,vB,vA],["do,0.7","E=1.4,m"]);
  Anglemark("0b",[vA,vC,vB],["do,0.7","E=n"]);
  Letter([vA,"n","A",vB,"w","B",vC,"e","C"]);
@@ -120,8 +120,7 @@ mkcmd4():=(
  "rd11mm:nthfactor(rd11m,6)",
  "rd12mm:nthfactor(rd12m,5)",
  "rd21mm:nthfactor(rd21m,4)",
- "rd22mm:nthfactor(rd22m,6)",
- 
+ "rd22mm:nthfactor(rd22m,6)", 
  "rdm:rd12mm",
  "rdn:numer(remainder(eq4b2,rdm))",
  "rdn:nthfactor(rdn,2)",
@@ -137,12 +136,8 @@ mkcmd4():=(
  "end"
  ]);
 );
-var4a="n2::eq4a::eq4b::eq4a1::eq4b2";
-//var4b=
-//"rd11m::rd11mm::rd12m::rd12mm::rd21m::rd21mm::rd22m::rd22mm";
-var4=var4a+"::"+var4b;
-//var4c="rdm::rdn::solm::soln::ansm1::ansn1";
-var4="ansm1::ansn1::n2::P1::P2";
+var4="n2::eq4a::eq4b::eq4a1::eq4b2::ansm1::ansn1";
+//var4="ansm1::ansn1::n2::P1::P2";
 
 repMN(vstr):=(
   regional(vL,repMN,out,tmp);
@@ -185,9 +180,9 @@ mkcmd5():=(
   "n2:frfactor(fe[3])",
   "P1:frfactor(fe[4])",
   "P2:frfactor(fe[5])",
-  "r1:frfactor(fe[6])",
-  "r2:frfactor(fe[7])",
-  "r3:frfactor(fe[8])",
+  "ra:frfactor(fe[6])",
+  "rb:frfactor(fe[7])",
+  "rc:frfactor(fe[8])",
   "putT(plusA(m1,n2),minusA(n1,n2),r0)",
   "slideT(vtxL,P1)",
   "rotateT(supA(n2),P1)",
@@ -196,10 +191,19 @@ mkcmd5():=(
   "fe:frevL([r0,inC,vtxT,vtxL,vtxR],sol)",
   "r0:fe[1]; I0:fe[2]; Q1:fe[3]; Q2:fe[4]; Q3:fe[5]",
   "P3:Q1",
-  "S:frfactor(r0+r1+r2+r3)",
+  "S:frfactor(r0+ra+rb+rc)",
   "end"
   ]);
 );
 //var5="m1::n1::n2::P1::P2::r0::Q1::Q2::Q3";
-var5="m1::n1::P1::P2::P3::r0::r1::r2::r3::S";
-var5="ansm1::ansn1::I0::r0::r1::r2::r3::S";
+//var5="m1::n1::P1::P2::P3::r0::r1::r2::r3::S";
+var5="ansm1::ansn1::I0::r0::ra::rb::rc::S";
+
+dispfig5():=(
+ Circledata("1",[I1,ra],["dr,1.5"]);
+ Letter([I1,"c","I1"]);
+ Circledata("2",[I2,rb],["dr,1.5"]);
+ Letter([I2,"c","I1"]);
+ Circledata("3",[I3,rc],["dr,1.5"]);
+ Letter([I3,"c","I3"]);
+);

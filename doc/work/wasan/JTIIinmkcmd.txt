@@ -1,0 +1,80 @@
+mkcmd1():=(
+ cmdL1=concat(Mxbatch("mnr"),[
+  "putT(m,n,r)",
+  "A:vtxT; B:vtxL; C:vtxR; I:inC; r:inR",
+  "Ca:exCa; Ra:exRa; Cb:exCb",
+  "Rb:exRb; Cc:exCc; Rc:exRc",
+  "end"
+ ]);
+);
+var1="A::B::C::I::Ca::Ra::Cb::Rb::Cc::Rc";
+
+dispfig1():=(
+ Parsevv(var1);
+ Listplot("1",[A,B,C,A]);
+ Circledata("1",[I,r]);
+ Circledata("1a",[Ca,Ra]);
+ Circledata("1b",[Cb,Rb]);
+ Circledata("1c",[Cc,Rc]);
+);
+
+mkcmd2():=(
+ cmdL2=concat(cmdL1,[
+  "out:comTan(Ca,Ra,Cb,Rb,2)",
+  "pts1:[out[1],out[2]]; Dis1:out[3]",
+  "dis1:radcan(sqrt(Dis1))",
+  "out:comTan(Cc,Rc,Ca,Ra,1)",
+  "pts2:[out[1],out[2]]; Dis2:out[3]",
+  "dis2:radcan(sqrt(Dis2))",
+  "out:comTan(Cb,Rb,Cc,Rc,2)",
+  "pts3:[out[1],out[2]]; Dis3:out[3]",
+  "dis3:radcan(sqrt(Dis3))",
+  "end"
+ ]);
+);
+//var2="D::E::F::dis1::dis2::dis3";
+var2="pts1::dis1::pts2::dis2::pts3::dis3";
+
+mkcmd2a():=(
+ cmdL2a=concat(cmdL2,[
+  "pts1:"+pts1,
+  "pts2:"+pts2,
+  "pts1:frfactor(pts1)",
+  "pts2:frfactor(pts2)",
+  "D:frfactor(meetLine(pts1,pts2))",
+  "E:frfactor(meetLine(pts2,pts3))",
+  "F:frfactor(meetLine(pts3,pts1))",
+  "end"
+ ]);
+);
+var2a="pts1::pts2::pts3::D::E::F";
+
+dispfig2():=(
+ Parsevv(var2a);
+ Listplot("2",[D,E,F,D]);
+ Letter([D,"s","D",E,"e","E",F,"w","F"]);
+);
+
+mkcmd3():=(
+ cmdL3=concat(cmdL1,[
+  "assume(m>0,m<1,n>0,n<1,(m+1)*n+m-1>0)",
+  "D:"+D, "E:"+E, "F:"+F,
+  "DE:edge(D,E); EF:edge(E,F); FD:edge(F,D)",
+  "a:EF; b:FD; c:DE",
+  "s:frfactor((a+b+c)/2)",
+  "S:sqrt(frfactor(s*(s-a)*(s-b)*(s-c)))",
+  "R:frfactor(S/s)",
+  "sum:frfactor(r+Ra+Rb+Rc)",
+  "CR:(a*D+b*E+c*F)/(a+b+c)",
+  "end"
+ ]);
+);
+//var3="r0::sum::CR::R";
+var3="D::E::F::DE::EF::FD::s::S::R::sum";
+//var3=var1+"::D::E::F::mD::mE::mF";
+ 
+dispfig3():=(
+ Parsevv(var3+"::CR");
+ Circledata("3",[CR,R],["Color=red"]);
+);
+

@@ -18,11 +18,13 @@ slideT(A,B)=slideTriangle
 rotateT(tr,centre)=rotateTriangle
 reduceD(pL,z,stp)=reduceDegree
 inCircle(p1,p2,p3)
+comTan(C1,r1,C2,r2,ch)
 comTan1(C1,r1,C2,r2),comTan2(C1,r1,C2,r2)
-comTanR(C1,r1,C2,r2)
-comTanC1(C1,r1,C2,r2),comTanC2(C1,r1,C2,r2)
+comTanC(C1,r1,C2,r2,ch)
+comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 
 ////log
+251210 comTan, comTanC changed
 250424 quaL added
 250402 timesA(rp,m), qua[rter](expr,m,M) added
 250329 angT ( angT(m,n) changed )
@@ -397,6 +399,7 @@ inCircle(p1,p2,p3):=block(
 )$
 */
 
+/*
 commonTan(C1,r1,C2,r2,ch):=block(
   [mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
    eq,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
@@ -418,15 +421,17 @@ commonTan(C1,r1,C2,r2,ch):=block(
   eq:numer(tmpmnr),
   sol:solve(eq,mL),
   tmpmnr:sol[ch],
-/*  pA1:ratev(pA1,tmpmnr),
-    pB1:ratev(pB1,tmpmnr), */
+  pA1:ratev(pA1,tmpmnr),
+  pB1:ratev(pB1,tmpmnr),
   pA1:frfactor(subst(tmpmnr,pA1)),
   pB1:frfactor(subst(tmpmnr,pB1)),
   out:[pA1,pB1],
   out
 )$
+?
+*/
 
-/* 251122 */
+/* 251122,251209 */
 commonTan(C1,r1,C2,r2,ch):=block(
   [mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
    eq,c2,c1,c0,Dis,sol,tempmnr,tempmnr1,out],
@@ -442,57 +447,34 @@ commonTan(C1,r1,C2,r2,ch):=block(
   pA2:vertexTop,
   pB2:vertexLeft,
   pC2:vertexRight,
-  v1:ratsimp(pA1-pB1),
-  v2:ratsimp(pA2-pB1),
-  tmpmnr:crossProd(v1,v2),
-  eq:expand(numer(tmpmnr)),
-  c2:coeff(eq,mL,2),
-  c1:coeff(eq,mL,1),
-  c0:coeff(eq,mL,0),
-  Dis:frfactor(c1^2-4*c2*c0),
-  sol:[mL=(-c1+sqrt(dis))/(2*c2),mL=(-c1-sqrt(dis))/(2*c2)],
-  tempmnr:sol[ch],
-  pA1:frfactor(subst(tempmnr,pA1)),
-  pB1:frfactor(subst(tempmnr,pB1)),
+  v1:frfactor(pA1-pB1),
+  v2:frfactor(pA2-pB1),
+  tempmnr:crossProd(v1,v2),
+  eq:expand(numer(tempmnr)),
+  sol:solve(eq,mL),
+  Dis:0,
+/*  dis:0, */
+  if length(sol)=2 then block(
+    c2:coeff(eq,mL,2),
+    c1:coeff(eq,mL,1),
+    c0:coeff(eq,mL,0),
+    Dis:frfactor(c1^2-4*c2*c0),
+/*    dis:radcan(sqrt(Dis)), */
+    sol:[mL=(-c1+dis)/(2*c2),mL=(-c1-dis)/(2*c2)],
+    sol:sol[ch]
+  ),
+  pA1:frfactor(subst(sol,pA1)),
+  pB1:frfactor(subst(sol,pB1)),
   out:[pA1,pB1,Dis],
   out
 )$
-
-
+comTan(C1,r1,C2,r2,ch):=commonTan(C1,r1,C2,r2,ch)$/*251210*/
 comTan1(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,1)$
 comTan2(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,2)$
 
-commonTanR(C1,r1,C2,r2,ch):=block(
-   [x1,y1,x2,y2,pA1,pC1,pA2,pC2,v1,v2,
-    eq,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
-  x1:C1[1], y1:C1[2],
-  x2:C2[1], y2:C2[2],
-  putTriangle(1,nR,r1),
-  slideTriangle([0, 0],C1),
-  pA1:vertexTop,
-  pC1:vertexRight,
-  putTriangle(1,nR,r2),
-  slideTriangle([0,0],C2),
-  pA2:vertexTop,
-  pC2:vertexRight,
-  v1:ratsimp(pA1-pC1),
-  v2:ratsimp(pA2-pC1),
-  eq:crossProd(v1,v2),
-  eq:numer(eq),  
-  sol:solve(eq,nR),
-  tmpmnr:sol[ch],
-/*  pA1:ratev(pA1,tmpmnr),
-    pC1:ratev(pC1,tmpmnr), */
-  pA1:frfactor(subst(tmpmnr,pA1)),
-  pC1:frfactor(subst(tmpmnr,pC1)),
-  out:[pA1,pC1],
-  out
-)$
-comTanR(C1,r1,C2,r2):=commonTanR(C1,r1,C2,r2,1)$
-
 commonTanC(C1,r1,C2,r2,ch):=block(
-   [x1,y1,x2,y2,pA1,pB1,pA2,pC2,v1,v2,
-    eq1,eq2,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
+   [x1,y1,x2,y2,pA1,pB1,pA2,pC2,v1,v2,Dis,dis,
+    eq1,eq2,sol,sol1,sol2,tempmnr,tempmnr1,out],
   x1:C1[1], y1:C1[2],
   x2:C2[1], y2:C2[2],
   putTriangle(mL,1,r1),
@@ -505,17 +487,24 @@ commonTanC(C1,r1,C2,r2,ch):=block(
   pC2:vertexRight,
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
-  tmpmnr:crossProd(v1,v2),
-  eq:numer(tmpmnr),
+  tempmnr:crossProd(v1,v2),
+  eq:expand(numer(tempmnr)),
   sol:solve(eq,mL),
-  tmpmnr:sol[ch],
-/*  pA1:ratev(pA1,tmpmnr),
-    pB1:ratev(pB1,tmpmnr), */
-  pA1:frfactor(subst(tmpmnr,pA1)),
-  pB1:frfactor(subst(tmpmnr,pB1)),
-  out:[pA1,pB1],
+  Dis:0,
+  if length(sol)=2 then block(
+    c2:coeff(eq,mL,2),
+    c1:coeff(eq,mL,1),
+    c0:coeff(eq,mL,0),
+    Dis:frfactor(c1^2-4*c2*c0),
+    sol:[mL=(-c1+dis)/(2*c2),mL=(-c1-dis)/(2*c2)],
+    sol:sol[ch]
+  ),
+  pA1:frfactor(subst(tempmnr,pA1)),
+  pB1:frfactor(subst(tempmnr,pB1)),
+  out:[pA1,pB1,Dis,sqrt(Dis)],
   out
 )$
+comTanC(C1,r1,C2,r2,ch):=commonTanC(C1,r1,C2,r2,ch)$
 comTanC1(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,1)$
 comTanC2(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,2)$
 

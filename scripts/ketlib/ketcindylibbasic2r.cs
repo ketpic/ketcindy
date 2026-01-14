@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20231123] loaded");
+println("ketcindylibbasic2[20260113] loaded");
 
 //help:start();
 
@@ -5540,6 +5540,20 @@ Tikzline(ptlist,options):=(
   Texcom("}");
 );
 ////%Tikzline end////
+
+////%Y2b start////260113
+Y2b(str):=(
+  //help:Y2b("¥sin x");
+  replace(str,unicode("A5"),unicode("5C"));
+);
+////%Y2b end////
+
+////%Y2be start////
+Y2be(str):=(
+  //help:Y2b("¥sin x");
+  Y2b("$"+Y2b(str)+"$");
+);
+////%Y2be end////
 
 //help:end();
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("KeTCindy V.4.5.48");
+println("KeTCindy V.4.5.49");
 println(ketjavaversion());
 println("ketcindylibbasic1[20230813] loaded");
 
@@ -1737,20 +1737,20 @@ Ptcrv(Num,Fig):=(
 );
 ////%Ptcrv end////
 
-////%Invert start////
-Invert(Fig):=(
-//help:Invert("gr1"); //no ketjs
-  regional(tmp);
-  if(isstring(Fig),tmp=parse(Fig),tmp=Fig); // 16.01.27
-  reverse(tmp);
-);
-Invert(nm,Fig):=Invert(nm,Fig,["nodisp"]);  // from 160127
-Invert(nm,Fig,options):=(
+////%Invert start//////260211renewed
+Invert(Figst):=Invert (Figst,Figst); //260211
+Invert(nm,Figst):=Invert(nm,Figst,["nodisp"]);
+Invert(nm,Figst,options):=(
 //help:Invert("1","gr1");
-  regional(name,tmp);
-  name="-inv"+nm;
-  tmp=Invert(Fig);
-  Listplot(name,tmp,options);
+  regional(dt,tmp);
+  dL=parse(Figst);
+  tmp=length(dL);
+  dt=[];
+  forall(1..tmp,
+    dt=append(dt,dL_(tmp+1-#));
+  );
+  Listplot("-inv"+nm,dt,["nodisp"]);
+  "inv"+nm;  
 );// to 160127
 ////%Invert end////
 

@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20260113] loaded");
+println("ketcindylibbasic2[20260209] loaded");
 
 //help:start();
 
@@ -1359,8 +1359,10 @@ Enclosing2(nm,plistorg,options):=(
       Fdata=plist_nn;
       if(nn==length(plist),nxtno=1,nxtno=nn+1);
       Gdata=plist_nxtno;
-      tmp1=parse(Fdata); //200803from
-      tmp2=parse(Gdata);
+      tmp1=Fdata;//260209from
+      if(!islist(tmp1),tmp1=parse(tmp1));
+      tmp2=Gdata;
+      if(!islist(tmp2),tmp2=parse(tmp2));//260209to
       if(|tmp2_1-tmp1_(-1)|<Eps,
         if(nn<length(plist), //211217from
           AnsL=concat(AnsL,tmp1);
@@ -1382,9 +1384,11 @@ Enclosing2(nm,plistorg,options):=(
           ss=1; //18.02.02to
         ,
           KL=sort(KL,[#_2]);//180706
-          tmp=parse(Fdata);
+          tmp=Fdata;
+          if(!islist(tmp),tmp=parse(tmp));//260209
           tmp1=t1+Eps;
-          tmp=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1))); //210411from
+          tmp=select(KL,(#_2>tmp1)%((#_2>t1)&(|#_1-p1|>Eps1)));
+          //210411from
           if(length(tmp)>0,
             KL=tmp;
           ,

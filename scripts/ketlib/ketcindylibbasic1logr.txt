@@ -1,3 +1,5 @@
+// 20260211
+//    Invert changed (to return the var string)
 // 20251219
 //    commonTan in mnr.max changed
 // 20251203

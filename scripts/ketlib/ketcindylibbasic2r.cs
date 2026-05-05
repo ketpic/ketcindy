@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic2[20260209] loaded");
+println("ketcindylibbasic2[20260215] loaded");
 
 //help:start();
 
@@ -3835,123 +3835,76 @@ CRspline(nm,ptL,options):=( //180822
 );
 ////%CRspline end////
 
-////%Beziersmooth start////
-Beziersmooth(nm,ptL):=Bzspline(nm,ptL,[]);
-//help:Beziersmooth("1",[A,B,C,A]);
-Beziersmooth(nm,ptL,options):=Bzspline(nm,ptL,options);
-Bzspline(nm,ptL):=Bzspline(nm,ptL,[]);
-Bzspline(nm,ptLorg,options):=(
-  // smooth bezier
-  regional(name,Eps,ptL,pt,pt1,pt2,pt3,npt,lstr,
-    tmp,tmp1,tmp2,cflg,ctrlist);
-  name="bzsp"+nm;
-  Eps=10^(-3);
-  ptL=apply(ptLorg,Lcrd(#)); // 16.08.16
-  if(|ptL_1-ptL_(length(ptL))|<Eps,cflg=1,cflg=0);
-  forall(2..length(ptL),
-    pt=ptL_#;
-    pt1=ptL_(#-1);
-    tmp1="C"+text(#-1)+"q";// 16.10.07
-    Putpoint(tmp1,(pt1+4*pt)/5,Lcrd(parse(tmp1))); // 16.08.16
+////%Beziersmooth start////260215
+Beziersmooth(nm, ptlist, options) := (
+  regional(sz, ctrlist, ii, p1, p2, cnamep, cnameq, 
+           ctrpL, ctrqL, tmpp, tmpq, tmp, pts, 
+           pMoved, pPartner, rawPivot, pPivot, pTarget, 
+           distOld, distRef, newpos);
+//help:Bzsmooth("1",ptlist,options); //260213
+//help:Bzsmooth(options=["Color=","Num=10"]);  
+  sz = length(ptlist);
+  ctrpL = []; 
+  ctrqL = []; 
+  ctrlist = []; 
+  forall(1..(sz-1), ii,
+    p1 = ptlist_ii;       
+    p2 = ptlist_(ii+1);
+    if(isstring(p1), p1 = parse(p1).xy);
+    if(isstring(p2), p2 = parse(p2).xy);   
+    cnamep = "c" + ii + "p"; 
+    cnameq = "c" + ii + "q"; 
+    if(!ispoint(parse(cnamep)),
+      Putpoint(cnamep, (2*p1+p2)/3);
+      inspect(parse(cnamep), "ptsize", 3); 
+      inspect(parse(cnamep), "color", "red");
+    );
+    if(!ispoint(parse(cnameq)),
+      Putpoint(cnameq, (p1+2*p2)/3);
+      inspect(parse(cnameq), "ptsize", 3);
+      inspect(parse(cnameq), "color", "red");
+    );
+    
+    ctrpL = append(ctrpL, cnamep);
+    ctrqL = append(ctrqL, cnameq);
   );
-  forall(2..(length(ptL)-1),
-    if(#<length(ptL) % cflg==1,
-      lstr="c"+text(#);
-      pt=ptLorg_#; // 16.08.16
-      pt1=parse("C"+text(#-1)+"q");
-      create([lstr],"Join",[pt1,pt]);
-      tmp2="C"+text(#)+"p";
-      tmp=append((2*pt.xy-pt1.xy),1);
-      create([tmp2],"PointOnLine",[parse(lstr),tmp]);
+  pts=[];
+  tmpp = select(1..(length(ctrpL)), Ptselected(parse(ctrpL_#)));
+  if(length(tmpp)>0,
+    tmp = tmpp_1; 
+    if(tmp > 1,
+      pts = [ctrpL_tmp, ctrqL_(tmp-1), ptlist_tmp];
     );
   );
-  if(cflg==0,
-    pt=ptL_1;
-    pt1=ptL_2;
-    tmp1="C1p";
-    Putpoint(tmp1,(4*pt+pt1)/5,Lcrd(parse(tmp1))); // 16.08.16
-  );
-  if(cflg==1,
-    lstr="c1";
-    pt=ptLorg_1; // 16.08.16
-    pt1=parse("C"+text(length(ptL)-1)+"q");
-    create([lstr],"Join",[pt1,pt]);
-    tmp1="C1p";
-    tmp=append((2*pt.xy-pt1.xy),1);
-    create([tmp1],"PointOnLine",[parse(lstr),tmp]);
-  );
-  ctrlist=[];
-  forall(1..(length(ptL)-1),
-    if(#>1 % cflg==1,
-      tmp1="c"+text(#);
-      inspect(parse(tmp1),"alpha",0.3);
+  tmpq = select(1..(length(ctrqL)), Ptselected(parse(ctrqL_#)));
+  if(length(tmpq)>0,
+    tmp = tmpq_1; 
+    if(tmp < length(ctrqL),
+      pts = [ctrqL_tmp, ctrpL_(tmp+1), ptlist_(tmp+1)];
     );
-    tmp1="C"+text(#)+"p";
-    tmp2="C"+text(#)+"q";
-    inspect(parse(tmp1),"ptsize",3);
-    inspect(parse(tmp1),"color",3);
-    inspect(parse(tmp2),"ptsize",3);
-    inspect(parse(tmp2),"color",3);
-    tmp=[parse(tmp1),parse(tmp2)];
-    ctrlist=append(ctrlist,tmp);
   );
-  Bezier(nm,ptL,ctrlist,options);
-  [ptL,ctrlist];
+  if(length(pts)>0,
+    pMoved   = parse(pts_1);
+    pPartner = parse(pts_2);
+    rawPivot = pts_3; 
+    if(isstring(rawPivot),
+      pPivot = parse(rawPivot), pPivot = rawPivot
+    );
+    pTarget = Rotatepoint(pMoved, pi, pPivot);
+    distOld = dist(pPartner, pPivot); 
+    distRef = dist(pTarget,  pPivot); 
+    if(distRef > 0.000001,
+       newpos = pPivot+(pTarget-pPivot)*(distOld/distRef);
+       Putpoint(pts_2, newpos);
+    );
+  );
+  forall(1..(sz-1), ii,
+    ctrlist = append(ctrlist, parse(ctrpL_ii));
+    ctrlist = append(ctrlist, parse(ctrqL_ii));
+  );  
+  Beziercurve(nm, ptlist, ctrlist, options);
 );
-////%Beziersmooth end////
-
-////%Beziersym start////
-Beziersym(nm,ptL):=Bzsspline(nm,ptL,[]);
-Beziersym(nm,ptL,options):=Bzsspline(nm,ptL,options);
-Bzsspline(nm,ptL):=Bzsspline(nm,ptL,[]);
-Bzsspline(nm,ptLorg,options):=(
-  // smooth bezier with symmetric control points
-  regional(name,Eps,ptL,pt,pt1,pt2,pt3,npt,lstr,
-    tmp,tmp1,tmp2,cflg,ctrlist);
-  name="bzssp"+nm;
-  Eps=10^(-3);
-  ptL=apply(ptLorg,Lcrd(#)); // 16.08.16
-  if(|ptL_1-ptL_(length(ptL))|<Eps,cflg=1,cflg=0);
-  forall(2..length(ptL),
-    pt=ptL_#;
-    pt1=ptL_(#-1);
-    tmp1="C"+text(#-1)+"q";
-    Putpoint(tmp1,(pt1+4*pt)/5,Lcrd(parse(tmp1)));
-  );
-  forall(2..(length(ptL)-1),
-    if(#<length(ptL) % cflg==1,
-      pt=ptL_#;
-      pt1=parse("C"+text(#-1)+"q");
-      tmp2="C"+text(#)+"p=2*pt-pt1;"; //190415
-      parse(tmp2);
-    );
-  );
-  if(cflg==0,
-    pt=ptL_1;
-    pt1=ptL_2;
-    Putpoint("C1p",(4*pt+pt1)/5,Lcrd(C1p)); // 16.08.16
-    inspect(C1p,"ptsize",3);
-    inspect(C1p,"color",3);
-  );
-  if(cflg==1,
-    pt=ptL_1;
-    pt1=Lcrd(parse("C"+text(length(ptL)-1)+"q")); // 16.08.16   
-    tmp1="Putpoint("+Dq+"C1p"+Dq+",2*pt-pt1);"; // 16.08.16//190415
-    parse(tmp1);
-  );
-  ctrlist=[];
-  forall(1..(length(ptL)-1),
-    tmp1="C"+text(#)+"p";
-    tmp2="C"+text(#)+"q";
-    inspect(parse(tmp2),"ptsize",3);
-    inspect(parse(tmp2),"color",3);
-    tmp=[parse(tmp1),parse(tmp2)];
-    ctrlist=append(ctrlist,tmp);
-  );
-  Bezier(nm,ptL,ctrlist,options);
-  [ptL,ctrlist];
-);
-////%Beziersym end////
+////%Beziersmooth end////260215
 
 ////%Listbspline2bz start////
 Listbspline2bz(listorg):=(

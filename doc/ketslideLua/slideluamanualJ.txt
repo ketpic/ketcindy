@@ -31,7 +31,9 @@ new::\ketcindy のインストール
 \enminit
 \textinit[115]
 layer::{140}{0}
-
+\addtext{8}{\pnp}{ketcindy homeからketcindyをダウンロード}\adde
+\addtext[8]{8}{\pnp}{doc/ketcinsysettings.cdyを実行}\adde
+end
 
 %%%%%%%%%%%%%%%%
 main::layer環境と\bs addtext

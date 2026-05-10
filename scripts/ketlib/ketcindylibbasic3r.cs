@@ -1669,100 +1669,7 @@ Settitle(titleold,cmdL,options):=(
 );
 ////%Settitle end////
 
-////%Maketitle start////
-Maketitle():=(
-  if(!isstring(TitleName), //17.04.13from
-    drawtext(mouse().xy,"Settitle not defined",
-      size->24,color->[1,0,0]);
-  , //17.04.13until
-    Maketitle(TitleName);
-  );
-);
-Maketitle(name):=(
-//help:Maketitle();
-  regional(texfile,texmain,tmp,tmp1,sep,txtfile);
-  texfile=name;
-  texmain=name+"main";
-  SCEOUTPUT=openfile(texfile+".tex");
-  forall(TitleCmdL,
-    println(SCEOUTPUT,#);
-  );
-  closefile(SCEOUTPUT);  
-  SCEOUTPUT=openfile(texmain+".tex");
-  tmp="\documentclass[landscape,10pt]{article}";
-  if(indexof(PathT,"platex")>0,
-    tmp=replace(tmp,"article","jarticle");
-    if(indexof(PathT,"uplatex")>0, //17.08.13from
-      tmp=replace(tmp,"jarticle","ujarticle");
-    );//17.08.13until
-  ); 
-  println(SCEOUTPUT,tmp);
-  tmp="\special{papersize=\the\paperwidth,\the\paperheight}";
-  println(SCEOUTPUT,tmp);
-  tmp=replace(Dirhead,"\","/");//17.11.01from
-  tmp=replace(tmp,"scripts","tex/latex");
-  if(isexists(tmp,""),
-    println(SCEOUTPUT,"\usepackage{ketpic,ketlayer,ketslide}");
-  ,
-    tmp=replace(Dirhead+"/ketpicstyle","\","/");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketpic}");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketlayer}");
-    println(SCEOUTPUT,"\usepackage{"+tmp+"/ketslide}");
-  );//17.11.01until
-  println(SCEOUTPUT,"\usepackage{amsmath,amssymb}");
-  println(SCEOUTPUT,"\usepackage{bm,enumerate}");
-  if((indexof(PathT,"pdflatex")>0)%(indexof(PathT,"lualatex")>0),
-    println(SCEOUTPUT,"\usepackage{graphicx}");
-  ,
-    println(SCEOUTPUT,"\usepackage[dvipdfmx]{graphicx}");
-  );
-  println(SCEOUTPUT,"\usepackage[usenames]{color}"); //190222
-  forall(ADDPACK, 
-      println(SCEOUTPUT,"\usepackage"+#); // 17.07.10
-  );
-  if(indexof(PathT,"platex")>0,tmp="\ketmarginJ",tmp="\ketmarginE"); 
-  println(SCEOUTPUT,tmp);
-  println(SCEOUTPUT,"\ketslideinit");
-  println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"\begin{document}");
-  println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"\input{"+texfile+".tex}");
-  println(SCEOUTPUT,"");
-  println(SCEOUTPUT,"\end{document}");
-  closefile(SCEOUTPUT); 
-  if(iswindows(),
-    Makebat(texmain,"tv");
-  ,
-    Makeshell(texmain,"tv");
-  );
-  kc();
-  txtfile=Cindyname()+".txt"; //180815from
-  if(!isexists(Dircdy,txtfile),
-    setdirectory(Dircdy);
-    SCEOUTPUT=openfile(txtfile);
-    println(SCEOUTPUT,"title::"+name+"//");
-    println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"%%%%%%%%%%%%%%%%//");
-    println(SCEOUTPUT,"main::"+PaO()+"title)//");
-    println(SCEOUTPUT,"\slidepage[m]//");
-    println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"%%%%%%%%%%%%%%%%//");
-    println(SCEOUTPUT,"new::"+PaO()+"title)//");
-    println(SCEOUTPUT,"%repeat=1,para//");
-    println(SCEOUTPUT,"\slidepage//");
-    println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"layer::{120}{0}//");
-    println(SCEOUTPUT,"%%putnote::s{65}{5}:://");
-    println(SCEOUTPUT,"end//");
-    println(SCEOUTPUT,"");
-    println(SCEOUTPUT,"itemize//");
-    println(SCEOUTPUT,"item//");
-    println(SCEOUTPUT,"end//");
-    closefile(SCEOUTPUT);
-    setdirectory(Dirwork);  //180815to
-  );
-);
-////%Maketitle end////
+
 
 ////%Repeatsameslide start////
 Repeatsameslide(repeatflg,sestr,addedL):=(
@@ -4575,15 +4482,10 @@ Nchoice(no,nL):=(
 );
 ////%Nchoice end////
 
-//// 250813 for ketslidelua
-//// for ketslidelua (def of Maketitle,... changed) ////
-
-PathT=PathThead+"/lualatex";
-
-//250811 new
+//260501 new
 ////%Maketitle start////
 Maketitle():=(
-  if(!isstring(TitleName), //17.04.13from
+  if(!isstring(TitleName),
     drawtext(mouse().xy,"Settitle not defined",
       size->24,color->[1,0,0]);
   , //17.04.13until
@@ -4592,9 +4494,13 @@ Maketitle():=(
 );
 Maketitle(name):=(
 //help:Maketitle();
-  regional(texfile,texmain,tmp,tmp1,sep,txtfile);
+  regional(texfile,texmain,tmp,tmp1,sep,txtfile,path);
   texfile=name;
   texmain=name+"main";
+  path=PathT; //260501from
+  if(indexof(PathT,"/")>0,sep="/",sep="\"); //260501from
+  tmp=Indexall(PathT,sep);
+  PathT=substring(PathT,0,tmp_(-1))+"lualatex";//260501to
   SCEOUTPUT=openfile(texfile+".tex");
   forall(TitleCmdL,
     println(SCEOUTPUT,#);
@@ -4651,6 +4557,7 @@ Maketitle(name):=(
     Makeshell(texmain,"tv");
   );
   kc();
+  PathT=path;//260501
   setdirectory(Dirwork);
 );
 ////%Maketitle end////
@@ -4744,6 +4651,9 @@ Presentation(texfile,txtfile):=(
   ,
     println(SCEOUTPUT,"\usepackage{ketslide2lua}");
   );
+  println(SCEOUTPUT,
+   "\usepackage[colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}");
+
 //  hyperflg=0;
 //  tmp=select(ADDPACK,indexof(#,"hyperref")>0);//250118from
 //  if(length(tmp)==0,
@@ -4852,8 +4762,6 @@ Presentation(texfile,txtfile):=(
   println(SCEOUTPUT,"\def\mslidetitlex{68}");
   println(SCEOUTPUT,"\def\mslidetitlesize{2}");
   
-
-
   forall(1..14, //16.12.22from
     tmp=SlideColorList_#;
     if(!isstring(tmp),tmp=text(tmp));
@@ -4881,6 +4789,9 @@ Presentation(texfile,txtfile):=(
     tmp2="";
     tmp3="";
     sld=Removespace(slideL_ns); // 16.06.28
+    if(indexof(sld,"\addtext")>0, //260510[3Lines]
+      sld=sld+"%";
+    );
     sestr="";
     if((substring(sld,0,1)=="%") & (substring(sld,0,2)!="%%"), // 17.06.23
       Repeatsameslide(repeatflg,"",[slideL_ns]);
@@ -5149,7 +5060,7 @@ Presentation(texfile,txtfile):=(
           nrepprev=nrep;//17.01.03
           nrep=0;
           npara=0;
-       );
+        );
         if(length(wall)>0,
           println(SCEOUTPUT,"\input{fig/"+wall+".tex}");
         );
@@ -5301,7 +5212,12 @@ Presentation(texfile,txtfile):=(
 
 ////%Mkslides start////
 Mkslides():=(
-  regional(store,sep,parent,texparentorg,tmp,tmp1,tmp2,tmp3,tmp4,flg);
+  regional(store,path,sep,parent,texparentorg,
+      tmp,tmp1,tmp2,tmp3,tmp4,flg);
+  path=PathT; //260501from
+  if(indexof(PathT,"/")>0,sep="/",sep="\");
+  tmp=Indexall(PathT,sep);
+  PathT=substring(PathT,0,tmp_(-1))+"lualatex";//260501to
   store=Fillblack();//181125
   tmp4=Fhead;
   Fhead=""; 
@@ -5364,6 +5280,7 @@ Mkslides():=(
   Fhead=tmp4;
   Texparent=texparentorg;//17.04.10
   Fillrestore(store);//181125
+  PathT=path; //260501
 );
 ////%Mkslides end////
 

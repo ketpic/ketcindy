@@ -1,6 +1,6 @@
  /*            MNR solver 
 
-numer(f),denomf(f),frfactor(f)
+numerf(f),denomf(f),frfactor(f)
 ratev(eq,rep),frev(eq,rep)
 ratevL(eq,repL),frevL(eq,repL)
 disc(eq,v),nthfactor(pol,kth)
@@ -24,6 +24,7 @@ comTanC(C1,r1,C2,r2,ch)
 comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 
 ////log
+260515 numer => numerf
 260401 rotateT dbg (barcenter)
 251210 comTan, comTanC changed
 250424 quaL added
@@ -55,11 +56,11 @@ comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 remvalue(all);
 */
 
-numer(f):=factor(num(ratsimp(f)))$
-Numer(f):=numer(f)$
+numerf(f):=factor(num(ratsimp(f)))$
+Numerf(f):=numerf(f)$
 denomf(f):=factor(denom(ratsimp(f)))$
 Denom(f):=factor(denom(ratsimp(f)))$
-frfactor(f):=numer(f)/denomf(f)$
+frfactor(f):=numerf(f)/denomf(f)$
 frfactorL(fL):=block( /*250424*/
  [out,ne,tmpmnrm],
  out:[],
@@ -69,7 +70,7 @@ frfactorL(fL):=block( /*250424*/
  ),
  out
 )$
-/*factorfr(f):=numer(f)/denomf(f)$*/
+/*factorfr(f):=numerf(f)/denomf(f)$*/
 ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 frev(eq,rep):=frfactor(ratev(eq,rep))$
@@ -179,7 +180,7 @@ eqLine(pa1,pa2):=block(
 	tmpmnr2:pa2[2]-pa1[2],
     tmpmnr:_Y-(pa1[2]+tmpmnr2/tmpmnr1*(_X-pa1[1]))
   ),
-  out:numer(tmpmnr)
+  out:numerf(tmpmnr)
 )$
 
 meetLinell(line1,line2):=block(
@@ -419,7 +420,7 @@ commonTan(C1,r1,C2,r2,ch):=block(
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
   tmpmnr:crossProd(v1,v2),
-  eq:numer(tmpmnr),
+  eq:numerf(tmpmnr),
   sol:solve(eq,mL),
   tmpmnr:sol[ch],
   pA1:ratev(pA1,tmpmnr),
@@ -451,7 +452,7 @@ commonTan(C1,r1,C2,r2,ch):=block(
   v1:frfactor(pA1-pB1),
   v2:frfactor(pA2-pB1),
   tempmnr:crossProd(v1,v2),
-  eq:expand(numer(tempmnr)),
+  eq:expand(numerf(tempmnr)),
   sol:solve(eq,mL),
   Dis:0,
 /*  dis:0, */
@@ -489,7 +490,7 @@ commonTanC(C1,r1,C2,r2,ch):=block(
   v1:ratsimp(pA1-pB1),
   v2:ratsimp(pA2-pB1),
   tempmnr:crossProd(v1,v2),
-  eq:expand(numer(tempmnr)),
+  eq:expand(numerf(tempmnr)),
   sol:solve(eq,mL),
   Dis:0,
   if length(sol)=2 then block(
@@ -537,7 +538,7 @@ ratden(s,x,a):=block( /*Rationalize denom 250206*/
 contCL(C,r,P1,P2):=block(
    [eq],
   eq:crossProd(P2-P1,C-P1)^2/lenSeg2(P2-P1)-r^2,
-  eq:numer(eq),
+  eq:numerf(eq),
   return(eq)
 )$
 

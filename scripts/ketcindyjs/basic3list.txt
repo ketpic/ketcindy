@@ -89,4 +89,4 @@ Nchoice,basic3,4472,4482
 Maketitle,basic3,4487,4562,Indexall,iswindows,Makebat,Makeshell,kc
 Presentation,basic3,4566,5210,readfile2str,Removespace,fileslist,Repeatsameslide
 Mkslides,basic3,5214,5284,Indexall,Fillblack,Changework,Setdirectory,setexec,isexists,Presentation,iswindows,Makebat,Makeshell,kc,pathsep,Fillrestore
-Mkslidesummary,basic3,5288,5353,Fillblack,pathsep,ismacosx,setexec,PPa,PaO,CalcbyR,iswindows,Makebat,Makeshell,kc,Changework,Fillrestore
+Mkslidesummary,basic3,5288,5365,Indexall,Fillblack,ismacosx,setexec,PPa,PaO,CalcbyR,Makebat,Makeshell,iswindows,pathsep,kc,Changework,Fillrestore

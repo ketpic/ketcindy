@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20251018] loaded");
+println("ketcindylibbasic3[20260517] loaded");
 
 //help:start();
 
@@ -5286,7 +5286,11 @@ Mkslides():=(
 
 ////%Mkslidesummary start////
 Mkslidesummary():=( // 17.10.26 for R
-  regional(texparentorg);
+  regional(texparentorg,path,tmp);
+  path=PathT; //260501from
+  if(indexof(PathT,"/")>0,sep="/",sep="\");
+  tmp=Indexall(PathT,sep);
+  PathT=substring(PathT,0,tmp_(-1))+"lualatex";//260501to
   texparentorg=Texparent;
   if(isstring(Slidename),
     Texparent=Slidename;
@@ -5316,9 +5320,9 @@ Mkslidesummary(inputfile,outputfile,options):=(
    "Dt=Dt[setdiff"+PaO()+"1:length"+PaO()+"Dt),num)]",[],
    "Smain=c"+PPa("")+";Snew=c"+PPa("")+";Ssame=c"+PPa(""),[],
    "for"+PaO()+"J in 1:length"+PaO()+"Dt)){",[],
-   "  Tmp=length"+PaO()+"grep"+PaO()+"'mainslide{',Dt[J],fixed=TRUE))",[], //180412
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'mainslide',Dt[J],fixed=TRUE))",[], // 修正箇所
    "  if"+PaO()+"Tmp>0){Smain=c"+PaO()+"Smain,1)}else{Smain=c"+PaO()+"Smain,0)}",[],
-   "  Tmp=length"+PaO()+"grep"+PaO()+"'newslide{',Dt[J],fixed=TRUE))",[], //180412
+   "  Tmp=length"+PaO()+"grep"+PaO()+"'newslide',Dt[J],fixed=TRUE))",[], // 修正箇所
    "  if"+PaO()+"Tmp>0){Snew=c"+PaO()+"Snew,1)}else{Snew=c"+PaO()+"Snew,0)}",[],
    "  Tmp=length"+PaO()+"grep"+PaO()+"'sameslide',Dt[J],fixed=TRUE))",[], //180412
    "  if"+PaO()+"Tmp>0){Ssame=c"+PaO()+"Ssame,1)}else{Ssame=c"+PaO()+"Ssame,0)}",[],
@@ -5347,8 +5351,16 @@ Mkslidesummary(inputfile,outputfile,options):=(
   ,
     Makeshell(tmp,"tv");
   );
+  kc():=(
+    if(iswindows(),
+       println("kc : "+kc(replace(Dirwork+Batparent,"/",pathsep()),Dirlib,Fnametex));
+    ,
+       println("kc : "+kc(replace(Dirwork+Shellparent,"\\",pathsep()),Mackc+Dirlib,Fnametex));
+    );
+  );
   kc();
   Changework(dirworkorg);//17.04.10
+  PathT=path;
   Fillrestore(store);//181125
 );
 ////%Mkslidesummary end////

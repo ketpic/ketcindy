@@ -1,3 +1,4 @@
+// 260517 mksummary dbg 
 // 260430 Presentation changed for lualatex
 // 260226 Presentation changed, Usetex added
 // 251018 Totexformjs added (\displaystyle \frac=>\dfrac for js)

@@ -24,7 +24,7 @@ comTanC(C1,r1,C2,r2,ch)
 comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 
 ////log
-260515 numer => numerf
+260515 numer => numerf, denom =>denomf
 260401 rotateT dbg (barcenter)
 251210 comTan, comTanC changed
 250424 quaL added
@@ -41,7 +41,7 @@ comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 2024.11.07 frsbsL added
 2024.02.09 ratevL,frevL
 2024.02.07 comTan1, comTan2, comTanC1, comTanC2
-2024.02.03 denomf,Denom,factorfr,frev
+2024.02.03 denom,Denom,factorfr,frev
 2024.01.12 lenSeg
 2024.01.06 comtan name
 2024.01.05 comtanLR
@@ -510,10 +510,10 @@ comTanC(C1,r1,C2,r2,ch):=commonTanC(C1,r1,C2,r2,ch)$
 comTanC1(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,1)$
 comTanC2(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,2)$
 
-ratden(s,x,a):=block( /*Rationalize denom 250206*/
+ratden(s,x,a):=block( /*Rationalize denomf 250206*/
   [sL,lflg,len,j,tmpmnrn,tmpmnrd,tmpmnrr,ns,ds,mul,out],
   if not listp(s) then block(
-    ns:num(s), ds:denom(s),
+    ns:num(s), ds:denomf(s),
     ns:remainder(ns,x^2-a),
     ds:remainder(ds,x^2-a),
     ds:expand(ds),

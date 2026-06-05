@@ -14,7 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 //
 
-println("ketcindylibbasic3[20260517] loaded");
+println("ketcindylibbasic3[20260605] loaded");
 
 //help:start();
 
@@ -1553,12 +1553,12 @@ Setslidehyper(driver,optionsorg):=(
   tmp1=replace(tmp1,"fc=","filecolor=");
   tmp1=replace(tmp1,"uc=","urlcolor=");
   ADDPACK=select(ADDPACK,indexof(#,"hyperref")==0);
-  if(driver=="dvipdfmx",
-    tmp="[dvipdfmx,"
-  ,
-    tmp="[";
-  );
-  Addpackage(tmp+tmp1+"]{hyperref}");
+//  if(driver=="dvipdfmx",
+//    tmp="[dvipdfmx,"
+//  ,
+//    tmp="[";
+//  );
+//  Addpackage(tmp+tmp1+"]{hyperref}");
   tmp=indexof(tmp1,"linkcolor=");//180813from
   tmp1=substring(tmp1,tmp-1,length(tmp1));
   tmp=indexof(tmp1,"=");
@@ -4517,10 +4517,12 @@ Maketitle(name):=(
   println(SCEOUTPUT,"\usepackage{bm,enumerate}");
   println(SCEOUTPUT,"\usepackage{graphicx}");
   println(SCEOUTPUT,"\usepackage{color}");
-  println(SCEOUTPUT,
-   "\usepackage[colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}");
+//  println(SCEOUTPUT,
+//   "\usepackage[colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\usepackage{ketslidelua}");
+  println(SCEOUTPUT, //260605[2Lines]
+    "\usepackage[colorlinks=true,linkcolor=blue,filecolor=blue,hypertexnames=false]{hyperref}");
   println(SCEOUTPUT,"");
   println(SCEOUTPUT,"\usepackage{qrcode}");
   println(SCEOUTPUT,"\usepackage{setspace}");
@@ -4652,7 +4654,7 @@ Presentation(texfile,txtfile):=(
     println(SCEOUTPUT,"\usepackage{ketslide2lua}");
   );
   println(SCEOUTPUT,
-   "\usepackage[colorlinks=true,linkcolor=blue,filecolor=blue]{hyperref}");
+   "\usepackage[colorlinks=true,linkcolor=blue,filecolor=blue,hypertexnames=false]{hyperref}"); //260605
 
 //  hyperflg=0;
 //  tmp=select(ADDPACK,indexof(#,"hyperref")>0);//250118from

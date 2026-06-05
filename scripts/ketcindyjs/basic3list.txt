@@ -27,7 +27,7 @@ Setslidemargin,basic3,1422,1425
 Setslidepage,basic3,1429,1454
 Setslidemain,basic3,1458,1482
 Setslidebody,basic3,1486,1528
-Setslidehyper,basic3,1532,1596,Divoptions,Addpackage,Indexall,Toupper
+Setslidehyper,basic3,1532,1596,Divoptions,Indexall,Toupper
 Settitle,basic3,1600,1669,Toupper,Indexall
 Repeatsameslide,basic3,1675,1830,Indexall
 BBdata,basic3,1834,1965,Divoptions,Toupper,ismacosx,Dqq,iswindows,kc,isexists,Readlines,Removespace,Strsplit,Sprintf
@@ -86,7 +86,7 @@ ParseL,basic3,4415,4425
 Parsev,basic3,4429,4447,Strsplit
 Parsevv,basic3,4451,4468,Strsplit,Parsev
 Nchoice,basic3,4472,4482
-Maketitle,basic3,4487,4562,Indexall,iswindows,Makebat,Makeshell,kc
-Presentation,basic3,4566,5210,readfile2str,Removespace,fileslist,Repeatsameslide
-Mkslides,basic3,5214,5284,Indexall,Fillblack,Changework,Setdirectory,setexec,isexists,Presentation,iswindows,Makebat,Makeshell,kc,pathsep,Fillrestore
-Mkslidesummary,basic3,5288,5365,Indexall,Fillblack,ismacosx,setexec,PPa,PaO,CalcbyR,Makebat,Makeshell,iswindows,pathsep,kc,Changework,Fillrestore
+Maketitle,basic3,4487,4564,Indexall,iswindows,Makebat,Makeshell,kc
+Presentation,basic3,4568,5212,readfile2str,Removespace,fileslist,Repeatsameslide
+Mkslides,basic3,5216,5286,Indexall,Fillblack,Changework,Setdirectory,setexec,isexists,Presentation,iswindows,Makebat,Makeshell,kc,pathsep,Fillrestore
+Mkslidesummary,basic3,5290,5367,Indexall,Fillblack,ismacosx,setexec,PPa,PaO,CalcbyR,Makebat,Makeshell,iswindows,pathsep,kc,Changework,Fillrestore

@@ -1,3 +1,4 @@
+// 260605 presentation changed (hyperref option)
 // 260517 mksummary dbg 
 // 260430 Presentation changed for lualatex
 // 260226 Presentation changed, Usetex added

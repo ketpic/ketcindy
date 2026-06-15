@@ -23,14 +23,14 @@ mkcmd2():=(
  cmdL2=concat(Mxbatch("mnr"),[
   "putT(m,n,r)",
   "slideT(cirC,[0,0])",
-  "eq1:numer(cirR-R)",
-  "eq2:numer(edgB-2*a)",
+  "eq1:numerf(cirR-R)",
+  "eq2:numerf(edgB-2*a)",
   "sol:solve([eq1,eq2],[n,r])",
   "fe:frevL([vtxT,vtxL,vtxR,n,angT],sol[2])",
   "A:fe[1]; B:fe[2]; C:fe[3]; n:fe[4]; aT:fe[5]",
   "pf:partfrac(aT,m)",
-//  "qu:quotient(numer(aT),denom(aT),m)",
-//  "rm:remainder(numer(aT),denom(aT),m)",
+//  "qu:quotient(numerf(aT),denom(aT),m)",
+//  "rm:remainder(numerf(aT),denom(aT),m)",
  "end"
  ]);
  var2="eq1::eq2::sol::A::B::C::n::aT::pf";//::qu::rm";

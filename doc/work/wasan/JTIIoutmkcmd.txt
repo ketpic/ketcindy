@@ -54,11 +54,11 @@ mkcmd2():=(
  cmdL2=concat(cmdL1,[
  "putT(m1,n,r2)","slideT(vtxR,C)",
  "I2a:frfactor(inC)",
- "eq1:numer(vtxL[1]-F[1])",
+ "eq1:numerf(vtxL[1]-F[1])",
  
  "putT(supA(n1),n,r2)","slideT(vtxR,C)",
  "I2b:frfactor(inC)",
- "eq2:numer(vtxL[1]-E[1])",
+ "eq2:numerf(vtxL[1]-E[1])",
 
  "sol12:solve([eq1,eq2],[r1,r2])",
  "fe:frevL([r1,r2,D,E,I1,G,F,H,J,K,I2a],sol12)",
@@ -68,7 +68,7 @@ mkcmd2():=(
  
  "putT(m1,n2,r2)","slideT(vtxL,F)",
  "I2c:frfactor(inC)",
- "eq2b:numer(vtxR[1]-J[1])",
+ "eq2b:numerf(vtxR[1]-J[1])",
  "sol2b:solve(eq2b,n2)",
  "fe:frev([n2,H,L],sol2b)",
  "n2:fe[1]; H:fe[2]","L:fe[3]",
@@ -86,7 +86,7 @@ mkcmd3():=(
  "putT(plusA(m,n2),minusA(n,n2),r3)",
  "slideT(vtxT,A)","rotateT(-n2,A)",
  "H3:frfactor(vtxL); L3:frfactor(vtxR)",
- "eq3:numer(H3[1]-H[1])",
+ "eq3:numerf(H3[1]-H[1])",
  "sol3:solve(eq3,r3)",
  "len:length(sol3)",
  "fe:frevL([H3,L3,inC,r3],sol3)",
@@ -122,7 +122,7 @@ mkcmd4():=(
  "rd21mm:nthfactor(rd21m,4)",
  "rd22mm:nthfactor(rd22m,6)", 
  "rdm:rd12mm",
- "rdn:numer(remainder(eq4b2,rdm))",
+ "rdn:numerf(remainder(eq4b2,rdm))",
  "rdn:nthfactor(rdn,2)",
 
  "solm:solve(rdm,m1)",

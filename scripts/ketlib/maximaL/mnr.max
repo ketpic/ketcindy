@@ -24,6 +24,8 @@ comTanC(C1,r1,C2,r2,ch)
 comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 
 ////log
+260805 meetLine changed
+260801 comTan,comTanC dbg (Dis,dis)
 260515 numer => numerf, denom =>denomf
 260401 rotateT dbg (barcenter)
 251210 comTan, comTanC changed
@@ -184,7 +186,7 @@ eqLine(pa1,pa2):=block(
 )$
 
 meetLinell(line1,line2):=block(
-  [out],
+  [out,_X,_Y],
   out:solve([line1,line2],[_X,_Y]),
   if length(out)>0 then block( /*250422from*/
     out:ratev([_X,_Y],out),
@@ -193,11 +195,12 @@ meetLinell(line1,line2):=block(
 )$
 
 meetLine(pts1,pts2):=block(
-  [tmpmnr1,tmpmnr2,out],
-  tmpmnr1:eqLine(pts1[1],pts1[2]),
-  tmpmnr2:eqLine(pts2[1],pts2[2]),
-  out:meetLinell(tmpmnr1,tmpmnr2),
-  out
+  [vec1,vec2,eq,t,s,sol,out],
+  vec1:(1-t)*pts1[1]+t*pts1[2],
+  vec2:(1-s)*pts2[1]+s*pts2[2],
+  eq:vec1-vec2,
+  sol:solve(eq,[t,s]),
+  out:frev(vec1,sol)
 )$
 
 /*
@@ -455,19 +458,19 @@ commonTan(C1,r1,C2,r2,ch):=block(
   eq:expand(numerf(tempmnr)),
   sol:solve(eq,mL),
   Dis:0,
-/*  dis:0, */
+/*  dis:0,*/
   if length(sol)=2 then block(
     c2:coeff(eq,mL,2),
     c1:coeff(eq,mL,1),
     c0:coeff(eq,mL,0),
     Dis:frfactor(c1^2-4*c2*c0),
-/*    dis:radcan(sqrt(Dis)), */
+/*    dis:radcan(sqrt(Dis)),*/
     sol:[mL=(-c1+dis)/(2*c2),mL=(-c1-dis)/(2*c2)],
     sol:sol[ch]
   ),
   pA1:frfactor(subst(sol,pA1)),
   pB1:frfactor(subst(sol,pB1)),
-  out:[pA1,pB1,Dis],
+  out:[pA1,pB1,radcan(sqrt(Dis))],
   out
 )$
 comTan(C1,r1,C2,r2,ch):=commonTan(C1,r1,C2,r2,ch)$/*251210*/
@@ -503,7 +506,7 @@ commonTanC(C1,r1,C2,r2,ch):=block(
   ),
   pA1:frfactor(subst(tempmnr,pA1)),
   pB1:frfactor(subst(tempmnr,pB1)),
-  out:[pA1,pB1,Dis,sqrt(Dis)],
+  out:[pA1,pB1,radcan(sqrt(Dis))],
   out
 )$
 comTanC(C1,r1,C2,r2,ch):=commonTanC(C1,r1,C2,r2,ch)$

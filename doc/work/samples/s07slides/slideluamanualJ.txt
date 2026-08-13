@@ -24,16 +24,6 @@ layer::{140}{0}
 end
 
 %%%%%%%%%%%%%%%%
-new::\ketcindy のインストール
-%repeat=1
-\slidepage
-
-\enminit
-\textinit[115]
-layer::{140}{0}
-
-
-%%%%%%%%%%%%%%%%
 main::layer環境と\bs addtext
 
 %%%%%%%%%%%%%%%%
@@ -151,15 +141,15 @@ new::itemizeとenumerate環境の使い方
 
 \textinit[115]
 layer::{140}{0}
-\addtext{8}{\ten}{段階的表示では，後ろの行の位置がずれることがある}
-\addtext{8}{\ten}{itemize〜end}
-\addtext{16}{}{itemize}
-\addtext{16}{}{item:\hspace{0mm}:内容}
-\addtext{16}{}{item:\hspace{0mm}:結論}
-\addtext{16}{}{end}
+\addtext{8}{\Pt}{段階的表示では，後ろの行の位置がずれることがある}
+\addtext{12}{\pt}{itemize〜end}
+\addtext{20}{}{itemize}
+\addtext{20}{}{item:\hspace{0mm}:内容}
+\addtext{20}{}{item:\hspace{0mm}:結論}
+\addtext{20}{}{end}
 
 \textinit[115]
-\addtext[8]{72}{\ten}{enumerate:\hspace{0mm}:[]〜end}
+\addtext[8]{72}{\pt}{enumerate:\hspace{0mm}:[]〜end}
 \addtext{80}{}{enumerate:\hspace{0mm}:[(1)]}
 \addtext{80}{}{item:\hspace{0mm}:内容}
 \addtext{80}{}{item:\hspace{0mm}:結論}

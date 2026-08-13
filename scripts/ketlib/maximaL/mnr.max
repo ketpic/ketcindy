@@ -24,6 +24,7 @@ comTanC(C1,r1,C2,r2,ch)
 comTanC1(C1,r1,C2,r2), comTanC2(C1,r1,C2,r2)
 
 ////log
+260813 _ added to local variables
 260805 meetLine changed
 260801 comTan,comTanC dbg (Dis,dis)
 260515 numer => numerf, denom =>denomf
@@ -64,67 +65,69 @@ denomf(f):=factor(denom(ratsimp(f)))$
 Denom(f):=factor(denom(ratsimp(f)))$
 frfactor(f):=numerf(f)/denomf(f)$
 frfactorL(fL):=block( /*250424*/
- [out,ne,tmpmnrm],
- out:[],
- for ne from 1 thru length(fL) do block(
-   tmpmnrm:frfactor(fL[ne]),
-   out:endcons(tmpmnrm,out)
+ [_out,_ne,_tmp],
+ _out:[],
+ for _ne from 1 thru length(fL) do block(
+   _tmp:frfactor(fL[_ne]),
+   _out:endcons(_tmp,_out)
  ),
- out
+ _out
 )$
 /*factorfr(f):=numerf(f)/denomf(f)$*/
 ratev(eq,rep):=ratsimp(ev(eq,rep))$
 Ratev(eq,rep):=ratev(eq,rep)$
 frev(eq,rep):=frfactor(ratev(eq,rep))$
 ratevL(eqL,rep):=block( /*250217*/
- [out,ne,tmpmnr],
- out:[],
- for ne from 1 thru length(eqL) do block( /*250424dbg*/
-   tmpmnr:ratev(eqL[ne],rep),
-   out:endcons(tmpmnr,out)
+ [_out,_ne,_tmp],
+ _out:[],
+ for _ne from 1 thru length(eqL) do block( /*250424dbg*/
+   _tmp:ratev(eqL[_ne],rep),
+   _out:endcons(_tmp,_out)
  ),
- out
+ _out
 )$
+
 /*frevL(eq,repL):=ratevL(eq,repL)$*/
 frevL(eqL,rep):=block( /* 250217 */
- [out,ne,tmpmnr],
- out:[],
- for ne from 1 thru length(eqL) do block(
-   tmpmnr:frev(eqL[ne],rep),
-   out:endcons(tmpmnr,out)
+ [_out,_ne,_tmp],
+ _out:[],
+ for _ne from 1 thru length(eqL) do block(
+   _tmp:frev(eqL[_ne],rep),
+   _out:endcons(_tmp,_out)
  ),
- out
+ _out
 )$
+
 frsbsL(vL,sol):=block(/*241106*/
-  [k,tmpmnr,tmpmnr1,tmpmnr2,out],
-  out:[],
-  for k from 1 thru length(vL) do block(
-    tmpmnr1:frevL(vL[k],sol),
-    out:endcons(tmpmnr1,out)
+  [_k,_tmp,_tmp1,_tmp2,_out],
+  _out:[],
+  for _k from 1 thru length(vL) do block(
+    _tmp1:frevL(vL[_k],sol),
+    _out:endcons(_tmp1,_out)
   ),
-  return(out)
+  return(_out)
  )$
 
 disc(eq,v):=block(
- [eqe,v2,v1,v0],
- eqe:expand(eq),
- v2:coeff(eqe,v,2),
- v1:coeff(eqe,v,1),
- v0:coeff(eqe,v,0),
- frfactor(v1^2-4*v2*v0)
+ [_eqe,_v2,_v1,_v0],
+ _eqe:expand(eq),
+ _v2:coeff(_eqe,v,2),
+ _v1:coeff(_eqe,v,1),
+ _v0:coeff(_eqe,v,0),
+ frfactor(_v1^2-4*_v2*_v0)
 )$
 
 nthfactor(pol,kth):=block(
- [tmpmnr,j,out],
- tmpmnr:part(pol,0),
- if tmpmnr="-" then
-   tmpmnr:part(pol,1)
+ [_tmp,_j,_out],
+ _tmp:part(pol,0),
+ if _tmp="-" then
+   _tmp:part(pol,1)
  else
-   tmpmnr:pol
+   _tmp:pol
  ,
- j:length(tmpmnr),
- if kth>j then kth:j,
- part(tmpmnr,kth)
+ _j:length(_tmp),
+ if kth>_j then kth:_j,
+ part(_tmp,kth)
 )$
 
 
@@ -137,33 +140,42 @@ Hokaku(m):=ratsimp(1/m)$
 Yokaku(m):=ratsimp((1-m)/(m+1))$
 plusA(m1,m2):=ratsimp((m1+m2)/(1-m2*m1))$
 minusA(m1,m2):=ratsimp((m1-m2)/(1+m2*m1))$
-timesA(nn,m):=block([k,mm],
-  mm:m,
-  for k from 2 thru nn do mm:plusA(mm,m),
-  return(mm)
+
+timesA(nn,m):=block(
+  [_k,_mm],
+  _mm:m,
+  for _k from 2 thru nn do _mm:plusA(_mm,m),
+  return(_mm)
 )$
+
 edge(A,B):=block(
-  [out],
-  out:frfactor(lenSeg2(A,B)),
-  out:frfactor(sqrt(out))
+  [_out],
+  _out:frfactor(lenSeg2(A,B)),
+  _out:frfactor(sqrt(_out)),
+  return(_out)
 )$
+
 edg2m(c,a,b):=block(
-  [cs,out],
-  cs:(a^2+b^2-c^2)/(2*a*b),
-  out:sqrt(frfactor((1-cs)/(1+cs))),
-  out:frfactor(out)
+  [_cs,_out],
+  _cs:(a^2+b^2-c^2)/(2*a*b),
+  _out:sqrt(frfactor((1-_cs)/(1+_cs))),
+  _out:frfactor(_out),
+  return(_out)
 )$
+
 m2edg(m,a,b):=block(/*250311*/
-  [cs,out],
-  cs:(1-m^2)/(1+m^2),
-  out:sqrt(frfactor(a^2+b^2-2*a*b*cs)),
-  out:frfactor(out)
+  [_cs,_out],
+  _cs:(1-m^2)/(1+m^2),
+  _out:sqrt(frfactor(a^2+b^2-2*a*b*_cs)),
+  _out:frfactor(_out),
+  return(_out)
 )$
 
 cos2m(c):=block(
-  [out],
-  out:sqrt(frfactor((1-c)/(1+c))),
-  out:frfactor(out)
+  [_out],
+  _out:sqrt(frfactor((1-c)/(1+c))),
+  _out:frfactor(_out),
+  return(_out)
 )$
 
 dotProd(v1,v2):=
@@ -174,33 +186,38 @@ crossProd(v1,v2):=
   ratsimp(v1[1]*v2[2]-v1[2]*v2[1])$ 
 
 eqLine(pa1,pa2):=block(
-  [tmpmnr,tmpmnr1,tmpmnr2,out],
+  [_tmp,_tmp1,_tmp2,_out],
   if pa1[1]=pa2[1] then
-    tmpmnr:_X-pa1[1]
+    _tmp:_X-pa1[1]
   else block(
-    tmpmnr1:pa2[1]-pa1[1],
-	tmpmnr2:pa2[2]-pa1[2],
-    tmpmnr:_Y-(pa1[2]+tmpmnr2/tmpmnr1*(_X-pa1[1]))
+    _tmp1:pa2[1]-pa1[1],
+	_tmp2:pa2[2]-pa1[2],
+    _tmp:_Y-(pa1[2]+_tmp2/_tmp1*(_X-pa1[1]))
   ),
-  out:numerf(tmpmnr)
+  _out:numerf(_tmp),
+  return(_out)
 )$
 
 meetLinell(line1,line2):=block(
-  [out,_X,_Y],
-  out:solve([line1,line2],[_X,_Y]),
-  if length(out)>0 then block( /*250422from*/
-    out:ratev([_X,_Y],out),
-    out:frfactor(out)
-  ) /*250422to*/
+  [_out,_X,_Y],
+  _out:solve([line1,line2],[_X,_Y]),
+  if length(_out)>0 then block( /*250422from*/
+    _out:ratev([_X,_Y],_out),
+    _out:frfactor(_out),
+    _out:radcan(_out)
+  ), /*250422to*/
+  return(_out)
 )$
 
 meetLine(pts1,pts2):=block(
-  [vec1,vec2,eq,t,s,sol,out],
-  vec1:(1-t)*pts1[1]+t*pts1[2],
-  vec2:(1-s)*pts2[1]+s*pts2[2],
-  eq:vec1-vec2,
-  sol:solve(eq,[t,s]),
-  out:frev(vec1,sol)
+  [_vec1,_vec2,_eq,_t,_s,_sol,_out],
+  kill(_t,_s),
+  _vec1:(1-_t)*pts1[1]+_t*pts1[2],
+  _vec2:(1-_s)*pts2[1]+_s*pts2[2],
+  _eq:_vec1-_vec2,
+  _sol:solve(_eq,[_t,_s]),
+  _out:ev(_vec1,_sol),
+  _out
 )$
 
 /*
@@ -210,21 +227,23 @@ intsectLine(line1,line2);
 */
 
 lenSeg2(p1,[p2]):=block(
- [tmpmnr],
+ [_tmp],
  if length(p2)>0 then
-   tmpmnr:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
+   _tmp:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
  else
-   tmpmnr:(p1[1])^2+(p1[2])^2,
- ratsimp(tmpmnr)
+   _tmp:(p1[1])^2+(p1[2])^2,
+ ratsimp(_tmp)
 )$
+
 lenSeg(p1,[p2]):=block(
- [tmpmnr],
+ [_tmp],
  if length(p2)>0 then
-   tmpmnr:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
+   _tmp:(p2[1][1]-p1[1])^2+(p2[1][2]-p1[2])^2
  else
-   tmpmnr:(p1[1])^2+(p1[2])^2,
- ratsimp(sqrt(tmpmnr))
+   _tmp:(p1[1])^2+(p1[2])^2,
+ ratsimp(sqrt(_tmp))
 )$
+
 vect(A,B):=ratsimp(B-A)$
 ptDirSeg(A,B,t):=ratsimp([A[1]+t*(B[1]-A[1]),A[2]+t*(B[2]-A[2])])$
 
@@ -237,13 +256,13 @@ forget(...)
 
 slide(v):=ratsimp(v+sliderVector)$
 rotate(v):=block(
-  [x,y,c,s,u],
-  x:v[1]-rotCenter[1],
-  y:v[2]-rotCenter[2],
-  c:rotCS[1],
-  s:rotCS[2],
-  u:[c*x-s*y,s*x+c*y],
-  ratsimp(u+rotCenter)
+  [_x,_y,_c,_s,_u],
+  _x:v[1]-rotCenter[1],
+  _y:v[2]-rotCenter[2],
+  _c:rotCS[1],
+  _s:rotCS[2],
+  _u:[_c*_x-_s*_y,_s*_x+_c*_y],
+  ratsimp(_u+rotCenter)
 )$
 
 putTriangle(m,n,r) := block(
@@ -296,10 +315,10 @@ putTriangle(m,n,r) := block(
 putT(m,n,r):=putTriangle(m,n,r)$
 
 putTriangle_btm(m,n,btm):=block(
-  [r,ans],
-  putTriangle(m,n,r),
-  ans:ratsimp(solve(edgeBottom=btm,r)),
-  putTriangle(m,n,ans),
+  [_r,_ans],
+  putTriangle(m,n,_r),
+  _ans:ratsimp(solve(edgeBottom=btm,_r)),
+  putTriangle(m,n,_ans),
   [vertexTop,vertexLeft,vertexRight,inCenter]
 )$
 
@@ -358,208 +377,213 @@ rotateT(tr,centre):=rotateTriangle(tr,centre)$
 /*angT(m,n):=supA(plusA(m,n));*/
 
 reduceDegree(pL,z,stp):=block(
-  [stpL,dg1,dg2,co1,co2,tmpmnr,tmpmnr1,tmpmnr2,ctr,out], 
-  tmpmnr1:expand(pL[1]), 
-  tmpmnr2:expand(pL[2]), 
-  dg1:hipow(tmpmnr1,z),
-  dg2:hipow(tmpmnr2,z), 
-  ctr:1,
-  stpL:[],
-  while ((not dg2=0) and (not dg1=0)) and (ctr<=stp) do block(
-	co1:diff(tmpmnr1,z,dg1)/factorial(dg1),
-	co2:diff(tmpmnr2,z,dg2)/factorial(dg2),
-	tmpmnr:gcd(co1,co2),
-	co1:ratsimp(co1/tmpmnr),
-	co2:ratsimp(co2/tmpmnr),
-	if dg2<dg1 then block(
-      tmpmnr1:expand(co2*tmpmnr1-co1*tmpmnr2*z^(dg1-dg2)),
-   	  dg1:hipow(tmpmnr1,z)
+  [_stpL,_dg1,_dg2,_co1,_co2,_tmp,_tmp1,_tmp2,_ctr,_out], 
+  _tmp1:expand(pL[1]), 
+  _tmp2:expand(pL[2]), 
+  _dg1:hipow(_tmp1,z),
+  _dg2:hipow(_tmp2,z), 
+  _ctr:1,
+  _stpL:[],
+  while ((not _dg2=0) and (not _dg1=0)) and (_ctr<=stp) do
+   block(
+	_co1:diff(_tmp1,z,_dg1)/factorial(_dg1),
+	_co2:diff(_tmp2,z,_dg2)/factorial(_dg2),
+	_tmp:gcd(_co1,_co2),
+	_co1:ratsimp(_co1/_tmp),
+	_co2:ratsimp(_co2/_tmp),
+	if _dg2<_dg1 then block(
+      _tmp1:expand(_co2*_tmp1-_co1*_tmp2*z^(_dg1-_dg2)),
+   	  _dg1:hipow(_tmp1,z)
     )else block(
-	  tmpmnr2:expand(co2*tmpmnr1*z^(dg2-dg1)-co1*tmpmnr2),
-	  dg2:hipow(tmpmnr2,z)
+	  _tmp2:expand(_co2*_tmp1*z^(_dg2-_dg1)-_co1*_tmp2),
+	  _dg2:hipow(_tmp2,z)
     ), 
-	stpL:append(stpL,[tmpmnr1,tmpmnr2]),
-	ctr:ctr + 1
+	_stpL:append(_stpL,[_tmp1,_tmp2]),
+	_ctr:_ctr + 1
   ),
-  tmpmnr1:factor(tmpmnr1),
-  tmpmnr2:factor(tmpmnr2),
-  [tmpmnr1,tmpmnr2,ctr,dg1,dg2,stpL]
+  _tmp1:factor(_tmp1),
+  _tmp2:factor(_tmp2),
+  [_tmp1,_tmp2,_ctr,_dg1,_dg2,_stpL]
 )$
 reduceD(pL,z,stp):=reduceDegree(pL,z,stp)$
 
 /* inner cirle  
 inCircle(p1,p2,p3):=block(
-  [a,b,c,S,s,tmpmnr,out],
-  a:normsq(p2-p3),
-  b:normsq(p3-p1),
-  c:normsq(p1-p2),
-  a:ratsimp(sqrt(a)),
-  b:ratsimp(sqrt(b)),
-  c:ratsimp(sqrt(c)),
-  s:(a+b+c)/2,
-  S:sqrt(s*(s-a)*(s-b)*(s-c)),
-  tmpmnr:(a*p1+b*p2+c*p3)/(2*s),
-  out:ratsimp([S/s,tmpmnr]),
-  out
+  [_a,_b,_c,_S,_s,_tmp,_out],
+  _a:normsq(p2-p3),
+  _b:normsq(p3-p1),
+  _c:normsq(p1-p2),
+  _a:ratsimp(sqrt(_a)),
+  _b:ratsimp(sqrt(_b)),
+  _c:ratsimp(sqrt(_c)),
+  _s:(_a+_b+_c)/2,
+  _S:sqrt(_s*(_s-_a)*(_s-_b)*(_s-_c)),
+  _tmp:(_a*p1+_b*p2+_c*p3)/(2*_s),
+  _out:ratsimp([_S/_s,_tmp]),
+  _out
 )$
 */
 
 /*
 commonTan(C1,r1,C2,r2,ch):=block(
-  [mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
-   eq,sol,sol1,sol2,tmpmnr,tmpmnr1,out],
-  x1:C1[1], y1:C1[2],
-  x2:C2[1], y2:C2[2],
-  putTriangle(mL,1,r1),
+  [_mL,_x1,_y1,_x2,_y2,_pA1,_pB1,_pC1,_pA2,_pB2,_pC2,
+   _v1,_v2,_eq,_sol,_sol1,_sol2,_tmp,_tmp1,_out],
+  _x1:C1[1], _y1:C1[2],
+  _x2:C2[1], _y2:C2[2],
+  putTriangle(_mL,1,r1),
   slideTriangle([0,0],C1),
-  pA1:vertexTop,
-  pB1:vertexLeft,
-  pC1:vertexRight,
-  putTriangle(mL,1,r2), 
+  _pA1:vertexTop,
+  _pB1:vertexLeft,
+  _pC1:vertexRight,
+  putTriangle(_mL,1,r2), 
   slideTriangle([0,0],C2),
-  pA2:vertexTop,
-  pB2:vertexLeft,
-  pC2:vertexRight,
-  v1:ratsimp(pA1-pB1),
-  v2:ratsimp(pA2-pB1),
-  tmpmnr:crossProd(v1,v2),
-  eq:numerf(tmpmnr),
-  sol:solve(eq,mL),
-  tmpmnr:sol[ch],
-  pA1:ratev(pA1,tmpmnr),
-  pB1:ratev(pB1,tmpmnr),
-  pA1:frfactor(subst(tmpmnr,pA1)),
-  pB1:frfactor(subst(tmpmnr,pB1)),
-  out:[pA1,pB1],
-  out
+  _pA2:vertexTop,
+  _pB2:vertexLeft,
+  _pC2:vertexRight,
+  _v1:ratsimp(pA1-pB1),
+  _v2:ratsimp(pA2-pB1),
+  _tmp:crossProd(_v1,_v2),
+  _eq:numerf(_tmp),
+  _sol:solve(_eq,_mL),
+  _tmp:_sol[ch],
+  _pA1:ratev(_pA1,_tmp),
+  _pB1:ratev(_pB1,_tmp),
+  _pA1:frfactor(subst(_tmp,_pA1)),
+  _pB1:frfactor(subst(_tmp,_pB1)),
+  _out:[_pA1,_pB1],
+  _out
 )$
 ?
 */
 
 /* 251122,251209 */
 commonTan(C1,r1,C2,r2,ch):=block(
-  [mL,x1,y1,x2,y2,pA1,pB1,pC1,pA2,pB2,pC2,v1,v2,
-   eq,c2,c1,c0,Dis,sol,tempmnr,tempmnr1,out],
-  x1:C1[1], y1:C1[2],
-  x2:C2[1], y2:C2[2],
-  putTriangle(mL,1,r1),
+  [_mL,_x1,_y1,_x2,_y2,_pA1,_pB1,_pC1,_pA2,_pB2,_pC2,
+   _v1,_v2,_eq,_c2,_c1,_c0,_Dis,_sol,_temp,_temp1,_out],
+  _x1:C1[1], _y1:C1[2],
+  _x2:C2[1], _y2:C2[2],
+  putTriangle(_mL,1,r1),
   slideTriangle([0,0],C1),
-  pA1:vertexTop,
-  pB1:vertexLeft,
-  pC1:vertexRight,
-  putTriangle(mL,1,r2), 
+  _pA1:vertexTop,
+  _pB1:vertexLeft,
+  _pC1:vertexRight,
+  putTriangle(_mL,1,r2), 
   slideTriangle([0,0],C2),
-  pA2:vertexTop,
-  pB2:vertexLeft,
-  pC2:vertexRight,
-  v1:frfactor(pA1-pB1),
-  v2:frfactor(pA2-pB1),
-  tempmnr:crossProd(v1,v2),
-  eq:expand(numerf(tempmnr)),
-  sol:solve(eq,mL),
-  Dis:0,
+  _pA2:vertexTop,
+  _pB2:vertexLeft,
+  _pC2:vertexRight,
+  _v1:frfactor(_pA1-_pB1),
+  _v2:frfactor(_pA2-_pB1),
+  _temp:crossProd(_v1,_v2),
+  _eq:expand(numerf(_temp)),
+  _sol:solve(_eq,_mL),
+  _Dis:0,
 /*  dis:0,*/
-  if length(sol)=2 then block(
-    c2:coeff(eq,mL,2),
-    c1:coeff(eq,mL,1),
-    c0:coeff(eq,mL,0),
-    Dis:frfactor(c1^2-4*c2*c0),
+  if length(_sol)=2 then block(
+    _c2:coeff(_eq,_mL,2),
+    _c1:coeff(_eq,_mL,1),
+    _c0:coeff(_eq,_mL,0),
+    _Dis:frfactor(_c1^2-4*_c2*_c0),
 /*    dis:radcan(sqrt(Dis)),*/
-    sol:[mL=(-c1+dis)/(2*c2),mL=(-c1-dis)/(2*c2)],
-    sol:sol[ch]
+    _sol:[_mL=(-_c1+dis)/(2*_c2),_mL=(-_c1-dis)/(2*_c2)],
+    _sol:_sol[ch]
   ),
-  pA1:frfactor(subst(sol,pA1)),
-  pB1:frfactor(subst(sol,pB1)),
-  out:[pA1,pB1,radcan(sqrt(Dis))],
-  out
+  _pA1:frfactor(subst(_sol,_pA1)),
+  _pB1:frfactor(subst(_sol,_pB1)),
+/*  _out:[_pA1,_pB1,radcan(sqrt(_Dis))], */
+  _temp:radcan(sqrt(_Dis)),
+  _pA1:ev(_pA1,[dis=_temp]),
+  _pB1:ev(_pB1,[dis=_temp]),
+  _out:radcan([_pA1,_pB1]),
+  _out
 )$
 comTan(C1,r1,C2,r2,ch):=commonTan(C1,r1,C2,r2,ch)$/*251210*/
 comTan1(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,1)$
 comTan2(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,2)$
 
 commonTanC(C1,r1,C2,r2,ch):=block(
-   [x1,y1,x2,y2,pA1,pB1,pA2,pC2,v1,v2,Dis,dis,
-    eq1,eq2,sol,sol1,sol2,tempmnr,tempmnr1,out],
-  x1:C1[1], y1:C1[2],
-  x2:C2[1], y2:C2[2],
-  putTriangle(mL,1,r1),
+   [_mL,_x1,_y1,_x2,_y2,_pA1,_pB1,_pA2,_pC2,_v1,_v2,_Dis,_dis,
+    _eq1,_eq2,_sol,_sol1,_sol2,_temp,_temp1,_out],
+  _x1:C1[1], _y1:C1[2],
+  _x2:C2[1], _y2:C2[2],
+  putTriangle(_mL,1,r1),
   slideTriangle([0, 0],C1),
-  pA1:vertexTop,
-  pB1:vertexLeft,
-  putTriangle(1,1/mL,r2),
+  _pA1:vertexTop,
+  _pB1:vertexLeft,
+  putTriangle(1,1/_mL,r2),
   slideTriangle([0,0],C2),
-  pA2:vertexTop,
-  pC2:vertexRight,
-  v1:ratsimp(pA1-pB1),
-  v2:ratsimp(pA2-pB1),
-  tempmnr:crossProd(v1,v2),
-  eq:expand(numerf(tempmnr)),
-  sol:solve(eq,mL),
-  Dis:0,
-  if length(sol)=2 then block(
-    c2:coeff(eq,mL,2),
-    c1:coeff(eq,mL,1),
-    c0:coeff(eq,mL,0),
-    Dis:frfactor(c1^2-4*c2*c0),
-    sol:[mL=(-c1+dis)/(2*c2),mL=(-c1-dis)/(2*c2)],
-    sol:sol[ch]
+  _pA2:vertexTop,
+  _pC2:vertexRight,
+  _v1:ratsimp(_pA1-_pB1),
+  _v2:ratsimp(_pA2-_pB1),
+  _temp:crossProd(_v1,_v2),
+  _eq:expand(numerf(_temp)),
+  _sol:solve(_eq,_mL),
+  _Dis:0,
+  if length(_sol)=2 then block(
+    _c2:coeff(_eq,_mL,2),
+    _c1:coeff(_eq,_mL,1),
+    _c0:coeff(_eq,_mL,0),
+    _Dis:frfactor(_c1^2-4*_c2*_c0),
+    _sol:[_mL=(-_c1+dis)/(2*_c2),_mL=(-_c1-dis)/(2*_c2)],
+    _sol:_sol[ch]
   ),
-  pA1:frfactor(subst(tempmnr,pA1)),
-  pB1:frfactor(subst(tempmnr,pB1)),
-  out:[pA1,pB1,radcan(sqrt(Dis))],
-  out
+  _pA1:frfactor(subst(_temp,_pA1)),
+  _pB1:frfactor(subst(_temp,_pB1)),
+  _out:[_pA1,_pB1,radcan(sqrt(_Dis))],
+  _out
 )$
 comTanC(C1,r1,C2,r2,ch):=commonTanC(C1,r1,C2,r2,ch)$
 comTanC1(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,1)$
 comTanC2(C1,r1,C2,r2):=commonTanC(C1,r1,C2,r2,2)$
 
 ratden(s,x,a):=block( /*Rationalize denomf 250206*/
-  [sL,lflg,len,j,tmpmnrn,tmpmnrd,tmpmnrr,ns,ds,mul,out],
+  [_sL,_lflg,_len,_j,_tmpn,_tmpd,_tmpr,_ns,_ds,_mul,_out],
   if not listp(s) then block(
-    ns:num(s), ds:denomf(s),
-    ns:remainder(ns,x^2-a),
-    ds:remainder(ds,x^2-a),
-    ds:expand(ds),
-    c1:coeff(ds,x,1),
-    c0:coeff(ds,x,0),
-    mul:c1*x-c0,
-    tmpmnrn:remainder(ns*mul,x^2-a),
-    tmpmnrd:remainder(ds*mul,x^2-a),
-    out:frfactor(tmpmnrn/tmpmnrd)
+    _ns:num(s), _ds:denomf(s),
+    _ns:remainder(_ns,x^2-a),
+    _ds:remainder(_ds,x^2-a),
+    _ds:expand(_ds),
+    _c1:coeff(_ds,x,1),
+    _c0:coeff(_ds,x,0),
+    _mul:_c1*x-_c0,
+    _tmpn:remainder(_ns*_mul,x^2-a),
+    _tmpd:remainder(_ds*_mul,x^2-a),
+    _out:frfactor(_tmpn/_tmpd)
   ),
   if listp(s) then block(
-    len:length(s),
-    out:[],
-    for j from 1 thru len do block(
-      tmpmnrr:ratden(s[j],x,a),
-      out:endcons(tmpmnrr,out)
+    _len:length(s),
+    _out:[],
+    for _j from 1 thru _len do block(
+      _tmpr:ratden(s[j],x,a),
+      _out:endcons(_tmpr,_out)
     )
   ),
-  return(out)
+  return(_out)
 )$
 
 contCL(C,r,P1,P2):=block(
-   [eq],
-  eq:crossProd(P2-P1,C-P1)^2/lenSeg2(P2-P1)-r^2,
-  eq:numerf(eq),
-  return(eq)
+   [_eq],
+  _eq:crossProd(P2-P1,C-P1)^2/lenSeg2(P2-P1)-r^2,
+  _eq:numerf(_eq),
+  return(_eq)
 )$
 
 quarter(expr,m,M):=block(
-  [out],
-  out:frev(expr,sqrt(m^2+1)=(1+M^2)/(1-M^2)),
-  out:frev(out,m=2*M/(1-M^2)),
-  return(out)
+  [_out],
+  _out:frev(expr,sqrt(m^2+1)=(1+M^2)/(1-M^2)),
+  _out:frev(_out,m=2*M/(1-M^2)),
+  return(_out)
 )$
 qua(expr,m,M):=quarter(expr,m,M)$
 quaL(exL,m,M):=block(
-  [k,tmpmnrm,out],
-  out:[],
-  for k from 1 thru length(exL) do block(
-    tmpmnrm:qua(exL[k],m,M),
-    out:endcons(tmpmnrm,out)
+  [_k,_tmpm,_out],
+  _out:[],
+  for _k from 1 thru length(exL) do block(
+    _tmpm:qua(exL[k],m,M),
+    _out:endcons(_tmpm,_out)
   ),
-  return(out)
+  return(_out)
 )$
 
 quasubs(p,m,M):=

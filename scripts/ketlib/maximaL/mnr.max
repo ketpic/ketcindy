@@ -459,7 +459,7 @@ commonTan(C1,r1,C2,r2,ch):=block(
 /* 251122,251209 */
 commonTan(C1,r1,C2,r2,ch):=block(
   [_mL,_x1,_y1,_x2,_y2,_pA1,_pB1,_pC1,_pA2,_pB2,_pC2,
-   _v1,_v2,_eq,_c2,_c1,_c0,_Dis,_sol,_temp,_temp1,_out],
+   _v1,_v2,_eq,_c2,_c1,_c0,_Dis,_dis,_sol,_temp,_temp1,_out],
   _x1:C1[1], _y1:C1[2],
   _x2:C2[1], _y2:C2[2],
   putTriangle(_mL,1,r1),
@@ -478,22 +478,19 @@ commonTan(C1,r1,C2,r2,ch):=block(
   _eq:expand(numerf(_temp)),
   _sol:solve(_eq,_mL),
   _Dis:0,
-/*  dis:0,*/
   if length(_sol)=2 then block(
     _c2:coeff(_eq,_mL,2),
     _c1:coeff(_eq,_mL,1),
     _c0:coeff(_eq,_mL,0),
     _Dis:frfactor(_c1^2-4*_c2*_c0),
-/*    dis:radcan(sqrt(Dis)),*/
-    _sol:[_mL=(-_c1+dis)/(2*_c2),_mL=(-_c1-dis)/(2*_c2)],
+    _dis:radcan(sqrt(_Dis)),
+    _sol:[_mL=(-_c1+_dis)/(2*_c2),_mL=(-_c1-_dis)/(2*_c2)],
     _sol:_sol[ch]
   ),
   _pA1:frfactor(subst(_sol,_pA1)),
   _pB1:frfactor(subst(_sol,_pB1)),
-/*  _out:[_pA1,_pB1,radcan(sqrt(_Dis))], */
-  _temp:radcan(sqrt(_Dis)),
-  _pA1:ev(_pA1,[dis=_temp]),
-  _pB1:ev(_pB1,[dis=_temp]),
+  
+  /* eval(_pA1, [dis=...]) の行は _sol で代入済みのため不要として整理 */
   _out:radcan([_pA1,_pB1]),
   _out
 )$
@@ -502,7 +499,7 @@ comTan1(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,1)$
 comTan2(C1,r1,C2,r2):=commonTan(C1,r1,C2,r2,2)$
 
 commonTanC(C1,r1,C2,r2,ch):=block(
-   [_mL,_x1,_y1,_x2,_y2,_pA1,_pB1,_pA2,_pC2,_v1,_v2,_Dis,_dis,
+   [_mL,_x1,_y1,_x2,_y2,_pA1,_pB1,_pA2,_pC2,_v1,_v2,_Dis,
     _eq1,_eq2,_sol,_sol1,_sol2,_temp,_temp1,_out],
   _x1:C1[1], _y1:C1[2],
   _x2:C2[1], _y2:C2[2],
@@ -525,12 +522,13 @@ commonTanC(C1,r1,C2,r2,ch):=block(
     _c1:coeff(_eq,_mL,1),
     _c0:coeff(_eq,_mL,0),
     _Dis:frfactor(_c1^2-4*_c2*_c0),
-    _sol:[_mL=(-_c1+dis)/(2*_c2),_mL=(-_c1-dis)/(2*_c2)],
+    _dis:radcan(sqrt(_Dis)),
+    _sol:[_mL=(-_c1+_dis)/(2*_c2),_mL=(-_c1-_dis)/(2*_c2)],
     _sol:_sol[ch]
   ),
-  _pA1:frfactor(subst(_temp,_pA1)),
-  _pB1:frfactor(subst(_temp,_pB1)),
-  _out:[_pA1,_pB1,radcan(sqrt(_Dis))],
+  _pA1:frfactor(subst(_sol,_pA1)),
+  _pB1:frfactor(subst(_sol,_pB1)),
+  _out:[_pA1,_pB1],
   _out
 )$
 comTanC(C1,r1,C2,r2,ch):=commonTanC(C1,r1,C2,r2,ch)$
